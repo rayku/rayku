@@ -2,21 +2,21 @@
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/widget/jquery.ui.css" />
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/widget/style.css" />
 <?php
-  $raykuUser = $sf_user->getRaykuUser();
-  $stats = $raykuUser->getStatisticsForDashboard();
-
+	$connection = RaykuCommon::getDatabaseConnection();
+	$raykuUser = $sf_user->getRaykuUser();
+	$stats = $raykuUser->getStatisticsForDashboard();
 	usort($rankUsers, "cmp");
 
 	$curr_user_rank=''; $ij =1;
 
 
 	if(count($rankUsers) > 0) :
-         
+
 	foreach($rankUsers as $_expert):
 
 		if($_expert['userid'] == $logedUserId):
 
-			$curr_user_rank = $ij;				 
+			$curr_user_rank = $ij;
 			break;
 
 		endif;
@@ -24,7 +24,7 @@
 	$ij++;
 
 	endforeach;
-		
+
 	endif;
 
 function cmp($a, $b)
@@ -33,7 +33,7 @@ function cmp($a, $b)
 	return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-    
+
 }
 
 
@@ -54,34 +54,34 @@ function cmp($a, $b)
     <!--<div id="myvar" style="width:650px;margin-top:10px">
       <?php ##include_partial('statistics'); ?>
     </div>-->
-    
-    
+
+
     <div>
       <?php include_partial('recent'); ?>
     </div>
-    
-    
+
+
   </div>
 </div>
 <div class="body-right" style="margin-top:10px;">
   <div id="myvar_activate">
 <!--widget-->
 
-<div id="widget">    		
+<div id="widget">
 
    <!--widget-head-->
 
-   <div id="widget-head">            		
+   <div id="widget-head">
 
       <div style="float:left;width:150px;"><h3>Tutor Status:</h3> </div>
-	<?php $query = mysql_query("select * from user_tutor where userid =".$logedUserId." ") or die(mysql_error()); ?>
-    
+	<?php $query = mysql_query("select * from user_tutor where userid =".$logedUserId." ", $connection) or die(mysql_error()); ?>
+
     <div style="float:right;width:60px;">
         <?php if(mysql_num_rows($query) > 0) : ?>
         	 	<span id="on-off"><strong style="color:#060">On</strong> | <a href="/dashboard/tutor" style="color:#333;text-decoration:underline">Off</a></span>
         <?php else: ?>
         		<span id="on-off"><a href="/dashboard/tutor" style="color:#333;text-decoration:underline">On</a> | <strong style="color:#900">Off</strong></span>
-        <?php endif; ?>             
+        <?php endif; ?>
         </div>
         <div style="clear:both;"></div>
 
@@ -91,7 +91,7 @@ function cmp($a, $b)
 
         <?php if(mysql_num_rows($query) > 0 && empty($_COOKIE['loginname'])) : ?>
 
-   <!--widget main-->    
+   <!--widget main-->
 
    <div id="widget-main">
 
@@ -100,18 +100,18 @@ function cmp($a, $b)
        <!--rank wrap-->
 
        <div id="rank-wrap">
-	
+
 	<?php if($curr_user_rank > 100 && !empty($curr_user_rank)) : $curr_user_rank = '100+'; endif; ?>
 
           <div id="rank-no">#<?php echo ($curr_user_rank? $curr_user_rank: '-'); ?></div>
 
 	<?php $_dispalyQuote = '';?>
 
-	<?php if($curr_user_rank <= 25) : 
+	<?php if($curr_user_rank <= 25) :
 
 		$_dispalyQuote = 'you are ranked!';
 
-	 else : 
+	 else :
 
 		$_dispalyQuote = 'not in top #25';
 
@@ -123,7 +123,7 @@ function cmp($a, $b)
 
        </div><!--rank wrap-->
 
-       <!--Tutor Rate Slider--> 
+       <!--Tutor Rate Slider-->
 
        <div id="tutor-rate-slider">
 
@@ -131,12 +131,12 @@ function cmp($a, $b)
 	     <div class="amount"><input type="text" id="amount" style="text-align:right" /> RP/min.</div>
 
 	  </p>
-	
-	 <div id="tutor-rate"></div> 
+
+	 <div id="tutor-rate"></div>
 <input type="hidden" id="amount_hidden" name ="amount_hidden" value=''>
       </div><!--Tutor Rate Slider-->
 
-   </div><!--widget main-->    
+   </div><!--widget main-->
 
    <!--widget-foot-->
 
@@ -148,16 +148,16 @@ function cmp($a, $b)
    </div><!--widget-foot-->
    <?php endif; ?>
 
-<?php 
-		$query = mysql_query("select * from user_rate where userid=".$logedUserId." ") or die(mysql_error());
-		$rate = mysql_fetch_assoc($query); 
+<?php
+		$query = mysql_query("select * from user_rate where userid=".$logedUserId." ", $connection) or die(mysql_error());
+		$rate = mysql_fetch_assoc($query);
 		$_Rate = ''; $_max = '';
 		if(mysql_num_rows($query) == 0) :
 			$_Rate = '0.00';
-		else : 
+		else :
 			$_Rate = $rate['rate'];
 		endif; ?>
-         <?php if($stats['expertCount'] >= 125 && $changeUserType != 1): 
+         <?php if($stats['expertCount'] >= 125 && $changeUserType != 1):
 		$_max = '5.00';
 	else:
 		$_max = '0.00';
@@ -241,21 +241,21 @@ vd('#tutor-rate').mouseover(function() {
 
 });
 
-		
+
 	</script>
 		<?php elseif(mysql_num_rows($query) == 0) : ?>
-   <!--widget main-->    
+   <!--widget main-->
    <div id="widget-main">
        <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="http://rayku.com/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
    </div>
-        
+
         <?php endif; ?>
 
 </div><!--widget-->
 </div>
 
 
- <div id="widget" style="margin-top:15px;"> 
+ <div id="widget" style="margin-top:15px;">
   <!--widget-head-->
   <div id="widget-head">
     <h3>
@@ -266,7 +266,7 @@ vd('#tutor-rate').mouseover(function() {
       	<?php else: ?>
       	<span style="color:#060">Verified Tutors</span>
       <?php endif; ?>
-      
+
       <?php else: ?>
       Account Type:
       	<?php if($sf_user->getRaykuUser()->getType() == 5): ?>
@@ -283,33 +283,33 @@ vd('#tutor-rate').mouseover(function() {
 
 
   </div>
-  <!--widget-head--> 
-  
+  <!--widget-head-->
+
   <!--widget main-->
   <div id="widget-main">
     <p>You currently receive question notifications through:</p>
     <ul class="icon-list">
 	<li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:10px;text-indent:-5000px;" /></li>
-	
-	<?php $query = mysql_query("select * from user_gtalk where userid =".$logedUserId." ") or die(mysql_error());
+
+	<?php $query = mysql_query("select * from user_gtalk where userid =".$logedUserId." ", $connection) or die(mysql_error());
     if(mysql_num_rows($query) > 0) : ?>
     <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
     <?php else: ?>
     <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk-no">Google Talk</a></li>
     <?php endif; ?>
-    
-    <?php $query = mysql_query("select * from user_fb where userid =".$logedUserId." ") or die(mysql_error());
+
+    <?php $query = mysql_query("select * from user_fb where userid =".$logedUserId." ", $connection) or die(mysql_error());
     if(mysql_num_rows($query) > 0) : ?>
 	<li><a href="http://rayku.com/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
     <?php else: ?>
 	<li><a href="http://rayku.com/dashboard/facebook" class="icon facebook-no">Facebook Chat</a></li>
     <?php endif; ?>
 	</ul>
-    
+
     <div style="clear:both"></div>
 
   </div>
-  <!--widget main--> 
+  <!--widget main-->
 </div>
 <!--widget-->
 
@@ -320,12 +320,8 @@ vd('#tutor-rate').mouseover(function() {
     <div class="top"></div>
     <ul>
       <?php
-						$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-							 $db = mysql_select_db("rayku_db", $con);
 
-
-
-						$query = mysql_query("select * from news_update order by id DESC limit 0,4") or die(mysql_error());
+						$query = mysql_query("select * from news_update order by id DESC limit 0,4", $connection) or die(mysql_error());
 
 
 
@@ -371,7 +367,7 @@ CheckRate = parseFloat(CheckRate);
 	if(CheckRate < '0.00' || CheckRate > '5.00') {
 
 		document.getElementById('rateError').innerHTML = "<font color='red'>Rate Should Be <strong>0.00</strong> to <strong>5.00</strong></font><br>";
-		
+
 		return false;
 
 

@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * This class will contain loose functions needed by rayku.com
  *
  * @author lukas
@@ -9,11 +9,11 @@ class RaykuCommon
   /**
    * Sometimes we are using one of users as special user to send notification messages,
    * as a default friend when new user registers, etc, etc
-   * 
+   *
    * We are fetching him from database based on username and here this username is defined
    *
    * This user must be type of student, teacher or expert and can not be hidden
-   * 
+   *
    */
   const SITE_USER_USERNAME = 'rayku';
 
@@ -27,7 +27,7 @@ class RaykuCommon
 			$date['year'],
 			$date['month'],
 			$date['day']
-		); 
+		);
   }
 
   static function formatDateForPost( $date )
@@ -35,7 +35,7 @@ class RaykuCommon
     $d1=explode(' ',$date);
     $d=explode('-',$d1[0]);
     $t=explode(':',$d1[1]);
-    
+
     return date('F jS , Y  \a\t  h:i a',mktime($t[0],$t[1],$t[2],$d[1],$d[2],$d[0]));
   }
 
@@ -99,6 +99,14 @@ class RaykuCommon
 		$thumb = new sfThumbnail(sfConfig::get('app_general_avatar_max_width4'), sfConfig::get('app_general_avatar_max_height4'));
 		$thumb->loadFile($sourceFile);
 		$thumb->save($destinationFile."_4", 'image/jpeg');
+  }
+
+  // this is a temporary function to allow the safe removal of mysql_connect and
+  // mysql_select_db across the codebase
+  static function getDatabaseConnection() {
+      $connection = mysql_connect("127.0.0.1", "rayku", "rayku");
+      mysql_select_db("rayku_db", $connection);
+      return $connection;
   }
 }
 ?>
