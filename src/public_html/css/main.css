@@ -924,7 +924,7 @@ Header
 
 
 #header {
-	background:url(http://www.rayku.com/images/bg-header.jpg) no-repeat 0 0;
+	background:url(/images/bg-header.jpg) no-repeat 0 0;
 	height:136px;
 	position:relative;
 }
@@ -1657,11 +1657,11 @@ Body - Subpage
 	width:80px;
 	/*padding:0 0 0 33px;*/
 
-	
+
 
 	/*padding-left:30px;*/
 
-	
+
 
 	overflow:hidden;
 }
@@ -1733,9 +1733,9 @@ Body - Subpage
 
 
 
-	font-weight:bold;*/ 
+	font-weight:bold;*/
 
-	
+
 
 
 
@@ -1757,7 +1757,7 @@ Body - Subpage
 
 	margin:35px 50px 0 0;
 
-	font-weight:bold;*/ 
+	font-weight:bold;*/
 
 
 

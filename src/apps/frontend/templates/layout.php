@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<div id="top-nav"> 
+<div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
     <ul class="top-menu">
@@ -38,18 +38,18 @@
     <!--div#user-box-->
     <div class="clear"></div>
   </div>
-  <!--div#top-nav-center--> 
+  <!--div#top-nav-center-->
 </div>
 </div>
-<!--div#top-nav--> 
+<!--div#top-nav-->
 
 <!--register-->
-<div id="register"> 
-  
+<div id="register">
+
   <!--container-->
   <div class="container"> <img src="../images/landing/banner-txt.png" alt="RAYKU IS ON-DEMAND" />
     <div class="play"> <a href="#newsletter">Play Video</a> </div>
-    
+
     <!--registration options-->
     <div id="registration-options">
       <h2><img src="../images/landing/connect-to-rayku.png" alt="Connect To Rayku" /></h2>
@@ -60,8 +60,8 @@
         </ul>
       </div>
     </div>
-    <!--registration opens--> 
-    
+    <!--registration opens-->
+
     <!--registration form-->
     <div class="login-form-div">
     <form action="/login/loginCheck" id="login-form" method="post">
@@ -77,11 +77,11 @@
       </p>
     </form>
     </div>
-    <!--registration form--> 
-    
+    <!--registration form-->
+
     <!--login form-->
     <div class="register-form-div">
-    <form action="/register" id="registration-form">    	
+    <form action="/register" id="registration-form">
       <div class="input-fader">
 	        <label for="name">Full Name</label><input class="name" type="text" />
       </div>
@@ -93,128 +93,128 @@
       </p>
     </form>
     </div>
-    <!--rlogin form--> 
-    
+    <!--rlogin form-->
+
     <!--scroll for more-->
     <div id="scroll-for-more">
       <p><a href="#whiteboard"><img src="../images/landing/scroll-arrow.png" alt="Scroll" style="margin-top:20px;"/></a></p>
     </div>
-    <!--scroll for more--> 
-    
+    <!--scroll for more-->
+
   </div>
-  <!--container--> 
-  
+  <!--container-->
+
 </div>
-<!--register--> 
+<!--register-->
 
 <!--questions-->
-<div id="questions"> 
-  
+<div id="questions">
+
   <!--container-->
-  <div class="container"> 
-    
+  <div class="container">
+
     <!--q-1-->
     <div class="q-1">
       <h3>Connect to</h3>
       <p>peers and experts who are specifically qualified to help you...</p>
     </div>
-    <!--q-1--> 
-    
+    <!--q-1-->
+
     <!--q-2-->
     <div class="q-2">
       <h3>Get Help</h3>
       <p>on algebra, limits, integrals, trigonometry, mortgages, matrices...</p>
     </div>
-    <!--q-2--> 
-    
+    <!--q-2-->
+
     <!--q-3-->
     <div class="q-3"> </div>
-    <!--q-3--> 
-    
+    <!--q-3-->
+
     <!--q-4-->
     <div class="q-4">
       <p>&quot;What is the derivative of 2x^2+34x^2?&quot;</p>
     </div>
-    <!--q-4--> 
-    
+    <!--q-4-->
+
     <!--q-5-->
     <div class="q-5">
       <p>&quot;What are the exact steps to factor f(x)= x^(3)+2x^(2)-45x-126?&quot;</p>
     </div>
-    <!--q-5--> 
-    
-    <!--q-6--> 
-    <img src="../images/landing/qmark-6.png" alt="Questions?" class="q-6" /><!--q-6--> 
-    
-    <!--q-7--> 
-    <img src="../images/landing/qmark-7.png" alt="Questions?" class="q-7" /><!--q-7--> 
-    
-    <!--q-8--> 
-    <img src="../images/landing/qmark-8.png" alt="Questions?" class="q-8" /><!--q-8--> 
-    
+    <!--q-5-->
+
+    <!--q-6-->
+    <img src="../images/landing/qmark-6.png" alt="Questions?" class="q-6" /><!--q-6-->
+
+    <!--q-7-->
+    <img src="../images/landing/qmark-7.png" alt="Questions?" class="q-7" /><!--q-7-->
+
+    <!--q-8-->
+    <img src="../images/landing/qmark-8.png" alt="Questions?" class="q-8" /><!--q-8-->
+
   </div>
-  <!--container--> 
-  
+  <!--container-->
+
 </div>
-<!--questions--> 
+<!--questions-->
 
 <!--whiteboard-->
-<div id="whiteboard"> 
-  
+<div id="whiteboard">
+
   <!--container-->
-  <div class="container"> <a><img src="../images/landing/whiteboard.png" alt="Whiteboard" /></a> <a class="plus-green plus">+</a> 
-    
+  <div class="container"> <a><img src="../images/landing/whiteboard.png" alt="Whiteboard" /></a> <a class="plus-green plus">+</a>
+
     <!--plus green-->
     <div id="plus-green" class="tooltip fade">
       <h3>Tools</h3>
       <p>The math equation writer makes it easy to communicate your question and thoughts. </p>
     </div>
-    <!--plus green--> 
-    
-    <a class="plus-grey plus">+</a> 
-    
+    <!--plus green-->
+
+    <a class="plus-grey plus">+</a>
+
     <!--plus grey-->
     <div id="plus-grey" class="tooltip fade">
       <h3>Video</h3>
       <p>See or listen to the tutor explain the concepts in question as they draw it out for you in real time. </p>
     </div>
-    <!--plus grey--> 
-    
-    <a class="plus-blue plus">+</a> 
-    
+    <!--plus grey-->
+
+    <a class="plus-blue plus">+</a>
+
     <!--plus blue-->
     <div id="plus-blue" class="tooltip fade">
       <h3>Chat</h3>
       <p>More comfortable typing? We've got you covered! </p>
     </div>
-    <!--plus blue--> 
-    
-    <a class="plus-orange plus">+</a> 
-    
+    <!--plus blue-->
+
+    <a class="plus-orange plus">+</a>
+
     <!--plus orange-->
     <div id="plus-orange" class="tooltip fade">
       <h3>Board</h3>
       <p>Watch as the tutor illustrates each step in a visual way on the live shared whiteboard. </p>
     </div>
     <!--plus orange-->
-    
+
     <div class="clip-left clip"></div>
     <div class="clip-right clip"></div>
   </div>
-  <!--container--> 
-  
+  <!--container-->
+
 </div>
-<!--whiteboard--> 
+<!--whiteboard-->
 
 <!--newletter-->
-<div id="newsletter"> 
-  
+<div id="newsletter">
+
   <!--container-->
-  <div class="container"> 
-    
+  <div class="container">
+
     <!--newsletter-content-->
-    <div id="newsletter-content"> 
-      
+    <div id="newsletter-content">
+
       <!--video-->
       <div class="video">
         <object width="465" height="260" id="wistia_355291" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
@@ -231,15 +231,15 @@
           <p><a href="#register">Register Now</a></p>
         </form>
       </div>
-      <!--video--> 
-      
+      <!--video-->
+
     </div>
-    <!--newsletter-content--> 
+    <!--newsletter-content-->
   </div>
-  <!--container--> 
-  
+  <!--container-->
+
 </div>
-<!--newsletter--> 
+<!--newsletter-->
 
 
 <!--footer-->
@@ -255,9 +255,9 @@
 </div>
 <!--footer-->
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script> 
-<script type="text/javascript" src="../js/landing/jquery.easing.1.3.js"></script> 
-<script type="text/javascript" src="../js/landing/jquery.scrolling-parallax.js"></script> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="../js/landing/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="../js/landing/jquery.scrolling-parallax.js"></script>
 <script type="text/javascript" src="../js/landing/functions.js"></script>
 <script type="text/javascript" src="../js/landing/input-fader.js"></script>
 </body>
@@ -407,10 +407,10 @@
       </form>
     </div>
     <!-- end of div#body -->
-    
+
     <div id="footer" style="padding-bottom:40px;">
       <div class="foo">
-        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="http://rayku.com/images/img-footer-logo-1.png" alt="rayku.com"/></a> </div>
+        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="/images/img-footer-logo-1.png" alt="rayku.com"/></a> </div>
         <p>Rayku is not sponsored or endorsed by any college or university.</p>
         <p>Copyright 2011 Rayku, Inc.  All rights reserved.</p>
         <ul>
@@ -422,10 +422,10 @@
         <div style="clear:both"></div>
       </div>
     </div>
-    <!-- end of footer --> 
-    
+    <!-- end of footer -->
+
   </div>
-  <!-- end of primary --> 
+  <!-- end of primary -->
 </div>
 <!-- end of wrapper -->
 </body>
