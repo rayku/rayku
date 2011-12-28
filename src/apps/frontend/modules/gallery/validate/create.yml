@@ -1,0 +1,7 @@
+fillin:
+  enabled: true
+
+fields:
+  title:
+    required:
+      msg: You must specify the name of the gallery

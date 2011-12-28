@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<rss version="2.0">
+		<channel>
+			<title>rayku.com</title>
+			<link>http://www.rayku.com/</link>
+			<description>Recent Activities</description>
+			<image>
+				<title>rayku.com</title>
+				<url>http://www.rayku.com/images/classroom_logo.jpg</url>
+				<link>http://www.rayku.com/</link>
+			</image>
+			
+		</channel>
+	</rss>

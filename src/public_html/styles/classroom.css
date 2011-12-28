@@ -1,0 +1,481 @@
+#top {
+	width:965px; height:91px;
+	margin:21px auto 0px auto;
+	}
+	#top #logo {
+		float:left;
+		width:237px; height:91px;
+		}
+	#top #classname {
+		float:left;
+		color:#fff;
+		font:35px "Arial";
+		font-weight:bold;
+		/*margin-top:24px;
+		margin-right:auto;
+		margin-bottom:auto;
+		margin-left:27px;*/
+		}
+
+#main {
+	width:950px;
+	background:#fff url(../images/main_bgbottom.gif) repeat-x bottom;
+	border-bottom:9px solid #282828;
+	padding:26px 0px 26px 15px;
+	margin:0px auto;
+	}
+	#main .title {
+		height:23px;
+		margin-bottom:16px;
+		margin-left:4px;
+		}
+		.title img { float:left; }
+		.title p {
+			float:left;
+			line-height:23px;
+			color:#1c517c;
+			font:16px "Arial";
+			font-weight:bold;
+			margin-left:15px;
+			}
+
+	#main #nav { float:left; _width:235px; }
+		#nav a {
+			display:block;
+			width:235px; height:32px;
+			color:#494949;
+			text-align:left;
+			text-decoration:none;
+			font:14px "Arial";
+			font-weight:bold;
+			background:url(../images/classroom_abg.gif) no-repeat;
+			padding:15px 0px 0px 49px;
+			margin-bottom:6px;
+			}
+
+		#nav a:hover { color:#347a11; background:url(../images/classroom_acbg.gif) no-repeat; }
+		#nav a.edit { background:url(../images/classroom_editbg.gif) no-repeat; }
+		#nav a:hover.edit, #nav a:hover.editnotif {
+	color:#009FAC;
+	background:url(../images/classroom_editnotifbg.gif) no-repeat;
+}
+		#nav a.editnotif { background:url(../images/classroom_editbg.gif) no-repeat; }
+
+		#nav .divider {
+			width:284px; height:1px;
+			border-bottom:1px dashed #9db9cf;
+			margin-top:11px;
+			margin-bottom:11px;
+			}
+
+	#main #nblog { float:left; _width:642px; margin-left:12px; }
+		#nblog .entry { margin-bottom:33px; }
+			.entry .top {
+				width:642px; height:24px;
+				background:url(../images/classroom_entrytop.gif) no-repeat;
+				}
+			.entry .content {
+				width:600px;
+				background:url(../images/classroom_entryconbg.gif) repeat-y center;
+				border:solid #9db9cf; border-width:0px 1px;
+				padding:0px 20px 0px 20px;
+				}
+				.content .titles { float:left; margin-bottom:21px; }
+					.titles .postdate {
+						display:block;
+						color:#2b5d85;
+						font:14px "Arial";
+						font-weight:bold;
+						margin-bottom:6px;
+						}
+					.titles .title02 {
+						float:left;
+						display:block;
+						color:#257000;
+						font:18px "Arial";
+						font-weight:bold;
+						text-decoration:none;
+						}
+				.content a.comments {
+					float:right;
+					height:15px;
+					color:#257000;
+					font:12px "Arial";
+					font-weight:bold;
+					text-decoration:none;
+					background:url(../images/classroom_commentbubble.gif) no-repeat left;
+					padding-top:2px;
+					padding-left:29px;
+					}
+				.content a:hover.comments { text-decoration:underline; }
+
+				.content img { margin:0px auto 11px auto; }
+
+				.content .paragraph { margin-top:9px;	}
+					.paragraph .head {
+						float:left;
+						color:#686d78;
+						font:15px "Arial";
+						font-weight:bold;
+						}
+					.paragraph .text {
+						display:block; clear:left;
+						text-align:left;
+						color:#686d78;
+						font:12px "Arial";
+						position:relative; top:16px;
+						line-height:24px;
+						border-bottom:1px solid #ececec;
+						padding-bottom:11px;
+						}
+					.paragraph .text2 {
+						display:block; clear:left;
+						text-align:left;
+						color:#686d78;
+						font:12px "Arial";
+						position:relative; top:16px;
+						line-height:24px;
+						border-bottom:1px solid #ececec;
+						padding-bottom:11px;
+						margin-bottom:20px;
+						}
+
+				.content .attachments {
+					clear:both; display:block;
+					border-bottom:1px solid #ececec;
+					padding-bottom:11px;
+					margin-top:40px;
+					}
+					.attachments .attachment {
+						height:19px;
+						display:block;
+						clear:both;
+						margin-left:35px;
+						_margin-bottom:13px; !margin-bottom:13px;
+						}
+						.attachment img { float:left; }
+						.attachment a {
+							float:left;
+							line-height:19px;
+							color:#257000;
+							font:14px "Arial";
+							font-weight:bold;
+							margin-left:11px;
+							text-decoration:none;
+							}
+						.attachment p { float:left; color:#686d78; font:12px "Arial"; margin-left:4px; }
+
+				.content .readmore { margin-top:26px; }
+					.readmore a {
+						float:left;
+						color:#257000;
+						text-decoration:none;
+						font:16px "Arial";
+						font-weight:bold;
+						}
+					.readmore a:hover { text-decoration:underline; }
+						.readmore a img { position:relative; top:9px; }
+
+					.readmore .dropin {
+						float:right; height:20px;
+						color:#1c517c;
+						font:14px "Arial";
+						font-weight:bold;
+						background:url(../images/icon_dropin.gif) no-repeat left;
+						padding-top:5px;
+						padding-left:36px;
+						}
+
+
+			.entry .bottom {
+				width:642px; height:27px;
+				background:url(../images/classroom_entrybottom.gif) no-repeat;
+				}
+
+	.format, .date-due { font-size: 12px; color: #2b5d85; }
+	.format strong, .date-due strong { color: #257000; font-size: 16px; }
+
+  div.assignment .date-due
+  {
+    display: inline;
+    padding-left: 15px;
+  }
+
+  div.assignment .format
+  {
+    display: inline;
+  }
+
+  div.assignment .paragraph a
+  {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: green;
+    float: left;
+  }
+
+	#bordersplitter {
+	height: 1px;
+	background: #fff;
+	border-bottom: 1px solid #d9e6ef;
+	padding: 14px 0 0 0;
+	}
+
+	.hand-in {
+	border: 1px solid #FFFFFF;
+	text-align: left;
+	}
+		.hand-in h3 {
+		font-size: 14px;
+		font-weight: bold;
+		color: #257000;
+		}
+
+	#uploadass {
+	float: left;
+	width: 471px;
+	height: 25px;
+	background: url(../images/upload.jpg) no-repeat;
+	border: 0;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding: 14px 14px 0 14px;
+	font-size: 12px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	}
+
+	#uploadasss {
+	float: left;
+	width: 471px;
+	height: 25px;
+	background: url(../images/upload.jpg) no-repeat;
+	border: 0;
+	margin-top: 10px;
+	padding: 14px 14px 0 14px;
+	font-size: 11px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	}
+	.blue {
+	float: right;
+	width: 90px;
+	height: 35px;
+	background: url(../images/bluebutton.jpg) no-repeat;
+	border: 0;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+	}
+
+  .left-btn_30
+  {
+    line-height: 30px;
+    float: left;
+  }
+
+
+
+	.comm {
+	width: 579px;
+	height: 81px;
+	background: url(../images/comments.jpg) no-repeat;
+	border: 0;
+	padding: 10px;
+	font-size: 12px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	margin: 10px 0;
+	}
+
+	.thecomments-left {
+	float: left;
+	width: 80px;
+	text-align: center;
+	font-size: 12px;
+	}
+	.thecomments-right {
+	float: right;
+	width: 496px;
+	font-size: 12px;
+	color: #8c8c8c;
+	line-height: 24px;
+	}	.postedby { font-weight: bold; margin-bottom: 10px; }
+
+	.by a { font-weight: bold; color: #1c77a2; text-decoration: none; } .by a:hover { text-decoration: underline; }
+
+	.by, .points, .awards { margin-bottom: 7px; }
+	.points { color: #257000; font-weight: bold; }
+	.awards { color: #8c8c8c; }
+
+	.infleft { float: left; width: 276px; }
+
+	.replyc {
+	width: 248px;
+	height: 25px;
+	background: url(../images/commentsreply.jpg) no-repeat;
+	border: 0;
+	margin-top: 4px;
+	padding: 14px 14px 0 14px;
+	font-size: 12px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	}
+
+	.notpg {
+	color: #257000;
+	text-decoration:none;
+	}
+
+	.dropdown {
+	width:195px; height:40px;
+	background:#fff url(../images/selectclassbg.gif) no-repeat;
+	margin-right:5px;
+	color:#3d3d3d;
+	font:14px "Arial";
+	border:0px;
+	padding:11px 10px 10px 12px;
+	}
+
+	.actionbuttons {
+	float:right;
+	width:360px;
+	padding-top:10px;
+	}
+
+	.vote {
+	float:left;
+	width:70px;
+	height:100px;
+	font:13px Arial;
+	font-weight:normal;
+	line-height:0px;
+	padding:0 20px 0 20px;
+  text-align: center;
+	}
+
+	.vote h1 {
+	font:28px Arial;
+	font-weight:bold;
+	}
+	.vote hr{
+	border:0;
+	border-bottom:1px solid #ececec;
+	}
+  .vote a.thumbs
+  {
+    border: none;
+  }
+  .vote a.thumbs:hover
+  {
+    border: none;
+  }
+  .vote a.thumbs img
+  {
+    margin: 0;
+  }
+
+	.hand-in label { color: #257000; font-size: 14px; font-weight: bold; }
+
+	.comment-message {
+	width: 571px;
+	height: 73px;
+	background: url(../images/leavecommentmessage.jpg) no-repeat;
+	padding: 14px;
+	font-size: 11px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	border: 0;
+	}
+
+
+	.subscribed, .notsub { width: 183px; float: left; font-size: 11px; font-weight: bold; margin-right: 7px; padding-left: 10px;  }
+	.subscribed { color: #257000; background: url(../images/yesub.jpg) no-repeat left; }
+	.notsub, .strong { background: #b61010; color: #FFFFFF; padding: 2px; }
+	.notsub { background: url(../images/notsub.jpg) no-repeat left; }
+
+	.email-st label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 6px; color: #056a9a; }
+	.subject {
+	width: 578px;
+	height: 26px;
+	background: url(../images/subject.jpg) no-repeat;
+	border: 0;
+	padding: 14px 14px 0 14px;
+	font-size: 11px;
+	color: #555555;
+	font: Arial, Helvetica, sans-serif;
+	}
+	#email-students, #postthis {
+	width: 264px;
+	height: 35px;
+	background: url(../images/email-students.jpg) no-repeat;
+	border: 0;
+	float: left;
+	margin-top: 10px;
+	}
+
+	#email-students { background: url(../images/email-students.jpg) no-repeat; }
+	#postthis { background: url(../images/postthisentry.jpg) no-repeat; }
+
+	#eyecatching {
+	float: left;
+	width: 264px;
+	height: 40px;
+	padding: 0 0 0 25px;
+	background: url(../images/eyecatchin.jpg) no-repeat;
+	margin: 16px 0 0 0;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	line-height: 40px;
+	}
+
+	.all {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #b4b4b4;
+	}
+
+	.pmteacher, .temail, .livehelpon, .livehelpoff {
+	font-size: 12px;
+	text-align: center;
+	line-height: 29px;
+	font-weight: bold;
+	}
+
+	.pmteacher {
+	width: 230px;
+	height: 29px;
+	background: url(../images/pmteacher.jpg) no-repeat;
+	color: #FFFFFF;
+	}
+
+	.pmteacher a { color: #FFFFFF; text-decoration: none; } .pmteacher a:hover { text-decoration: underline; }
+
+	.temail {
+	width: auto;
+	text-align:left;
+	font-weight: normal;
+	color: #494949;
+	}
+	.livehelpon {
+	width: 165px;
+	height: 29px;
+	margin-top:10px;
+	float:left;
+	background: url(../images/request.jpg) no-repeat top;
+	color: #FFFFFF;
+	}	.livehelpon a { color: #FFFFFF; text-decoration: none; } .livehelpon a:hover { text-decoration: underline; }
+
+	.livehelpoff {
+	width: 165px;
+	height: 29px;
+	margin-top:10px;
+	float:left;
+	background: url(../images/request.jpg) no-repeat bottom;
+	color: #FFFFFF;
+	}	.livehelpoff a { color: #FFFFFF; text-decoration: none; } .livehelpoff a:hover { text-decoration: underline; }
+
+	#orbon { width: 23px; height: 23px; background: url(../images/orb.jpg) no-repeat top; float: left; display: inline; margin: 13px 20px 0 9px; text-indent: -9999px; }
+	#orboff { width: 23px; height: 23px; background: url(../images/orb.jpg) no-repeat bottom; float: left; display: inline; margin: 13px 20px 0 9px; text-indent: -9999px; }

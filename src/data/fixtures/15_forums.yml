@@ -1,0 +1,63 @@
+Forum:
+  forum_1:
+    id: 1
+    name: test test
+    type: 2
+    entity_id: 1
+  forum_13:
+    id: 13
+    name: test group part a
+    type: 3
+    entity_id: 1
+
+Thread:
+# create some threads for group 1
+  thread_1_group_1:
+    title: Announcement
+    poster_id: user_test
+    forum_id: forum_13
+    
+  thread_2_group_1:
+    title: For Sale
+    poster_id: user_test
+    forum_id: forum_13
+
+# create some threads for user "test test"
+  thread_1_user_1:
+    title: What's up?
+    poster_id: user_friend
+    forum_id: forum_1
+    
+Post:
+  thread_1_post_1:
+    poster_id: user_test
+    thread_id: thread_1_group_1
+    content: |
+      Attention members, this group has a special announcement.
+      
+      So, pay attention!
+      
+      Thanks,
+      Group member #1
+      
+  thread_1_post_2:
+    poster_id: user_test
+    thread_id: thread_1_group_1
+    content: |
+      Oh, and always remember: announcements are good
+    
+  thread_2_post_1:
+    poster_id: user_test
+    thread_id: thread_2_group_1
+    content: |
+      1 slightly used group
+      
+      Low maintenence
+      
+      Message me for details
+      
+  thread_3_post_1:
+    poster_id: user_friend
+    thread_id: thread_1_user_1
+    content: |
+      Hey, long time no see. I've been busy travelling the world. I'll upload my pictures later to my gallery!

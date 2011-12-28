@@ -1,0 +1,18 @@
+﻿@charset "utf-8";
+
+
+
+* {font-size:100.01%;}
+html {font:normal 62.5%/1 Arial, Geneva, Verdana, Tahoma, sans-serif}
+body {font-size:1em;}
+strong {font-weight:bold;}
+em {font-style:italic;}
+
+
+.float-left {float:left}
+.float-right {float:right}
+.clear-both {clear:both;}
+.position-relative {position:relative}
+.position-absolute {position:absolute}
+
+

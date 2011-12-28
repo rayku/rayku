@@ -1,0 +1,2 @@
+default:
+  stylesheets: [/styles/top-tabs.css]

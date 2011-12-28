@@ -1,0 +1,50 @@
+body {
+  background: #EEEEEE;
+  font-family:Arial;
+  font-size: 12px;
+}
+
+#wrapper a {
+  text-decoration: none;
+}
+
+div#sidebar #menu_first {
+  float: left;
+}
+
+div#sidebar #menu_second {
+  float: left;
+}
+
+div#sidebar ul {
+  list-style: none;
+  font-size: 11px;
+  padding: 0;
+  margin: 2px 0;
+  border: 1px solid black;
+}
+
+div#sidebar ul li {
+  float: left;
+}
+
+div#sidebar ul li a {
+  display: block;
+  background: #DDDDDD;
+  color:#4E4E4E;
+  margin:0;
+  padding: 4px 8px;
+  border-right: 1px solid black;
+}
+
+div#sidebar ul li a.last {
+  border-right: 0;
+}
+
+div#sidebar ul li a:hover {
+  background: #EEEEEE;
+}
+
+#sf_admin_container h1 {
+font-size:15px !important;
+}

@@ -1,0 +1,21 @@
+div.pager-pages {
+		float:right;
+		}
+  div.pager-pages p {
+    float:left;
+    color:#1c517c;
+    border:1px solid #d2dce5;
+    padding:3px;
+    margin-right:2px;
+    }
+  div.pager-pages a {
+    display:inline-block;
+    color:#7f8189;
+    background:#dde5eb;
+    padding:4px 6px;
+    margin-left:3px;
+    }
+  div.pager-pages a.active {
+    color:#fff;
+    background:#1c517c;
+    }

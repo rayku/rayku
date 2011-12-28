@@ -1,0 +1,47 @@
+@charset "utf-8";
+/*-------------------------------------------
+
+           Name: Table - print
+           Author: Pawel Wisniowski
+		   eMail: pawel.wisniowskii@gmail.com
+		   		   
+/*! General
+---------------------------------------------*/
+* { margin: 0; padding: 0 }
+
+html { font-size: 100.01% }
+body { background: #fff }
+
+body, textarea, input, select, option, button { color: #555; font-family: Calibri,Lucida Grande,Helvetica Neue,Helvetica,Arial,sans-serif; line-height: 1.5 }
+li, dt, dd, p, th, td, caption, pre { font-size: 1.5em } /*---*/ li *, li p, li li, dt *, dd *, p *, th *, td * { font-size: 1em }
+ul, ol, dl, p, table, pre, h1, h2, h3, h4, h5, h6 { margin-bottom: 15px }
+button { overflow: visible; padding: 0 10px }
+table th, table td { padding: 5px 10px; border: 1px solid #ccc }
+ul, ol, dd, blockquote { padding-left: 30px }
+	ul ul, ol ol, ul ol, ol ul { margin-bottom: 0 }
+img { border-width: 0; image-rendering: optimizeQuality; -ms-interpolation-mode: bicubic }
+pre { font-family: Consolas,Monaco,Courier New,monospace; white-space: pre-wrap }
+
+/*! Content
+---------------------------------------------*/
+#top { margin: 0 0 15px; padding: 0 0 1px; border-bottom: 1px solid #ccc }
+	#top h1 a { color: #000; text-decoration: none }
+#content { }
+#content a:after { content: " (" attr(href) ") "; color: #555; font-size: 0.8em; font-style: italic }
+#footer { margin: 15px 0 0; padding: 15px 0 0; border-top: 1px solid #ccc }
+   
+/*! Headers
+---------------------------------------------*/
+h1, h2, h3, h4, h5, h6 { margin: 20px 0 5px; color: #000; font-family: Cambria,Georgia,serif }
+	h1 { margin-top: 0; font-size: 2.4em }
+	h2 { font-size: 2.0em }
+	h3 { font-size: 1.8em }
+	h4 { font-size: 1.6em }
+	h5 { font-size: 1.5em; text-transform: uppercase }
+	h6 { font-size: 1.4em; text-transform: uppercase }
+
+/*! Remove
+---------------------------------------------*/
+a { color: #09f; text-decoration: underline }
+#skip, #nav { display: none }
+div.window-wrapper { display: none }

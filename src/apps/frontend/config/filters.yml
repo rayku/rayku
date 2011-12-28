@@ -1,0 +1,12 @@
+rendering: ~
+security:  ~
+
+rememberMeFilter:
+  class: RememberMeFilter
+
+userActifity: 
+  class: UserActivityFilter
+
+cache:     ~
+common:    ~
+execution: ~

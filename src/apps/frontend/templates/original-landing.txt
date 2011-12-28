@@ -1,0 +1,79 @@
+<!DOCTYPE html  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Rayku.com - On-Demand College Education Help</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/landing.css"/>
+<link rel="stylesheet" type="text/css" href="/styles/style.css" media="screen" />
+<script type="text/javascript">document.documentElement.className += " js";</script>
+<script type="text/javascript" src="/js/lightbox.js"></script>
+<script type="text/javascript" src="/video/flowplayer-3.2.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+</head>
+<body>
+
+<?php if ($sf_user->isAuthenticated()): ?>
+<?php header ("Location: http://www.rayku.com/dashboard"); ?>
+<?php endif ; ?>
+<div id="wrapper">
+  <div id="top"> <a href="http://www.rayku.com" title="home"><img src="/images/rayku_logo.png" alt="Rayku.com" /></a>
+    <ul>
+      <li><a href="http://www.rayku.com/images/oops.jpg" rel="lightbox">Members Sign In</a></li>
+    </ul>
+  </div>
+   
+  <!--End top-->
+  
+  <div id="featured">
+    <p class="info" style="font-size:16px;margin-top:30px"><br />
+      Rayku.com is a peer-to-peer online tutoring website for instant, on-demand academic help.<br />
+      <br />
+    We are currently in <strong>closed private beta</strong>. We will be opening up soon.</p>
+    <div id="video" align="center"> <a href="http://www.rayku.com/video/raykuvid.flv" id="player" style="display:block;width:430px;height:242px;color:#FFF"> <img src="/images/prescreen2.jpg" alt="Rayku Introduction Video" /> </a> 
+      <script language="JavaScript">
+	  flowplayer("player", "http://www.rayku.com/video/flowplayer-3.2.2.swf", {
+		  clip : {
+			 autoBuffering: true,
+			 },
+			 onLoad: function() {	// called when player has finished loading
+			 this.setVolume(100);	// set volume property
+			 }
+	  });
+      </script> 
+    </div>
+    <form action="#" method="get">
+      <p><?php echo link_to('<img src="/images/tourbutton.png"/>', 'tourpage/index'); ?></p>
+    </form>
+    <div style="clear: both;"></div>
+  </div>
+  <!-- End Featured-->
+  
+    <div id="quotebox">
+    <p>"My college recommends that I spend 3 hours of study for each class I attend. With Rayku, 2's enough." -<span>Theo Swami</span></p>
+  </div><!--End Quote Box-->
+
+
+  <!--<div id="content">
+    <div id="registrationarea">
+      <div id="roundtop"></div>
+      <a href="http://www.rayku.com/register"><img src="http://www.rayku.com/images/registernow.png" border="0"/></a>
+      <h2 style="font-size:16px;color:#333">Use coupon code <strong>'launch11'</strong> for a $10 tutoring credit (first 500)</h2>
+    </div>
+  </div>
+
+      <div id="roundbottom"></div>
+</div>-->
+
+    <!--End Registration Area-->
+  <!--End content-->
+  
+  <div id="footer" style="margin-top:0">
+    <div style="font-size:12px;color:#333;font-family:Tahoma, Geneva, sans-serif;margin:8px 0 20px 0;line-height:18px" align="center">Copyright 2011 Rayku, Inc.  All rights reserved. | <a href="http://www.rayku.com/certification">Paid Tutor Certification</a> | <a href="mailto:admin@rayku.com">Email Us</a><br />
+</div></div>
+  <!--End Footer--> 
+</div>
+<!--End Wrapper-->
+
+</body>
+</html>

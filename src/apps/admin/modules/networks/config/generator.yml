@@ -1,0 +1,15 @@
+generator:
+  class:              sfPropelAdminGenerator
+  param:
+    model_class:      Network
+    theme:            default
+    
+    list:
+      max_per_page: 50
+      display: [=name, member_count]
+      
+    edit:
+      display: [name, description, _type]
+      
+      fields:
+        status: { name: Type }

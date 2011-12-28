@@ -1,0 +1,17 @@
+﻿@charset "utf-8";
+@import "reset.css";
+@import "predefined.css";
+
+body {
+	background:#353535 url(../images/bg-body.png) repeat-x 0 0;
+}
+
+
+#body .body-main {
+	width:640px;
+}
+
+
+#body .body-side {
+	padding-right: 10px;
+}

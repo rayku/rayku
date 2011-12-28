@@ -1,0 +1,9 @@
+all:
+  gifts:
+    thumb_size: 150 # Maximum height or width of a gift thumbnail
+  items:
+    upload_folder: item
+    image_large_width:  229
+    image_large_height: 202
+    image_thumb_width:  91
+    image_thumb_height: 91

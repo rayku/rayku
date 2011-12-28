@@ -1,0 +1,186 @@
+/*
+ * Student voices
+ */
+
+.top-tabs {
+	list-style: none;
+	padding-bottom: 15px;
+}
+
+.top-tabs li {
+	float: left;
+}
+
+.top-tabs li.active {
+	float: left;
+	padding: 16px;
+	background: #1C517C;
+	position: relative;
+}
+
+.top-tabs li.active .tab-left {
+	width: 6px;
+	height: 6px;
+	background-image: url(../images/tab-active-left.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.top-tabs li.active .tab-right {
+	width: 6px;
+	height: 6px;
+	background-image: url(../images/tab-active-right.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.top-tabs li.active a {
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.top-tabs li.popular {
+	float: left;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+	width: 81px;
+	background: url(../images/tab-popular.png);
+	width: 81px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-tabs li.topideas {
+	float: left;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+	width: 81px;
+	background: url(../images/tab-topideas.png);
+	width: 94px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-tabs li.accepted {
+	float: left;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+	width: 81px;
+	background: url(../images/tab-accepted.png);
+	width: 95px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-tabs li.completed {
+	float: left;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+	width: 81px;
+	background: url(../images/tab-completed.png);
+	width: 95px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-tabs li.thelatest {
+	float: left;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+	width: 81px;
+	background: url(../images/tab-thelatest.png);
+	width: 95px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.top-tabs li.completed a, .top-tabs li.accepted a, .top-tabs li.topideas a, .top-tabs li.popular a, .top-tabs li.thelatest a {
+	color: #1C517C;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.top-tabs li.completed a:hover, .top-tabs li.accepted a:hover, .top-tabs li.topideas a:hover, .top-tabs li.popular a:hover, .top-tabs li.thelatest a:hover {
+	text-decoration: underline;
+}
+
+.tabs-box strong {
+	color: #257000;
+}
+
+.tabs-box a {
+	color: #14649E;
+	border-bottom: 1px dotted #14649E;
+	text-decoration: none;
+}
+
+.tabs-box a:hover {
+	border-bottom: 1px solid #14649E;
+}
+
+.tabs-box p {
+	font-size: 13px;
+	color: #555555;
+	line-height: 21px;
+}
+
+.tabs-box .item-divider {
+	padding-top: 10px;
+	height: 1px;
+	clear: both;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #D9E6EF;
+}
+
+.tabs-box h3 {
+	float: left;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #257000;
+	font-size: 16px;
+	width: 368px;
+	margin-top: 7px;
+}
+
+.tabs-box .author {
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #2B5D85;
+	width: 150px;
+	margin-top: 7px;
+}
+
+.tabs-box .votes {
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #2B5D85;
+	width: 70px;
+	margin-top: 7px;
+}
+
+.tabs-box .author span, .tabs-box .votes span {
+	color: #257000;
+	font-size: 16px;
+}
+
+.tabs-box .block-divider {
+	height: 45px;
+	background-image: url(../images/student-voices-divider.png);
+	background-repeat: no-repeat;
+	background-position: top center;
+	clear: both;
+}

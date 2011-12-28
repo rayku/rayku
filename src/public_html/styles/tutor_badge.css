@@ -1,0 +1,90 @@
+
+
+
+				.imp {
+
+					border-bottom:1px dotted #e3e3e3;
+
+					padding:5px 0;
+
+					float:left;
+
+						}
+
+					.imp .badge {
+
+							float:left;
+
+							height:34px;
+
+							width:33px;
+
+							background:url(../images/badge.png) center no-repeat;
+
+							font-size:11px;
+
+							font-weight:bold;
+
+							font-style:italic;
+
+							color:#848484;
+
+							border-right:1px solid #e3e3e3;
+
+							text-align:center;
+
+							padding:6px 5px 0 3px;
+
+								}
+
+				 .uni {
+
+					
+					float:left;
+
+						}
+
+						.uni .level {
+
+							float:left;
+
+							height:27px;
+
+							width:28px;
+
+							background:url(../images/level.png) center no-repeat;
+
+							font-size:11px;
+
+							font-weight:bold;
+
+							font-style:italic;
+
+							color:#fff;
+
+							border-right:1px solid #e3e3e3;
+
+							text-align:center;
+
+							padding:13px 7px 0 7px;
+
+								}
+
+						.lvl {
+
+							float:left;
+
+							padding:0 0 5px 5px;
+
+							color:#848484;
+
+							font-size:12px;
+
+							width:200px;
+
+							line-height:18px;
+
+								}
+
+
+

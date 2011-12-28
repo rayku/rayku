@@ -1,0 +1,2 @@
+all:
+  stylesheets: [/css/46.css, /styles/ex_donny.css, /styles/ex_tabcontent.css, /styles/ex_global.css]

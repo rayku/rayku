@@ -1,0 +1,111 @@
+# -----------
+# Rayku Main Configuration File
+# -----------
+# 
+# Use this file to modify any configuration items. Note that Lifies works on a
+# cache system which caches all configuration files (among other things) to 
+# save processing time. Once you modify this file, you need to regenerate the
+# cache. This can be done in your AdminCP by selecting the "Regenerate Cache"
+# option from the menu. Note that only admins have access to this feature and
+# not moderators.
+#
+
+all:
+  general:
+    admin_email: administration@rayku.com # Admin's e-mail address
+    allowed_html_tags: <b><a><u><i> # List of allowed HTML tags
+    date_format: M j, Y # Date format to be used across the site see 
+                        # http://php.net/date for formatting details
+    referral_points: 5 # Number of points to grant someone for referring another
+                       # member
+    # for most use cases
+    avatar_max_width: 100
+    avatar_max_height: 100
+    # for use in site header when user is logged in
+    avatar_max_width2: 54
+    avatar_max_height2: 54
+    # for use in comments list on profile page
+    avatar_max_width3: 69
+    avatar_max_height3: 54
+    # for use in profile page in bulletin board box
+    avatar_max_width4: 188
+    avatar_max_height4: 155
+
+    avatar_folder: avatar
+    avatar_default_image: anon
+    avatar_default_image_type: jpg
+  login:
+    facebook_notification:    You were invited to join <a href=”http://www.rayku.com”>Rayku</a>! http://www.rayku.com
+  homepage:
+    count_newest_users: 4 # number of "newest users" to appear on homepage
+  
+  forum:
+    threads_per_page: 25 # Maximum number of threads for one page (on the global
+                         # forum only)
+    posts_per_page: 25   # Maximum number of posts for one page (global forum)
+    
+                         
+  group:
+    threads_per_page: 5 # Maximum number of threads for one page (on the group
+                        # page only)
+    posts_per_page: 25   # Maximum number of posts for one page (group page)
+    request_exipry_time: 30 # Number of days until a group request expires
+    monthly_point_tax: 10 # Number of points to deduct each month from each
+                          # group.
+    bankrupt_expiry_time: 60 # Number of days which a group is allowed to stay
+                             # bankrupt before dissolution
+    members_per_page: 30 # Number of users to show on each page of the list of
+                         # members
+    
+                        
+  profile:
+    threads_per_page: 5 # Maximum number of threads for one page (in the profile
+                        # page only)
+    posts_per_page: 25   # Maximum number of posts for one page (profile page)
+    friends_per_page: 8 # Maximum number of friends displayed on profile pages
+    online_activity_timeout: 60 # Number in seconds of how long someone is "online" after their last page hit
+    
+    
+  friends:
+    friends_per_page: 25 # Maximum number of friends to display on one page
+    autocomplete_limit: 10 # The maximum number of friend usernames to display
+                           # on the autocomplete list at one time
+    max_mutual_friends: 5 # Maximum number of mutual friends to show in a "Get
+                          # More Info" request
+    request_exipry_time: 30 # Number of days until a group request expires
+  
+  
+  messages:
+    messages_per_page: 25 # Maximum number of PMs to display on any one page
+    
+  
+  bulletin:
+    expiry_time: 30 # Number of days before a bulletin expires
+    
+  gallery:
+    upload_folder: gallery
+    valid_mime_types:
+      image:
+        - image/jpeg
+        - image/pjpeg
+        - image/gif
+        - image/png
+      video:
+        - video/mp4
+        - video/mpeg
+        - video/quicktime
+        - video/x-ms-wmv
+    image_max_width: 600
+    image_max_height: 600
+    thumbnail_max_width: 40
+    thumbnail_max_height: 40
+    thumbnail2_max_width: 120
+    thumbnail2_max_height: 120
+  items:
+    upload_folder: item
+    image_large_width:  229
+    image_large_height: 202
+    image_thumb_width:  91
+    image_thumb_height: 91
+    award_price : 2
+    award_limit: 0

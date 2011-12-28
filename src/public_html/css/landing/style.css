@@ -1,0 +1,580 @@
+@import url('fonts/stylesheet.css');
+/*
+---------------------------------------------
+General Styling
+--------------------------------------------- */
+* {
+	margin:0;
+	border:0;
+	outline:0;
+	padding:0;
+	text-decoration:none;
+}
+body {
+	min-width:1000px;
+	font-family: 'HelveticaLight';
+}
+a {
+	color:#fff;
+}
+.clear {
+	clear:both;
+}
+.container {
+	width:975px;
+	margin:0 auto;
+	position:relative;
+}
+input[type=submit] {
+	cursor:pointer;
+}
+.play {
+	margin-left:32px;
+}
+.play a {
+	background:url(http://rayku.com/images/landing/play.png) no-repeat;
+	width:237px;
+	height:43px;
+	text-indent:-9999px;
+	text-transform:uppercase;
+	display:block;
+}
+.play a:hover {
+	background:url(http://rayku.com/images/landing/play.png) 0 -68px no-repeat;
+}
+/*
+---------------------------------------------
+Navigation Section Styling
+--------------------------------------------- */
+/* Misc classes */
+div.clear {
+	clear: both;
+}
+/* Top Nav */
+div#top-nav {
+	width :100%;
+	padding: 0 0 2px;
+	margin: 0 0 15px;
+	background: url('http://rayku.com/images/landing/topnav/background.jpg') left top repeat-x;
+	height:51px;
+	position:fixed;
+	z-index:1001;
+}
+div#top-nav div#top-nav-center {
+	width: 965px;
+	margin: 0 auto;
+}
+div#top-nav div#top-nav-center ul.top-menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+div#top-nav div#top-nav-center ul.top-menu li {
+	display: inline-block;
+	float: left;
+}
+div#top-nav div#top-nav-center ul.top-menu li a[title="Rayku"] {
+	background: url('http://rayku.com/images/landing/topnav/rayku.jpg') top left no-repeat;
+	width: 111px;
+	height: 51px;
+	text-indent: -5000px;
+	display: block;
+}
+div#top-nav div#top-nav-center div#user-box a.tt-whiteboard {
+	background: url('http://rayku.com/images/landing/topnav/whiteboard.jpg') top left no-repeat;
+	width: 47px;
+	height: 51px;
+	display: block;
+	text-indent: -5000px;
+	float: right;
+}
+div#top-nav div#top-nav-center div#user-box a.tt-whiteboard:hover {
+	background: url('http://rayku.com/images/landing/topnav/whiteboard.jpg') bottom left no-repeat;
+}
+.tooltip {
+	background: url('http://rayku.com/images/landing/tooltip.png') center top no-repeat;
+	font-size:12px;
+	padding: 15px 10px 10px;
+	position: absolute;
+	z-index: 50;
+	color: white;
+	display: none;
+	margin: 0;
+}
+/*
+---------------------------------------------
+Register Section Styling
+--------------------------------------------- */
+#register {
+	padding:100px 0 0 0;
+	background:#252324 url(http://rayku.com/images/landing/background.jpg) 0 0 repeat-x;
+}
+#registration-options {
+	position:absolute;
+	left:576px;
+	top:20px;
+	width:500px;
+	z-index:1000;
+}
+#registration-form {
+	background:url(http://rayku.com/images/landing/pencil.png) right 15px no-repeat;
+	height:155px;
+	position:absolute;
+	width:375px;
+	left:580px;
+	padding-top:65px;
+	top:50px;
+}
+#login-form {
+	background:url(http://rayku.com/images/landing/pencil.png) right 15px no-repeat;
+	height:155px;
+	position:absolute;
+	width:375px;
+	left:580px;
+	padding-top:65px;
+	top:50px;
+}
+#registration-form label, #login-form label {
+	display:inline-block;
+    *display:inline;
+	zoom:1;
+	font-weight:bold;
+	color:#666;
+	font-size:16px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-radius: 5px 0px 0px 5px;
+	border-radius: 5px 0px 0px 5px;
+}
+#registration-form p, #login-form p {
+	height:34px;
+	margin-bottom:10px;
+}
+#registration-form label, #registration-form input, #login-form label, #login-form input {
+	height:34px;
+	line-height:34px;
+	padding-left:12px;
+	background:#fff;
+	display:inline-block;
+ *display:inline;
+	zoom:1;
+	vertical-align:middle;
+}
+#registration-form input, #login-form input {
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-radius: 0px 5px 5px 0px;
+	border-radius: 0px 5px 5px 0px;
+	color:#676767;
+	font-size:16px;
+	position:relative;
+}
+.name {
+	width:200px;
+}
+.email {
+	width:234px;
+}
+.password {
+	width:203px;
+}
+#connect-to-tabs {
+	background:url(http://rayku.com/images/landing/tabs-bg.png) repeat-x;
+	font-size:14px;
+	font-weight:bold;
+	color:#fff;
+	line-height:16px;
+	padding-top:10px;
+	padding-left:10px;
+	text-shadow:1px 1px 0 rgba(0,0,0,0.8);
+	z-index:1000;
+	position:relative;
+	width: 300px;
+	height:30px;
+}
+#connect-to-tabs li {
+	display:inline-block;
+ *display:inline;
+	zoom:1;
+	height:29px;
+	position:absolute;
+	height:38px;
+	line-height:38px;
+}
+#connect-to-tabs li a {
+	color:#a1a1a1;
+	text-shadow:1px 1px 0 rgba(0,0,0,0.8);
+}
+#registration-tab {
+	width:155px;
+	left:0;
+	top:0;
+	padding:0 0 0 10px;
+}
+#registration-tab.active {
+	background:url(http://rayku.com/images/landing/tabs.png) 0 -112px no-repeat;
+}
+#login-tab.active {
+	background:url(http://rayku.com/images/landing/tabs.png) right -51px no-repeat;
+}
+#login-tab {
+	top:0;
+	right:0;
+	padding-left: 18px;
+	width: 130px;
+}
+#connect-to-tabs li.active a {
+	color:#fff;
+	text-shadow:0 0 0 #000;
+}
+#registration-form input[type=submit], #login-form input[type=submit] {
+	background:url(http://rayku.com/images/landing/submitr-button.png) no-repeat;
+	width:122px;
+	height:44px;
+	text-indent:-9999px;
+	text-transform:uppercase;
+	display:block;
+}
+#registration-form input[type="submit"]:active, #login-form input[type="submit"]:active {
+	background:url(http://rayku.com/images/landing/submitr-button.png) 0 -54px no-repeat;
+}
+#login-form input[type=submit] {
+	background:url(http://rayku.com/images/landing/submitl-button.png) no-repeat;
+	width:101px;
+	height:44px;
+	text-indent:-9999px;
+	text-transform:uppercase;
+	display:block;
+}
+#login-form input[type="submit"]:active {
+	background:url(http://rayku.com/images/landing/submitl-button.png) 0 -54px no-repeat;
+}
+#scroll-for-more {
+	text-align:center;
+	width:153px;
+	margin:80px 0 0 160px;
+	position:absolute;
+}
+#scroll-for-more p {
+	margin-bottom:120px;
+}
+.hide {
+	display:none;
+}
+/*
+---------------------------------------------
+Questions Section Styling
+--------------------------------------------- */
+#questions {
+	background:url(http://rayku.com/images/landing/background2.jpg) #fff repeat-x;
+	background-position:center top;
+	height: 1200px;
+	padding: 500px 0 0;
+}
+.q-1, .q-2, .q-3, .q-4, .q-5, .q-6, .q-7, .q-8 {
+	position:fixed;
+	color:#8e8e8e;
+}
+.q-1 {
+	background:url(http://rayku.com/images/landing/qmark-1.png) no-repeat;
+	width:255px;
+	min-height:91px;
+	top:640px;
+	left:10%;
+	z-index:3;
+}
+.q-1 h3, .q-1 p {
+	width:170px;
+	margin-left:80px;
+}
+.q-1 h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:28px;
+	font-weight:bold;
+	color:#000;
+}
+.q-1 p {
+	font-size:15px;
+}
+.q-2 {
+	background:url(http://rayku.com/images/landing/qmark-2.png) no-repeat;
+	width:313px;
+	min-height:180px;
+	top:700px;
+	left:36%;
+	z-index:8;
+}
+.q-2 h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:42px;
+	font-weight:bold;
+	color:#000;
+	margin-top:30px;
+}
+.q-2 h3, .q-2 p {
+	width:216px;
+	margin-left:145px;
+}
+.q-2 p{
+	font-size:20px;
+}
+.q-3 {
+	background:url(http://rayku.com/images/landing/qmark-3.png) no-repeat;
+	width:247px;
+	height:262px;
+	top:620px;
+	right:10%;
+	z-index:10;
+}
+.q-4 {
+	background:url(http://rayku.com/images/landing/qmark-4.png) no-repeat;
+	width:412px;
+	height:262px;
+	top:830px;
+	left:5%;
+	z-index:9;
+}
+
+.q-4 p {
+	width:216px;
+	margin-left:188px;
+	margin-top:55px;
+	font-size:26px;
+}
+.q-5 {
+	background:url(http://rayku.com/images/landing/qmark-5.png) no-repeat;
+	width:209px;
+	top:960px;
+	right:15%;
+	z-index:4;
+}
+.q-5 p {
+	width:195px;
+	margin-left:90px;
+	font-size:18px;
+	margin-top:15px;
+}
+.q-6 {
+	top:1150px;
+	left:33%;
+	z-index:5;
+}
+.q-7 {
+	left: 15%;
+	top: 1360px;
+	z-index:6;
+}
+.q-8 {
+	top:1250px;
+	right:25%;
+	z-index:7;
+}
+/*
+---------------------------------------------
+Whiteboard Section Styling
+--------------------------------------------- */
+#whiteboard {
+	background:url(http://rayku.com/images/landing/background.jpg) 0 -1070px repeat-x;
+	padding-top: 50px;
+	z-index:1000;
+	position:relative;
+}
+#whiteboard .container {
+	padding:100px 0 80px 0;
+	width: 900px;
+}
+#whiteboard .plus {
+	display:block;
+	width:36px;
+	height:36px;
+	position:absolute;
+	font-size:32px;
+	font-family:"Arial Black", Helvetica, sans-serif;
+	font-weight:bolder;
+	color:#fff;
+	text-align:center;
+	line-height:36px;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.41);
+	filter: dropshadow(color=#000, offx=1, offy=1);
+}
+#whiteboard .plus-green {
+	background:#89a500;
+	left:87px;
+	top:236px;
+	-webkit-box-shadow: 0px 1px 0px 0px #000000;
+	-moz-box-shadow: 0px 1px 0px 0px #000000;
+	box-shadow: 0px 1px 0px 0px #000000;
+}
+#whiteboard .plus-grey {
+	background:#9f9f9f;
+	right: 24px;
+	top:166px;
+	-webkit-box-shadow: 0px 1px 0px 0px #000000;
+	-moz-box-shadow: 0px 1px 0px 0px #000000;
+	box-shadow: 0px 1px 0px 0px #000000;
+}
+#whiteboard .plus-blue {
+	background:#17689f;
+	left:750px;
+	top:336px;
+}
+#whiteboard .plus-orange {
+	background:#ffb422;
+	left:205px;
+	top:442px;
+}
+#plus-green, #plus-grey, #plus-blue, #plus-orange {
+	position:absolute;
+	background:url(http://rayku.com/images/landing/trans-whiteboard-tooltip.png) repeat;
+	padding:28px 22px 23px 17px;
+	width:150px;
+	color:white;
+	font-size:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	height: 149px;
+}
+#plus-green h3, #plus-grey h3, #plus-blue h3, #plus-orange h3 {
+	font-size:34px;
+	line-height:34px;
+	font-style:normal;
+	margin-bottom:10px;
+}
+#plus-green p, #plus-grey p, #plus-blue p, #plus-orange p {
+	font-family: 'HelveticaLightOblique'
+}
+#plus-green {
+	left: -102px;
+	top: 36px;
+}
+#plus-green h3 {
+	color:#a4c500;
+}
+#plus-grey {
+	right: -165px;
+	top: -34px;
+}
+#plus-grey h3 {
+	color:#d6d6d6;
+}
+#plus-blue {
+	right: -75px;
+	top: 372px;
+	height:110px;
+}
+#plus-blue h3 {
+	color:#1e7fc1;
+}
+#plus-orange {
+	top:478px;
+	left:16px;
+	z-index: 2;
+}
+#plus-orange h3 {
+	color:#ffa800;
+}
+.clip {
+	background:url(http://rayku.com/images/landing/clip.png) no-repeat;
+	width:66px;
+	height:92px;
+	position:absolute;
+	bottom:0;
+	z-index:1;
+}
+.clip-left {
+	left:80px;
+}
+.clip-right {
+	right:-20px;
+}
+/*
+---------------------------------------------
+Newsletter Section Styling
+--------------------------------------------- */
+#newsletter {
+	background:url(http://rayku.com/images/landing/newsletter-bg.png) repeat;
+}
+#newsletter .container {
+	background:url(http://rayku.com/images/landing/newsletter.png) repeat-y;
+	height:500px;
+	padding-bottom:50px;
+}
+#newsletter #newsletter-content {
+	background:url(http://rayku.com/images/landing/newsletter-2.png) 0 36px no-repeat;
+	height:500px;
+	margin-left:-15px;
+}
+#newsletter #newsletter-content .video {
+	position:absolute;
+	left:38px;
+	top:90px;
+}
+form#newsletter-form {
+	position:absolute;
+	left:505px;
+	top:55px;
+	width:405px;
+}
+form#newsletter-form p {
+	color:#000000;
+	font-size:20px;
+	margin-bottom:8px;
+}
+form#newsletter-form p:first-child {
+	font-size: 18px;
+	margin-bottom: 30px;
+	margin-left: 172px;
+	-moz-opacity: 0.58;
+	opacity: 0.58;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=58)";
+	filter:alpha(opacity=58);
+}
+form#newsletter-form input[type=text] {
+	background:url(http://rayku.com/images/landing/input-button.png) no-repeat;
+	width:365px;
+	height:62px;
+	color:#575757;
+	font-size:22px;
+	line-height:62px;
+	padding:0 20px;
+}
+form#newsletter-form a {
+	background:url(http://rayku.com/images/landing/register-button.png) no-repeat;
+	width:350px;
+	height:65px;
+	margin-left:2px;
+	text-indent:-9999px;
+	text-transform:uppercase;
+	display:block;
+}
+form#newsletter-form a:hover {
+	background:url(http://rayku.com/images/landing/register-button.png) 0 -80px no-repeat;
+}
+/*
+---------------------------------------------
+Footer Section Styling
+--------------------------------------------- */
+.footer {
+  width:100%;
+  margin:0;
+  background:#ECF4F9;
+  border-top:2px solid #0078B3;
+}
+.footer .container {
+  width:900px;
+  padding:26px 16px 50px 16px;
+  margin-right:auto;
+  margin-left:auto;
+  font-size:13px;
+  color:#333;
+}
+.footer .container a{
+  color:#006699;
+}
+.footer .container a:hover{
+  text-decoration:underline;
+}
+/* edited 13/12/2011 */.input-fader {	display:block!important;	height:34px;	line-height:34px;	width:290px;	padding:0 0 0 15px;	background:#fff!important;	zoom:1;	vertical-align:middle;		-moz-border-radius-topleft: 5px!important;	-webkit-border-radius: 5px!important;	border-radius: 5px!important;	margin: 0 0 10px;}.input-fader label {	display: block;	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	position:absolute!important;	z-index:1;	padding:0!important;	background:none!important;}.input-fader input {	display:block;	height:34px;	line-height:34px;	padding:0!important;	width:100%;	position:absolute;	z-index:3;	color:#333!important; background: none!important;}#registration-form input, #login-form input {	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	color:#676767;	font-size:16px;	position:relative;}

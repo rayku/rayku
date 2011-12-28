@@ -1,0 +1,23 @@
+#user > ul li
+{
+	float:left !important;
+}
+#open-account
+{
+	font-size:13px;
+}
+#email 
+{
+    width: 244px;
+}
+#user ul ul
+{
+	margin-top:40px;
+	width:189px;
+	overflow:hidden;
+}
+#scroll-for-more
+{
+	left:0px;
+	top:260px;
+}

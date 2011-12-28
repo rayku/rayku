@@ -1,0 +1,21 @@
+generator:
+  class:              sfPropelAdminGenerator
+  param:
+    model_class:      User
+    theme:            default
+
+    list:
+      display: [=name, email, type_name, network]
+      
+      fields:
+        type_name: { name: User Type }
+        
+      max_per_page: 50
+      
+      filters: [name, email, id, type]
+      
+    edit:
+      display: [name, email, points, _type]
+      
+      fields:
+        email: { type: plain }

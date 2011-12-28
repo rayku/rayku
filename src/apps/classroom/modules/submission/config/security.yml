@@ -1,0 +1,14 @@
+all:
+  credentials: assignment_management
+show:
+  credentials: []
+create:
+  credentials: []
+edit:
+  credentials: []
+update:
+  credentials: []
+delete:
+  credentials: []
+download:
+  credentials: []

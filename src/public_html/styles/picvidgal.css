@@ -1,0 +1,74 @@
+/* ---------------------------------------- */
+
+/*
+ * Picture/Video Gallery
+ */
+
+.picvidgal .content {
+	text-align: left;
+	margin-bottom: -15px;
+}
+
+.picvidgal .info-box {
+	width: 322px;
+	float: left;
+}
+
+.picvidgal .info-box h3 {
+	font-size: 16px;
+	color: #257000;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.picvidgal .info-box p {
+	color: #7F8189;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.picvidgal .album-actions {
+	width: 203px;
+	float: right;
+	line-height: 0px;
+}
+
+.pic-box .content, .video-box .content {
+	text-align: left;
+}
+
+.pic-box h3 {
+	font-size: 16px;
+	font-weight: bold;
+	color: #464646;
+	line-height: 30px;
+	background-image: url(../images/picture-count-icon.png);
+	background-position: left 3px;
+	background-repeat: no-repeat;
+	padding-left: 39px;
+	padding-bottom: 25px;
+}
+
+.pic-item img {
+	vertical-align: top;
+	padding: 2px;
+	border: 1px solid #959595;
+}
+
+.video-box h3 {
+	font-size: 16px;
+	font-weight: bold;
+	color: #464646;
+	line-height: 30px;
+	background-image: url(../images/video-count-icon.png);
+	background-position: left 3px;
+	background-repeat: no-repeat;
+	padding-left: 39px;
+	padding-bottom: 5px;
+}
+
+.video-box .content .video-item {
+	float: left;
+	padding: 10px;
+	width: 273px;
+}

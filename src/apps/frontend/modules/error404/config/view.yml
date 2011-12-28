@@ -1,0 +1,8 @@
+default:
+  stylesheets: [/styles/forum_global.css, /styles/forum_donny.css, /css/custom/forum-threads.css, /css/custom/forum-threads-bit.css]
+searchSuccess:
+  stylesheets: [/css/pager.css]
+forumSuccess:
+  stylesheets: [/css/pager.css]
+threadSuccess:
+  stylesheets: [/css/pager.css]

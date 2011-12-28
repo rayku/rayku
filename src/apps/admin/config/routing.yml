@@ -1,0 +1,24 @@
+offer_voucher:
+  class: sfPropelRouteCollection
+  options:
+    model:                OfferVoucher
+    module:               offer_voucher
+    prefix_path:          offer_voucher
+    column:               id
+    with_wildcard_routes: true
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+default_symfony:
+  url:   /symfony/:action/*
+  param: { module: default }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

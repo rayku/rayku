@@ -1,0 +1,1 @@
+<img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/live-ad.gif" alt="Advertisement" />

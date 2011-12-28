@@ -1,0 +1,15 @@
+fillin:
+  enabled: true
+  
+fields:
+  gift{name}:
+    required:
+      msg: You must give this gift a name
+  gift{description}
+    required:
+      msg: This gift must have a description
+  gift{cost}:
+    sfNumberValidator:
+      min: 0
+      min_error: The gift can't cost less than nothing!
+      nan_error: You must enter a number

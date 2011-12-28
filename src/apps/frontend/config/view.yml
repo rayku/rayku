@@ -1,0 +1,15 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        Rayku.com Peer Online Tutoring
+    robots:       index, follow
+    language:     en
+
+  stylesheets:    []
+
+  javascripts:    [/sfProtoculousPlugin/js/prototype.js]
+
+  has_layout:     on
+  layout:         layout

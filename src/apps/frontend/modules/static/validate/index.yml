@@ -1,0 +1,29 @@
+fields:
+  password:
+    required:
+      msg: Please enter a password
+    sfStringValidator:
+      min: 6
+      min_error: Your password should be at least 6 characters long
+      
+  email:
+    required:
+      msg: Please specify an email
+    sfEmailValidator:
+      email_error: Please make sure this is correct.
+    sfPropelUniqueValidator:
+      class: User
+      column: email
+      unique_error: This email address is already in use
+  
+  username:
+    required:
+      msg: Please enter a username
+    sfPropelUniqueValidator:
+      class: User
+      column: username
+      unique_error: This username is already in use
+    sfRegexValidator:
+      match: Yes
+      match_error: Your username should only contain alphanumeric characters
+      pattern: /^[\w\d]+$/

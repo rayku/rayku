@@ -1,0 +1,30 @@
+fillin:
+  enabled: true
+  param:
+    skip_fields: [password1, password2]
+
+fields:
+  realname:
+    required:
+      msg: You must specify a full name
+    sfRegexValidator:
+      match: Yes
+      match_error: Your name can only contain alphanumeric characters and spaces
+      pattern: /^[\w\d ]+$/
+      
+  password1:
+    sfCompareValidator:
+      check: password2
+      compare_error: Your passwords don't match
+    sfStringValidator:
+      min: 6
+      min_error: Your password must be at least 6 characters long
+      
+  email:
+    sfEmailValidator:
+      strict: true
+      email_error: You must enter a valid e-mail address
+    myUniqueEmailValidator:
+      class: User
+      column: email
+      unique_error: That e-mail address is already in use

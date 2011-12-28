@@ -1,0 +1,6 @@
+all:
+  is_secure: true
+itemShow:
+  is_secure: false
+itemDownload:
+  is_secure: false

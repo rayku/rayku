@@ -1,0 +1,49 @@
+<?php
+$comments = $user->getComments();
+$maxCount = count( $comments );
+?>
+
+<a name="comments" id="comments"></a>
+<div class="comments" style="margin-top:20px;">
+  <h4><a href="#">view all <em>+</em></a>Comments for <?php echo $user->getName(); ?></h4>
+  <?php
+  if($maxCount>0)
+  {
+    echo '<ul>';
+    foreach($comments as $comment)
+    {
+      $poster = $comment->getUserRelatedByPosterId();
+      $posterUsername = $poster->getUsername();
+      echo '<li>';
+      echo avatar_tag_for_user($poster, 3);
+      echo link_to( $posterUsername, '@profile?username=' . $posterUsername, array('class' => 'commentator'));
+			?>
+  <div class="comment-content">
+    <p><?php echo $comment->getContent();?></p>
+  </div>
+  <div class="comment-time"><?php echo $comment->getCreatedAt( "l , F jS, Y - g:i A" );?></div>
+  </li>
+  <?php
+	  }
+	  echo '</ul>';
+  }
+
+  if($maxCount==0)
+  {
+  ?>
+  <div>
+    <p style="font-size:12px; font-weight:bold; color:#999999;"> No comment posted. </p>
+  </div>
+  <?php
+  }
+  ?>
+</div>
+<br class="clear-both" />
+<?php
+if( $sf_user->isAuthenticated()
+    && $user->isFriendsWith( $current ) )
+{
+  echo '<p style="font-size:15px; margin-top:5px; color:#666666; font-weight:bold">Add Your Comment:</p>';
+  include_partial( 'shoutbox_form' );
+}
+?>

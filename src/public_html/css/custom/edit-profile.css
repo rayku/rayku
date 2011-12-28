@@ -1,0 +1,110 @@
+
+<!--
+.body-main {
+	width:926px;
+}
+.body-main .box {
+	margin-bottom:13px;
+}
+.body-main .box .top {
+	width:926px;
+	height:14px;
+	background:url(../../images/b-mboxtopfull.gif) no-repeat top center;
+}
+.body-main .box .content {
+	width:899px;
+	background:url(../../images/b-sboxcontentbgfull.gif) repeat-y center;
+	padding:4px 12px 0px 15px;
+}
+.content .entry {
+	clear:both;
+}
+.entry .ttle {
+	float:left;
+	color:#787878;
+	font:12px "Arial";
+	font-weight:bold;
+	margin:11px 0px 10px 0px;
+}
+.entry input {
+	float:left;
+	width:271px;
+	background:url(../../images/registerinputbg.gif) no-repeat;
+	border:0px;
+	color:#7f8189;
+	font:12px "Arial";
+	padding:13px;
+	clear:none;
+}
+.entry .txtareabg {
+	float:left;
+	width:295px;
+	height:126px;
+	background:url(../../images/edit-profile-txtareabg.gif) no-repeat;
+	position:relative;
+	z-index:3;
+}
+.entry textarea {
+	float:left;
+	width:271px;
+!width:260px;
+	height:102px;
+!height:100px;
+	border:0px;
+	background:none;
+	color:#7f8189;
+	font:12px "Arial";
+	padding:12px;
+	overflow:auto;
+	position:relative;
+	z-index:4;
+	left:-295px;
+!top:1px;
+}
+.entry .chkbox {
+	float:left;
+	background:none;
+	width:12px;
+	height:12px;
+	position:relative;
+	top:2px;
+	margin-left:24px;
+}
+.entry .text {
+	float:left;
+	color:#787878;
+	font:12px "Arial";
+	font-weight:bold;
+	position:relative;
+	top:14px;
+	margin-left:18px;
+}
+.entry select {
+	width:156px !important;
+	height:40px;
+	background:#fff url(../../images/selectyearbg.gif) no-repeat;
+	float:left;
+	margin-right:5px;
+	color:#3d3d3d;
+	font:14px "Arial";
+	border:0px;
+	padding:11px 10px 10px 12px;
+}
+.body-main .box .bottom {
+	width:926px;
+	height:16px;
+	background:url(../../images/b-mboxbottomfull.gif) no-repeat bottom center;
+}
+#save {
+	width:264px;
+	height:35px;
+	background:url(../../images/add-journal-submit.gif) no-repeat;
+	border:0px;
+	color:#fff;
+	font:17px "Arial";
+	font-weight:bold;
+	margin-top:18px;
+	cursor:pointer;
+	margin-bottom:25px;
+}
+-->

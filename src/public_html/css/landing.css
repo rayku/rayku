@@ -1,0 +1,279 @@
+/*CSS Reset 
+====================================================*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+	background: transparent;
+	border: 0;
+	font-size: 100%;
+	font-weight: normal;
+	margin: 0 auto;
+	outline: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+body {
+	background:url('/images/bg.jpg') #fff repeat-x;
+	font-family: arial, sans-serif;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0 auto;
+	text-align: center;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+/*
+Start Wrapper
+====================================================*/
+#wrapper {
+	width:900px;
+	height:auto;
+	text-align:center;
+	margin:0 auto;
+	padding:0;
+}
+/*
+Start Top
+====================================================*/
+#top {
+	width:844px;
+	height:87px;
+}
+#top img {
+	float:left;
+	padding:24px 0 0 0px;
+}
+#top ul {
+	color:#085c8d;
+	display:inline;
+	float:right;
+	padding:44px 0 0 0;
+}
+#top ul li {
+	display:inline;
+}
+#top ul li a {
+	color:#085c8d;
+	font-size:1.00em;
+	font-weight:bold;
+	text-decoration:none;
+	padding:0 4px 0 4px;
+}
+#top ul li a:hover {
+	text-decoration:underline;
+}
+/*
+Start Featured
+====================================================*/
+#featured {
+	background:url('/images/blueboxbg.jpg') no-repeat;
+	clear:both;
+	text-align:left;
+	height:295px;
+	width:1000px;
+	margin:0 0 0 -50px;
+	position:relative;
+}
+p.info {
+	float: left;
+	color:#c3efff;
+	float:left;
+	font-size:0.80em;
+	padding:0px 0 0 50px;
+	position:relative;
+	width:390px;
+	line-height:25px;
+}
+p.info span {
+	padding: 62px 0 5px 0;
+	float:left;
+}
+#featured form {
+	float: left;
+	padding:20px 0 0 50px;
+}
+#featured form #tour {
+	padding:0 0 0 10px;
+}
+#featured form p {
+	float:left;
+}
+#video {
+	float:right;
+	width:430px;
+	height:242px;
+	margin:29px 85px 0 0;
+	clear:right;
+	border:2px solid #FFF;
+	background:#FFF;
+}
+/*
+Start Quote Box
+====================================================*/
+#quotebox {
+	float:left;
+	width:905px;
+	height:55px;
+	position:relative;
+	margin:0 0 0 0;
+}
+#quotebox p {
+	color:#fff;
+	font-size:1.00em;
+	font-weight:bold;
+	font-style:italic;
+	line-height:55px;
+	float:left;
+}
+#quotebox p span {
+	color:#c2dde9;
+	padding:0 0 0 5px;
+	font-style:normal;
+}
+/*
+Start Register Form
+====================================================*/
+#content {
+	float:left;
+	width:905px;
+	margin:31px 0 0 0;
+	float:left;
+}
+#registrationarea {
+	width:905px;
+	height:auto;
+	background:url('/images/round_middle.jpg') repeat-y;
+	float:left;
+}
+#roundtop {
+	background:url('/images/round_top.jpg') no-repeat;
+	width:905px;
+	height:20px;
+	float:left;
+}
+#roundbottom {
+	background:url('/images/round_bottom.jpg') no-repeat;
+	width:905px;
+	height:17px;
+	float:left;
+}
+#content h2 {
+	color:#056a9a;
+	font-size:1.13em;
+	float:left;
+	padding:5px 0 5px 56px;
+	background:url('/images/regicon.png') no-repeat
+}
+#registrationarea form {
+	float:left;
+	padding:18px 0 0 18px;
+	font-size:0.88em;
+	width:950px;
+}
+#registrationarea form input {
+	font-size: 1em;
+}
+#fullname {
+	border: none;
+	width: 133px;
+	height: 18px;
+	padding:9px 0;
+	margin:-13px 15px 2px 15px;
+}
+#email {
+	border: none;
+	width: 213px;
+	height: 18px;
+	padding:9px 0;
+	margin:-13px 15px 2px 15px;
+}
+#password {
+	border: none;
+	width: 133px;
+	height: 19px;
+	padding:9px 0;
+	margin:-13px 15px 2px 15px;
+}
+#username {
+	border: none;
+	width: 125px;
+	height: 18px;
+	padding:9px 0;
+	margin:-13px 15px 2px 15px;
+}
+.smfield {
+	float:left;
+	width:258px;
+	background:url('/images/smallfield.jpg') no-repeat;
+	padding-top:15px;
+	margin:4px 10px 10px 0;
+}
+.bgfield {
+	float:left;
+	width:307px;
+	background:url('/images/bigfield.jpg') no-repeat;
+	padding-top:15px;
+	margin:4px 10px 10px 0;
+}
+#registrationarea p span {
+	color:#085c8d;
+	padding:5px 20px 5px 0;
+}
+#registrationarea span a {
+	color:#086898;
+	text-decoration:underline;
+	font-weight:bold;
+}
+#register {
+	background:url('/images/register-button.jpg') no-repeat;
+	border:none;
+	color:#FFFFFF;
+	width:120px;
+	height:34px;
+	padding:0px 15px;
+	margin:7px 0 0 20px;
+	line-height:41px;
+	overflow:hidden;
+	clear:right;
+}
+/*
+Start Footer
+====================================================*/
+#footer {
+	float:left;
+	margin:0 auto;
+	margin-top:40px;
+	padding:0 0 0;
+	border-top:1px solid #cacaca;
+	width:1000px;
+	position:absolute;
+	top:495px;
+	right:0;
+	left:0;
+	float:left;
+	clear:both;
+	text-align:center;
+	font-size:12px;
+	color:#667;
+	line-height:35px
+}
+#footer ul {
+	display:inline;
+	float:left;
+	padding:22px 0 0 15px;
+}
+#footer ul li {
+	display:inline;
+	float:left;
+	padding:0 12px 0 0;
+}

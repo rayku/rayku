@@ -1,0 +1,40 @@
+
+<!--
+.content .title {
+	color:#589bbb;
+	font:16px "Arial";
+	font-weight:bold;
+	padding-top:1px;
+}
+.content .author, .content .postdate {
+	color:#7f8189;
+	font:12px "Arial";
+}
+.content .author {
+	margin-top:9px;
+}
+.content .postdate {
+	margin-top:3px;
+}
+.body-main .box .content img {
+	margin:0px auto 32px auto;
+}
+.content .paragraph {
+	padding-bottom:10px;
+}
+.paragraph .head {
+	float:left;
+	color:#686d78;
+	font:13px "Arial";
+	font-weight:bold;
+}
+.paragraph .text {
+	color:#686d78;
+	font:14px "Arial";
+	line-height:20px;
+	padding:1px 3px;
+}
+.paragraph .text p {
+	margin-top:20px;
+}
+-->

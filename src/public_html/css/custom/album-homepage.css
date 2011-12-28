@@ -1,0 +1,60 @@
+
+<!--
+.content-green .title {
+	color:#257000;
+}
+.content-green .mediacount {
+	height:27px;
+	padding-bottom:21px;
+}
+.mediacount img {
+	float:left;
+}
+.mediacount p {
+	color:#464646;
+	font:16px "Arial";
+	font-weight:bold;
+	position:relative;
+	top:3px;
+	left:12px;
+}
+.content-green .row {
+	text-align:center;
+	margin-bottom:19px;
+}
+.row img {
+	border:1px solid #b6b6b6;
+	padding:1px;
+	vertical-align:top;
+	margin-right:4px;
+}
+.content-green .entry {
+	clear:both;
+}
+.entry .ttle {
+	float:left;
+	color:#056a9a;
+	font:13px "Arial";
+	font-weight:bold;
+	margin:11px 0px 8px 0px;
+}
+.entry input {
+	float:left;
+	width:281px;
+	height:33px;
+	background:url(../../images/registerinputbg.gif) no-repeat;
+	border:0px;
+	color:#7f8189;
+	font:19px "Arial";
+	padding:7px 7px 0px 7px;
+	clear:left;
+}
+.deleteImage {
+	color:red;
+	font-size:12px;
+}
+.setAsAvatar {
+	color:blue;
+	font-size:12px;
+}
+-->

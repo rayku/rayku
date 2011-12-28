@@ -1,0 +1,7 @@
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^whiteboard\.rayku\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.whiteboard\.rayku\.com$
+RewriteRule ^/?$ "http\:\/\/rayku\.com\:8001\/standalone" [R=301,L]
+

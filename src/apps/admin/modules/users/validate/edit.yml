@@ -1,0 +1,18 @@
+fillin:
+  enabled: true
+  
+fields:
+  user{name}:
+    required:
+      msg: You must give this user a name
+  user{points}:
+    sfNumberValidator:
+      nan_error: You must enter a number
+  user{type}:
+    sfNumberValidator:
+      min: 0
+      max: 4
+      min_error: You must choose a valid user type
+      max_error: You must choose a valid user type
+      nan_error: You must choose a valid user type
+    

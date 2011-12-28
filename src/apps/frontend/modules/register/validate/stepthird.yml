@@ -1,0 +1,13 @@
+fields:
+  file:
+    file: True
+    sfFileValidator:
+      mime_types:
+        - 'image/jpeg'
+        - 'image/png'
+        - 'image/x-png'
+        - 'image/pjpeg'
+        - 'image/gif'
+      mime_types_error: Only PNG and JPEG images are allowed
+      max_size:         10485760
+      max_size_error:   Max size is 10MB

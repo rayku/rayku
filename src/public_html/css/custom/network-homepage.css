@@ -1,0 +1,103 @@
+/*.body-main .box .content {
+	width:637px;
+	padding:0px;
+	}
+
+.content .title {
+	!float:left;
+	display:inline;
+	margin-left:15px;
+	}
+.content .subtitle {
+	color:#7f8189;
+	font:12px "Arial";
+	line-height:18px;
+	padding-bottom:5px;
+	margin:9px 12px 0px 15px;
+	}
+
+.content .viewall {
+	float:right;
+	display:inline;
+	color:#7f8189;
+	font:12px "Arial";
+	margin-right:12px;
+	}
+*/
+.content .person {
+  float: left;
+	width:192px; _width:190px; height:62px;
+	margin-bottom:21px;
+	margin-left:16px;
+	}
+	.person img {
+		float:left;
+		border:1px solid #e7e7e7;
+
+		}
+	.person .cred { float:left; padding:12px 0px 0px 11px; font-family:"Arial"; }
+		.cred .name {
+			display:block;
+			width:118px; _width:117px; height:15px;
+			overflow:hidden;
+			color:#056a9a;
+			font-size:14px;
+			font-weight:bold;
+			}
+		.cred .info {
+			width:119px; _width:117px; height:30px;
+			overflow:hidden;
+			margin-top:4px;
+			}
+			.info p {
+				display:inline;
+				color:#7f8189;
+				text-align:left;
+				font-size:12px;
+				line-height:15px;
+				}
+			.info div {
+				display:inline-block;
+				width:5px; !width:11px; height:1px;
+				border:0px; border-top:1px solid #7f8189;
+				margin:0px 4px 0px 4px;
+				position:relative; top:-3px; !top:7px;
+				}
+
+.content .thread {
+	height:53px;
+	border-top:1px dashed #9db9cf;
+	padding:14px 13px 2px 0px;
+	margin-top:12px;
+	}
+	.thread .cred { float:left; padding:5px 0px 0px 16px; font-family:"Arial"; }
+	.thread .cred a.threadtitle {
+		display:inline;
+		color:#1c517c;
+		font-size:16px;
+		font-weight:bold;
+		}
+	.thread .cred .post {
+		display:inline;
+		color:#7f8189;
+		font-size:10px;
+		margin:-1px 0px 0px 8px;
+		}
+		.post a.user { color:#93be00; }
+	.thread .cred p {
+		width:540px; height:30px;
+		line-height:15px; overflow:hidden;
+		color:#7f8189;
+		font-size:12px;
+		margin-top:8px;
+		}
+	.thread .replies {
+		float:right;
+		width:53px; height:48px;
+		background:url(../../images/network-replybubble.jpg) no-repeat;
+		color:#fff;
+		font:24px "Arial";
+		font-weight:bold;
+		text-align:center;
+		padding-top:5px;
+		}

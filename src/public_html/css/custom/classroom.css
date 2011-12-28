@@ -1,0 +1,222 @@
+@import "../reset.css";
+@import "../predefined.css";
+
+html { overflow:auto; }
+
+.spacer {
+	clear:both;
+	height:0px;
+	font-size:0px;
+	line-height:0px;
+	}
+
+body {
+	color:#056a9a;
+	background:#353535 url(../../images/bg-body.png) repeat-x 0 0;
+	text-align:center;
+	font-family:Arial;
+	}
+
+
+#footer {
+	width:965px; height:95px;
+	font:13px "Arial";
+	color:#5d5d5d;
+	border-top:1px solid #5d5d5d;
+	padding:16px 0px 0px 0px;
+	margin:23px auto 0px auto;
+}
+	#footer #links {
+		float:left;
+		text-align:left;
+		}
+	#links a {
+		display:inline-block;
+		color:#bdc793;
+		text-decoration:none;
+		margin-top:5px;
+		margin-right:5px;
+		}
+
+	#footer #partners {
+		float:right;
+		margin-top:12px;
+		}
+		#partners img { margin-left:10px; }
+
+#top {
+	width:965px; height:91px;
+	margin:21px auto 0px auto;
+	}
+	#top #logo {
+		float:left;
+		width:237px; height:91px;
+		}
+	#top #classname {
+		float:left;
+		color:#fff;
+		font:35px "Arial";
+		font-weight:bold;
+		position:relative; top:24px;
+		margin-left:27px;
+		}
+
+#main {
+	width:950px;
+	background:#fff url(../../images/main_bgbottom.gif) repeat-x bottom;
+	border-bottom:9px solid #282828;
+	padding:26px 0px 26px 15px;
+	margin:0px auto;
+	}
+	#main .title {
+		height:23px;
+		margin-bottom:16px;
+		margin-left:4px;
+		}
+		.title img { float:left; }
+		.title p {
+			float:left;
+			line-height:23px;
+			color:#1c517c;
+			font:16px "Arial";
+			font-weight:bold;
+			margin-left:15px;
+			}
+
+	#main #nav { float:left; _width:235px; }
+		#nav a {
+			display:block;
+			width:235px; height:32px;
+			color:#494949;
+			text-align:left;
+			text-decoration:none;
+			font:14px "Arial";
+			font-weight:bold;
+			background:url(../../images/classroom_abg.gif) no-repeat;
+			padding:15px 0px 0px 49px;
+			margin-bottom:6px;
+			}
+
+		#nav a:hover, #nav a:hover.edit, #nav a:hover.editnotif { color:#347a11; background:url(../../images/classroom_acbg.gif) no-repeat; }
+		#nav a.edit { background:url(../../images/classroom_editbg.gif) no-repeat; }
+		#nav a.editnotif { color:#028491; background:url(../../images/classroom_editnotifbg.gif) no-repeat; }
+
+		#nav .divider {
+			width:284px; height:1px;
+			border-bottom:1px dashed #9db9cf;
+			margin-top:11px;
+			margin-bottom:11px;
+			}
+
+	#main #nblog { float:left; _width:642px; margin-left:12px; }
+		#nblog .entry { margin-bottom:33px; }
+			.entry .top {
+				width:642px; height:24px;
+				background:url(../../images/classroom_entrytop.gif) no-repeat;
+				}
+			.entry .content {
+				width:600px;
+				background:url(../../images/classroom_entryconbg.gif) repeat-y center;
+				border:solid #9db9cf; border-width:0px 1px;
+				padding:0px 20px 0px 20px;
+				}
+				.content .titles { float:left; margin-bottom:21px; }
+					.titles .postdate {
+						display:block;
+						color:#2b5d85;
+						font:14px "Arial";
+						font-weight:bold;
+						margin-bottom:6px;
+						}
+					.titles .title02 {
+						float:left;
+						display:block;
+						color:#257000;
+						font:16px "Arial";
+						font-weight:bold;
+						text-decoration:none;
+						}
+				.content a.comments {
+					float:right;
+					height:15px;
+					color:#257000;
+					font:12px "Arial";
+					font-weight:bold;
+					text-decoration:none;
+					background:url(../../images/classroom_commentbubble.gif) no-repeat left;
+					padding-top:2px;
+					padding-left:29px;
+					}
+				.content a:hover.comments { text-decoration:underline; }
+
+				.content img { margin:0px auto 11px auto; }
+
+				.content .paragraph { margin-top:9px;	}
+					.paragraph .head {
+						float:left;
+						color:#686d78;
+						font:15px "Arial";
+						font-weight:bold;
+						}
+					.paragraph .text {
+						display:block; clear:left;
+						text-align:left;
+						color:#686d78;
+						font:12px "Arial";
+						position:relative; top:16px;
+						line-height:24px;
+						border-bottom:1px solid #ececec;
+						padding-bottom:11px;
+						}
+
+				.content .attachments {
+					clear:both; display:block;
+					border-bottom:1px solid #ececec;
+					padding-bottom:11px;
+					margin-top:40px;
+					}
+					.attachments .attachment {
+						height:19px;
+						display:block;
+						clear:both;
+						margin-left:35px;
+						_margin-bottom:13px; !margin-bottom:13px;
+						}
+						.attachment img { float:left; }
+						.attachment a {
+							float:left;
+							line-height:19px;
+							color:#257000;
+							font:14px "Arial";
+							font-weight:bold;
+							margin-left:11px;
+							text-decoration:none;
+							}
+						.attachment p { float:left; color:#686d78; font:12px "Arial"; margin-left:4px; }
+
+				.content .readmore { margin-top:26px; }
+					.readmore a {
+						float:left;
+						color:#257000;
+						text-decoration:none;
+						font:16px "Arial";
+						font-weight:bold;
+						}
+					.readmore a:hover { text-decoration:underline; }
+						.readmore a img { position:relative; top:9px; }
+
+					.readmore .dropin {
+						float:right; height:20px;
+						color:#1c517c;
+						font:14px "Arial";
+						font-weight:bold;
+						background:url(../../images/icon_dropin.gif) no-repeat left;
+						padding-top:5px;
+						padding-left:36px;
+						}
+
+
+			.entry .bottom {
+				width:642px; height:27px;
+				background:url(../../images/classroom_entrybottom.gif) no-repeat;
+				}

@@ -1,0 +1,292 @@
+html {
+
+  width: 100%;
+
+  height: 100%;
+
+	overflow: hidden;
+
+}
+
+
+
+body {
+
+  cursor: auto;
+
+  margin: 0px;
+
+  border: 0px;
+
+  padding: 0px;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+}
+
+
+div.iwcTop {
+
+  height: 58px;
+
+  width: 100%;
+
+  padding: 0px;
+
+  margin-bottom: 2px;
+
+}
+
+
+
+.iwcTop #iwcBanner {
+
+  background: url(../images/headerChrome.png?13.01_012515) repeat-x left bottom;
+
+  background-color: #F4F5EB;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+
+.iwcTop div.iwcBanner a {
+
+	text-decoration:none;
+
+}
+
+
+
+div.iwcTop div.iwcBanner .banner_img1 {
+
+  position: relative;
+
+  height: 45px;
+
+  width: 260px;
+
+  margin: 8px;
+
+  float: left;
+
+  background: url(../images/headerLogo.png?13.01_012515) no-repeat left top;
+
+}
+
+.dj_ie6 div.iwcTop div.iwcBanner .banner_img1 {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image src='images/headerLogo.png?13.01_012515');
+	background: none;
+}
+
+div.iwcTop div.iwcBanner .banner_img2 {
+
+  position: relative;
+
+  height: 45px;
+
+  width: 140px;
+
+  margin: 8px;
+
+  float: right;
+
+  background: url(../images/poweredbySunLogo.png?13.01_012515) no-repeat left top;
+
+}
+
+.dj_ie6 div.iwcTop div.iwcBanner .banner_img2 {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image src='images/poweredbySunLogo.png?13.01_012515');
+	background: none;
+}
+
+.iwcBanner span .themeIcon {
+        float: right;
+        margin: 1px;
+        margin-top: 8px;
+        padding: 1px;
+}
+
+.iwcBanner span .themeIcon div {
+        display: block;
+        width: 10px;
+        height: 10px;
+	cursor: pointer;
+}
+
+/* spike --
+.iwcBanner span .themeIcon div:hover {
+	cursor: pointer;
+}
+*/
+
+.iwcBanner .themeIconUnselected {
+        border: 0px solid;
+}
+
+.iwcBanner .themeIconSelected {
+        border: 1px solid;
+}
+
+
+div.iwcBottom {
+
+  padding: 0px;
+
+  border: 0px;
+
+  margin: 0px 5px 5px 5px;
+
+}
+
+
+
+div.iwcBottom div.dojoSplitContainer {
+
+  width: 100%;
+
+  height: 100%; background: #eeeeee; padding: 0px; border: 0px;
+
+  margin: 0px;
+
+}
+
+
+
+.iwcNavigationContainer {
+
+/*  overflow: auto; */ /* Causing double scrollbar in calendar */
+
+}
+
+
+
+
+#overlay {
+	position:absolute;
+  top:0pt;
+  left:0pt;
+  width:100%;
+  height:100%;
+  z-index:90;
+  background-color: white;
+  filter: alpha(opacity=85);
+	-moz-opacity: .85;
+	opacity:.85;
+}
+#overlay.login {
+  background-color: white;
+  filter: alpha(opacity=100);
+	-moz-opacity: 1;
+	opacity:1;
+}
+
+#overlay .centered {
+  position:absolute;
+  top:50%;
+  left:50%;
+  height:100px;
+  width:100px;
+  margin-top:-50px;
+  margin-left:-50px;
+}
+#overlay .logo {
+  width:100px;
+  height:85px;
+  background:url(../images/java_logo.jpg?13.01_012515) center no-repeat;
+}
+#progress {
+  width:100px;
+  height:15px;
+  text-align:center;
+	font-weight: bold;
+}
+
+#iwcLayout {
+	width: 100%;
+	height: 100%;
+}
+
+#iwcQuickActions {
+	width: 100%;
+	height:32px;
+}
+
+
+#horizontalsplit {
+	height: 100%;
+	/*top: 0px !important;*/
+}
+
+.toolbarItem.disabled .toolbarbutton-icon {
+
+	filter : alpha(opacity=30);
+
+	cursor : default;
+
+}
+
+
+
+.dj_ie .toolbarItem.disabled .toolbarbutton-text {
+
+  color: darkgrey;
+
+}
+
+
+
+.dojoDialog {
+
+	background : #eee;
+
+	border : 1px solid #999;
+
+	-moz-border-radius : 5px;
+
+	padding : 4px;
+
+}
+
+
+
+.underConstruction{
+
+
+
+font-family:Arial, Helvetica, sans-serif;
+
+font-size:24px;
+
+color:#404A66;
+
+font-weight:bold;
+
+}
+
+
+
+#iwcID .calendarMiniToolbar .underConstruction {
+
+	float:left;
+
+}
+
+.dijitClosable .busyImage {
+	position: absolute;
+	top: 7px;
+	right: 3px;
+	background: transparent url(../images/ajaxLoaderSmall.gif?13.01_012515) no-repeat scroll left top;
+	height: 12px;
+	margin: 7px 0 0 0;
+	padding: 0;
+	width: 12px;
+}
+

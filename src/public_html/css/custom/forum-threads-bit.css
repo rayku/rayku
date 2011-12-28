@@ -1,0 +1,531 @@
+<!--
+
+
+	.body-main #commrply {
+		color:#1c517c;
+		font:16px "Arial";
+		font-weight:bold;
+		margin-top:17px;
+		margin-bottom:14px;
+		}
+
+	.body-main .box {  }
+	.body-main .box .top {
+		width:640px; height:8px;
+		background:url(../../images/ft-boxtop.gif) no-repeat top;
+		_margin-bottom:-3px;
+		}
+		.body-main .box .topb {
+			width:640px; height:8px;
+			background:url(../../images/topb.gif) no-repeat top;
+			_margin-bottom:-3px;
+			}
+    .body-main .box .content {
+      background:#FAFAFA none repeat scroll 0 0;
+      border-color:#DDDDDD;
+      border-style:solid;
+      border-width:0 1px;
+      padding:0;
+      text-align:center;
+      width:638px;
+    }
+		.body-main .box .contentb {
+			width:638px;
+			text-align:center;
+			background:none;
+			background-color:#eeffd3;
+			border:solid #dddddd; border-width:0px 1px;
+			padding:0px;
+			}
+		.content .userinfo {
+			float:left;
+			width:128px;
+			text-align:center;
+			padding:14px 0px;
+			}
+			.contentb .userinfo {
+				float:left;
+				width:128px;
+				text-align:center;
+				padding:14px 0px;
+				}
+			.userinfo img { border:1px solid #e8e8e8; margin-bottom:7px; }
+			.userinfo .username, .userinfo .points {
+				font:12px "Arial";
+				font-weight:bold;
+				}
+			.userinfo .username {
+				color:#1c77a2;
+				border:0px solid #000;
+				}
+			.userinfo .points {
+				color:#257000;
+				margin-top:10px;
+				}
+			.userinfo .medals {
+				width:100px;
+				margin:14px auto 0px auto;
+				color:#8c8c8c;
+				font:12px "Arial";
+				}
+			.userinfo .medals img { border:0px; }
+		.content .numbers {
+			float:left;
+			width:490px;
+			display:inline;
+			border-top:1px dashed #9db9cf;
+			text-align:left;
+			font-size:11px;
+			font-weight:bold;
+			color:#818181;
+			padding:10px;
+			margin-top:-7px;
+			float:left;
+			}
+			.contentb .numbers {
+				float:left;
+				width:490px;
+				display:inline;
+				border-top:1px dashed #97b46a;
+				text-align:left;
+				font-size:11px;
+				font-weight:bold;
+				color:#818181;
+				padding:10px;
+				margin-top:-7px;
+				float:left;
+				}
+		.content .info {
+			float:left;
+			width:495px;
+			display:inline;
+			border-bottom:1px dashed #9db9cf;
+			text-align:left;
+			padding:9px 0px 12px 14px;
+			margin-top:-7px;
+			}
+			.contentb .info {
+				float:left;
+				width:495px;
+				display:inline;
+				border-bottom:1px dashed #97b46a;
+				text-align:left;
+				padding:9px 0px 7px 14px;
+				margin-top:-7px;
+				}
+			.info img { display:inline; margin-top:7px; margin-bottom:3px; }
+			.info p {
+				display:inline;
+				color:#1c517c;
+				font:16px "Arial";
+				font-weight:bold;
+				position:relative; top:-8px; left:3px;
+				}
+			.info .postdate {
+				color:#8c8c8c;
+				font:11px "Arial";
+				float:left;
+				padding:5px 10px 0 0;
+				}
+				.info .bestr {
+					float:right;
+					width:118px;
+					height:22px;
+					background:url(../../images/bestr.gif) no-repeat;
+					margin:0 8px 0 0;
+						}
+		.cmmt {
+			float:left;
+			width:509px;
+			border-left:1px dashed #9db9cf;
+				}
+				.cmmtb {
+					float:left;
+					width:509px;
+					border-left:1px dashed #97b46a;
+						}
+		.content .message {
+			!float:left;
+			display:inline-block;
+			width:470px; 
+			line-height:22px;
+			text-align:left;
+			padding:15px 10px 40px 15px;
+			position:relative; 
+			font-size:14px;
+			color:#333333;
+			}
+		.content .message p{
+			padding-top:15px;
+			}
+		.content .message ul{
+			margin-top:5px;
+			}
+		.content .message li{
+			margin-left:30px;
+			}
+			.contentb .message {
+				!float:left;
+				display:inline-block;
+				width:470px; 
+				line-height:22px;
+				text-align:left;
+				padding:15px 10px 40px 15px;
+				position:relative; 
+				font-size:14px;
+				color:#333333;
+				}
+			.contentb .message p{
+				padding-top:15px;
+				}
+			.contentb .message ul{
+				margin-top:5px;
+				}
+			.contentb .message li{
+				margin-left:30px;
+				}
+	.body-main .box .bottom{
+		width:640px; height:13px;
+		background:#fff url(../../images/ft-boxbottom.gif) no-repeat top;
+		position:relative; top:-8px; 
+		}
+		.body-main .box .bottomb{
+		width:640px; height:8px;
+		background:#fff url(../../images/botb.gif) no-repeat top;
+		position:relative; top:-8px; 
+		}
+
+	.body-main .expertrply {
+		display:block;
+		width:614px;
+		margin:0 0 0 13px;
+		position:relative; top:-22px; z-index:3;
+		overflow:hidden;
+		}
+		.body-main .expertrplyb {
+			display:block;
+			width:614px;
+			margin:-35px 0 0 13px;
+			overflow:hidden;
+			}
+		.expertrply .ptitle {
+			width:595px; height:31px;
+			display:inline-block;
+			border:solid #bdf072; border-width:0px 2px;
+			text-align:left;
+			color:#257000;
+			font:16px "Arial";
+			font-weight:bold;
+			background:#cbf689;
+			border-bottom:1px dashed #b0e671;
+			padding:12px 0px 0px 15px;
+			position:relative; z-index:3;
+			}
+			.ptitle span {
+				float:left;
+					}
+			.ptitle .bestest {
+				float:right;
+				height:29px;
+				width:157px;
+				background:url(../../images/bestest.gif) no-repeat;
+				margin:-5px 8px 0 0;
+					}
+			.setbest {
+				float:right;
+				width:168px;
+				height:22px;
+				background:url(../../images/setbest.png) no-repeat;
+				display:block;
+				overflow:hidden;
+				text-indent:-9999px;
+				border:none;
+				margin:0 8px 0 0;
+					}
+					.btns {
+						float:right;
+						height:24px;
+						width:250px;
+							}
+							.close {
+								width:59px;
+								height:24px;
+								background:url(../../images/btns1.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								text-indent:-9999px;
+								margin:0 5px 0 0;
+									}
+									.close:hover {
+										background-position:bottom;
+											}
+								.closed {
+								width:59px;
+								height:24px;
+								background:url(../../images/btns4.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								text-indent:-9999px;
+								margin:0 5px 0 0;
+									}
+									.closed:hover {
+										background-position:bottom;
+											}
+							.cancel {
+								width:68px;
+								height:24px;
+								background:url(../../images/btns2.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								text-indent:-9999px;
+								margin:0 5px 0 0;
+									}
+									.cancel:hover {
+										background-position:bottom;
+											}
+
+							.edit {
+								width:59px;
+								height:24px;
+								background:url(../../images/b-edit.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								padding-right:5px;
+								text-indent:-9999px;
+								margin:0 5px 0 0;
+									}
+									.edit:hover {
+										background-position:bottom;
+											}
+
+							.delete {
+								width:59px;
+								height:24px;
+								background:url(../../images/b-delete.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								text-indent:-9999px;
+								margin:0 5px 0 0;
+									}
+									.delete:hover {
+										background-position:bottom;
+											}
+
+
+							.reac {
+								width:92px;
+								height:24px;
+								background:url(../../images/btns3.gif) no-repeat top;
+								float:left;
+								display:block;
+								overflow:hidden;
+								border:none;
+								text-indent:-9999px;
+									}
+									.reac:hover {
+										background-position:bottom;
+											}
+			.expertrplyb .ptitleb {
+				width:595px; height:31px;
+				display:inline-block;
+				border:solid #bfd9ee; border-width:0px 2px;
+				text-align:left;
+				color:2f749c;
+				font:16px "Arial";
+				font-weight:bold;
+				background:#cfe9f8;
+				border-bottom:1px dashed #bfd9ee;
+				padding:22px 0px 0px 15px;
+				}
+		.expertrply .msg {
+			width:565px;
+			min-height:50px;
+			text-align:left;
+			font:12px "Arial";
+			background:url(../../images/ftb-erbg.gif) repeat-y center;
+			padding:0px 20px 17px 25px;
+			border:solid #bdf072; border-width:0px 2px;
+			}
+			.expertrplyb .msgb {
+				width:565px;
+				min-height:50px;
+				text-align:left;
+				font:12px "Arial";
+				background:url(../../images/blue.gif) repeat-y center;
+				padding:0px 20px 17px 25px;
+				border:solid #bfd9ee; border-width:0px 2px;
+				}
+			.msg img {
+				border:1px solid #8fc155;
+				padding:5px;
+				margin-top:16px;
+				margin-bottom:5px;
+				}
+				.msgb img {
+					border:1px solid #c0dbeb;
+					padding:5px;
+					margin-top:16px;
+					margin-bottom:5px;
+					}
+			.msg p, .msgb p {
+				text-align:left;
+				color:#2f2f2f;
+				line-height:24px;
+				margin-top:9px;
+				position:relative;
+				}
+		.expertrply table {
+			width:613px; !width:614px;
+			border-top:1px dashed #b0e671;
+			background:#bdf072 url(../../images/ftb-exrplyinfo.gif) repeat-y center;
+			position:relative; z-index:3;
+			}
+			.expertrplyb table.b {
+				width:614px; !width:614px;
+				border-top:1px dashed #bfd9ee;
+				background:#bfd9ee url(../../images/bluebot.gif) repeat-y center;
+				position:relative; z-index:3;
+				}
+			.userinfo tr { border:1px solid #000; }
+			.expertrply table .user {
+				width:251px; vertical-align:top;
+				padding:20px 0px 6px 22px;
+				border-left:2px solid #bdf072;
+				}
+				.expertrplyb table.b .user {
+					width:251px; vertical-align:top;
+					padding:20px 0px 6px 22px;
+					border-left:2px solid #bfd9ee;
+					}
+				.user img { float:left; border:1px solid #e7eae2; margin-right:12px; }
+				.user p, .user a {
+					font-family:"Arial";
+					font-weight:bold;
+					}
+				.user .usrname {
+					display:block;
+					color:#1c77a2;
+					font-size:14px;
+					margin-top:1px;
+					}
+				.user .pnts {
+					color:#257000;
+					font-size:12px;
+					margin-top:8px;
+					}
+				.user .awrds {
+					color:#8c8c8c;
+					font-size:12px;
+					font-weight:normal;
+					margin-top:4px;
+					}
+				.user .expertise {
+					width:121px; height:33px;
+					background:url(../../images/ftb-expertisebble.gif) no-repeat;
+					color:#359500;
+					font-size:13px;
+					line-height:33px;
+					padding-left:108px;
+					margin:6px 0px 7px 0px;
+					}
+			.expertrply table .expabout {
+				width:316px; _width:320px;
+				border-left:1px dashed #b0e671;
+				border-right:2px solid #bdf072;
+				padding:18px 9px 0px 9px;
+				font-family:"Arial";
+				position:relative;
+				margin:0px;
+				}
+				.expertrplyb table.b .expabout {
+					width:316px; _width:320px;
+					border-left:1px dotted #97b8d3;
+					border-right:2px solid #bfd9ee;
+					padding:18px 9px 0px 9px;
+					font-family:"Arial";
+					position:relative;
+					margin:0px;
+					}
+				.expabout .abtitle {
+					color:#257000;
+					font-size:14px;
+					font-weight:bold;
+					}
+						.expabout .abtitle span {
+							float:left;
+								}
+						.pitchg {
+							float:right;
+							height:22px;
+							width:114px;
+							background:url(../../images/pitchg.gif) no-repeat;
+							margin:-5px 0 0 0;
+								}
+					table.b .expabout .abtitle {
+						color:#205a7b;
+						font-size:14px;
+						font-weight:bold;
+						}
+						.pitchb {
+							float:right;
+							height:22px;
+							width:114px;
+							background:url(../../images/pitchb.gif) no-repeat;
+							margin:-5px 0 0 0;
+								}
+				.expabout .abtxt {
+					color:#63714d;
+					font-size:12px;
+					margin-top:9px;
+					line-height:20px;
+					}
+					table.b .expabout .abtxt {
+						color:#4d6371;
+						font-size:12px;
+						margin-top:9px;
+						line-height:20px;
+						}
+				.expabout a {
+					display:inline-block;
+					color:#257000;
+					font-size:12px;
+					font-weight:bold;
+					background:url(../../images/smallarrowright.gif) no-repeat right;
+					padding-right:15px;
+					margin-top:11px;
+					margin-bottom:11px;
+					}
+					table.b .expabout a {
+						display:inline-block;
+						color:#004f70;
+						font-size:12px;
+						font-weight:bold;
+						background:url(../../images/smallarrowright.gif) no-repeat right;
+						padding-right:15px;
+						margin-top:11px;
+						margin-bottom:11px;
+						}
+
+		.expertrply .btm {
+			width:614px; height:9px;
+			background:url(../../images/btm.png) no-repeat bottom;
+			position:relative;
+			}
+			.expertrplyb .btmb {
+				width:614px; height:12px;
+				background:url(../../images/bluebb.png) no-repeat center bottom;
+				position:relative; z-index:10;
+				margin:0 0 23px 0;
+				}
+
+-->

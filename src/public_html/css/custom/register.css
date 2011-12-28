@@ -1,0 +1,244 @@
+/* resgister css */
+			.spacer {
+	clear:both;
+}
+#body .body-main {
+	width:937px;
+}
+#top {
+	margin:23px 27px 0px 27px;
+}
+#top a#create-account {
+	_float:left;
+!float:left;
+	display:inline-block;
+	cursor:pointer;
+	height:23px;
+	line-height:23px;
+	color:#1c517c;
+	font:14px "Arial";
+	font-weight:bold;
+	background:url(/images/arrow-right.gif) no-repeat top left;
+	padding-top:3px;
+	padding-left:51px;
+	position:relative;
+	top:2px;
+}
+#top .step {
+	float:right;
+	display:inline-block;
+	margin-left:39px;
+}
+.step .active, .step .inactive {
+	_float:left;
+!float:left;
+	display:inline-block;
+	width:17px;
+	height:24px;
+	color:#fff;
+	font:12px "Georgia";
+	font-weight:bold;
+	padding:3px 0px 0px 9px;
+}
+.step .active {
+	background:url(/images/stepactive.gif) no-repeat;
+}
+.step .inactive {
+	background:url(/images/stepinactive.gif) no-repeat;
+}
+.step .descri {
+	display:inline;
+	color:#7f8189;
+	font:12px "Arial";
+	margin-left:9px;
+	position:relative;
+	_top:5px;
+!top:5px;
+}
+#body .body-mains {
+	width:637px;
+	padding:0px;
+	margin-top:14px;
+	float:left;
+}
+.body-mains .form_error {
+	padding-left: 0
+}
+.body-mains .box {
+	margin-bottom:13px;
+}
+.body-mains .box .top {
+	width:637px;
+	height:14px;
+	background:url(/images/b-mboxtop.gif) no-repeat top center;
+}
+.body-mains .box .top-green {
+	width:638px;
+	height:16px;
+	background:url(/images/b-mboxtopgreen.gif) no-repeat top center;
+}
+.body-mains .box .content {
+	width:610px;
+	background:url(/images/b-mboxcontentbg.gif) repeat-y center;
+	padding:0px 12px 0px 15px;
+}
+.body-mains .box .content-green {
+	width:611px;
+	background:url(/images/b-mboxcontentbggreen.gif) repeat-y center;
+	padding:0px 12px 0px 15px;
+}
+.content .title {
+	color:#1c517c;
+	font:16px "Arial";
+	font-weight:bold;
+}
+.content .subtitle {
+	color:#7f8189;
+	font:12px "Arial";
+	padding-bottom:5px;
+	margin-top:3px;
+}
+.content .entry {
+	clear:both;
+	padding-top:20px;
+}
+.entry .ttle {
+	float:left;
+	width:220px;
+	color:#056a9a;
+	font:16px "Arial";
+	font-weight:bold;
+	margin:11px 10px 8px 10px;
+}
+.entry input {
+	float:left;
+	width:281px;
+	background:url(/images/registerinputbg.gif) no-repeat;
+	border:0px;
+	color:#7f8189;
+	font:19px "Arial";
+	padding:9px;
+	clear:left;
+}
+.entry .file input {
+	float:left;
+	height: auto;
+	font:12px "Arial";
+	margin-left: 10px;
+}
+.entry select {
+	width:156px;
+	height:40px;
+	background:#fff url(/images/selectyearbg.gif) no-repeat;
+	float:left;
+	margin-right:5px;
+	color:#3d3d3d;
+	font:14px "Arial";
+	border:0px;
+	padding:11px 10px 10px 12px;
+}
+.content .available {
+	float:left;
+	width:266px;
+	height:27px;
+	background:url(/images/available.gif) no-repeat;
+	color:#fff;
+	font:12px "Arial";
+	font-weight:bold;
+	margin-left:9px;
+	padding:13px 0px 0px 40px;
+}
+.content .information {
+	float:left;
+	width:260px;
+	height:30px;
+	background:url(/images/firstnamewhy.png) no-repeat;
+	color:#fff;
+	font:12px "Arial";
+	padding:13px 0px 0px 40px;
+	margin-left:9px;
+}
+.body-mains .box .bottom {
+	width:637px;
+	height:18px;
+	background:url(/images/b-mboxbottom.gif) no-repeat bottom center;
+}
+.body-mains .box .bottom-green {
+	width:638px;
+	height:27px;
+	background:url(/images/b-sboxbottomgreen.gif) no-repeat top center;
+}
+.body-mains #referaltext {
+	float:left;
+	color:#069;
+	font:16px 'Arial';
+	margin-left:10px;
+	font-weight:bold;
+	position:relative;
+	top:11px
+}
+.body-mains #referalinput {
+	float:right;
+	width:424px;
+	border:0px;
+	background:url(/images/refererinputbg.gif) no-repeat;
+	color:#7f8189;
+	font:19px 'Arial';
+	padding:9px;
+}
+.body-mains #tos {
+	color:#6b6e77;
+	font-family:"Arial";
+	margin-left:13px;
+	margin-bottom:23px;
+}
+#tos input {
+	position:relative;
+	top:2px;
+}
+#tos a {
+	color:#257000;
+}
+.body-mains #register {
+	width:264px;
+	height:35px;
+	background:url(/images/registeraccount.gif) no-repeat;
+	border:0px;
+	margin-bottom:44px;
+}
+#body .body-side {
+	width:284px;
+	padding:0px;
+	margin-top:14px;
+}
+.body-side .box .top {
+	width:284px;
+	height:10px;
+	background:url(/images/b-sboxtop.gif) no-repeat top center;
+}
+.body-side .box .content {
+	width:284px;
+	background:url(/images/b-sboxcontentbg.gif) repeat-y center;
+	padding:6px 0px 5px 0px;
+}
+.body-side .box .content .title {
+	color:#257000;
+	font:13px "Arial";
+	font-weight:bold;
+	line-height:24px;
+	padding-left:15px;
+	margin-top:12px;
+}
+.body-side .box .content .text {
+	color:#7f8189;
+	font:12px "Arial";
+	line-height:22px;
+	margin-top:5px;
+	padding-left:15px;
+}
+.body-side .box .bottom {
+	width:284px;
+	height:14px;
+	background:url(/images/b-sboxbottom.gif) no-repeat bottom center;
+}
+/*resgister css */

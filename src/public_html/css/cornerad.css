@@ -1,0 +1,20 @@
+﻿#corner-ad {  
+    display: block;  
+    width: 200px;  
+    height: 200px;  
+    position: absolute;  
+    top: -100px;  
+    right: -100px;  
+    -webkit-transform: rotate(45deg);  
+    -moz-transform: rotate(45deg);  
+    -o-transform: rotate(45deg);  
+}  
+
+#corner-ad {  
+    top: -142px\9;  
+    rightright: -60px\9;  
+    *rightright: -140px;  
+    filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476);  
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand', M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476)";  
+    zoom: 1;  
+}  

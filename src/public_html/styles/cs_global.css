@@ -1,0 +1,45 @@
+﻿@import "reset.css";
+@import "predefined.css";
+
+html { overflow:auto; }
+
+.spacer {
+	clear:both;
+	height:0px;
+	font-size:0px;
+	line-height:0px;
+	}
+
+body {
+	color:#056a9a;
+	background:#353535 url(../images/bg-body.png) repeat-x 0 0;
+	text-align:center;
+	font-family:Arial;
+	}
+	
+	
+#footer {
+	width:965px; height:95px;
+	font:13px "Arial";
+	color:#5d5d5d;
+	border-top:1px solid #5d5d5d;
+	padding:16px 0px 0px 0px;
+	margin:23px auto 0px auto;
+}
+	#footer #links {
+		float:left;
+		text-align:left;
+		}
+	#links a {
+		display:inline-block;
+		color:#bdc793;
+		text-decoration:none;
+		margin-top:5px;
+		margin-right:5px;
+		}
+		
+	#footer #partners {
+		float:right;
+		margin-top:12px;
+		}
+		#partners img { margin-left:10px; }

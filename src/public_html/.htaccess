@@ -1,0 +1,21 @@
+Options +FollowSymLinks +ExecCGI
+
+order allow,deny
+
+allow from all
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{REQUEST_URI} \..+$
+  RewriteCond %{REQUEST_URI} !\.html$
+
+  RewriteRule .* - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !/student/.*
+  RewriteCond %{REQUEST_URI} !/teacher/.*
+  RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+ErrorDocument 500 "<h2>Application error</h2>symfony application failed to start properly"

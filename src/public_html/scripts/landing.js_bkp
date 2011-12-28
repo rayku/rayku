@@ -1,0 +1,85 @@
+	function validate()
+	{
+	
+		
+		var fullname=document.getElementById('fullname').value;
+		
+		if(fullname == '')
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'The name field is empty';
+			return false;
+		}
+		
+		
+		var email=document.getElementById('email').value;
+		
+		if(email == '')
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'The email field is empty';
+			return false;
+		}
+		
+		var patt1=new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$");
+	
+		if (patt1.test(email)==false)
+		{
+	
+				document.getElementById('error').style.display = "block";
+				document.getElementById('error').innerHTML = 'Your email is not valid';
+				return false;
+		} 
+		
+		var password=document.getElementById('password').value;
+		
+		if(password == '')
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'The password field is empty';
+			return false;
+		}
+		
+		if(password.length < 6)
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'Your password should be atleast 6 characters';
+			return false;
+		}
+		
+		
+		var username=document.getElementById('username').value;
+		
+		if(username == '')
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'The username field is empty';
+			return false;
+		}
+		
+		for(var j=0; j<username.length; j++)
+		{
+			  var alphaa = username.charAt(j);
+			  var hh = alphaa.charCodeAt(0);
+			  
+			  if((hh > 47 && hh<58) || (hh > 64 && hh<91) || (hh > 96 && hh<123))
+			  {
+			  }
+			  else	
+			  {
+					document.getElementById('error').style.display = "block";
+					document.getElementById('error').innerHTML = 'Your username should only contain alphanumeric characters';
+					return false;
+			  }
+		}
+	
+			
+		if(document.getElementById('checkbox').checked == false)
+		{
+			document.getElementById('error').style.display = "block";
+			document.getElementById('error').innerHTML = 'Please accept the terms and conditions.';
+			return false;
+		}
+	
+	
+	}

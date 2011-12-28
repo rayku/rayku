@@ -1,0 +1,23 @@
+<?php
+
+
+		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+	        $db = mysql_select_db("rayku_db", $con);
+	//$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+
+$queryName = mysql_query("select * from user where username='".$_COOKIE['username']."' ") or die(mysql_error());
+
+
+
+if(mysql_num_rows($queryName) > 0) {
+		
+		echo "name";
+
+} else {
+	
+	echo "else";
+}
+
+
+
+?>

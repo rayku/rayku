@@ -1,0 +1,87 @@
+/* ######### CSS for Shade Tabs. Remove if not using ######### */
+
+.shadetabs{
+padding: 0 0 0 5px;
+margin-left: 0;
+margin-top: 30px;
+margin-bottom: 0;
+font: bold 12px Verdana;
+text-transform:uppercase;
+list-style-type: none;
+height:31px;
+}
+
+.shadetabs li{
+display: inline;
+margin: 0;
+}
+
+.shadetabs li a{
+text-decoration: none;
+position: relative;
+display:block;
+float:left;
+text-align:center;
+color: #fff;
+padding:10px 0 0 0;
+height:21px;
+width:134px;
+background: url(../images/tab.gif) no-repeat;
+}
+
+.shadetabs li a:visited{
+color: #fff;
+}
+
+.shadetabs li a:hover{
+text-decoration: none;
+color: #eee;
+}
+
+.shadetabs li a.selected{ /*selected main tab style */
+position: relative;
+color:#fff;
+}
+
+.shadetabs li a.selected{ /*selected main tab style */
+background-image: url(../images/tab_sel.gif);
+border-bottom-color: white;
+}
+
+.shadetabs li a.selected:hover{ /*selected main tab style */
+text-decoration: none;
+}
+
+.tabcontent{
+display:none;
+border:none;
+width:637px;
+font-size:12px;
+color:#767676;
+line-height:18px;
+padding:0;
+}
+
+@media print {
+.tabcontent {
+display:block !important;
+border:none;
+}
+}
+
+ul.questions {
+	padding:0 15px;
+		}
+.questions li {
+	float:left;
+	width:585px;
+	padding:8px 0;
+	list-style:circle;
+	font-size:12px;
+	color:#767676;
+	font-weight:bold;
+		}
+		.questions li a {
+			text-decoration:none;
+			color:#767676;
+				}

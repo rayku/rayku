@@ -1,0 +1,78 @@
+Options +FollowSymLinks +ExecCGI
+
+order allow,deny
+
+allow from all
+
+#ErrorDocument 404 http://www.rayku.com
+
+<IfModule mod_rewrite.c>
+
+  RewriteEngine On
+
+  # uncomment the following line, if you are having trouble
+
+  # getting no_script_name to work
+
+   RewriteBase /
+
+RewriteCond %{HTTP_HOST} !^www\.rayku\.com$ [NC]
+
+RewriteRule ^(.*)$ http://www.rayku.com/$1 [R=301,L]
+
+#RewriteCond %{HTTP_HOST} !^dev1.rayku.com
+
+#RewriteCond %{HTTP_HOST} ^[^\.w{3}]+\.rayku.com$
+
+#RewriteRule ^(.*) %{HTTP_HOST}$1 [C]
+
+#RewriteRule ^([^\.w{3}]+)\.rayku\.com(.*) http://www.rayku.com/static/classroom?classname=$1 [R=301,L]
+
+#RewriteRule ^classroom/index/id/(.*)$ http://$1.rayku.com [R=301,L]
+
+  # we skip all files with .something
+
+  RewriteCond %{REQUEST_URI} \..+$
+
+  RewriteCond %{REQUEST_URI} !\.html$
+
+  RewriteRule .* - [L]
+
+  # we check if the .html version is here (caching)
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+
+  RewriteCond %{REQUEST_URI} !/student/.*
+
+  RewriteCond %{REQUEST_URI} !/teacher/.*
+
+  # no, so we redirect to our front web controller
+
+  RewriteRule ^(.*)$ index.php [QSA,L]
+
+</IfModule>
+
+# big crash from our front web controller
+
+ErrorDocument 500 "<h2>Application error</h2>symfony application failed to start properly"
+
+#php_value max_execution_time 300
+
+#php_flag display_errors off
+
+RewriteCond %{HTTP_HOST} ^rayku\.org$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.rayku\.org$
+RewriteRule ^/?$ "http\:\/\/rayku\.com" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^rayku\.net$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.rayku\.net$
+RewriteRule ^/?$ "http\:\/\/rayku\.com" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^rayku\.us$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.rayku\.us$
+RewriteRule ^/?$ "http\:\/\/rayku\.com" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^rayku\.ca$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.rayku\.ca$
+RewriteRule ^/?$ "http\:\/\/rayku\.com" [R=301,L]
+

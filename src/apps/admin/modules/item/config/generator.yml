@@ -1,0 +1,12 @@
+generator:
+  class:              sfPropelAdminGenerator
+  param:
+    model_class:      Item
+    theme:            default
+    fields:
+      image:
+        name: Item image
+        type: admin_input_file_tag
+      features:
+        name:  "Item Features (Separate features by ',' example: White cotton, Hand made, Soft)"
+        type: textarea_tag

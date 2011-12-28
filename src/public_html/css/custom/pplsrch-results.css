@@ -1,0 +1,166 @@
+<!--
+
+.body-main { width:926px; }
+
+	.body-main #results {
+		float:left;
+		display:inline;
+		color:#676767;
+		font:16px "Arial";
+		font-weight:bold;
+    padding-bottom:20px;
+		}
+
+	.body-main .box {
+    width:926px; margin-bottom:13px;
+    position:relative;
+    z-index:5;
+    }
+		.body-main .box .top {
+			width:926px; height:14px;
+			background:url(../../images/b-mboxtopfull.png) no-repeat top center;
+			}
+		.body-main .box .content {
+			width:926px;
+			background:url(../../images/b-sboxcontentbgfull.gif) repeat-y center;
+			padding:4px 12px 0px 15px;
+			padding:0px;
+			}
+			.content .entry {
+				border-bottom:1px dashed #9db9cf;
+				padding:23px 0px 20px 0px;
+				}
+			.content .first { padding-top:12px; }
+			.content .last { border:0px; padding-bottom:5px; }
+				.entry img {
+					float:left;
+					border:1px solid #e8e8e8;
+					margin-left:18px;
+					vertical-align:top;
+					}
+				.entry .container { padding-top:4px; }
+				.entry .name {
+					display:inline;
+					color:#1c517c;
+					font:18px "Arial";
+					font-weight:bold;
+					margin-left:13px;
+					}
+				.entry .username {
+					display:inline;
+					color:#929292;
+					font:16px "Arial";
+					margin-left:1px;
+					}
+				.entry .actions {
+					!float:left;
+					display:inline-block;
+					margin:11px 0px 0px 13px;
+					}
+					.actions .addfriend {
+						!float:left;
+						display:inline-block;
+						height:16px; line-height:16px;
+						color:#257000;
+						font:12px "Arial";
+						font-weight:bold;
+						background:url(../../images/ico/green-plus-small.jpg) no-repeat left;
+						padding-left:23px;
+						}
+					.actions div {
+						!float:left; display:inline-block;
+						width:43px; height:1px;
+						border:0px; border-top:1px solid #e0e0e0;
+						margin:0px -4px 0px 8px;
+						position:relative; top:-3px; !top:7px;
+						}
+					.actions .useraction {
+						!float:left;
+						display:inline-block;
+						color:#1c517c;
+						font:12px "Arial";
+						font-weight:bold;
+						margin-left:16px;
+						}
+		.body-main .box .bottom{
+			width:926px; height:16px;
+			background:url(../../images/b-mboxbottomfull.gif) no-repeat bottom center;
+			}
+
+#save {
+	width:264px; height:35px;
+	background:url(../../images/add-journal-submit.gif) no-repeat;
+	border:0px;
+	color:#fff;
+	font:17px "Arial";
+	font-weight:bold;
+	margin-top:18px;
+	cursor:pointer;
+	margin-bottom:25px;
+	}
+
+.searchbutton {
+  background:transparent url(/images/search-btn.gif) repeat 0 0;
+  bottom:10px;
+  color:#FFFFFF;
+  float:right;
+  font-size:11px;
+  font-weight:bold;
+  height:18px;
+  line-height:17px;
+  position:relative;
+  right:20px;
+  text-align:center;
+  width:67px;
+}
+
+.extract {
+  width:800px;
+  !float:left;
+  display:inline-block;
+  height:16px; line-height:16px;
+  color:#1c517c;
+  font:12px "Arial";
+  font-weight:bold;
+}
+
+.extract strong {
+  font-weight:bold;
+  color:#257000;
+}
+
+/* S */
+
+.content table {
+  margin-left: 50px;
+}
+
+.content table th {
+  color:#056A9A;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  font-weight:bold;
+  padding-right: 20px;
+}
+
+.content table td {
+  width: 200px;
+  color: black;
+  padding: 5px 10px;
+}
+
+.content table td a {
+  color: black;
+}
+
+.content table a.navlink {
+  color:#696969;
+  display:inline-block;
+  font-size:13px;
+  font-weight:bold;
+  height:20px;
+  margin-bottom:10px;
+  padding:17px 0 10px 49px;
+  width:235px;
+}
+-->

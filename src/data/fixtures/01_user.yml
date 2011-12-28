@@ -1,0 +1,99 @@
+User:
+  user_test:
+    username: test
+    email: test@test.com
+    password: test
+    type: 1
+    name: test test
+    gender: 0
+    birthdate: 02-04-1984
+    show_gender: on
+    
+  user_friend:
+    username: friend
+    email: friend@friend.com
+    password: friend
+    type: 1
+    name: friend friend
+    gender: 0
+    
+  user_family:
+    username: family
+    email: family@family.com
+    password: family
+    type: 1
+    name: family family
+    gender: 0
+    
+  user_dummy1:
+    username: dummy1
+    email: dummy1@dummy1.com
+    password: dummy1
+    type: 1
+    name: dummy1 dummy1
+    gender: 1
+    
+  user_dummy2:
+    username: dummy2
+    email: dummy2@dummy2.com
+    password: dummy2
+    type: 1
+    name: dummy2 dummy2
+    gender: 1
+    
+  user_dummy3:
+    username: dummy3
+    email: dummy3@dummy3.com
+    password: dummy3
+    type: 1
+    name: dummy3 dummy3
+    gender: 1
+    
+  user_dummy4:
+    username: dummy4
+    email: dummy4@dummy4.com
+    password: dummy4
+    type: 1
+    name: dummy4 dummy4
+    gender: 1
+    
+  user_dummy5:
+    username: dummy5
+    email: dummy5@dummy5.com
+    password: dummy5
+    type: 1
+    name: dummy5 dummy5
+    gender: 1
+    
+  user_dummy6:
+    username: dummy6
+    email: dummy6@dummy6.com
+    password: dummy6
+    type: 1
+    name: dummy6 dummy6
+    gender: 1
+    
+  user_dummy7:
+    username: dummy7
+    email: dummy7@dummy7.com
+    password: dummy7
+    type: 1
+    name: dummy7 dummy7
+    gender: 1
+    
+  user_dummy8:
+    username: dummy8
+    email: dummy8@dummy8.com
+    password: dummy8
+    type: 1
+    name: dummy8 dummy8
+    gender: 1
+    
+  user_real:
+    username: real
+    email: notjosh@gmail.com
+    password: real
+    type: 1
+    name: real real
+    gender: 1
+  

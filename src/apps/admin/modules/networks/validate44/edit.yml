@@ -1,0 +1,17 @@
+fillin:
+  enabled: true
+  
+fields:
+  network{name}:
+    required:
+      msg: You must give this network a name
+  network{description}
+    required:
+      msg: This network must have a description
+  network{type}:
+    sfNumberValidator:
+      min: 0
+      max: 1
+      min_error: You must choose a valid network type
+      max_error: You must choose a valid network type
+      nan_error: You must choose a valid network type

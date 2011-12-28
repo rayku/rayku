@@ -1,0 +1,16 @@
+all:
+  credentials: student_voice_management
+index:
+  credentials: []
+list:
+  credentials: []
+show:
+  credentials: []
+create:
+  credentials: []
+update:
+  credentials: []
+vote:
+  credentials: []
+voteexist:
+  credentials: []

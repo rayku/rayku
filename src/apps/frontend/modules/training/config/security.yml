@@ -1,0 +1,8 @@
+all:
+  is_secure: true
+autocomplete:
+  is_secure: false
+members:
+  is_secure: false
+games:
+  is_secure: false

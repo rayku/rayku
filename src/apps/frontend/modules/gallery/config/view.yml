@@ -1,0 +1,4 @@
+default:
+  stylesheets: [/styles/donny.css]
+indexSuccess:
+  stylesheets: [/css/custom/gallery-homepage.css]

@@ -1,0 +1,148 @@
+*
+{
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+}
+
+.clear
+{
+	clear:both;
+}
+.black
+{
+	color:#333333;
+}
+#widget
+{
+	margin:0 auto;
+	width:284px;
+	border:1px solid #999999;
+	border-top:2px solid #999999;
+	font-size:14px;
+	font-family:Tahoma, Geneva, sans-serif;
+}
+#widget-head
+{
+	position:relative;
+	width:264;
+	background: #f4f4f4;
+	border-bottom:1px solid #e1e1e1;
+	padding:7px 10px;
+	
+}
+#widget-head h3
+{
+	font-size:14px;
+	font-weight:normal;
+	color:#333333;
+}
+#on-off
+{
+	font-size:15px;
+	color:#666;
+}
+#widget-main
+{
+	margin:10px;
+	position:relative;
+}
+#widget-main p
+{
+	color:#838383;
+	line-height:18px;
+	
+}
+#rank-wrap
+{
+	padding:0 0 15px 55px;
+	margin:16px auto;
+	border-bottom:1px solid #e1e1e1;
+}
+#rank-no
+{
+	font-size:40px;
+	float:left;
+}
+#rank
+{
+	width:60px;
+	font-size:16px;
+	padding-left:10px;
+	line-height:18px;
+	color:#666666;
+	cursor:pointer;
+	text-decoration:underline;
+	float:left;
+}
+#widget-foot
+{
+	background:#f3f3f3;
+	margin:0 10px;
+	border-top:1px solid #e1e1e1;
+}
+#widget-foot p
+{
+	padding:7px 5px;
+	font-size:12px;
+	color:#666666;
+}
+#widget-foot p a
+{
+	color:#066699;
+}
+#amount
+{
+	width:30px;
+	color:#07679a;
+	background:transparent;
+}
+.amount
+{
+
+	float:right;
+	color:#666666;
+}
+#tutor-rate-slider p
+{
+	margin-bottom:15px;
+}
+#tutor-rate-slider
+{
+	padding-bottom:25px;
+}
+
+#widget-main ul.icon-list 
+{
+	list-style: none;
+	padding: 0;
+	margin: 20px 0 0;
+	background: #d2e6f6;
+}
+#widget-main ul.icon-list li a
+{
+	display: block;
+	float: left;
+	width: 74px;
+	height: 73px;
+	margin-right: 15px;
+	text-indent: -5000px;
+}
+#widget-main ul.icon-list li a.windows { background: url('/images/icon-windows.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.windows:hover { background: url('/images/icon-windows-hover.jpg') center center no-repeat;}		
+#widget-main ul.icon-list li a.mac { background: url('/images/icon-mac.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.mac:hover { background: url('/images/icon-mac-hover.jpg') center center no-repeat;}
+#widget-main ul.icon-list li a.gtalk { background: url('/images/icon-gtalk.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.gtalk:hover { background: url('/images/icon-gtalk-hover.jpg') center center no-repeat;}
+#widget-main ul.icon-list li a.facebook { background: url('/images/icon-facebook.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.facebook:hover { background: url('/images/icon-facebook-hover.jpg') center center no-repeat;}
+
+#widget-main ul.icon-list li a.windows-no { background: url('/images/icon-windows-no.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.windows-no:hover { background: url('/images/icon-windows-no-hover.jpg') center center no-repeat;}		
+#widget-main ul.icon-list li a.mac-no { background: url('/images/icon-mac-no.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.mac-no:hover { background: url('/images/icon-mac-no-hover.jpg') center center no-repeat;}
+#widget-main ul.icon-list li a.gtalk-no { background: url('/images/icon-gtalk-no.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.gtalk-no:hover { background: url('/images/icon-gtalk-no-hover.jpg') center center no-repeat;}
+#widget-main ul.icon-list li a.facebook-no { background: url('/images/icon-facebook-no.jpg') center center no-repeat; }
+#widget-main ul.icon-list li a.facebook-no:hover { background: url('/images/icon-facebook-no-hover.jpg') center center no-repeat;}

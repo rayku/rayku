@@ -1,0 +1,2 @@
+default:
+  stylesheets: [/styles/forum_global.css, /styles/forum_donny.css]

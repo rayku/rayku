@@ -1,0 +1,6 @@
+all:
+  is_secure: false
+stepthird:
+  is_secure: true
+stepthird:
+  is_secure: true

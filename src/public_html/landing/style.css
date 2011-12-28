@@ -1,0 +1,277 @@
+* { margin:0; padding:0; }
+
+body
+{ 
+	font:12px Arial, Verdana; color:#000000;
+	background: url('images/background.png') repeat-x;
+	background-color: #353535;
+}
+
+A:link {text-decoration: none; color: #FFFFFF;}
+A:visited {text-decoration: none; color: #FFF;}
+A:active {text-decoration: none; color: #FFF;}
+A:hover {text-decoration: underline; color: #FFF;}
+
+div#container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50em; height: auto;
+	text-align: left; width: 965px;
+}
+
+#banner {
+	background: url('images/banner.png');
+	width: 965px;
+	height: 86px;
+	margin-top: 20px;
+}
+
+#bannertext {
+	font-size: 20px;
+	color: #FFF;
+	float: left;
+	margin: 34px 0 0 180px;
+}
+
+#login {
+	float: right;
+	background-color: #1d76a0;
+	padding: 12px 27px 10px 27px;
+	margin: 25px 40px 0 0;
+	font-size: 18px;
+	border-radius: 5px;
+}
+
+#ask {
+	float: left;
+	width: 537px;
+	height: 179px;
+	background-color: #dfe6eb;
+	padding: 40px 30px 40px 30px;
+}
+
+h1 {
+	color: #074b6d;
+	text-shadow: 1px 1px #FFF;
+	font-size: 30px;
+}
+
+hr {
+	border: 0px;
+	background: url('images/hr.png') repeat-x;
+	width: 100%; height: 1px;
+	margin: 5px 0 10px 0;
+}
+
+.textarea {
+	border: 1px solid #b7b6b6;
+	border-radius: 7px;
+	width: 515px; height: 61px;
+	color: #666;
+	font:14px/21px arial,sans-serif;
+	padding: 10px;
+	margin-bottom: 15px;
+	font-style:italic;
+}
+
+.select {
+	position: absolute;
+	width: 200px;
+	height: 21px;
+	padding: 10px 24px 10px 13px;
+	color: #9d9d9d;
+	font: 12px/21px arial,sans-serif;
+	background: url(images/select.png) no-repeat;
+	overflow: hidden;
+}
+
+.submit {
+	border: 0px;
+	background: url('images/submit.png');
+	width: 122px; height: 29px;
+	float: right;
+	margin-top: 7px;
+	color: #5981ae;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#video {
+	float: right;
+	width: 332px;
+	background-color: #f5f9fd;
+	padding: 30px 10px 31px 26px;
+}
+
+	#actual {
+		border: 2px solid #f2f3f3;
+		width: 311px; height: 175px;
+	}
+	
+#bar {
+	background: url('images/bar.png');
+	width: 965px; height: 116px;
+}
+
+.tutors {
+	font-size: 18px;
+	color: #585858;
+	float: left;
+	width: 110px;
+	padding: 37px 0 0 40px;
+}
+
+.number {
+	color: #7EBA78;
+	font-size: 47px;
+	clear: left;
+	float: left;
+	margin: -3px 5px 0 0;
+}
+
+.questions {
+	font-size: 18px;
+	color: #585858;
+	float: left;
+	width: 200px;
+	padding: 37px 0 0 40px;
+}
+
+.todaymath {
+	color: #7f7f7f;
+	float: right;
+	padding: 30px 40px 0 0;
+}
+
+.quote {
+	margin: 0 0 -30px 0;
+}
+
+.tmquestion {
+	color: #5795c7;
+	font-size: 25px;
+}
+
+.tmquestion A:link {text-decoration: none; color: #5795c7;}
+.tmquestion A:visited {text-decoration: none; color: #5795c7;}
+.tmquestion A:active {text-decoration: none; color: #5795c7;}
+.tmquestion A:hover {text-decoration: underline; color: #417cab;}
+
+#body {
+	background-color: #FFF;
+	padding: 30px 0px 0 26px;
+	margin: 0 0 8px 0;
+}
+
+#body ul {
+	margin-bottom: 30px;
+}
+
+#body ul li {
+	list-style-type: none;
+	display: inline;
+	padding-right: 20px;
+}
+
+#getstarted {
+	float: left;
+	margin-top: 30px;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+}
+
+#getstarted ul li {
+	list-style-type: none;
+	display: inline;
+}
+
+#getstarted ul li a {
+	background: url('images/getstarted.png');
+	padding: 50px 134px 76px 134px;
+}
+
+#getstarted ul li a:hover {
+	background: url('images/getstarted2.png');
+	padding: 50px 134px 76px 134px;
+	text-decoration: none;
+}
+
+#slider {
+	float:right; 
+	margin: -94px 28px 30px 0;
+	border: 2px solid #e8e7e3;
+}
+
+#line {
+	background-color: #585858;
+	height: 1px; width:  100%;
+}
+
+#footer {
+	color: #5d5d5d;
+	padding: 30px 0 50px 0;
+	line-height: 20px;
+}
+
+#footer A:link {text-decoration: none; color: #bdc793;}
+#footer A:visited {text-decoration: none; color: #bdc793;}
+#footer A:active {text-decoration: none; color: #bdc793;}
+#footer A:hover {text-decoration: underline; color: #d9e2b1;}
+
+.logos {
+	float: right;
+	margin: -35px 0 0 0;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+
+*{outline: none;}
+img {border: 0;}
+
+/*--Main Container--*/
+.main_view {
+	float: left;
+	position: relative;
+}
+/*--Window/Masking Styles--*/
+.window {
+	height:137px;	width: 619px;
+	overflow: hidden; /*--Hides anything outside of the set width/height--*/
+	position: relative;
+}
+.image_reel {
+	position: absolute;
+	top: 0; left: 0;
+}
+.image_reel img {float: left;}
+
+/*--Paging Styles--*/
+.paging {
+	position: absolute;
+	top: 10px; left: 20px;
+	width: 703px; height:47px;
+	z-index: 100; /*--Assures the paging stays on the top layer--*/
+	text-align: left;
+	line-height: 40px;
+	background: url(images/bgslider.png) no-repeat;
+	display: none; /*--Hidden by default, will be later shown with jQuery--*/
+}
+.paging a {
+	padding: 15px 10px 18px 20px;
+	text-decoration: none;
+	color: #fff;
+	background: url('images/numberbg.png') no-repeat;
+}
+.paging a.active {
+	font-weight: bold; 
+	color: #1ebd95;
+	background: url('images/numberbghover.png') no-repeat;
+}
+.paging a:hover {font-weight: bold;}

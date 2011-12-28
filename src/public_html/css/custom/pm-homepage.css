@@ -1,0 +1,52 @@
+<!--
+
+.body-main .entry {
+		height:40px;
+		font-family:"Arial";
+		border-bottom:1px solid #d2dce5;
+		background:#fff url(../../images/pmh-entrybg.gif) repeat-x bottom;
+		padding:13px 10px 0px 10px;
+		}
+		.entry .container {
+			width:146px;
+			float:left;
+			margin-right:10px;
+			}
+			.container .author {
+				color:#1c517c;
+				font-size:12px;
+				font-weight:bold;
+				}
+			.container .date {
+				color:#7f8189;
+				font-size:12px;
+				margin-top:2px;
+				}
+		.entry .desc {
+			float:left;
+			display:inline-block;
+			color:#6b6e77;
+			font-size:13px;
+			margin-top:6px;
+			}
+		.entry .desc a {
+			color:#667;
+			}
+    .entry .desc a.unreaded {
+      font-weight:bold;
+	  color:#333333;
+      }
+		.entry .delete {
+			float:right;
+			display:inline-block;
+			width:17px; height:38px;
+			background:url(../../images/ico/pmh-del.gif) no-repeat;
+			margin-top:5px;
+			cursor:pointer;
+			}
+
+			
+			
+			
+
+-->

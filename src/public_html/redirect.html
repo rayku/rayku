@@ -1,0 +1,18 @@
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<script type="text/javascript">
+function popupWin() {
+
+newWindow = window.open('http://www.rayku.com/popup.php','newWin','width=360,height=415,scrollbars=yes');
+}
+
+
+function delayedRedirect(){
+    window.location = "http://www.rayku.com/dashboard"
+}
+</script>
+<body onLoad="popupWin();setTimeout('delayedRedirect()', 1500)" >
+<div align="center" style="margin-top:50px;font-family:Tahoma"><img src="http://www.rayku.com/images/loading1.gif"><br>
+<a href="http://www.rayku.com/dashboard">Click here</a> if you are not redirected in 2 seconds...</div>
+</body>

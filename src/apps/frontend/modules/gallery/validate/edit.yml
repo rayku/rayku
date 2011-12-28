@@ -1,0 +1,15 @@
+fillin:
+  enabled: true
+
+fields:
+  title:
+    required:
+      msg: You must specify the name of the gallery
+      
+  gallery{type}:
+    sfNumberValidator:
+      min: 0
+      max: 3
+      min_error: You must specifiy a valid gallery type
+      max_error: You must specifiy a valid gallery type
+      nan_error: You must specifiy a valid gallery type

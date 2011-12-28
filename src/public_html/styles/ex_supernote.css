@@ -1,0 +1,68 @@
+/* "fallback" links for non-CSS supporting browsers. */
+.fallback {
+ display: none;
+}
+
+/* Here's our default note styles. */
+.notedefault, .notenested {
+ position: absolute;
+ visibility: hidden;
+ top: 1.5em;
+ left: 2em; width: 10em;
+}
+.notedefault {
+ padding: 3px;
+ color: white;
+}
+#supernote-note-demo1, #supernote-note-demo2 {
+	background:url(../images/baloon.png) no-repeat;
+	height:121px;
+	width:117px;
+	color:#000;
+	padding:10px 10px 10px 18px;
+		}
+.notedefault select {
+	height:70px;
+	width:117px;
+	margin:5px 0;
+	border:none;
+	font-size:11px;
+		}		
+
+.notedefault .bookin {
+	height:22px;
+	width:78px;
+	background:url(../images/bookin.gif) no-repeat;
+	display:block;
+	overflow:hidden;
+	text-indent:-9999px;
+	border:none;
+		}		
+
+/* Some position-type-specific offset information. Tweak as needed! */
+.snp-mouseoffset, .snp-triggeroffset, .snp-mousetrack {
+ margin-left: 0;
+ margin-top: 0;
+}
+
+/* Headings within notes */
+.notedefault h5 {
+ font-size:14px;
+ font-weight:bold;
+ color: #347a11;
+ border-bottom:1px solid #a6a6a6;
+ padding:0 2px 5px 2px;
+}
+
+.blue1 {
+background:transparent url(../images/bluebutton.jpg) no-repeat scroll 0 0;
+border:0 none;
+color:#FFFFFF;
+font-size:12px;
+font-weight:bold;
+height:35px;
+text-align:center;
+width:90px;
+float:left;
+line-height:35px;
+}
