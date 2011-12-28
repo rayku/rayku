@@ -32,7 +32,7 @@ input[type=submit] {
 	margin-left:32px;
 }
 .play a {
-	background:url(http://rayku.com/images/landing/play.png) no-repeat;
+	background:url(/images/landing/play.png) no-repeat;
 	width:237px;
 	height:43px;
 	text-indent:-9999px;
@@ -40,7 +40,7 @@ input[type=submit] {
 	display:block;
 }
 .play a:hover {
-	background:url(http://rayku.com/images/landing/play.png) 0 -68px no-repeat;
+	background:url(/images/landing/play.png) 0 -68px no-repeat;
 }
 /*
 ---------------------------------------------
@@ -55,7 +55,7 @@ div#top-nav {
 	width :100%;
 	padding: 0 0 2px;
 	margin: 0 0 15px;
-	background: url('http://rayku.com/images/landing/topnav/background.jpg') left top repeat-x;
+	background: url('/images/landing/topnav/background.jpg') left top repeat-x;
 	height:51px;
 	position:fixed;
 	z-index:1001;
@@ -74,14 +74,14 @@ div#top-nav div#top-nav-center ul.top-menu li {
 	float: left;
 }
 div#top-nav div#top-nav-center ul.top-menu li a[title="Rayku"] {
-	background: url('http://rayku.com/images/landing/topnav/rayku.jpg') top left no-repeat;
+	background: url('/images/landing/topnav/rayku.jpg') top left no-repeat;
 	width: 111px;
 	height: 51px;
 	text-indent: -5000px;
 	display: block;
 }
 div#top-nav div#top-nav-center div#user-box a.tt-whiteboard {
-	background: url('http://rayku.com/images/landing/topnav/whiteboard.jpg') top left no-repeat;
+	background: url('/images/landing/topnav/whiteboard.jpg') top left no-repeat;
 	width: 47px;
 	height: 51px;
 	display: block;
@@ -89,10 +89,10 @@ div#top-nav div#top-nav-center div#user-box a.tt-whiteboard {
 	float: right;
 }
 div#top-nav div#top-nav-center div#user-box a.tt-whiteboard:hover {
-	background: url('http://rayku.com/images/landing/topnav/whiteboard.jpg') bottom left no-repeat;
+	background: url('/images/landing/topnav/whiteboard.jpg') bottom left no-repeat;
 }
 .tooltip {
-	background: url('http://rayku.com/images/landing/tooltip.png') center top no-repeat;
+	background: url('/images/landing/tooltip.png') center top no-repeat;
 	font-size:12px;
 	padding: 15px 10px 10px;
 	position: absolute;
@@ -107,7 +107,7 @@ Register Section Styling
 --------------------------------------------- */
 #register {
 	padding:100px 0 0 0;
-	background:#252324 url(http://rayku.com/images/landing/background.jpg) 0 0 repeat-x;
+	background:#252324 url(/images/landing/background.jpg) 0 0 repeat-x;
 }
 #registration-options {
 	position:absolute;
@@ -117,7 +117,7 @@ Register Section Styling
 	z-index:1000;
 }
 #registration-form {
-	background:url(http://rayku.com/images/landing/pencil.png) right 15px no-repeat;
+	background:url(/images/landing/pencil.png) right 15px no-repeat;
 	height:155px;
 	position:absolute;
 	width:375px;
@@ -126,7 +126,7 @@ Register Section Styling
 	top:50px;
 }
 #login-form {
-	background:url(http://rayku.com/images/landing/pencil.png) right 15px no-repeat;
+	background:url(/images/landing/pencil.png) right 15px no-repeat;
 	height:155px;
 	position:absolute;
 	width:375px;
@@ -183,7 +183,7 @@ Register Section Styling
 	width:203px;
 }
 #connect-to-tabs {
-	background:url(http://rayku.com/images/landing/tabs-bg.png) repeat-x;
+	background:url(/images/landing/tabs-bg.png) repeat-x;
 	font-size:14px;
 	font-weight:bold;
 	color:#fff;
@@ -216,10 +216,10 @@ Register Section Styling
 	padding:0 0 0 10px;
 }
 #registration-tab.active {
-	background:url(http://rayku.com/images/landing/tabs.png) 0 -112px no-repeat;
+	background:url(/images/landing/tabs.png) 0 -112px no-repeat;
 }
 #login-tab.active {
-	background:url(http://rayku.com/images/landing/tabs.png) right -51px no-repeat;
+	background:url(/images/landing/tabs.png) right -51px no-repeat;
 }
 #login-tab {
 	top:0;
@@ -232,7 +232,7 @@ Register Section Styling
 	text-shadow:0 0 0 #000;
 }
 #registration-form input[type=submit], #login-form input[type=submit] {
-	background:url(http://rayku.com/images/landing/submitr-button.png) no-repeat;
+	background:url(/images/landing/submitr-button.png) no-repeat;
 	width:122px;
 	height:44px;
 	text-indent:-9999px;
@@ -240,10 +240,10 @@ Register Section Styling
 	display:block;
 }
 #registration-form input[type="submit"]:active, #login-form input[type="submit"]:active {
-	background:url(http://rayku.com/images/landing/submitr-button.png) 0 -54px no-repeat;
+	background:url(/images/landing/submitr-button.png) 0 -54px no-repeat;
 }
 #login-form input[type=submit] {
-	background:url(http://rayku.com/images/landing/submitl-button.png) no-repeat;
+	background:url(/images/landing/submitl-button.png) no-repeat;
 	width:101px;
 	height:44px;
 	text-indent:-9999px;
@@ -251,7 +251,7 @@ Register Section Styling
 	display:block;
 }
 #login-form input[type="submit"]:active {
-	background:url(http://rayku.com/images/landing/submitl-button.png) 0 -54px no-repeat;
+	background:url(/images/landing/submitl-button.png) 0 -54px no-repeat;
 }
 #scroll-for-more {
 	text-align:center;
@@ -270,7 +270,7 @@ Register Section Styling
 Questions Section Styling
 --------------------------------------------- */
 #questions {
-	background:url(http://rayku.com/images/landing/background2.jpg) #fff repeat-x;
+	background:url(/images/landing/background2.jpg) #fff repeat-x;
 	background-position:center top;
 	height: 1200px;
 	padding: 500px 0 0;
@@ -280,7 +280,7 @@ Questions Section Styling
 	color:#8e8e8e;
 }
 .q-1 {
-	background:url(http://rayku.com/images/landing/qmark-1.png) no-repeat;
+	background:url(/images/landing/qmark-1.png) no-repeat;
 	width:255px;
 	min-height:91px;
 	top:640px;
@@ -301,7 +301,7 @@ Questions Section Styling
 	font-size:15px;
 }
 .q-2 {
-	background:url(http://rayku.com/images/landing/qmark-2.png) no-repeat;
+	background:url(/images/landing/qmark-2.png) no-repeat;
 	width:313px;
 	min-height:180px;
 	top:700px;
@@ -323,7 +323,7 @@ Questions Section Styling
 	font-size:20px;
 }
 .q-3 {
-	background:url(http://rayku.com/images/landing/qmark-3.png) no-repeat;
+	background:url(/images/landing/qmark-3.png) no-repeat;
 	width:247px;
 	height:262px;
 	top:620px;
@@ -331,7 +331,7 @@ Questions Section Styling
 	z-index:10;
 }
 .q-4 {
-	background:url(http://rayku.com/images/landing/qmark-4.png) no-repeat;
+	background:url(/images/landing/qmark-4.png) no-repeat;
 	width:412px;
 	height:262px;
 	top:830px;
@@ -346,7 +346,7 @@ Questions Section Styling
 	font-size:26px;
 }
 .q-5 {
-	background:url(http://rayku.com/images/landing/qmark-5.png) no-repeat;
+	background:url(/images/landing/qmark-5.png) no-repeat;
 	width:209px;
 	top:960px;
 	right:15%;
@@ -378,7 +378,7 @@ Questions Section Styling
 Whiteboard Section Styling
 --------------------------------------------- */
 #whiteboard {
-	background:url(http://rayku.com/images/landing/background.jpg) 0 -1070px repeat-x;
+	background:url(/images/landing/background.jpg) 0 -1070px repeat-x;
 	padding-top: 50px;
 	z-index:1000;
 	position:relative;
@@ -429,7 +429,7 @@ Whiteboard Section Styling
 }
 #plus-green, #plus-grey, #plus-blue, #plus-orange {
 	position:absolute;
-	background:url(http://rayku.com/images/landing/trans-whiteboard-tooltip.png) repeat;
+	background:url(/images/landing/trans-whiteboard-tooltip.png) repeat;
 	padding:28px 22px 23px 17px;
 	width:150px;
 	color:white;
@@ -477,7 +477,7 @@ Whiteboard Section Styling
 	color:#ffa800;
 }
 .clip {
-	background:url(http://rayku.com/images/landing/clip.png) no-repeat;
+	background:url(/images/landing/clip.png) no-repeat;
 	width:66px;
 	height:92px;
 	position:absolute;
@@ -495,15 +495,15 @@ Whiteboard Section Styling
 Newsletter Section Styling
 --------------------------------------------- */
 #newsletter {
-	background:url(http://rayku.com/images/landing/newsletter-bg.png) repeat;
+	background:url(/images/landing/newsletter-bg.png) repeat;
 }
 #newsletter .container {
-	background:url(http://rayku.com/images/landing/newsletter.png) repeat-y;
+	background:url(/images/landing/newsletter.png) repeat-y;
 	height:500px;
 	padding-bottom:50px;
 }
 #newsletter #newsletter-content {
-	background:url(http://rayku.com/images/landing/newsletter-2.png) 0 36px no-repeat;
+	background:url(/images/landing/newsletter-2.png) 0 36px no-repeat;
 	height:500px;
 	margin-left:-15px;
 }
@@ -533,7 +533,7 @@ form#newsletter-form p:first-child {
 	filter:alpha(opacity=58);
 }
 form#newsletter-form input[type=text] {
-	background:url(http://rayku.com/images/landing/input-button.png) no-repeat;
+	background:url(/images/landing/input-button.png) no-repeat;
 	width:365px;
 	height:62px;
 	color:#575757;
@@ -542,7 +542,7 @@ form#newsletter-form input[type=text] {
 	padding:0 20px;
 }
 form#newsletter-form a {
-	background:url(http://rayku.com/images/landing/register-button.png) no-repeat;
+	background:url(/images/landing/register-button.png) no-repeat;
 	width:350px;
 	height:65px;
 	margin-left:2px;
@@ -551,7 +551,7 @@ form#newsletter-form a {
 	display:block;
 }
 form#newsletter-form a:hover {
-	background:url(http://rayku.com/images/landing/register-button.png) 0 -80px no-repeat;
+	background:url(/images/landing/register-button.png) 0 -80px no-repeat;
 }
 /*
 ---------------------------------------------
