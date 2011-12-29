@@ -211,27 +211,26 @@ class loginActions extends sfActions
 
         $currentUser = $this->getUser()->getRaykuUser();
 
-        if(!empty($logedUserId)) :
+        if(!empty($logedUserId)) {
 
             mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-        mysql_query("delete from sendmessage where asker_id =".$logedUserId, $connection) or die(mysql_error());
-        mysql_query("delete from user_expert where checked_id=".$logedUserId, $connection) or die(mysql_error());
-endif;
+            mysql_query("delete from sendmessage where asker_id =".$logedUserId, $connection) or die(mysql_error());
+            mysql_query("delete from user_expert where checked_id=".$logedUserId, $connection) or die(mysql_error());
 
-if($_SESSION['modelPopupOpen']) :
+        }
+        if($_SESSION['modelPopupOpen']) {
 
-    unset($_SESSION['modelPopupOpen']);
+            unset($_SESSION['modelPopupOpen']);
 
-if($_SESSION['popup_session']) :
+            if($_SESSION['popup_session']) {
 
-    unset($_SESSION['popup_session']);
-endif;
+                unset($_SESSION['popup_session']);
+            }
+        }
 
-endif;
 
-
-$this->getUser()->signOut();
-$this->redirect('@homepage');
+        $this->getUser()->signOut();
+        $this->redirect('@homepage');
 
 
     }
