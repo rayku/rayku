@@ -19,226 +19,195 @@ class tutorActions extends sfActions
 	//		$this->appcanvasurl = 'http://apps.facebook.com/rayku';
 	//		$appapikey = '0b60aa8352658ae667308f301eeda8ce';
 	//		$appsecret = 'f6f39f025954444c01061415d2510bbf';
-			
+
 		//	$this->facebook = new Facebook($appapikey, $appsecret,true);
 			//$this->user = $this->facebook->require_login();// id of Facebook user hat will add your app.Then, you can use $this->user in your all actions to get user id.
-	
+
 	}
 
 	/**
 	* Action to display login page
 	*/
 	public function executeIndex()
-	{
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-                  $db = mysql_select_db("rayku_db", $con);
-				  
-				  
-				
+    {
+        $connection = RaykuCommon::getDatabaseConnection();
 
-		if($this->getRequestParameter('username') == NULL) 
-		{
+        if($this->getRequestParameter('username') == NULL)
+        {
 
-			$this->redirect("http://www.rayku.com/dashboard");
-	
-		}
-		  
+            $this->redirect("http://www.rayku.com/dashboard");
 
+        }
+        $c = new Criteria();
+        $c->add(UserPeer::USERNAME,$this->getRequestParameter('username'));
+        $user = UserPeer::doSelectOne($c);
 
-	 $c = new Criteria();
-	 $c->add(UserPeer::USERNAME,$this->getRequestParameter('username'));
-	 $user = UserPeer::doSelectOne($c);
+        $this->user = $user;
 
-	$this->user = $user;
-	 
-	 		//$this->currentUserId = $this->getUser()->getRaykuUser()->getId();
-	
-				  ////////get rank of the user
-	$tutor_id = $user->getId();
+        //$this->currentUserId = $this->getUser()->getRaykuUser()->getId();
 
-	$this->tutor_id = $user->getId();
+        ////////get rank of the user
+        $tutor_id = $user->getId();
 
+        $this->tutor_id = $user->getId();
 
-			 
+        $c = new Criteria();
 
+        $rankexperts = ExpertCategoryPeer::doSelect($c);
 
-	$c = new Criteria();
+        $rankUsers = array(); $ji =0; $newUserLimit = array();  $rankScore = array();
 
-	$rankexperts = ExpertCategoryPeer::doSelect($c);
+        foreach($rankexperts as $exp){
+            if(!in_array($exp->getUserId(), $newUserLimit)) {
 
-	$rankUsers = array(); $ji =0; $newUserLimit = array();  $rankScore = array();
+                $newUserLimit[] = $exp->getUserId();
 
-		 foreach($rankexperts as $exp): 
+                $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
+                if(mysql_num_rows($_query) > 0) {
 
-	
-					if(!in_array($exp->getUserId(), $newUserLimit)) :
+                    $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+                    $score = mysql_fetch_assoc($query);
 
-					$newUserLimit[] = $exp->getUserId();
+                    if($score['score'] != 0){
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ") or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
+                        $dv=new Criteria();
+                        $dv->add(UserPeer::ID,$exp->getUserId());
+                        $_thisUser = UserPeer::doSelectOne($dv);
+                        $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
 
-							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId()) or die(mysql_error());
-							$score = mysql_fetch_assoc($query);
+                        $ji++;
 
-							if($score['score'] != 0):
+                    }
+                }
+            }
+        }
 
-								$dv=new Criteria();
-								$dv->add(UserPeer::ID,$exp->getUserId());
-								$_thisUser = UserPeer::doSelectOne($dv);
-								$rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
 
-								$ji++;
 
-							endif;
-		      
-      						 endif; 
+        asort($rankUsers);
 
-					endif;
+        arsort($rankUsers);
 
+        $this->rankUsers = $rankUsers;
 
-		 endforeach; 
 
 
+        //////////////////////////////
 
-					asort($rankUsers);  
+        if(!empty($_GET['expert_id'])) {
 
-					arsort($rankUsers);
 
- $this->rankUsers = $rankUsers;
-	
-	
+            $_expert_id = !empty($_GET['expert_id']) ? $_GET['expert_id'] : 0;
 
-//////////////////////////////
+            $userId = $this->getUser()->getRaykuUserId();
 
-		if(!empty($_GET['expert_id'])) {
+            if($_expert_id) {
 
+                $query = mysql_query("select * from expert_subscribers where expert_id = ".$_expert_id." and user_id =".$userId, $connection) or die(mysql_error());
 
-			$_expert_id = !empty($_GET['expert_id']) ? $_GET['expert_id'] : 0;
+                if(mysql_num_rows($query) == 0) {
 
-			$userId = $this->getUser()->getRaykuUserId();
+                    $_query = mysql_query("insert into expert_subscribers(expert_id, user_id) values(".$_expert_id.", ".$userId.")", $connection) or die("Error--->".mysql_error());
+                    $queryScore = mysql_query("select * from user_score where user_id =".$_expert_id, $connection) or die(mysql_error());
+                    $rowScore = mysql_fetch_assoc($queryScore);
+                    $newScore = '';
 
-			if($_expert_id) :
+                    $newScore = $rowScore['score'] + 10;
 
- 			 $query = mysql_query("select * from expert_subscribers where expert_id = ".$_expert_id." and user_id =".$userId) or die(mysql_error());
+                    mysql_query("update user_score set score = ".$newScore." where user_id =".$_expert_id, $connection) or die(mysql_error());
 
-     			 if(mysql_num_rows($query) == 0) {
+                }
 
-				$_query = mysql_query("insert into expert_subscribers(expert_id, user_id) values(".$_expert_id.", ".$userId.")") or die("Error--->".mysql_error());
-					$queryScore = mysql_query("select * from user_score where user_id =".$_expert_id) or die(mysql_error());
-					$rowScore = mysql_fetch_assoc($queryScore);
-					$newScore = '';
+            }
 
-					$newScore = $rowScore['score'] + 10;
 
-					mysql_query("update user_score set score = ".$newScore." where user_id =".$_expert_id) or die(mysql_error());
 
-  			}
+            $this->redirect("http://www.rayku.com/tutor/".$user->getUsername());
 
+        }
 
+        if($this->getRequestParameter('content') != NULL)
 
-			endif;
+        {
 
-			$this->redirect("http://www.rayku.com/tutor/".$user->getUsername());
+            $this->expertid = $this->getUser()->getRaykuUser()->getId();
+            $this->expertusr= $this->getUser()->getRaykuUser()->getUsername();
 
-		}
 
-		if($this->getRequestParameter('content') != NULL) 
-		
-		{
 
-		$this->expertid = $this->getUser()->getRaykuUser()->getId();
-				$this->expertusr= $this->getUser()->getRaykuUser()->getUsername();
-				
 
+            $this->content = $this->getRequestParameter('content');
 
+            $c= new Criteria();
+            $c->add(ExpertsPromoTextPeer::EXP_ID,$this->expertid);
+            $expertstext = ExpertsPromoTextPeer::doSelectOne($c);
 
-		$this->content = $this->getRequestParameter('content');
-				
-				$c= new Criteria();
-				$c->add(ExpertsPromoTextPeer::EXP_ID,$this->expertid);
-				$expertstext = ExpertsPromoTextPeer::doSelectOne($c);
-				
-				if($expertstext != NULL) { 
-				
-					$expertstext->setContent($this->content);
-					$expertstext->save();
-							
-				}
-				else {
-					
-					$promo = new ExpertsPromoText();
-					$promo->setExpId($this->expertid);
-					$promo->setContent($this->content);
-					$promo->save();
-				
-				}
-					
+            if($expertstext != NULL) {
 
-		}
+                $expertstext->setContent($this->content);
+                $expertstext->save();
 
-			  $this->expert =  $user;
+            }
+            else {
 
+                $promo = new ExpertsPromoText();
+                $promo->setExpId($this->expertid);
+                $promo->setContent($this->content);
+                $promo->save();
 
-			   $f = new Criteria();
-			   $f->add(PostPeer::POSTER_ID,$user->getId());
-			   $f->add(PostPeer::BEST_RESPONSE, '1');
-			   $f->addDescendingOrderByColumn('ID');
+            }
 
-			   $this->bestResponses = PostPeer::doSelect($f);
 
-			   $f->setLimit(6);
+        }
 
-			   $this->best_responses = PostPeer::doSelect($f);
+        $this->expert =  $user;
 
-	
-			  $expertId = $user->getId();
-			  $userId = $this->getUser()->getRaykuUserId();
 
-			$this->currentUser = $this->getUser()->getRaykuUser();
+        $f = new Criteria();
+        $f->add(PostPeer::POSTER_ID,$user->getId());
+        $f->add(PostPeer::BEST_RESPONSE, '1');
+        $f->addDescendingOrderByColumn('ID');
 
-						    
-		    // last n whiteboard sessions    
-		    $cLastSessions = new Criteria();
-		    
-		    if ($userId != $expertId) {
-		  	  $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $expertId);
-		  	  $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::IS_PUBLIC, true);
-		  	  $cPublicC = $cLastSessions->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
-		      $cPublicB->addOr($cPublicC);
-		      $cPublicA->addAnd($cPublicB);
-		    } else {
-			    $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $userId);
-			    $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
-		      $cPublicA->addOr($cPublicB);
-		    } 
-		    
-		    $cLastSessions->add($cPublicA);
-		    $cLastSessions->add(WhiteboardChatPeer::STARTED_AT, null, Criteria::ISNOTNULL);
-		    $cLastSessions->addDescendingOrderByColumn(WhiteboardChatPeer::ID);
+        $this->bestResponses = PostPeer::doSelect($f);
 
-		    
-			$this->totalSessions = WhiteboardChatPeer::doSelect($cLastSessions);
+        $f->setLimit(6);
 
-		    $cLastSessions->setLimit(3);
-		    $this->lastSessions = WhiteboardChatPeer::doSelect($cLastSessions);
+        $this->best_responses = PostPeer::doSelect($f);
 
 
-		
-	}	
+        $expertId = $user->getId();
+        $userId = $this->getUser()->getRaykuUserId();
 
+        $this->currentUser = $this->getUser()->getRaykuUser();
+
+
+        // last n whiteboard sessions
+        $cLastSessions = new Criteria();
+
+        if ($userId != $expertId) {
+            $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $expertId);
+            $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::IS_PUBLIC, true);
+            $cPublicC = $cLastSessions->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
+            $cPublicB->addOr($cPublicC);
+            $cPublicA->addAnd($cPublicB);
+        } else {
+            $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $userId);
+            $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
+            $cPublicA->addOr($cPublicB);
+        }
+
+        $cLastSessions->add($cPublicA);
+        $cLastSessions->add(WhiteboardChatPeer::STARTED_AT, null, Criteria::ISNOTNULL);
+        $cLastSessions->addDescendingOrderByColumn(WhiteboardChatPeer::ID);
+
+
+        $this->totalSessions = WhiteboardChatPeer::doSelect($cLastSessions);
+
+        $cLastSessions->setLimit(3);
+        $this->lastSessions = WhiteboardChatPeer::doSelect($cLastSessions);
+    }
 
 	public function executeFollow() {
-
-
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-                  $db = mysql_select_db("rayku_db", $con);
-
-
-		
-
-
 	}
-
 
 }
