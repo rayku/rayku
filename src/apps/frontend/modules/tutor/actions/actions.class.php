@@ -34,9 +34,7 @@ class tutorActions extends sfActions
 
         if($this->getRequestParameter('username') == NULL)
         {
-
-            $this->redirect("http://www.rayku.com/dashboard");
-
+            $this->redirect("/dashboard");
         }
         $c = new Criteria();
         $c->add(UserPeer::USERNAME,$this->getRequestParameter('username'));
@@ -95,8 +93,6 @@ class tutorActions extends sfActions
         //////////////////////////////
 
         if(!empty($_GET['expert_id'])) {
-
-
             $_expert_id = !empty($_GET['expert_id']) ? $_GET['expert_id'] : 0;
 
             $userId = $this->getUser()->getRaykuUserId();
@@ -115,15 +111,10 @@ class tutorActions extends sfActions
                     $newScore = $rowScore['score'] + 10;
 
                     mysql_query("update user_score set score = ".$newScore." where user_id =".$_expert_id, $connection) or die(mysql_error());
-
                 }
-
             }
 
-
-
-            $this->redirect("http://www.rayku.com/tutor/".$user->getUsername());
-
+            $this->redirect("/tutor/".$user->getUsername());
         }
 
         if($this->getRequestParameter('content') != NULL)

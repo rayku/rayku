@@ -6,7 +6,7 @@ function checkUserStay()
 
 		dvd.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/dashboard/stay"
+			url: "http://"+getHostname()+"/dashboard/stay"
 		});
 
 setTimeout("checkUserStay()", 300000);

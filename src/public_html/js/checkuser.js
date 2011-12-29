@@ -95,7 +95,7 @@ stopTitle = 1;
 function music() {
 
 
-document.getElementById('music').innerHTML = '<embed src="http://www.rayku.com/alert.mp3" autostart="true" loop="false" width="2" height="0"></embed><noembed><bgsound src="http://www.rayku.com/alert.mp3"></noembed>';
+document.getElementById('music').innerHTML = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="false" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
 
 setTimeout('music()', 9000);
 
@@ -114,7 +114,7 @@ function checkedUser()
 
 		dv.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/mapuser",
+			url: "http://"+getHostname()+"/expertmanager/mapuser",
 			success : function (data)  {
 
 				var result = data.split("<");
@@ -169,7 +169,7 @@ function askerOpen(row_id,chat_id) {
 			details[0] = row_id;
   			details[1] = chat_id;
 					 
-		document.location='http://www.rayku.com/expertmanager/answer?details='+details;
+		document.location='http://'+getHostname()+'/expertmanager/answer?details='+details;
 
 }*/
 
@@ -221,20 +221,20 @@ if(modelbox == 1) {
 	if(browser == 'others') {
 
 
-	musicCheck = '<embed src="http://www.rayku.com/alert.mp3" autostart="true" loop="false" width="2" height="0"></embed><noembed><bgsound src="http://www.rayku.com/alert.mp3"></noembed>';
+	musicCheck = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="false" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
 
 	setTimeout('music()', 9000);
 
 	} else {
 
-	musicCheck = '<iframe src="http://www.rayku.com/musical.php" width="1" height="1"></iframe>';
+	musicCheck = '<iframe src="http://'+getHostname()+'/musical.php" width="1" height="1"></iframe>';
 
 	}
 
 }
 
 
-	Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1><span>'+ school +'</span> student:</h1> <div class="content"> <div class="question">'+ ques +' <span>(year '+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://www.rayku.com/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
+	Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1><span>'+ school +'</span> student:</h1> <div class="content"> <div class="question">'+ ques +' <span>(year '+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
 
 //countCheck();
 
@@ -247,7 +247,7 @@ if(modelbox == 1) {
 }
 
 
-function countCheck() { countGlobal = countGlobal - 1; document.getElementById("countDown").innerHTML = countGlobal + " Seconds"; 
+function countCheck() { countGlobal = countGlobal - 1; document.getElementById("countDown").innerHTML = countGlobal + " Seconds";
 
 
 	popupclose = getCookie("_popupclose");
@@ -280,7 +280,7 @@ function finalclose(newexpid, newuserid, newques, newschool, newsub, newyear, ne
   details[7] = newloginname;
 
 
- document.location="http://www.rayku.com/expertmanager/auto?details="+ details;
+ document.location="http://"+getHostname()+"/expertmanager/auto?details="+ details;
 
   
 }
@@ -313,7 +313,7 @@ stopTitle = 2;
 
 		dxv.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/ignore?details="+ details,
+			url: "http://"+getHostname()+"/expertmanager/ignore?details="+ details,
 			success : function (data)  {
 
 				stopTitle = 2;
@@ -354,7 +354,7 @@ stopTitle = 2;
 
 		dxv.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/auto?details="+ details,
+			url: "http://"+getHostname()+"/expertmanager/auto?details="+ details,
 			success : function (data)  {
 
 				stopTitle = 2;
@@ -379,7 +379,7 @@ function newpopup(rowid, chatid){
 
 	alert("An expert is available to help!");
 
-  Modalbox.show('<div style="padding:20px 15px"><p style="color:#000;font-size:14px;">An expert has offered to help!<br><br><a href="http://www.rayku.com/expertmanager/answer?details='+ details +'" style="font-size:16px;font-weight:bold">Connect Now!</a></p></div>', {title: this.title,overlayClose: false,  height: 150, width: 350 });
+  Modalbox.show('<div style="padding:20px 15px"><p style="color:#000;font-size:14px;">An expert has offered to help!<br><br><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'" style="font-size:16px;font-weight:bold">Connect Now!</a></p></div>', {title: this.title,overlayClose: false,  height: 150, width: 350 });
 
   newrowid = rowid;
 
@@ -396,7 +396,7 @@ function newfinalclose(newrowid){
   
   Modalbox.hide('', {title: this.title,overlayClose: false,  height: 300, width: 400 });
 
-  document.location="http://www.rayku.com/expertmanager/ignore?details="+ newrowid;
+  document.location="http://"+getHostname()+"/expertmanager/ignore?details="+ newrowid;
 
 }
 
@@ -418,3 +418,6 @@ return "";
 }
 
 
+function getHostname() {
+    return document.URL.match(/http:\/\/([^\/]*).*/)[1];
+}
