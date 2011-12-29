@@ -16,12 +16,12 @@ class messageActions extends sfActions
 
 		$this->redirect('message/list');
 	}
-	
+
 	/**
 	* Displays either the inbox or outbox
 	*/
 	public function executeList()
-	{	
+	{
 
 
 
@@ -33,7 +33,7 @@ class messageActions extends sfActions
 
 			//Name of the partial to use for each message
 			$this->messageRowPartialName = 'message_row_outbox';
-			
+
 			//Name the URL for the pager
 			$url = '@outbox';
 		}
@@ -41,14 +41,14 @@ class messageActions extends sfActions
 		{
 			//Grab all recieved messages
       $c = PrivateMessagePeer::getCriteriaForRecievedByUser( $this->getUser()->getRaykuUserId() );
-      
-			//Name of the partial to use for each message	
+
+			//Name of the partial to use for each message
 			$this->messageRowPartialName = 'message_row_inbox';
-			
+
 			//Name the URL for the pager
 			$url = '@inbox';
 		}
-		
+
 		//Setup the pager
 		$pager = new sfPropelPager('PrivateMessage', sfConfig::get('app_messages_messages_per_page',10));
 		$pager->setCriteria($c);
@@ -60,41 +60,34 @@ class messageActions extends sfActions
     $this->raykuPager = new RaykuPagerRenderer( $pager );
     $this->raykuPager->setBaseUrl( $url );
 	}
-	
+
 	/**
 	* AJAX action to delete a PM
 	*/
 	public function executeDelete()
 	{
-
-
-
-//================================================================================================================================================================//
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
-//================================================================================================================================================================//
+		$connection = RaykuCommon::getDatabaseConnection();
 
 		$pm = PrivateMessagePeer::getPrivateMessageByIdAndUser($this->getRequestParameter('id'), $this->getUser()->getRaykuUserId());
-		
+
 		//If such a PM doesn't exist, return an error
 		if(!$pm)
 			return sfVew::ERROR;
 
 		//If this user was the sender, delete on the sender's end
-		if($pm->getSenderId() == $this->getUser()->getRaykuUserId())
+        if($pm->getSenderId() == $this->getUser()->getRaykuUserId()) {
 			$pm->deleteFromSender();
-		
+        }
+
 		//Otherwise, there's a pretty darn good chance that they were the
 		//recipient, so, delete it on their end
-		else
-
-//================================================================================================================================================================//
-			mysql_query("update private_message set read_status = 1 where id=".$pm->getId()) or die(mysql_error());
-//================================================================================================================================================================//
+        else {
+			mysql_query("update private_message set read_status = 1 where id=".$pm->getId(), $connection) or die(mysql_error());
+        }
 
 			$pm->deleteFromRecipient();
 	}
-	
+
 	/**
 	* Action to display the form to compose a message
 	*/
@@ -104,10 +97,10 @@ class messageActions extends sfActions
 
 		// address book kind of thing
 		$this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
-		
+
 		$this->to = $this->getRequestParameter('nickname');
 	}
-	
+
 	/**
 	* AJAX action to send a message
 	*/
@@ -117,20 +110,20 @@ class messageActions extends sfActions
 
 		//Grab the user object
 		$user = $this->getUser()->getRaykuUser();
-		
+
 		//Pull a User object for the recipient
 		$c = new Criteria();
 		$c->add(UserPeer::USERNAME, $this->getRequestParameter('name'));
 		$recipient = UserPeer::doSelectOne($c);
-		
+
 		//Send the message
 		$user->sendMessage($recipient->getId(), $this->getRequestParameter('subject'), $this->getRequestParameter('body'));
-		
+
 		$this->getUser()->addNotice('Your private message has been successfully sent');
-		
+
 		$this->redirect('message/index');
 	}
-	
+
 	public function executeRead()
 	{
 

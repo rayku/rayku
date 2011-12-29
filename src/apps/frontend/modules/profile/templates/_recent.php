@@ -1,4 +1,5 @@
 <?php
+		$connection = RaykuCommon::getDatabaseConnection();
   /* @var $user User */
   $history = $user->getRecentHistory();
 
@@ -6,7 +7,7 @@
 ?>
 <div class="recent">
   <?php
-    echo link_to( image_tag( "http://www.rayku.com/images/rss_logo.jpg",
+    echo link_to( image_tag( "/images/rss_logo.jpg",
                                  array( 'style' => "width:15px; height:15px; float:left; margin-left:3px; margin-right:5px;" )),
                   'rss/index?id='.$user->getId() . '&context=profile', array( 'target' => '_blank' ) );
   ?>
@@ -16,18 +17,13 @@
   <ul>
   <?php
 
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-
-			$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
-
     if( count( $history ) > 0 )
     {
       foreach( $history as $item )
 
 	if($item->getEntityType() == "Friend") {
 
-		$query = mysql_query("select * from history as h, friend as f where h.created_at = f.created_at and h.id=".$item->getId()." and h.created_at = '".$item->getCreatedAt()."' ");
+		$query = mysql_query("select * from history as h, friend as f where h.created_at = f.created_at and h.id=".$item->getId()." and h.created_at = '".$item->getCreatedAt()."' ", $connection);
 
 			$row = mysql_fetch_array($query);
 
@@ -36,8 +32,8 @@
 
 				echo "<li>$item</li>";
 			endif;
-			
-			       
+
+
 	} else {
 
 		 echo "<li>$item</li>";

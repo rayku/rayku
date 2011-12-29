@@ -2,7 +2,7 @@
 		<link rel="stylesheet" type="text/css" href="/styles/print.css" media="print" />
         <link rel="stylesheet" type="text/css" href="/styles/donny.css"  />
 		<script type="text/javascript">document.documentElement.className += " js";</script>
-        
+
         <div style="padding:48px 7px 0 7px">
 
         <div style="margin-top:22px">
@@ -12,12 +12,11 @@
 		<div id="root" class="table-a">
 			<h3>Course Information </h3>
 	<?php
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-		$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
+		$connection = RaykuCommon::getDatabaseConnection();
 
 $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-		$query = mysql_query("select * from user_course where user_id=".$logedUserId) or die(mysql_error());
+		$query = mysql_query("select * from user_course where user_id=".$logedUserId, $connection) or die(mysql_error());
 			$i = 0;
 		if(mysql_num_rows($query) == 0) { ?>
 
@@ -41,7 +40,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 						<tr>
 							<th scope="col" class="first">Subject</th>
 							<th scope="col">Course Name</th>
-							
+
 							<th scope="col">Performance (Estimate)</th>
 							<th scope="col">&nbsp;</th>
 						</tr>
@@ -62,7 +61,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 						    <input name="course_new_name" type="text" id="course_new_name" value="" size="20" maxlength="50" />
 						  </p>
 					      <p style="font-size:10px;color:#999">(eg. Calculus Vectors Intro)</p></td>
-							
+
 							<td>
 							 	 <label class="d"><span>D</span><input type="radio" name="new_grade" id="new_grade" value = "D"/></label>
 								<label class="c"><span>C</span><input type="radio" name="new_grade" id="new_grade" value = "C" /></label>
@@ -91,7 +90,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 						<tr>
 							<th scope="col" class="first">Subject</th>
 							<th scope="col">Course Name</th>
-							
+
 							<th scope="col">Performance (Estimate)</th>
 							<th scope="col">&nbsp;</th>
 						</tr>
@@ -105,11 +104,11 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 					         <?php $categories = CategoryPeer::doSelect(new Criteria()); ?>
 						<option value="">--- Select ---</option>
 						<?php foreach( $categories as $category): ?>
-						
+
 					<option value="<?=$category->getId();?>" <?php if($rowValues['course_subject'] == $category->getId()): ?> selected="selected" 							<?php endif; ?> ><?=$category->getName();?></option>
-					
+
 						<?php endforeach; ?>
-				          </select></td> 
+				          </select></td>
 
 
 <input type="hidden" name="course_new_sub[]" id="course_new_sub[]" value="<?php echo $rowValues['course_subject']; ?>" /> <input type="hidden" name="courseid[]" id="courseid[]" value="<?php echo $rowValues['id']; ?>" />
@@ -118,7 +117,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 						     <input name="course_name[]" type="text" id="course_name[]" value="<?php echo $rowValues['course_name']; ?>" size="20" maxlength="50" />
 						  </p>
 					      <p style="font-size:10px;color:#999">(eg. Calculus Vectors Intro)</p></td>
-							
+
 							<td>
 							 	 <label class="d"><span>D</span><input type="radio" name="grade[<?php echo $i; ?>]" value = "D" <?php if($rowValues['course_performance'] == D) {?> checked="checked" <?php } ?>/></label>
 								<label class="c"><span>C</span><input type="radio" name="grade[<?php echo $i; ?>]" value = "C" <?php if($rowValues['course_performance'] == C) {?> checked="checked" <?php } ?>/></label>
@@ -127,15 +126,15 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 						  </td>
 							<td><?php echo link_to('Delete', 'profile/rowdelete?id='.$rowValues['id'], array('class' => 'navlink delete', 'onclick' => "return confirm('Are you sure?');" )); ?> </td>
 					  </tr>
-						
-						
-			<?php 
+
+
+			<?php
 
 					$i++;
 
 				endif;
 
-				 } 
+				 }
 
 		} ?>
 
@@ -144,28 +143,28 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 				</fieldset>
 
 		</div>
-		
+
 
 		<input type="button" name="button2" id="button2" value="More Space" style="padding:6px;font-size:14px;margin:10px 0 0 10px" onclick="addRow('dataTable')" />
-	 	
+
 		<input type="submit" value="Submit Form" style="padding:6px;font-size:14px;margin:10px;font-weight:bold"  />
 
-			</form> 
+			</form>
 
 
         </div>
         </div>
  <SCRIPT language="javascript">
 	        function addRow(tableID) {
- 
+
 	            var table = document.getElementById(tableID);
 	            var rowCount = table.rows.length;
 	            var row = table.insertRow(rowCount);
-	
+
 
 
 					    var colCount = table.rows[2].cells.length;
-				 
+
 					    for(var i=0; i<colCount; i++) {
 
 					 var j = 1;
@@ -176,9 +175,9 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 							table.rows[rowCount].cells[i].innerHTML = "<select name='subject[" + rowCount + "]' id='subject[" + rowCount + "]' style='background:none;padding:0;width:auto;height:auto'><option value=''>Select</option><option value='1' >Mathematics</option><option value='4'>Business</option><option value='6'>Economics</option></select>";
 
 			newcell.innerHTML = table.rows[rowCount].cells[i].innerHTML;
-						
+
 						} else if(i == '1') {
-				
+
 						 table.rows[rowCount].cells[i].innerHTML =  "<input name='name[" + rowCount + "]' type='text' id='name[" + rowCount + "]' size='20' maxlength='50' >";
 
 							newcell.innerHTML = table.rows[rowCount].cells[i].innerHTML;
@@ -197,4 +196,4 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 
 	       	    </SCRIPT>
-                        
+

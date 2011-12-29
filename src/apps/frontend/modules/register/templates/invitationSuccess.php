@@ -23,14 +23,13 @@
           <input type="submit" name="invitation" value="Generate Coupon Codes"  id="invitation" style="padding:5px;font-size:14px" />
         </p>
       </form>
-      <?php else : 
+      <?php else :
 
 		$date = date("Y-m-d");
 
-				$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-				$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
-				$query = mysql_query("select * from referral_code where user_id=".$user->getId()." and date='".$date."' order by id DESC limit 0,5") or die(mysql_error());
+		$connection = RaykuCommon::getDatabaseConnection();
+				$query = mysql_query("select * from referral_code where user_id=".$user->getId()." and date='".$date."' order by id DESC limit 0,5", $connection) or die(mysql_error());
 
 
 ?>
@@ -47,12 +46,12 @@ while($row = mysql_fetch_assoc($query)) { ?>
       </table>
       <?php endif; ?>
       <hr style="border:0;color:#C1C1C1;height:2px;margin:20px 0 30px 0;">
-      
-      <p style="line-height:20px;font-size:18px;margin-left:10px;font-weight:bold;color:#060"><a href="http://www.rayku.com/register/step4"><img src="http://www.rayku.com/images/email.png" style="float:right;padding-left:10px;" border="0"></a>Want to Make Things Easier?</p>
-      
+
+          <p style="line-height:20px;font-size:18px;margin-left:10px;font-weight:bold;color:#060"><a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/register/step4"><img src="/images/email.png" style="float:right;padding-left:10px;" border="0"></a>Want to Make Things Easier?</p>
+
       <p style="line-height:20px;font-size:14px;margin-left:10px">Use the Rayku Email Invite tool to automatically send a coupon code to each of your email contacts that you select.<br>
         <br>
-        It's easy. <a href="http://www.rayku.com/register/step4">Click here to take a look!</a></span></p>
+        It's easy. <a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/register/step4">Click here to take a look!</a></span></p>
     </div>
     <div class="left-bottom"></div>
   </div>
@@ -65,7 +64,7 @@ while($row = mysql_fetch_assoc($query)) { ?>
       <div class="text"><span style="line-height:20px; font-size:14px">You may purchase RP directly. The current conversion rate is as follows:<br>
         <br>
          <strong>1RP = C$1</strong> (One Canadian Dollar)<br><br>
-        <a href="http://www.rayku.com/shop/paypal"><img src="http://www.rayku.com/images/paypalsmall.png" border="0"><br>
+         <a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/shop/paypal"><img src="/images/paypalsmall.png" border="0"><br>
         Click here</a> for instant purchase options.</span></div>
     </div>
     <div class="bottom"></div>

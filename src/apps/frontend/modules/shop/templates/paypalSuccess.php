@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if(!empty($_POST)) :
 
@@ -25,11 +25,9 @@ endif;
                 <p>&nbsp;</p>
                 <?php
 
-$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
+		$connection = RaykuCommon::getDatabaseConnection();
 
-
-$query = mysql_query("Select * from points_paypal") or die(mysql_error());
+$query = mysql_query("Select * from points_paypal", $connection) or die(mysql_error());
 
 $i = 0; ?>
                 <form name="form1" id="form1" method="post">
@@ -46,12 +44,12 @@ $i = 0; ?>
                 <span style="color:#999">This will give you a total of 35.67RP, which can account for 43 minutes* of premium tutoring.</span>
               </form>
               </div>
-              <img src="http://www.rayku.com/images/paypal.png" style="margin-bottom:10px;" />
-              <?php 
+              <img src="/images/paypal.png" style="margin-bottom:10px;" />
+              <?php
 
 if(!empty($item)) :
 
-$queryOne = mysql_query("Select * from points_paypal where id=".$item) or die(mysql_error());
+$queryOne = mysql_query("Select * from points_paypal where id=".$item, $connection) or die(mysql_error());
 
 $rowOne = mysql_fetch_assoc($queryOne);
 
@@ -78,7 +76,7 @@ $rowOne = mysql_fetch_assoc($queryOne);
                 <div class="sep" style="margin-bottom:20px"></div>
                 <div class="f"><span>Total Cost:</span> <span style="color:#000">$<?php echo $tot_price; ?>.00 <strong>CAD</strong></span> </div>
                 <div align="center">
-                  <form name="paypal" id="paypal" method="post" action="http://www.rayku.com/paypal.php" >
+                <form name="paypal" id="paypal" method="post" action="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/paypal.php" >
                     <input type="hidden" name="loginid" id="loginid" value="<?php echo $user->getId(); ?>">
                     <input type="hidden" name="amount" id="amount" value="<?php echo $tot_price; ?>">
                     <input type="hidden" name="quantity" id="quantity" value="1">
@@ -90,27 +88,27 @@ $rowOne = mysql_fetch_assoc($queryOne);
                 <div class="clear"></div>
               </div>
               <!--ch-->
-              
+
               <?php endif; ?>
             </div>
-            <!--cont--> 
+            <!--cont-->
           </div>
-          <!--b--> 
+          <!--b-->
         </div>
-        <!--t--> 
-        
+        <!--t-->
+
       </div>
-      <!--end of box--> 
+      <!--end of box-->
     </div>
   </div>
 </div>
 <div id="shop_right">
   <div class="header"> <a href="/shop/index">Shop Homepage</a> </div>
   <!--cart-->
-  
+
   <div class="text">Thank you for your interest. Go ahead and fill out the forms on your left. Once you are ready, click on the 'Submit' button. You may <a href="mailto:support@rayku.com" class="link">email us</a> if you have any problems.<br />
     <br />
   </div>
 </div>
-<!--shop_right--> 
+<!--shop_right-->
 

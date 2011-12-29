@@ -50,13 +50,14 @@
 		<div class="box">
 			<div class="top"></div>
 			<div class="content3" style="font-size:14px">
-            <?php 
+            <?php
+		$connection = RaykuCommon::getDatabaseConnection();
 
-						$queryRPRate = mysql_query("select * from user_rate where userid=".$expert->getId()." ") or die(mysql_error());
+						$queryRPRate = mysql_query("select * from user_rate where userid=".$expert->getId()." ", $connection) or die(mysql_error());
 
 					if(mysql_num_rows($queryRPRate)) {
 
-					$rowRPRate = mysql_fetch_assoc($queryRPRate); 
+					$rowRPRate = mysql_fetch_assoc($queryRPRate);
 
 					$rate = $rowRPRate['rate'];
 
@@ -67,33 +68,33 @@
 
 					} ?>
             <h1>How I Can Help: &nbsp;&nbsp;
-			
+
 					<?php if($sf_user->getRaykuUser()->getId() == $expert->getId() ) : ?>
- 
+
 
 		<a href="#" onclick="popup_show('popup', 'popup_drag', 'popup_exit', 'screen-center', 0, 0);">[edit promo text]</a>
-						
-						
+
+
 					<?php endif; ?>
-				
-				
+
+
 </h1>
-				
+
 					<p>
-					<?php 
+					<?php
 							$c= new Criteria();
 							$c->add(ExpertsPromoTextPeer::EXP_ID,$expert->getId());
 							$promotext = ExpertsPromoTextPeer::doSelectOne($c);
-							
+
 					?>
-					
-					
+
+
 					<?php if($promotext != NULL): ?>
-			
+
 						<?php echo $promotext->getContent(); ?>
-					
+
 					<?php else: ?>
-					
+
 					Welcome to my portfolio profile. I am a new expert at Rayku so you may not be able to see much on this page. Though, if you have a question that's within my field, I'm sure I can help you out!<br />
 					<br />
 					I charge <strong><? echo $rate; ?>RP per minute</strong>.			  <br />
@@ -101,32 +102,32 @@
 					If I'm online, connect with me! If not, feel free to leave me a message and I'll get back to you.
                     </p>
 			  <?php endif; ?>
-				
-			
+
+
 			</div>
 		<div class="bottom"></div>
 		</div>
-      
+
       <!-- <h3>Immediate 1-on-1 Help Topics</h3>
-	  
-	 <?php 
-			
+
+	 <?php
+
 				$c = new Criteria();
 				$c->add(ExpertsImmediateLessonPeer::USER_ID, $expert->getId());
 				$expert_immediate_lessons = ExpertsImmediateLessonPeer::doSelect($c);
-				
+
 				$count = 0;
-	?>	
-	
+	?>
+
 	  <?php if($expert_immediate_lessons != NULL): ?>
-	  
+
 		  <div class="pbox">
 				<div class="top">
 					<div class="name">Course Name</div>
 					<div class="schedule">Availability / Order Information</div>
 					<div class="price">Pricing</div>
 				</div>
-				
+
 				<?php foreach($expert_immediate_lessons as $expert_lesson):?>
 				<?php echo form_tag('online_experts/immediate'); ?>
 				<input type="hidden" name="expert_immediate_lesson_id" value="<?php echo $expert_lesson->getId(); ?>" />
@@ -134,7 +135,7 @@
 				<div class="<?php echo ($count++%2 == 0)?"light":"dark"; ?>">
 					<div class="name"><?php echo $expert_lesson->getTitle(); ?></div>
 					<div class="schedule" style="font-size:8px">
-					<?php if ($expert->isOnline()): ?>                        
+					<?php if ($expert->isOnline()): ?>
 						<?php echo submit_image_tag('/images/start.png', array('width' => '71', 'height' => '19', 'border' => '0')); ?>
 					<?php else: ?>
 						<img src="/images/start-gray.png" /><br />
@@ -145,36 +146,36 @@
 				</div>
 				</form>
 				<?php endforeach; ?>
-				
+
 				<div class="bot"></div>
 		</div>
-	
+
 		<?php else : ?>
-		
+
 			<p style="font-size:12px; font-family:verdana; color:#000000; font-weight:bold; padding-left:30px; padding-top:5px; padding-bottom:20px;">No immediate lessons created yet! </p>
-	
+
 	<?php endif;?>
-	
+
 	<div class="clear-both"></div>
-	
+
 		<h3>Scheduled Lesson Topics</h3>
-		
-		<?php 
+
+		<?php
 				$c = new Criteria();
 				$c->add(ExpertLessonPeer::USER_ID, $expert->getId());
 				$expert_lessons = ExpertLessonPeer::doSelect($c);
 				$count = 0;
-		?>	
+		?>
 
 		<?php if($expert_lessons != NULL): ?>
-		
+
 				<div class="pbox">
 					<div class="top">
 						<div class="name">Course Name</div>
 						<div class="schedule">Order Information</div>
 						<div class="price">Pricing</div>
 					</div>
-					
+
 					<?php foreach($expert_lessons as $expert_lesson):?>
 					<?php echo form_tag('expertmanager/checkout'); ?>
 					<input type="hidden" name="expert_lesson_id" value="<?php echo $expert_lesson->getId(); ?>" />
@@ -188,17 +189,17 @@
 					</div>
 					</form>
 					<?php endforeach; ?>
-		
+
 					<div class="bot"></div>
 				</div>
-				
+
 		<?php else : ?>
-		
+
 			<p style="font-size:12px; font-family:verdana; color:#000000; font-weight:bold; padding-left:30px; padding-top:5px;">No scheduled lessons created yet! </p>
-	
+
 	<?php endif;?>	-->
 
-    
+
 <div class="sample_popup"     id="popup" style="display: none;">
 
 <div class="menu_form_header" id="popup_drag" style="background:#069 none;border:2px solid #069;height:25px;">
@@ -215,12 +216,12 @@
 
 					<?php echo form_tag('expertmanager/promotext') ?>
 						  <p style="padding:10px;font-weight:bold;font-size:14px;color:#333">Enter your promotional message here: </p>
-							
-														
-						
-		<?php echo textarea_tag('content',$content,array('size' => '54x40', 'rich' => 'fck')); ?>							
+
+
+
+		<?php echo textarea_tag('content',$content,array('size' => '54x40', 'rich' => 'fck')); ?>
 							<br />
-							
+
 						  <?php echo submit_tag('Edit Promo Text',array('style' => 'padding:5px;font-size:13px;')) ?>
 						</form>
 </div>
@@ -234,10 +235,10 @@
 				<h4 style="font-size:14px; font-weight:bold">Video Sessions with Students:</h4>
 				<a href="<?php echo url_for('whiteboard/sessions/') . '/' . $expert->getUsername() ?>">view all sessions</a>
 				<div class="entry" style="margin-top:10px;">
-				  
-				  <div class="portimg">  				
+
+				  <div class="portimg">
   					  <div class="sessions">
-  					    
+
   					    <?php if (count($lastSessions) > 0) { ?>
   					      <div class="question">
   					        <a href="<?php echo url_for('whiteboard/show?id=' . $lastSessions[0]->getId()) ?>"> <?php echo urldecode($lastSessions[0]->getQuestion()) ?> </a>
@@ -245,16 +246,16 @@
   					    <?php } else { ?>
   					      <div>no sessions</div>
   					    <?php }; ?>
-                
+
               </div>
   					<div class="desc">
   				    <span>This Feature</span> is being worked on, and will be available soon.
   				  </div>
   				</div>
-				
-  				<div class="portimg">  				
+
+  				<div class="portimg">
   					  <div class="sessions">
-                
+
                 <?php if (count($lastSessions) > 1) { ?>
   					      <div class="question">
   					        <a href="<?php echo url_for('whiteboard/show?id=' . $lastSessions[1]->getId()) ?>"> <?php echo urldecode($lastSessions[1]->getQuestion()) ?> </a>
@@ -262,16 +263,16 @@
   					    <?php } else { ?>
   					      <div>no sessions</div>
   					    <?php }; ?>
-                
+
               </div>
   					<div class="desc">
   				    <span>This Feature</span> is being worked on, and will be available soon.
   				  </div>
   				</div>
-                
+
           <div class="portimg">
             <div class="sessions">
-              
+
               <?php if (count($lastSessions) > 2) { ?>
 					      <div class="question">
 					        <a href="<?php echo url_for('whiteboard/show?id=' . $lastSessions[2]->getId()) ?>"> <?php echo urldecode($lastSessions[2]->getQuestion()) ?> </a>
@@ -279,35 +280,35 @@
 					    <?php } else { ?>
 					      <div>no sessions</div>
 					    <?php }; ?>
-              
+
             </div>
 					<div class="desc">
 				    <span>This Feature</span> is being worked on, and will be available soon.
 				  </div>
           </div>
-        
+
                 <!--<div class="portimg">
 					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
-                
+
                 <div class="clear-both" style="height:10px"></div>
-                
+
                 <div class="portimg">
 					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
-                
+
                 <div class="portimg">
 					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
-                
+
                 <div class="portimg">
 					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>-->
-				
+
 			  <div class="clear-both"></div>
 
 					<div class="spacer"></div>
@@ -315,70 +316,68 @@
 			</div>
 			<div class="bottom"></div>
 		</div>
-        
+
 <div class="box">
 			<div class="top"></div>
 			<div class="content2">
             <h4 style="font-size:14px; font-weight:bold; margin-bottom:10px">Best Responses on the Question Boards:</h4>
-		
-		<?php  
-		
+
+		<?php
+
 			   $c=new Criteria();
 			   $c->add(PostPeer::POSTER_ID,$expert->getId());
 			   $c->add(PostPeer::BEST_RESPONSE, '1');
 			   $c->addDescendingOrderByColumn('ID');
 			 //  $c->setLimit(2);
 			   $best_responses=PostPeer::doSelect($c);
-			   
+
 		?>
          <?php //print_r($best_responses);
 		 ?>
-		
-			<?php if($best_responses != NULL): 
-			
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-   			$db = mysql_select_db("rayku_db", $con);
+
+			<?php if($best_responses != NULL):
+
 			?>
-							
+
 					  <ul>
-					<?php foreach($best_responses as $best_response): 
-                                 ?>  
-                                 
-                                 
+					<?php foreach($best_responses as $best_response):
+                                 ?>
+
+
                                  <li>
-								 
+
 								 <strong>
-								 <?php $query = mysql_query("select * from thread where id='".$best_response->getThreadId()."' ") or die(mysql_error());
+								 <?php $query = mysql_query("select * from thread where id='".$best_response->getThreadId()."' ", $connection) or die(mysql_error());
 	                			       $row = mysql_fetch_assoc($query);
 	                			       //echo $row['title'];
 									   echo link_to($row['title'], '@view_thread?thread_id='.$row['id'],array('class' => 'threadttle'));
-									   
+
 									   ?>
-                                       
-                                       
-                                       
-                                       </strong><?php 
-								//$a = new Criteria(); 
+
+
+
+                                       </strong><?php
+								//$a = new Criteria();
 								//$a->add(ThreadPeer::ID,$best_response->getThreadId());
-								//$threads = ThreadPeer::doSelectOne($a); 
-								
+								//$threads = ThreadPeer::doSelectOne($a);
+
 								//print_r($threads);
 								//echo $best_response->getThreadId();
-								
-								//echo link_to($row['title'], '@view_thread?thread_id='.$row['id'],array('class' => 'threadttle'));
-								
-	           
-								
-								
-								
-								?>
-                               
-									
 
-								
+								//echo link_to($row['title'], '@view_thread?thread_id='.$row['id'],array('class' => 'threadttle'));
+
+
+
+
+
+								?>
+
+
+
+
 					<?php endforeach; ?>
-                    </ul>	
-            <?php 
+                    </ul>
+            <?php
 						else :
                     		echo 'This expert does not have any \'best response\' answers yet. Please check back later.';
                     	endif; ?>
@@ -387,21 +386,18 @@
 		</div>
 
 
-        
+
 <div class="box">
 			<div class="top"></div>
 			<div class="content2">
             <h4 style="font-size:14px; font-weight:bold; margin-bottom:10px">Followers:</h4>
-		
-			<?php
 
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
+			<?php
 
 		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
 
-$query = mysql_query("select * from expert_subscribers where expert_id=".$expert->getId()) or die("error1");
+$query = mysql_query("select * from expert_subscribers where expert_id=".$expert->getId(), $connection) or die("error1");
 
 if(mysql_num_rows($query) > 0) {
 
@@ -415,7 +411,7 @@ if(mysql_num_rows($query) > 0) {
 while($row = mysql_fetch_array($query)) {
 
 
-$queryUser = mysql_query("select * from user where id=".$row["user_id"]) or die("error2");
+$queryUser = mysql_query("select * from user where id=".$row["user_id"], $connection) or die("error2");
 
 $rowUser = mysql_fetch_array($queryUser);
 
@@ -427,7 +423,7 @@ $rowUser = mysql_fetch_array($queryUser);
 
 <?php } ?>
 
-</ul> 
+</ul>
 
 <?php } else { ?>
 
@@ -440,8 +436,8 @@ $rowUser = mysql_fetch_array($queryUser);
 		</div>
 		<div class="bottom"></div>
 		</div>
-        
-		
+
+
 	  <div class="spacer"></div>
 	</div>
 
@@ -450,7 +446,7 @@ $rowUser = mysql_fetch_array($queryUser);
 
 	<div class="body-side">
 
-	
+
 
 		<div class="box">
 			<div class="top"></div>
@@ -460,22 +456,22 @@ $rowUser = mysql_fetch_array($queryUser);
 					<h1 class="name" style="font-size:14px"><?php echo link_to( $expert->getName(), '@profile?username=' . $expert->getUsername(), 'style=color:#257000'); ?></h1>
 					<br /><br />
                     <strong style="float:left;">Member Since:&nbsp;</strong><? echo $expert->getCreatedAt('m-Y'); ?><br />
-                    <strong>Points:</strong> 
+                    <strong>Points:</strong>
 					<?php $logedUserId = $expert->getID();
-		$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
+		$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 		$detailPoints = mysql_fetch_assoc($query);
 		echo $detailPoints['points']; ?>RP
         <br />
 				<!-- Show the Charge amount for Live Help - start--->
 
-					
+
 
 					<strong >Rate:&nbsp;</strong><? echo $rate; ?>RP/minute<!-- Show the Charge amount for Live Help - end--->
 
 
-					
+
                     <div class="clear-both" style="margin-top:10px"></div>
-					
+
 					<div class="status">
 						This user is <?php if ($expert->isOnline()): ?><span class="online">online</span>
 						<?php else: ?><span class="offline">offline</span><?php endif; ?>
@@ -485,25 +481,25 @@ $rowUser = mysql_fetch_array($queryUser);
                     <?php if ($expert->isOnline()): ?>
 					<a href="../direct?id=<?php echo $expert->getId(); ?>" class="contact" style="background:url(http://www.rayku.com/images/contact2.gif)">Connect</a>
                     <?php else: ?><a href="http://www.rayku.com/message/compose/<?php echo $expert->getUsername(); ?>" class="contact">Contact</a><?php endif; ?>
-				
-	<?php endif; ?>	
+
+	<?php endif; ?>
 					<div class="clear-both"></div>
-					
+
 				</div>
 			</div>
 			<div class="bottom"></div>
 		</div>
 
 
-		
+
 		<div class="box">
 			<div class="top"></div>
 			<div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
 				<h1 class="tit">Session Ratings</h1>
 				<div class="about">
-				<?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ") or die(mysql_error());
+				<?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ", $connection) or die(mysql_error());
 					$chat_rating = 0; $rating_count = 0; $avg_rating = 0;
-					
+
 					if(mysql_num_rows($_query) > 0) {
 
 					$rating_count = mysql_num_rows($_query);
@@ -512,12 +508,12 @@ $rowUser = mysql_fetch_array($queryUser);
 
 							$chat_rating += $_row['rating'];
 
-					
+
 						}
 
 	 				$avg_rating = $chat_rating / $rating_count;
 
-					} 
+					}
 				?>
 
 				</div>
@@ -530,7 +526,7 @@ $rowUser = mysql_fetch_array($queryUser);
 				<p style="font-size:12px; margin-top:10px;">Average Session Rating : - </p>
 		<?php endif; ?>
                <!-- <?php endif; ?>-->
-                
+
 			</div>
 			<div class="bottom"></div>
 		</div>
@@ -542,9 +538,9 @@ $rowUser = mysql_fetch_array($queryUser);
 			<div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
 				<h1 class="tit">About <?php echo $expert->getName(); ?></h1>
 				<div class="about">
-					<?php $expertaboutmeval = $expert->getAboutMe(); 
-					
-						if($expertaboutmeval != NULL): 
+					<?php $expertaboutmeval = $expert->getAboutMe();
+
+						if($expertaboutmeval != NULL):
 							echo $expert->getAboutMe();
 						else :
                     		echo 'No information about this expert is currently available. Please check back later.';
@@ -554,40 +550,40 @@ $rowUser = mysql_fetch_array($queryUser);
                 <?php if($expert->getUsername() == $sf_user->getRaykuUser()->getUsername()): ?>
                 <p style="font-size:12px; margin-top:10px;"><a href="http://www.rayku.com/register/step3" style="color:#900">Edit Your 'About Me' Message</a></p>
                 <?php endif; ?>
-                
+
 			</div>
 			<div class="bottom"></div>
 		</div>
-		
-	<?php 	
-		
+
+	<?php
+
 		$user_ids = array();
-		
+
 		$c = new Criteria();
 		$c->add(UserPeer::TYPE,5);
 		$c->addDescendingOrderByColumn(UserPeer::POINTS);
 		$c->setLimit(5);
 		$users = UserPeer::doSelect($c);
-	
+
 		foreach($users as $key => $user) {
-					
+
 			if( $user->getId() == $expert->getId() )
 			{
-				$rank = $key+1; 
+				$rank = $key+1;
 			}
-		
+
 		}
-		
-	?> 
-	
+
+	?>
+
 	<?php
-			
+
 			$categories = CategoryPeer::doSelect(new Criteria());
-			
+
 			$category_ranks = array();
-			
-			foreach($categories as $category): 
-				
+
+			foreach($categories as $category):
+
 					$c = new Criteria();
 					$c->addJoin(ExpertCategoryPeer::USER_ID,UserPeer::ID,Criteria::JOIN);
 					$c->add(ExpertCategoryPeer::CATEGORY_ID,$category->getId());
@@ -595,23 +591,23 @@ $rowUser = mysql_fetch_array($queryUser);
 					$c->setLimit(5);
 					$expertcats = ExpertCategoryPeer::doSelect($c);
 
-										
+
 					foreach($expertcats as $key => $expertcat) {
-					
+
 						if( $expertcat->getUserId() == $expert->getId() )
 						{
 							$cat_rank = $key+1;
-							
+
 							$category_ranks[] = $cat_rank .','.$expertcat->getCategoryId();
 						}
-					
+
 					}
-					
-			
+
+
 			endforeach;
 
-			
-						
+
+
 	?>
 		<?php if($rank != NULL) : ?>
 
@@ -623,23 +619,23 @@ $rowUser = mysql_fetch_array($queryUser);
 					<div class="badge">#<?php echo $rank; ?></div>
 					<div class="lvl"><?php echo $expert->getName(); ?> is currently ranked the <strong>#<?php echo $rank; ?> overall expert</strong> on Rayku!</div>
 					<div class="clear-both"></div>
-				</div> 
-				
+				</div>
 
-				
-					<?php 
-							
-						if($category_ranks != NULL): 
-							
+
+
+					<?php
+
+						if($category_ranks != NULL):
+
 							foreach($category_ranks as $category_rank)
 							{
-							
+
 								$ranks = explode(',',$category_rank);
-								
+
 								$c= new Criteria();
 								$c->add(CategoryPeer::ID,$ranks[1]);
 								$cate = CategoryPeer::doSelectOne($c); ?>
-								
+
 							<div class="uni">
 								<div class="level">#<?php echo $ranks[0]; ?></div>
 								<div class="lvl"><?php echo $expert->getName(); ?> is currently ranked the <strong>#<?php echo $ranks[0]; ?> <?php echo $cate->getName(); ?> expert</strong> on Rayku!</div>
@@ -652,8 +648,8 @@ $rowUser = mysql_fetch_array($queryUser);
 			<div class="bottom"></div>
 		</div>
 
-	
-			<?php  endif; ?> 
+
+			<?php  endif; ?>
 
 
 
@@ -661,7 +657,7 @@ $rowUser = mysql_fetch_array($queryUser);
 
 	</div>
 
-	
+
 
 <script type="text/javascript" src="/fancybox/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.1.js"></script>
@@ -679,20 +675,20 @@ $rowUser = mysql_fetch_array($queryUser);
 	<style type='text/css'>
 	th {
 	     background-color: #8FB5DB;
-		border-color: #DDDDDD ;     
+		border-color: #DDDDDD ;
 	    color: black;
 	    font-weight: bold;
 	    text-align: center;
-	    	font-size: 17px;    
+	    	font-size: 17px;
 	}
 
 	td {
 		border-color: #DDDDDD ;
 	    	font-size: 15px;
-		padding: 6px;    	
+		padding: 6px;
 	}
 	table {
-	 	border: groove;    	
+	 	border: groove;
 		border-color: #DDDDDD ;
 	    	font-size: 15px;
 		border-bottom-width : 20px;
@@ -700,7 +696,7 @@ $rowUser = mysql_fetch_array($queryUser);
 
 	</style>
 
-  
+
 <div style="display: none;">
 		<div id="inline1" style="width:650px;height:500px;overflow:auto;padding:25px" align="left">
 
@@ -710,35 +706,35 @@ $rowUser = mysql_fetch_array($queryUser);
 		<table width="650"  border='2px' align='center' style = "'border-bottom-width : 4px';">
 		<tr ><th width="130px">Session Question</th><th width="130px">Rating</th><th width="130px">Comments</th><th width="130px">Date</th></tr>
 
-		<?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ") or die(mysql_error());
+		<?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ", $connection) or die(mysql_error());
 
-									
+
 					if(mysql_num_rows($_query) > 0) {
 
 					$rating_count = mysql_num_rows($_query);
 
 					while($_row = mysql_fetch_array($_query)) {
 
-							echo '<tr align="center">';	
-					
+							echo '<tr align="center">';
+
 							echo '<td>'.urldecode($_row['question']).'</td>';
-				
+
 							echo '<td>'.$_row['rating'].'</td>';
-							
+
 							echo '<td>'.$_row['comments'].'</td>';
-								
+
 							echo '<td>'.$_row['started_at'].'</td>';
-				
-				
+
+
 							echo '</tr>';
 
-												
+
 						}
 
-	 				
 
-					} 
+
+					}
 				?>
-                                        </table>          
+                                        </table>
 		</div>
         </div>

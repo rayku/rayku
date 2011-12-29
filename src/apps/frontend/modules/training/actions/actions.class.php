@@ -14,16 +14,9 @@ class trainingActions extends sfActions
     */
    public function executeIndex()
    {
-
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
-
 		$currentUser = $this->getUser()->getRaykuUser();
 
 		$userId = $currentUser->getId();
-
    }
-
-
 }
 

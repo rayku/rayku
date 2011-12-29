@@ -24,9 +24,9 @@
 
 						if (confirmLeave==false) {
 
-							//$(window).unbind("unload");	
+							//$(window).unbind("unload");
 
-							
+
 
 							$(window).unbind("beforeunload");
 
@@ -35,11 +35,11 @@
 							return false;
 
 
-							
+
 
 						} else {
 
-								
+
 								$.ajax({ cache: false,
 									type: "POST", // XXX should be POST
 									url: "http://www.rayku.com/dashboard/checkdata"
@@ -79,12 +79,12 @@ function toopenpopup() {
 				document.cookie = "popupopen" + "=" + value; path="/"; domain="rayku.com";
 
 }
-	 
 
-	 
+
+
 function checkedUser()
 {
-	
+
 
 
 
@@ -132,16 +132,16 @@ xmlhttp.onreadystatechange=function()
 
    	if(xmlhttp.responseText != '')
 	{
-			
+
 		var result = xmlhttp.responseText.split("<");
 
-			
+
 		if(result[0].length != 1) {
 
 		var newChecking = result[0].split("-");
 
 
-			if(newChecking[8] == "expert") {	
+			if(newChecking[8] == "expert") {
 
 			document.getElementById('window-a').style.display = "block";
 			document.getElementById('message').style.display = "none";
@@ -149,7 +149,7 @@ xmlhttp.onreadystatechange=function()
 
 //To Give alert for Expert: Start//
 
-				
+
 				/*if(navigator.userAgent.indexOf("Firefox")!=-1) {
 
 						    var winX = (screen.availWidth - window.outerWidth) / 2
@@ -231,7 +231,7 @@ document.getElementById('window-a').style.display = "none";
 								details[0] = newMsgResult[1];
 								details[1] = newMsgResult[4];
 
-	
+
 
 callAnswer(details);
 
@@ -240,7 +240,7 @@ callAnswer(details);
 
 			} else {
 
-				
+
 document.getElementById('nothing').style.display = "block";
 document.getElementById('message').style.display = "none";
 document.getElementById('window-a').style.display = "none";
@@ -253,7 +253,7 @@ setTimeout("toopenpopup()", 2000);
 			}
 
 
-		} 
+		}
     }
   }
 
@@ -358,7 +358,7 @@ return "";
 <head>
 <body onLoad="checkedUser()">
 
-  
+
 <div class="window-a" id="window-a" style="display:none;">
   <embed src="http://www.rayku.com/back.wav" autostart="true" loop="true" width="2" height="0"></embed>
   <noembed>
@@ -392,7 +392,7 @@ return "";
   <noembed>
   <bgsound src="http://www.rayku.com/back.wav" loop="infinite">
   </noembed> </div>
-  
+
 </body>
 </html>
 
@@ -401,57 +401,56 @@ return "";
 
 if(!empty($_POST)) {
 
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
 
+		$connection = RaykuCommon::getDatabaseConnection();
 	//$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-	$queryScore = mysql_query("select * from user_score where user_id=".$_COOKIE["ratingExpertId"]) or die(mysql_error());
+	$queryScore = mysql_query("select * from user_score where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 	$rowScore = mysql_fetch_assoc($queryScore);
 
 	if($_POST["rating"] == 1) {
 
 		$newRatingScore = $rowScore['score'] - 6;
 
-		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"]) or die(mysql_error());
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 
-	
+
 
 	}  elseif($_POST["rating"] == 3) {
 
 		$newRatingScore = $rowScore['score'] + 6;
 
-		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"]) or die(mysql_error());
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 
-	
+
 
 	} elseif($_POST["rating"] == 4) {
 
 		$newRatingScore = $rowScore['score'] + 12;
 
-		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"]) or die(mysql_error());
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 
-	
+
 
 	} elseif($_POST["rating"] == 5) {
 
 		$newRatingScore = $rowScore['score'] + 18;
 
-		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"]) or die(mysql_error());
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 
-	
 
-	} 
+
+	}
 
 
 
 if(isset($_POST["checkbox"]) && !empty($_POST["checkbox"])) {
 
-		$query = mysql_query("select * from expert_subscribers where expert_id = ".$_COOKIE["ratingExpertId"]." and user_id =".$_COOKIE["ratingUserId"]) or die(mysql_error());
+		$query = mysql_query("select * from expert_subscribers where expert_id = ".$_COOKIE["ratingExpertId"]." and user_id =".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
 
 		if(mysql_num_rows == 0) {
 
-		mysql_query("insert into expert_subscribers(expert_id, user_id) values('".$_COOKIE["ratingExpertId"]."', '".$_COOKIE["ratingUserId"]."')") or die(mysql_error());
+		mysql_query("insert into expert_subscribers(expert_id, user_id) values('".$_COOKIE["ratingExpertId"]."', '".$_COOKIE["ratingUserId"]."')", $connection) or die(mysql_error());
 
 		}
 

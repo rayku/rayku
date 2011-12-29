@@ -9,16 +9,15 @@
       <div class="t">
         <div class="b">
           <div class="cont">
-            
+
             <!--rp_av-->
-            
+
             <?php  $remainingItems = array(); $j = 0; ?>
             <?php foreach($items as $item): ?>
-            <?php 
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
+            <?php
 
-		$query = mysql_query("select * from item_featured where item_id =".$item->getId()." and status=1") or die(mysql_error());
+		$connection = RaykuCommon::getDatabaseConnection();
+		$query = mysql_query("select * from item_featured where item_id =".$item->getId()." and status=1", $connection) or die(mysql_error());
 
 
 		if(mysql_num_rows($query) > 0) { ?>
@@ -28,22 +27,22 @@
                 <div class="thumb" style="border:none"><?php echo image_tag( '/uploads'  . '/' . sfConfig::get('app_items_upload_folder').'/'.$filename."_t".$ext,array('alt'=>$item->getTitle())) ?></div>
                 <input type="button" onClick="parent.location='shop/itemDetail?id=<?php echo $item->getId(); ?>'" class="myButton" value="More Info" style="padding:3px;font-size:13px;"> </div>
               <!--left-->
-              
+
               <div class="right">
                 <h1><?php echo link_to($item->getTitle(),'shop/itemDetail?id='.$item->getId(),array('class'=>'stitle')) ?></h1>
                 <?php echo substr($item->getDescription(),0,120).'...'; ?>
                 <div class="prices" style="margin-top:30px;"> <span>Price:</span> <?php echo $item->getPricePerUnit(); ?>RP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Actual Value:</span> $<?php echo $item->getActualValue()." ". $item->getActualValueCurrency(); ?> </div>
-                <!--prices--> 
+                <!--prices-->
               </div>
               <!--right-->
-              
+
               <div class="clear"></div>
             </div>
             <!--item-->
-            
+
             <?php } else {
 
-			
+
  $remainingItems[$j] = $item->getId();
 
 $j++;
@@ -51,7 +50,7 @@ $j++;
 				} ?>
             <?php endforeach; ?>
             <?php foreach($remainingItems as $newitem): ?>
-            <?php 
+            <?php
 
 
 	 $c= new Criteria();
@@ -64,32 +63,32 @@ $j++;
                 <div class="thumb" style="border:none"><?php echo image_tag( '/uploads'  . '/' . sfConfig::get('app_items_upload_folder').'/'.$filename."_t".$ext,array('alt'=>$item->getTitle())) ?></div>
                 <input type="button" onClick="parent.location='shop/itemDetail?id=<?php echo $item->getId(); ?>'" class="myButton" value="More Info" style="padding:3px;font-size:13px;"> </div>
               <!--left-->
-              
+
               <div class="right">
                 <h1><?php echo link_to($item->getTitle(),'shop/itemDetail?id='.$item->getId(),array('class'=>'stitle')) ?></h1>
                 <?php echo substr($item->getDescription(),0,120).'...'; ?>
                 <div class="prices" style="margin-top:30px;"> <span>Price:</span> <?php echo $item->getPricePerUnit(); ?>RP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Actual Value:</span> $<?php echo $item->getActualValue()." ". $item->getActualValueCurrency(); ?> </div>
-                <!--prices--> 
+                <!--prices-->
               </div>
               <!--right-->
-              
+
               <div class="clear"></div>
             </div>
             <!--item-->
-            
+
             <?php endforeach; ?>
           </div>
-          <!--cont--> 
+          <!--cont-->
         </div>
-        <!--b--> 
+        <!--b-->
       </div>
-      <!--t--> 
-      
+      <!--t-->
+
     </div>
-    <!--box--> 
-    
+    <!--box-->
+
   </div>
-  <!--shop_left--> 
-  
+  <!--shop_left-->
+
 </div>
 <?php include_component('shop','rightBox') ?>

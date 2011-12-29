@@ -2,7 +2,7 @@
     <div class="t">
         <div class="b">
             <div class="cont">
-                
+
                 <div class="ch">
                     <div class="obj"><h1>Item</h1></div>
                     <div class="price"><h1>Price</h1></div>
@@ -28,10 +28,10 @@
                           <?php $tot_shipping_price = $tot_shipping_price + $cart_item->getTotalShippingCharge(); ?>
                     <?php endif; ?>
                     <?php endforeach; ?>
-                    
+
                     <div class="sep" style="margin-bottom:20px"></div>
                         <div class="ttl" align="left" style="text-align:left;font-size:16px">Your items come to a total of...</div>
-                    
+
                     <div class="f" style="line-height:25px;">
                         <span style="color:#666">Items:</span> <?php echo $tot_item_price; ?> <strong>RP</strong><br />
                         <span style="color:#666">Shipping fee:</span> <?php echo $tot_shipping_price; ?> <strong>RP</strong><br /><br />
@@ -48,14 +48,12 @@
                         <span>Total Cost:</span> <span style="color:#000"><?php echo $tot_price; ?> $<strong>RP</strong></span>
                         <br /><em>(You have <?php $logedUserId = $user->getID();
 
-$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
-						$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
-						$detailPoints = mysql_fetch_assoc($query); 
+		$connection = RaykuCommon::getDatabaseConnection();
+						$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
+						$detailPoints = mysql_fetch_assoc($query);
 						echo $detailPoints['points']; ?>RP available)</em>
                     </div>
-                    
+
                     <div class="r">
                         <span>Have a coupon?</span>
                         <?php echo form_tag('shop/voucherCode'); ?>
@@ -66,16 +64,16 @@ $db = mysql_select_db("rayku_db", $con) or die(mysql_error());
                                 echo '<input style="margin-right:5px;padding:5px;" type="text" name="coupon" />';
                               }
                             ?>
-                            
+
                       <input type="submit" class="apply" value=" " name="apply" />
                             <div class="clear"></div>
                         </form>
                     </div>
-                    
+
                     <div class="clear"></div>
-                    
+
                 </div><!--ch-->
-                
+
             </div><!--cont-->
         </div><!--b-->
     </div><!--t-->

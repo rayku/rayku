@@ -1,26 +1,17 @@
 <?php
-
-
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
-
-
+$connection = RaykuCommon::getDatabaseConnection();
 $result = explode("/",$_SERVER['REDIRECT_URL']);
 
-
-$queryBest = mysql_query("select * from post where thread_id = ".$result[3]." order by created_at ASC limit 0,1 ") or die(mysql_error());
+$queryBest = mysql_query("select * from post where thread_id = ".$result[3]." order by created_at ASC limit 0,1 ", $connection) or die(mysql_error());
 $rowBest = mysql_fetch_array($queryBest);
 
-
-
-
 foreach($other_others_posts as $post)
-{ 
-		 
+{
+
 		 	$c =new Criteria();
 			$c->add(UserPeer::ID,$post->getPosterId());
 			$user = UserPeer::doSelectOne($c);
-			
+
 		?>
 
 <div class="box">
@@ -30,15 +21,9 @@ foreach($other_others_posts as $post)
       <div class="avatar-holder" style="float:none !important;"> <?php echo avatar_tag_for_user($user); ?> </div>
       <div class="spacer"></div>
 
-<?php 
-
-
-
-					$query = mysql_query("select * from user_score where user_id=".$user->getId()) or die(mysql_error());
-					$row = mysql_fetch_assoc($query);
-
-
-
+<?php
+$query = mysql_query("select * from user_score where user_id=".$user->getId(), $connection) or die(mysql_error());
+$row = mysql_fetch_assoc($query);
 ?>
 
 <?php if($user->getType() == 5) : ?>
@@ -62,62 +47,62 @@ foreach($other_others_posts as $post)
 <div class="points" style="font-weight:normal;color:#666">Posts: <strong><?php $logedUserId = $user->getID();
 		$v = new Criteria();
 		$v->add(PostPeer::POSTER_ID, $logedUserId);
-		$_postCount = PostPeer::doCount($v) ;  
+		$_postCount = PostPeer::doCount($v) ;
 
 		echo $_postCount; ?></strong> </div>
-        
-        <div class="points" style="font-weight:normal;color:#666;margin-top:4px;">RP: <strong><?php 
-		$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
+
+        <div class="points" style="font-weight:normal;color:#666;margin-top:4px;">RP: <strong><?php
+		$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 		$detailPoints = mysql_fetch_assoc($query);
 		echo $detailPoints['points'];
 		?>
         </strong> </div>
-   
+
         <?php
-		 
-		 $query_es = mysql_query("select * from user_score where user_id=".$detailPoints[id]." ") or die(mysql_error());
+
+		 $query_es = mysql_query("select * from user_score where user_id=".$detailPoints[id]." ", $connection) or die(mysql_error());
 		$es_score = mysql_fetch_assoc($query_es);
 		//echo $detailPoints['points'];
-		 
-		 
+
+
 		 ?>
          <div class="points" style="font-weight:normal;color:#666;margin-top:4px;font-size:9px;"> <strong>Expert Score:</strong> <?php echo $es_score['score']; ?> ES  </div>
             <?php
-				  
-				    $query_usr = mysql_query("select * from user where id=".$detailPoints[id]." ") or die(mysql_error());
+
+				    $query_usr = mysql_query("select * from user where id=".$detailPoints[id]." ", $connection) or die(mysql_error());
 		$user_details = mysql_fetch_assoc($query_usr);
 		 if($user_details==5 || $user_details=4):
-		 
-		 
+
+
          $query = mysql_query("select * from post where
-					 id = ".$post->getId()."") or die(mysql_error());
-					
+					 id = ".$post->getId()."", $connection) or die(mysql_error());
+
 					$fetch_row=mysql_fetch_assoc($query);
 		 ?>
          <div class="points"  style="font-weight:normal;color:#666;margin-top:4px; font-size:9px;">
          IP:<?php echo $fetch_row['user_ip']<>''?$fetch_row['user_ip']:'Not Available';?>
          </div>
-         
+
          <?php endif;?>
         <?php
-		 
+
 		 	 //////// follow me
 		//	 echo "<pre>";
 		 $current_user_id=$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 			  $detailPoints[id];
 			 //echo "</pre>";
          if($current_user_id<>$detailPoints[id]):
-		 
-		 $query_fm = mysql_query("select * from expert_subscribers where expert_id=".$detailPoints[id]." and 	user_id=".$current_user_id) or die(mysql_error());
+
+		 $query_fm = mysql_query("select * from expert_subscribers where expert_id=".$detailPoints[id]." and 	user_id=".$current_user_id, $connection) or die(mysql_error());
 		//$detailPoints = mysql_fetch_assoc($query);
-					if(mysql_num_rows($query_fm)<=0): 
+					if(mysql_num_rows($query_fm)<=0):
 				 ?>
 					<div class="points" style="font-weight:normal;color:#666;margin-top:4px;">
                      <a href="<?php echo $curr_url;?>?follow=true&user_id=<?php
 					  echo $current_user_id;?>&expert_id=<?php
 					   echo $detailPoints[id];?>">Follow Me</a>  </div>
 		<?php
-						else:			
+						else:
 						echo "Following";
 						endif;
 		endif;
@@ -192,27 +177,22 @@ endif;
 	<p align="right" style="color:#056A9A;padding:0 20px;"><label><input type="checkbox" name="<?php echo $_quick; ?>" id="<?php echo $_quick; ?>" onClick="return Cookieset(this.id);" >Quote in reply</label>
     <br/>
 <?php
-
-	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
-					
-					
 					$query = mysql_query("select * from post where
-					 id = ".$post->getId()." and reported=1") or die(mysql_error());
-					
+					 id = ".$post->getId()." and reported=1", $connection) or die(mysql_error());
+
 					if(mysql_num_rows($query) == 0):
 ?>
                      <a href="<?php echo $curr_url;?>?report=true&post_id=<?php
 					  echo $post->getId();?>" style="margin-right:30px; margin-top:10px; color:#F00;">Report post</a>
 <?php        endif; ?>
     </p>
-	
+
 <?php
 
 $_SESSION['post_index'] +=  1;
 
 
-$_postId = "post_id[".$_SESSION['post_index']."]"; 
+$_postId = "post_id[".$_SESSION['post_index']."]";
 ?>
 
 <input type="hidden" value="<?php echo $post->getId(); ?>" name="<?php echo $_postId; ?>" id="<?php echo $_postId; ?>"></input>
@@ -220,14 +200,14 @@ $_postId = "post_id[".$_SESSION['post_index']."]";
 
 
 
-						
+
 							<br />
 
 
 
 
 
-		<br />	
+		<br />
 </div>
 
 <?php } ?>
