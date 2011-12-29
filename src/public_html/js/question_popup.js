@@ -7,7 +7,7 @@
 
 			jk.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/topic",
+			url: "http://"+getHostname()+"/expertmanager/topic",
 			success : function (data)  {
 
 				    if(data == "yes") {
@@ -52,11 +52,11 @@ function popupClose() {
 
 
 		} else {
-	
+
 			setTimeout('popupClose()', 1000);
 
 		}
-	}		
+	}
 
 
 
@@ -71,7 +71,7 @@ function popupCookieClear()
 
 		jk.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/cookieadd?cookie=0"
+			url: "http://"+getHostname()+"/expertmanager/cookieadd?cookie=0"
 		});
 
 
