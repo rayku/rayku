@@ -6,19 +6,19 @@
 $(function() {
 // OPACITY OF BUTTON SET TO 25%
 $(".body-connect-left").css("opacity","0.25");
-		
+
 // ON MOUSE OVER
 $(".body-connect-left").hover(function () {
-										  
+
 // SET OPACITY TO 100%
 $(this).stop().animate({
 opacity: 1.0
 }, "slow");
 },
-		
+
 // ON MOUSE OUT
 function () {
-			
+
 // SET OPACITY BACK TO 25%
 $(this).stop().animate({
 opacity: 0.25
@@ -56,13 +56,13 @@ opacity: 0.25
         </label>
         <div class="cn-spacer"></div>
         <h3>Filtering Options:</h3>
-        
+
         <h4>Expert Status: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
         <p><a href="" onClick="return setStatus(1)">Online</a></p>
         <p><a href="" onClick="return setStatus(2)">Offline</a></p>
         <script language="javascript">
 	function setStatus(value)
-	{   
+	{
 		 var onoff;
 		 document.cookie = "onoff"+ "=" +value;
 
@@ -78,20 +78,20 @@ opacity: 0.25
         <script language="javascript">
 
 function setSchool(value)
-{   
+{
 
 var school;
 document.cookie = "school"+ "=" +value;
 window.location.reload();
 }
 
-</script> 
+</script>
         <!--<h4>Price: <span id="currentPrice"></span></h4>
                             <div id="sliderContainer" style="width: 170px; height: 16px; margin: 0 auto; color: #1e1e1e; padding-bottom: 15px; background-image: url(images/slider/sliderBg.jpg); background-repeat: no-repeat; background-position: top center;">
                             	<img src="images/slider/sliderCarot.jpg" style="position: relative;" onMouseDown="return true;" id="sliderCarot" alt="" height="16" width="8"><br />
                                 <span class="cn-price-left">$0.25/min</span>     <span class="cn-price-right">$2.00/min</span> <div class="clear-both"></div>
-                            </div>--> 
-        
+                            </div>-->
+
         <script lang="text/javascript">
 								var count_checkboxclicks=0;
 							    var expertcount=0;  var expertIds=new Array();
@@ -112,7 +112,7 @@ window.location.reload();
 
 										document.getElementById(a).checked = false;
 
-										
+
 										alert("You are Limited To Select Four Expers At Once");
 
 										return false;
@@ -207,17 +207,17 @@ window.location.reload();
 
 									}
 
-	
+
 
 								}
 
 
 								function checkExpertCheckBoxes()
-								{ 
+								{
 
 									var online_user = document.getElementById("online_user").value;
 
-									
+
 									if(expertcount > 1)
 									{
 										return true;
@@ -241,7 +241,7 @@ window.location.reload();
 										 	 return false;
 										  }
 
-	
+
 									}
 
 									if(expertcount == 0) {
@@ -259,7 +259,7 @@ window.location.reload();
 function setScore(value)
 {
 		var ss;
-		
+
 		document.cookie = "ss"+ "=" +value;
 
 		window.location.reload();
@@ -276,7 +276,7 @@ function reSet(value)
 	     document.cookie = "school"+ "=" +value;
 
 }
-</script> 
+</script>
       </div>
       <div class="cn-left-bottom"></div>
     </div>
@@ -294,10 +294,9 @@ function reSet(value)
           <div class="cn-column-four" align="center">Connect</div>
           <div class="clear-both"></div>
         </div>
-        <?php $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con); 
+<?php
 
-$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+		$connection = RaykuCommon::getDatabaseConnection();
 
 	$c = new Criteria();
 
@@ -305,17 +304,17 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 	$rankUsers = array(); $ji =0; $newUserLimit = array();  $rankScore = array();
 
-		 foreach($rankexperts as $exp): 
+		 foreach($rankexperts as $exp):
 
-	
+
 					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ") or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
+						 if(mysql_num_rows($_query) > 0) :
 
-							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId()) or die(mysql_error());
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
 
 							if($score['score'] != 0):
@@ -328,17 +327,15 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 								$ji++;
 
 							endif;
-		      
-      						 endif; 
+
+      						 endif;
 
 					endif;
-
-
-		 endforeach; 
+		 endforeach;
 
 
 
-					asort($rankUsers);  
+					asort($rankUsers);
 
 					arsort($rankUsers);
 
@@ -352,13 +349,11 @@ function cmp($a, $b)
 	return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-    
+
 }
-
-
 ?>
         <?php if($cat != NULL): ?>
-        <?php if(count($expert_cats) >= 1 ): 
+        <?php if(count($expert_cats) >= 1 ):
 
   			$_SESSION['temp1'] = array();
 
@@ -369,96 +364,96 @@ function cmp($a, $b)
 		usort($expert_cats, "cmp");
 
 
-		foreach($expert_cats as $new): 
+		foreach($expert_cats as $new):
 
 			$newUser[$i] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category']);
 
 			$i++;
 
-		endforeach; 
+		endforeach;
 
 
 
-		$xy = 1; 
+		$xy = 1;
 
 		 $_count_online_user = 0;
 
-				
+
 	$_count_check = count($newUser);
 
 
-	$_v = 1; 
+	$_v = 1;
 
 
-				 foreach($newUser as $newOne): 
+				 foreach($newUser as $newOne):
 
 
 						$sfcategory = $newOne['category'];
 						$c=new Criteria();
 						$c->add(UserPeer::ID,$newOne['userid']);
 						$experts=UserPeer::doSelectOne($c);
-						
-						if($sfcategory == 5) {
 
-						$query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ") or die(mysql_error());
+                        if($sfcategory == 5) {
 
-						$query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ") or die(mysql_error());
-						$detail3=mysql_fetch_assoc($query3);
-								
-	    				$query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ") or die(mysql_error());
-						$detail2=mysql_fetch_assoc($query2);
-						
-						
-						$query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']."  ") or die(mysql_error());
-						$allsub= "General"." Student (Year: ".$detail3['course_year'].")";
-						
-						} else {
-						
-									$query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
+                            $query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
 
-						$query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
-						$detail3=mysql_fetch_assoc($query3);
-								
-	    				$query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
-						$detail2=mysql_fetch_assoc($query2);
-							
+                            $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
+                            $detail3=mysql_fetch_assoc($query3);
 
-						  
-						
-						$query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
-		
-						$allsub=" ";
-						while ($row = mysql_fetch_array($query4, MYSQL_NUM)) 
-						         {
-                       
-								 
-								 if($allsub==" ")
-								 {
-									 $allsub=$row[3];
-								 }
-								 else
-								 {
-								 $allsub=$allsub." | ".$row[3];
-								 }
-                                  }
-								  
-						$allsub=$allsub." Student (Year: ".$detail3['course_year'].")";
-						
-					}
+                            $query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
+                            $detail2=mysql_fetch_assoc($query2);
 
-						$query5 = mysql_query("select * from user_rate where userid=".$newOne['userid']." ") or die(mysql_error());
+
+                            $query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']."  ", $connection) or die(mysql_error());
+                            $allsub= "General"." Student (Year: ".$detail3['course_year'].")";
+
+                        } else {
+
+                            $query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
+
+                            $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
+                            $detail3=mysql_fetch_assoc($query3);
+
+                            $query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
+                            $detail2=mysql_fetch_assoc($query2);
+
+
+
+
+                            $query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
+
+                            $allsub=" ";
+                            while ($row = mysql_fetch_array($query4, MYSQL_NUM))
+                            {
+
+
+                                if($allsub==" ")
+                                {
+                                    $allsub=$row[3];
+                                }
+                                else
+                                {
+                                    $allsub=$allsub." | ".$row[3];
+                                }
+                            }
+
+                            $allsub=$allsub." Student (Year: ".$detail3['course_year'].")";
+
+                        }
+
+						$query5 = mysql_query("select * from user_rate where userid=".$newOne['userid']." ", $connection) or die(mysql_error());
 						if(mysql_num_rows($query5) > 0) {
-			
+
 						$rowValues = mysql_fetch_assoc($query5);
 
 							$rate=$rowValues['rate']."RP";
-						
+
 						} else {
 
 							$rate="0.16RP";
 
 						}
-						
+
 						$usercoursedetail=$detail3['course_name']." Student (Year: ".$detail3['course_year'].")";
 						//$usercoursedetail=$experts->getName().$score1;
 
@@ -467,65 +462,44 @@ function cmp($a, $b)
 
 $onlinecheck = '';
 
-	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$experts->getId()) or die(mysql_error());
+	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$experts->getId(), $connection) or die(mysql_error());
 
 	if(mysql_num_rows($gtalkquery) > 0) {
-
 		$status = mysql_fetch_assoc($gtalkquery);
-
 		$gtalkmail = $status['gtalkid'];
-
-		$onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
-
-
+		$onlinecheck = file_get_contents('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail);
 	} else {
-
 		 $onlinecheck = '';
-
 	}
 
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
-
-
-		$fb_query = mysql_query("select * from user_fb where userid=".$experts->getId()) or die(mysql_error());
-
+		$fb_query = mysql_query("select * from user_fb where userid=".$experts->getId(), $connection) or die(mysql_error());
 		if(mysql_num_rows($fb_query) > 0) {
-
 			$fbRow = mysql_fetch_assoc($fb_query);
-
-			$fb_username = $fbRow['fb_username']; 
-
+			$fb_username = $fbRow['fb_username'];
 			$details = file_get_contents("http://facebook.rayku.com/tutor");
-
 			$Users = json_decode($details, true);
-
-
 			foreach($Users as $key => $user) :
-	
 				if($user['username'] == $fb_username):
-
-					 $onlinecheck = "online"; 			
-					 break;	
+					 $onlinecheck = "online";
+					 break;
 				endif;
-
 			endforeach;
-
 		}
-
 	}
 
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
-	
+
 		$onlineUsers = file_get_contents("http://notification-bot.rayku.com/tutor");
 
 		$_Users = json_decode($onlineUsers, true);
 
 		foreach($_Users as $key => $_user) :
-	
+
 			if($_user['email'] == $experts->getEmail()):
 
-				 $onlinecheck = 'online'; 		
-				 break;	
+				 $onlinecheck = 'online';
+				 break;
 			endif;
 
 		endforeach;
@@ -533,12 +507,6 @@ $onlinecheck = '';
 	}
 
 
-
-?>
-	
-<?php 
-
-       
 	$curr_user_rank=''; $ij =1;
 
 
@@ -546,7 +514,7 @@ $onlinecheck = '';
 
 		if($_expert['userid'] == $experts->getId()):
 
-			$curr_user_rank=$ij;				 
+			$curr_user_rank=$ij;
 			break;
 
 		endif;
@@ -556,15 +524,10 @@ $onlinecheck = '';
 	endforeach;
 
 
-?>
-
-
-
-<?php
 
 if(strlen($allsub) > 100) :
 
- $allsub = substr($allsub,0,100); 
+ $allsub = substr($allsub,0,100);
 
  $allsub =  $allsub." ...";
 endif;
@@ -573,8 +536,8 @@ endif;
 ?>
 
 <?php
-								
- if(!empty($_COOKIE["ss"]) && $_COOKIE["ss"] <= $newOne['score']) { 
+
+ if(!empty($_COOKIE["ss"]) && $_COOKIE["ss"] <= $newOne['score']) {
 
 $k = 1; ?>
 
@@ -587,20 +550,20 @@ $k = 1; ?>
               <?php if($experts->getType() == 5): ?>
 
 	<?php if($curr_user_rank <= 10): ?>
-              <img src="http://www.rayku.com/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" /> 
+              <img src="/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" />
          <?php endif; ?>
 
- <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+ <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php else: ?>
               <?php if($experts->getType() == 5): ?>
 
 	<?php if($curr_user_rank <= 10): ?>
-              <img src="http://www.rayku.com/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor"/> 
+              <img src="/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor"/>
          <?php endif; ?>
 
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php endif; ?>
@@ -609,7 +572,7 @@ $k = 1; ?>
 
 			<?php if(($experts->getType() == 5) && ($curr_user_rank > 10)): ?>
 
-		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="http://www.rayku.com/images/portfolio/certified-online.png" alt="Certified" id="certified" title="Certified Tutor"/></div>
+		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" title="Certified Tutor"/></div>
 
 			<?php elseif($curr_user_rank <= 10): ?>
 
@@ -628,24 +591,24 @@ $k = 1; ?>
 
             </p>
           </div>
-          
+
           <div id="<?php echo $xy.'.4'; ?>"  class="cn-column-two" align="center">
 				            	<p class="cn-expertscore" style="font-size:13px;color:#333">
 										<?php echo $rate; ?></p>
 				       </div>
-          
+
           <div class="cn-column-four">
             <p class="cn-pricepermin" align="center" style="margin-top:10px">
 	     <?php
 
-		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid']) or die(mysql_error());
+		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid'], $connection) or die(mysql_error());
 
 		if(mysql_num_rows($query) > 0) {
-	
+
 			$newFlag = 1;
 
 		} else {
-	
+
 			$newFlag = 2;
 		} ?>
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
@@ -664,15 +627,16 @@ $k = 1; ?>
           <div> </div>
           <div class="clear-both"></div>
         </div>
-        <?php 	
-					
+        <?php
+
 							 $_SESSION['temp1'][$newOne['userid']]=1;
-							 
+
 	} else if(!empty($_COOKIE['ss'])) {
 
 			///	//style="background-color:#DEF3FE;"
 
-	} else { ?>
+    } else {
+?>
 
 
 
@@ -685,20 +649,20 @@ $k = 1; ?>
               <?php if($experts->getType() == 5): ?>
 
 	<?php if($curr_user_rank <= 10): ?>
-              <img src="http://www.rayku.com/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" /> 
+    <img src="/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" />
          <?php endif; ?>
 
- <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+ <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php else: ?>
               <?php if($experts->getType() == 5): ?>
 
 	<?php if($curr_user_rank <= 10): ?>
-              <img src="http://www.rayku.com/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" /> 
+              <img src="/images/portfolio/certified-online.png" width='20' height='20' alt="Certified" id="certified" title="Certified Tutor" />
          <?php endif; ?>
 
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php endif; ?>
@@ -707,7 +671,7 @@ $k = 1; ?>
 
 			<?php if(($experts->getType() == 5) && ($curr_user_rank > 10)): ?>
 
-		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="http://www.rayku.com/images/portfolio/certified-online.png" alt="Certified" id="certified" title="Certified Tutor" /></div>
+		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" title="Certified Tutor" /></div>
 
 			<?php elseif($curr_user_rank <= 10): ?>
 
@@ -724,24 +688,24 @@ $k = 1; ?>
 
             </p>
           </div>
-          
+
           <div id="<?php echo $xy.'.4'; ?>"  class="cn-column-two" align="center">
 				            	<p class="cn-expertscore" style="font-size:13px;color:#333">
 										<?php echo $rate; ?></p>
 				       </div>
-          
+
           <div class="cn-column-four">
             <p class="cn-pricepermin" align="center" style="margin-top:10px">
 	     <?php
 
-		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid']) or die(mysql_error());
+		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid'], $connection) or die(mysql_error());
 
 		if(mysql_num_rows($query) > 0) {
-	
+
 			$newFlag = 1;
 
 		} else {
-	
+
 			$newFlag = 2;
 		} ?>
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
@@ -762,19 +726,19 @@ $k = 1; ?>
         </div>
 
 
-        <?php 
-				
-				
-					
+        <?php
+
+
+
 							 $_SESSION['temp1'][$newOne['userid']]=1;
-	
+
 	}
 
 
-					
+
 					if($_count_check == $_v) :
-						
-						echo "<input type='hidden' name='online_user' id='online_user' value='".$_count_online_user."' >";	
+
+						echo "<input type='hidden' name='online_user' id='online_user' value='".$_count_online_user."' >";
 					endif;
 
 			$xy++; 		$_v++;
@@ -790,13 +754,13 @@ $k = 1; ?>
 						} ?>
       <?php else: ?>
       </form>
-      <?php 
+      <?php
 
 if($_COOKIE["onoff"] == 1) {
 
-	 
+
 	  if(!empty($_COOKIE["ss"])) {
- 	
+
 									if(!empty($_COOKIE["school"])) {
 
 										?>
@@ -811,7 +775,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  } else {
-		
+
 		if(!empty($_COOKIE["school"])) {
 
 			?>
@@ -825,9 +789,9 @@ if($_COOKIE["onoff"] == 1) {
       <?php
 
 		}
-		
+
 	  }
-	
+
 
 
 } else if($_COOKIE["onoff"] == 2) {
@@ -835,7 +799,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  if(!empty($_COOKIE["ss"])) {
- 	
+
 									if(!empty($_COOKIE["school"])) {
 
 										?>
@@ -850,7 +814,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  } else {
-		
+
 		if(!empty($_COOKIE["school"])) {
 
 			?>
@@ -864,21 +828,21 @@ if($_COOKIE["onoff"] == 1) {
       <?php
 
 		}
-		
+
 	  }
-	
+
 
 } else {
 
      if(!empty($_COOKIE["ss"])) {
-	 
+
 						if(!empty($_COOKIE["school"])) {
-			
-						
+
+
 		?>
       <p class="cn-pricepermin" align="center" style="margin-top:10px"> No Experts found for this category with the criteria of Expert Score Level and School.... </p>
       <?php
-			
+
 						} else {
 
 				?>
@@ -892,9 +856,9 @@ if($_COOKIE["onoff"] == 1) {
 			?>
       <p class="cn-pricepermin" align="center" style="margin-top:10px"> No Experts found for this category with the criteria of School Level.... </p>
       <?php
-			
 
-		} 
+
+		}
 
       }
 
@@ -904,7 +868,7 @@ if($_COOKIE["onoff"] == 1) {
       <!--<p class="cn-pricepermin" align="center" style="margin-top:10px; color:#C30">
                         	    Please Select category from the category list
                       	    </p>-->
-      
+
       <div class="clear-both"></div>
       <? endif; ?>
       <?php else: ?>
