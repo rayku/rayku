@@ -3,47 +3,45 @@
   $raykuUser = $sf_user->getRaykuUser();
   $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-    ////////checking user is authirzed to the site 
+    ////////checking user is authirzed to the site
 	$num_of_row=0;
-	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-         $db = mysql_select_db("rayku_db", $con);
-		 $IP=$_SERVER['REMOTE_ADDR'];
-		  
-	$_query = mysql_query("select * from thread  where user_ip='".$IP."' and banned=1");
+  $connection = RaykuCommon::getDatabaseConnection();
+  $IP=$_SERVER['REMOTE_ADDR'];
+
+	$_query = mysql_query("select * from thread  where user_ip='".$IP."' and banned=1", $connection);
 	$num_of_row= mysql_num_rows($_query);
 	if($num_of_row>0)
 	{
 		echo "
         <script type='text/javascript'>
-			document.location='http://www.rayku.com/error';
+			document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 		</script>";
-        
 	}
-	
-	$_query = mysql_query("select * from banned_ips  where ip like '%".$IP."%' ");
+
+	$_query = mysql_query("select * from banned_ips  where ip like '%".$IP."%' ", $connection);
 	$num_of_row= mysql_num_rows($_query);
 	if($num_of_row>0)
 	{
 		echo "
         <script type='text/javascript'>
-			document.location='http://www.rayku.com/error';
+			document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 		</script>";
-        
+
 	}
-	
+
 	if($logedUserId<>'')
 	{
 			$user_id=$raykuUser->getId();
 			$num_of_row=0;
-			$_query = mysql_query("select * from thread  where 	poster_id='".$user_id."' and banned=1");
+			$_query = mysql_query("select * from thread  where 	poster_id='".$user_id."' and banned=1", $connection);
 			$num_of_row= mysql_num_rows($_query);
 			if($num_of_row>0)
 			{
 				echo "
 				<script type='text/javascript'>
-					document.location='http://www.rayku.com/error';
+                    document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 				</script>";
-				
+
 			}
 	}
 //////////////////////////
@@ -51,7 +49,7 @@
   if(!$sf_user->isAuthenticated())
   {
 ?>
-<div id="top-nav"> 
+<div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
     <ul class="top-menu">
@@ -62,16 +60,16 @@
     <!--div#user-box-->
     <div class="clear"></div>
   </div>
-  <!--div#top-nav-center--> 
+  <!--div#top-nav-center-->
 </div>
 </div>
-<!--div#top-nav--> 
+<!--div#top-nav-->
 <?php } else { ?>
 
 
-<?php 
-$queryPoints = mysql_query("select * from user where id=".$raykuUser->getId()) or die(mysql_error());
-$detailPoints = mysql_fetch_assoc($queryPoints); 
+<?php
+$queryPoints = mysql_query("select * from user where id=".$raykuUser->getId(), $connection) or die(mysql_error());
+$detailPoints = mysql_fetch_assoc($queryPoints);
 ?>
 
 <?php $email=$raykuUser->getEmail();  ?>
@@ -79,21 +77,21 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
 	<!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
 	<div id="top-nav-center">
 		<ul class="top-menu">
-			<li><?php echo link_to( 'Rayku', 'http://rayku.com', array('title'=>'Rayku') ); ?></li>
-			<li><?php echo link_to( 'Ask Question', 'http://rayku.com/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
+			<li><?php echo link_to( 'Rayku', RaykuCommon::getCurrentHttpDomain() . '/', array('title'=>'Rayku') ); ?></li>
+			<li><?php echo link_to( 'Ask Question', RaykuCommon::getCurrentHttpDomain() . '/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
 			<li><?php echo link_to( 'Q&A Boards', 'forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>
-            
+
             <?php if($raykuUser->getNrOfNewMessages() >= 1) : ?>
-            <li><a href="http://www.rayku.com/message/inbox" title="Messages" class="tt-messages"><span><?php echo $raykuUser->getNrOfNewMessages(); ?></span>Messages</a></li>
+            <li><a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/message/inbox" title="Messages" class="tt-messages"><span><?php echo $raykuUser->getNrOfNewMessages(); ?></span>Messages</a></li>
             <?php else:  ?>
-            <li><a href="http://www.rayku.com/message/inbox" title="Messages" class="tt-messages">Messages</a></li>
+            <li><a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/message/inbox" title="Messages" class="tt-messages">Messages</a></li>
 			<?php endif; ?>
-    
+
 			<li><?php echo link_to( 'Tutors', 'tutors/index', array('title'=>'Tutors','class'=>'tt-tutors') ); ?></li>
 			<li><?php echo link_to( 'Rayku Points', 'shop/index', array('title'=>'Rayku Points','class'=>'tt-points') ); ?></li>
 		</ul>
 		<!--ul.top-menu-->
-		
+
 		<div id="user-box" align="left">
 			<a href="http://whiteboard.rayku.com" title="Test Whiteboard" target="_blank" class="tt-whiteboard">Test Whiteboard</a>
 			<ul>
@@ -106,19 +104,19 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
 
 					<?php echo $raykuUser->getName(); ?>
 					<ul>
-						<li class="profile"><a href="<? echo 'http://rayku.com/tutor/'.$raykuUser->getUsername(); ?>" title="View Profile">View Profile</a></li>
-						<li class="edit"><a href="<? echo 'http://rayku.com/profile/'.$raykuUser->getUsername().'/edit'; ?>" title="Edit Profile">Edit Profile</a></li>
-						<li class="signout"><a href="http://rayku.com/logout" title="Sign-Out" style="border-bottom: none;">Log Out</a></li>
+						<li class="profile"><a href="<? echo 'http://'. RaykuCommon::getCurrentHttpDomain() .'/tutor/'.$raykuUser->getUsername(); ?>" title="View Profile">View Profile</a></li>
+						<li class="edit"><a href="<? echo 'http://'. RaykuCommon::getCurrentHttpDomain() .'/profile/'.$raykuUser->getUsername().'/edit'; ?>" title="Edit Profile">Edit Profile</a></li>
+                        <li class="signout"><a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/logout" title="Sign-Out" style="border-bottom: none;">Log Out</a></li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 		<!--div#user-box-->
-		
+
 		<div class="clear"></div>
 	</div>
 	<!--div#top-nav-center-->
-</div>	
+</div>
 <!--div#top-nav-->
 
 <script type="text/javascript">
@@ -173,21 +171,21 @@ if(($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/scriptaculous.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/builder.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/effects.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/unittest.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/modalbox.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>
+<script type="text/javascript" src="/js/scriptaculous.js"></script>
+<script type="text/javascript" src="/js/builder.js"></script>
+<script type="text/javascript" src="/js/effects.js"></script>
+<script type="text/javascript" src="/js/unittest.js"></script>
+<script type="text/javascript" src="/js/modalbox.js"></script>
+<script type="text/javascript" src="/js/checkuser.js"></script>
+<script type="text/javascript" src="/js/checkuserstay.js"></script>
 
 <?php if($sf_user->isAuthenticated()) : ?>
 
 
-	<link rel="stylesheet" type="text/css" href="http://www.rayku.com/styles/popup-window.css" />
-	<script type="text/javascript" src="http://www.rayku.com/scripts/popup-window.js"></script>
+	<link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
+	<script type="text/javascript" src="/scripts/popup-window.js"></script>
 
-	<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/question_popup.js"></script>
+	<script type="text/javascript" src="/js/question_popup.js"></script>
 	<script language="javascript">checkMissedQuestion();</script>
 
 
@@ -195,7 +193,7 @@ if(($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL
 
 	<div class="sample_popup"   id="question_popup" style="display: none;">
 	<div class="menu_form_header" id="popup_drag" style="background:#E57A72 none;border:2px solid #E57A72;height:25px;">
-	<img class="menu_form_exit"   id="popup_exit" src="http://www.rayku.com/styles/form_exit.png" alt="Exit" /></div>
+	<img class="menu_form_exit"   id="popup_exit" src="/styles/form_exit.png" alt="Exit" /></div>
 
 	<div class="menu_form_body" style="background:#FFF;border:2px solid #E57A72; height:100px;padding-top:50px;">
 					<font style="font-size:20px;margin:100px;color:red">Oops. You missed a question!</font>
@@ -207,7 +205,7 @@ if(($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL
 
 <?php if($_SERVER['REQUEST_URI'] == "/expertmanager/connect") : ?>
 
-	<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkedMsgUser.js"></script>
+	<script type="text/javascript" src="/js/checkedMsgUser.js"></script>
 
 	<script type="text/javascript">
 	checkedMsgUser();
@@ -259,7 +257,7 @@ forumsub = getCookie("forumsub");
 			success : function (data)  {
 				var check = data.split("<");
 				if(check[0] == "redirect") {
-					document.location = "http://www.rayku.com/forum/newthread/"+forumsub+"?exp_online=1";
+                    document.location = "http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/forum/newthread/"+forumsub+"?exp_online=1";
 				}
 			}
 		});
@@ -269,5 +267,5 @@ setTimeout('checkForRedirect()', 20000);
 </script>
 
 <?php
-endif;  
+endif;
 ?>
