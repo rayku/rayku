@@ -1,7 +1,6 @@
 <?php
   use_helper('MyAvatar', 'Javascript');
   $raykuUser = $sf_user->getRaykuUser();
-  $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
     ////////checking user is authirzed to the site
 	$num_of_row=0;
@@ -26,9 +25,9 @@
         <script type='text/javascript'>
 			document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 		</script>";
-
 	}
 
+    $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 	if($logedUserId<>'')
 	{
 			$user_id=$raykuUser->getId();
@@ -77,9 +76,9 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
 	<!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
 	<div id="top-nav-center">
 		<ul class="top-menu">
-			<li><?php echo link_to( 'Rayku', RaykuCommon::getCurrentHttpDomain() . '/', array('title'=>'Rayku') ); ?></li>
-			<li><?php echo link_to( 'Ask Question', RaykuCommon::getCurrentHttpDomain() . '/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
-			<li><?php echo link_to( 'Q&A Boards', 'forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>
+			<li><?php echo link_to( 'Rayku', '/', array('title'=>'Rayku') ); ?></li>
+			<li><?php echo link_to( 'Ask Question', '/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
+			<li><?php echo link_to( 'Q&A Boards', '/forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>
 
             <?php if($raykuUser->getNrOfNewMessages() >= 1) : ?>
             <li><a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/message/inbox" title="Messages" class="tt-messages"><span><?php echo $raykuUser->getNrOfNewMessages(); ?></span>Messages</a></li>
