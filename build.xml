@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Rayku" default="full-build">
+
+    <property name="version"      value="0.0.0" override="true" />
+    <property name="build"        value="0000"  override="true" />
+    <property name="identifier"   value="${version}.${build}" override="false" />
+
+    <property name="reports-dir"  value="reports" />
+
+    <target name="full-build" depends="metrics">
+        <!--target name="full-build" depends="metrics, run-tests"-->
+    </target>
+
+    <target name="run-tests" depends="unit-tests">
+    </target>
+
+    <target name="unit-tests" depends="prepare-directories">
+        <exec
+            dir="." logoutput="true" checkreturn="true"
+            command="phpunit --include-path src:tests
+            --log-junit '${reports-dir}/unit-tests.xml'
+            --coverage-html '${reports-dir}/coverage'
+            --coverage-clover '${reports-dir}/coverage/coverage.xml'
+            tests/" />
+    </target>
+
+    <target name="metrics" depends="prepare-directories, pmd, depend" />
+
+    <target name="pmd">
+        <phpmd rulesets="codesize,naming,design,unusedcode">
+            <fileset dir="tests">
+                <include name="**/*.php" />
+            </fileset>
+            <fileset dir="src">
+                <include name="apps/**" />
+                <include name="lib/**/*.php" />
+                <exclude name="lib/vendor/**" />
+            </fileset>
+            <formatter type="xml" outfile="${reports-dir}/pmd.xml" />
+            <formatter type="html" outfile="${reports-dir}/pmd.html" />
+        </phpmd>
+    </target>
+
+    <target name="depend">
+        <phpdepend>
+            <fileset dir="src">
+                <include name="apps/**" />
+                <include name="lib/**/*.php" />
+                <exclude name="lib/vendor/**" />
+            </fileset>
+            <logger type="jdepend-xml" outfile="${reports-dir}/jdepend.xml"/>
+            <logger type="jdepend-chart" outfile="${reports-dir}/jdepend-chart"/>
+            <logger type="overview-pyramid" outfile="${reports-dir}/jdepend-pyramid"/>
+            <analyzer type="coderank-mode" value="method"/>
+        </phpdepend>
+    </target>
+
+    <target name="prepare-directories">
+        <delete dir="${reports-dir}" />
+        <mkdir dir="${reports-dir}" />
+    </target>
+</project>

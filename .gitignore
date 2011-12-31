@@ -3,3 +3,4 @@ src/log
 .DS_Store
 *.swp
 host-files
+reports
