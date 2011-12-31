@@ -1,2 +1,0 @@
-all:
-  stylesheets: [/styles/donny.css, /css/pager.css]
