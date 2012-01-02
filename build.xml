@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Rayku" default="full-build">
 
+
     <property name="version"      value="0.0.0" override="true" />
     <property name="build"        value="0000"  override="true" />
     <property name="identifier"   value="${version}.${build}" override="false" />
