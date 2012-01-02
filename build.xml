@@ -8,7 +8,6 @@
     <property name="reports-dir"  value="reports" />
 
     <target name="full-build" depends="lint, metrics">
-        <!--target name="full-build" depends="metrics, run-tests"-->
     </target>
 
     <target name="run-tests" depends="unit-tests">
@@ -33,10 +32,6 @@
             </fileset>
             <fileset dir="src">
                 <include name="apps/**/*.php" />
-                <!--
-                <include name="lib/**/*.php" />
-                <exclude name="lib/vendor/**" />
-                -->
             </fileset>
             <formatter type="xml" outfile="${reports-dir}/pmd.xml" />
             <formatter type="html" outfile="${reports-dir}/pmd.html" />
@@ -47,10 +42,6 @@
         <phpdepend>
             <fileset dir="src">
                 <include name="apps/**/*.php" />
-                <!--
-                <include name="lib/**/*.php" />
-                <exclude name="lib/vendor/**" />
-                -->
             </fileset>
             <logger type="jdepend-xml" outfile="${reports-dir}/jdepend.xml"/>
             <logger type="jdepend-chart" outfile="${reports-dir}/jdepend-chart"/>
@@ -63,10 +54,6 @@
         <phplint>
             <fileset dir="src">
                 <include name="apps/**/*.php" />
-                <!--
-                <include name="lib/**/*.php" />
-                <exclude name="lib/vendor/**" />
-                -->
             </fileset>
         </phplint>
     </target>
