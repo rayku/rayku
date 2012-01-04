@@ -1,20 +1,11 @@
 <?php
+require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1.2/lib/autoload/sfCoreAutoload.class.php';
+require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
+sfCoreAutoload::register();
 
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
+$connection = RaykuCommon::getDatabaseConnection();
 
-
-
-	$time = time()-300;
-
-mysql_query("delete from user_expert where time <= ".$time." ") or die("Expert Delete Error:--->".mysql_error());
-
-mysql_query("delete from sendmessage where time <= ".$time." ") or die("Asker Delete Error:--->".mysql_error());
-
-
-
-	
-
-
-
+$time = time()-300;
+mysql_query("delete from user_expert where time <= ".$time." ", $connection) or die("Expert Delete Error:--->".mysql_error());
+mysql_query("delete from sendmessage where time <= ".$time." ", $connection) or die("Asker Delete Error:--->".mysql_error());
 ?>
