@@ -24,7 +24,7 @@ module.exports = function starttls(socket, options, cb) {
   var cleartext = pipe(pair, socket);
 
   pair.on('secure', function() {
-    var verifyError = pair._ssl.verifyError();
+    var verifyError = pair.ssl.verifyError();
 
     if (verifyError) {
       cleartext.authorized = false;
