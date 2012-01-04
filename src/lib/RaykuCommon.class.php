@@ -104,9 +104,30 @@ class RaykuCommon
   // this is a temporary function to allow the safe removal of mysql_connect and
   // mysql_select_db across the codebase
   static function getDatabaseConnection() {
-      $connection = mysql_connect("127.0.0.1", "rayku", "rayku");
-      mysql_select_db("rayku_db", $connection);
+      $config = self::getDatabaseConfiguration();
+      $connection = mysql_connect($config['host'], $config['username'], $config['password']);
+
+      mysql_select_db($config['dbname'], $connection);
       return $connection;
+  }
+
+  private static $dbConfig = array();
+
+  private static function getDatabaseConfiguration() {
+      if (self::$dbConfig == null) {
+          $config = sfYaml::load(dirname(__FILE__).'/../config/databases.yml');
+
+          $propelConfiguration = $config['all']['propel']['param'];
+          preg_match('/dbname=(.*);host=(.*)/', $propelConfiguration['dsn'], $matched);
+          var_dump($matched);
+
+          self::$dbConfig['host'] = $matched[2];
+          self::$dbConfig['dbname'] = $matched[1];
+          self::$dbConfig['username'] = $propelConfiguration['username'];
+          self::$dbConfig['password'] = $propelConfiguration['password'];
+      }
+
+      return self::$dbConfig;
   }
 }
 ?>
