@@ -119,7 +119,6 @@ class RaykuCommon
 
           $propelConfiguration = $config['all']['propel']['param'];
           preg_match('/dbname=(.*);host=(.*)/', $propelConfiguration['dsn'], $matched);
-          var_dump($matched);
 
           self::$dbConfig['host'] = $matched[2];
           self::$dbConfig['dbname'] = $matched[1];
