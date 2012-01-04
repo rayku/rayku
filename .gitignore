@@ -4,3 +4,4 @@ src/log
 *.swp
 host-files
 reports
+nohup.out
