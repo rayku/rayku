@@ -86,7 +86,7 @@ class dashboardActions extends sfActions
 			mysql_query("update user_score set status = 1 where user_id =".$_userId."", $connection) or die(mysql_error());
 		}
 
-		$this->redirect('http://www.rayku.com/dashboard');
+		$this->redirect('/dashboard');
 	}
 
 	public function executeList() {
@@ -103,20 +103,20 @@ class dashboardActions extends sfActions
 			if(mysql_num_rows($query) > 0) {
 
 				$_SESSION['conversation'] = 1;
-				$this->redirect('http://www.rayku.com/dashboard');
+				$this->redirect('/dashboard');
 			}
 
 			$_SESSION['question'] = $_POST['question'];
 			$_SESSION['subject'] = $_POST['subject'];
 
 			if($_POST['redirect'] == "2"){
-				$this->redirect('http://www.rayku.com/dashboard/direct');
+				$this->redirect('/dashboard/direct');
 			}
 
-			$this->redirect('http://www.rayku.com/expertmanager/list');
+			$this->redirect('/expertmanager/list');
 		}
 
-		$this->redirect('http://www.rayku.com/dashboard');
+		$this->redirect('/dashboard');
 	}
 
 	public function executeTutor() {
@@ -140,7 +140,7 @@ class dashboardActions extends sfActions
 			}
 		}
 
-		$this->redirect('http://www.rayku.com/dashboard');
+		$this->redirect('/dashboard');
 	}
 
 	public function executeDirect()
@@ -228,7 +228,7 @@ class dashboardActions extends sfActions
 				if(mysql_num_rows($gtalkquery) > 0) {
 					$status = mysql_fetch_assoc($gtalkquery);
 					$gtalkmail = $status['gtalkid'];
-					$onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+					$onlinecheck = file_get_contents('http://'.RaykuCommon::getCurrentHttpDomain().':8922/status/'.$gtalkmail);
 				}
 			}
 
@@ -274,7 +274,7 @@ class dashboardActions extends sfActions
 
 		if(count($onlineusers) < 1)
 		{
-			$this->redirect('http://www.rayku.com/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
+			$this->redirect('/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
 		}
 
 		$time = time();
@@ -348,10 +348,10 @@ class dashboardActions extends sfActions
 
 				mysql_query("insert into whiteboard_moneyback(chat_id, reason) values(".$_SESSION["whiteboard_Chat_Id"].", '".$_POST['reason']."')", $connection) or die(mysql_error());
 
-				$this->redirect('http://www.rayku.com/dashboard/moneyredirect');
+				$this->redirect('/dashboard/moneyredirect');
 			}
 		}
-		$this->redirect('http://www.rayku.com/dashboard/moneyback');
+		$this->redirect('/dashboard/moneyback');
 	}
 
 	public function executeMoneyback()
@@ -369,7 +369,7 @@ class dashboardActions extends sfActions
 
 		if($_POST['_hidden_facebook'] && !empty($_POST['fbname'])) {
 			$fb_username = $_POST['fbname'];
-			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://www.rayku.com/dashboard/facebookadd?username='.$fb_username);
+			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard/facebookadd?username='.$fb_username);
 		}
 
 		$query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
@@ -430,13 +430,13 @@ class dashboardActions extends sfActions
 			$email .= '@gmail.com';
 		}
 
-		$test = file_get_contents('http://www.rayku.com:8892/add/'.$email);
+		$test = file_get_contents('http://'.RaykuCommon::getCurrentHttpDomain().':8922/add/'.$email);
 
 		if($test) {
 			$_SESSION['adduser'] = 1;
 		} else {
 			$_SESSION['adduser'] = 2;
-			$this->redirect('http://www.rayku.com/dashboard/gtalk');
+			$this->redirect('/dashboard/gtalk');
 		}
 
 		if(mysql_num_rows($query) > 0) {
@@ -444,7 +444,7 @@ class dashboardActions extends sfActions
 		} else {
 			mysql_query("insert into user_gtalk(userid, gtalkid) values(".$userId.", '".$email."' ) ", $connection) or die(mysql_error());
 		}
-		$this->redirect('http://www.rayku.com/dashboard/gtalk');
+		$this->redirect('/dashboard/gtalk');
 	}
 
 	public function executeBeforeclose()
@@ -529,7 +529,7 @@ class dashboardActions extends sfActions
 		}
 		if(!empty($_POST)) {
 			if(empty($_POST["rating"])) {
-				$this->redirect('http://www.rayku.com/dashboard/rating');
+				$this->redirect('/dashboard/rating');
 			}
 			if(!empty($_COOKIE['raykuCharge'])) {
 				$rate = $_COOKIE['raykuCharge'];
@@ -691,10 +691,10 @@ class dashboardActions extends sfActions
 			$this->getResponse()->setCookie("ratingUserId", "", time()-3600);
 
 			if($_chat_rating == 1 || $_chat_rating == 2) {
-				$this->redirect('http://www.rayku.com/dashboard/moneyback');
+				$this->redirect('/dashboard/moneyback');
 			}
 
-			$this->redirect('http://www.rayku.com/dashboard');
+			$this->redirect('/dashboard');
 		}
 	}
 }
