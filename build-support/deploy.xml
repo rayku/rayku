@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Rayku">
+
+    <property name="deploy.directory" value="/opt/rayku-website" />
+    <property name="deploy.directory.backup" value="${deploy.directory}-${current.datetime}" />
+
+    <target name="deploy" depends="-deploy:backup-current-version,
+                                   -deploy:copy-new-files">
+    </target>
+
+    <target name="-deploy:copy-new-files">
+        <echo>=====> Copying Rayku files into ${deploy.directory}</echo>
+        <copy todir="${deploy.directory}" haltonerror="true">
+            <fileset dir="src">
+                <include name="**/*" />
+                <exclude name="log/" />
+                <exclude name="cache/" />
+                <exclude name="data/" />
+                <exclude name="symfony" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="-deploy:backup-current-version">
+        <available file="${deploy.directory}" type="dir" property="deploy.directory.exists" />
+        <if>
+            <equals arg1="${deploy.directory.exists}" arg2="TRUE" />
+            <then>
+                <echo>  => Backing up current version as ${deploy.directory.backup}</echo>
+                <move file="${deploy.directory}" tofile="${deploy.directory.backup}" haltonerror="true" />
+            </then>
+            <else>
+                <echo>  => Nothing to backup</echo>
+            </else>
+        </if>
+    </target>
+</project>

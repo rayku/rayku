@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Rayku" default="full-build">
-
+    <tstamp>
+        <format property="current.datetime" pattern="%Y%m%d%H%M%S" />
+    </tstamp>
 
     <property name="version"      value="0.0.0" override="true" />
     <property name="build"        value="0000"  override="true" />
     <property name="identifier"   value="${version}.${build}" override="false" />
 
-    <property name="reports-dir"  value="reports" />
+    <property name="reports.directory"  value="reports" />
+
+    <property name="env"          value="dev"   override="true" />
+
+    <property file="build-support/build.properties" />
+    <property file="build-support/${env}.build.properties" />
+    <import   file="build-support/deploy.xml" />
 
     <target name="full-build" depends="lint, metrics">
     </target>
@@ -18,9 +26,9 @@
         <exec
             dir="." logoutput="true" checkreturn="true"
             command="phpunit --include-path src:tests
-            --log-junit '${reports-dir}/unit-tests.xml'
-            --coverage-html '${reports-dir}/coverage'
-            --coverage-clover '${reports-dir}/coverage/coverage.xml'
+            --log-junit '${reports.directory}/unit-tests.xml'
+            --coverage-html '${reports.directory}/coverage'
+            --coverage-clover '${reports.directory}/coverage/coverage.xml'
             tests/" />
     </target>
 
@@ -34,8 +42,8 @@
             <fileset dir="src">
                 <include name="apps/**/*.php" />
             </fileset>
-            <formatter type="xml" outfile="${reports-dir}/pmd.xml" />
-            <formatter type="html" outfile="${reports-dir}/pmd.html" />
+            <formatter type="xml" outfile="${reports.directory}/pmd.xml" />
+            <formatter type="html" outfile="${reports.directory}/pmd.html" />
         </phpmd>
     </target>
 
@@ -44,9 +52,9 @@
             <fileset dir="src">
                 <include name="apps/**/*.php" />
             </fileset>
-            <logger type="jdepend-xml" outfile="${reports-dir}/jdepend.xml"/>
-            <logger type="jdepend-chart" outfile="${reports-dir}/jdepend-chart"/>
-            <logger type="overview-pyramid" outfile="${reports-dir}/jdepend-pyramid"/>
+            <logger type="jdepend-xml" outfile="${reports.directory}/jdepend.xml"/>
+            <logger type="jdepend-chart" outfile="${reports.directory}/jdepend-chart"/>
+            <logger type="overview-pyramid" outfile="${reports.directory}/jdepend-pyramid"/>
             <analyzer type="coderank-mode" value="method"/>
         </phpdepend>
     </target>
@@ -59,8 +67,9 @@
         </phplint>
     </target>
 
+
     <target name="prepare-directories">
-        <delete dir="${reports-dir}" />
-        <mkdir dir="${reports-dir}" />
+        <delete dir="${reports.directory}" />
+        <mkdir dir="${reports.directory}" />
     </target>
 </project>
