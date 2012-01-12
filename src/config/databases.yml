@@ -12,9 +12,9 @@ all:
   propel:
     class: sfPropelDatabase
     param:
-      dsn:        mysql:dbname=rayku_db;host=localhost
-      username:   rayku_db
-      password:   db_*$%$%
+      dsn:        mysql:dbname=rayku_db;host=127.0.0.1
+      username:   rayku
+      password:   rayku
       encoding:   utf8
       persistent: true
       pooling:    true
