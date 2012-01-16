@@ -1,0 +1,7 @@
+source :rubygems
+
+gem "rspec"
+gem "cucumber"
+gem "capybara", :require => %w(capybara/cucumber capybara/dsl)
+gem "selenium-webdriver"
+gem "ruby-debug"
