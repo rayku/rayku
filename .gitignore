@@ -1,7 +1,7 @@
 src/cache
 src/log
 .DS_Store
-*.swp
+*.sw*
 host-files
 reports
 nohup.out
