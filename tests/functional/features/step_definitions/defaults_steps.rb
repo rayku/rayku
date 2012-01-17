@@ -1,6 +1,7 @@
 Given /^that I'm connecting to Rayku$/ do
-    visit '/'
+  visit '/'
 end
 
-Given /^I'm a new user$/ do
+Then /^I should see a "([^"]*)" message on the page$/ do |text|
+  page.text.should include text
 end

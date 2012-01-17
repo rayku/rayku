@@ -7,6 +7,25 @@ When /^I register on it as "([^"]*)", "([^"]*)"$/ do |name, email|
   end
 end
 
-Then /^I should see a "([^"]*)" message on the page$/ do |text|
-  page.text.should include text
+Given /^I'm a new user$/ do
+end
+
+Given /^I'm a registered user$/ do
+end
+
+Given /^I'm not a registered user$/ do
+end
+
+When /^I (try to )?sign in as "([^"]*)", "([^"]*)"$/ do |ignore, email, password|
+  find('#login-tab').click
+  within('#login-form') do
+    find('.email').set(email)
+    find('.password').set(password)
+
+    find('input[type="submit"]').click
+  end
+end
+
+Then /^I should be redirected to my dashboard$/ do
+  wait_until { page.text.match /Ask a Question/ }
 end
