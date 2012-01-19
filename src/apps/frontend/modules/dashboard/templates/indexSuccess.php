@@ -143,7 +143,7 @@ function cmp($a, $b)
    <?php if($stats['expertCount']<125): ?>
    <div id="widget-foot">
 
-       <p>get more exposure as a tutor, <a href="http://rayku.com/joinus">get certified</a></p>
+       <p>get more exposure as a tutor, <a href="/joinus">get certified</a></p>
 
    </div><!--widget-foot-->
    <?php endif; ?>
@@ -221,7 +221,7 @@ vd('#tutor-rate').mouseout(function() {
 
 				vd.ajax({ cache: false,
 					type : "GET",
-					url: "http://www.rayku.com/dashboard/chargerate?rate="+rate
+					url: "/dashboard/chargerate?rate="+rate
 				});
 
 //alert(rate);
@@ -235,7 +235,7 @@ vd('#tutor-rate').mouseover(function() {
 
 				vd.ajax({ cache: false,
 					type : "GET",
-					url: "http://www.rayku.com/dashboard/chargerate?rate="+rate
+					url: "/dashboard/chargerate?rate="+rate
 				});
 
 
@@ -246,7 +246,7 @@ vd('#tutor-rate').mouseover(function() {
 		<?php elseif(mysql_num_rows($query) == 0) : ?>
    <!--widget main-->
    <div id="widget-main">
-       <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="http://rayku.com/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
+       <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
    </div>
 
         <?php endif; ?>
@@ -293,16 +293,16 @@ vd('#tutor-rate').mouseover(function() {
 
 	<?php $query = mysql_query("select * from user_gtalk where userid =".$logedUserId." ", $connection) or die(mysql_error());
     if(mysql_num_rows($query) > 0) : ?>
-    <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
+    <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
     <?php else: ?>
-    <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk-no">Google Talk</a></li>
+    <li><a href="/dashboard/gtalk" class="icon gtalk-no">Google Talk</a></li>
     <?php endif; ?>
 
     <?php $query = mysql_query("select * from user_fb where userid =".$logedUserId." ", $connection) or die(mysql_error());
     if(mysql_num_rows($query) > 0) : ?>
-	<li><a href="http://rayku.com/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
+	<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
     <?php else: ?>
-	<li><a href="http://rayku.com/dashboard/facebook" class="icon facebook-no">Facebook Chat</a></li>
+	<li><a href="/dashboard/facebook" class="icon facebook-no">Facebook Chat</a></li>
     <?php endif; ?>
 	</ul>
 
