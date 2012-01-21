@@ -5,3 +5,4 @@ gem "cucumber"
 gem "capybara", :require => %w(capybara/cucumber capybara/dsl)
 gem "selenium-webdriver"
 gem "ruby-debug"
+gem "wirble"
