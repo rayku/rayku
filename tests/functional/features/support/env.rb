@@ -8,8 +8,8 @@ module Capybara::Config
   Capybara.run_server = false
   Capybara.ignore_hidden_elements = true
   Capybara.default_driver = :selenium
-  Capybara.default_wait_time = 5
-  Capybara.app_host = ENV['uri'] || "http://rayku.localhost"
+  Capybara.default_wait_time = 10
+  Capybara.app_host = 'http://' + (ENV['HOST'] || "rayku.localhost")
 end
 
 Capybara.register_driver :selenium do |app|
