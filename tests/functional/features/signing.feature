@@ -8,7 +8,7 @@ Feature: Signing up & in
   Scenario: Signing in
     Given that I'm connecting to Rayku
     And I'm a registered user
-    When I sign in as "kinkarso@gmail.com", "rayku"
+    When I sign in as "g@rayku.com", "devpass45445"
     Then I should see a "You are now logged in." message on the page
     And I should be redirected to my dashboard
 
