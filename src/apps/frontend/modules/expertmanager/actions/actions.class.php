@@ -929,9 +929,6 @@ exit(0);
             $this->redirect('expertmanager/connect');
 
         }
-
-
-
         $this->cat = $this->getRequestParameter('category');
 
         if(empty($this->cat))
@@ -1151,7 +1148,6 @@ if(count($onlineusers) < 1)
 {
     $this->redirect('/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
 }
-
 
 /////////////////////////////////////////////////////
 

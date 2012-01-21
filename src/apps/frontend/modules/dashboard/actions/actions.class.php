@@ -100,8 +100,7 @@ class dashboardActions extends sfActions
 			}
 
 			$query = mysql_query("Select * from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-			if(mysql_num_rows($query) > 0) {
-
+			if (mysql_num_rows($query) > 0) {
 				$_SESSION['conversation'] = 1;
 				$this->redirect('/dashboard');
 			}
