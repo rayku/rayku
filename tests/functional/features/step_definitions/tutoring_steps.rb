@@ -1,11 +1,3 @@
-Given /^that a "([^"]*)" is logged in as "([^"]*)", "([^"]*)"$/ do |user_type, email, password|
-  switch_to(user_type)
-
-  step %{that I'm connecting to Rayku}
-  step %{I'm a registered user}
-  step %{I sign in as "#{email}", "#{password}"}
-end
-
 Given /^is available for tutoring$/ do
 end
 
@@ -14,6 +6,8 @@ Given /^the student posts a question$/ do
   find('div.sbHolder a.sbSelector').click
   find(:xpath, "//div[@class='sbHolder']//a[contains(text(), 'Algebra')]").click
   wait_until { not find('#form-for-questions input[type="submit"]').nil? }
+  #sometimes the button is not ready to be clicked
+  wait_until { find('#form-for-questions input[type="submit"]').visible? }
   find('#form-for-questions input[type="submit"]').click
 end
 
@@ -28,14 +22,13 @@ When /^the student pick an available tutor$/ do
 end
 
 Then /^the "([^"]*)" sees "([^"]*)"$/ do |user_type, message|
-  Capybara.session_name = user_type
+  switch_to user_type
   page.text.should include message
 end
 
 Then /^the tutor sees a notification window$/ do
-  Capybara.session_name = 'tutor'
-
-  wait_until { page.has_selector? '#MB_window' }
+  switch_to 'tutor'
+  wait_until { find('#MB_window').visible? }
   find('#MB_window').text.should include 'this question expires'
   find('#MB_window').text.should include 'Connect'
 end

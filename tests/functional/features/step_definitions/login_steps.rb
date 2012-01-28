@@ -29,3 +29,11 @@ end
 Then /^I should be redirected to my dashboard$/ do
   wait_until { page.text.match /Ask a Question/ }
 end
+
+Given /^that a "([^"]*)" is logged in as "([^"]*)", "([^"]*)"$/ do |user_type, email, password|
+  switch_to(user_type)
+
+  step %{that I'm connecting to Rayku}
+  step %{I'm a registered user}
+  step %{I sign in as "#{email}", "#{password}"}
+end
