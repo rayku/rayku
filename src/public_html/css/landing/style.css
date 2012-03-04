@@ -3,29 +3,34 @@
 ---------------------------------------------
 General Styling
 --------------------------------------------- */
-* {
+*{
 	margin:0;
 	border:0;
 	outline:0;
 	padding:0;
 	text-decoration:none;
 }
-body {
+body
+{
 	min-width:1000px;
 	font-family: 'HelveticaLight';
 }
-a {
+a
+{
 	color:#fff;
 }
-.clear {
+.clear
+{
 	clear:both;
 }
-.container {
+.container
+{
 	width:975px;
 	margin:0 auto;
 	position:relative;
 }
-input[type=submit] {
+input[type=submit]
+{
 	cursor:pointer;
 }
 .play {
@@ -44,236 +49,232 @@ input[type=submit] {
 }
 /*
 ---------------------------------------------
-Navigation Section Styling
+Header Styling
 --------------------------------------------- */
-/* Misc classes */
-div.clear {
-	clear: both;
-}
-/* Top Nav */
-div#top-nav {
-	width :100%;
-	padding: 0 0 2px;
-	margin: 0 0 15px;
-	background: url('/images/landing/topnav/background.jpg') left top repeat-x;
-	height:51px;
+#header
+{
+	background:url(/images/landing/topnav/header-bg.gif) repeat-x;
+	height:47px;
+	padding-top:4px;
 	position:fixed;
-	z-index:1001;
+	z-index:99999;
+	width:100%;
+	top:0px;
 }
-div#top-nav div#top-nav-center {
-	width: 965px;
-	margin: 0 auto;
+#header .container h1
+{
+	float:left;
+	margin-top: -4px;
 }
-div#top-nav div#top-nav-center ul.top-menu {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+#navigation
+{
+	margin-left:24px;
+	background:url(/images/landing/topnav/navigation-gradient.png) repeat-x;
+	height:32px;
+	line-height:32px;
+	float:right;
+	margin-top:2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:13px;
 }
-div#top-nav div#top-nav-center ul.top-menu li {
-	display: inline-block;
-	float: left;
+#navigation li
+{
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	padding:0 11px;
+	background:url(/images/landing/topnav/nav-border.png) right 6px no-repeat;
 }
-div#top-nav div#top-nav-center ul.top-menu li a[title="Rayku"] {
-	background: url('/images/landing/topnav/rayku.jpg') top left no-repeat;
-	width: 111px;
-	height: 51px;
-	text-indent: -5000px;
-	display: block;
+#navigation li a:hover
+{
+	text-decoration:underline;
 }
-div#top-nav div#top-nav-center div#user-box a.tt-whiteboard {
-	background: url('/images/landing/topnav/whiteboard.jpg') top left no-repeat;
-	width: 47px;
-	height: 51px;
-	display: block;
-	text-indent: -5000px;
-	float: right;
-}
-div#top-nav div#top-nav-center div#user-box a.tt-whiteboard:hover {
-	background: url('/images/landing/topnav/whiteboard.jpg') bottom left no-repeat;
-}
-.tooltip {
-	background: url('/images/landing/tooltip.png') center top no-repeat;
-	font-size:12px;
-	padding: 15px 10px 10px;
-	position: absolute;
-	z-index: 50;
-	color: white;
-	display: none;
-	margin: 0;
+#navigation li:last-child
+{
+	background:none;
 }
 /*
 ---------------------------------------------
 Register Section Styling
 --------------------------------------------- */
-#register {
-	padding:100px 0 0 0;
-	background:#252324 url(/images/landing/background.jpg) 0 0 repeat-x;
+#register
+{
+	background:url(/images/landing/blackboard.jpg) 0 bottom repeat-x;
+	height:432px;
+	padding-top:51px;
+	border-bottom:1px solid #000;
 }
-#registration-options {
+#register-form
+{
+	width:100%;
 	position:absolute;
-	left:576px;
-	top:20px;
-	width:500px;
-	z-index:1000;
+	padding-top:90px;
 }
-#registration-form {
-	background:url(/images/landing/pencil.png) right 15px no-repeat;
-	height:155px;
-	position:absolute;
-	width:375px;
-	left:580px;
-	padding-top:65px;
-	top:50px;
-}
-#login-form {
-	background:url(/images/landing/pencil.png) right 15px no-repeat;
-	height:155px;
-	position:absolute;
-	width:375px;
-	left:580px;
-	padding-top:65px;
-	top:50px;
-}
-#registration-form label, #login-form label {
-	display:inline-block;
-    *display:inline;
-	zoom:1;
+#register-form h3
+{
+	text-align:center;
+	margin-bottom:34px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:35px;
 	font-weight:bold;
-	color:#666;
-	font-size:16px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 0px;
-	-moz-border-radius-bottomright: 0px;
-	-moz-border-radius-bottomleft: 5px;
-	-webkit-border-radius: 5px 0px 0px 5px;
-	border-radius: 5px 0px 0px 5px;
+	text-shadow: 0px 1px 0px rgba(255,255,255,0.2);
 }
-#registration-form p, #login-form p {
-	height:34px;
-	margin-bottom:10px;
+
+.main-question
+{
+	text-align:center;
 }
-#registration-form label, #registration-form input, #login-form label, #login-form input {
-	height:34px;
-	line-height:34px;
-	padding-left:12px;
-	background:#fff;
-	display:inline-block;
- *display:inline;
-	zoom:1;
-	vertical-align:middle;
+.main-question input[type=text]
+{
+	width:656px;
+	height:75px;
+	background:url(/images/landing/question-input.png) no-repeat;
+	font-size:20px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	padding:0 22px;
+	color:#919294;
+	line-height:75px;
+	text-shadow: 0px 1px 0px #000000;
 }
-#registration-form input, #login-form input {
+#register-block
+{
+	margin:0 auto;
+	width:630px;
+	padding-bottom:18px;
+	background:url(/images/landing/register-block-bg.png) repeat;
 	-moz-border-radius-topleft: 0px;
-	-moz-border-radius-topright: 5px;
+	-moz-border-radius-topright: 0px;
 	-moz-border-radius-bottomright: 5px;
-	-moz-border-radius-bottomleft: 0px;
-	-webkit-border-radius: 0px 5px 5px 0px;
-	border-radius: 0px 5px 5px 0px;
-	color:#676767;
-	font-size:16px;
-	position:relative;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .4);
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .4); 
 }
-.name {
-	width:200px;
-}
-.email {
-	width:234px;
-}
-.password {
-	width:203px;
-}
-#connect-to-tabs {
-	background:url(/images/landing/tabs-bg.png) repeat-x;
+#register-block h4
+{
+	font-family:Arial, Helvetica, sans-serif;
 	font-size:14px;
 	font-weight:bold;
-	color:#fff;
+	color:#64666a;
+	text-shadow:0px 1px 0 rgba(255,255,255,.5);
+	vertical-align:middle;
+	line-height:31px;
+	padding:10px 20px;
+	border-bottom:1px solid #9d9ea0;
+}
+#register-block h4 img
+{
+	vertical-align:middle;
+	float:right;
+}
+#register-block-fields
+{
+	border-top:1px solid #e8e9ea;
+}
+#register-block-fields li
+{
+	float:left;
+	list-style-type:none;
+	background:url(/images/landing/register-block-input.png) no-repeat;
+	width:290px;
+	height:41px;
+	margin:18px 0 0 20px;
+	margin-right:-10px;
+}
+#register-block-fields input{
+width:230px;
+height:41px;
+padding-left:40px;
+padding-right:20px;
+line-height:41px\9;
+color:#878787;
+font-size:12px;
+font-family:Arial, Helvetica, sans-serif;
+background:none;
+}
+#register-block-fields #name
+{
+	background:url(/images/landing/user-icon.png) 14px center no-repeat;
+}
+#register-block-fields #email
+{
+	background:url(/images/landing/email-icon.png) 14px center no-repeat;
+}
+#register-block-fields #password,#register-block-fields #confirm-password
+{
+	background:url(/images/landing/password-icon.png) 14px center no-repeat;
+}
+#tos-create-account
+{
+	margin-top:18px;
+}
+#tos-create-account .tos
+{
+	float:left;
+	text-align:right;
+	font-size:11px;
+	color:#5a5c60;
+	text-shadow:0 1px 0 rgba(255,255,255,0.1);
+	width:280px;
+	margin-left:20px;
 	line-height:16px;
-	padding-top:10px;
-	padding-left:10px;
-	text-shadow:1px 1px 0 rgba(0,0,0,0.8);
-	z-index:1000;
-	position:relative;
-	width: 300px;
-	height:30px;
+	padding-top:5px;
 }
-#connect-to-tabs li {
-	display:inline-block;
- *display:inline;
-	zoom:1;
-	height:29px;
-	position:absolute;
-	height:38px;
-	line-height:38px;
+#tos-create-account .tos a
+{
+	color:#5a5c60;
+	font-weight:bold;
 }
-#connect-to-tabs li a {
-	color:#a1a1a1;
-	text-shadow:1px 1px 0 rgba(0,0,0,0.8);
+#tos-create-account .tos a:hover
+{
+	text-decoration:underline;
 }
-#registration-tab {
-	width:155px;
-	left:0;
-	top:0;
-	padding:0 0 0 10px;
+#tos-create-account .create-account
+{
+	float:right;
+	margin-right:18px;
 }
-#registration-tab.active {
-	background:url(/images/landing/tabs.png) 0 -112px no-repeat;
+
+/*
+---------------------------------------------
+Bubble Section Styling
+--------------------------------------------- */
+#bubble-section
+{
+	background:url(/images/landing/grid.png) repeat-x;
 }
-#login-tab.active {
-	background:url(/images/landing/tabs.png) right -51px no-repeat;
+#bubble-section .container
+{
+	background:url(/images/landing/bubble-inner.png) top center no-repeat;
+	min-height:575px;
 }
-#login-tab {
-	top:0;
-	right:0;
-	padding-left: 18px;
-	width: 130px;
-}
-#connect-to-tabs li.active a {
-	color:#fff;
-	text-shadow:0 0 0 #000;
-}
-#registration-form input[type=submit], #login-form input[type=submit] {
-	background:url(/images/landing/submitr-button.png) no-repeat;
-	width:122px;
-	height:44px;
-	text-indent:-9999px;
-	text-transform:uppercase;
-	display:block;
-}
-#registration-form input[type="submit"]:active, #login-form input[type="submit"]:active {
-	background:url(/images/landing/submitr-button.png) 0 -54px no-repeat;
-}
-#login-form input[type=submit] {
-	background:url(/images/landing/submitl-button.png) no-repeat;
-	width:101px;
-	height:44px;
-	text-indent:-9999px;
-	text-transform:uppercase;
-	display:block;
-}
-#login-form input[type="submit"]:active {
-	background:url(/images/landing/submitl-button.png) 0 -54px no-repeat;
-}
-#scroll-for-more {
+.bubble
+{
 	text-align:center;
-	width:153px;
-	margin:80px 0 0 160px;
-	position:absolute;
+	float:left;
+	width:325px;
+	margin-top:40px;
 }
-#scroll-for-more p {
-	margin-bottom:120px;
-}
-.hide {
-	display:none;
+.bubble h3
+{
+	font-size:28px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-shadow:0 1px 0 #fff;
+	margin-bottom:22px;
 }
 /*
 ---------------------------------------------
 Questions Section Styling
 --------------------------------------------- */
 #questions {
-	background:url(/images/landing/background2.jpg) #fff repeat-x;
-	background-position:center top;
-	height: 1200px;
-	padding: 500px 0 0;
+	height: 800px;
 }
 .q-1, .q-2, .q-3, .q-4, .q-5, .q-6, .q-7, .q-8 {
 	position:fixed;
@@ -283,7 +284,7 @@ Questions Section Styling
 	background:url(/images/landing/qmark-1.png) no-repeat;
 	width:255px;
 	min-height:91px;
-	top:640px;
+	top:950px;
 	left:10%;
 	z-index:3;
 }
@@ -304,7 +305,7 @@ Questions Section Styling
 	background:url(/images/landing/qmark-2.png) no-repeat;
 	width:313px;
 	min-height:180px;
-	top:700px;
+	top:920px;
 	left:36%;
 	z-index:8;
 }
@@ -326,7 +327,7 @@ Questions Section Styling
 	background:url(/images/landing/qmark-3.png) no-repeat;
 	width:247px;
 	height:262px;
-	top:620px;
+	top:890px;
 	right:10%;
 	z-index:10;
 }
@@ -334,7 +335,7 @@ Questions Section Styling
 	background:url(/images/landing/qmark-4.png) no-repeat;
 	width:412px;
 	height:262px;
-	top:830px;
+	top:1050px;
 	left:5%;
 	z-index:9;
 }
@@ -348,7 +349,7 @@ Questions Section Styling
 .q-5 {
 	background:url(/images/landing/qmark-5.png) no-repeat;
 	width:209px;
-	top:960px;
+	top:1180px;
 	right:15%;
 	z-index:4;
 }
@@ -359,17 +360,17 @@ Questions Section Styling
 	margin-top:15px;
 }
 .q-6 {
-	top:1150px;
+	top:1330px;
 	left:33%;
 	z-index:5;
 }
 .q-7 {
 	left: 15%;
-	top: 1360px;
+	top: 1580px;
 	z-index:6;
 }
 .q-8 {
-	top:1250px;
+	top:1470px;
 	right:25%;
 	z-index:7;
 }
@@ -379,13 +380,13 @@ Whiteboard Section Styling
 --------------------------------------------- */
 #whiteboard {
 	background:url(/images/landing/background.jpg) 0 -1070px repeat-x;
-	padding-top: 50px;
+	padding-top:50px;
 	z-index:1000;
 	position:relative;
 }
 #whiteboard .container {
 	padding:100px 0 80px 0;
-	width: 900px;
+	width:900px;
 }
 #whiteboard .plus {
 	display:block;
@@ -496,6 +497,8 @@ Newsletter Section Styling
 --------------------------------------------- */
 #newsletter {
 	background:url(/images/landing/newsletter-bg.png) repeat;
+	z-index:1100;
+	position:relative;
 }
 #newsletter .container {
 	background:url(/images/landing/newsletter.png) repeat-y;
@@ -577,4 +580,10 @@ Footer Section Styling
 .footer .container a:hover{
   text-decoration:underline;
 }
+
+/*Clearfix*/
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
 /* edited 13/12/2011 */.input-fader {	display:block!important;	height:34px;	line-height:34px;	width:290px;	padding:0 0 0 15px;	background:#fff!important;	zoom:1;	vertical-align:middle;		-moz-border-radius-topleft: 5px!important;	-webkit-border-radius: 5px!important;	border-radius: 5px!important;	margin: 0 0 10px;}.input-fader label {	display: block;	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	position:absolute!important;	z-index:1;	padding:0!important;	background:none!important;}.input-fader input {	display:block;	height:34px;	line-height:34px;	padding:0!important;	width:100%;	position:absolute;	z-index:3;	color:#333!important; background: none!important;}#registration-form input, #login-form input {	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	color:#676767;	font-size:16px;	position:relative;}

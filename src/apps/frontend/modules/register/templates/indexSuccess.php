@@ -2,81 +2,137 @@
 <link href="../css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
 
 <div class="body-main">
-  <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(../../../images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create your account</span> </div>
+  <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(../../../images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Account</span> </div>
   <div class="clear"></div>
-  <div style="font-size:16px;color:#333;padding-left:40px">Sorry! We are currently in a closed private beta. Want to take a look inside? Sign up for our early-bird list:<br />
-  <form method=post action="https://app.icontact.com/icp/signup.php" name="icpsignup" id="icpsignup128" accept-charset="UTF-8" onsubmit="return verifyRequired128();" >
-<input type=hidden name=redirect value="http://www.icontact.com/www/signup/thanks.html" />
-<input type=hidden name=errorredirect value="http://www.icontact.com/www/signup/error.html" />
-
-<div id="SignUp" style="margin-top:25px">
-<div style="float:left;margin-right:20px">
-        <input type=text name="fields_email" value="Email Address" style="padding:7px;width:200px;font-size:14px" onblur="if(this.value=='') this.value='Email Address';" onfocus="if(this.value=='Email Address') this.value='';">
+  <div class="body-mains"> <?php echo form_tag('register/index', array('name' => 'register')) ?> <?php echo input_hidden_tag('utype',$requestedUserType) ?>
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+	  	<div class="entry" style="padding-bottom:15px;">
+          <div class="ttle">Full Name:</div>
+          <div style="float:left">
+            <?php if($sf_request->hasError('username')): ?>
+            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('username') ?></div>
+            <?php endif; ?>
+            <?php echo input_tag('username') ?>
+            <input type="hidden" name="realname" id="realname" value="hiddenname">
+          </div>
+          <div class="spacer"></div>
         </div>
-        <div>
-        <input type="submit" name="Submit" value="Secure Spot!" style="font-size:14px; padding:4px"></div>
-
-
-    <input type=hidden name="listid" value="1755">
-    <input type=hidden name="specialid:1755" value="Y93F">
-
-    <input type=hidden name=clientid value="907989">
-    <input type=hidden name=formid value="128">
-    <input type=hidden name=reallistid value="1">
-    <input type=hidden name=doubleopt value="0">
-
-
-</div>
-</form>
-<script type="text/javascript">
-
-var icpForm128 = document.getElementById('icpsignup128');
-
-if (document.location.protocol === "https:")
-
-	icpForm128.action = "https://app.icontact.com/icp/signup.php";
-function verifyRequired128() {
-  if (icpForm128["fields_email"].value == "") {
-    icpForm128["fields_email"].focus();
-    alert("The Email Address field is required.");
-    return false;
-  }
-
-
-return true;
-}
-</script>
-</div>
+        <div class="entry" style="padding-top:15px">
+          <div class="ttle">Email:</div>
+          <div style="float:left">
+            <?php if($sf_request->hasError('email')): ?>
+            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('email') ?></div>
+            <?php endif; ?>
+            <?php echo input_tag('email') ?> </div>
+          <div style="font-weight:normal;color:#666;width:280px;margin-left:240px;">A confirmation email will be sent to the address above</div>
+          <div class="spacer"></div>
+        </div>
+        <div class="entry">
+          <div class="ttle">Password:</div>
+          <div style="float:left">
+            <?php if($sf_request->hasError('password1')): ?>
+            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('password1') ?></div>
+            <?php endif; ?>
+            <?php echo input_tag('password1', '', array('type' => 'password')) ?> </div>
+          <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">6 characters or more</div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+      <span id="referaltext">Referrer (optional):</span>
+        <input style="background:url('/images/registerinputbg.gif') no-repeat scroll 0 0 transparent;border:0 none;
+color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="text" name="coupon" id="coupon" />
+          <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">Enter the username of your referrer</div>
+        <div class="spacer"></div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+    
+    <!-- for expert categories //-->
+    <?php if($requestedUserType == UserPeer::getTypeFromValue( 'expert' ) ): ?>
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+        <div class="title">Select Expert Categories</div>
+        <div class="subtitle">Every expert needs to select atleast one category (You may select multiple categories using the shift button)</div>
+        <div class="entry">
+          <div class="ttle">Categories</div>
+          <div style="clear:left;">
+            <?php $options = array(); ?>
+            <?php $categories = CategoryPeer::getAll(); ?>
+            <?php foreach( $categories as $key=>$category): ?>
+            <?php $options[$category->getId()] = $category->getName(); ?>
+            <?php endforeach; ?>
+            <?php echo select_tag('categories', 
+									   		options_for_select($options), array('style' => 'width: 300px; height: 80px;background: none', 'multiple' => true));
+										?> </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+    
+    <!-- end of expert categories //--> 
+    
+    <!-- notifications -->
+    
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+        <div class="title">Notification options</div>
+        <div class="subtitle">once student asks question within expert's subject of expertise</div>
+        <input type="checkbox" name="notify_email" value="email" />
+        <label style="font-size:13px; font-family: Arial; color:#056A9A; font-weight:bold;">Email</label>
+        <br />
+        <input type="checkbox" name="notify_sms" value="sms" />
+        <label style="font-size:13px; font-family: Arial; color:#056A9A; font-weight:bold;">SMS &nbsp;&nbsp;&nbsp; Enter Phone Number</label>
+        <input type="text" name="phone_number" value="" />
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+    <?php endif; ?>
+    
+    <!--  end -->
+    
+    <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
+    <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
+      <label><strong>
+        <input type="checkbox" name="terms" value="1"/>
+        Agree to <a href="http://www.rayku.com/tos.html" rel="popup standard 800 600 noicon">Terms &amp; Conditions</a></strong> </label>
+    </div>
+    <!--
+<?php echo submit_tag('', array('id' => 'register','name' => 'register')) ?>-->
+    <div style="float:right"><?php echo "<input type='submit' name='register' value='Finish' style='padding:7px;width:100px;font-size:16px;font-weight:bold' onClick='return emailValidateNew()'>"; ?></div>
+    <div class="spacer"></div>
+    </form>
+  </div>
+  <div class="body-side">
+    <div class="box">
+      <div class="top"></div>
+      <div class="content" style="position:relative; _top:-3px; _bottom:-3px; padding-right:20px; width:264px">
+        <div class="text">
+          <p>Your password is immediately MD5 encrypted, so that only you know what it is - no one else. </p>
+        </div>
+      </div>
+      <div class="bottom"></div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
 
 function emailValidateNew()
 {
 var email = document.getElementById('email').value;
-
-var mailadd = email.split("@");
-
-		var finalsplit = mailadd[1].split(".");
-
-		if(mailadd[1] == "utoronto.ca")
-		{
-			
-		}
-		else if(mailadd[1] == "alumni.utoronto.ca")
-		{
-			
-		}
-		else if(mailadd[1] == "toronto.edu")
-		{
-		
-		}
-		else
-		{
-			document.getElementById('error').style.display = "block";
-			document.getElementById('error').innerHTML = 'Error: Rayku is currently available for certain schools only. Please a your @utoronto.ca or @toronto.edu email address.';
-			return false;
-		} 
-
 
 var subject = document.getElementById('course_subject[]').value;
 

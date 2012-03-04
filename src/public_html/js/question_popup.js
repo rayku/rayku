@@ -6,31 +6,39 @@
 
 
 			jk.ajax({ cache: false,
-			type : "POST",
+			type : "GET",
 			url: "http://"+getHostname()+"/expertmanager/topic",
 			success : function (data)  {
-
-				    if(data == "yes") {
-							if(document.getElementById("question_hidden").value == 1)  {
-
-						       	    popup_show('question_popup', 'popup_drag', 'popup_exit', 'screen-center', 0, 0);
-
-					   		    document.getElementById("question_hidden").value = 2;
-
-							    setTimeout('popupClose()', 1000);
-
+				   var respval = data.split('~');
+				   var chkpoint = respval[0]; 	
+				   var chkval = respval[1];
+				   if(chkpoint == 'yes') {
+				   		if(document.getElementById("question_hidden").value == 1)  {
+						/* jk.ajax({
+							type: "GET",
+							url: "http://"+getHostname()+"/expertmanager/missqryreload",
+							data: '',
+							success: function(html){
+								document.getElementById('misqry').innerHTML = html;  
 							}
-				   }
+							});
+						*/
+						  	document.getElementById('misqry').innerHTML = chkval;  	
+						    	
+						    	popup_show('question_popup', 'popup_drag', 'popup_exit', 'screen-center', 0, 0);
+						    	
+						    	document.getElementById("question_hidden").value = 2;
+
+							setTimeout('popupClose()', 1000);
+
+						}
+				  }
 			}
-
-
-		});
-
+		}	
+	);
 	setTimeout('checkMissedQuestion()', 10000);
 
-	}
-
-
+}
 
 
 function popupClose() {
@@ -52,11 +60,11 @@ function popupClose() {
 
 
 		} else {
-
+	
 			setTimeout('popupClose()', 1000);
 
 		}
-	}
+	}		
 
 
 

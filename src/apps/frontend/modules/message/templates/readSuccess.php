@@ -1,4 +1,6 @@
-<?php use_helper('MyAvatar'); ?>
+<?php //use_helper('MyAvatar'); ?>
+<?php use_helper('MyAvatar', 'Javascript') ?>
+
 
 <div class="body-main">
   <div id="what-is">
@@ -13,10 +15,25 @@
       <div class="spacer"></div>
       <div class="user2">
         <?php
-          if($message->getSender()->getPicture()!='')
-           echo avatar_tag_for_user($message->getSender(), 2);
+		//1645
+				
+		$c = new Criteria();
+		
+		$c->add(UserPeer::ID, $message->getSender()->getId());
+		
+		$_Sender = UserPeer::doSelectOne($c);
+		
+		//print_r($message); echo link_to( avatar_tag_for_user($message->getSender()), '@profile?username=' . $message->getSender()->getUsername() ); 
+
+          if($_Sender->getUsername()!='')
+		  
+		  echo link_to( avatar_tag_for_user($_Sender), '@profile?username=' . $_Sender->getUsername() ); 		   
+		
           else
+		  
            echo image_tag('/images/dev/emptyprofile-small.gif', array('alt' => 'avatar'));
+		   
+		   
 
 if($message->getSender()->getType() == 5): ?>
 

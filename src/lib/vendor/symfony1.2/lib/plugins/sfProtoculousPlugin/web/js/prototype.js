@@ -1464,9 +1464,65 @@ Ajax.Updater = Class.create(Ajax.Request, {
           var insertion = { }; insertion[options.insertion] = responseText;
           receiver.insert(insertion);
         }
-        else options.insertion(receiver, responseText);
+        else 
+        {
+        	options.insertion(receiver, responseText);   
+        	
+        	var checkurl = window.location.href;
+        	
+        	if(checkurl == "http://www.rayku.com/expertmanager/list") {
+        	      	        	
+			/* Popup Load */
+			dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) 
+			{
+				dv("#popup_content").html(response);	    
+			});
+			/* BG setup */
+			set_background();
+		
+		}  else if(checkurl == "http://www.rayku.com/tutors") {        	
+      	        	
+			/* Popup Load */
+			dv('#popup_connect').load('http://www.rayku.com/tutors/checkoutpopup', '', function(response) 
+			{
+				dv("#popup_content").html(response);	    
+			});
+			/* BG setup */
+			set_background(); 
+		
+		} 
+        }	
       }
-      else receiver.update(responseText);
+      else
+      { 
+      	receiver.update(responseText);
+      	
+      	   	var checkurl = window.location.href;
+
+        	
+        	if(checkurl == "http://www.rayku.com/expertmanager/list") {        	
+      	        	
+			/* Popup Load */
+			dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) 
+			{
+				dv("#popup_content").html(response);	    
+			});
+			/* BG setup */
+			set_background(); 
+		
+		}  else if(checkurl == "http://www.rayku.com/tutors") {        	
+      	        	
+			/* Popup Load */
+			dv('#popup_connect').load('http://www.rayku.com/tutors/checkoutpopup', '', function(response) 
+			{
+				dv("#popup_content").html(response);	    
+			});
+			/* BG setup */
+			set_background(); 
+		
+		} 
+
+      }	
     }
   }
 });

@@ -6,6 +6,13 @@
 
 
 </style> 
+
+<style>
+.back-image {
+padding : 15px 15px 15px 875px;
+
+} 
+</style> 
 <link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
 
 
@@ -13,8 +20,29 @@
 <div id="sf_admin_container">  
 
 <h1>Whiteboard Chat Session List</h1>
+<?php
+
+	$_addCondition = '';
+
+
+
+	if(!empty($expertId)) {
+
+		$_addCondition = "where expert_id='".$expertId."'";
+	} else {
+		$expertId = !empty($_GET['expertId']) ? $_GET['expertId'] : '';
+
+		if(!empty($expertId)) {
+
+			$_addCondition = "where expert_id='".$expertId."'";
+
+		}
+	}
+
+?>
 
 <div id="sf_admin_content"> 
+<?php 	if(!empty($expertId)) { ?> <div class='back-image'> <a href="/admin.php/whiteboardsession/verify">Back</a>	</div> <?php } ?>
 <table class="sf_admin_list" cellspacing="0">
   <thead>
     <tr>
@@ -36,7 +64,9 @@
 $tbl_name = "whiteboard_chat"; $adjacents = 1;
 
 
-	$query = "SELECT COUNT(*) as num FROM $tbl_name";
+
+
+	$query = "SELECT COUNT(*) as num FROM $tbl_name $_addCondition";
 	$total_pages = mysql_fetch_array(mysql_query($query));
 	$total_pages = $total_pages['num'];
 
@@ -50,7 +80,7 @@ $tbl_name = "whiteboard_chat"; $adjacents = 1;
 	else
 		$start = 0;	
 
-	$sql = "SELECT * FROM $tbl_name ORDER BY id DESC LIMIT $start, $limit";
+	$sql = "SELECT * FROM $tbl_name $_addCondition ORDER BY id DESC LIMIT $start, $limit";
 	$result = mysql_query($sql);
 	
 
@@ -68,7 +98,12 @@ $pagination = "";
 		$pagination .= "<div class=\"pagination\">";
 		//previous button
 		if ($page > 1) 
-			$pagination.= "<a href=\"$targetpage?page=$prev\">« previous</a>";
+			if(!empty($expertId)) {
+				$pagination.= "<a href=\"$targetpage?page=$prev&expertId=$expertId\">« previous</a>";	
+			} else {
+				$pagination.= "<a href=\"$targetpage?page=$prev\">« previous</a>";		
+			}
+		
 		else
 			$pagination.= "<span class=\"disabled\">« previous</span>";	
 		
@@ -80,7 +115,11 @@ $pagination = "";
 				if ($counter == $page)
 					$pagination.= "<span class=\"current\">$counter</span>";
 				else
-					$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";					
+						if(!empty($expertId)) {
+							$pagination.= "<a href=\"$targetpage?page=$counter&expertId=$expertId\">$counter</a>";		
+						} else {
+							$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";		
+						}					
 			}
 		}
 		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
@@ -93,9 +132,24 @@ $pagination = "";
 					if ($counter == $page)
 						$pagination.= "<span class=\"current\">$counter</span>";
 					else
-						$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";					
+						if(!empty($expertId)) {
+							$pagination.= "<a href=\"$targetpage?page=$counter&expertId=$expertId\">$counter</a>";		
+						} else {
+							$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";		
+						}				
 				}
 				$pagination.= "...";
+
+						if(!empty($expertId)) {
+
+							$pagination.= "<a href=\"$targetpage?page=$lpm1&expertId=$expertId\">$lpm1</a>";
+							$pagination.= "<a href=\"$targetpage?page=$lastpage&expertId=$expertId\">$lastpage</a>";		
+				
+						} else {
+							$pagination.= "<a href=\"$targetpage?page=$lpm1\">$lpm1</a>";
+							$pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";				
+						}	
+
 				$pagination.= "<a href=\"$targetpage?page=$lpm1\">$lpm1</a>";
 				$pagination.= "<a href=\"$targetpage?page=$lastpage\">$lastpage</a>";		
 			}
@@ -110,7 +164,11 @@ $pagination = "";
 					if ($counter == $page)
 						$pagination.= "<span class=\"current\">$counter</span>";
 					else
-						$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";					
+						if(!empty($expertId)) {
+							$pagination.= "<a href=\"$targetpage?page=$counter&expertId=$expertId\">$counter</a>";		
+						} else {
+							$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";		
+						}					
 				}
 				$pagination.= "...";
 				$pagination.= "<a href=\"$targetpage?page=$lpm1\">$lpm1</a>";
@@ -127,14 +185,26 @@ $pagination = "";
 					if ($counter == $page)
 						$pagination.= "<span class=\"current\">$counter</span>";
 					else
-						$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";					
+
+						if(!empty($expertId)) {
+							$pagination.= "<a href=\"$targetpage?page=$counter&expertId=$expertId\">$counter</a>";		
+						} else {
+							$pagination.= "<a href=\"$targetpage?page=$counter\">$counter</a>";		
+						}
+			
 				}
 			}
 		}
 		
 		//next button
 		if ($page < $counter - 1) 
-			$pagination.= "<a href=\"$targetpage?page=$next\">next »</a>";
+
+				if(!empty($expertId)) {
+					$pagination.= "<a href=\"$targetpage?page=$next&expertId=$expertId\">next »</a>";
+				} else {
+					$pagination.= "<a href=\"$targetpage?page=$next\">next »</a>";
+				}
+			
 		else
 			$pagination.= "<span class=\"disabled\">next »</span>";
 		$pagination.= "</div>\n";		

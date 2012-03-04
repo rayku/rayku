@@ -325,6 +325,17 @@ tutors:
   url: /tutors
   param: { module: tutors, action: index }
 
+
+# ----
+# Testtutor
+# ----
+
+testtutor:
+  url: /testtutor/:username
+  param: { module: testtutor, action: index }
+
+
+
 # ----
 # Training
 # ----
@@ -332,6 +343,24 @@ tutors:
 training:
   url: /training
   param: { module: training, action: index }
+
+
+
+
+
+
+# ----
+# Regtutor
+# ----
+  
+  
+regtutor:
+  url: /regtutor
+  param: { module: login, action: index }
+
+regtutor_confirm:
+  url: /regtutor/confirm/:code/temp/*
+  param: { module: regtutor, action: confirmUser }
   
 
 

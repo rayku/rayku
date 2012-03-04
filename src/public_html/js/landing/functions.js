@@ -1,11 +1,12 @@
+$('#register-block').hide();
 $(document).ready(function() {
 	$(function() {
-                $('a:not(#registration-options a)').bind('click',function(event){
+                $('a').bind('click',function(event){
                     var $anchor = $(this);
                     
                     $('html, body').stop().animate({
                         scrollTop: $($anchor.attr('href')).offset().top
-                    }, 3000,'easeOutExpo');
+                    }, 7000,'easeOutExpo');
 					event.preventDefault();
                 });
             });
@@ -28,27 +29,58 @@ $(document).ready(function() {
 		    });
 	});
 	$("#connect-to-tabs li").click(function(){
+	$("#login-form").hide();
+	$("#registration-form").hide();
 	$("#connect-to-tabs li").removeClass("active"); 
 	$(this).addClass("active"); 
 	var activeTab = $(this).find("a").attr("href"); 
 	$(activeTab).fadeIn(600);		
 	return false;
 });
+
+//store object in var for efficiency
+var mainQuestion = $('.main-question input');
+var initialValue = 'Type the question or topic you need help with here';
+
+mainQuestion.focus(function(){
+    //blank out field on focus
+    if(mainQuestion.val() == initialValue){
+        mainQuestion.val('');
+    }
+});
+
+mainQuestion.keyup(function(){
+    //animate opening here
+    $('#register-form').stop().animate({top:"-130px"},1000);
+    $('#register-block').slideDown();
+});
+
+mainQuestion.blur(function(){
+    //check to see if user has typed anything in
+    if((mainQuestion.val() == initialValue) || !mainQuestion.val().length){
+        //reset value
+        mainQuestion.val(initialValue);
+        //animate closing here
+        $('#register-form').stop().animate({top:"0px"},500);
+        $('#register-block').slideUp(); 
+    }
+});
+
 	
 });
-$('.q-1').scrollingParallax( {staticSpeed : .4,
+$('.q-1').scrollingParallax( {staticSpeed : .6,
 staticScrollLimit: false,});
-$('.q-2').scrollingParallax({staticSpeed : .4,
+$('.q-2').scrollingParallax({staticSpeed : .6,
 staticScrollLimit: false,});
-$('.q-3').scrollingParallax({staticSpeed : .4,
+$('.q-3').scrollingParallax({staticSpeed : .6,
 staticScrollLimit: false,});
-$('.q-4').scrollingParallax({staticSpeed : .4,
+$('.q-4').scrollingParallax({staticSpeed : .6,
 staticScrollLimit: false,});
-$('.q-5').scrollingParallax({staticSpeed : .4,
+$('.q-5').scrollingParallax({staticSpeed : .6,
 staticScrollLimit: false,});
-$('.q-6').scrollingParallax({staticSpeed : .5,
+$('.q-6').scrollingParallax({staticSpeed : .7,
 staticScrollLimit: false,});
-$('.q-7').scrollingParallax({staticSpeed : .6,
+$('.q-7').scrollingParallax({staticSpeed : .8,
 staticScrollLimit: false,});
-$('.q-8').scrollingParallax({staticSpeed : .6,
+$('.q-8').scrollingParallax({staticSpeed : .8,
 staticScrollLimit: false,});

@@ -221,6 +221,38 @@ class UserPeer extends BaseUserPeer
   {
     return sha1( $user->getPassword() . 'salt'. $user->getId() );
   }
+  /* For Quick Registration User */
+  static function generateConfirmationValue( User $user )
+  {
+      return sha1( $user->getPassword() . 'salt'. $user->getId() ); 	
+  	
+     /* $resval = sha1( $user->getPassword() . 'salt'. $user->getId() );
+     $resval = substr($resval,0,10);
+     return $resval; */     
+  }
+  
+  public static function doSelectFromConfirmationValue( $code )
+  {
+  
+    $oC = new Criteria();
+    $oC->add( UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$code'" , Criteria::CUSTOM );
+    $oC->add( UserPeer::TYPE, '0', Criteria::LESS_THAN );
+    return UserPeer::doSelectOne( $oC );  
+    
+    /*
+    //echo "Code::".$code;
+    //die("Inside CValue");
+  
+    $oC = new Criteria();   //SUBSTRING( SHA1( CONCAT( user.password, 'salt', user.id ) ) , 1, 10 ) = '37633b4242'
+    $oC->add( UserPeer::ID, " SUBSTRING( ( SHA1( CONCAT( user.password, 'salt', user.id ) ) ), 1, 10 ) = '$code'" , Criteria::CUSTOM );
+    			    //SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$code'
+    $oC->add( UserPeer::TYPE, '0', Criteria::LESS_THAN );
+    print_r($oC);
+    print_r(UserPeer::doSelectOne( $oC ));
+    die("Inside CValue");
+    //return UserPeer::doSelectOne( $oC ); */
+  }
+
   /**
    * @return User
    */

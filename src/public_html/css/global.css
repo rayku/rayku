@@ -1735,21 +1735,21 @@ Body - Expert Connect Page
 .cn-left-bg {
 float:left;
 width: 210px;
-background: url(../images/cn-bg-left.jpg) repeat-y #FFFFFF;
+border-right:1px solid #CCC;
+
 }	.cn-left-top {
 	width: 210px;
 	height: 12px;
-	background: url(../images/cn-left-top.jpg) no-repeat top;
 	padding-bottom: 5px;
 }
 	.cn-left-bottom {
 	float:left;
 	width: 210px;
 	height: 13px;
-	background: url(../images/cn-left-bottom.jpg) no-repeat bottom;
 	overflow: hidden;
 	margin-bottom: 14px;
 	padding-top: 10px;
+	border-right:1px solid #CCC;
 }
 .cn-content {
 	width: 710px;
@@ -1758,10 +1758,6 @@ background: url(../images/cn-bg-left.jpg) repeat-y #FFFFFF;
 .cn-right-top {
 	background-color: #efefef;
 	border: 1px solid #d0d0d0;
-	-moz-border-top-left-radius: 10px;
-	-moz-border-top-right-radius: 10px;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
 	height: 40px;
 	line-height: 40px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -1845,7 +1841,7 @@ background: url(../images/cn-bg-left.jpg) repeat-y #FFFFFF;
 }
 .onlinenow { color: green; } .offlinenow { color: grey; }
 	.cn-spacer { height: 1px; width: 170px; margin: 25px auto; border-bottom: 1px solid #c4c4c4; }
-	.cn-left-bg h3 { font: bold 14px Arial, Helvetica, sans-serif; color: #266e00; padding:0 0 0 20px; }
+	.cn-left-bg h3 { font: bold 14px Arial, Helvetica, sans-serif; color: #333; padding:0 0 0 20px; }
 	span.cn-category-name { font: bold 36px Arial, Helvetica, sans-serif; padding: 0 0 0 20px; letter-spacing: -1px; color: #086a99; }
 	.cn-left-bg h4 { font: bold 12px Arial, Helvetica, sans-serif; color: #aeaeae; padding:15px 0 0 20px; }
 	.cn-left-bg p { font: bold 12px Arial, Helvetica, sans-serif; color: #1e527a; padding: 5px 0 2px 20px; }
@@ -3250,20 +3246,6 @@ a#checkout img {
 			color: #353535;
 		}
 		
-		input#username, input#password {
-			border: none;
-			background: url('../images/expert-input.png') no-repeat;
-			width: 128px;
-			height: 38px;
-			padding: 4px 20px 0 110px;
-			margin-right: 12px;
-		}
-		
-		input#password {
-			background: url('../images/expert-input.png') no-repeat;
-			padding: 4px 20px 0 100px;
-			width: 138px;
-		}
 		
 		.expert-button {			
 			width: 110px;
@@ -3294,3 +3276,42 @@ a#checkout img {
 		width: 900px;
 		height: 20px;
 	}
+
+
+
+/* SEARCH FORM */
+
+	  .searchform{
+		  background:#EAEAEA;
+		  border:solid #CCC;
+		  border-width:2px 0;
+		  font-size:14px;
+		  color:#666;
+		  font-weight:bold;
+		  margin:40px 15px 0 15px;
+		  padding:20px 0;
+		  text-align:center;
+	  }
+	  .searchform .sselect{
+		  padding:4px 2px;
+		  font-size:14px;
+		  color:#666;
+		  font-weight:bold;
+		  width:105px;
+		  margin:0 8px 0 0;
+		  background:#F2F2F2;
+		  border:none;
+	  }
+	  .searchform .text-box{
+		  padding:4px;
+		  font-size:14px;
+		  margin-right:8px;
+		  border:1px solid #999;
+		  width:250px;
+	  }
+	  .searchform .myButton{
+		  color:#333333;
+		  font-size:14px;
+		  font-weight:normal;
+		  padding:3px;
+	  }

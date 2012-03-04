@@ -1,0 +1,271 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+body
+{
+	padding:10px;
+}
+
+/*Form Styling begins*/
+a
+{
+	text-decoration:none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+}
+.clearfix {
+    zoom:1;
+}
+#form-for-questions
+{
+	position:relative;
+	width:620px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+	color:#6a6a6a;
+	vertical-align:middle;
+}
+#form-for-questions input[type=submit]
+{
+	cursor:pointer;
+	margin-top:20px;
+	line-height:42px;
+	background:url(../images/ask-button-sprite.png) 0 1px no-repeat;
+	width:102px;
+	height:42px;
+	position:absolute;
+	right:0;
+	border:none;
+	font-weight:bold;
+	font-size:12px;
+	color:#5d7731;
+	text-shadow:1px 1px 1px rgba(255,255,255,0.4);
+}
+#form-for-questions input[type=submit]:hover
+{
+	background-position:0 -41px;
+}
+#question-form
+{
+	width:618px;
+	border:1px solid #afafaf;
+	border-bottom:none;
+}
+.question-form-container
+{
+	margin:0 auto;
+	padding:30px;
+	border-bottom:1px solid #999999;
+}
+.question
+{
+	vertical-align:middle;
+	height:42px;
+}
+.question input[type=text]
+{
+	width:520px;
+	border:1px solid #bbbbbb;
+	border-left:none;
+	height:40px;
+	vertical-align:top;
+	margin-left:-10px;
+	font-style:italic;
+	text-indent:20px;
+	color:#808080;
+}
+#recent-questions
+{
+	background:url(../images/pattern.jpg) repeat;
+	padding:20px 19px 10px 19px;
+}
+#recent-questions h3
+{
+	text-transform:uppercase;
+	color:#1c517c;
+	font-weight:bold;
+	font-size:12px;
+}
+#tags li
+{
+	font-size:12px;
+	padding:12px 0;
+	border-bottom:1px solid #e3e3e3;
+	height:12px;
+	line-height:12px;
+	margin-left:16px;
+	position:relative;
+}
+#tags li:last-child
+{
+	border:none;
+	padding-bottom:0;
+}
+#tags li a
+{
+	color:#808080;
+}
+#tags li:hover a
+{
+	color:#045f9e;
+}
+#tags li .tag
+{
+	margin-left:-16px;
+	margin-right:5px;
+	vertical-align:bottom;
+}
+#tags li span
+{
+	padding:0 15px;
+	border-right:1px solid #808080;
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	line-height:12px;
+}
+#tags li span:first-child
+{
+	padding-left:0;
+	margin-left:0;
+}
+#tags li span:last-child
+{
+	padding-right:0;
+	margin-right:0;
+}
+#tags li:hover span
+{
+	border-right:1px solid #045f9e;
+}
+#tags li span:last-child
+{
+	border:none;
+}
+.cross
+{
+	background:url(../images/cross_ques.png) no-repeat;
+	width:10px;
+	height:10px;
+	position:absolute;
+	text-indent:-9999px;
+	right:10px;
+	display:block;
+	top:13px;
+}
+#categories, .sbHolder
+{
+	margin:20px 0 0 0;	
+}
+#personal-info.question-form-container
+{
+	background:url(../images/shadow.png) repeat-x;
+}
+.education input
+{
+	vertical-align:bottom;
+}
+#personal-info input[type=text]
+{
+	background:url(../images/gradient.jpg) repeat-x;
+	border:none;
+	border:1px solid #d7d7d7;
+	height:30px;
+	line-height:30px;
+	text-indent:12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color:#6A6A6A;
+}
+#personal-info p
+{
+	float:left;
+	margin-right:16px;
+}
+p.education
+{
+	margin-bottom:20px;
+	float:none !important;
+}
+#personal-info p span
+{
+	display:block;
+	text-align:right;
+	color:#cac8c8;
+	padding-top:2px;
+}
+.university-name input
+{
+	width:178px;
+}
+.course select
+{
+	width:288px;
+}
+.year select, .grade select
+{
+	width:130px;
+}
+.selected
+{
+	background-color:#045F9E;
+	color:#fff !important;
+	padding:0 5px;
+}
+.selected span
+{
+	border-color:#fff !important;
+}

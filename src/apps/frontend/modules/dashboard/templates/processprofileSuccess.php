@@ -1,5 +1,6 @@
 <?php
 session_start();
+$connection = RaykuCommon::getDatabaseConnection();
 include "config.php";
 $id = $_SESSION['tbid123'];
     if(version_compare('5', PHP_VERSION, "<=")) require_once('facebook-platform/client/facebook.php');
@@ -10,15 +11,15 @@ $fbuserarray = $facebook->api_client->users_getInfo($fb_uid, array('name','first
 $fbuser = $fbuserarray[0];
 $hometown=$fbuser["hometown_location"]['city']." ".$fbuser["hometown_location"]['country'];
 if($hometown!='')
-mysql_query("UPDATE user SET hometown = '$hometown' where id='$id'");
+mysql_query("UPDATE user SET hometown = '$hometown' where id='$id'", $connection);
 $abtme=$fbuser['about_me'];
 if($abtme!='')
-mysql_query("UPDATE user SET about_me = '$abtme' where id='$id'");
+mysql_query("UPDATE user SET about_me = '$abtme' where id='$id'", $connection);
 if($fbuser['sex']=='male')
 $sex=0;
 else
 $sex=1;
-mysql_query("UPDATE user SET sex = '$sex' where id='$id'");
+mysql_query("UPDATE user SET sex = '$sex' where id='$id'", $connection);
 $rel=$fbuser['relationship_status'];
 if($rel=='Single')
 $rel1=1;
@@ -28,11 +29,11 @@ elseif($rel=='Married')
 $rel1=3;
 else
 $rel1=0;
-mysql_query("UPDATE user SET relationship_status = '$rel1' where id='$id'");
+mysql_query("UPDATE user SET relationship_status = '$rel1' where id='$id'", $connection);
 $bdate=$fbuser['birthday_date'];
 if($bdate!='')
 {$bdate=date("Y-m-d", $bdate);
-mysql_query("UPDATE user SET birthdate = '$bdate' where id='$id'");}
+mysql_query("UPDATE user SET birthdate = '$bdate' where id='$id'", $connection);}
 //$mob=$fbuser['user_mobile_phone'];
 //if($mob!='')
 //mysql_query("UPDATE user SET mobile_phone = '$mob' where id='$id'");

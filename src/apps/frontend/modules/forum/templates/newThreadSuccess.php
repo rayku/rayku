@@ -107,7 +107,7 @@ $(document).ready(function(){
       <div class="top"></div>
       <div class="content">
       <?php if($_GET[exp_online]==1):?>
-		<p style="font-size:14px;color:red;padding-top:15px;" align="center"><em>Uh-oh... all experts are either busy or unavailable. Please elaborate on your Topic below:</em></p>
+		<p style="font-size:14px;color:red;padding-top:15px;" align="center"><em>Uh-oh... all experts are either busy or unavailable. Please elaborate on your question below:</em></p>
 		<?php endif;?>
         <!--threadtitle-->
 
@@ -117,9 +117,11 @@ $(document).ready(function(){
 	 
 	<?php if(!empty($_COOKIE["forumsub"]) || $_GET['exp_online']==1 || $_GET['pob']==1) : ?>
 		
-         	 <input name="thread_title" id="thread_title" value="<?php echo $_SESSION['question']; ?>" size="30" type="text" style="color:#000000"> 
+         	 <input name="thread_title" id="thread_title" value="<?php if (!empty($_SESSION['course_name_sess'])) { echo '['.$_SESSION['course_name_sess'].']'; } ?> <?php echo $_SESSION['question']; ?>" size="30" type="text" style="color:#000000"> 
 
 		<?php 
+		$_SESSION['course_name_sess'] = "";
+		$_SESSION['question'] = "";
 			setcookie("forumsub", "", time()-3600,"/","rayku.com");
 			 $_COOKIE["forumsub"] = "";
 

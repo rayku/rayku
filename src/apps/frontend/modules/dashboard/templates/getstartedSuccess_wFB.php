@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "config.php";
+$connection = RaykuCommon::getDatabaseConnection();
 
   $raykuUser = $sf_user->getRaykuUser();
   $stats = $raykuUser->getStatisticsForDashboard();
@@ -49,7 +50,7 @@ $_SESSION['tbid123']=$id;
 						<h2>How to Get Started Immediately</h2>
 <p style="color:#333;padding-left:10px;font-size:14px;">Using Rayku is simple. You are starting off with <?php $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-		$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
+		$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 		$detailPoints = mysql_fetch_assoc($query);
 		echo $detailPoints['points']; ?>RP. With Rayku Points (RP), you can get one-to-one tutoring with our database of experts.<br />
   <br />

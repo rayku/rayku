@@ -20,5 +20,29 @@ class whiteboardsessionActions extends sfActions
             $i++;
         }
         $this->allChat = $allChat;
+		$this->expertId = $request->getParameter('id');
+    }
+
+  public function executeVerify()
+  {
+	$connection = RaykuCommon::getDatabaseConnection();
+
+	$_query = mysql_query("select * from user_score where status = 1 and score <= 80", $connection) or die(mysql_error());
+
+	$userDetails = array();
+	$i = 0;
+
+	while($_row = mysql_fetch_array($_query)) {
+		$userDetails[$i] = array("user_id"=> $_row['user_id']);
+	$i++;
+	}
+
+	$this->userDetails = $userDetails;
+
+  } 
+
+	public function executeTutor()
+	{
+		RaykuCommon::getDatabaseConnection();
     }
 }

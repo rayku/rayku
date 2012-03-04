@@ -91,7 +91,8 @@ function popup_exit(e)
 
 		var jk = jQuery.noConflict();
 
-		jk.ajax({ cache: false,
+		jk.ajax({ 
+			cache: false,
 			type : "POST",
 			url: "http://www.rayku.com/expertmanager/cookieadd?cookie=1"
 		});

@@ -174,7 +174,7 @@ class whiteboardActions extends sfActions
       // get params
       $askerId = $request->getPostParameter('askerId');
       $expertId = $request->getPostParameter('expertId');
-      $question = $request->getPostParameter('question');
+      $question = urldecode($request->getPostParameter('question'));
       $askerNick = $request->getPostParameter('askerNick');
       $expertNick = $request->getPostParameter('expertNick');
       $chatSessionId = $request->getPostParameter('chatSessionId');

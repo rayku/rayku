@@ -1,4 +1,5 @@
 <?php
+
 /**
  * dashboard actions.
  *
@@ -7,693 +8,1149 @@
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 2692 2006-11-15 21:03:55Z fabien $
  */
+ 
 class dashboardActions extends sfActions
 {
-	/**
-	 * Executes index action
-	 *
-	 */
-	public function executeIndex()
-	{
-		if(!empty($_COOKIE["timer"])) {
-			$this->redirect('/dashboard/rating');
-		}
+  /**
+   * Executes index action
+   *
+   */
+  public function executeIndex()
+  {
 
-		//============================================================Modified By DAC021===============================================================================//
-		$connection = RaykuCommon::getDatabaseConnection();
+	unset($_SESSION['dash_hidden']);
+	unset($_SESSION['subject']);
+	unset($_SESSION['edu']);
+	unset($_SESSION['course_id']);
+	unset($_SESSION['name']);
+	unset($_SESSION["asker_school"]);
+	unset($_SESSION['course_code']);
+	unset($_SESSION["asker_cc_id"]);
+	unset($_SESSION['year']);
+	unset($_SESSION['asker_year']);
+	unset($_SESSION['grade']);
+	unset($_SESSION['question']);
+	
 
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
-		$this->logedUserId =  $logedUserId;
-
-		$query = mysql_query("select * from user where id=$logedUserId", $connection) or die(mysql_error());
-		$row = mysql_fetch_assoc($query);
-
-		////////get rank of the user
-		$c = new Criteria();
-		$rankexperts = ExpertCategoryPeer::doSelect($c);
-
-		$rankUsers = array(); $ji =0; $newUserLimit = array();
-
-		foreach($rankexperts as $exp){
-			if(!in_array($exp->getUserId(), $newUserLimit)) {
-
-				$newUserLimit[] = $exp->getUserId();
-
-				$_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId(), $connection) or die(mysql_error());
-				if(mysql_num_rows($_query) > 0) {
-
-					$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-					$score = mysql_fetch_assoc($query);
-
-					if($score['score'] != 0){
-
-						$dv=new Criteria();
-						$dv->add(UserPeer::ID,$exp->getUserId());
-						$_thisUser = UserPeer::doSelectOne($dv);
-						$rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
-						$ji++;
-					}
-				}
-			}
-		}
-		asort($rankUsers);
-		arsort($rankUsers);
-		$this->rankUsers = $rankUsers;
-		$this->getResponse()->setCookie("practice_name", $row['username'],time()+3600);
-		$queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
-
-		if(mysql_num_rows($queryScore) > 0) {
-			$this->changeUserType = 1;
-		}
-	}
+	if(!empty($_COOKIE["timer"])) : 
+	
+		$this->redirect('/dashboard/rating');
+	
+	endif; 
 
 
-	function cmp($a, $b) {
-		if ($a["score"] == $b["score"]) {
-			return strcmp($a["createdat"], $b["createdat"]);
-		}
-		return ($a["score"] < $b["score"]) ? 1 : -1;
-	}
+//============================================================Modified By DAC021===============================================================================//
+$connection = RaykuCommon::getDatabaseConnection();
 
-	public function executeVerifytutor() {
-		$connection = RaykuCommon::getDatabaseConnection();
-		$_userId = $this->getUser()->getRaykuUser()->getId();
+$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-		$queryScore = mysql_query("select * from user_score where user_id =".$_userId."", $connection) or die(mysql_error());
+$this->logedUserId =  $logedUserId;
 
-		if(mysql_num_rows($queryScore) > 0) {
-			mysql_query("update user_score set status = 1 where user_id =".$_userId."", $connection) or die(mysql_error());
-		}
+$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
+$row = mysql_fetch_assoc($query);
 
-		$this->redirect('/dashboard');
-	}
 
-	public function executeList() {
-		$connection = RaykuCommon::getDatabaseConnection();
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-		if(!empty($_POST['subject'])) {
-			if(!empty($_COOKIE['whiteclose']) && $_COOKIE['whiteclose'] == 1) {
-				mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-				$this->getResponse()->setCookie("whiteclose", "", time()-3600);
-			}
+////////get rank of the user
+	$c = new Criteria();
+	$rankexperts = ExpertCategoryPeer::doSelect($c);
 
-			$query = mysql_query("Select * from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-			if (mysql_num_rows($query) > 0) {
-				$_SESSION['conversation'] = 1;
-				$this->redirect('/dashboard');
-			}
+	$rankUsers = array(); $ji =0; $newUserLimit = array(); 
 
-			$_SESSION['question'] = $_POST['question'];
-			$_SESSION['subject'] = $_POST['subject'];
+		 foreach($rankexperts as $exp): 
 
-			if($_POST['redirect'] == "2"){
-				$this->redirect('/dashboard/direct');
-			}
-
-			$this->redirect('/expertmanager/list');
-		}
-
-		$this->redirect('/dashboard');
-	}
-
-	public function executeTutor() {
-		$connection = RaykuCommon::getDatabaseConnection();
-
-		$_userId = $this->getUser()->getRaykuUser()->getId();
-		$_select = mysql_query("select * from user_tutor where userid=".$_userId, $connection) or die(mysql_error());
-
-		if(mysql_num_rows($_select) > 0) {
-			mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());
-			$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-
-			if(!$_query) {
-				mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-			}
-		} else {
-			mysql_query("insert into user_tutor(userid) values(".$_userId.")", $connection) or die(mysql_error());
-			$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-			if(!$_query) {
-				mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-			}
-		}
-
-		$this->redirect('/dashboard');
-	}
-
-	public function executeDirect()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
-		$currentUser = $this->getUser()->getRaykuUser();
-
-		$userId = $currentUser->getId();
-		if(!empty($_SESSION['subject'])) {
-			$this->cat = $_SESSION['subject'];
-		}
-
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
-		$c = new Criteria();
-		if($this->cat==5)
-		{
-			$experts=ExpertCategoryPeer::doSelect($c);
-		} else {
-			$c->add(ExpertCategoryPeer::CATEGORY_ID,$this->cat);
-			$experts = ExpertCategoryPeer::doSelect($c);
-		}
-
-		$queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
-
-		if(mysql_num_rows($queryPoints) > 0) {
-			$rowPoints = mysql_fetch_assoc($queryPoints);
-
-			$_points = $rowPoints['points'];
-		}
-
-		$newUser= array(); $i =0; $newUserLimit= array();
-
-		foreach($experts as $exp){
-			if($userId != $exp->getUserId()){
-				if(!in_array($exp->getUserId(), $newUserLimit)) {
+	
+					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-					$_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-					if(mysql_num_rows($_query) > 0) {
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+						 if(mysql_num_rows($_query) > 0) : 
 
-						$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-						$score = mysql_fetch_assoc($query);
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+							$score = mysql_fetch_assoc($query);
 
-						if($score['score'] != 0){
-							if($_points == '' || $_points == '0.00' ) {
-								$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
-								if(mysql_num_rows($emptyRCquery) > 0) {
-									$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat);
-									$i++;
-								}
-							} else {
-								$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat);
-								$i++;
-							}
-						}
-					}
-				}
-			}
-		}
-		asort($newUser);
-		arsort($newUser);
+							if($score['score'] != 0):
 
-		$onlineusers = array();
-		$j =0;
+								$dv=new Criteria();
+								$dv->add(UserPeer::ID,$exp->getUserId());
+								$_thisUser = UserPeer::doSelectOne($dv);
+								$rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
+								$ji++;
+							endif;
+		      
+      						 endif; 
 
-		foreach($newUser as $new){
+					endif;
 
-			$a=new Criteria();
-			$a->add(UserPeer::ID,$new['userid']);
-			$users_online=UserPeer::doSelectOne($a);
 
-			$onlinecheck = '';
+		 endforeach; 
 
-			if($users_online->isOnline()) {
-				$onlinecheck = "online";
-			}
+					asort($rankUsers);  
 
-			if(empty($onlinecheck)) {
-				$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+					arsort($rankUsers);
 
-				if(mysql_num_rows($gtalkquery) > 0) {
-					$status = mysql_fetch_assoc($gtalkquery);
-					$gtalkmail = $status['gtalkid'];
-					$onlinecheck = file_get_contents('http://'.RaykuCommon::getCurrentHttpDomain().':8922/status/'.$gtalkmail);
-				}
-			}
 
-			if(empty($onlinecheck) || ($onlinecheck != "online")) {
-				$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
-				if(mysql_num_rows($fb_query) > 0) {
-					$fbRow = mysql_fetch_assoc($fb_query);
-					$fb_username = $fbRow['fb_username'];
-					$details = file_get_contents("http://facebook.rayku.com/tutor");
-					$Users = json_decode($details, true);
-					foreach($Users as $key => $user) {
-						if($user['username'] == $fb_username) {
-							$onlinecheck = 'online';
-							break;
-						}
-					}
-				}
-			}
 
-			if(empty($onlinecheck) || ($onlinecheck != "online")) {
-				$onlineUsers = file_get_contents("http://notification-bot.rayku.com/tutor");
-				$_Users = json_decode($onlineUsers, true);
-				foreach($_Users as $key => $_user) {
-					if($_user['email'] == $users_online->getEmail()){
-						$onlinecheck = 'online';
-						break;
-					}
-				}
-			}
 
-			if($onlinecheck == "online") {
 
-				$onlineusers[$j] = $new['userid'];
-				$j++;
 
-			} elseif($users_online->isOnline()) {
+ $this->rankUsers = $rankUsers;
+	
 
-				$onlineusers[$j] = $new['userid'];
-				$j++;
+//////////////////////////////
 
-			}
-		}
+	$this->getResponse()->setCookie("practice_name", $row['username'],time()+3600);
 
-		if(count($onlineusers) < 1)
+
+	$queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
+
+	if(mysql_num_rows($queryScore) > 0) :
+
+			$this->changeUserType = 1;
+
+	endif;
+
+
+  }
+
+  public function executeTag()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+			mysql_query("delete from user_question_tag where id=".$_REQUEST['id'][1], $connection);
+			$userId = $this->getUser()->getRaykuUser()->getId();
+			$countquery = mysql_query("select user_id from `user_question_tag` where user_id = ".$userId, $connection);
+			echo $countrows = mysql_num_rows($countquery);
+		
+			exit(0);
+
+  }
+
+
+
+
+	public function executeAutocomplete()
+	{
+
+	
+	}
+	public function executeAutocourse()
+	{
+
+	
+	}
+	public function executeAskquestionqueries()
+	{
+	}
+  
+	function cmp($a, $b)
+	{
+
+
+	    if ($a["score"] == $b["score"]) {
+		return strcmp($a["createdat"], $b["createdat"]);
+	    }
+	    return ($a["score"] < $b["score"]) ? 1 : -1;
+	    
+	}
+
+  public function executeVerifytutor() {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+	$_userId = $this->getUser()->getRaykuUser()->getId();
+
+	$queryScore = mysql_query("select * from user_score where user_id =".$_userId."", $connection) or die(mysql_error());
+
+	if(mysql_num_rows($queryScore) > 0) :
+
+			mysql_query("update user_score set status = 1 where user_id =".$_userId."", $connection) or die(mysql_error());
+
+	endif;
+
+	$this->redirect('http://www.rayku.com/dashboard');
+
+
+ }
+
+
+
+  /* Edit Tutor Profile information  */
+  public function executeTutorprofile()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+	
+	if($_POST['usrid'])
+	{
+		$uid = $_POST['usrid'];
+		$catid = $_POST['category'];
+		$courseid = $_POST['catcheck'];
+		$usrdesc = $_POST['description'];
+		$school = $_POST['school'];
+		$study = $_POST['study'];
+		$coursecode = $_POST['CourseCodes'];
+		
+		if($usrdesc=='Freshman')
 		{
-			$this->redirect('/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
+			$year = '1st Year';
 		}
+		else if($usrdesc=='Sophomore')
+		{
+			$year = '2nd Year';
+		}
+		else if($usrdesc=='Junior')
+		{
+			$year = '3rd Year';
+		}
+		else if($usrdesc=='Senior')
+		{
+			$year = '4th Year';
+		}
+		else
+		{
+			$year = '4+ Year';
+		}
+		
+		$courses = implode("-",$courseid);
+		
+		$_select = mysql_query("select * from tutor_profile where user_id=".$uid, $connection) or die(mysql_error());
 
-		$time = time();
+		if(mysql_num_rows($_select) > 0) 
+		{
+			mysql_query("update tutor_profile set category = '".$catid."',course_id = '".$courses."', school = '".$school."', year = '".$year."', tutor_role = '".$usrdesc."', study = '".$study."', course_code = '".$coursecode."' where user_id=".$uid, $connection) or die(mysql_error());
+		}
+		else
+		{
+			mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
+		}
+	$this->redirect('http://www.rayku.com/dashboard');	
+	}
+	
+  }	
+  /* Add Tutor Profile information and Tutor on/off status */
+  public function executeTutor()
+  {
 
-		if(!empty($onlineusers)) {
-			$count = count($onlineusers);
+$connection = RaykuCommon::getDatabaseConnection();
 
-			if($count > 4){
-				$count = 4;
+	$_userId = $this->getUser()->getRaykuUser()->getId();
+
+
+	$_select = mysql_query("select * from user_tutor where userid=".$_userId, $connection) or die(mysql_error());
+
+	if(mysql_num_rows($_select) > 0) {
+		
+			mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());	
+
+			$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
+			
+
+			if(!$_query) :
+
+				mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
+				
+			endif;
+			
+			// change  Tutor on / off status //
+			$insSQL = "INSERT INTO `log_user_on_off` (
+					`id` ,
+					`user_id` ,
+					`off_date_time` ,
+					`off_status`
+						)
+						VALUES (
+								NULL , 
+								'".$_userId."', 
+								'".date("Y-m-d H:i:s")."', 
+								'0'
+							   );";
+				mysql_query($insSQL, $connection);	
+		
+			// change  Tutor on / off status //
+	
+			$this->redirect('http://www.rayku.com/dashboard');
+
+	} else {
+	
+		if($_POST['usrid'])
+		{
+			$uid = $_POST['usrid'];
+			$catid = $_POST['category'];
+			$courseid = $_POST['catcheck'];
+			$usrdesc = $_POST['description'];
+			$school = $_POST['school'];
+			$study = $_POST['study'];
+			$coursecode = $_POST['CourseCodes'];
+		
+			$courses = implode("-",$courseid);
+		
+			if($usrdesc=='Freshman')
+			{
+				$year = '1st Year';
 			}
-
-			if($count > 2) {
-
-				$close = 21000;
-
-			} else if($count == 2) {
-
-				$close = 31000;
-
-			} else if($count == 1) {
-
-				$close = 61000;
-
+			else if($usrdesc=='Sophomore')
+			{
+				$year = '2nd Year';
 			}
-
-			$j = 0;
-			for($i=0; $i < $count; $i++) {
-				mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$onlineusers[$i]."', '".$_SESSION['subject']."', '".$_SESSION['question']."','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
+			else if($usrdesc=='Junior')
+			{
+				$year = '3rd Year';
 			}
+			else if($usrdesc=='Senior')
+			{
+				$year = '4th Year';
+			}
+			else
+			{
+				$year = '4+ Year';
+			}	
+		
+		   // change  Tutor on / off status //
+			  $insSQL = "INSERT INTO `log_user_on_off` (
+					`id` ,
+					`user_id` ,
+					`off_date_time` ,
+					`off_status`
+						)
+						VALUES (
+								NULL , 
+								'".$uid."', 
+								'".date("Y-m-d H:i:s")."', 
+								'1'
+							   );";
+			   mysql_query($insSQL, $connection);	
+			// change  Tutor on / off status //
+		
+		
+		
+		
+			$_select = mysql_query("select * from tutor_profile where user_id=".$uid, $connection) or die(mysql_error());
+			
+			
+			if(mysql_num_rows($_select) > 0) 
+			{
+				mysql_query("update tutor_profile set category = '".$catid."',course_id = '".$courses."', school = '".$school."', year = '".$year."', tutor_role = '".$usrdesc."', study = '".$study."', course_code = '".$coursecode."' where user_id=".$uid, $connection) or die(mysql_error());
+				
+			}
+			else
+			{
+				mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
+			
+			}
+		//$this->redirect('http://www.rayku.com/dashboard/tutor');
+	
+		mysql_query("insert into user_tutor(userid) values(".$_userId.")", $connection) or die(mysql_error());
 
-			setcookie("asker_que",$_SESSION['question'], time()+600, "/");
-			$this->getResponse()->setCookie("redirection", 1,time()+600);
-			$this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
-			$this->redirect('expertmanager/connect');
+		$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
 
+		if(!$_query) :
+
+			mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
+			
+		endif;
+		
+		$this->redirect('http://www.rayku.com/tutorshelp');
+		
 		}
 	}
+	
+  }
 
-	public function executeNew()
-	{
-		$this->user  = $this->getUser()->getRaykuUser();
-	}
 
-	public function executeGetstarted()
-	{
-		$this->user = $this->getUser()->getRaykuUser();
-	}
 
-	public function executeProcessprofile()
-	{
-		$this->user = $this->getUser()->getRaykuUser();
-	}
 
-	public function executePointserror()
-	{
-	}
 
-	public function executeExpire()
-	{
-	}
+  public function executeNew()
+  {
 
-	public function executeMoneystore()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
+	$this->user  = $this->getUser()->getRaykuUser();
+
+	//$this->user->getId();
+
+  }
+
+  public function executeGetstarted()
+  {
+
+	$this->user = $this->getUser()->getRaykuUser();
+
+	//$this->user->getId();
+
+  }
+  
+    public function executeProcessprofile()
+  {
+	 $this->user = $this->getUser()->getRaykuUser();
+  }
+
+  public function executePointserror()
+  {
+
+  
+	
+
+  }
+
+  public function executeExpire()
+  {
+
+  
+	
+
+  }
+
+  public function executeMoneystore()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
 		$userId = $this->getUser()->getRaykuUser()->getId();
 
-		if($_POST['reason'] == "Reason For Asking Money Back..." || empty($_POST['reason']))  {
-			$_SESSION['reason'] = 1;
-		} elseif (!empty($_POST['reason'])) {
-			if(!empty($_SESSION["whiteboard_Chat_Id"])) {
+	if($_POST['reason'] == "Reason For Asking Money Back..." || empty($_POST['reason']))  {
 
-				mysql_query("insert into whiteboard_moneyback(chat_id, reason) values(".$_SESSION["whiteboard_Chat_Id"].", '".$_POST['reason']."')", $connection) or die(mysql_error());
+		$_SESSION['reason'] = 1;
 
-				$this->redirect('/dashboard/moneyredirect');
-			}
-		}
-		$this->redirect('/dashboard/moneyback');
+
+	} elseif(!empty($_POST['reason'])) {
+
+		if(!empty($_SESSION["whiteboard_Chat_Id"])) :
+
+			 mysql_query("insert into whiteboard_moneyback(chat_id, reason) values(".$_SESSION["whiteboard_Chat_Id"].", '".$_POST['reason']."')", $connection) or die(mysql_error());
+
+			$this->redirect('http://www.rayku.com/dashboard/moneyredirect');
+
+		endif;
+
 	}
+	
+$this->redirect('http://www.rayku.com/dashboard/moneyback');
 
-	public function executeMoneyback()
-	{
-	}
+  }
 
-	public function executeMoneyredirect()
-	{
-	}
+  public function executeMoneyback()
+  {
 
-	public function executeFacebook()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-		$userId = $this->getUser()->getRaykuUser()->getId();
+		
 
-		if($_POST['_hidden_facebook'] && !empty($_POST['fbname'])) {
+	
+
+  }
+
+  public function executeMoneyredirect()
+  {
+
+
+  }
+
+  public function executeFacebook()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+	$userId = $this->getUser()->getRaykuUser()->getId();
+
+
+
+	if($_POST['_hidden_facebook'] && !empty($_POST['fbname'])) :
+
+			
 			$fb_username = $_POST['fbname'];
-			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard/facebookadd?username='.$fb_username);
-		}
 
-		$query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
+			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://www.rayku.com/dashboard/facebookadd?username='.$fb_username);
 
-		if(mysql_num_rows($query) > 0) {
-			$this->record = 1;
-			$row = mysql_fetch_assoc($query);
-			$this->facebook = $row['fb_username'];
-		} else {
-			$this->record = 0;
-		}
-	}
 
-	public function executeFacebookadd()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
+	endif;
+
+	$query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
+
+	 if(mysql_num_rows($query) > 0) :
+
+		$this->record = 1;
+
+		$row = mysql_fetch_assoc($query);
+
+		$this->facebook = $row['fb_username'];
+
+	 else :
+
+		$this->record = 0;
+
+	 endif;
+	
+  }
+
+  public function executeFacebookadd()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
 		$userId = $this->getUser()->getRaykuUser()->getId();
 
-		$query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
+	 $query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
 
-		$fb_username = !empty($_GET['username']) ? $_GET['username'] : '';
+	$fb_username = !empty($_GET['username']) ? $_GET['username'] : '';
 
-		if(!empty($fb_username)) {
+	 if(!empty($fb_username)) :
+
 			$this->display = 1;
-			if(mysql_num_rows($query) > 0) {
+
+			if(mysql_num_rows($query) > 0) :
+
 				mysql_query("update user_fb set fb_username = '".$fb_username."' where userid = ".$userId." ", $connection) or die(mysql_error());
-			} else {
+		
+
+			else :
+
 				mysql_query("insert into user_fb(userid, fb_username) values(".$userId.", '".$fb_username."' ) ", $connection) or die(mysql_error());
-			}
-		} else {
-			$this->display = 2;
-		}
-	}
 
-	public function executeGtalk()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
+			endif;
+
+	else :
+
+		$this->display = 2;
+
+
+	endif;
+
+  }
+
+
+  public function executeGtalk()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+	$userId = $this->getUser()->getRaykuUser()->getId();
+
+
+
+	$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
+
+	 if(mysql_num_rows($query) > 0) :
+
+		$this->record = 1;
+
+		$row = mysql_fetch_assoc($query);
+
+		$this->gtalk = $row['gtalkid'];
+
+	 else :
+
+		$this->record = 0;
+
+	 endif;
+
+
+
+  }
+
+  public function executeGtalkupdate()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
 		$userId = $this->getUser()->getRaykuUser()->getId();
-		$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
-		if(mysql_num_rows($query) > 0) {
 
-			$this->record = 1;
-			$row = mysql_fetch_assoc($query);
-			$this->gtalk = $row['gtalkid'];
-		} else {
-			$this->record = 0;
-		}
+	$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
+
+	$email = $_POST['gtalkname'];
+
+	$checkemail = explode("@", $email);
+
+	
+	if(count($checkemail) == 1) {
+
+		$email .= '@gmail.com';
+
+	} 
+
+	$test = file_get_contents('http://www.rayku.com:8892/add/'.$email);
+
+	if($test) {
+
+		$_SESSION['adduser'] = 1;
+
+	} else {
+
+		$_SESSION['adduser'] = 2;
+
+		$this->redirect('http://www.rayku.com/dashboard/gtalk');
+
 	}
 
-	public function executeGtalkupdate()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-		$userId = $this->getUser()->getRaykuUser()->getId();
-		$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
-		$email = $_POST['gtalkname'];
-		$checkemail = explode("@", $email);
-		if(count($checkemail) == 1) {
-			$email .= '@gmail.com';
-		}
 
-		$test = file_get_contents('http://'.RaykuCommon::getCurrentHttpDomain().':8922/add/'.$email);
+	 if(mysql_num_rows($query) > 0) :
 
-		if($test) {
-			$_SESSION['adduser'] = 1;
-		} else {
-			$_SESSION['adduser'] = 2;
-			$this->redirect('/dashboard/gtalk');
-		}
+	
+		mysql_query("update user_gtalk set gtalkid = '".$email."' where userid = ".$userId." ", $connection) or die(mysql_error());
+		
 
-		if(mysql_num_rows($query) > 0) {
-			mysql_query("update user_gtalk set gtalkid = '".$email."' where userid = ".$userId." ", $connection) or die(mysql_error());
-		} else {
-			mysql_query("insert into user_gtalk(userid, gtalkid) values(".$userId.", '".$email."' ) ", $connection) or die(mysql_error());
-		}
-		$this->redirect('/dashboard/gtalk');
+	 else :
+
+		mysql_query("insert into user_gtalk(userid, gtalkid) values(".$userId.", '".$email."' ) ", $connection) or die(mysql_error());
+
+	 endif;
+
+
+
+	$this->redirect('http://www.rayku.com/dashboard/gtalk');
+
+  }
+
+
+
+  public function executeBeforeclose()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+	$logedUserId = $this->getUser()->getRaykuUser()->getId();
+
+	mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
+
+
+  
+
+  }
+
+  public function executeThank()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+	$logedUserId = $this->getUser()->getRaykuUser()->getId();
+
+	$cookiename= $logedUserId."_question";
+	$limitcookiename = $logedUserId."_limit";
+
+	if(!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
+
+
+		$_audio = !empty($_POST["audio"]) ? $_POST["audio"] : '';
+		$_use = !empty($_POST["use"]) ? $_POST["use"] : '';
+		$_overall = !empty($_POST["overall"]) ? $_POST["overall"] : '';
+
+		$_feedback = !empty($_POST["feedback"]) ? $_POST["feedback"] : '';
+
+
+		$_time = date("Y-m-d H:i:s");
+
+
+		mysql_query("INSERT INTO `whiteboard_tutor_feedback` ( `whiteboard_chat_id`, `expert_id`, `audio`, `use`, `overall`, `feedback`, `created_at`) VALUES (".$_COOKIE["whiteboardChatId"].", ".$_COOKIE["ratingExpertId"].", ".$_audio.", ".$_use.", ".$_overall.", '".$_feedback."',  '".$_time."') ", $connection) or die(mysql_error());
+
+
 	}
 
-	public function executeBeforeclose()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
 
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-		mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
+	if (isset($_SERVER['HTTP_COOKIE'])) {
 
-		$cookiename= $logedUserId."_question";
-		$limitcookiename = $logedUserId."_limit";
+	    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
 
-		if (isset($_SERVER['HTTP_COOKIE'])) {
-			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-			foreach($cookies as $cookie) {
-				$parts = explode('=', $cookie);
-				$name = trim($parts[0]);
+	    foreach($cookies as $cookie) {
+	       $parts = explode('=', $cookie);
+	        $name = trim($parts[0]);
 
-				if(($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "practice_name")  ) {
+			if(($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "practice_name")  ) :
 					$this->getResponse()->setCookie($name, "", time()-3600);
-				}
-			}
-		}
-	}
+			endif;
 
-	public function executeChargerate()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
+	    }
+
+	}
+  
+
+  }
+
+  public function executeChargerate()
+  {
+
+$connection = RaykuCommon::getDatabaseConnection();
+
 		$_Rate = !empty($_GET['rate']) ? $_GET['rate'] : '0.00';
+
 		$userId = $this->getUser()->getRaykuUser()->getId();
-		$query = mysql_query("select * from user_rate where userid=".$userId, $connection) or die(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			mysql_query("update user_rate set rate = ".$_Rate." where userid=".$userId, $connection) or die(mysql_error());
-		} else {
-			mysql_query("insert into user_rate(userid,rate) values(".$userId.", ".$_Rate.") ", $connection) or die(mysql_error());
-		}
-	}
 
-	public function executeStay()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-		$userId = $this->getUser()->getRaykuUser()->getId();
-		$user = $this->getUser()->getRaykuUser();
-		$time = time() - 1800;
+			$query = mysql_query("select * from user_rate where userid=".$userId, $connection) or die(mysql_error());
 
-		$query = mysql_query("select * from user_stay where user_id=".$userId." ", $connection) or die(mysql_error());
 
-		if((mysql_num_rows($query) > 0) && ($user->isOnline())) {
-			$queryStay = mysql_query("select * from user_stay where user_id=".$userId." and time <= '".$time."' ", $connection) or die(mysql_error());
-			if(mysql_num_rows($queryStay) > 0) {
-				$_time = time();
-				$_rowStay = mysql_fetch_assoc($queryStay);
-				$stayTime = $_rowStay['stay'] + 1;
+			if(mysql_num_rows($query) > 0) {
+	
+				mysql_query("update user_rate set rate = ".$_Rate." where userid=".$userId, $connection) or die(mysql_error());
 
-				mysql_query("update user_stay set stay = '".$stayTime."', time = '".$_time."' where user_id=".$userId, $connection) or die(mysql_error());
-			}
-		} elseif($user->isOnline()) {
-			$_time = time();
-			mysql_query("insert into user_stay(user_id,time, stay) values(".$userId.",'".$_time."', 1) ", $connection) or die(mysql_error());
-		}
-		die("In veera");
-	}
-
-	public function executeRating()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-		mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-		$cookiename= $logedUserId."_question";
-		$limitcookiename = $logedUserId."_limit";
-
-		if (isset($_SERVER['HTTP_COOKIE'])) {
-			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-			foreach($cookies as $cookie) {
-				$parts = explode('=', $cookie);
-				$name = trim($parts[0]);
-				if(($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "ratingExpertId") && ($name != "ratingUserId") && ($name != "timer") && ($name != "practice_name") && ($name != "rEmail") && ($name != "rPassword")) {
-					$this->getResponse()->setCookie($name, "", time()-3600);
-				}
-			}
-		}
-		if(!empty($_POST)) {
-			if(empty($_POST["rating"])) {
-				$this->redirect('/dashboard/rating');
-			}
-			if(!empty($_COOKIE['raykuCharge'])) {
-				$rate = $_COOKIE['raykuCharge'];
 			} else {
-				$queryRPRate = mysql_query("select * from user_rate where userid=".$_COOKIE["ratingExpertId"]." ", $connection) or die(mysql_error());
-				if(mysql_num_rows($queryRPRate)) {
-					$rowRPRate = mysql_fetch_assoc($queryRPRate);
-					$rate = $rowRPRate['rate'];
-				} else {
-					$rate = '0.16';
-				}
+
+				mysql_query("insert into user_rate(userid,rate) values(".$userId.", ".$_Rate.") ", $connection) or die(mysql_error());
+
 			}
 
-			$timer = explode(":", $_COOKIE["timer"]);
-			$newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
-			$raykuPercentage = $newTimer * $rate;
-			$_chat_rating = $_POST["rating"];
-			$date = date('Y-m-d H:i:s');
+}
 
-			$queryScore = mysql_query("select * from user_score where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-			$rowScore = mysql_fetch_assoc($queryScore);
+  public function executeStay()
+  {
+$connection = RaykuCommon::getDatabaseConnection();
 
-			$queryAsker = mysql_query("select * from user where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-			$rowAsker = mysql_fetch_assoc($queryAsker);
+			$userId = $this->getUser()->getRaykuUser()->getId();
 
-			$queryExpert = mysql_query("select * from user where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-			$rowExpert = mysql_fetch_assoc($queryExpert);
+			$user = $this->getUser()->getRaykuUser();
 
-			$queryKinkarso = mysql_query("select * from user where id=124", $connection) or die(mysql_error());
-			$rowKinkarso = mysql_fetch_assoc($queryKinkarso);
+			$time = time() - 1800;
 
-			if($_POST["rating"] == 1) {
-				$newRatingScore = $rowScore['score'] - 20;
-				mysql_query("update user_score set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				$kinkarsoPoints = $rowKinkarso["points"] + $raykuPercentage;
-				mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-				mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$raykuPercentage.", '".$date."')", $connection) or die(mysql_error());
-			}  elseif($_POST["rating"] == 2) {
-				$askerPoints = $rowAsker["points"] - $raykuPercentage;
-				mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-				$expertPer = ($raykuPercentage * 25) / 100;
-				$kinkarsoPer = ($raykuPercentage * 75) / 100;
-				$expertPoints = $rowExpert["points"] + $expertPer;
-				$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-				mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-				mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
-			} elseif($_POST["rating"] == 3) {
-				$_Score = 0;
-				if($newTimer > 10) {
-					$_Score = 10;
-				} elseif ($newTimer <= 10 && $newTimer >= 2) {
+			$query = mysql_query("select * from user_stay where user_id=".$userId." ", $connection) or die(mysql_error());
 
-					$_Score = 4;
+			if((mysql_num_rows($query) > 0) && ($user->isOnline())) {
+
+
+				$queryStay = mysql_query("select * from user_stay where user_id=".$userId." and time <= '".$time."' ", $connection) or die(mysql_error());
+
+				if(mysql_num_rows($queryStay) > 0) {
+
+					$_time = time();
+	
+					$_rowStay = mysql_fetch_assoc($queryStay);
+
+					$stayTime = $_rowStay['stay'] + 1;
+	
+					mysql_query("update user_stay set stay = '".$stayTime."', time = '".$_time."' where user_id=".$userId, $connection) or die(mysql_error());
 
 				}
 
-				$newRatingScore = $rowScore['score'] + 6 + $_Score;
-				mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				$askerPoints = $rowAsker["points"] - $raykuPercentage;
-				mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-				$expertPer = ($raykuPercentage * 50) / 100;
-				$kinkarsoPer = ($raykuPercentage * 50) / 100;
-				$expertPoints = $rowExpert["points"] + $expertPer;
-				$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-				mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-				mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
-			} elseif($_POST["rating"] == 4) {
-				$_Score = 0;
-				if($newTimer > 10) {
-					$_Score = 18;
-				} elseif($newTimer <= 10 && $newTimer >= 2) {
-					$_Score = 7;
-				}
-				$newRatingScore = $rowScore['score'] + 12 + $_Score;
-				mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				$askerPoints = $rowAsker["points"] - $raykuPercentage;
-				mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-				$expertPer = ($raykuPercentage * 60) / 100;
-				$kinkarsoPer = ($raykuPercentage * 40) / 100;
-				$expertPoints = $rowExpert["points"] + $expertPer;
-				$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-				mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-				mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
+			} elseif($user->isOnline()) {
 
-			} elseif($_POST["rating"] == 5) {
-				$ratingScore = !empty($rowScore['score']) ? $rowScore['score'] : 0 ;
-				$askerPoints = $rowAsker["points"] - $raykuPercentage;
-				mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-				if($ratingScore >= 1000 ) { // Honour Tutor
-					$expertPer = ($raykuPercentage * 75) / 100;
-					$kinkarsoPer = ($raykuPercentage * 25) / 100;
-				} else { // Normal Tutor
-					$expertPer = ($raykuPercentage * 70) / 100;
-					$kinkarsoPer = ($raykuPercentage * 30) / 100;
-				}
+				$_time = time();
 
-				$expertPoints = $rowExpert["points"] + $expertPer;
-				$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-				mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-				mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-				mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
-				$_Score = 0;
-				if($newTimer > 10) {
-					$_Score = 25;
-				}	elseif($newTimer <= 10 && $newTimer >= 2) {
-					$_Score = 10;
-				}
+				mysql_query("insert into user_stay(user_id,time, stay) values(".$userId.",'".$_time."', 1) ", $connection) or die(mysql_error());
 
-				$newRatingScore = $rowScore['score'] + 18 + $_Score;
-				mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 			}
 
-			// follow to this expert
-			if(isset($_POST["checkbox"]) && !empty($_POST["checkbox"])) {
-				if(!empty($_COOKIE["ratingExpertId"]) && !empty($_COOKIE["ratingUserId"])) {
-					$query = mysql_query("select * from expert_subscribers where expert_id = ".$_COOKIE["ratingExpertId"]." and user_id =".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-					if(mysql_num_rows($query) == 0) {
-						mysql_query("insert into expert_subscribers(expert_id, user_id) values('".$_COOKIE["ratingExpertId"]."', '".$_COOKIE["ratingUserId"]."')", $connection) or die(mysql_error());
-						$queryScore = mysql_query("select * from user_score where user_id =".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-						$rowScore = mysql_fetch_assoc($queryScore);
-						$newScore = '';
+	exit(0);
 
-						$newScore = $rowScore['score'] + 10;
 
-						mysql_query("update user_score set score = ".$newScore." where user_id =".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-					}
-				}
+  }
+
+  public function executeRating()
+  {
+
+
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+
+mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
+
+
+$cookiename= $logedUserId."_question";
+$limitcookiename = $logedUserId."_limit";
+
+
+if (isset($_SERVER['HTTP_COOKIE'])) {
+
+    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+
+    foreach($cookies as $cookie) {
+       $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+
+
+
+		if(($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "ratingExpertId") && ($name != "ratingUserId") && ($name != "timer") && ($name != "practice_name") && ($name != "rEmail") && ($name != "rPassword")) :
+
+
+  			$this->getResponse()->setCookie($name, "", time()-3600);
+
+
+
+		endif;
+    }
+
+}
+
+
+
+if(!empty($_POST)) {
+
+
+
+if(empty($_POST["rating"])) {
+
+$this->redirect('http://www.rayku.com/dashboard/rating');
+
+}
+
+
+if(empty($_COOKIE['ratingExpertId']) && empty($_COOKIE['ratingUserId']) ) {
+	
+	$this->redirect('http://www.rayku.com/dashboard');
+	
+}
+else
+{
+
+		if(!empty($_COOKIE['raykuCharge'])) {
+
+			$rate = $_COOKIE['raykuCharge'];
+
+		} else {
+
+			$queryRPRate = mysql_query("select * from user_rate where userid=".$_COOKIE["ratingExpertId"]." ", $connection) or die(mysql_error());
+
+			if(mysql_num_rows($queryRPRate)) {
+
+				$rowRPRate = mysql_fetch_assoc($queryRPRate); 
+			
+				$rate = $rowRPRate['rate'];
+
+
+			} else {
+
+				$rate = '0.00';
+
 			}
-			// public session?
-			if(!empty($_COOKIE["whiteboardChatId"]) && !empty($_COOKIE["whiteboardChatId"])) {
-				$chatId = $_COOKIE["whiteboardChatId"];
-				$_SESSION["whiteboard_Chat_Id"] = $_COOKIE["whiteboardChatId"];
-				if(isset($_POST["chkIsPublic"]) && !empty($_POST["chkIsPublic"])) {
-					// chat query
-					$criteria = new Criteria();
-					$criteria->add(WhiteboardChatPeer::ID, $chatId);
-					$chat = WhiteboardChatPeer::doSelectOne($criteria);
 
-					if ($chat) {
-						$chat->setIsPublic(true);
-						$chat->save();
-					}
-				}
+	      }
+ 
 
-				$_comments = !empty($_POST['content'])?$_POST['content']:'';
-				$_chat_query = mysql_query("select * from whiteboard_chat where id=".$chatId."", $connection) or("Error In Select".mysql_error());
-				if(mysql_num_rows($_chat_query) > 0) {
-					$_chat_row = mysql_fetch_assoc($_chat_query);
-					mysql_query("update whiteboard_chat set timer = '".$newTimer."', rating = ".$_chat_rating.", amount=".$raykuPercentage.", comments = '".$_comments."' where id=".$chatId." ", $connection) or die(mysql_error());
-				}
-			}
+	$timer = explode(":", $_COOKIE["timer"]);
 
-			$this->getResponse()->setCookie("timer", "", time()-3600);
-			$this->getResponse()->setCookie("whiteboardChatId", "", time()-3600);
-			$this->getResponse()->setCookie("ratingExpertId", "", time()-3600);
-			$this->getResponse()->setCookie("ratingUserId", "", time()-3600);
 
-			if($_chat_rating == 1 || $_chat_rating == 2) {
-				$this->redirect('/dashboard/moneyback');
-			}
+	$newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
 
-			$this->redirect('/dashboard');
+	$raykuPercentage = $newTimer * $rate;
+
+	$_chat_rating = $_POST["rating"];
+
+	$date = date('Y-m-d H:i:s');
+
+
+	$queryScore = mysql_query("select * from user_score where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+	$rowScore = mysql_fetch_assoc($queryScore);
+
+	$queryAsker = mysql_query("select * from user where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+	$rowAsker = mysql_fetch_assoc($queryAsker);
+
+	$queryExpert = mysql_query("select * from user where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+	$rowExpert = mysql_fetch_assoc($queryExpert);
+
+	$queryKinkarso = mysql_query("select * from user where id=124", $connection) or die(mysql_error());
+	$rowKinkarso = mysql_fetch_assoc($queryKinkarso);
+	
+	
+	
+
+	if($_POST["rating"] == 1) {
+
+		$check1RatingScore = $rowScore['score'] - 20;
+		
+		if($check1RatingScore < 1)
+		{
+		  $newRatingScore = "1";
 		}
+		else
+		{
+		  $newRatingScore = $rowScore['score'] - 20;
+		}
+
+		mysql_query("update user_score set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+		
+
+	if($rate != '0.00') :
+
+		$kinkarsoPoints = $rowKinkarso["points"] + $raykuPercentage;
+
+		mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
+
+		mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$raykuPercentage.", '".$date."')", $connection) or die(mysql_error());
+
+	endif;
+
+	
+
+	}  elseif($_POST["rating"] == 2) {
+	
+	
+
+
+		$tiptutor=$_POST["tiptutor"];
+
+		$askerPoints = $rowAsker["points"] - $raykuPercentage;
+
+		mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+
+		$expertPer = ($raykuPercentage * 25) / 100;
+
+		$kinkarsoPer = ($raykuPercentage * 75) / 100;
+
+		$expertPoints = $rowExpert["points"] + $expertPer + $tiptutor;
+
+		$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
+		
+		mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+		mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
+
+		mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
+
+
+
+
+	} elseif($_POST["rating"] == 3) {
+	
+	    $tiptutor=$_POST["tiptutor"];
+
+		$_Score = 0;
+
+		if($newTimer > 10) :
+
+			$_Score = 10;
+
+		elseif($newTimer <= 10 && $newTimer >= 2) :
+
+			$_Score = 4;
+		
+		endif;
+
+		if($rate == '0.00') :
+
+			 $_Score =  $_Score * 2;
+
+		endif;
+
+			$newRatingScore = $rowScore['score'] + $_Score;
+
+
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+	if($rate != '0.00') :
+
+		$askerPoints = $rowAsker["points"] - $raykuPercentage;
+
+		mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+
+		$expertPer = ($raykuPercentage * 50) / 100;
+
+		$kinkarsoPer = ($raykuPercentage * 50) / 100;
+
+		$expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
+
+		$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
+
+		mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+		mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
+
+		mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
+
+	endif;
+
+
+
+
+	} elseif($_POST["rating"] == 4) {
+	
+	   $tiptutor=$_POST["tiptutor"];
+
+		$_Score = 0;
+
+		if($newTimer > 10) :
+
+			$_Score = 18;
+
+		elseif($newTimer <= 10 && $newTimer >= 2) :
+
+			$_Score = 7;
+		
+		endif;
+
+		if($rate == '0.00') :
+
+			 $_Score =  $_Score * 2;
+
+		endif;
+
+			$newRatingScore = $rowScore['score'] + $_Score;
+
+
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+
+	if($rate != '0.00') :
+		$askerPoints = $rowAsker["points"] - $raykuPercentage;
+
+		mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+
+		$expertPer = ($raykuPercentage * 75) / 100; //60;
+
+		$kinkarsoPer = ($raykuPercentage * 25) / 100; //40;
+
+		$expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
+
+		$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
+
+		mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+		mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
+
+		mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
+
+	endif;
+
+	
+
+	} elseif($_POST["rating"] == 5) {
+	
+	    $tiptutor=$_POST["tiptutor"];
+
+		$ratingScore = !empty($rowScore['score']) ? $rowScore['score'] : 0 ;
+
+	if($rate != '0.00') :
+
+			$askerPoints = $rowAsker["points"] - $raykuPercentage;
+
+			mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+			
+
+			/*if($ratingScore >= 1000 ) { // Honour Tutor
+
+				$expertPer = ($raykuPercentage * 75) / 100;
+
+				$kinkarsoPer = ($raykuPercentage * 25) / 100;
+
+			} else { // Normal Tutor
+
+				$expertPer = ($raykuPercentage * 70) / 100;
+
+				$kinkarsoPer = ($raykuPercentage * 30) / 100;
+			}*/
+			
+			$expertPer = $raykuPercentage;  // 5 stars: 100% RP
+
+			$expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
+
+			$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
+
+			mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+			mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
+
+			mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
+
+	endif;
+
+		$_Score = 0;
+
+
+
+		if($newTimer > 10) :
+
+			$_Score = 25;
+
+		elseif($newTimer <= 10 && $newTimer >= 2) :
+
+			$_Score = 10;
+		
+		endif;
+
+		if($rate == '0.00') :
+
+			 $_Score =  $_Score * 2;
+
+		endif;
+
+			$newRatingScore = $rowScore['score'] + $_Score;
+
+		mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+
+
+	} 
+
+
+  // follow to this expert
+  if(isset($_POST["checkbox"]) && !empty($_POST["checkbox"])) {
+
+
+    if(!empty($_COOKIE["ratingExpertId"]) && !empty($_COOKIE["ratingUserId"])) {
+
+  	  $query = mysql_query("select * from expert_subscribers where expert_id = ".$_COOKIE["ratingExpertId"]." and user_id =".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
+
+      if(mysql_num_rows($query) == 0) {
+
+  		  mysql_query("insert into expert_subscribers(expert_id, user_id) values('".$_COOKIE["ratingExpertId"]."', '".$_COOKIE["ratingUserId"]."')", $connection) or die(mysql_error());
+
+					$queryScore = mysql_query("select * from user_score where user_id =".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+					$rowScore = mysql_fetch_assoc($queryScore);
+					$newScore = '';
+
+					$newScore = $rowScore['score'] + 10;
+
+					mysql_query("update user_score set score = ".$newScore." where user_id =".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
+
+  		}
+    }
+  }
+
+  // public session?
+
+ 
+if(!empty($_COOKIE["whiteboardChatId"]) && !empty($_COOKIE["whiteboardChatId"])) {
+
+ $chatId = $_COOKIE["whiteboardChatId"];
+
+$_SESSION["whiteboard_Chat_Id"] = $_COOKIE["whiteboardChatId"];
+
+	 if(isset($_POST["chkIsPublic"]) && !empty($_POST["chkIsPublic"])) {
+	      // chat query
+	          $criteria = new Criteria();
+	  	  $criteria->add(WhiteboardChatPeer::ID, $chatId);
+	      $chat = WhiteboardChatPeer::doSelectOne($criteria);
+
+	      if ($chat) {
+	        $chat->setIsPublic(true);
+	        $chat->save();
+	      }
 	}
+
+	$_comments = !empty($_POST['content'])?$_POST['content']:'';
+
+	$_chat_query = mysql_query("select * from whiteboard_chat where id=".$chatId."", $connection) or("Error In Select".mysql_error());
+
+	 if(mysql_num_rows($_chat_query) > 0) {
+
+
+		$_chat_row = mysql_fetch_assoc($_chat_query);
+
+	mysql_query("update whiteboard_chat set timer = '".$newTimer."', rating = ".$_chat_rating.", amount=".$raykuPercentage.", comments = '".$_comments."' where id=".$chatId." ", $connection) or die(mysql_error());
+
+		//$_chat_rating //$raykuPercentage //$expertPer
+
+	 }
+
+
+}
+
+
+   $this->getResponse()->setCookie("timer", "", time()-3600);
+  $this->getResponse()->setCookie("whiteboardChatId", "", time()-3600);
+  $this->getResponse()->setCookie("ratingExpertId", "", time()-3600);
+  $this->getResponse()->setCookie("ratingUserId", "", time()-3600);
+
+
+	if($_chat_rating == 1 || $_chat_rating == 2) {
+
+		$this->redirect('http://www.rayku.com/dashboard/moneyback');
+
+	}
+
+  $this->redirect('http://www.rayku.com/dashboard');
+  
+  }
+  
+}
+}
+
+
+
+
 }

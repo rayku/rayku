@@ -13,10 +13,20 @@ $(document).ready(function(){
 		
 	});
 	
-	$('.input-fader').each(function(){
+	$('.input-fader').each(function(){		
+		
+		if($('input', $(this)).val()!=''&&$('input', $(this)).val()!=' '){		
+			$('label', $(this).parent()).hide();			
+		}
+		
 		$('input', $(this)).bind('propertychange keyup input paste', function(){			
 			$('label', $(this).parent()).fadeOut('slow');			
 		});
+		
+	});
+	
+	$('.play a').click(function(){
+		window.document['wistia_355291'].videoPlay();
 	});
 	
 })

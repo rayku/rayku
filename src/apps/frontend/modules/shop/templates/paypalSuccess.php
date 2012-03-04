@@ -1,18 +1,40 @@
-<?php
+<?php 
 
-if(!empty($_POST)) :
+$connection = RaykuCommon::getDatabaseConnection();
 
-$item = $_POST['item'];
+			$query = mysql_query("select * from user where id=".$userId." ", $connection) or die(mysql_error());
+			$detailPoints = mysql_fetch_assoc($query);
 
-endif;
+	if(!empty($_POST)) :
+
+
+			$item = $_POST['item'];
+
+			$_show_value = "$".$item.".00";
+			$_final_points = $detailPoints['points'] + $item;
+			$_minutes = intval($_final_points / 0.40);
+	
+
+	else :
+
+			$item = 5;
+
+			$_final_points = $detailPoints['points'] + 5;
+			$_minutes = $_final_points / 0.40;
+			$_minutes = intval($_minutes);
+	
+			$_show_value = "$5.00";
+
+	endif;
 
 ?>
+
 <link rel="stylesheet" type="text/css" media="screen" href="/styles/global.css" />
 
 <div class="body-main">
   <div id="what-is">
     <div style="width:30px; float:left;"> <img src="/images/green_arrow.jpg" width="42" height="25" alt="" /> </div>
-    <p style="font-size:16px; color:#1c517c; font-weight:bold; margin-left:45px;">Purchase Rayku Points (RP)</p>
+    <p style="font-size:16px; color:#1c517c; font-weight:bold; margin-left:45px;">Purchase Rayku Points</p>
   </div>
   <div id="shop_left">
     <div id="shop_cart">
@@ -21,40 +43,60 @@ endif;
           <div class="b">
             <div class="cont">
               <div class="obj" style="font-size:14px;color:#444;line-height:20px;">
-                <p>Rayku Points are credits that you can use on Rayku to pay for live question sessions.</p>
-                <p>&nbsp;</p>
+
+              <div class="raykupoints" align="center">
+              YOU HAVE<br>
+              <span><?php echo $detailPoints['points']; ?></span><br>
+              RAYKU POINTS
+              </div>
+
+<input type="hidden" id="_hidden" name="_hidden" value="<?php echo $detailPoints['points']; ?>" />
+
+              <div class="rpcontent">
+              <h3>What are Rayku Points (RP)?</h3>
+              <p>
+              Rayku Points are credits that you can use on Rayku to pay for live question sessions. In the future, you'll be able to use them in a Rayku Shop to buy cool stuff (like an iPad!).</p>
+              </div>
+              <div style="clear:both"></div>
+
+
+                <div class="rpdivider"></div>
+
                 <?php
+                $con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
+                $db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
-		$connection = RaykuCommon::getDatabaseConnection();
+                $query = mysql_query("Select * from points_paypal", $connection) or die(mysql_error());
+                $i = 0;
+//
+                ?>
 
-$query = mysql_query("Select * from points_paypal", $connection) or die(mysql_error());
-
-$i = 0; ?>
                 <form name="form1" id="form1" method="post">
-                <h1 style="font-weight:normal;font-size:20px;color:#444">Buy <select name="item" onchange="this.form.submit();" style="font-size:18px;width:45px">
-                  <option value="">--</option>
+                <h1 id="buyrp">Buy <select name="item"  id="item" onchange="this.form.submit();" style="font-size:18px;width:50px;">
                   <?php
             while($row = mysql_fetch_assoc($query)) { ?>
-                  <option value="<?php echo $row['id'];?>" <?php if($item == $row['id']): ?> selected="selected" <?php endif; ?> >
+                  <option value="<?php echo $row['price'];?>" <?php if($item == $row['price']): ?> selected="selected" <?php endif; ?>>
                   <?=$row['title'];?>
                   </option>
                 <?php } ?>
-                </select> Rayku Points for <span style="color:#060"><strong>$--.00</strong>(CAD)</span>
+                </select> Rayku Points for <span id="value" style="color:#060;font-weight:bold"><?php echo $_show_value; ?></span>(CAD)
                 </h1>
-                <span style="color:#999">This will give you a total of 35.67RP, which can account for 43 minutes* of premium tutoring.</span>
+                <span style="color:#666">This will give you a total of</span> <span id="final_points" style="color:#666"><?php echo $_final_points;?>RP</span><span style="color:#666">, which can account for</span> <span id="minutes" style="color:#666"><?php echo $_minutes; ?></span> <span style="color:#666"> minutes* of premium tutoring.</span>
+
+
               </form>
               </div>
-              <img src="/images/paypal.png" style="margin-bottom:10px;" />
-              <?php
 
-if(!empty($item)) :
+              <?php 
 
-$queryOne = mysql_query("Select * from points_paypal where id=".$item, $connection) or die(mysql_error());
+              if(!empty($item)) :
 
-$rowOne = mysql_fetch_assoc($queryOne);
+              $queryOne = mysql_query("Select * from points_paypal where price=".$item, $connection) or die(mysql_error());
 
-
- ?>
+              $rowOne = mysql_fetch_assoc($queryOne);
+              
+              ?>
+              
               <div class="ch">
                 <div class="obj">
                   <h1>Item</h1>
@@ -62,53 +104,87 @@ $rowOne = mysql_fetch_assoc($queryOne);
                 <div class="price">
                   <h1>Price</h1>
                 </div>
-                <div class="qtty">
-                  <h1>Quantity</h1>
-                </div>
                 <div class="clear"></div>
                 <div class="sep"></div>
                 <div class="obj"><?php echo $rowOne['title']; ?> Rayku Points (RP)</div>
                 <div class="price">$<?php echo $rowOne['price']; ?>.00 <strong>CAD</strong></div>
-                <div class="qtty wr">1</div>
                 <div class="clear"></div>
                 <?php $tot_price = $rowOne['price'] + $rowOne['shipping_charge_per_unit']; ?>
                 <?php $tot_item_price = $rowOne['price'] ?>
-                <div class="sep" style="margin-bottom:20px"></div>
-                <div class="f"><span>Total Cost:</span> <span style="color:#000">$<?php echo $tot_price; ?>.00 <strong>CAD</strong></span> </div>
+                <div class="sep"></div>
+                <div class="f"><img src="../images/securepayment.jpg" title="Secure Payment via PayPal"></div>
                 <div align="center">
-                <form name="paypal" id="paypal" method="post" action="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/paypal.php" >
+                  <form name="paypal" id="paypal" method="post" action="http://www.rayku.com/paypal.php" >
                     <input type="hidden" name="loginid" id="loginid" value="<?php echo $user->getId(); ?>">
                     <input type="hidden" name="amount" id="amount" value="<?php echo $tot_price; ?>">
                     <input type="hidden" name="quantity" id="quantity" value="1">
                     <input type="hidden" name="points" id="points" value="<?php echo $rowOne['points']; ?>">
                     <input type="hidden" name="pack" id="pack" value="<?php echo $rowOne['title']; ?>">
-                    <input type="submit" value="Buy Now" name="submit" style="font-size:14px;padding:4px;"/>
+                    <div align="right"><input type="submit" class="myButton" value="Purchase Now" name="submit"/></div>
                   </form>
                 </div>
                 <div class="clear"></div>
               </div>
               <!--ch-->
-
+              
               <?php endif; ?>
+              <div class="rpnote">*estimate is provided asuming an average tutoring rate of 0.40RP/minute.</div>
+
             </div>
-            <!--cont-->
+            <!--cont--> 
           </div>
-          <!--b-->
+          <!--b--> 
         </div>
         <!--t-->
-
       </div>
-      <!--end of box-->
+      <!--end of box--> 
     </div>
   </div>
+  
+  <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo $detailPoints['points']; ?>CAD</strong></p><br />
+  <input type="submit" class="myButton" value="Cash Out" name="submit"/>
 </div>
-<div id="shop_right">
-  <div class="header"> <a href="/shop/index">Shop Homepage</a> </div>
-  <!--cart-->
-
-  <div class="text">Thank you for your interest. Go ahead and fill out the forms on your left. Once you are ready, click on the 'Submit' button. You may <a href="mailto:support@rayku.com" class="link">email us</a> if you have any problems.<br />
-    <br />
+<div id="shop_right">  
+  <div class="text">
+  <h2 style="font-size:16px;line-height:20px;border-bottom:1px solid #CCC;color:#666;font-weight:bold;margin-top:10px;">Terms</h2>
+  <p style="margin-top:20px;">All purchases are final.</p>
+  <p style="margin-top:20px;">Rayku Points do not expire. They are yours to keep and use forever!</p>
+  <p style="margin-top:20px;">We reserve the right to revoke a user's ability to use or purchase Rayku Points if we suspect abuse.</p>
+  <p style="margin-top:20px;">We reserve the right to change the price of Rayku Points at any time without notice.</p>
   </div>
 </div>
-<!--shop_right-->
+<!--shop_right--> 
 
+<script type="text/javascript">
+  var ray_jq = jQuery.noConflict();
+  ray_jq(document).ready(function()
+  {
+
+ 
+		
+	
+		ray_jq('#item').change(function() {
+			var str = ""; var rayku_points = ""; var final_points = "";  var minutes = "";
+			str = parseInt(ray_jq("#item").val());
+
+			rayku_points = parseFloat(ray_jq("#_hidden").val());
+
+			final_points = str + rayku_points;
+		
+			minutes = parseInt(final_points / 0.40);
+
+			str = "$"+str+".00";
+			ray_jq("#value").text(str);
+
+		         ray_jq("#final_points").text(final_points+"RP");
+
+			 ray_jq("#minutes").text(minutes);
+
+		});
+	
+
+
+
+  });
+
+</script>

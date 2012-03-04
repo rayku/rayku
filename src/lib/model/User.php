@@ -19,7 +19,14 @@ class User extends BaseUser
 	{
     return UserPeer::generateConfirmationCode( $this );
 	}
-
+	/**
+	* Generates the confirmation code for this Quickreg user
+	*/
+	public function getConfirmationValue()
+	{
+    		return UserPeer::generateConfirmationValue( $this );
+	}
+	
 	/**
 	* Hashes the password for entry into the DB
 	*

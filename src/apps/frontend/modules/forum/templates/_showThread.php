@@ -9,11 +9,12 @@
 }
 </style>
 <?php
-
-$raykuUser = $sf_user->getRaykuUser();
-
-
 $connection = RaykuCommon::getDatabaseConnection();
+
+	$raykuUser = $sf_user->getRaykuUser();
+	
+ 	//$stats = $raykuUser->getStatisticsForDashboard(); 
+
 
 ?>
 <link rel="stylesheet" type="text/css" href="/css/custom/button.css"/>
@@ -25,11 +26,12 @@ $connection = RaykuCommon::getDatabaseConnection();
 <div class="top"></div>
 <div class="content">
 <div class="userinfo">
-  <?php $user = UserPeer::retrieveByPK($post->getPosterId());?>
-  <div class="avatar-holder" style="float:none !important;"> <?php echo avatar_tag_for_user($user); ?> </div>
+  <?php 
+  $user = UserPeer::retrieveByPK($post->getPosterId());
+  ?>
+  <div class="avatar-holder" style="float:none !important;"> <?php echo  avatar_tag_for_user($user); ?> </div>
   <div class="spacer"></div>
-  <?php
-
+  <?php 
 
 					$query = mysql_query("select * from user_score where user_id=".$user->getId(), $connection) or die(mysql_error());
 					$row = mysql_fetch_assoc($query);
@@ -54,39 +56,39 @@ $connection = RaykuCommon::getDatabaseConnection();
       <?php $logedUserId = $user->getID();
 		$v = new Criteria();
 		$v->add(PostPeer::POSTER_ID, $logedUserId);
-		$_postCount = PostPeer::doCount($v) ;
+		$_postCount = PostPeer::doCount($v) ;  
 
 		echo $_postCount; ?>
       </strong> </div>
     <div class="points" style="font-weight:normal;color:#666;margin-top:4px;">RP: <strong>
-      <?php
+      <?php 
 		$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 		$detailPoints = mysql_fetch_assoc($query);
 		echo $detailPoints['points'];
-
+	
 		 ?>
       </strong> </div>
-
+        
     <!-- Expert Rank -->
-
+    
     <?php
-
+		 
 
 	$c = new Criteria();
 
 	$rankexperts = ExpertCategoryPeer::doSelect($c);
 
-	$rankUsers = array(); $ji =0; $newUserLimit = array();
+	$rankUsers = array(); $ji =0; $newUserLimit = array(); 
 
-		 foreach($rankexperts as $exp):
+		 foreach($rankexperts as $exp): 
 
-
+	
 					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-						 if(mysql_num_rows($_query) > 0) :
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+						 if(mysql_num_rows($_query) > 0) : 
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -100,17 +102,17 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 								$ji++;
 							endif;
-
-      						 endif;
+		      
+      						 endif; 
 
 					endif;
 
 
-		 endforeach;
+		 endforeach; 
 
-					asort($rankUsers);
+					asort($rankUsers);  
 
-
+		
 					arsort($rankUsers);
 
 usort($rankUsers, "cmp");
@@ -123,20 +125,20 @@ function cmp($a, $b)
 	return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-
+    
 }
 
 
 $ij = 1; $curr_user_rank = '';
 
 	if(count($rankUsers) > 0) :
-
+         
 	foreach($rankUsers as $_expert):
 
 		if($_expert['userid'] == $logedUserId):
-
+	
 			$curr_user_rank = $ij;
-			$curr_user_score = $_expert['score'];
+			$curr_user_score = $_expert['score'];				 
 			break;
 
 		endif;
@@ -144,7 +146,7 @@ $ij = 1; $curr_user_rank = '';
 	$ij++;
 
 	endforeach;
-
+		
 	endif;
 
 	 ?>
@@ -152,55 +154,55 @@ $ij = 1; $curr_user_rank = '';
     <div class="points" style="font-weight:normal;color:#666;margin-top:4px;"> Tutor Rank: <strong>#<?=$curr_user_rank?></strong>
     </div>
     <?php endif;?>
-
-    <!-- Expert Rank -->
-
+    
+    <!-- Expert Rank --> 
+    
     <!-- Expert IP Showing -->
-
+    
     <?php    $query_usr = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 	$user_details = mysql_fetch_assoc($query_usr);
-
+	
 $_logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-if(!empty($_logedUserId)):
+if(!empty($_logedUserId)): 
 
 	if($sf_user->getRaykuUser()->getType()==5 || $sf_user->getRaykuUser()->getType()==4):
-
+		  
          $query = mysql_query("select * from thread where id = ".$thread->getId()."", $connection) or die(mysql_error());
-
+					
 	$fetch_row=mysql_fetch_assoc($query); ?>
     <div class="points" style="font-weight:normal;color:#666;margin-top:4px;padding-top:5px;border-top:1px dotted #CCC"> IP: <?php echo $fetch_row['user_ip']<>''?$fetch_row['user_ip']:'Not Available';?> </div>
     <?php endif;?>
     <?php endif;?>
-
-    <!-- Expert IP Showing -->
-
+    
+    <!-- Expert IP Showing --> 
+    
     <!-- Expert Follow Me -->
-
+    
     <?php
 
-if(!empty($_logedUserId)):
+if(!empty($_logedUserId)): 
 
 
          if($_logedUserId<>$logedUserId):
-
+		 
 		 $query_fm = mysql_query("select * from expert_subscribers where expert_id=".$logedUserId." and user_id=".$_logedUserId, $connection) or die(mysql_error());
-
+		
 		if(mysql_num_rows($query_fm)<=0):  ?>
     <div class="followme" style="margin-top:5px;"> <a href="<?php echo $curr_url;?>?follow=true&user_id=<?php echo $_logedUserId;?>&expert_id=<?php echo $logedUserId;?>" style="font-size:12px;">Follow Me</a> </div>
-    <?php else:
-
+    <?php else:	
+			
 		  echo "<div class='following' style='font-size:12px;margin-top:5px;color:#666'><em>Already Following</em></div>";
 
 		endif;
 	endif;
 
 endif;
-
+		 
 ?>
-
+    
     <!-- Expert Follow Me -->
-
+    
     <?php if($thread->getSchoolGrade() != NULL): ?>
     <div class="points">School Grade: <?php echo $thread->getSchoolGrade() ; ?> </div>
     <?php endif; ?>
@@ -233,18 +235,18 @@ endif;
 
                 echo link_to('Cancel','@thread_status?thread_id='.$thread->getId().'&status=cancel',array('class' => 'cancel'));
 
-				$_post_time = strtotime($thread->getCreatedAt());
+				$_post_time = strtotime($thread->getCreatedAt()); 
 
 				$_post_time += 300;
-
-				$_now = time();
+						
+				$_now = time(); 
 
 
 		if(!empty($logedUserId)) {
 
 			   if($sf_user->getRaykuUser()->getType() == 5)
 			   {
-
+			     
 				echo '<a id="various1" href="#inline1" title="'.$thread->getId().'" class="edit">Edit</a>';
 
 		  		echo link_to('Delete','@thread_status?thread_id='.$thread->getId().'&status=delete',array('class' => 'delete'));
@@ -255,7 +257,7 @@ endif;
 					echo '<a id="various1" href="#inline1" title="'.$thread->getId().'" class="edit">Edit</a>';
 
 
-			    }
+			    } 
 		}
               echo '</div>';
               echo '<div class="clear-both"></div>';
@@ -275,7 +277,7 @@ endif;
           ?>
   </div>
   <!--end of info -->
-
+  
   <div class="message">
     </quote>
     <?php echo $post->getContent(); ?> </div>
@@ -314,9 +316,9 @@ endif;
   <form action="<?php echo $_action; ?>" method="post">
     <?php
 
-$_postId = "post_id[".$_SESSION['post_index']."]";
+$_postId = "post_id[".$_SESSION['post_index']."]"; 
 
-$_quick = "quick[".$post->getId()."]";
+$_quick = "quick[".$post->getId()."]"; 
 
 
 ?>
@@ -324,14 +326,14 @@ $_quick = "quick[".$post->getId()."]";
         <input type="checkbox" name="<?php echo $_quick; ?>" id="<?php echo $_quick; ?>" onClick="return Cookieset(this.id);" >
         Quote in reply</label></div>
 
-<?php
-
-			$query = mysql_query("select * from thread where id = ".$thread->getId()." and reported=1", $connection) or die(mysql_error());
-
+      <?php
+			$query = mysql_query("select * from thread where
+			id = ".$thread->getId()." and reported=1", $connection) or die(mysql_error());
+					
 			if(mysql_num_rows($query) == 0): ?>
       <div style="float:right;width:200px;padding-right:20px;" align="right">
       <a href="<?php echo $curr_url;?>?report=true&thread_id=<?php echo $thread->getId();?>" style="color:#999;font-size:12px;line-height:18px;">Report this thread</a></div>
-
+      
       <?php endif; ?></div>
     <input type="hidden" value="<?php echo $post->getId(); ?>" name="<?php echo $_postId; ?>" id="<?php echo $_postId; ?>">
     </input>
@@ -339,16 +341,16 @@ $_quick = "quick[".$post->getId()."]";
     <?php } ?>
     <br />
     </div>
-
+    
     <!-- end of cmmt -->
-
+    
     <div class="spacer"></div>
     </div>
     <div class="spacer"></div>
     <div class="bottom"></div>
     </div>
     <!-- end of box -->
-
+    
     <?php
     include_partial( 'expert_best_posts', array( 'expert_best_posts' => $expert_best_posts ) );
     include_partial( 'other_best_posts', array( 'other_best_posts' => $other_best_posts ) );
@@ -367,9 +369,9 @@ $_quick = "quick[".$post->getId()."]";
     <?php } ?>
   </form>
 </div>
-<!-- end of body-main -->
+<!-- end of body-main --> 
 
-<script type="text/javascript" src="/fancybox/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/fancybox/jquery-1.4.2.min.js"></script> 
 <script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.1.js"></script>
 <link rel="stylesheet" type="text/css" href="/fancybox/jquery.fancybox-1.3.1.css" media="screen" />
 <script type="text/javascript">
@@ -385,20 +387,20 @@ $_quick = "quick[".$post->getId()."]";
 <style type='text/css'>
 	th {
 	     background-color: #8FB5DB;
-		border-color: #DDDDDD ;
+		border-color: #DDDDDD ;     
 	    color: black;
 	    font-weight: bold;
 	    text-align: center;
-	    	font-size: 17px;
+	    	font-size: 17px;    
 	}
 
 	td {
 		border-color: #DDDDDD ;
 	    	font-size: 15px;
-		padding: 6px;
+		padding: 6px;    	
 	}
 	table {
-	 	border: groove;
+	 	border: groove;    	
 		border-color: #DDDDDD ;
 	    	font-size: 15px;
 		border-bottom-width : 20px;
@@ -411,18 +413,18 @@ $_quick = "quick[".$post->getId()."]";
     <div class="body-main">
       <div class="qa">
         <div class="ta">
-          <?php
+          <?php 
 
 $_thread = explode("/",$_SERVER['REQUEST_URI']);
 
 $_thread_id = $_thread[3];
 
-		$thread = ThreadPeer::retrieveByPK($_thread_id);
-
+		$thread = ThreadPeer::retrieveByPK($_thread_id); 
+		 
 		$c = new Criteria();
 		$c->add(PostPeer::THREAD_ID,$thread->getId());
 		$c->addAscendingOrderByColumn(PostPeer::ID);
-		$post = PostPeer::doSelectOne($c) ;
+		$post = PostPeer::doSelectOne($c) ; 
 
 
 $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
@@ -435,11 +437,11 @@ if(!empty($logedUserId)) {
 
 if($actionCheck->getType() == '5') :
 
-	 echo form_tag('@expertreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId());
+	 echo form_tag('@expertreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId()); 
 
 else :
 
-	echo form_tag('@userreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId());
+	echo form_tag('@userreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId()); 
 
 endif;
 
@@ -458,7 +460,7 @@ endif;
         <div class="b"></div>
       </div>
       <!--qa--><!--qa--><!--qa-->
-
+      
       <div class="qa">
         <div class="tb">
           <h1>Description</h1>
@@ -472,10 +474,10 @@ endif;
         <!--bg-->
         <div class="b"></div>
       </div>
-      <!--qa-->
-
+      <!--qa--> 
+      
       <!--     <a class="publish_response" href="#">Publish response</a>-->
-
+      
       <input type="submit" name="Post" class="publish_response">
       </form>
     </div>
@@ -503,7 +505,7 @@ function Cookieset(id) {
 	} else if(document.getElementById(id).checked == false && setValue == 2) {
 
 		document.getElementById('final_id').value = '';
-
+	
 		setValue = 1;
 
 		return true;
@@ -519,4 +521,4 @@ function Cookieset(id) {
 	}
 
 }
-</script>
+</script> 

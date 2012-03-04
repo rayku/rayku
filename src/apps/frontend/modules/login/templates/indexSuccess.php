@@ -7,7 +7,7 @@ echo "</pre>";*/
 
 <div id="top">
   <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
-  <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left">Login to your Rayku Account</div>
+  <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left">Login</div>
   <div class="spacer"></div>
 </div>
 <div class="spacer"></div>
@@ -24,7 +24,7 @@ echo "</pre>";*/
 		endif;
 		?>
       </div>
-        <div class="ttle">Email Address</div>
+        <div class="ttle">Email address</div>
 
 			<?php $_Username  = ($_COOKIE['rEmail']) ? $_COOKIE['rEmail'] : "Username" ;
 
@@ -40,11 +40,9 @@ echo "</pre>";*/
       </div>
       <div class="entry">
         <div class="ttle">Password</div>
-        <div>
           <?php
               echo input_password_tag('pass',$_Password, array('id'=>'password'));
             ?>
-        </div>
         <div class="spacer"></div>
         
       </div>
@@ -82,18 +80,14 @@ echo "</pre>";*/
 			   /////ends recaptcha
 	  ?>
       <div style="margin-left:10px; padding-top:10px; font-weight:bold; font-size:13px">
-        <label><?php echo checkbox_tag('remember', '1', true); ?> Remember Me</label>
+        <label><?php echo checkbox_tag('remember', '1', true); ?> Remember me</label>
       </div>
       <div style="margin-left:10px; font-weight:bold; font-size:13px">
-        <label><?php echo checkbox_tag('invisible', '1', false); ?> Login as Invisible</label>
+        <label><?php echo checkbox_tag('invisible', '1', false); ?> Login as invisible</label>
       </div>
       
-     
-      
-      <div style="margin-left:10px; font-weight:bold; font-size:13px">
-        <a href="#forgot" style="line-height:20px">Forgotten your Password?</a>
-      </div>
-      <?php echo input_hidden_tag('referer', $sf_request->getAttribute('referer')) ?> <?php echo submit_tag( 'Login to your Rayku account!', array( 'class' => 'button' )) ?>
+
+      <?php echo input_hidden_tag('referer', $sf_request->getAttribute('referer')) ?> <?php echo submit_tag( 'Login to your account now!', array( 'class' => 'button' )) ?>
       </form>
     </div>
     <div class="spacer"></div>
@@ -103,7 +97,7 @@ echo "</pre>";*/
   <div class="box">
     <div class="top-green"></div>
     <div class="content-green">
-      <div id="forgottext">Forgotten your Password?</div>
+      <div id="forgottext">Forgot your password?</div>
       <?php echo form_tag('@recover_password') ?> <?php echo input_tag( 'email', "Enter your email and we'll send it along...",
                                 array( 'id' => 'forgotinput',
                                        'onblur' => 'if(this.value==\'\') this.value="Enter your email and we\'ll send it along...";', 'onfocus' => 'if(this.value=="Enter your email and we\'ll send it along...") this.value=\'\';'

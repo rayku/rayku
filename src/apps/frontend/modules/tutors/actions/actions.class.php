@@ -9,320 +9,999 @@
  */
 class tutorsActions extends sfActions
 {
-    /**
-     * all members database
-     */
-    public function executeIndex()
-    {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $currentUser = $this->getUser()->getRaykuUser();
-        $userId = $currentUser->getId();
-        $time = time();
-        if(!empty($_POST['hidden'])) {
-            $count = count($_POST['checkbox']);
-            if($count > 2) {
-                $close = 21000;
-            } else if($count == 2) {
-                $close = 31000;
-            } else if($count == 1) {
-                $close = 61000;
-            }
+   /**
+    * all members database
+    */
+  
 
-            $j = 0;
-            for($i=0; $i < $count; $i++) {
-                mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
-            }
-            setcookie("asker_que",$_SESSION['question'], time()+600, "/");
-            $this->getResponse()->setCookie("redirection", 1,time()+600);
-            $this->getResponse()->setCookie("forumsub", 1,time()+600);
-            $this->redirect('expertmanager/connect');
-        }
+public function executeIndex() {
 
-        $this->cat = $this->getRequestParameter('category');
-        if(empty($this->cat))
-        {
-            $this->cat = 1;
-        }
-        $c = new Criteria();
+    $connection = RaykuCommon::getDatabaseConnection();
 
-        if($this->cat==5)
-        {
-            $experts=ExpertCategoryPeer::doSelect($c);
-        }else
-        {
-            $c->add(ExpertCategoryPeer::CATEGORY_ID,$this->cat);
-            $experts = ExpertCategoryPeer::doSelect($c);
-        }
-        $queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
+	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
-        if(mysql_num_rows($queryPoints) > 0) {
-            $rowPoints = mysql_fetch_assoc($queryPoints);
-            $_points = $rowPoints['points'];
-        }
+$currentUser = $this->getUser()->getRaykuUser();
 
-        $newUser= array(); $i =0; $newUserLimit= array();
-        foreach($experts as $exp){
-            if($userId != $exp->getUserId()){
-                if(!in_array($exp->getUserId(), $newUserLimit)) {
-                    $newUserLimit[] = $exp->getUserId();
-                    $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-                    if(mysql_num_rows($_query) > 0) {
+$userId = $currentUser->getId();
 
-                        $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-                        $score = mysql_fetch_assoc($query);
+$this->userId = $currentUser->getId();
 
-                        if($score['score'] != 0){
 
-                            if($_points == '' || $_points == '0.00' ) {
+	/* Clearing Cookies 
 
-                                $emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+	if($_COOKIE['onoff'] != 1) {
+				
+		for($u=$_COOKIE['cookcount'];$u>=1;$u--) {
 
-                                if(mysql_num_rows($emptyRCquery) > 0) {
+			$cookname =  'tutor_'.$u;
 
-                                    $dv=new Criteria();
-                                    $dv->add(UserPeer::ID,$exp->getUserId());
-                                    $_thisUser = UserPeer::doSelectOne($dv);
+			setcookie($cookname,'', time()-3600, "/");
+				    		
+		}
 
-                                    $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+		setcookie("tutorcount",'', time()-3600, "/");
+		setcookie("cookcount",'', time()-3600, "/");
 
-                                    $i++;
+	}
 
-                                }
-                            } else {
+	/* Clearing Cookies */
+		
 
-                                $dv=new Criteria();
-                                $dv->add(UserPeer::ID,$exp->getUserId());
-                                $_thisUser = UserPeer::doSelectOne($dv);
-
-                                $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                                $i++;
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        asort($newUser);
-
-        arsort($newUser);
+$time = time();
 
 
 
-        if($_COOKIE["onoff"] == 1) {
-
-            if(!empty($_COOKIE["school"])) {
-
-                $cookieSchool = array(); $m =0;
-
-                foreach($newUser as $new){
-                    $b=new Criteria();
-                    $b->add(UserPeer::ID,$new['userid']);
-                    $schoolusers=UserPeer::doSelectOne($b);
-                    $mail = explode("@", $schoolusers->getEmail());
-                    $newMail = explode(".", $mail[1]);
-                    $onlinecheck = '';
-                    if($schoolusers->isOnline()) {
-                        $onlinecheck = "online";
-                    }
-                    if(empty($onlinecheck)) {
-                        $gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($gtalkquery) > 0) {
-                            $status = mysql_fetch_assoc($gtalkquery);
-                            $gtalkmail = $status['gtalkid'];
-                            $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
-                        }
-                    }
-
-                    if(empty($onlinecheck) || ($onlinecheck != "online")) {
-                        $fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($fb_query) > 0) {
-                            $fbRow = mysql_fetch_assoc($fb_query);
-                            $fb_username = $fbRow['fb_username'];
-                            $details = file_get_contents("http://facebook.rayku.com/tutor");
-                            $Users = json_decode($details, true);
-                            foreach($Users as $key => $user) {
-                                if($user['username'] == $fb_username){
-                                    $onlinecheck = 'online';
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if($onlinecheck == "online" || $schoolusers->isOnline()) {
-                        if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
-                            $cookieSchool[$m] = $new;
-                            $m++;
-                        }
-                    }
-                }
-
-                $this->expert_cats = $cookieSchool;
-            } else {
-                $cookieOneOn = array(); $j =0;
-                foreach($newUser as $new){
-                    $a=new Criteria();
-                    $a->add(UserPeer::ID,$new['userid']);
-                    $users=UserPeer::doSelectOne($a);
-
-                    $onlinecheck = '';
-                    if($users->isOnline()) {
-                        $onlinecheck = "online";
-                    }
-                    if(empty($onlinecheck)) {
-                        $gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($gtalkquery) > 0) {
-                            $status = mysql_fetch_assoc($gtalkquery);
-                            $gtalkmail = $status['gtalkid'];
-                            $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
-                        }
-                    }
-                    if(empty($onlinecheck) || ($onlinecheck != "online")) {
-                        $fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($fb_query) > 0) {
-                            $fbRow = mysql_fetch_assoc($fb_query);
-                            $fb_username = $fbRow['fb_username'];
-                            $details = file_get_contents("http://facebook.rayku.com/tutor");
-                            $Users = json_decode($details, true);
-                            foreach($Users as $key => $user) {
-                                if($user['username'] == $fb_username){
-                                    $onlinecheck = 'online';
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if($onlinecheck == "online" || $users->isOnline()) {
-                        $cookieOneOn[$j] = $new;
-                        $j++;
-                    }
-                }
-                $this->expert_cats = $cookieOneOn;
-            }
-        } else if($_COOKIE["onoff"] == 2) {
-            if(!empty($_COOKIE["school"])) {
-                $cookieSchool = array(); $m =0;
-                foreach($newUser as $new){
-                    $b=new Criteria();
-                    $b->add(UserPeer::ID,$new['userid']);
-                    $schoolusers=UserPeer::doSelectOne($b);
-
-                    $mail = explode("@", $schoolusers->getEmail());
-                    $newMail = explode(".", $mail[1]);
-                    $onlinecheck = '';
-                    if($schoolusers->isOnline()) {
-                        $onlinecheck = "online";
-                    }
-                    if(empty($onlinecheck)) {
+if(!empty($_POST['hidden'])) {
 
 
-                        $gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+$count = count($_POST['checkbox']);
 
-                        if(mysql_num_rows($gtalkquery) > 0) {
 
-                            $status = mysql_fetch_assoc($gtalkquery);
+	/* Clearing Cookies */
+				
+	for($u=$_COOKIE['cookcount'];$u>=1;$u--) {
 
-                            $gtalkmail = $status['gtalkid'];
+		$cookname =  'tutor_'.$u;
 
-                            $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
-                        }
+		$this->getResponse()->setCookie($cookname, '',time()-3600);
+			    		
+	}
 
-                    }
 
-                    if(empty($onlinecheck) || ($onlinecheck != "online")) {
-                        $fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($fb_query) > 0) {
-                            $fbRow = mysql_fetch_assoc($fb_query);
-                            $fb_username = $fbRow['fb_username'];
-                            $details = file_get_contents("http://facebook.rayku.com/tutor");
-                            $Users = json_decode($details, true);
-                            foreach($Users as $key => $user) {
-                                if($user['username'] == $fb_username){
-                                    $onlinecheck = 'online';
-                                    break;
-                                }
-                            }
-                        }
-                    }
+	$this->getResponse()->setCookie("tutorcount", '',time()-3600);
 
-                    if($onlinecheck != "online" && !$schoolusers->isOnline()) {
-                        if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
-                            $cookieSchool[$m] = $new;
-                            $m++;
-                        }
-                    }
-                }
-                $this->expert_cats = $cookieSchool;
-            } else {
-                $cookieOneOn = array(); $j =0;
-                foreach($newUser as $new){
-                    $a=new Criteria();
-                    $a->add(UserPeer::ID,$new['userid']);
-                    $users=UserPeer::doSelectOne($a);
+	$this->getResponse()->setCookie("cookcount", '',time()-3600);
 
-                    $onlinecheck = '';
+	/* Clearing Cookies */
+	if($count == 4)
+	{
+		$close = 46000;
+		$_SESSION['connected_tutors'] = 4;
+	}
+	if($count == 3) {
 
-                    if($users->isOnline()) {
-                        $onlinecheck = "online";
-                    }
-                    if(empty($onlinecheck)) {
-                        $gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($gtalkquery) > 0) {
-                            $status = mysql_fetch_assoc($gtalkquery);
-                            $gtalkmail = $status['gtalkid'];
-                            $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
-                        }
-                    }
+		$close = 46000;
+		$_SESSION['connected_tutors'] = 3;
 
-                    if(empty($onlinecheck) || ($onlinecheck != "online")) {
-                        $fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
-                        if(mysql_num_rows($fb_query) > 0) {
-                            $fbRow = mysql_fetch_assoc($fb_query);
-                            $fb_username = $fbRow['fb_username'];
-                            $details = file_get_contents("http://facebook.rayku.com/tutor");
-                            $Users = json_decode($details, true);
-                            foreach($Users as $key => $user) {
-                                if($user['username'] == $fb_username){
-                                    $onlinecheck = 'online';
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if($onlinecheck != "online" && !$users->isOnline()) {
-                        $cookieOneOn[$j] = $new;
-                        $j++;
-                    }
-                }
+	} else if($count == 2) {
 
-                $this->expert_cats = $cookieOneOn;
-            }
-        } else {
-            if(!empty($_COOKIE["school"])) {
-                $cookieSchool = array(); $m =0;
-                foreach($newUser as $new){
-                    $b=new Criteria();
-                    $b->add(UserPeer::ID,$new['userid']);
-                    $schoolusers=UserPeer::doSelectOne($b);
-                    $mail = explode("@", $schoolusers->getEmail());
-                    $newMail = explode(".", $mail[1]);
-                    if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
-                        $cookieSchool[$m] = $new;
-                        $m++;
-                    }
-                }
-                $this->expert_cats = $cookieSchool;
-            } else {
-                $this->expert_cats = $newUser;
-            }
-        }
-        $c=new Criteria();
-        $c->add(CategoryPeer::ID,$this->cat);
-        $this->e=CategoryPeer::doSelectOne($c);
-    }
+		$close = 61000;
+		$_SESSION['connected_tutors'] = 2;
+
+	} else if($count == 1) {
+
+		$close = 61000;
+		$_SESSION['connected_tutors'] = 1;
+	}
+	else
+	{
+		$close = 61000;
+		$_SESSION['connected_tutors'] = 1;
+	} 
+
+$j = 0;
+	for($i=0; $i < $count; $i++) {
+
+mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
+
+	}
+	
+	/* Notify same tutor again */
+	
+	$l=0;
+	$source = 'tutorlist';
+	
+	mysql_query("DELETE FROM `student_questions` WHERE user_id=".$userId."", $connection);
+	
+	for($i=0; $i < $count; $i++) 
+	{	
+		mysql_query("INSERT INTO `student_questions` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close, source) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$l)."', '".$time."', 1, ".$close.", '".$source."') ", $connection) or die(mysql_error());
+		
+		
+	}
+
+				
+
+				setcookie("asker_que",$_SESSION['question'], time()+600, "/");
+
+				$this->getResponse()->setCookie("redirection", 1,time()+600);
+
+				$this->getResponse()->setCookie("forumsub", 1,time()+600);
+
+
+
+
+	$this->redirect('expertmanager/connect');
+
+}
+
+ 
+
+		$this->cat = $this->getRequestParameter('category');
+
+		$this->course_id = $this->getRequestParameter('course');
+
+		if(empty($this->course_id))
+			{
+				$this->course_id = 1;
+			
+			} 
+
+
+		if(empty($this->cat))
+			{
+					$this->cat = 1;
+			}
+
+					
+
+		$c = new Criteria();
+		
+		
+		
+		if($this->cat==5)
+		{
+						
+		$experts=ExpertCategoryPeer::doSelect($c);
+				 
+		}else
+		{
+		$c->add(ExpertCategoryPeer::CATEGORY_ID,$this->cat);
+		
+		$experts = ExpertCategoryPeer::doSelect($c);
+		}		
+
+
+					$queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
+
+					if(mysql_num_rows($queryPoints) > 0) {
+
+					$rowPoints = mysql_fetch_assoc($queryPoints);
+
+						$_points = $rowPoints['points'];
+
+					}
+
+
+		$newUser= array(); $i =0; $newUserLimit= array(); 
+
+		 foreach($experts as $exp): 
+
+									 
+				if(!in_array($exp->getUserId(), $newUserLimit)) :
+
+					$newUserLimit[] = $exp->getUserId();
+
+					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+					    if(mysql_num_rows($_query) > 0) : 
+
+						 $_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ", $connection) or die("Er-1-->".mysql_error()); 
+						 if(mysql_num_rows($_queryCourse) > 0) : 
+
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+							$score = mysql_fetch_assoc($query);
+
+							if($score['score'] != 0):
+
+								if($_points == '' || $_points == '0.00' ) {
+
+									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+
+									if(mysql_num_rows($emptyRCquery) > 0) {
+
+									$dv=new Criteria();
+									$dv->add(UserPeer::ID,$exp->getUserId());
+									$_thisUser = UserPeer::doSelectOne($dv);
+
+									$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+
+									$i++;
+
+									}
+
+
+								} else {
+
+								$dv=new Criteria();
+								$dv->add(UserPeer::ID,$exp->getUserId());
+								$_thisUser = UserPeer::doSelectOne($dv);
+
+									
+								$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+
+								$i++;
+
+								}
+							endif;
+						    endif; 
+		      
+      						 endif; 
+
+					endif;
+
+
+		 endforeach; 
+
+
+
+
+					 asort($newUser);  
+
+					 arsort($newUser);
+					 
+
+					$this->rankCheckUsers = $newUser;
+			
+				
+					////if no online expert available redirecting to the board page
+			
+					
+					 		$onlineusers = array();  $offlineusers = array();
+
+							$newOnlineUser = array();  $newOfflineUser = array();
+							$j=0; $k = 0;
+									$facebookResponse = file_get_contents("http://facebook.rayku.com/tutor");
+									$facebookUsers = json_decode($facebookResponse, true);
+									$botResponse = file_get_contents("http://notification-bot.rayku.com/tutor");
+									$botUsers = json_decode($botResponse, true);
+
+							foreach($newUser as $new):
+						
+								 $a=new Criteria();
+								 $a->add(UserPeer::ID,$new['userid']);
+								 $users_online=UserPeer::doSelectOne($a);
+
+								$onlinecheck = '';
+
+								if($users_online->isOnline()) {
+
+									$onlinecheck = "online";
+
+								} 
+
+
+								if(empty($onlinecheck)) {
+
+					
+									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+
+									if(mysql_num_rows($gtalkquery) > 0) {
+
+										$status = mysql_fetch_assoc($gtalkquery);
+
+										$gtalkmail = $status['gtalkid'];
+
+										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+									} 
+
+								}
+
+							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+
+
+								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
+
+											if(mysql_num_rows($fb_query) > 0) {
+
+												$fbRow = mysql_fetch_assoc($fb_query);
+
+												$fb_username = $fbRow['fb_username'];
+
+
+											foreach($facebookUsers as $key => $user) :
+	
+												if($user['username'] == $fb_username):
+
+													 $onlinecheck = 'online'; 	
+		
+													 break;	
+												endif;
+
+											endforeach;
+
+											}
+
+								}
+								
+							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+	
+
+									foreach($botUsers as $key => $_user) :
+	
+										if($_user['email'] == $users_online->getEmail()):
+
+											 $onlinecheck = 'online'; 		
+											 break;	
+										endif;
+
+									endforeach;
+
+								}
+	
+
+
+							if($onlinecheck == "online") {
+
+							$onlineusers[$j] = $new['userid'];
+
+							$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							 $j++;
+
+							} elseif($users_online->isOnline()) {
+
+							$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							$onlineusers[$j] = $new['userid'];
+
+							 $j++;
+
+							} else {
+
+							$newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							$offlineusers[$k] = $new['userid'];
+
+							$k++;
+
+							}
+							
+							 endforeach;
+
+
+						$this->newOnlineUser = $newOnlineUser;
+
+
+
+						$this->newOfflineUser = $newOfflineUser;
+
+
+						$this->_checkOnlineUsers = $onlineusers;
+
+						
+				
+					 /////////////////////////////////////////////////////
+
+if($_COOKIE["onoff"] == 1) {
+		
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+			foreach($newOnlineUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());   		
+				 $newMail = explode(".", $mail[1]);
+									
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+
+					$cookieSchool[$m] = $new;
+					$m++;
+
+				}
+			
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+				$this->expert_cats = $newOnlineUser;
+
+		}
+
+
+} else if($_COOKIE["onoff"] == 2) {
+		
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+
+			foreach($newOfflineUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());    			
+				 $newMail = explode(".", $mail[1]);
+		
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+
+					$cookieSchool[$m] = $new;
+					$m++;
+
+				}
+				
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+
+			$this->expert_cats = $newOfflineUser;
+
+		}
+
+	
+} else {
+
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+
+			foreach($newUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());    								
+				 $newMail = explode(".", $mail[1]);									
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+						$cookieSchool[$m] = $new;
+						$m++;
+
+				}
+				
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+		
+				$this->expert_cats = $newUser;
+		}
+
+
+}
+		$this->tutorsCount = count($this->expert_cats);
+
+		$c=new Criteria();
+	  	  $c->add(CategoryPeer::ID,$this->cat);
+		$this->e=CategoryPeer::doSelectOne($c);
+
+
+
+}
+
+	public function executeAjaxidle() {
+		
+		
+
+			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+		        $db = mysql_select_db("rayku_db", $con);
+
+
+			if($_GET['status']=='1')
+			{
+			
+			
+				$selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."'", $connection);
+				$misqrys = mysql_fetch_array($selmisqry);
+								 
+				if($misqrys['user_id']=="")
+				{
+					 mysql_query("INSERT INTO `popup_close` (
+					 `id` ,
+					 `user_id`,
+					 `ustatus`
+					 )
+					 VALUES (
+					 NULL , '".$_GET['userid']."','1' )", $connection);
+				}
+
+			}
+			else if($_GET['status']=='2')
+			{
+			
+			    $selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."' and ustatus='1' ", $connection);
+				$misqrys = mysql_fetch_array($selmisqry);
+				
+				if($misqrys['user_id']!="")
+				{
+			      $sel_misqry = mysql_query("DELETE FROM popup_close WHERE user_id='".$_GET['userid']."'", $connection);
+				}
+			  
+			  
+			}
+
+
+}
+
+public function executeAppend() {
+		
+		
+
+			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+		         $db = mysql_select_db("rayku_db", $con);
+
+	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+
+$currentUser = $this->getUser()->getRaykuUser();
+
+$userId = $currentUser->getId();
+
+$this->userId = $currentUser->getId();
+
+
+$time = time();
+
+
+
+		/*if($this->getRequestParameter('rate') == 1) {		
+			$_SESSION["rateDisplay"] = 1; 
+			
+		} elseif($this->getRequestParameter('rate') == 2) {		
+			unset($_SESSION["rateDisplay"]); 			
+		} else {
+			unset($_SESSION["rateDisplay"]); 
+		}*/
+
+		$_SESSION["rateDisplay"] = 1; 
+
+
+
+if(!empty($_POST['hidden'])) {
+
+
+$count = count($_POST['checkbox']);
+
+
+	/* Clearing Cookies */
+				
+	for($u=$_COOKIE['cookcount'];$u>=1;$u--) {
+
+		$cookname =  'tutor_'.$u;
+
+		$this->getResponse()->setCookie($cookname, '',time()-3600);
+			    		
+	}
+
+
+	$this->getResponse()->setCookie("tutorcount", '',time()-3600);
+
+	$this->getResponse()->setCookie("cookcount", '',time()-3600);
+
+	/* Clearing Cookies */
+
+	if($count > 2) {
+
+		$close = 21000;
+
+	} else if($count == 2) {
+
+		$close = 31000;
+
+	} else if($count == 1) {
+
+		$close = 61000;
+
+	} 
+
+$j = 0;
+	for($i=0; $i < $count; $i++) {
+
+mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
+
+	}
+
+				
+
+				setcookie("asker_que",$_SESSION['question'], time()+600, "/");
+
+				$this->getResponse()->setCookie("redirection", 1,time()+600);
+
+				$this->getResponse()->setCookie("forumsub", 1,time()+600);
+
+
+
+
+	$this->redirect('expertmanager/connect');
+
+}
+
+ 
+
+		$this->cat = $this->getRequestParameter('category');
+
+		$this->course_id = $_SESSION['tutcourse']; //$this->getRequestParameter('course');
+		
+		if(empty($this->course_id))
+		{
+			$this->course_id = 1;
+		
+		} 
+
+
+		if(empty($this->cat))
+		{
+				$this->cat = 1;
+		}
+
+					
+
+		$c = new Criteria();
+		
+		
+		
+		if($this->cat==5)
+		{
+						
+		$experts=ExpertCategoryPeer::doSelect($c);
+				 
+		}else
+		{
+		$c->add(ExpertCategoryPeer::CATEGORY_ID,$this->cat);
+		
+		$experts = ExpertCategoryPeer::doSelect($c);
+		}		
+
+
+					$queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
+
+					if(mysql_num_rows($queryPoints) > 0) {
+
+					$rowPoints = mysql_fetch_assoc($queryPoints);
+
+						$_points = $rowPoints['points'];
+
+					}
+
+
+		$newUser= array(); $i =0; $newUserLimit= array(); 
+
+		 foreach($experts as $exp): 
+
+									 
+				//if($userId != $exp->getUserId()):
+
+					if(!in_array($exp->getUserId(), $newUserLimit)) :
+
+					$newUserLimit[] = $exp->getUserId();
+
+					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+					    if(mysql_num_rows($_query) > 0) : 
+
+						 //$_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ") or die("Er-1-->".mysql_error()); 
+						 
+						 /* Student match with Tutors */	
+						$usrname = $this->getUser()->getRaykuUser()->getUsername();
+						
+							$_queryCourse = '';
+						 	$tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());  
+						 	$tutors = mysql_fetch_array($tutorsq);
+						 	$tutor ='';
+						 	
+						 		$tutor = explode("-",$tutors['course_id']);
+						 		$coursid = $this->course_id;
+						 		if(in_array($coursid,$tutor))
+						 		{
+						 			//echo $coursid;
+						 			
+						 			$_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());	
+						 			//echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
+						 		}					 		
+						 	
+						 
+						 
+						 if(mysql_num_rows($_queryCourse) > 0) : 
+
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+							$score = mysql_fetch_assoc($query);
+
+							if($score['score'] != 0):
+
+								if($_points == '' || $_points == '0.00' ) {
+
+									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+
+									if(mysql_num_rows($emptyRCquery) > 0) {
+
+									$dv=new Criteria();
+									$dv->add(UserPeer::ID,$exp->getUserId());
+									$_thisUser = UserPeer::doSelectOne($dv);
+
+									$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+
+									$i++;
+
+									}
+
+
+								} else {
+
+								$dv=new Criteria();
+								$dv->add(UserPeer::ID,$exp->getUserId());
+								$_thisUser = UserPeer::doSelectOne($dv);
+
+									
+								$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+
+								$i++;
+
+								}
+							endif;
+						    endif; 
+		      
+      						 endif; 
+
+					endif;
+
+				//endif;	
+
+
+		 endforeach; 
+
+
+
+
+					 asort($newUser);  
+
+					 arsort($newUser);
+					 
+
+					$this->rankCheckUsers = $newUser;
+			
+				
+					////if no online expert available redirecting to the board page
+			
+					
+					 		$onlineusers = array();  $offlineusers = array();
+
+							$newOnlineUser = array();  $newOfflineUser = array();
+							$j=0; $k = 0;
+							$facebookResponse = file_get_contents("http://facebook.rayku.com/tutor");
+							$facebookUsers = json_decode($facebookResponse, true);
+							$botResponse = file_get_contents("http://notification-bot.rayku.com/tutor");
+							$botUsers = json_decode($botResponse, true);
+
+							foreach($newUser as $new):
+						
+								 $a=new Criteria();
+								 $a->add(UserPeer::ID,$new['userid']);
+								 $users_online=UserPeer::doSelectOne($a);
+
+								$onlinecheck = '';
+
+								if($users_online->isOnline()) {
+
+									$onlinecheck = "online";
+
+								} 
+
+
+								if(empty($onlinecheck)) {
+
+					
+									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+
+									if(mysql_num_rows($gtalkquery) > 0) {
+
+										$status = mysql_fetch_assoc($gtalkquery);
+
+										$gtalkmail = $status['gtalkid'];
+
+										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+									} 
+
+								}
+
+							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+
+
+								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
+
+											if(mysql_num_rows($fb_query) > 0) {
+
+												$fbRow = mysql_fetch_assoc($fb_query);
+
+												$fb_username = $fbRow['fb_username'];
+
+											foreach($facebookUsers as $key => $user) :
+	
+												if($user['username'] == $fb_username):
+
+													 $onlinecheck = 'online'; 	
+		
+													 break;	
+												endif;
+
+											endforeach;
+
+											}
+
+								}
+								
+							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+	
+									foreach($botUsers as $key => $_user) :
+	
+										if($_user['email'] == $users_online->getEmail()):
+
+											 $onlinecheck = 'online'; 		
+											 break;	
+										endif;
+
+									endforeach;
+
+								}
+	
+
+
+							if($onlinecheck == "online") {
+
+							$onlineusers[$j] = $new['userid'];
+
+							$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							 $j++;
+
+							} elseif($users_online->isOnline()) {
+
+							$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							$onlineusers[$j] = $new['userid'];
+
+							 $j++;
+
+							} else {
+
+							$newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+							$offlineusers[$k] = $new['userid'];
+
+							$k++;
+
+							}
+							
+							 endforeach;
+
+						$this->newOnlineUser = $newOnlineUser;
+
+
+						$this->newOfflineUser = $newOfflineUser;
+
+
+						$this->_checkOnlineUsers = $onlineusers;
+
+
+					
+				
+					 /////////////////////////////////////////////////////
+
+if($_COOKIE["onoff"] == 1) {
+		
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+			foreach($newOnlineUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());   		
+				 $newMail = explode(".", $mail[1]);
+									
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+
+					$cookieSchool[$m] = $new;
+					$m++;
+
+				}
+			
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+				$this->expert_cats = $newOnlineUser;
+
+		}
+
+
+} else if($_COOKIE["onoff"] == 2) {
+		
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+
+			foreach($newOfflineUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());    			
+				 $newMail = explode(".", $mail[1]);
+		
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+
+					$cookieSchool[$m] = $new;
+					$m++;
+
+				}
+				
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+
+			$this->expert_cats = $newOfflineUser;
+
+		}
+
+	
+} else {
+
+		if(!empty($_COOKIE["school"])) {
+
+			$cookieSchool = array(); $m =0;
+
+			foreach($newUser as $new):
+			
+				 $b=new Criteria();
+				 $b->add(UserPeer::ID,$new['userid']);
+				 $schoolusers=UserPeer::doSelectOne($b);
+				 $mail = explode("@", $schoolusers->getEmail());    								
+				 $newMail = explode(".", $mail[1]);									
+				if(($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+						$cookieSchool[$m] = $new;
+						$m++;
+
+				}
+				
+			 endforeach; 
+
+			$this->expert_cats = $cookieSchool;
+
+		} else {
+		
+				$this->expert_cats = $newUser;
+		}
+
+
+}
+		$this->tutorsCount = count($this->expert_cats);
+
+		$c=new Criteria();
+	  	  $c->add(CategoryPeer::ID,$this->cat);
+		$this->e=CategoryPeer::doSelectOne($c);
+
+
+
+}
+
+
+
+	 public function executeCheckoutpopup()
+	  {
+			   $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+	 $db = mysql_select_db("rayku_db", $con);	  
+	  
+	  }
+	  
+	 
+	  
+	 public function executeDemopopup()
+	  {
+			   $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+	 $db = mysql_select_db("rayku_db", $con);	  
+	  
+	  }
+
 }
 

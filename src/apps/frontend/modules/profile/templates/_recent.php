@@ -1,5 +1,4 @@
 <?php
-		$connection = RaykuCommon::getDatabaseConnection();
   /* @var $user User */
   $history = $user->getRecentHistory();
 
@@ -7,7 +6,7 @@
 ?>
 <div class="recent">
   <?php
-    echo link_to( image_tag( "/images/rss_logo.jpg",
+    echo link_to( image_tag( "http://www.rayku.com/images/rss_logo.jpg",
                                  array( 'style' => "width:15px; height:15px; float:left; margin-left:3px; margin-right:5px;" )),
                   'rss/index?id='.$user->getId() . '&context=profile', array( 'target' => '_blank' ) );
   ?>
@@ -16,6 +15,8 @@
   ?><?php echo $user->getName() ?>'s <strong>Recent History</strong></h4>
   <ul>
   <?php
+                        $connection = RaykuCommon::getDatabaseConnection();
+
 
     if( count( $history ) > 0 )
     {
@@ -32,8 +33,8 @@
 
 				echo "<li>$item</li>";
 			endif;
-
-
+			
+			       
 	} else {
 
 		 echo "<li>$item</li>";

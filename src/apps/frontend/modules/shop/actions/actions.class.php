@@ -18,14 +18,14 @@ class shopActions extends sfActions
   {
 
 
- if(!empty($_COOKIE["timer"])) :
+ if(!empty($_COOKIE["timer"])) : 
 
 
 	$this->redirect('/dashboard/rating');
 
- endif;
-
-     $category = $this->getRequestParameter('category');
+ endif; 
+  
+     $category = $this->getRequestParameter('category'); 
 	 $c= new Criteria();
 	 $c->add(ItemPeer::IS_ACTIVE,true);
 	$c->addDescendingOrderByColumn('rand()');
@@ -46,13 +46,13 @@ class shopActions extends sfActions
   public function executeItemDetail()
   {
 
-
+  
   	$id=$this->getRequestParameter('id');
 	$this->user = $this->getUser()->getRaykuUser();
 	$this->item = ItemPeer::retrieveByPK($id);
-
+	
 	$total_item_price = $this->item->getPricePerUnit() + $this->item->getShippingChargePerunit() ;
-
+	
 	if($this->getUser()->getRaykuUser()->getPoints() < $total_item_price )
 	{
 		$this->msg='Sorry! Not enough RP!' ;
@@ -61,12 +61,12 @@ class shopActions extends sfActions
 	{
 		$this->msg='' ;
 	}
-
-
+	
+	
 	$c = new Criteria();
 	$c->add(ItemRatingPeer::ITEM_ID, $this->item->getId());
 	$item_ratings=ItemRatingPeer::doSelect($c);
-
+	
 	$this->countReviews = count($item_ratings);
 	$rating = 0;
 	foreach($item_ratings as $item_rating)
@@ -90,17 +90,18 @@ class shopActions extends sfActions
 	 $c->add(ItemRatingPeer::ITEM_ID, $id);
 	 $c->add(ItemRatingPeer::USER_ID, $this->user->getId());
 	 $item_rating = ItemRatingPeer::doSelect($c);
-
-
+	 
+	 
 	if($item_rating)
 		$this->allowRate = false;
 	else
 		$this->allowRate = true;
   	//this protoype script is put in response for rating compatibility
+	$this->getResponse()->addJavascript('/sf/prototype/js/prototype');
 	$this->getResponse()->addJavascript('prototype');
   	$this->getResponse()->addJavascript('protorater');
   }
-
+  
   public function executeRate()
   {
 
@@ -118,7 +119,7 @@ class shopActions extends sfActions
 		 $c->add(ItemRatingPeer::ITEM_ID, $item_id);
 		 $c->add(ItemRatingPeer::USER_ID, $this->user->getId());
 		 $item_rating = ItemRatingPeer::doSelect($c);
-
+		 
 		if($item_rating)
 			return $this->renderText('already');
 		else
@@ -129,13 +130,13 @@ class shopActions extends sfActions
 			$item_rating->setRating($rating);
 			$item_rating->save();
 			return $this->renderText('success');
-		}
+		}	
 		return $this->renderText('fail');
 	}
   }
-
+  
   public function executeAddToCart()
-  {
+  {	
 
 
 
@@ -148,8 +149,8 @@ class shopActions extends sfActions
 		$item_id = $this->getRequestParameter('it');
 		$quantity = 1;
 		$this->item = ItemPeer::retrieveByPK($item_id);
-
-		if(!$this->item->getIsActive())
+		
+		if(!$this->item->getIsActive()) 
 			$this->item = NULL;
 		if($this->item)
 		{
@@ -162,12 +163,12 @@ class shopActions extends sfActions
 				$c->addDescendingOrderByColumn(ShoppingCartPeer::CREATED_AT);
 				$this->cart_items = ShoppingCartPeer::doSelect($c);
 				$tot_price = 0;
-
+				
 				foreach($this->cart_items as $cart_item)
 				{
 					$tot_price = $tot_price + $cart_item->getTotalPrice() + $cart_item->getTotalShippingCharge();
 				}
-
+				
 				$tot_price = $tot_price + ($this->item->getPricePerUnit() * $quantity) + ($this->item->getShippingChargePerUnit() * $quantity);
 				if($tot_price <= $this->user->getPoints())
 				{
@@ -179,18 +180,18 @@ class shopActions extends sfActions
 					$shopping_cart->setTotalShippingCharge($this->item->getShippingChargePerUnit() * $quantity);
 					$shopping_cart->setIsActive(true);
 					$shopping_cart->save();
-
+					
 					$quantity_avail = $this->item->getQuantity();
 					$quantity_avail = $quantity_avail - $quantity;
-
+					
 					$this->item->setQuantity($quantity_avail);
 					$this->item->save();
-
+					
 					return $this->renderText(get_component('shop','cartBox'));
 				}
 				else
 				{
-
+					
 					return $this->renderText('<span style="line-height:26px"><center>Sorry! Not enough RP!</center></span>'.get_component('shop','cartBox'));
 				}
 			}
@@ -198,17 +199,17 @@ class shopActions extends sfActions
 			{
 				return $this->renderText('Sorry! Item out of stock'.get_component('shop','cartBox'));
 			}
-
+		
 		}
 		else
 			return $this->renderText('Sorry! No item is there'.get_component('shop','cartBox'));
-	}
-
+	}	
+ 		
   }
-
-
+  
+  
   public function executeRemoveFromCart()
-  {
+  {	
 
 
 
@@ -227,18 +228,18 @@ class shopActions extends sfActions
 			{
 				$shopping_cart->getItem()->setQuantity($shopping_cart->getItem()->getQuantity() + $shopping_cart->getQuantity());
 				$shopping_cart->getItem()->save();
-			}
+			}	
 			$shopping_cart->delete();
-
+			
 			return $this->renderText(get_component('shop','cartBox'));
 		}
 		else
 			return $this->renderText('Item is not removed due to some problem'.get_component('shop','cartBox'));
 	}
   }
-
+  
    public function executeRemoveItemFromCart()
-  {
+  {	
 
 
 
@@ -278,6 +279,8 @@ class shopActions extends sfActions
 
    $this->user = $this->getUser()->getRaykuUser();
 
+   $this->userId = $this->user->getId();
+
 
   }
 
@@ -288,7 +291,7 @@ class shopActions extends sfActions
 
 
     $this->user = $this->getUser()->getRaykuUser();
-
+    
     $voucherCode = $this->getRequestParameter('coupon');
 
     $c =  new Criteria();
@@ -309,7 +312,7 @@ class shopActions extends sfActions
 
 
   }
-
+  
   public function executeCheckout()
   {
 
@@ -380,7 +383,7 @@ class shopActions extends sfActions
 		else :
 			$purchasedItems = $purchasedItems.",".$itemPurchased->getTitle();
 		endif;
-
+		
 
           $cart_item->delete();
         }
@@ -401,9 +404,9 @@ class shopActions extends sfActions
         $sales->setQuantity($tot_quantity);
         $sales->setStatusId(1);
 
-
+	
         $sales->save();
-
+    
         $this->user->setPoints($this->user->getPoints() - $tot_price);
         $this->user->save();
 
@@ -416,7 +419,7 @@ class shopActions extends sfActions
         $zip = htmlentities($purchase_detail['zip']);
         $country = htmlentities($purchase_detail['country']);
         $tel = htmlentities($purchase_detail['tel']);
-
+        
         $purchase_detail = new PurchaseDetail();
         $purchase_detail->setFullName($full_name);
         $purchase_detail->setUserId($this->user->getId());
@@ -436,15 +439,15 @@ class shopActions extends sfActions
 					$this->mail = Mailman::createCleanMailer();
 					$this->mail->setSubject('Rayku.com Shoping Item Purchase Details');
 					$this->mail->setFrom($user->getName().' <'.$user->getEmail().'>');
-					$to = "admin@rayku.com";
-
+					$to = "admin@rayku.com"; 
+					
 
 				$items = "<b>". $purchasedItems . "</b>";
 
     sfProjectConfiguration::getActive()->loadHelpers(array('Partial'));
 
 					$this->mail->setBody(get_partial('purchaseitem', array( 'name' => $user->getName(), 'user' => $user, 'items' => $items ) ));
-
+					
 					$this->mail->setContentType('text/html');
 					$this->mail->addAddress($to);
 					$this->mail->send();
@@ -461,21 +464,21 @@ class shopActions extends sfActions
     else
       $this->msg = "<p style='font-size:14px;color:#444444'>Unauthorized access.</p>";
   }
-
+  
   public function executeDonatePage()
   {
 
   	$this->user = $this->getUser()->getRaykuUser();
-
+		
 
 
 
 //$this->items = $allItems;
 
 
-
+	
   }
-
+  
   public function executeDonate()
   {
 
@@ -488,14 +491,14 @@ class shopActions extends sfActions
 		$username = htmlentities($this->getRequestParameter('name'));
 		$comment = htmlentities($this->getRequestParameter('comments'));
 		$this->user = $this->getUser()->getRaykuUser();
-
+		
 		if($this->user && $this->user->getPoints() > $amount)
 		{
-
+			
 			$c = new Criteria();
 			$c->add(UserPeer::USERNAME, $username);
 			$c->add(UserPeer::HIDDEN, false);
-
+			
 			$receiver = UserPeer::doSelectOne($c);
 			if($receiver)
 			{
@@ -514,12 +517,12 @@ class shopActions extends sfActions
 			 $this->msg = "The user you want to donate to can not be found.";
 		}
 		else
-		  $this->msg = "Unauthorized access.";
+		  $this->msg = "Unauthorized access.";	
 	}
 	else
 		$this->msg = "Unauthorized access.";
   }
-
+  
   public function executeAwardPurchase()
   {
 
@@ -560,7 +563,7 @@ class shopActions extends sfActions
 					$user_award->setUserId($this->user->getId());
 					$user_award->save();
 				}
-
+			
 				$this->user->setPoints($this->user->getPoints() - $amount);
 				$this->user->save();
 				$this->msg = "Profile icon has been successfully added to your profile.";
@@ -571,9 +574,9 @@ class shopActions extends sfActions
 	}
 	else
 	    $this->msg = "Unauthorized access.";
-
+	
 	$this->setTemplate('checkout');
   }
-
+  
 }
 

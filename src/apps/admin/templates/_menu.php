@@ -13,15 +13,23 @@
     <li><?php echo link_to('Regenerate Cache', 'cache/index'); ?></li>
     <li><?php echo link_to('News Update', 'news/index'); ?></li>
     <li><?php echo link_to('Mass Mail', 'massmail/index'); ?></li>
-    <li><?php echo link_to('Whiteboard Sessions', 'whiteboardsession/index'); ?></li>
+
     <li><?php echo link_to('Threads', 'threads/index'); ?></li>
-     <li><?php echo link_to('Reported Posts', 'reportedposts/index'); ?></li>
+    <li><?php echo link_to('Reported Posts', 'reportedposts/index'); ?></li>
+    <li><?php echo link_to('Log Statistics', 'statistics/index'); ?></li>
     <li><?php echo link_to( 'Logout', "http://$_SERVER[HTTP_HOST]/login/logout", array( 'class' => 'last' ) ); ?></li>
   </ul><br /><br />
 
   <h3>Manage Users Settings:</h3>
   <ul id="menu_first">
     <li><?php echo link_to('Manage Users & Category', 'manageusers/index'); ?></li>
+  </ul><br /><br />
+
+  <h3>Whiteboard Settings:</h3>
+  <ul id="menu_first">
+    <li><?php echo link_to('Whiteboard Sessions', 'whiteboardsession/index'); ?></li>
+    <li><?php echo link_to('Verfied Tutor Whiteboard Sessions', 'whiteboardsession/verify'); ?></li>
+    <li><?php echo link_to('Tutor Experience In Whiteboard', 'whiteboardsession/tutor'); ?></li>
   </ul><br /><br />
 
   <h3>Shop Settings:</h3>

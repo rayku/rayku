@@ -115,10 +115,14 @@ background: url(../images/bg-left-green.png) repeat-y #FFFFFF !important;
 }
 
 .update-item .update-info .update-text {
-	color: #686868;
+	color: #999;
 	font-size: 13px;
 	line-height: 24px;
 	clear: both;
+}
+
+.update-item .update-info .update-text a{
+	color:#4E95AF;
 }
 
 .hover-no-under {

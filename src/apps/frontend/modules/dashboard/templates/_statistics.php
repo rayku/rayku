@@ -1,6 +1,7 @@
 <?php
   use_helper('MyAvatar', 'Javascript');
   $raykuUser = $sf_user->getRaykuUser();
+$connection = RaykuCommon::getDatabaseConnection();
 ?>
 <?php
   $raykuUser = $sf_user->getRaykuUser();
@@ -21,7 +22,7 @@
           <li><strong><?php echo $stats['classroomsCount']; ?></strong> Expert-Connect Sessions</li>
           <li><strong><?php echo $stats['friendsCount']; ?></strong> Friends on Rayku.com</li>
           <li><strong><?php $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-		$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
+		$query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
 		$detailPoints = mysql_fetch_assoc($query);
 		echo $detailPoints['points']; ?></strong>RP (<a rel="popup standard 600 435 noicon" href="http://rayku.com/rp.html" title="[Opens in pop-up window]">Rayku Points</a>)</li>
           <li><strong><?php echo $stats['teachersCount']; ?></strong> Media Files (Video/Pictures)</li>

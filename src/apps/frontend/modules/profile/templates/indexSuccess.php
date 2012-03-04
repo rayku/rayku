@@ -1,18 +1,18 @@
 <script type="text/javascript">
 <!--
-window.location = "http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/tutor/<?php echo $user->getUsername();?>";
+window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 //-->
 </script>
 
-<div class="skyscrapers"> <a href="http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/register/invitation"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/ad-unit-1.jpg" alt="ad" /></a> </div>
+<div class="skyscrapers"> <a href="http://rayku.com/register/invitation"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/ad-unit-1.jpg" alt="ad" /></a> </div>
 <div class="content">
-<?php
+<?php  
 	setcookie("newUser",$user->getId(), time()*60*60*24*30);
 	$_COOKIE["newUser"] = $user->getId();
 ?>
   <?php if ($sf_user->isAuthenticated() && $user->equals($sf_user->getRaykuUser())): ?>
   <?php include_component('nudge', 'showNudges', array('user' => $user)) ?>
-  <?php
+  <?php 
 			$c= new Criteria();
 			$c->add(UsersNetworksPeer::USER_ID,$sf_user->getRaykuUser()->getId());
 			$networkusers = UsersNetworksPeer::doSelectOne($c);
@@ -40,7 +40,7 @@ window.location = "http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/tut
 
     echo '<div class="url" align="center">';
       if($sf_user->isAuthenticated())
-      {
+      { 
         if( $sf_user->getRaykuUser()->getUsername() != $user->getUsername() )
         {
           if( $isFriend )
@@ -68,10 +68,10 @@ window.location = "http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/tut
     <br class="clear-both" />
     <div class="friends">
       <?php
-     	 $friends = $user->getAllFriends();
+     	 $friends = $user->getAllFriends(); 
 
 
-
+		
     ?>
   <!--    <h4> <?php echo link_to('view all', 'friends/members?type=1'); ?><em>+</em></a> Friends of <strong><?php echo $user ?></strong> (<?php echo count($friends); ?>) </h4>-->
 <!--============================================================Modified By DAC021===============================================================================-->
@@ -105,7 +105,7 @@ if( $sf_user->isAuthenticated()
       <?php include_partial('userBlockProfile', array('user' => $user,'currentuser' => $sf_user->getRaykuUser())) ?>
       <div style="clear:both"></div>
       <div style="margin-top: 11px; margin-left:10px; font-size:12px">
-        <?php
+        <?php 
       if ($user->isOnline())
         echo link_to('<div style="font-size:12px">'.$user->getName().' is online</div>', '@profile?username=' . $user->getUsername(),array('class' => 'online'));
       else

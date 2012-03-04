@@ -62,36 +62,6 @@ list-style-type: disc !important;
                                                       'postsPerPage' => $postsPerPage)); ?>
 
 <div class="body-side">
-  <?php
-    if( $sf_user->isAuthenticated() )
-    {
-      $best_resp_count = PostPeer::getCountOfBestResponseForThread($thread);
-
-      if( $best_resp_count < 1 && $thread->getVisible() == '1' )
-      {
-
-
-	   // include_partial('makePostForm', array( 'forum' => $thread->getCategoryId(),
-                                     //  'threadID' => $thread->getId(),
-                                    //   'class' => 'Reply to this thread'));
-
-
-		if($sf_user->getRaykuUser()->getType()!= 5)
-
-		{
-			echo link_to('Respond to this Topic','@userreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId(), array('class'=> 'navlink add'));
-
-		}
-
-		else
-		{
-			echo link_to('Respond to this Topic','@expertreply_thread?forum_id='.$thread->getCategoryId().'&thread_id='.$thread->getId(), array('class'=> 'navlink add'));
-
-		}
-
-      }
-    }
-  ?>
 
   <?php  echo link_to('Back to Forum', 'forum/'.$thread->getCategoryId().'',array('class' => 'navlink back')); ?>
 
