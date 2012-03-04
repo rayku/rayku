@@ -1,3 +1,4 @@
+<?php RaykuCommon::getDatabaseConnection(); ?>
 <?php if( ( sfContext::getInstance()->getModuleName() == 'start' )) : ?>
 
 <?php
@@ -10,10 +11,6 @@ $newUser  = UserPeer::doSelect($c);
 
 ////if no online expert available redirecting to the board page
 
-$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-$db = mysql_select_db("rayku_db", $con);
-		
-					
 $onlineusers = array();  
 $offlineusers = array();
 $newOnlineUser = array();  
@@ -643,8 +640,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
 <?php if($sf_context->getModuleName() !='expertmanager'){ 
          
-	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-	$db = mysql_select_db("rayku_db", $con);
         if(@$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id']!="")
 	{ 
         $sessUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];

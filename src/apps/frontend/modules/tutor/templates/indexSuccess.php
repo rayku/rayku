@@ -525,8 +525,6 @@ function followMe(expert_id, expertname) {
       
       <div class="row">
         <?php
-        $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
 		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 		
 		$query = mysql_query("select * from expert_subscribers as es, user as u where es.expert_id=".$expert->getId()." and es.user_id = u.id", $connection) or die("error1");
@@ -622,8 +620,6 @@ function followMe(expert_id, expertname) {
         </span> Followers</h4>
       <div  id="followers-images">
         <?php
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
 		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 		
 		$query = mysql_query("select * from expert_subscribers as es, user as u where es.expert_id=".$expert->getId()." and es.user_id = u.id ", $connection) or die("error1");
