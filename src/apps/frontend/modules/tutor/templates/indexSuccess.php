@@ -7,7 +7,7 @@
 	foreach($rankUsers as $_expert):
 		if($_expert['userid'] == $tutor_id):
 			$curr_user_rank = $ij;	
-			$curr_user_score=$rankUsers['score'];			 
+			$curr_user_score=$_expert['score'];
 			break;
 		endif;
 	$ij++;
@@ -327,8 +327,7 @@ function followMe(expert_id, expertname) {
 	
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
 
-		$fb_query = w
-mysql_query("select * from user_fb where userid=".$expert->getId(), $connection) or die(mysql_error());
+		$fb_query = mysql_query("select * from user_fb where userid=".$expert->getId(), $connection) or die(mysql_error());
 		if(mysql_num_rows($fb_query) > 0) {
 			$fbRow = mysql_fetch_assoc($fb_query);
 			$fb_username = $fbRow['fb_username']; 
