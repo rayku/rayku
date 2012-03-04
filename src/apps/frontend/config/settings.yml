@@ -3,11 +3,6 @@ prod:
     no_script_name:         on
     error_reporting:        0
 
-prod2:
-  .settings:
-    no_script_name:         on
-    error_reporting:        0
-
 dev:
   .settings:
     # E_ALL | E_STRICT = 8191
