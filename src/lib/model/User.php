@@ -1274,7 +1274,7 @@ class User extends BaseUser
     }
 
     $stats = array(
-        'classroomsCount' => $_COOKIE[$cookiename],
+        'classroomsCount' => @$_COOKIE[$cookiename],
         'teachersCount'   => count($this->getMediaCount()),
         'friendsCount'    => count($this->getAllFriends()),
         'ryakuCount'      => $this->getAllRyaku(),

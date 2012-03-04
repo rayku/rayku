@@ -105,11 +105,10 @@ $row = mysql_fetch_assoc($query);
 
 	$queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
 
-	if(mysql_num_rows($queryScore) > 0) :
-
-			$this->changeUserType = 1;
-
-	endif;
+	$this->changeUserType = null;
+	if(mysql_num_rows($queryScore) > 0) {
+		$this->changeUserType = 1;
+	}
 
 
   }

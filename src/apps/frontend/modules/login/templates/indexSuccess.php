@@ -18,7 +18,7 @@ echo "</pre>";*/
       <div class="entry">
       <div style="font-size:14px; color:#F00;" >
       <?php
-		if($_SESSION['loginErrorMsg']<>''): 
+		if(isset($_SESSION['loginErrorMsg']) && $_SESSION['loginErrorMsg']<>''): 
 			 echo $_SESSION['loginErrorMsg'];
 			 $_SESSION['loginErrorMsg']='';
 		endif;
@@ -26,9 +26,9 @@ echo "</pre>";*/
       </div>
         <div class="ttle">Email address</div>
 
-			<?php $_Username  = ($_COOKIE['rEmail']) ? $_COOKIE['rEmail'] : "Username" ;
+			<?php $_Username  = isset($_COOKIE['rEmail']) ? $_COOKIE['rEmail'] : "Username" ;
 
-			$_Password  = ($_COOKIE['rPassword']) ? $_COOKIE['rPassword'] : "Password" ; ?>
+			$_Password  = isset($_COOKIE['rPassword']) ? $_COOKIE['rPassword'] : "Password" ; ?>
 
 
         <div> <?php echo input_tag('name',$_Username, array('id'=>'email') ); ?> 
@@ -51,7 +51,7 @@ echo "</pre>";*/
 	 /////start recaptcha
 	  ///////if user has entered 5 times wrong password recaptcha will enable
 	 
-	  		if($_SESSION['loginWrongPass']>=5):
+	  		if(isset($_SESSION['loginWrongPass']) && $_SESSION['loginWrongPass']>=5):
 		//	echo $_SERVER['DOCUMENT_ROOT'].'/recaptcha/recaptchalib.php';
 			require_once($_SERVER['DOCUMENT_ROOT'].'/recaptcha/recaptchalib.php');
 			

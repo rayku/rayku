@@ -312,6 +312,7 @@ function followMe(expert_id, expertname) {
 
 	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$expert->getId(), $connection) or die(mysql_error());
 	
+	$googletalk=null;
 	if(mysql_num_rows($gtalkquery) > 0) {
 		$status = mysql_fetch_assoc($gtalkquery);
 		$gtalkmail = $status['gtalkid'];
@@ -366,7 +367,7 @@ mysql_query("select * from user_fb where userid=".$expert->getId(), $connection)
 	}
 	
 	// Facebook //
-	
+		$facebookchat = null;
 	    $fb_query = mysql_query("select * from user_fb where userid=".$expert->getId(), $connection) or die(mysql_error());
 		if(mysql_num_rows($fb_query) > 0) {
 			$fbRow = mysql_fetch_assoc($fb_query);
@@ -388,6 +389,7 @@ mysql_query("select * from user_fb where userid=".$expert->getId(), $connection)
 				
 		$_Users = json_decode($onlineTutorsByNotificationBot, true);
 		
+		$desktopapplication = null;
 		foreach($_Users as $key => $_user) :
 		
 			if($_user['email'] == $expert->getEmail()):

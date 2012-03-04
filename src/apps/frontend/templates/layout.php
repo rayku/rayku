@@ -645,8 +645,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
          
 	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
 	$db = mysql_select_db("rayku_db", $con);
-     
-        if($_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id']!="")
+        if(@$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id']!="")
 	{ 
         $sessUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 	

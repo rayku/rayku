@@ -218,7 +218,7 @@ class loginActions extends sfActions
 		}
 
 
-		if($_SESSION['modelPopupOpen']) {
+		if(isset($_SESSION['modelPopupOpen'])) {
 
 			unset($_SESSION['modelPopupOpen']);
 
@@ -260,7 +260,7 @@ class loginActions extends sfActions
 			mysql_query("delete from user_expert where checked_id=".$userId, $connection) or die(mysql_error());
 		}
 
-		if($_SESSION['modelPopupOpen']) {
+		if(isset($_SESSION['modelPopupOpen'])) {
 
 			unset($_SESSION['modelPopupOpen']);
 
