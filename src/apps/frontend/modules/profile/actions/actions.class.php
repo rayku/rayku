@@ -7,7 +7,7 @@
  * @subpackage profile
  * @author     Adam A Flynn <adamaflynn@criticaldevelopment.net>
  */
- 
+
 class profileActions extends sfActions
 {
 	/**
@@ -20,20 +20,20 @@ class profileActions extends sfActions
  $userId = $this->getUser()->getRaykuUserId();
 
 	if(empty($userId)) {
-		
+
 		$this->redirect('/login');
 
 	}
-  
- if(!empty($_COOKIE["timer"])) : 
+
+ if(!empty($_COOKIE["timer"])) :
 
 
 	$this->redirect('/dashboard/rating');
 
- endif; 
+ endif;
 
 
-	 
+
 	 $c = new Criteria();
 	 $c->add(UserPeer::USERNAME,$this->getRequestParameter('username'));
 	 $user = UserPeer::doSelectOne($c);
@@ -56,17 +56,17 @@ class profileActions extends sfActions
 //============================================================Modified By DAC021===============================================================================//
 
     $this->current = $this->getUser()->getRaykuUser();
-		
+
 		if (sfWebRequest::POST === $this->getRequest()->getMethod())
 		{
 			$comment = $this->getRequestParameter('content');
 			if($this->getRequestParameter('action_comment') && $comment != '')
-			{			
+			{
 				$poster = $this->getUser()->getRaykuUser();
 
       		  $poster->createShoutFor($this->user, $comment);
 
-	
+
         $this->redirect('@profile?username=' . $this->user->getUsername());
 			}
 		}
@@ -74,10 +74,10 @@ class profileActions extends sfActions
    if( $this->getRequest()->isXmlHttpRequest() )
     {
 	     sfProjectConfiguration::getActive()->loadHelpers('Partial');
-	     return $this->renderText( get_partial( 'shoutbox', array( 'raykuPager' => $raykuPagerNew) ) );  
+	     return $this->renderText( get_partial( 'shoutbox', array( 'raykuPager' => $raykuPagerNew) ) );
     }
-//========================================================Modified By  DAC021================================================================//			
-		
+//========================================================Modified By  DAC021================================================================//
+
 	}
 
 	public function executeEdit()
@@ -86,7 +86,7 @@ class profileActions extends sfActions
 
 
 		$user = UserPeer::getByUsername($this->getRequestParameter('username'));
-		
+
 		// make sure it's a valid user, and that we're editing our own profile
 		if (!$user instanceof User)
 		{
@@ -121,21 +121,21 @@ class profileActions extends sfActions
 			$user->setHometown($this->getRequestParameter('hometown'));
 			$user->setHomePhone($this->getRequestParameter('home_phone'));
 			$user->setMobilePhone($this->getRequestParameter('mobile_phone'));
-		
+
       			$birthdate = RaykuCommon::dateArrayToString( $this->getRequestParameter('birthdate') );
   			$user->setBirthdate( $birthdate );
-      
+
 			$user->setAddress($this->getRequestParameter('address'));
 			$user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
 			$user->setAboutMe($this->getRequestParameter('about_me'));
 			$user->setUserInterestsFromString($this->getRequestParameter('hobbies'));
-			
+
 			// if the password is set
 			if ('' !== $this->getRequestParameter('password1'))
 			{
 				$user->setPassword($this->getRequestParameter('password1'));
 			}
-			
+
 			// set the 'show xxx' params..
 			$user->setShowEmail($this->getRequestParameter('show_email', 0));
 			$user->setShowGender($this->getRequestParameter('show_gender', 0));
@@ -177,32 +177,32 @@ class profileActions extends sfActions
 
 							// move to uploads
 							$uploadDir = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . 'profile';
-			
+
 							if(in_array($contentType, $checkcontentType)) {
 
 								 $query = mysql_query("insert into user_profile(`user_id`, `file_name`,  `created_at`) VALUES (".$user->getId().", '".$fileName."', '".$created_at."')", $connection) or die(mysql_error());
 
-							} 
+							}
 
 						if($query) {
 
 
 							$filename = mysql_insert_id();
 
-							$_query = mysql_query("select * from user_profile where user_id=".$user->getId()." and id != ".$filename."", $connection); 
+							$_query = mysql_query("select * from user_profile where user_id=".$user->getId()." and id != ".$filename."", $connection);
 
 							if(mysql_num_rows($_query)) {
 
 							$_row = mysql_fetch_assoc($_query);
 
-							mysql_query("delete from user_profile where user_id=".$user->getId()." and id = ".$_row['id']." ", $connection); 
+							mysql_query("delete from user_profile where user_id=".$user->getId()." and id = ".$_row['id']." ", $connection);
 
 							$remove = $uploadDir . DIRECTORY_SEPARATOR . $_row['id'];
 
 							$remove = $uploadDir . DIRECTORY_SEPARATOR . $_row['id']."thumb2";
 
 							unlink($remove);
-								
+
 
 							}
 
@@ -219,7 +219,7 @@ class profileActions extends sfActions
 
 							$successfullyMoved = move_uploaded_file($_FILES['file']['tmp_name'], $target);
 
-					
+
 							if ($successfullyMoved)
 							{
 
@@ -236,19 +236,19 @@ class profileActions extends sfActions
 					 	}
 
 			}
-			$this->redirect('http://rayku.com/dashboard');
+			$this->redirect('/dashboard');
 		}
-		
+
 		// passing to view
 		$this->user = $user;
 	}
-	
+
 
 
 	public function handleErrorEdit()
 	{
 		$user = UserPeer::getByUsername($this->getRequestParameter('username'));
-		
+
 		// make sure it's a valid user, and that we're editing our own profile
 		if (!$user instanceof User)
 		{
@@ -262,10 +262,10 @@ class profileActions extends sfActions
 			$this->setTemplate('_error');
 			return sfView::SUCCESS;
 		}
-		
+
 		// passing to view
 		$this->user = $user;
-		
+
 		return sfView::SUCCESS;
 	}
 
@@ -274,13 +274,13 @@ class profileActions extends sfActions
 
 
 		$this->user=$this->getRequestParameter('userid');
-		
+
 		$c=new Criteria();
 		$c->addJoin(CategoryPeer::ID,ExpertCategoryPeer::CATEGORY_ID,Criteria::JOIN);
 		$c->add(ExpertCategoryPeer::USER_ID,$this->getRequestParameter('userid'));
 		$this->usercategories=CategoryPeer::doSelect($c);
-		
-		
+
+
 		$cat = new Criteria();
 		$subSelect = "category.id NOT IN (
 			SELECT
@@ -290,54 +290,54 @@ class profileActions extends sfActions
 			WHERE
 				 expert_category.user_id = ".$this->getRequestParameter('userid')."
 			)";
-			
+
 		$cat->add(CategoryPeer::ID, $subSelect, Criteria::CUSTOM);
 		$this->unjoinedcategories = CategoryPeer::doSelect($cat);
-		
+
 	}
-	
+
 	public function executeJoinCategory()
 	{
 
-	
+
 				$this->user=$this->getRequestParameter('userid');
-				
+
 				$selcategories=$this->getRequestParameter('category');
-			
+
 				foreach($selcategories as $categoryid) {
-				
+
 				$this->expertcat=new ExpertCategory();
 				$this->expertcat->setUserId($this->user);
 				$this->expertcat->setCategoryId($categoryid);
 				$this->expertcat->save();
-				
+
 				}
-			
-	
+
+
 	}
-	
+
 	public function executeUnjoinExpert()
 	{
 
-	
+
 		$this->catid=$this->getRequestParameter('catid');
 		$this->user=$this->getRequestParameter('user');
-		
-		
+
+
 		$c=new Criteria();
 		$c->add(ExpertCategoryPeer::USER_ID,$this->getRequestParameter('user'));
 		$c->add(ExpertCategoryPeer::CATEGORY_ID,$this->getRequestParameter('catid'));
 		$category=ExpertCategoryPeer::doSelectOne($c);
-		
+
 		$category->delete();
-		
-	
+
+
 	}
 	public function executeShowAvatar()
 	{
 
 		$user = UserPeer::retrieveByPK($this->getRequestParameter('user_id'));
-		
+
 		$this->forward404Unless($user instanceof User);
 
     $allowedSizes = array(1, 2, 3, 4);
@@ -356,10 +356,10 @@ class profileActions extends sfActions
           $fileSuffix = "_$size";
         break;
     }
-		
+
 		$uploadDir = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . sfConfig::get('app_general_avatar_folder');
 		$file = $uploadDir . DIRECTORY_SEPARATOR . $user->getId() . $fileSuffix;
-		
+
 		if (!is_file($file))
 		{
 			$file = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR
@@ -372,25 +372,25 @@ class profileActions extends sfActions
         $this->getResponse()->setHttpHeader('Content-Transfer-Encoding', 'binary', true);
 		$this->getResponse()->setContentType('image/jpeg');
 		$this->getResponse()->sendHttpHeaders();
-		
+
 		readfile($file);
 		exit;	// for some reason, this fixed some bugs with sfWebResponse trying to output again later (despite sfView::NONE returned)
-		
+
 		return sfView::NONE;
 	}
-	
+
 	public function executeEmailNotify()
 	{
-	
-		$c = new Criteria();		
+
+		$c = new Criteria();
 		$c->add(NotificationEmailsPeer::USER_ID,$this->getRequestParameter('user_id'));
 		$notifies = NotificationEmailsPeer::doSelectOne($c);
-		
+
 		if($notifies != NULL)
 		{
 			$notifies->setOnOff($this->getRequestParameter('st'));
 			$notifies->save();
-		
+
 		}
 		else
 		{
@@ -398,18 +398,18 @@ class profileActions extends sfActions
 			$c->setUserId($this->getRequestParameter('user_id'));
 			$c->setOnOff($this->getRequestParameter('st'));
 			$c->save();
-			
-		
+
+
 		}
-		
+
 		$c = new Criteria();
 		$c->add(UserPeer::ID, $this->getRequestParameter('user_id'));
 		$user = UserPeer::doSelectOne($c);
-		
+
 		$this->redirect('@profile?username='.$user->getUsername());
-		
-		
-		
+
+
+
 	}
 //============================================================Modified By DAC021===============================================================================//
 
@@ -526,7 +526,7 @@ class profileActions extends sfActions
 						mysql_query("insert into expert_category(user_id,category_id) values(".$logedUserId.",".$newSubject[$j].")", $connection) or die(mysql_error());
 
 						}
-					
+
 			   }
 		}
     }
@@ -549,14 +549,14 @@ class profileActions extends sfActions
 
 			if(mysql_num_rows($queryDelete) == 1)
 			{
-				mysql_query("delete from expert_category where category_id=".$rowNew['course_subject']." and user_id=".$logedUserId, $connection) or die(mysql_error());	
+				mysql_query("delete from expert_category where category_id=".$rowNew['course_subject']." and user_id=".$logedUserId, $connection) or die(mysql_error());
 			}
-		
+
 
 			mysql_query("delete from user_course where id=".$newId[4]." ", $connection) or die(mysql_error());
 
 			//To Select Profile User
-			
+
 			$query = mysql_query("select * from user where id=".$logedUserId, $connection) or die(mysql_error());
 			$row = mysql_fetch_assoc($query);
 
@@ -581,5 +581,5 @@ class profileActions extends sfActions
 		}
 //============================================================Modified By DAC021===============================================================================//
 
-	
+
 }

@@ -17,7 +17,6 @@ class dashboardActions extends sfActions
    */
   public function executeIndex()
   {
-
 	unset($_SESSION['dash_hidden']);
 	unset($_SESSION['subject']);
 	unset($_SESSION['edu']);
