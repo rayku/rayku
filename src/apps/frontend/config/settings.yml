@@ -9,7 +9,7 @@ dev:
     error_reporting:        8191
     web_debug:              on
     cache:                  off
-    no_script_name:         off
+    no_script_name:         true
     etag:                   off
 
 test:
