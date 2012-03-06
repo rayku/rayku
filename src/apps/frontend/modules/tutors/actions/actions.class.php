@@ -9,14 +9,16 @@
  */
 class tutorsActions extends sfActions
 {
+    public function preExecute() {
+        RaykuCommon::getDatabaseConnection();
+    }
+    
    /**
     * all members database
     */
   
 
 public function executeIndex() {
-
-    $connection = RaykuCommon::getDatabaseConnection();
 
 	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
@@ -102,7 +104,7 @@ $count = count($_POST['checkbox']);
 $j = 0;
 	for($i=0; $i < $count; $i++) {
 
-mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
+mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ") or die(mysql_error());
 
 	}
 	
@@ -111,11 +113,11 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 	$l=0;
 	$source = 'tutorlist';
 	
-	mysql_query("DELETE FROM `student_questions` WHERE user_id=".$userId."", $connection);
+	mysql_query("DELETE FROM `student_questions` WHERE user_id=".$userId."");
 	
 	for($i=0; $i < $count; $i++) 
 	{	
-		mysql_query("INSERT INTO `student_questions` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close, source) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$l)."', '".$time."', 1, ".$close.", '".$source."') ", $connection) or die(mysql_error());
+		mysql_query("INSERT INTO `student_questions` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close, source) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$l)."', '".$time."', 1, ".$close.", '".$source."') ") or die(mysql_error());
 		
 		
 	}
@@ -172,7 +174,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 		}		
 
 
-					$queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
+					$queryPoints = mysql_query("select * from user where id=".$userId) or die("Error In rate".mysql_error());
 
 					if(mysql_num_rows($queryPoints) > 0) {
 
@@ -192,20 +194,20 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 					$newUserLimit[] = $exp->getUserId();
 
-					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ") or die(mysql_error()); 
 					    if(mysql_num_rows($_query) > 0) : 
 
-						 $_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ", $connection) or die("Er-1-->".mysql_error()); 
+						 $_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ") or die("Er-1-->".mysql_error()); 
 						 if(mysql_num_rows($_queryCourse) > 0) : 
 
-							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId()) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
 
 							if($score['score'] != 0):
 
 								if($_points == '' || $_points == '0.00' ) {
 
-									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ") or die("Error In rate".mysql_error());
 
 									if(mysql_num_rows($emptyRCquery) > 0) {
 
@@ -283,7 +285,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 								if(empty($onlinecheck)) {
 
 					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid']) or die(mysql_error());
 
 									if(mysql_num_rows($gtalkquery) > 0) {
 
@@ -299,7 +301,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
 
-								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
+								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid']) or die(mysql_error());
 
 											if(mysql_num_rows($fb_query) > 0) {
 
@@ -482,18 +484,11 @@ if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 }
 
 	public function executeAjaxidle() {
-		
-		
-
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		        $db = mysql_select_db("rayku_db", $con);
-
-
 			if($_GET['status']=='1')
 			{
 			
 			
-				$selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."'", $connection);
+				$selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."'");
 				$misqrys = mysql_fetch_array($selmisqry);
 								 
 				if($misqrys['user_id']=="")
@@ -504,19 +499,19 @@ if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 					 `ustatus`
 					 )
 					 VALUES (
-					 NULL , '".$_GET['userid']."','1' )", $connection);
+					 NULL , '".$_GET['userid']."','1' )");
 				}
 
 			}
 			else if($_GET['status']=='2')
 			{
 			
-			    $selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."' and ustatus='1' ", $connection);
+			    $selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='".$_GET['userid']."' and ustatus='1' ");
 				$misqrys = mysql_fetch_array($selmisqry);
 				
 				if($misqrys['user_id']!="")
 				{
-			      $sel_misqry = mysql_query("DELETE FROM popup_close WHERE user_id='".$_GET['userid']."'", $connection);
+			      $sel_misqry = mysql_query("DELETE FROM popup_close WHERE user_id='".$_GET['userid']."'");
 				}
 			  
 			  
@@ -528,9 +523,6 @@ if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 public function executeAppend() {
 		
 		
-
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		         $db = mysql_select_db("rayku_db", $con);
 
 	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
@@ -598,7 +590,7 @@ $count = count($_POST['checkbox']);
 $j = 0;
 	for($i=0; $i < $count; $i++) {
 
-mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ", $connection) or die(mysql_error());
+mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '5', 'To be discussed','".(++$j)."', '".$time."', 1, ".$close.") ") or die(mysql_error());
 
 	}
 
@@ -654,7 +646,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 		}		
 
 
-					$queryPoints = mysql_query("select * from user where id=".$userId, $connection) or die("Error In rate".mysql_error());
+					$queryPoints = mysql_query("select * from user where id=".$userId) or die("Error In rate".mysql_error());
 
 					if(mysql_num_rows($queryPoints) > 0) {
 
@@ -676,7 +668,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 					$newUserLimit[] = $exp->getUserId();
 
-					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
+					     $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ") or die(mysql_error()); 
 					    if(mysql_num_rows($_query) > 0) : 
 
 						 //$_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ") or die("Er-1-->".mysql_error()); 
@@ -685,7 +677,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 						$usrname = $this->getUser()->getRaykuUser()->getUsername();
 						
 							$_queryCourse = '';
-						 	$tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());  
+						 	$tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."") or die("Er-1-->".mysql_error());  
 						 	$tutors = mysql_fetch_array($tutorsq);
 						 	$tutor ='';
 						 	
@@ -695,7 +687,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 						 		{
 						 			//echo $coursid;
 						 			
-						 			$_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());	
+						 			$_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."") or die("Er-1-->".mysql_error());	
 						 			//echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
 						 		}					 		
 						 	
@@ -703,14 +695,14 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 						 
 						 if($_queryCourse && mysql_num_rows($_queryCourse) > 0) : 
 
-							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId()) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
 
 							if($score['score'] != 0):
 
 								if($_points == '' || $_points == '0.00' ) {
 
-									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ") or die("Error In rate".mysql_error());
 
 									if(mysql_num_rows($emptyRCquery) > 0) {
 
@@ -790,7 +782,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 								if(empty($onlinecheck)) {
 
 					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
+									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid']) or die(mysql_error());
 
 									if(mysql_num_rows($gtalkquery) > 0) {
 
@@ -806,7 +798,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
 
-								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
+								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid']) or die(mysql_error());
 
 											if(mysql_num_rows($fb_query) > 0) {
 
@@ -989,18 +981,12 @@ if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 
 	 public function executeCheckoutpopup()
 	  {
-			   $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-	 $db = mysql_select_db("rayku_db", $con);	  
-	  
 	  }
 	  
 	 
 	  
 	 public function executeDemopopup()
 	  {
-			   $con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-	 $db = mysql_select_db("rayku_db", $con);	  
-	  
 	  }
 
 }
