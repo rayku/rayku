@@ -283,9 +283,13 @@ if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/logi
 	setTimeout('checkForRedirect()', 25000);
 	</script>
 <?php endif; ?>
+<?php if ($sf_user->isAuthenticated()) { ?>
 <script type="text/javascript">
 checkedUser();
 checkUserStay();
+</script>
+<?php } ?>
+<script type="text/javascript">
 
 function hideDiv() {
 
