@@ -20,7 +20,7 @@ var rayku_tutor_pag = jQuery.noConflict();
 		rayku_tutor_pag('#resultpage').hide();
 		rayku_tutor_pag("#loadingimage").show();
 		var rate_get = rayku_tutor_pag("#ratesort").attr("class");
-		rayku_tutor_pag.post("http://www.rayku.com/tutors/append?show_more_post=15&rate="+rate_get, {
+		rayku_tutor_pag.post("http://"+getHostname()+"/tutors/append?show_more_post=15&rate="+rate_get, {
 
 		}, function(response){
 			if(rate_get == 1)
@@ -46,7 +46,7 @@ var rayku_tutor_pag = jQuery.noConflict();
 rayku_tutor_pag(document).ready(function(){	
 	
 	
-	rayku_tutor_pag.post("http://www.rayku.com/tutors/append?show_more_post=15", {
+	rayku_tutor_pag.post("http://"+getHostname()+"/tutors/append?show_more_post=15", {
 
 	}, function(response){
 		rayku_tutor_pag("#loadingimage").hide();
@@ -64,7 +64,7 @@ rayku_tutor_pag(document).ready(function(){
 			var next =  rayku_tutor_pag(this).attr('id').replace('more_','');
 			//alert(next);
 			var name =  rayku_tutor_pag(this).attr('name');
-			var file = 'http://www.rayku.com/tutors/append';
+			var file = 'http://'+getHostname()+'/tutors/append';
 			
 			var keepID = 1;//$('#keepID').val();
 			var posted_on = 1;//$('#posted_on').val();
