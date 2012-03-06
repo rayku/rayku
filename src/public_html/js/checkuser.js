@@ -118,7 +118,7 @@ function checkedUser()
 
 		dv.ajax({ cache: false,
 			type : "POST",
-			url: "http://'+getHostname()+'/expertmanager/mapuser",
+			url: 'http://'+getHostname()+'/expertmanager/mapuser',
 			success : function (data)  {
 
 				var result = data.split("<");
