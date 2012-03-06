@@ -255,11 +255,9 @@ if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/logi
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/unittest.js"></script> 
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/modalbox.js"></script> 
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/encode_decode.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>
 <?php if($sf_user->isAuthenticated()) : ?>
 <link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
-<script type="text/javascript" src="/popup-window.js"></script> 
+<script type="text/javascript" src="/js/popup-window.js"></script> 
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/question_popup.js"></script> 
 <script type="text/javascript" language="javascript">checkMissedQuestion();</script>
 <input type="hidden" value='1' name="question_hidden" id="question_hidden" />
@@ -347,3 +345,5 @@ setTimeout('checkForRedirect()', 20000);
 <?php
 endif;  
 ?>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script> 
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>

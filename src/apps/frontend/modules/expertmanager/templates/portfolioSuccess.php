@@ -23,7 +23,7 @@
 
 <link rel="stylesheet" type="text/css" href="http://www.rayku.com/styles/popup-window.css" />
 
-<script type="text/javascript" src="http://www.rayku.com/scripts/popup-window.js"></script>
+<script type="text/javascript" src="http://www.rayku.com/scripts/js/popup-window.js"></script>
 	<!--<script type="text/javascript" src="http://www.rayku.com/js/jquery-1.4.2.min.js"></script>
    	<script type="text/javascript" src="http://www.rayku.com/scripts/fancybox/jquery.fancybox-1.3.1.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://www.rayku.com/scripts/fancybox/jquery.fancybox-1.3.1.css" media="screen" />
