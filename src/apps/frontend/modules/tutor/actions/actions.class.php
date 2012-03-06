@@ -19,10 +19,10 @@ class tutorActions extends sfActions
 	//		$this->appcanvasurl = 'http://apps.facebook.com/rayku';
 	//		$appapikey = '0b60aa8352658ae667308f301eeda8ce';
 	//		$appsecret = 'f6f39f025954444c01061415d2510bbf';
-			
+
 		//	$this->facebook = new Facebook($appapikey, $appsecret,true);
 			//$this->user = $this->facebook->require_login();// id of Facebook user hat will add your app.Then, you can use $this->user in your all actions to get user id.
-	
+
 	}
 
 	/**
@@ -31,16 +31,16 @@ class tutorActions extends sfActions
 	public function executeIndex()
 	{
             $connection = RaykuCommon::getDatabaseConnection();
-				  
-				
 
-		if($this->getRequestParameter('username') == NULL) 
+
+
+		if($this->getRequestParameter('username') == NULL)
 		{
 
-			$this->redirect("http://www.rayku.com/dashboard");
-	
+			$this->redirect("/dashboard");
+
 		}
-		  
+
 
 
 	 $c = new Criteria();
@@ -48,16 +48,16 @@ class tutorActions extends sfActions
 	 $user = UserPeer::doSelectOne($c);
 
 	$this->user = $user;
-	 
+
 	 		//$this->currentUserId = $this->getUser()->getRaykuUser()->getId();
-	
+
 				  ////////get rank of the user
 	$tutor_id = $user->getId();
 
 	$this->tutor_id = $user->getId();
 
 
-			 
+
 
 
 	$c = new Criteria();
@@ -66,15 +66,15 @@ class tutorActions extends sfActions
 
 	$rankUsers = array(); $ji =0; $newUserLimit = array();  $rankScore = array();
 
-		 foreach($rankexperts as $exp): 
+		 foreach($rankexperts as $exp):
 
-	
+
 					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
+						 if(mysql_num_rows($_query) > 0) :
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -89,23 +89,23 @@ class tutorActions extends sfActions
 								$ji++;
 
 							endif;
-		      
-      						 endif; 
+
+      						 endif;
 
 					endif;
 
 
-		 endforeach; 
+		 endforeach;
 
 
 
-					asort($rankUsers);  
+					asort($rankUsers);
 
 					arsort($rankUsers);
 
  $this->rankUsers = $rankUsers;
-	
-	
+
+
 
 //////////////////////////////
 
@@ -137,41 +137,41 @@ class tutorActions extends sfActions
 
 			endif;
 
-			$this->redirect("http://www.rayku.com/tutor/".$user->getUsername());
+			$this->redirect("/tutor/".$user->getUsername());
 
 		}
 
-		if($this->getRequestParameter('content') != NULL) 
-		
+		if($this->getRequestParameter('content') != NULL)
+
 		{
 
 		$this->expertid = $this->getUser()->getRaykuUser()->getId();
 				$this->expertusr= $this->getUser()->getRaykuUser()->getUsername();
-				
+
 
 
 
 		$this->content = $this->getRequestParameter('content');
-				
+
 				$c= new Criteria();
 				$c->add(ExpertsPromoTextPeer::EXP_ID,$this->expertid);
 				$expertstext = ExpertsPromoTextPeer::doSelectOne($c);
-				
-				if($expertstext != NULL) { 
-				
+
+				if($expertstext != NULL) {
+
 					$expertstext->setContent($this->content);
 					$expertstext->save();
-							
+
 				}
 				else {
-					
+
 					$promo = new ExpertsPromoText();
 					$promo->setExpId($this->expertid);
 					$promo->setContent($this->content);
 					$promo->save();
-				
+
 				}
-					
+
 
 		}
 
@@ -189,16 +189,16 @@ class tutorActions extends sfActions
 
 			   $this->best_responses = PostPeer::doSelect($f);
 
-	
+
 			  $expertId = $user->getId();
 			  $userId = $this->getUser()->getRaykuUserId();
 
 			$this->currentUser = $this->getUser()->getRaykuUser();
 
-						    
-		    // last n whiteboard sessions    
+
+		    // last n whiteboard sessions
 		    $cLastSessions = new Criteria();
-		    
+
 		    if ($userId != $expertId) {
 		  	  $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $expertId);
 		  	  $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::IS_PUBLIC, true);
@@ -209,21 +209,21 @@ class tutorActions extends sfActions
 			    $cPublicA = $cLastSessions->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $userId);
 			    $cPublicB = $cLastSessions->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
 		      $cPublicA->addOr($cPublicB);
-		    } 
-		    
+		    }
+
 		    $cLastSessions->add($cPublicA);
 		    $cLastSessions->add(WhiteboardChatPeer::STARTED_AT, null, Criteria::ISNOTNULL);
 		    $cLastSessions->addDescendingOrderByColumn(WhiteboardChatPeer::ID);
 
-		    
+
 			$this->totalSessions = WhiteboardChatPeer::doSelect($cLastSessions);
 
 		    $cLastSessions->setLimit(3);
 		    $this->lastSessions = WhiteboardChatPeer::doSelect($cLastSessions);
 
 
-		
-	}	
+
+	}
 
 
 	public function executeFollow()

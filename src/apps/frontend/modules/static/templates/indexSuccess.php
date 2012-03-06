@@ -1,9 +1,9 @@
 <body style="font-family:Tahoma;font-size:24px;margin:50px auto">
-<?php if ($sf_user->isAuthenticated()){ 
-	echo '<script type="text/javascript"> window.location = "/dashboard" </script> You do not have javascript enabled. <a href="http://www.rayku.com/dashboard">Click here</a> to continue.';
+<?php if ($sf_user->isAuthenticated()){
+	echo '<script type="text/javascript"> window.location = "/dashboard" </script> You do not have javascript enabled. <a href="/dashboard">Click here</a> to continue.';
 	}
 	else {
-	echo '<script type="text/javascript"> window.location = "/start" </script> You are being redirected... <a href="http://www.rayku.com/start">Click here</a> to continue.';
+	echo '<script type="text/javascript"> window.location = "/start" </script> You are being redirected... <a href="/start">Click here</a> to continue.';
 	}
 ?>
 <!--<div align="center">

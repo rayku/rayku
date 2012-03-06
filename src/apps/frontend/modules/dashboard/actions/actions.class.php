@@ -8,7 +8,7 @@
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 2692 2006-11-15 21:03:55Z fabien $
  */
- 
+
 class dashboardActions extends sfActions
 {
   /**
@@ -30,13 +30,13 @@ class dashboardActions extends sfActions
 	unset($_SESSION['asker_year']);
 	unset($_SESSION['grade']);
 	unset($_SESSION['question']);
-	
 
-	if(!empty($_COOKIE["timer"])) : 
-	
+
+	if(!empty($_COOKIE["timer"])) :
+
 		$this->redirect('/dashboard/rating');
-	
-	endif; 
+
+	endif;
 
 
 //============================================================Modified By DAC021===============================================================================//
@@ -55,17 +55,17 @@ $row = mysql_fetch_assoc($query);
 	$c = new Criteria();
 	$rankexperts = ExpertCategoryPeer::doSelect($c);
 
-	$rankUsers = array(); $ji =0; $newUserLimit = array(); 
+	$rankUsers = array(); $ji =0; $newUserLimit = array();
 
-		 foreach($rankexperts as $exp): 
+		 foreach($rankexperts as $exp):
 
-	
+
 					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
+						 if(mysql_num_rows($_query) > 0) :
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -78,15 +78,15 @@ $row = mysql_fetch_assoc($query);
 								$rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
 								$ji++;
 							endif;
-		      
-      						 endif; 
+
+      						 endif;
 
 					endif;
 
 
-		 endforeach; 
+		 endforeach;
 
-					asort($rankUsers);  
+					asort($rankUsers);
 
 					arsort($rankUsers);
 
@@ -96,7 +96,7 @@ $row = mysql_fetch_assoc($query);
 
 
  $this->rankUsers = $rankUsers;
-	
+
 
 //////////////////////////////
 
@@ -121,7 +121,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 			$userId = $this->getUser()->getRaykuUser()->getId();
 			$countquery = mysql_query("select user_id from `user_question_tag` where user_id = ".$userId, $connection);
 			echo $countrows = mysql_num_rows($countquery);
-		
+
 			exit(0);
 
   }
@@ -132,17 +132,17 @@ $connection = RaykuCommon::getDatabaseConnection();
 	public function executeAutocomplete()
 	{
 
-	
+
 	}
 	public function executeAutocourse()
 	{
 
-	
+
 	}
 	public function executeAskquestionqueries()
 	{
 	}
-  
+
 	function cmp($a, $b)
 	{
 
@@ -151,7 +151,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 		return strcmp($a["createdat"], $b["createdat"]);
 	    }
 	    return ($a["score"] < $b["score"]) ? 1 : -1;
-	    
+
 	}
 
   public function executeVerifytutor() {
@@ -168,7 +168,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 	endif;
 
-	$this->redirect('http://www.rayku.com/dashboard');
+	$this->redirect('/dashboard');
 
 
  }
@@ -180,7 +180,7 @@ $connection = RaykuCommon::getDatabaseConnection();
   {
 
 $connection = RaykuCommon::getDatabaseConnection();
-	
+
 	if($_POST['usrid'])
 	{
 		$uid = $_POST['usrid'];
@@ -190,7 +190,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 		$school = $_POST['school'];
 		$study = $_POST['study'];
 		$coursecode = $_POST['CourseCodes'];
-		
+
 		if($usrdesc=='Freshman')
 		{
 			$year = '1st Year';
@@ -211,12 +211,12 @@ $connection = RaykuCommon::getDatabaseConnection();
 		{
 			$year = '4+ Year';
 		}
-		
+
 		$courses = implode("-",$courseid);
-		
+
 		$_select = mysql_query("select * from tutor_profile where user_id=".$uid, $connection) or die(mysql_error());
 
-		if(mysql_num_rows($_select) > 0) 
+		if(mysql_num_rows($_select) > 0)
 		{
 			mysql_query("update tutor_profile set category = '".$catid."',course_id = '".$courses."', school = '".$school."', year = '".$year."', tutor_role = '".$usrdesc."', study = '".$study."', course_code = '".$coursecode."' where user_id=".$uid, $connection) or die(mysql_error());
 		}
@@ -224,10 +224,10 @@ $connection = RaykuCommon::getDatabaseConnection();
 		{
 			mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
 		}
-	$this->redirect('http://www.rayku.com/dashboard');	
+	$this->redirect('/dashboard');
 	}
-	
-  }	
+
+  }
   /* Add Tutor Profile information and Tutor on/off status */
   public function executeTutor()
   {
@@ -240,18 +240,18 @@ $connection = RaykuCommon::getDatabaseConnection();
 	$_select = mysql_query("select * from user_tutor where userid=".$_userId, $connection) or die(mysql_error());
 
 	if(mysql_num_rows($_select) > 0) {
-		
-			mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());	
+
+			mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());
 
 			$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-			
+
 
 			if(!$_query) :
 
 				mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-				
+
 			endif;
-			
+
 			// change  Tutor on / off status //
 			$insSQL = "INSERT INTO `log_user_on_off` (
 					`id` ,
@@ -260,19 +260,19 @@ $connection = RaykuCommon::getDatabaseConnection();
 					`off_status`
 						)
 						VALUES (
-								NULL , 
-								'".$_userId."', 
-								'".date("Y-m-d H:i:s")."', 
+								NULL ,
+								'".$_userId."',
+								'".date("Y-m-d H:i:s")."',
 								'0'
 							   );";
-				mysql_query($insSQL, $connection);	
-		
+				mysql_query($insSQL, $connection);
+
 			// change  Tutor on / off status //
-	
-			$this->redirect('http://www.rayku.com/dashboard');
+
+			$this->redirect('/dashboard');
 
 	} else {
-	
+
 		if($_POST['usrid'])
 		{
 			$uid = $_POST['usrid'];
@@ -282,9 +282,9 @@ $connection = RaykuCommon::getDatabaseConnection();
 			$school = $_POST['school'];
 			$study = $_POST['study'];
 			$coursecode = $_POST['CourseCodes'];
-		
+
 			$courses = implode("-",$courseid);
-		
+
 			if($usrdesc=='Freshman')
 			{
 				$year = '1st Year';
@@ -304,8 +304,8 @@ $connection = RaykuCommon::getDatabaseConnection();
 			else
 			{
 				$year = '4+ Year';
-			}	
-		
+			}
+
 		   // change  Tutor on / off status //
 			  $insSQL = "INSERT INTO `log_user_on_off` (
 					`id` ,
@@ -314,32 +314,32 @@ $connection = RaykuCommon::getDatabaseConnection();
 					`off_status`
 						)
 						VALUES (
-								NULL , 
-								'".$uid."', 
-								'".date("Y-m-d H:i:s")."', 
+								NULL ,
+								'".$uid."',
+								'".date("Y-m-d H:i:s")."',
 								'1'
 							   );";
-			   mysql_query($insSQL, $connection);	
+			   mysql_query($insSQL, $connection);
 			// change  Tutor on / off status //
-		
-		
-		
-		
+
+
+
+
 			$_select = mysql_query("select * from tutor_profile where user_id=".$uid, $connection) or die(mysql_error());
-			
-			
-			if(mysql_num_rows($_select) > 0) 
+
+
+			if(mysql_num_rows($_select) > 0)
 			{
 				mysql_query("update tutor_profile set category = '".$catid."',course_id = '".$courses."', school = '".$school."', year = '".$year."', tutor_role = '".$usrdesc."', study = '".$study."', course_code = '".$coursecode."' where user_id=".$uid, $connection) or die(mysql_error());
-				
+
 			}
 			else
 			{
 				mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
-			
+
 			}
-		//$this->redirect('http://www.rayku.com/dashboard/tutor');
-	
+		//$this->redirect('/dashboard/tutor');
+
 		mysql_query("insert into user_tutor(userid) values(".$_userId.")", $connection) or die(mysql_error());
 
 		$_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
@@ -347,14 +347,14 @@ $connection = RaykuCommon::getDatabaseConnection();
 		if(!$_query) :
 
 			mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-			
+
 		endif;
-		
-		$this->redirect('http://www.rayku.com/tutorshelp');
-		
+
+		$this->redirect('/tutorshelp');
+
 		}
 	}
-	
+
   }
 
 
@@ -378,7 +378,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 	//$this->user->getId();
 
   }
-  
+
     public function executeProcessprofile()
   {
 	 $this->user = $this->getUser()->getRaykuUser();
@@ -387,16 +387,16 @@ $connection = RaykuCommon::getDatabaseConnection();
   public function executePointserror()
   {
 
-  
-	
+
+
 
   }
 
   public function executeExpire()
   {
 
-  
-	
+
+
 
   }
 
@@ -418,22 +418,22 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 			 mysql_query("insert into whiteboard_moneyback(chat_id, reason) values(".$_SESSION["whiteboard_Chat_Id"].", '".$_POST['reason']."')", $connection) or die(mysql_error());
 
-			$this->redirect('http://www.rayku.com/dashboard/moneyredirect');
+			$this->redirect('/dashboard/moneyredirect');
 
 		endif;
 
 	}
-	
-$this->redirect('http://www.rayku.com/dashboard/moneyback');
+
+$this->redirect('/dashboard/moneyback');
 
   }
 
   public function executeMoneyback()
   {
 
-		
 
-	
+
+
 
   }
 
@@ -454,7 +454,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 	if($_POST['_hidden_facebook'] && !empty($_POST['fbname'])) :
 
-			
+
 			$fb_username = $_POST['fbname'];
 
 			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://www.rayku.com/dashboard/facebookadd?username='.$fb_username);
@@ -477,7 +477,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 		$this->record = 0;
 
 	 endif;
-	
+
   }
 
   public function executeFacebookadd()
@@ -498,7 +498,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 			if(mysql_num_rows($query) > 0) :
 
 				mysql_query("update user_fb set fb_username = '".$fb_username."' where userid = ".$userId." ", $connection) or die(mysql_error());
-		
+
 
 			else :
 
@@ -557,12 +557,12 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 	$checkemail = explode("@", $email);
 
-	
+
 	if(count($checkemail) == 1) {
 
 		$email .= '@gmail.com';
 
-	} 
+	}
 
 	$test = BotServiceProvider::createFor('http://www.rayku.com:8892/add/'.$email)->getContent();
 
@@ -574,16 +574,16 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 		$_SESSION['adduser'] = 2;
 
-		$this->redirect('http://www.rayku.com/dashboard/gtalk');
+		$this->redirect('/dashboard/gtalk');
 
 	}
 
 
 	 if(mysql_num_rows($query) > 0) :
 
-	
+
 		mysql_query("update user_gtalk set gtalkid = '".$email."' where userid = ".$userId." ", $connection) or die(mysql_error());
-		
+
 
 	 else :
 
@@ -593,7 +593,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 
 
-	$this->redirect('http://www.rayku.com/dashboard/gtalk');
+	$this->redirect('/dashboard/gtalk');
 
   }
 
@@ -609,7 +609,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 	mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
 
 
-  
+
 
   }
 
@@ -658,7 +658,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 	    }
 
 	}
-  
+
 
   }
 
@@ -675,7 +675,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 
 			if(mysql_num_rows($query) > 0) {
-	
+
 				mysql_query("update user_rate set rate = ".$_Rate." where userid=".$userId, $connection) or die(mysql_error());
 
 			} else {
@@ -706,11 +706,11 @@ $connection = RaykuCommon::getDatabaseConnection();
 				if(mysql_num_rows($queryStay) > 0) {
 
 					$_time = time();
-	
+
 					$_rowStay = mysql_fetch_assoc($queryStay);
 
 					$stayTime = $_rowStay['stay'] + 1;
-	
+
 					mysql_query("update user_stay set stay = '".$stayTime."', time = '".$_time."' where user_id=".$userId, $connection) or die(mysql_error());
 
 				}
@@ -774,15 +774,15 @@ if(!empty($_POST)) {
 
 if(empty($_POST["rating"])) {
 
-$this->redirect('http://www.rayku.com/dashboard/rating');
+$this->redirect('/dashboard/rating');
 
 }
 
 
 if(empty($_COOKIE['ratingExpertId']) && empty($_COOKIE['ratingUserId']) ) {
-	
-	$this->redirect('http://www.rayku.com/dashboard');
-	
+
+	$this->redirect('/dashboard');
+
 }
 else
 {
@@ -797,8 +797,8 @@ else
 
 			if(mysql_num_rows($queryRPRate)) {
 
-				$rowRPRate = mysql_fetch_assoc($queryRPRate); 
-			
+				$rowRPRate = mysql_fetch_assoc($queryRPRate);
+
 				$rate = $rowRPRate['rate'];
 
 
@@ -809,7 +809,7 @@ else
 			}
 
 	      }
- 
+
 
 	$timer = explode(":", $_COOKIE["timer"]);
 
@@ -834,14 +834,14 @@ else
 
 	$queryKinkarso = mysql_query("select * from user where id=124", $connection) or die(mysql_error());
 	$rowKinkarso = mysql_fetch_assoc($queryKinkarso);
-	
-	
-	
+
+
+
 
 	if($_POST["rating"] == 1) {
 
 		$check1RatingScore = $rowScore['score'] - 20;
-		
+
 		if($check1RatingScore < 1)
 		{
 		  $newRatingScore = "1";
@@ -852,7 +852,7 @@ else
 		}
 
 		mysql_query("update user_score set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-		
+
 
 	if($rate != '0.00') :
 
@@ -864,11 +864,11 @@ else
 
 	endif;
 
-	
+
 
 	}  elseif($_POST["rating"] == 2) {
-	
-	
+
+
 
 
 		$tiptutor=$_POST["tiptutor"];
@@ -884,7 +884,7 @@ else
 		$expertPoints = $rowExpert["points"] + $expertPer + $tiptutor;
 
 		$kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-		
+
 		mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
 
 		mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
@@ -895,7 +895,7 @@ else
 
 
 	} elseif($_POST["rating"] == 3) {
-	
+
 	    $tiptutor=$_POST["tiptutor"];
 
 		$_Score = 0;
@@ -907,7 +907,7 @@ else
 		elseif($newTimer <= 10 && $newTimer >= 2) :
 
 			$_Score = 4;
-		
+
 		endif;
 
 		if($rate == '0.00') :
@@ -947,7 +947,7 @@ else
 
 
 	} elseif($_POST["rating"] == 4) {
-	
+
 	   $tiptutor=$_POST["tiptutor"];
 
 		$_Score = 0;
@@ -959,7 +959,7 @@ else
 		elseif($newTimer <= 10 && $newTimer >= 2) :
 
 			$_Score = 7;
-		
+
 		endif;
 
 		if($rate == '0.00') :
@@ -995,10 +995,10 @@ else
 
 	endif;
 
-	
+
 
 	} elseif($_POST["rating"] == 5) {
-	
+
 	    $tiptutor=$_POST["tiptutor"];
 
 		$ratingScore = !empty($rowScore['score']) ? $rowScore['score'] : 0 ;
@@ -1008,7 +1008,7 @@ else
 			$askerPoints = $rowAsker["points"] - $raykuPercentage;
 
 			mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-			
+
 
 			/*if($ratingScore >= 1000 ) { // Honour Tutor
 
@@ -1022,7 +1022,7 @@ else
 
 				$kinkarsoPer = ($raykuPercentage * 30) / 100;
 			}*/
-			
+
 			$expertPer = $raykuPercentage;  // 5 stars: 100% RP
 
 			$expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
@@ -1048,7 +1048,7 @@ else
 		elseif($newTimer <= 10 && $newTimer >= 2) :
 
 			$_Score = 10;
-		
+
 		endif;
 
 		if($rate == '0.00') :
@@ -1063,7 +1063,7 @@ else
 
 
 
-	} 
+	}
 
 
   // follow to this expert
@@ -1092,7 +1092,7 @@ else
 
   // public session?
 
- 
+
 if(!empty($_COOKIE["whiteboardChatId"]) && !empty($_COOKIE["whiteboardChatId"])) {
 
  $chatId = $_COOKIE["whiteboardChatId"];
@@ -1138,14 +1138,14 @@ $_SESSION["whiteboard_Chat_Id"] = $_COOKIE["whiteboardChatId"];
 
 	if($_chat_rating == 1 || $_chat_rating == 2) {
 
-		$this->redirect('http://www.rayku.com/dashboard/moneyback');
+		$this->redirect('/dashboard/moneyback');
 
 	}
 
-  $this->redirect('http://www.rayku.com/dashboard');
-  
+  $this->redirect('/dashboard');
+
   }
-  
+
 }
 }
 

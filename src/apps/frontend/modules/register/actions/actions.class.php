@@ -8,7 +8,7 @@
  */
 class registerActions extends sfActions
 {
-	
+
 	/**
 	* Action to show the registration form
 	*/
@@ -22,9 +22,9 @@ class registerActions extends sfActions
       $this->error = 'You are already logged in. You can not register again.';
 			return sfView::ERROR;
 		}
-    
+
     $this->requestedUserType = $this->getRequestedUserType();
-		
+
 		//If the form hasn't yet been filled in, just display the form
 		if( sfWebRequest::POST !== $this->getRequest()->getMethod() )
 		{
@@ -57,17 +57,17 @@ class registerActions extends sfActions
 		$user->setName($this->getRequestParameter('username'));
 
 		//$user->setPoints('10.11');
-		
+
 		// GENERATE USERNAME FROM FULL NAME FIELD
-		
+
 		$userName = str_replace(' ','',strtolower($this->getRequestParameter('username')));
-		
+
 		$U_QRY = "select * from user where username='".$userName."'";
-		
+
 		$u_res = mysql_query($U_QRY, $connection);
-		
+
 		$unamecount = mysql_num_rows($u_res);
-		 
+
 		$dupval = 2;
         duplicationCheck:
         if($unamecount>=1)
@@ -85,12 +85,12 @@ class registerActions extends sfActions
                         $userName = $newUsername;
                 }
         }
-        
+
 		$user->setUsername($userName);
-		
-		
+
+
 		// END of GENERATE USERNAME FROM FULL NAME FIELD
-		
+
 
     	$user->setTypeUnconfirmed( $this->requestedUserType );
 
@@ -106,10 +106,10 @@ class registerActions extends sfActions
 			if(mysql_num_rows($query) > 0)
 			{
 
-				$rowValues = mysql_fetch_assoc($query);	//$rowValues['user_id']; 
+				$rowValues = mysql_fetch_assoc($query);	//$rowValues['user_id'];
 
-				$query = mysql_query("select * from user where id=".$rowValues['user_id'], $connection) or die(mysql_error());	
-				$rowDetails = mysql_fetch_assoc($query);	
+				$query = mysql_query("select * from user where id=".$rowValues['user_id'], $connection) or die(mysql_error());
+				$rowDetails = mysql_fetch_assoc($query);
 
 				 $newPoints = $rowDetails['points'] + 0.5;
 
@@ -118,8 +118,8 @@ class registerActions extends sfActions
 				mysql_query("delete from referral_code where referral_code='".$_POST['coupon']."'", $connection) or die(mysql_error());
 
 			} else {
-				
-			
+
+
 				if($_POST['coupon'] == 'launch11') {
 
 					$points = "10";
@@ -135,9 +135,9 @@ class registerActions extends sfActions
 
 			}
 
-		endif; 
+		endif;
 
-		//Try to save the User... throw an exception if something messes up		
+		//Try to save the User... throw an exception if something messes up
 		if(!$user->save())
 			throw new PropelException('User creation failed');
 
@@ -151,7 +151,7 @@ class registerActions extends sfActions
 		}
 
 
-	
+
 		if(!empty($_POST['coupon']) && !empty($points)) {
 
 				mysql_query("update user set points='".$points."' where id=".$user->getId(), $connection) or die(mysql_error());
@@ -236,7 +236,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
     return false;
   }
-	
+
 	/**
 	* Handles validaton errors in the register form... passes the user back
 	* to the form where the errors are displayed.
@@ -246,7 +246,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
     $this->requestedUserType = $this->getRequestedUserType();
 		return sfView::SUCCESS;
 	}
-	
+
 	/**
 	* Action to handle getting a confirmation code. Confirms user and spits out
 	* a success page if the code checks out... spits out an error page otherwise
@@ -288,7 +288,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 			    $user->setTypeConfirmed();
 			    $user->save();
 
-		} 
+		}
 
 
 
@@ -326,16 +326,16 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
  	   $kinkarsoUser = FriendPeer::createInitialFriendship($user);
 
 
-	} 
+	}
                 $connection = RaykuCommon::getDatabaseConnection();
-   
+
     if( $kinkarsoUser ) {
 
 					if($user) {
 
 					$query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."", $connection) or die(mysql_error());
 						if(mysql_num_rows($query) == 0) {
-			
+
 
 							 ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
 
@@ -343,25 +343,25 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
 						}
 
-					} 
-			      
+					}
 
-	
+
+
 				 $subject='Welcome to Rayku';
-	
+
 					if($user) {
 
 							 $body='Hey '.$user->getName().', welcome to Rayku.com!<br><br>';
 
-					} 
-	
-				 
+					}
+
+
 				 $body .=' Thanks for joining our community!<br><br>
-				 
+
 				 The first thing you should do is introduce yourself. We\'re interested in hearing your story, if you are a potential tutor or tutee.<br><br>
-				 
-				 Let us know by creating a thread in the <a href="http://www.rayku.com/forum/newthread/125">Introductions Forum</a>.<br><br>
-				 				 
+
+				 Let us know by creating a thread in the <a href="'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/125">Introductions Forum</a>.<br><br>
+
 				 Thanks!<br>
 				 Rayku Administration';
 				$currentuser = $kinkarsoUser;
@@ -370,9 +370,9 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 				if($user) {
 
 					$currentuser->sendMessage($user->getId(),$subject,$body);
-				} 
-	
-			    
+				}
+
+
 				$gallery = new Gallery();
 				$gallery->setTitle('Profile Pictures');
 				$gallery->setShowEntity(0);
@@ -381,23 +381,23 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
 	}
 
-		
+
 		if($user) {
 
 			$this->forward('register', 'new');
 
 		} else {
 
-			$this->redirect("http://www.rayku.com/dashboard/getstarted");
+			$this->redirect("/dashboard/getstarted");
 		}
-		
-		
 
-		//$this->redirect("http://www.rayku.com/regtutor");
-	
+
+
+		//$this->redirect("/regtutor");
+
 	}
 
-	
+
 
 	public function executeNew()
 	{
@@ -408,7 +408,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
 	public function executeOther()
 	{
-		
+
 	}
 
 	/**
@@ -419,15 +419,15 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 	{
 
 	}
-	
+
 	/**
 	* Action to show the registration step 3 form
 	*/
 	public function executeStepthird()
 	{
-		
+
 		$user = $this->getUser()->getRaykuUser();
-		
+
 		// if form is submitted, persist the data
 		if (sfWebRequest::POST === $this->getRequest()->getMethod())
 		{
@@ -439,7 +439,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 			$user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
 			$user->setAboutMe($this->getRequestParameter('about_me'));
 			$user->setUserInterestsFromString($this->getRequestParameter('hobbies'));
-			
+
 			$user->save();
 			if($this->getRequest()->getFileName('file')!="")
 			{
@@ -471,29 +471,29 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 				}
 				$pic->setName($this->getRequest()->getFileName('file'));
 				$pic->save();
-				
-				
+
+
 				$c = new Criteria();
 				$c->add(GalleryPeer::TITLE,'Profile Pictures');
 				$c->add(GalleryPeer::USER_ID,$user->getId());
 				$gallery = GalleryPeer::doSelectOne($c);
-				
+
 				$galleryItem = new GalleryItem();
 				$galleryItem->setGallery($gallery);
 				$galleryItem->setFileName($this->getRequest()->getFileName('file'));
 				$galleryItem->setMimeType($mimeType);
 				$galleryItem->setIsImage(in_array($mimeType, $validMimeTypes['image']));
 				$galleryItem->save();
-				
-				
+
+
         		$user->setPicture( $pic );
 				$user->save();
-				
+
 				// move to uploads
 				$uploadDir = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . sfConfig::get('app_gallery_upload_folder');
-				
+
 				$uploadDirAvatar = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . sfConfig::get('app_general_avatar_folder');
-				
+
 				if (!file_exists($uploadDir))
 				{
 					mkdir($uploadDir, 0700, true);
@@ -502,27 +502,27 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 				{
 					mkdir($uploadDirAvatar, 0700, true);
 				}
-				
+
 				// $filename = $pic->getId();
-				
-				
+
+
 				$filename = $galleryItem->getId();
 				$avafilename = $user->getId();
 				$target = $uploadDir . DIRECTORY_SEPARATOR . $filename;
 				$targetava = $uploadDirAvatar . DIRECTORY_SEPARATOR . $avafilename;
-				
+
 				$successfullyMoved = $this->getRequest()->moveFile('file', $target.".jpg");
-				
+
 				if (!$successfullyMoved)
 				{
 					throw new Exception('Could not move uploaded file');
 				}
 
 				// set filename to the id
-				
+
 				$galleryItem->setFileSystemPath($galleryItem->getId());
 				$galleryItem->save();
-											
+
 				if(in_array($mimeType, $validMimeTypes['image']))
 				{
 					// resize image
@@ -531,91 +531,91 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 					$thumb->save($target);
 
           			RaykuCommon::writeAvatarImage($target.".jpg", $user->getId());
-					
+
 					// create thumb
 					$thumb = new sfThumbnail(sfConfig::get('app_gallery_thumbnail_max_width'), sfConfig::get('app_gallery_thumbnail_max_height'));
 					$thumb->loadFile($target.".jpg");
-					$thumb->save($target . 'thumb'); 
-					
+					$thumb->save($target . 'thumb');
+
 					// create thumb
 					$thumb = new sfThumbnail(sfConfig::get('app_gallery_thumbnail2_max_width'), sfConfig::get('app_gallery_thumbnail2_max_height'));
 					$thumb->loadFile($target);
 					$thumb->save($target . 'thumb2');
-					
-					
-					
+
+
+
 				}
 			}
-				
+
 			//go to step forth of registration
 			$this->redirect('@register_step4');
 		}
-		
+
 		// passing to view
 		$this->user = $user;
 	}
-	
+
 	/**
 	* Action to show the registration step 4 form
 	*/
 	public function executeStepforth()
 	{
-		 
+
 		//  require_once('/home/rayku/lib/OpenInviter/openinviter.php');
-		
+
 		 $user = $this->getUser()->getRaykuUser();
 	   // passing to view
-		 $this->user = $user;		
-		/* getting all email providers array */	
+		 $this->user = $user;
+		/* getting all email providers array */
 
 	//	$inviter=new OpenInviter();
 	//	$oi_services=$inviter->getPlugins();
 	//	$this->email = array();
-	//	foreach ($oi_services as $type=>$providers)	
-	//		{									
+	//	foreach ($oi_services as $type=>$providers)
+	//		{
 	//			foreach ($providers as $provider=>$details)
 	//				$this->email[$provider] = $details['name'];
-						
+
 				/* exit when socail networking starts */
-	//			break;		
+	//			break;
 	//		}
-		
-		
-		
+
+
+
 	}
-	
+
 	/**
 	* Action to show the registration step 4 form
 	*/
 	public function executeGetcontact()
-	{		
-	
+	{
+
 $loginuser = $this->getUser()->getRaykuUser();
 
 
-		//	require_once(SF_ROOT_DIR.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'OpenInviter'.DIRECTORY_SEPARATOR.'openinviter.php');		
-	
+		//	require_once(SF_ROOT_DIR.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'OpenInviter'.DIRECTORY_SEPARATOR.'openinviter.php');
+
 			require_once('/home/rayku/lib/OpenInviter/openinviter.php');
-		
+
 		$user = UserPeer::retrieveByPk($loginuser->getId());
 	    $display_array=array();
 		if (sfWebRequest::POST === $this->getRequest()->getMethod())
 		{
 			$username = $this->getRequestParameter('username');
-			$password = $this->getRequestParameter('password');			
-				
-			if($password == '')				
+			$password = $this->getRequestParameter('password');
+
+			if($password == '')
 				return false;
 
-			$inviter=new OpenInviter();			
-			
+			$inviter=new OpenInviter();
+
 			if(!$inviter->startPlugin($this->getRequestParameter('webmailProvider'),$inviter->getPlugins()))
 				{
 					var_dump($inviter->getInternalError());
 					return false;
-				}	
+				}
 			elseif(!$inviter->login($username,$password))
-				{				
+				{
 					var_dump($inviter->getInternalError());
 					return false;
 				}
@@ -623,11 +623,11 @@ $loginuser = $this->getUser()->getRaykuUser();
 				{
 					$this->display_array=$inviter->getMyContacts();
 					$this->user = $user;
-				}	
+				}
 		}
-		
+
 	}
-	
+
 	/**
 	* Action to Send the invitation
 	*/
@@ -637,23 +637,23 @@ $loginuser = $this->getUser()->getRaykuUser();
 		$this->mail = Mailman::createCleanMailer();
 		$this->mail->setSubject('Rayku.com Coupon Credit');
 		$this->mail->setFrom($user->getName().' <'.$user->getEmail().'>');
-	
+
     $list=$this->getRequestParameter('list');
-		
+
 	$j = 1;
 	$date = date("Y-m-d");
-		
+
 		if($user)
 		{
 			foreach($list as $name_email)
 			{
 				$user->sendPointsFromAdmin(sfConfig::get('app_general_invite_points'));
 				list($to,$name) = @split('x22z',$name_email);
-			
+
 			if (ereg('@',$name)){
 				$name = "";
 				}
-				
+
 				if($to)
 				{
 
@@ -666,23 +666,23 @@ $loginuser = $this->getUser()->getRaykuUser();
           sfProjectConfiguration::getActive()->loadHelpers( array( 'Partial' ) );
 
 					$this->mail->setBody( "<p>".$user->getName()." has given you coupon credit through Rayku.com.</p><p>Value of Coupon: <strong>5.5 Rayku Points</strong> ($5.50 Canadian Dollars)<br />Eligibility: <strong>University of Toronto Students</strong><br />Expiration Date: <strong>xx/xx/2011</strong><br />Unique Coupon Code: <b>".$refcode."</b></p>". get_partial( 'invitationEmailHtml', array( 'name' => $name, 'user' => $user ) ));
-					
+
 					$this->mail->setContentType('text/html');
 					$this->mail->addAddress($to);
 					$this->mail->send();
-					
+
 				$j++;
-					
+
 				}
 
 
 			}
 		}
 
-			
+
 		//redirect
 			$this->redirect('@register_step4');
-		
+
 	}
 
 
@@ -696,7 +696,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 		$user = $this->getUser()->getRaykuUser();
 
 		$this->user = $user;
-		
+
 		$username = $user->getUsername();
 
 
@@ -714,17 +714,17 @@ $loginuser = $this->getUser()->getRaykuUser();
                                 $connection = RaykuCommon::getDatabaseConnection();
 
 				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ", $connection) or die(mysql_error());
-			
+
 			}
 		}
 
 		$this->flag = 1;
 
 		endif;
-		
+
 	}
 
-	
+
 	/**
 	 * show the latest user header
 	 */
@@ -733,7 +733,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 		sfProjectConfiguration::getActive()->loadHelpers('Partial');
 
 		$user = $this->getUser()->getRaykuUser();
-		
+
 			if($user->getPoints() < 2) {
 
                                         $connection = RaykuCommon::getDatabaseConnection();
@@ -745,10 +745,10 @@ $loginuser = $this->getUser()->getRaykuUser();
 						$this->mail = Mailman::createCleanMailer();
 						$this->mail->setSubject('Rayku Points - Almost used up!');
 						$this->mail->setFrom('Bonnie Pang <bonniecs@rayku.com>');
-						$to = $user->getEmail(); 
-					
-						$this->mail->setBody( "<p>Hi there,<br /><br />I've noticed that your Rayku \$RP balance has just fallen below 2$RP. I really hope you've spent them well!<br /><br />In order to get more Rayku Points, here's two quick & instant options: <br /><a href='http://www.rayku.com/shop/paypal'><strong>Buy Rayku Points</strong></a><br /><a href='http://www.rayku.com/register/invitation'><strong>Invite Your Friends (get \$RP)</strong></a><br /><br />Or, if you need help with any of those two options I listed above, just send me a reply and I'll do my best to help you out!<br /><br />Thanks for using Rayku.com!<br />Bonnie Pang<br />Rayku Account Rep<br /><br />http://www.rayku.com</p>");
-					
+						$to = $user->getEmail();
+
+						$this->mail->setBody( "<p>Hi there,<br /><br />I've noticed that your Rayku \$RP balance has just fallen below 2$RP. I really hope you've spent them well!<br /><br />In order to get more Rayku Points, here's two quick & instant options: <br /><a href='/shop/paypal'><strong>Buy Rayku Points</strong></a><br /><a href='/register/invitation'><strong>Invite Your Friends (get \$RP)</strong></a><br /><br />Or, if you need help with any of those two options I listed above, just send me a reply and I'll do my best to help you out!<br /><br />Thanks for using Rayku.com!<br />Bonnie Pang<br />Rayku Account Rep<br /><br />http://www.rayku.com</p>");
+
 						$this->mail->setContentType('text/html');
 						$this->mail->addAddress($to);
 						$this->mail->send();
@@ -757,13 +757,13 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				      }
 
-			
+
 
 			} else {
 
                                         $connection = RaykuCommon::getDatabaseConnection();
 
-			
+
 					mysql_query("delete from points_notify where userid=".$user->getId(), $connection) or die(mysql_error());
 
 			}
@@ -771,7 +771,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 
 		return $this->renderText( get_partial('topNavNewUser'));
-	} 
+	}
 
 
 /*
@@ -794,8 +794,8 @@ $loginuser = $this->getUser()->getRaykuUser();
 		endif;
 
 
-		
-		$this->redirect('http://www.rayku.com/dashboard');
+
+		$this->redirect('/dashboard');
 
 
 	}*/
@@ -832,7 +832,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 		exit(0);
 
-	} 
+	}
 
 
 	/*public function executeCheckpoints()
@@ -844,7 +844,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 		sfProjectConfiguration::getActive()->loadHelpers('Partial');
 
 		$user = $this->getUser()->getRaykuUser();
-		
+
 			if($user->getPoints() < 2) {
 
 					$query = mysql_query("select * from points_notify where userid=".$user->getId()) or die(mysql_error());
@@ -854,10 +854,10 @@ $loginuser = $this->getUser()->getRaykuUser();
 						$this->mail = Mailman::createCleanMailer();
 						$this->mail->setSubject('Rayku Points Notify');
 						$this->mail->setFrom('Admin < admin@rayku.com >');
-						$to = $user->getEmail(); 
-					
-						$this->mail->setBody( "<p> Purchase Rayku Points From Rayku Shop : <a href='http://www.rayku.com/shop/paypal'> <strong> Rayku Points </strong></a></p>");
-					
+						$to = $user->getEmail();
+
+						$this->mail->setBody( "<p> Purchase Rayku Points From Rayku Shop : <a href='/shop/paypal'> <strong> Rayku Points </strong></a></p>");
+
 						$this->mail->setContentType('text/html');
 						$this->mail->addAddress($to);
 						$this->mail->send();
@@ -866,54 +866,54 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				      }
 
-			
+
 
 			} else {
 
-			
+
 					mysql_query("delete from points_notify where userid=".$user->getId()) or die(mysql_error());
 
 			}
 
 	} */
 
-	
-	public function executeTest() 
+
+	public function executeTest()
 	{
-	
+
 		sfProjectConfiguration::getActive()->loadHelpers('Partial');
-		
+
 		$email= $this->getRequestParameter('email');
-		
-		$mailer_1=explode('@', $email); 
-		
+
+		$mailer_1=explode('@', $email);
+
 		$mailer_2= explode('.',$mailer_1[1]) ;
-		
-		$webmailer = $mailer_2[0];   
-		
+
+		$webmailer = $mailer_2[0];
+
 		 require_once('/home/rayku/lib/OpenInviter/openinviter.php');
-		
+
 		$user = $this->getUser()->getRaykuUser();
 	   // passing to view
-		$this->user = $user;		
-		/* getting all email providers array */	
+		$this->user = $user;
+		/* getting all email providers array */
 
 		$inviter=new OpenInviter();
 		$oi_services=$inviter->getPlugins();
 		$this->email = array();
-		foreach ($oi_services as $type=>$providers)	
-			{									
+		foreach ($oi_services as $type=>$providers)
+			{
 				foreach ($providers as $provider=>$details)
 					$this->email[$provider] = $details['name'];
-						
+
 				/* exit when socail networking starts */
-				break;		
+				break;
 			}
-		
-		
-		return $this->renderText(get_partial('webmailer', array('mailer' => $webmailer ,'email' => $this->email ))); 
-		
+
+
+		return $this->renderText(get_partial('webmailer', array('mailer' => $webmailer ,'email' => $this->email )));
+
 	}
-		
-	
+
+
 }

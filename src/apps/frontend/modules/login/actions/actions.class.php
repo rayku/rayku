@@ -33,7 +33,7 @@ class loginActions extends sfActions
 		//If the user is logged in, don't let them login again
 
 		if($this->getUser()->isAuthenticated())
-			return sfView::ERROR; 
+			return sfView::ERROR;
 
 
 		$referer_rel = $_SERVER["REQUEST_URI"];
@@ -57,7 +57,7 @@ class loginActions extends sfActions
 
 		if( $sEmail == '' && $sPassword == '' )
 		{
-			$this->redirect( 'login/index' ); 
+			$this->redirect( 'login/index' );
 		}
 
 		//Check the user credentials
@@ -114,7 +114,7 @@ class loginActions extends sfActions
 
 			if($_SESSION['loginWrongPass']>=5)
 			{
-				$this->redirect("http://www.rayku.com/login");
+				$this->redirect("/login");
 
 			}
 			return sfView::ERROR;
@@ -129,7 +129,7 @@ class loginActions extends sfActions
 
 		//If user is teacher account expires after 6 month
 		if($this->user->getType() == UserPeer::getTypeFromValue('teacher'))
-		{			
+		{
 
 			$currentdate = time();
 			$prevdate = strtotime($this->user->getCreatedAt());
@@ -143,11 +143,11 @@ class loginActions extends sfActions
 				$this->msg = 'You need to upgrade your account to continue.';
 
 				return sfView::ERROR;
-			}	
+			}
 
 			//echo date_interval_create_from_date_string($this->user->getCreatedAt());
 
-		}		
+		}
 
 		//If the user is banned, display a message
 		if($this->user->getHidden())
@@ -160,7 +160,7 @@ class loginActions extends sfActions
 		if($this->getRequestParameter('remember')) {
 
 			$time = time() + 60 * 60 * 24 * 15;
-                        
+
                         /**
                          * @todo - wtf ? - do we need this at all ?
                          */
@@ -168,7 +168,7 @@ class loginActions extends sfActions
 			$this->getResponse()->setCookie("rPassword", $sPassword,$time);
 
 
-		}	
+		}
 
 		$this->getUser()->signIn($this->user, $this->getRequestParameter('remember', false));
 
@@ -184,12 +184,12 @@ class loginActions extends sfActions
 				`login_status`
 					)
 					VALUES (
-							NULL , 
-							'".$userID."', 
-							'".date("Y-m-d H:i:s")."', 
+							NULL ,
+							'".$userID."',
+							'".date("Y-m-d H:i:s")."',
 							'1'
 						   );";
-			mysql_query($insSQL, $connection);			
+			mysql_query($insSQL, $connection);
 
 		}
 
@@ -228,7 +228,7 @@ class loginActions extends sfActions
 				unset($_SESSION['popup_session']);
 			}
 		}
-                
+
 		if($this->getRequestParameter('referer') != 'http://'.RaykuCommon::getCurrentHttpDomain().'/login')
 		{
 			if($this->getRequestParameter('referer') != NULL)
@@ -282,12 +282,12 @@ class loginActions extends sfActions
 				`login_status`
 					)
 					VALUES (
-							NULL , 
-							'".$logedUserId."', 
-							'".date("Y-m-d H:i:s")."', 
+							NULL ,
+							'".$logedUserId."',
+							'".date("Y-m-d H:i:s")."',
 							'0'
 						   );";
-			mysql_query($insSQL, $connection);			
+			mysql_query($insSQL, $connection);
 
 		}
 
@@ -325,17 +325,17 @@ class loginActions extends sfActions
 			$this->mail = Mailman::createMailer();
 
 			// set from, to and subject
-			$this->mail->addAddress($user->getEmail());	
+			$this->mail->addAddress($user->getEmail());
 			$this->mail->setSubject('Rayku.com Password Reset Request');
 
 			// set view vars
 			$this->name = $user->getName();
-			$this->key = $user->getPasswordRecoverKey();  
-			$this->mail->setBody(get_partial('passwordReminderConfirmation',  array( 'name' => $this->name, 'key' => $this->key ) ) ); 
+			$this->key = $user->getPasswordRecoverKey();
+			$this->mail->setBody(get_partial('passwordReminderConfirmation',  array( 'name' => $this->name, 'key' => $this->key ) ) );
 			$this->mail->send();
 
 
-			// $this->getController()->sendEmail('login', 'sendPasswordReminderConfirmation'); 
+			// $this->getController()->sendEmail('login', 'sendPasswordReminderConfirmation');
 
 			$this->redirect('@recover_password_sent');
 		}
@@ -363,7 +363,7 @@ class loginActions extends sfActions
 		$this->getRequest()->setAttribute('user', $user);
 		$this->getRequest()->setAttribute('password', $password);
 
-		sfProjectConfiguration::getActive()->loadHelpers(array('Asset','Url','Partial'));	
+		sfProjectConfiguration::getActive()->loadHelpers(array('Asset','Url','Partial'));
 
 		$password = $this->getRequest()->getAttribute('password');
 		$user = $this->getRequest()->getAttribute('user');
@@ -372,13 +372,13 @@ class loginActions extends sfActions
 		$this->mail = Mailman::createMailer();
 
 		// set from, to and subject
-		$this->mail->addAddress($user->getEmail());	
+		$this->mail->addAddress($user->getEmail());
 		$this->mail->setSubject('Your New Rayku.com Password');
 
 		// set view vars
 		$this->name = $user->getName();
 
-		$this->mail->setBody(get_partial('sendNewPassword',  array( 'name' => $this->name, 'password' => $password ) ) ); 
+		$this->mail->setBody(get_partial('sendNewPassword',  array( 'name' => $this->name, 'password' => $password ) ) );
 		$this->mail->send();
 
 
@@ -395,12 +395,12 @@ class loginActions extends sfActions
 		$this->mail = Mailman::createMailer();
 
 		// set from, to and subject
-		$this->mail->addAddress($user->getEmail());	
+		$this->mail->addAddress($user->getEmail());
 		$this->mail->setSubject('Rayku.com Password Reset Request');
 
 		// set view vars
 		$this->name = $user->getName();
-		$this->key = $user->getPasswordRecoverKey(); 
+		$this->key = $user->getPasswordRecoverKey();
 
 		return sfView::SUCCESS;
 
@@ -415,7 +415,7 @@ class loginActions extends sfActions
 		$this->mail = Mailman::createMailer();
 
 		// set from, to and subject
-		$this->mail->addAddress($user->getEmail());	
+		$this->mail->addAddress($user->getEmail());
 		$this->mail->setSubject('Rayku.com New Password');
 
 		// set view vars
@@ -462,7 +462,7 @@ class loginActions extends sfActions
 			$_SESSION['fullname'] = $_POST['fullname'];
 
 
-			$this->redirect("http://www.rayku.com/start");
+			$this->redirect("/start");
 
 
 		} else {
@@ -480,7 +480,7 @@ class loginActions extends sfActions
 				$_SESSION['fullname'] = $_POST['fullname'];
 
 
-				$this->redirect("http://www.rayku.com/start");
+				$this->redirect("/start");
 
 
 			} else {
@@ -492,7 +492,7 @@ class loginActions extends sfActions
 
 
 
-				$this->redirect("http://www.rayku.com/login/facebooklogin");
+				$this->redirect("/login/facebooklogin");
 
 			}
 
@@ -527,7 +527,7 @@ class loginActions extends sfActions
                 $connection = RaykuCommon::getDatabaseConnection();
 
 		$query = mysql_query("select * from user order by id DESC limit 0,1", $connection) or die(mysql_error());
-		$row = mysql_fetch_array($query);	
+		$row = mysql_fetch_array($query);
 
 		$_SESSION['newUserTempID'] = $row['id'];
 
@@ -594,7 +594,7 @@ class loginActions extends sfActions
 		unset($_SESSION['newUserTempID']);
 
 	}
-	//===================================================================Modified By DAC021=====================================================================//	
+	//===================================================================Modified By DAC021=====================================================================//
 
 	private function sendConfirmationEmail( User $user )
 	{
@@ -676,8 +676,8 @@ class loginActions extends sfActions
 
 		$selected='';
 		foreach($selectedusers as $value)
-		{	
-			$selected=$selected . $value . ",";		
+		{
+			$selected=$selected . $value . ",";
 
 		}
 
@@ -732,7 +732,7 @@ class loginActions extends sfActions
 
 		$this->getUser()->signIn($testUser);
 
-		$this->redirect("http://www.rayku.com/dashboard");
+		$this->redirect("/dashboard");
 
 
 
@@ -777,9 +777,9 @@ class loginActions extends sfActions
 				mysql_query("update user_expert set status = 7 where user_id =".$row['checked_id'], $connection) or die("Error5".mysql_error());
 				mysql_query("delete from user_expire_msg where userid=".$row['checked_id'], $connection) or die("Error_Expire2".mysql_error());
 
-				$this->redirect("http://www.rayku.com:8001/");
+				$this->redirect("/");
 			}
-		} 
+		}
 	}
 
 	public function executeValidateUsername()
