@@ -176,7 +176,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
 
 <div id="status" style="padding:0 5px;">&nbsp;</div>
 <form name="idleform" id="idleform" >
-<input type="hidden" name="user_val" id="user_val"  value="<?php echo $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];?>"/>
+<input type="hidden" name="user_val" id="user_val"  value="<?php echo @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];?>"/>
 </form>
     <script type="text/javascript">
     var ds = jQuery.noConflict();

@@ -108,7 +108,7 @@ class loginActions extends sfActions
 		{
 			$this->msg = 'Your username or password was incorrect.';
 			/////incrementing session value plus one if the password is wrong
-			$_SESSION['loginWrongPass']=$_SESSION['loginWrongPass']+1;
+			$_SESSION['loginWrongPass']=@$_SESSION['loginWrongPass']+1;
 
 
 
@@ -160,7 +160,10 @@ class loginActions extends sfActions
 		if($this->getRequestParameter('remember')) {
 
 			$time = time() + 60 * 60 * 24 * 15;
-
+                        
+                        /**
+                         * @todo - wtf ? - do we need this at all ?
+                         */
 			$this->getResponse()->setCookie("rEmail", $sEmail,$time);
 			$this->getResponse()->setCookie("rPassword", $sPassword,$time);
 
@@ -203,8 +206,6 @@ class loginActions extends sfActions
 		$this->user->save();
 
 
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
 		$currentUser = $this->getUser()->getRaykuUser();
 
 		$userId = $currentUser->getId();
@@ -227,7 +228,8 @@ class loginActions extends sfActions
 				unset($_SESSION['popup_session']);
 			}
 		}
-		if($this->getRequestParameter('referer') != 'http://www.rayku.com/login')
+                
+		if($this->getRequestParameter('referer') != 'http://'.RaykuCommon::getCurrentHttpDomain().'/login')
 		{
 			if($this->getRequestParameter('referer') != NULL)
 			{
