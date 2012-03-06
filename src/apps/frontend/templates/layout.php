@@ -54,7 +54,7 @@ foreach($newUser as $new):
 		
 		}
 
-		if(empty($onlinecheck) || ($onlinecheck != "online")) {
+		if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
 
 					$fb_query = mysql_query("select * from user_fb where userid=".$new->getId()) or die(mysql_error());
 
@@ -80,7 +80,7 @@ foreach($newUser as $new):
 
 		}
 	
-	  if(empty($onlinecheck) || ($onlinecheck != "online")) {
+	  if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($_Users)) {
 
 
 
