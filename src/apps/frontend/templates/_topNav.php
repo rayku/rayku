@@ -243,6 +243,8 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
   <?php endif;?>
 </ul>
 </div>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script> 
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>
 <?php
 if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL'] != "/logout") && ($_SERVER['REDIRECT_URL'] != "/register") && ($_SERVER['REDIRECT_URL'] != "/start") && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")):
 ?>
@@ -345,5 +347,3 @@ setTimeout('checkForRedirect()', 20000);
 <?php
 endif;  
 ?>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>

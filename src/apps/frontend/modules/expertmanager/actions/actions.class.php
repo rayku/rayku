@@ -2077,7 +2077,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 					 		}					 		
 					 	
 											 
-						 if(mysql_num_rows($_queryCourse) > 0) : 
+						 if($_queryCourse && mysql_num_rows($_queryCourse) > 0) : 
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -2288,12 +2288,12 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
+										 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
 									} 
 
 								}
 
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
 
 
 								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
@@ -2320,7 +2320,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 								}
 								
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($_Users)) {
 	
 
 

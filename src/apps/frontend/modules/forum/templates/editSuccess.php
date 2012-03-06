@@ -1,9 +1,9 @@
 <?php use_helper('Object') ?>
 <?php use_helper('Javascript'); ?>
 <style media="all" type="text/css">
-@import "styles/global.css";
- @import "styles/donny.css";
- @import "styles/custom/forum-threads-bit.css";
+@import "/styles/global.css";
+ @import "/styles/donny.css";
+ @import "/css/custom/forum-threads-bit.css";
 </style>
 <script type="text/javascript">
   function gotoforum()
