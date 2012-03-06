@@ -1,0 +1,143 @@
+/*tutors popup*/
+
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+}
+.clearfix {
+    zoom:1;
+}
+
+input[type="checkbox"]
+{
+	background-color:#DEF3FE;
+	border:1px solid red;
+}
+
+#tutors-popup
+{
+	width:184px;	
+	position:fixed;
+	margin-left:922px;
+	top:54px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+	-webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, .1);
+	box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, .1);
+	background:#fafafa;
+}
+#tutors-popup-inner
+{
+	width:177px;
+	margin:0 auto;
+	padding-top:16px;
+	padding-bottom:20px;
+}
+#tutors-popup-inner h3
+{
+	background:url(../images/tutor-icon.jpg) no-repeat;
+	padding-left:22px;
+	color:#1c517c;
+	font-weight:bold;
+	font-size:11px;
+}
+#tutor-list
+{
+	margin:17px 0;
+}
+#tutor-list li
+{
+	border-right:1px solid #d2d2d2;
+	border-bottom:1px solid #d2d2d2;
+	margin-bottom:4px;
+	position:relative;
+}
+.tutor-number, .tutor-info
+{
+	float:left;
+}
+.tutor-number
+{
+	width:20px;
+	min-height:60px;
+	text-align:center;
+	line-height:60px;
+	font-weight:bold;
+	font-size:14px;
+	color:#595959;
+	background:url(../images/popup-pattern.jpg);
+	margin-bottom:1px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px; 
+}
+.tutor-info
+{
+	margin-left:8px;
+	padding:8px 0 0 5px;
+	color:#4e4e4e;
+	font-size:10px;
+	line-height:15px;
+	width:72%;
+}
+.tutor-info .name
+{
+	font-weight:bold;
+	font-size:13px;
+}
+.tutor-info .subjects span
+{
+	display:inline-block;
+	*display:inline;
+	zoom:1;
+	padding:0 4px;
+	border-right:1px solid #4e4e4e;
+	line-height:10px;
+	height:10px;
+}
+.tutor-info .subjects span:first-child
+{
+	padding-left:0;
+}
+.tutor-info .subjects span:last-child
+{
+	border-right:none;
+}
+#tutor-list li a.cross
+{
+	position:absolute;
+	background:url(../images/cross.png) no-repeat;
+	width:15px;
+	height:15px;
+	position:absolute;
+	text-indent:-9999px;
+	right:8px;
+	top:6px;
+	display:block;
+	top:13px;
+}
+.limit
+{
+	float:right;
+	color:#1c517c;
+}
+a.connect-now
+{
+	margin-top:14px;
+	display:block;
+	width:112px;
+	height:32px;
+	background:url(../images/connect-now.jpg) repeat-x;
+	text-indent:-99999px;
+	position:relative;
+	float:right;
+}
+a.connect-now:hover
+{
+	background-position:0 -32px;
+}
