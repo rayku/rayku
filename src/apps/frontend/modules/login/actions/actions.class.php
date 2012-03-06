@@ -67,7 +67,7 @@ class loginActions extends sfActions
 		{
 			$_SESSION['loginErrorMsg']='Your username or password was incorrect.';
 		}
-		if($_SESSION['loginWrongPass']>=5)
+		if(isset($_SESSION['loginWrongPass']) && $_SESSION['loginWrongPass']>=5)
 		{
 
 			require_once($_SERVER['DOCUMENT_ROOT'].'/recaptcha/recaptchalib.php');

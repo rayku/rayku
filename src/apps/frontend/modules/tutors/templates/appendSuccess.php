@@ -60,11 +60,18 @@
 
 				endforeach;
 
-
-					asort($_emptyOnlineUsers);  
-					arsort($_emptyOnlineUsers);
-					asort($_rateOnlineUsers);
-					arsort($_rateOnlineUsers);
+                                        if (@$_emptyOnlineUsers) {
+                                            asort($_emptyOnlineUsers);  
+                                        }
+                                        if (@$_emptyOnlineUsers) {
+                                            arsort($_emptyOnlineUsers);
+                                        }
+                                        if (@$_rateOnlineUsers) {
+                                            asort($_rateOnlineUsers);
+                                        }
+                                        if (@$_rateOnlineUsers) {
+                                            arsort($_rateOnlineUsers);
+                                        }
 
 
 					if(!empty($_emptyOnlineUsers) && !empty($_rateOnlineUsers)) {
@@ -102,11 +109,18 @@
 
 				endforeach;
 
-
-					asort($_emptyOfflineUsers);  
-					arsort($_emptyOfflineUsers);  
-					asort($_rateOfflineUsers);
-					arsort($_rateOfflineUsers);
+                                        if (@$_emptyOfflineUsers) {
+                                            asort($_emptyOfflineUsers);
+                                        }
+                                        if (@$_emptyOfflineUsers) {
+                                            arsort($_emptyOfflineUsers);
+                                        }
+                                        if (@$_rateOfflineUsers) {
+                                            asort($_rateOfflineUsers);
+                                        }
+                                        if (@$_rateOfflineUsers) {
+                                            arsort($_rateOfflineUsers);
+                                        }
 
 
 					if(!empty($_emptyOfflineUsers) && !empty($_rateOfflineUsers)) {
@@ -219,7 +233,9 @@
 				$next_records=15;
 			}
 
-		 	$_count_online_user = 0;	$_count_check = count($_finalUsers); $_v = 1;
+		 	$_count_online_user = 0;
+                        $_count_check = is_array(@$_finalUsers) ? count($_finalUsers) : 0;
+                        $_v = 1;
 
 		 	$sample = array_slice($_FinalUsers,0,$next_records);
 		 	
@@ -291,7 +307,8 @@
 							
 							if(mysql_num_rows($titRes)){
 								$tutData 	= mysql_fetch_assoc($titRes);
-								$allsub		= $tutData['tutor_title'];
+                                                                
+								$allsub		= @$tutData['tutor_title'];
 								if($tutData['tutor_role'] != ''){
 									$allsub		.= $tutData['tutor_role'];
 									
@@ -389,11 +406,11 @@ endif;
 			$onlinecheck = "online";
 		endif;
 
-		if($_COOKIE["onoff"] == 1) :
+		if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) :
 
 			$onlinecheck = "online";
 
-		elseif($_COOKIE["onoff"] == 2) :
+		elseif(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 2) :
 
 			$onlinecheck = "";
 

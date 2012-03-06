@@ -296,7 +296,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 								}
 
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
 
 								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
@@ -323,7 +323,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 								}
 								
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
 	
 
 									foreach($botUsers as $key => $_user) :
@@ -379,7 +379,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 				
 					 /////////////////////////////////////////////////////
 
-if($_COOKIE["onoff"] == 1) {
+if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 		
 		if(!empty($_COOKIE["school"])) {
 
@@ -409,7 +409,7 @@ if($_COOKIE["onoff"] == 1) {
 		}
 
 
-} else if($_COOKIE["onoff"] == 2) {
+} else if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 2) {
 		
 		if(!empty($_COOKIE["school"])) {
 
@@ -701,7 +701,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 						 	
 						 
 						 
-						 if(mysql_num_rows($_queryCourse) > 0) : 
+						 if($_queryCourse && mysql_num_rows($_queryCourse) > 0) : 
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -803,7 +803,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 								}
 
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
 
 								$fb_query = mysql_query("select * from user_fb where userid=".$new['userid'], $connection) or die(mysql_error());
@@ -829,7 +829,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 								}
 								
-							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
+							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
 	
 									foreach($botUsers as $key => $_user) :
 	
@@ -883,7 +883,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 				
 					 /////////////////////////////////////////////////////
 
-if($_COOKIE["onoff"] == 1) {
+if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 		
 		if(!empty($_COOKIE["school"])) {
 
@@ -913,7 +913,7 @@ if($_COOKIE["onoff"] == 1) {
 		}
 
 
-} else if($_COOKIE["onoff"] == 2) {
+} else if(isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 2) {
 		
 		if(!empty($_COOKIE["school"])) {
 
