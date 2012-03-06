@@ -162,7 +162,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`,`
 
 				$this->getResponse()->setCookie("forumsub", 5,time()+600);
 
-$this->redirect("http://www.rayku.com/expertmanager/connect");
+$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/expertmanager/connect');
 
 
 	
@@ -187,7 +187,7 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 
 		  } 
 
-	   $this->redirect('http://www.rayku.com/dashboard');
+	   $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 
 
@@ -281,7 +281,7 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 		mysql_query("insert into popup_close(user_id) values(".$userId.")", $connection) or die(mysql_error());
 
 
-		$this->redirect('http://www.rayku.com/dashboard');
+		$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
   }
 
@@ -315,6 +315,9 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 		  if(mysql_num_rows($_queryRecord)) {
 			  $newId = $details[6] + 1;
 			  $asker = UserPeer::retrieveByPK($details[1]);
+                          /**
+                           * @todo - make domain used below in setCookie flexible so we can have it working in development 
+                           */
 			  setCookie("question", urlencode($details[2]), time()+3600, '/', "rayku.com");
 			  $this->getResponse()->setCookie("askerid", $details[1],time()+3600);
 			  $this->getResponse()->setCookie("askerUsername", $asker->getUsername(), time()+3600);
@@ -355,10 +358,10 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 
 
 			  // redirect to rayku whiteboard
-			  $this->redirect("http://www.rayku.com:8001/");
+			  $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
 		  } else {
 			  // redirect to rayku dashboard
-			  $this->redirect("http://www.rayku.com/login/answer");
+			  $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/login/answer');
 		  }
 	  } else {
 		  $_record_id = $details[0];
@@ -426,12 +429,12 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 			  }
 
 			  // redirect to rayku whiteboard
-			  $this->redirect("http://www.rayku.com:8001/");
+			  $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
 
 		  } else {
 
 			  // redirect to rayku dashboard
-			  $this->redirect("http://www.rayku.com/dashboard");
+			  $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 
 		  }
@@ -467,7 +470,7 @@ $this->redirect("http://www.rayku.com/expertmanager/connect");
 
 	endif;
 	
-	$this->redirect('http://www.rayku.com/dashboard');	
+	$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');	
  }
 
  public function executeTopic()
@@ -612,7 +615,7 @@ $details =  explode(",", $_REQUEST['details']);
 			 
 
 echo "close";
-	//$this->redirect('http://www.rayku.com/dashboard');
+	//$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 	
 }
@@ -763,7 +766,7 @@ $details =  explode(",", $_REQUEST['details']);
 			 // Ignore Whiteboard //
 
 echo "close";
-	//$this->redirect('http://www.rayku.com/dashboard');
+	//$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 	
 }
@@ -807,7 +810,7 @@ $userId = $currentUser->getId();
 
 
 
-	$this->redirect('http://www.rayku.com/dashboard');
+	$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 }
 
@@ -830,7 +833,7 @@ $userId = $currentUser->getId();
 
 					echo "redirect";
 
-					$this->redirect('http://www.rayku.com/dashboard');
+					$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 				}
 
@@ -838,7 +841,7 @@ $userId = $currentUser->getId();
 
 				echo "redirect";
 
-				$this->redirect('http://www.rayku.com/dashboard');
+				$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 			}
 
@@ -862,7 +865,7 @@ $userId = $currentUser->getId();
 	   
      $status = mysql_fetch_assoc($gtalkquery);
 		 $gtalkmail = $status['gtalkid'];
-		 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
+		 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
 	 
 	 } else {
 	   
@@ -978,7 +981,7 @@ $userId = $currentUser->getId();
    } 
 
 exit(0);
-   //$this->redirect('http://www.rayku.com/dashboard');
+   //$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
  }
 
 
@@ -998,7 +1001,7 @@ public function executeMapmsguser()
 
 					echo "redirect";
 
-					$this->redirect('http://www.rayku.com/dashboard');
+					$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 				}
 
@@ -1006,7 +1009,7 @@ public function executeMapmsguser()
 
 				echo "redirect";
 
-				$this->redirect('http://www.rayku.com/dashboard');
+				$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard');
 
 			}
 
@@ -1384,7 +1387,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
+										 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
 									} 
 									
 
@@ -1479,7 +1482,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 						if(count($onlineusers) < 1)
 						{
-							$this->redirect('http://www.rayku.com/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
+							$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/'.$_SESSION['subject'].'?exp_online=1');
 						}
 						
 				
@@ -2375,7 +2378,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 						if(count($onlineusers) < 1)
 						{
-							$this->redirect('http://www.rayku.com/forum/newthread/'.$_SESSION[subject].'?exp_online=1');
+							$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/'.$_SESSION['subject'].'?exp_online=1');
 						}
 						
 				
