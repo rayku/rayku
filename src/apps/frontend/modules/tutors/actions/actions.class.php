@@ -260,9 +260,9 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 							$newOnlineUser = array();  $newOfflineUser = array();
 							$j=0; $k = 0;
-									$facebookResponse = file_get_contents("http://facebook.rayku.com/tutor");
+									$facebookResponse = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 									$facebookUsers = json_decode($facebookResponse, true);
-									$botResponse = file_get_contents("http://notification-bot.rayku.com/tutor");
+									$botResponse = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 									$botUsers = json_decode($botResponse, true);
 
 							foreach($newUser as $new):
@@ -291,7 +291,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 									} 
 
 								}
@@ -767,9 +767,9 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 							$newOnlineUser = array();  $newOfflineUser = array();
 							$j=0; $k = 0;
-							$facebookResponse = file_get_contents("http://facebook.rayku.com/tutor");
+							$facebookResponse = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 							$facebookUsers = json_decode($facebookResponse, true);
-							$botResponse = file_get_contents("http://notification-bot.rayku.com/tutor");
+							$botResponse = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 							$botUsers = json_decode($botResponse, true);
 
 							foreach($newUser as $new):
@@ -798,7 +798,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 									} 
 
 								}

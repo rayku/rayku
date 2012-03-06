@@ -564,7 +564,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 	} 
 
-	$test = file_get_contents('http://www.rayku.com:8892/add/'.$email);
+	$test = BotServiceProvider::createFor('http://www.rayku.com:8892/add/'.$email)->getContent();
 
 	if($test) {
 

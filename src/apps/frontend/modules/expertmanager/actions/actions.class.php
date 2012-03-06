@@ -862,7 +862,7 @@ $userId = $currentUser->getId();
 	   
      $status = mysql_fetch_assoc($gtalkquery);
 		 $gtalkmail = $status['gtalkid'];
-		 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+		 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 	 
 	 } else {
 	   
@@ -1355,8 +1355,8 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 							$newOnlineUser = array();  $newOfflineUser = array();
 							$j=0; $k = 0;
-							$facebookTutors = file_get_contents("http://facebook.rayku.com/tutor");
-							$onlineTutorsByNotificationBot = file_get_contents("http://notification-bot.rayku.com/tutor");
+							$facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+							$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 
 							foreach($newUser as $new):
 						
@@ -1384,7 +1384,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 									} 
 									
 
@@ -2257,8 +2257,8 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 							$newOnlineUser = array();  $newOfflineUser = array();
 							$j=0; $k = 0;
-											$facebookTutors = file_get_contents("http://facebook.rayku.com/tutor");
-											$onlineTutorsByNotificationBot = file_get_contents("http://notification-bot.rayku.com/tutor");
+											$facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+											$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 											$Users = json_decode($facebookTutors, true);
 											$_Users = json_decode($onlineTutorsByNotificationBot, true);
 
@@ -2288,7 +2288,7 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 										$gtalkmail = $status['gtalkid'];
 
-										 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 									} 
 
 								}

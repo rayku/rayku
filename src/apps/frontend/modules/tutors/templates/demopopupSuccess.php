@@ -43,7 +43,7 @@ if($count>0)
 
 						$gtalkmail = $status['gtalkid'];
 
-						 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+						 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 					} 
 
 					}
@@ -59,7 +59,7 @@ if($count>0)
 
 						$fb_username = $fbRow['fb_username'];
 
-					$details = file_get_contents("http://facebook.rayku.com/tutor");
+					$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 
 					$Users = json_decode($details, true);
 
@@ -80,7 +80,7 @@ if($count>0)
 
 					if(empty($onlinecheck) || ($onlinecheck != "online")) {
 
-					$onlineUsers = file_get_contents("http://notification-bot.rayku.com/tutor");
+					$onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 
 					$_Users = json_decode($onlineUsers, true);
 

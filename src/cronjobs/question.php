@@ -1,6 +1,7 @@
 <?php
 require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1.2/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
+require_once dirname(dirname( __FILE__ )) . '/lib/service/BotServiceProvider.class.php';
 sfCoreAutoload::register();
 
 function checkquestion() {
@@ -20,9 +21,9 @@ function checkquestion() {
                 $_exp_message = $_exp_newline;
                 $_exp_message .= "This%20question%20has%20expired.";
                 $_exp_message .= $_exp_newline;
-                $_gtalk_online_check = file_get_contents('http://www.rayku.com:8892/status/'.$_gtalk_email_id);
+                $_gtalk_online_check = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$_gtalk_email_id)->getContent();
                 if($_gtalk_online_check != "offline") {
-                    $_send_msg = file_get_contents('http://www.rayku.com:8892/msg/'.$_gtalk_email_id.'/'.$_exp_message);
+                    $_send_msg = BotServiceProvider::createFor('http://www.rayku.com:8892/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
                 }
             }
 
@@ -30,7 +31,7 @@ function checkquestion() {
             if(mysql_num_rows($fb_query) > 0) {
                 $fbRow = mysql_fetch_assoc($fb_query);
                 $fb_username = $fbRow['fb_username'];
-                $details = file_get_contents("http://facebook.rayku.com/tutor");
+                $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
                     if($user['username'] == $fb_username){
@@ -155,9 +156,9 @@ function checkquestion() {
             if(mysql_num_rows($gtalkquery) > 0) {
                 $status = mysql_fetch_assoc($gtalkquery);
                 $gtalkmail = $status['gtalkid'];
-                $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+                $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
                 if($onlinecheck != "offline") {
-                    $testcall = file_get_contents('http://www.rayku.com:8892/msg/'.$gtalkmail.'/'.$message);
+                    $testcall = BotServiceProvider::createFor('http://www.rayku.com:8892/msg/'.$gtalkmail.'/'.$message)->getContent();
                     $flag = 1;
                 }
             }
@@ -165,7 +166,7 @@ function checkquestion() {
             if(mysql_num_rows($fb_query) > 0) {
                 $fbRow = mysql_fetch_assoc($fb_query);
                 $fb_username = $fbRow['fb_username'];
-                $details = file_get_contents("http://facebook.rayku.com/tutor");
+                $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
                     if($user['username'] == $fb_username){
@@ -195,7 +196,7 @@ function checkquestion() {
                     }
                 }
             }
-            $onlineUsers = file_get_contents("http://notification-bot.rayku.com/tutor");
+            $onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
             $_Users = json_decode($onlineUsers, true);
             foreach($_Users as $key => $_user) {
                 if($_user['email'] == $tutorEmail){

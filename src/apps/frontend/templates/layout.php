@@ -17,8 +17,9 @@ $newOnlineUser = array();
 $newOfflineUser = array();
 							
 $j=0; $k = 0;
-$facebookTutors = file_get_contents("http://facebook.rayku.com/tutor");
-$onlineTutorsByNotificationBot = file_get_contents("http://notification-bot.rayku.com/tutor");
+$facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+
 $Users = json_decode($facebookTutors, true);
 $_Users = json_decode($onlineTutorsByNotificationBot, true);
 
@@ -48,7 +49,7 @@ foreach($newUser as $new):
 		
 				$gtalkmail = $status['gtalkid'];
 		
-				 $onlinecheck = file_get_contents('http://www.rayku.com:8892/status/'.$gtalkmail);
+				 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
 			} 
 		
 		}
