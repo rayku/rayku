@@ -56,7 +56,5 @@ $teacher = $classroom->getUser();
   else if( $raykuUser->getType() == UserPeer::getTypeFromValue( 'user' ) )
   {
     echo link_to( 'Unrole from classroom', 'classroom/unRole' );
-    echo '<div class="divider"></div>';
-    echo link_to( 'Edit Notifications', 'studentaccess/notifications?userid='.$raykuUser->getId(), array( 'class' => 'editnotif'));
   }
 ?>

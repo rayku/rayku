@@ -22,10 +22,6 @@
     {
       echo link_to( image_tag( 'classroom_logo.jpg' ), "http://$_SERVER[HTTP_HOST]/" );
     }
-    else if( $raykuUser->getType() == 1 )
-    {
-      echo link_to( image_tag( 'classroom_logo.jpg' ), 'studentmanager/index' );
-    }
     else if( $raykuUser->getType() == 2 )
     {
       echo link_to( image_tag( 'classroom_logo.jpg' ), 'classmanager/index' );

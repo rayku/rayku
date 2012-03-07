@@ -1,8 +1,0 @@
-all:
-  is_secure: true
-  credentials: student
-
-confirmStudent:
-  credentials: teacher
-expertSwitchConfirmation:
-  credentials: expert

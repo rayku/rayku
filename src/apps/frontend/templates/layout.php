@@ -617,10 +617,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php if($sf_context->getModuleName() =='invitation'): ?>
 <link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
 <?php endif; ?>
-<?php if($sf_context->getModuleName() =='studentmanager' && $sf_context->getActionName() =='search'): ?>
-<link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
-<link rel="stylesheet" type="text/css" href="/css/custom/pplsrch-results.css"/>
-<?php endif; ?>
 <?php if($sf_context->getModuleName() == 'expertmanager'):?>
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/styles/classroom.css" />
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/custom/button.css"/>
@@ -670,7 +666,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.notifier.js"></script>
 <style type="text/css">
-<?php if( ( ( sfContext::getInstance()->getModuleName() == 'classmanager' ) && ( sfContext::getInstance()->getActionName() == 'list') || ( sfContext::getInstance()->getModuleName() == 'studentmanager' ) && ( sfContext::getInstance()->getActionName() == 'index') ) || ( ( sfContext::getInstance()->getModuleName() == 'profile' ) && ( sfContext::getInstance()->getActionName() == 'edit') ) ): ?> @import "/styles/cm_global.css";
+<?php if( ( ( sfContext::getInstance()->getModuleName() == 'classmanager' ) && ( sfContext::getInstance()->getActionName() == 'list') ) || ( ( sfContext::getInstance()->getModuleName() == 'profile' ) && ( sfContext::getInstance()->getActionName() == 'edit') ) ): ?> @import "/styles/cm_global.css";
  @import "/css/46.css";
  @import "/styles/donny.css";
 <?php endif;
