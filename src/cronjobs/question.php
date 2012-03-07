@@ -1,5 +1,5 @@
 <?php
-require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1.2/lib/autoload/sfCoreAutoload.class.php';
+require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/service/BotServiceProvider.class.php';
 sfCoreAutoload::register();
