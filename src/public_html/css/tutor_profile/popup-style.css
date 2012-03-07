@@ -1,0 +1,234 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*************************
+**************************
+
+Required Styles for the Popup
+
+
+**************************
+**************************/
+
+
+#trans
+{
+	position:fixed;
+	width:100%;
+	height:100%;
+	background:url(../images/trans.png) repeat;
+	top:0;
+	left:0;
+}
+
+.filter-popup
+{
+	width:460px;
+	overflow:scroll;
+	top:140px;
+	left:50%;
+	margin-left:-230px;
+	background:#fff;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px; 
+	border:1px solid #d5d4d4;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+	line-height:16px;
+}
+.filter-popup-inner
+{
+	position:relative;
+}
+.filter-popup-close
+{
+	position:absolute;
+	right:20px;
+	top:20px;
+}
+.filter-popup h3
+{
+	color:#1c517c;
+	font-size:15px;
+	margin-bottom:22px;
+}
+.filter-popup h3 .steps
+{
+	font-weight:bold;
+}
+.filter-popup .row-1
+{
+	padding:20px;
+	border-bottom:1px solid #d5d4d4;
+}
+.filter-popup .row-1 form
+{
+	margin-bottom:12px;
+}
+.filter-popup .row-1 input[type="text"] {
+    background: url("../images/gradient.jpg") repeat-x scroll 0 0 transparent;
+    border: 1px solid #D7D7D7;
+    border-radius: 2px 2px 2px 2px;
+    color: #6A6A6A;
+    height: 30px;
+    line-height: 30px/9;
+    text-indent: 12px;
+	width:175px;
+	margin-left:10px;
+}
+.filter-popup p
+{
+	color:#808080;
+}
+.row-2
+{
+	background:url(../images/popup-shadow.png) no-repeat;
+	width:100%;
+	padding:20px;
+}
+p.education
+{
+	margin-top:20px;
+}
+.education input
+{
+	vertical-align:bottom;
+}
+#personal-info input[type=text]
+{
+	background:url(../images/gradient.jpg) repeat-x;
+	border:none;
+	border:1px solid #d7d7d7;
+	height:30px;
+	line-height:30px/9;
+	text-indent:12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color:#6A6A6A;
+}
+#personal-info p
+{
+	float:left;
+	margin-right:16px;
+}
+p.education
+{
+	margin-bottom:20px;
+	float:none !important;
+}
+#personal-info p span
+{
+	display:block;
+	text-align:right;
+	color:#cac8c8;
+	padding-top:2px;
+}
+#university-info input
+{
+	margin-bottom:15px;
+}
+.university-name input
+{
+	width:178px;
+}
+.course-code input
+{
+	width:188px;
+}
+.year select, .grade select
+{
+	width:130px;
+}
+.selected
+{
+	background-color:#045F9E;
+	color:#fff !important;
+	padding:0 5px;
+}
+.selected span
+{
+	border-color:#fff !important;
+}
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+}
+.clearfix {
+    zoom:1;
+}
+.row-3
+{
+	padding:20px;
+	background:url(../images/pattern.jpg) repeat;
+}
+#filter
+{
+	background: url("../images/ask-button-sprite.png") no-repeat scroll 0 1px transparent;
+    border: medium none;
+    color: #5D7731;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    height: 42px;
+    line-height: 42px;
+    right: 0;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+    width: 102px;
+}
+#filter:hover
+{
+	background-position:0 -41px;
+}
