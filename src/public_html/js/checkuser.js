@@ -129,7 +129,7 @@ function checkedUser()
 
 
 
-					if(newChecking[8] == "expert") {	
+					if(newChecking[8] == "expert") {
 
 						  var newResult = result[0].split("-");
 
@@ -140,8 +140,8 @@ function checkedUser()
 
 					     if(Page == "/expertmanager/connect") {
 
-						asker_row_id = newChecking[1];  
-						asker_chat_id = newChecking[4]; 
+						asker_row_id = newChecking[1];
+						asker_chat_id = newChecking[4];
 
 						setTimeout('askerOpen(asker_row_id,asker_chat_id)', 5000);
 
@@ -172,7 +172,7 @@ function askerOpen(row_id,chat_id) {
 
 			details[0] = row_id;
   			details[1] = chat_id;
-					 
+
 		document.location='http://'+getHostname()+'/expertmanager/answer?details='+details;
 
 }*/
@@ -234,27 +234,27 @@ if(modelbox == 1) {
 
 
 	musicCheck = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
-	
+
 	//musicCheck = '<embed  loop="1" autostart="1"  src="http://'+getHostname()+'/alert.mp3" height="0" width="2">';
-	
+
 	//alert("Step 1");
-	
+
 	setTimeout('music()', 9000);
 
 	} else {
 
 	//alert("Step 2");
-	
+
 	musicCheck = '<iframe src="http://'+getHostname()+'/musical.php" width="1" height="1"></iframe>';
 	}
-	
+
 	//alert(musicCheck);
-	
+
 	//musicCheck = '<iframe src="http://'+getHostname()+'/musical.php" width="1" height="1"></iframe>';
 
 }
 
-	
+
 
 
 	Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1>A student is asking you this question:</h1> <div class="content"> <div class="question">'+ ques +' <span>('+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
@@ -270,7 +270,7 @@ if(modelbox == 1) {
 }
 
 
-function countCheck() { 
+function countCheck() {
 
 
 	popupclose = getCookie("_popupclose");
@@ -281,14 +281,14 @@ function countCheck() {
 
 		  Modalbox.hide('', {title: this.title,overlayClose: false,  height: 350, width: 400 });
 
-	} 
+	}
 
 	if(stopTitle == 1) {
-	
 
-		countGlobal = countGlobal - 1; document.getElementById("countDown").innerHTML = countGlobal + " Seconds"; 
 
-		setTimeout("countCheck()", 1000); 
+		countGlobal = countGlobal - 1; document.getElementById("countDown").innerHTML = countGlobal + " Seconds";
+
+		setTimeout("countCheck()", 1000);
 
 	}
 
@@ -334,7 +334,7 @@ stopTitle = 2;
 			}
 
 		});
-  
+
 }
 
 
@@ -375,7 +375,7 @@ stopTitle = 2;
 			}
 
 		});
-  
+
 }
 
 
@@ -401,6 +401,6 @@ return "";
 }
 
 function getHostname() {
-    return document.URL.match(/http:\/\/([^\/]*).*/)[1];
+    return window.location.host;
 }
 

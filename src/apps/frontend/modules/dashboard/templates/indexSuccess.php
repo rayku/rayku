@@ -15,12 +15,12 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 
 	if(count($rankUsers) > 0) :
-         
+
 	foreach($rankUsers as $_expert):
 
 		if($_expert['userid'] == $logedUserId):
 
-			$curr_user_rank = $ij;				 
+			$curr_user_rank = $ij;
 			break;
 
 		endif;
@@ -28,7 +28,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 	$ij++;
 
 	endforeach;
-		
+
 	endif;
 
 function cmp($a, $b)
@@ -37,7 +37,7 @@ function cmp($a, $b)
 	return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-    
+
 }
 
 
@@ -66,25 +66,25 @@ function cmp($a, $b)
     <!--<div id="myvar" style="width:650px;margin-top:10px">
       <?php ##include_partial('statistics'); ?>
     </div>-->
-    
-    
+
+
     <div>
       <?php include_partial('recent'); ?>
     </div>
-    
-     
-    
+
+
+
   </div>
 </div>
 <div class="body-right" style="margin-top:10px;">
   <div id="myvar_activate">
 <!--widget-->
 
-<div id="widget">    		
+<div id="widget">
 
    <!--widget-head-->
 
-   <div id="widget-head">            		
+   <div id="widget-head">
   <?php $query = mysql_query("select * from user_tutor where userid =".$logedUserId." ", $connection) or die(mysql_error()); ?>
       <div style="float:left;width:150px;">
       <h3>
@@ -105,7 +105,7 @@ function cmp($a, $b)
 			<?php else: ?>
 			Tutor (level 1)
 			<?php endif; ?>
-	      
+
 	      <?php }  elseif($stats['expertCount'] > 500) { ?>
 
 			<?php if($sf_user->getRaykuUser()->getType() == 5): ?>
@@ -120,32 +120,32 @@ function cmp($a, $b)
      		 Tutor Status:
       <?php endif; ?>
       </h3> </div>
-    
+
     <div style="float:right;width:60px;">
         <?php if(mysql_num_rows($query) > 0) : ?>
         	 	<span id="on-off"><strong style="color:#060">On</strong> | <a href="/dashboard/tutor" style="color:#333;text-decoration:underline">Off</a></span>
         <?php else: ?>
         		<span id="on-off"><a href="javascript:tutorprofile();" style="color:#333;text-decoration:underline">On</a> | <strong style="color:#900">Off</strong></span>
-        		
-        <?php endif; ?>             
+
+        <?php endif; ?>
         </div>
         <div style="clear:both;"></div>
 
 
    </div><!--widget-head-->
 
-        <?php  
-		
-		
+        <?php
+
+
 		if(mysql_num_rows($query) > 0 && empty($_COOKIE['loginname'])) : ?>
 
-   <!--widget main-->    
+   <!--widget main-->
 
    <div id="widget-main">
-	
+
       <!--progress wrap-->
-		<?php 
-		$percentage = ''; 
+		<?php
+		$percentage = '';
 		//echo $logedUserId."---**".$stats['expertCount'];
 		if ($stats['expertCount'] <= 125 )
 		{
@@ -159,7 +159,7 @@ function cmp($a, $b)
 		{
 			$percentage = 100;
 		}
-		
+
 		?>
        <div id="progress-wrap">
        <div style="width:200px;float:left">
@@ -185,23 +185,23 @@ function cmp($a, $b)
        </div><!--progress wrap-->
 
        <!--rank wrap-->
-       
+
        <!--<p>Your overall rank is...</p>
 
 
        <div id="rank-wrap">
-	
+
 	<?php if($curr_user_rank > 100 && !empty($curr_user_rank)) : $curr_user_rank = '100+'; endif; ?>
 
           <div id="rank-no">#<?php echo ($curr_user_rank? $curr_user_rank: '-'); ?></div>
 
 	<?php $_dispalyQuote = '';?>
 
-	<?php if($curr_user_rank <= 25) : 
+	<?php if($curr_user_rank <= 25) :
 
 		$_dispalyQuote = 'you are ranked!';
 
-	 else : 
+	 else :
 
 		$_dispalyQuote = 'not in top #25';
 
@@ -215,7 +215,7 @@ function cmp($a, $b)
        <!--rank wrap-->
 
 
-       <!--Tutor Rate Slider--> 
+       <!--Tutor Rate Slider-->
 
        <div id="tutor-rate-slider">
 
@@ -223,20 +223,20 @@ function cmp($a, $b)
 	     <div class="amount"><input type="text" id="amount" style="text-align:right" /> RP/min.</div>
 
 	  </p>
-	
-	 <div id="tutor-rate"></div> 
+
+	 <div id="tutor-rate"></div>
 	<input type="hidden" id="amount_hidden" name ="amount_hidden" value=''>
-	
+
       </div><!--Tutor Rate Slider-->
       <?php
       $usrpro = $sf_user->getRaykuUser()->getUsername();
       if($usrpro) : ?>
-      
+
       <div id="tutor_profile_form">
       	<a href="javascript:tutorprofileedit();">Edit Tutor Profile</a> | <a href="http://rayku.com/tutorshelp" target="_blank">Help Guide</a>
-      </div>	
+      </div>
       <?php endif; ?>
-   </div><!--widget main-->    
+   </div><!--widget main-->
 
    <!--widget-foot-->
 
@@ -246,17 +246,17 @@ function cmp($a, $b)
 
    </div><!--widget-foot-->
 
-<?php 
+<?php
 		$query = mysql_query("select * from user_rate where userid=".$logedUserId." ", $connection) or die(mysql_error());
-		$rate = mysql_fetch_assoc($query); 
+		$rate = mysql_fetch_assoc($query);
 		$_Rate = ''; $_max = '';
 		if(mysql_num_rows($query) == 0) :
 			$_Rate = '0.00';
-		else : 
+		else :
 			$_Rate = $rate['rate'];
 		endif; ?>
-         <?php 
-	if($stats['expertCount'] >= 125 && $changeUserType != 1): 
+         <?php
+	if($stats['expertCount'] >= 125 && $changeUserType != 1):
 
 		$_max = '0.50';
 
@@ -275,7 +275,7 @@ function cmp($a, $b)
 
 	var vd = jQuery.noConflict();
 
-	
+
 
 
 	vd('#rank').qtip({
@@ -325,7 +325,7 @@ vd('#tutor-rate').mouseout(function() {
 
 				vd.ajax({ cache: false,
 					type : "GET",
-					url: "http://www.rayku.com/dashboard/chargerate?rate="+rate
+					url: "http://" + getHostname() + "/dashboard/chargerate?rate="+rate
 				});
 
 
@@ -362,11 +362,11 @@ vd('#tutor-rate').mouseover(function() {
 
 </script>
 
- 
+
 </div><!--widget-->
 </div>
 
- <div id="widget" style="margin-top:15px;"> 
+ <div id="widget" style="margin-top:15px;">
   <!--widget-head-->
   <div id="widget-head">
     <h3>
@@ -375,9 +375,9 @@ vd('#tutor-rate').mouseover(function() {
 
 
   </div>
-  <!--widget-head--> 
- 
-    
+  <!--widget-head-->
+
+
   <!--widget main-->
   <div id="widget-main">
     <p>Connect with as many notification channels as you can:</p>
@@ -388,23 +388,23 @@ vd('#tutor-rate').mouseover(function() {
     <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
     <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
 	</ul>
-    
-    
-    	    
+
+
+
     <div style="clear:both"></div>
 
   </div>
-  <!--widget main--> 
+  <!--widget main-->
 </div>
 <!--widget-->
 
 
 		<?php elseif(mysql_num_rows($query) == 0) : ?>
-   <!--widget main-->    
+   <!--widget main-->
    <div id="widget-main">
        <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="http://rayku.com/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
    </div>
-        
+
 </div><!--widget-->
 </div>
         <?php endif; ?>
@@ -444,17 +444,17 @@ vd('#tutor-rate').mouseover(function() {
 var tp = jQuery.noConflict();
 function tutorprofile()
 {
-	tp('#tutor_profile').load('http://www.rayku.com/dashboard/tutor', '', function(response) {
-	   tp("#profile_content").html(response);	   
-	    
-	});		
+	tp('#tutor_profile').load('http://' + getHostname() + '/dashboard/tutor', '', function(response) {
+	   tp("#profile_content").html(response);
+
+	});
 }
 function tutorprofileedit()
 {
-	tp('#tutor_profile').load('http://www.rayku.com/dashboard/tutorprofile', '', function(response) {
-	   tp("#profile_edit_content").html(response);	   
-	    
-	});		
+	tp('#tutor_profile').load('http://' + getHostname() + '/dashboard/tutorprofile', '', function(response) {
+	   tp("#profile_edit_content").html(response);
+
+	});
 }
 function validateRate() {
 
@@ -480,7 +480,7 @@ CheckRate = parseFloat(CheckRate);
 	if(CheckRate < '0.00' || CheckRate > '5.00') {
 
 		document.getElementById('rateError').innerHTML = "<font color='red'>Rate Should Be <strong>0.00</strong> to <strong>5.00</strong></font><br>";
-		
+
 		return false;
 
 
