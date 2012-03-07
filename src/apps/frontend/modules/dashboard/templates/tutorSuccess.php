@@ -4,35 +4,34 @@ $connection = RaykuCommon::getDatabaseConnection();
 <div id="profile_content">
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/tutor_profile/tprofile-style.css" />
 <!--filter popup-->
-<div class="filter-popup"> 
-  
+<div class="filter-popup">
+
   <!--filter popup inner-->
-  <div class="filter-popup-inner"> 
-    
-    <!--close button--> 
+  <div class="filter-popup-inner">
+
+    <!--close button-->
     <a class="filter-popup-close" href="#"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/tutor_profile/cross.png" alt="Close"/></a>
-    <form name="tutor_profile_data" action="/dashboard/tutor" method="post">      
+    <form name="tutor_profile_data" action="/dashboard/tutor" method="post">
       <!--row-2-->
       <div class="row-2 clearfix">
         <h3>Complete your tutor profile</h3>
-        
+
         <p style="color:#000000">Before activating your tutor status, please fill out as much as possible to complete<br />
         your tutor profile.</p>
         <p>&nbsp;</p>
-        
+
         <!--categories-->
         <p>What subjects are you comfortable teaching?</p>
         <br />
-        <?php 
+        <?php
         $usrid = $sf_user->getRaykuUser()->getId();
         $usrdataq = mysql_query("SELECT * FROM tutor_profile WHERE user_id='".$usrid."'", $connection) or die(mysql_error());
 	$usrdata = mysql_fetch_array($usrdataq);
-	
 	?>
         <input type="hidden" name="usrid" id="usrid" value="<?php echo $usrid; ?>" />
         <div class="categories">
 	        <?php
-        	$catquery = mysql_query("SELECT s.id,c.id as catid, s.course_name,c.name FROM courses AS s JOIN category AS c ON c.id=s.category_id WHERE c.status=1", $connection);	
+        	$catquery = mysql_query("SELECT s.id,c.id as catid, s.course_name,c.name FROM courses AS s JOIN category AS c ON c.id=s.category_id WHERE c.status=1", $connection);
         	$e=1;
         	$course = $usrdata['course_id'];
 		$course = explode("-",$course);
@@ -50,21 +49,21 @@ $connection = RaykuCommon::getDatabaseConnection();
 		  		<?php if($e%2==0)
 		  		{ ?>
 		  			<br />
-		  		<?php 
-		  		} 
+		  		<?php
+		  		}
 		  		$e++;
-		  		          		
+
        		}
         	?>
         </div>
         <div style="clear:both;padding-bottom:20px;"></div>
         <!--categories-->
-        <?php use_helper('Javascript', 'MyForm') ?>        
+        <?php use_helper('Javascript', 'MyForm') ?>
         <div id="personal-inform">
-        	
+
           <!--Description-->
           <p>What best describes you?</p>
-          
+
           <select name="description" id="description" style="font-size:12px;border:1px solid #CCC;padding:3px;">
             <option value=""></option>
             <option value="Freshman" <?php if($usrdata['tutor_role']=='Freshman') { ?> selected="selected" <?php } ?>>Freshman</option>
@@ -81,45 +80,45 @@ $connection = RaykuCommon::getDatabaseConnection();
             <option value="Middle School Teacher" <?php if($usrdata['tutor_role']=='Middle School Teacher') { ?> selected="selected" <?php } ?>>Middle School Teacher</option>
             <option value="High School Teacher" <?php if($usrdata['tutor_role']=='High School Teacher') { ?> selected="selected" <?php } ?>>High School Teacher</option>
           </select><br /><br />
-          <!--Description--> 
-            
+          <!--Description-->
+
           <!--School Name-->
           <p>School name:</p>
-          
+
           <?php echo input_auto_complete_tag('school', $usrdata['school'], 'dashboard/autocomplete', array('use_style' => true)); ?>
           <br/><br/>
           <!--School Name-->
-        
+
           <!--Study-->
           <div>
           <p><span id="e" style="color:#333">Study:</span></p>
-        		  
+
 		  <input type="text" name="study" id="study" placeholder="example: Electrical Engineering"value="<?php echo $usrdata['study'];?>" />
-		  
+
           </div>
           <br/>
           <br/>
           <!--Study-->
-          
+
           <!--Course Codes-->
           <div>
           <p>List all relevant couse codes (1 per line):</p>
-          
+
           <textarea name="CourseCodes" placeholder="example: MAT133" cols="30" rows="5" style="padding:10px;font-size:12px;color:#666;border:1px solid #ccc;"><?php echo $usrdata['course_code']; ?></textarea><br /><br />
           </div>
           <!--Course Codes-->
         </div>
-        
+
         <!--Title Preview-->
         <div style="padding:10px;background:#DDF0F6;width:440px;">
         <p style="color:#036;line-height:20px;">Listing Title Preview:</p>
         <span style="color:#069;font-size:11px;">(When students search for tutors, this is what they will see as you)</span><br /><br />
         <u style="color:#000000"><span id="a">&nbsp;&nbsp;&nbsp;</span> at <span id="b">&nbsp;&nbsp;&nbsp;</span> <span id="d">&nbsp;&nbsp;&nbsp;</span> <span id="c">&nbsp;&nbsp;&nbsp;</span></u></div>
         <!--Title Preview-->
-        
+
       </div>
-      <!--row-2--> 
-      
+      <!--row-2-->
+
       <!--row-3-->
       <div class="row-3">
         <p>
@@ -127,50 +126,48 @@ $connection = RaykuCommon::getDatabaseConnection();
         </p>
       </div>
       <!--row-3-->
-      
+
     </form>
   </div>
-  <!--filter popup inner--> 
-  
+  <!--filter popup inner-->
+
 </div>
-<!--filter popup--> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/jquery.selectbox-0.1.3.min.js"></script> 
+<!--filter popup-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/jquery.selectbox-0.1.3.min.js"></script>
 <script type="text/javascript">
-			var tp = jQuery.noConflict();
-			tp(".filter-popup").before("<div id='trans'></div>");
-			
-			tp(".filter-popup-close").click(function(){
-					
-					tp(".filter-popup").fadeOut('slow');
-					tp("#trans").fadeOut('slow');
-					//return false;
-					window.location="http://www.rayku.com/dashboard";
-			});
-							
-			tp('.education input').click(function(){
-					tp('.hide').hide();
-					var radioClass=$(this).attr('class');
-					radioClass="#"+radioClass;
-					tp(radioClass).slideDown();
-			});
-			
-			
-			tp('.sbSelector').bind('click', function() {
-					tp(this).css({"border-color":"#bcbcbc"});
-					
-			});	
-			tp('.sbOptions a').bind('click', function() {
-					tp('.sbSelector').css({"border-color":"#d4d4d4"});
-					
-			});
-			
-			document.getElementById('description').onchange = function() {
+var tp = jQuery.noConflict();
+tp(".filter-popup").before("<div id='trans'></div>");
+
+tp(".filter-popup-close").click(function(){
+    tp(".filter-popup").fadeOut('slow');
+    tp("#trans").fadeOut('slow');
+    //return false;
+    window.location = 'http://' + getHostname() + '/dashboard';
+});
+
+tp('.education input').click(function(){
+    tp('.hide').hide();
+    var radioClass=$(this).attr('class');
+    radioClass="#"+radioClass;
+    tp(radioClass).slideDown();
+});
+
+
+tp('.sbSelector').bind('click', function() {
+    tp(this).css({"border-color":"#bcbcbc"});
+
+});
+tp('.sbOptions a').bind('click', function() {
+    tp('.sbSelector').css({"border-color":"#d4d4d4"});
+});
+
+var verb = '';
+var question = 'Study:';
+document.getElementById('description').onchange = function() {
 
     document.getElementById('a').innerHTML = this.value;
 
-    var verb = '';
-    var question = 'Study:';
     switch (this.value) {
     case 'Freshman':
     case 'Sophomore':
@@ -183,7 +180,7 @@ $connection = RaykuCommon::getDatabaseConnection();
         break;
 
     case 'Undergrad Degree Holder':
-	case 'Masters Degree Holder':
+    case 'Masters Degree Holder':
     case 'Phd Degree Holder':
         verb = 'having studied';
         question = 'What have you studied?';
@@ -217,7 +214,6 @@ tp(document).ready(function() {
   document.getElementById('c').innerHTML = document.getElementById('study').value;
   document.getElementById('d').innerHTML = verb;
   document.getElementById('e').innerHTML = question;
-  
 });
 
 </script>
