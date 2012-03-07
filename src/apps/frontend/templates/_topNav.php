@@ -2,13 +2,13 @@
   use_helper('MyAvatar', 'Javascript');
   $raykuUser = $sf_user->getRaykuUser();
 
-    ////////checking user is authirzed to the site 
+    ////////checking user is authirzed to the site
 	$num_of_row=0;
 
     $connection = RaykuCommon::getDatabaseConnection();
 
 		 $IP=$_SERVER['REMOTE_ADDR'];
-		  
+
 	$_query = mysql_query("select * from thread  where user_ip='".$IP."' and banned=1", $connection);
 	$num_of_row= mysql_num_rows($_query);
 	if($num_of_row>0)
@@ -17,9 +17,9 @@
         <script type='text/javascript'>
      document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 		</script>";
-        
+
 	}
-	
+
 	$_query = mysql_query("select * from banned_ips  where ip like '%".$IP."%' ", $connection);
 	$num_of_row= mysql_num_rows($_query);
 	if($num_of_row>0)
@@ -28,9 +28,9 @@
         <script type='text/javascript'>
      document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 		</script>";
-        
+
 	}
-	
+
   $logedUserId = @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 	if($logedUserId<>'')
 	{
@@ -44,7 +44,7 @@
 				<script type='text/javascript'>
      document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
 				</script>";
-				
+
 			}
 	}
 //////////////////////////
@@ -80,7 +80,7 @@
 }
 </style>
 
-<div id="top-nav"> 
+<div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
     <ul class="top-menu">
@@ -96,17 +96,17 @@
     <!--navigation-->
     <div class="clear"></div>
   </div>
-  <!--div#top-nav-center--> 
+  <!--div#top-nav-center-->
 </div>
 </div>
 <!--div#top-nav-->
 <?php } else { ?>
-<?php 
+<?php
 $queryPoints = mysql_query("select * from user where id=".$raykuUser->getId(), $connection) or die(mysql_error());
-$detailPoints = mysql_fetch_assoc($queryPoints); 
+$detailPoints = mysql_fetch_assoc($queryPoints);
 ?>
 <?php $email=$raykuUser->getEmail();  ?>
-<div id="top-nav"> 
+<div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
     <ul class="top-menu">
@@ -122,14 +122,14 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
       <li><?php echo link_to( 'Rayku Points', 'shop/paypal', array('title'=>'Rayku Points','class'=>'tt-points') ); ?></li>
     </ul>
     <!--ul.top-menu-->
-    
+
     <div id="user-box" align="left"> <a href="http://whiteboard.rayku.com" title="Test Whiteboard" target="_blank" class="tt-whiteboard">Test Whiteboard</a>
       <ul>
         <li class="main-row">
           <?php //echo avatar_tag_for_user($raykuUser, 2) ; ?>
-          
+
           <!--<img src="http://rayku.com/images/topnav/mini-profile.jpg" alt="<?php echo $raykuUser->getName(); ?>" />-->
-          
+
           <?php $_image = avatar_tag_for_user($raykuUser); $_image = str_replace("img", "img height='24'", $_image);?>
           <?php echo $_image; ?> <?php echo $raykuUser->getName(); ?>
           <ul>
@@ -141,10 +141,10 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
       </ul>
     </div>
     <!--div#user-box-->
-    
+
     <div class="clear"></div>
   </div>
-  <!--div#top-nav-center--> 
+  <!--div#top-nav-center-->
   <div style="width:100%;padding:8px 0;background:#FFFECC;border-bottom:2px solid #D0CA82;font-size:14px;color:#666" align="center">
 We're currently in beta. If you find any bugs, please <a href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">report them</a>. We'll send some RP as a thank you :).
 </div>
@@ -154,7 +154,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
 </div>
 <![endif]-->
 </div>
-<!--div#top-nav--> 
+<!--div#top-nav-->
 
 <script type="text/javascript">
   var rayku_jq = jQuery.noConflict();
@@ -181,51 +181,51 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
     <script type="text/javascript">
     var ds = jQuery.noConflict();
     (function(ds){
-      
+
         var timeout = 600000;
-        
+
 		var usid = document.getElementById("user_val").value;
-		
+
         ds(document).bind("idle.idleTimer", function(){
             //ds("#status").html("User is idle :(").css("backgroundColor", "silver");
 			//alert(usid)
-			ds.ajax({ 
+			ds.ajax({
 				type: "GET",
 				url: 'http://www.rayku.com/tutors/ajaxidle?userid='+usid+'&status=1',
 				success: function(msg){
 				//alert(msg);
-					
+
 				}
-			}); 
-			
-			
+			});
+
+
         });
-        
+
         ds(document).bind("active.idleTimer", function(){
             // ds("#status").html("User is active :D").css("backgroundColor", "yellow");
-			 
-			 ds.ajax({ 
+
+			 ds.ajax({
 				type: "GET",
 				url: 'http://www.rayku.com/tutors/ajaxidle?userid='+usid+'&status=2',
 				success: function(msg){
 				//alert(msg);
-					
+
 				}
-			}); 
-			 
-			 
+			});
+
+
         });
-        
+
         ds.idleTimer(timeout);
-        
+
         // correct the page
         ds('#timeout').text(timeout/1000);
-    
-    
+
+
     })(jQuery);
-    
+
     </script>
-	
+
 
 <div id="tt-questions-tooltip" class="tooltip"> Ask a Question </div>
 <div id="tt-boards-tooltip" class="tooltip"> Q&A Boards </div>
@@ -243,7 +243,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
   <?php endif;?>
 </ul>
 </div>
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script> 
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuser.js"></script>
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/checkuserstay.js"></script>
 <?php
 if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL'] != "/logout") && ($_SERVER['REDIRECT_URL'] != "/register") && ($_SERVER['REDIRECT_URL'] != "/start") && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")):
@@ -251,16 +251,15 @@ if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/logi
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/scriptaculous.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/builder.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/effects.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/unittest.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/modalbox.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/encode_decode.js"></script> 
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/scriptaculous.js"></script>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/builder.js"></script>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/effects.js"></script>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/modalbox.js"></script>
+<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/encode_decode.js"></script>
 <?php if($sf_user->isAuthenticated()) : ?>
 <link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
-<script type="text/javascript" src="/scripts/popup-window.js"></script> 
-<script type="text/javascript" src="/js/question_popup.js"></script> 
+<script type="text/javascript" src="/scripts/popup-window.js"></script>
+<script type="text/javascript" src="/js/question_popup.js"></script>
 <script type="text/javascript" language="javascript">checkMissedQuestion();</script>
 <input type="hidden" value='1' name="question_hidden" id="question_hidden" />
 <!-- Missed Question Popup Start -->
@@ -276,7 +275,7 @@ if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/logi
 <!-- Missed Question Popup Stop -->
 <?php endif; ?>
 <?php if($_SERVER['REQUEST_URI'] == "/expertmanager/connect") : ?>
-<script type="text/javascript" src="/js/checkedMsgUser.js"></script> 
+<script type="text/javascript" src="/js/checkedMsgUser.js"></script>
 <script type="text/javascript">
 	checkedMsgUser();
 
@@ -334,16 +333,16 @@ forumsub = getCookie("forumsub");
 			url: "http://www.rayku.com/register/redirect",
 			success : function (data)  {
 				var check = data.split("<");
-				if(check[0] == "redirect") {				
+				if(check[0] == "redirect") {
 					document.location = "http://www.rayku.com/expertmanager/studentconfirmation";
           // document.location = "http://<?php echo RaykuCommon::getCurrentHttpDomain(); ?>/forum/newthread/"+forumsub+"?exp_online=1";
 				}
 			}
 		});
 	}
-setTimeout('checkForRedirect()', 20000);	
+setTimeout('checkForRedirect()', 20000);
 }
 </script>
 <?php
-endif;  
+endif;
 ?>
