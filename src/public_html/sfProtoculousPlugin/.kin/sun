@@ -1,2 +1,0 @@
-#!/bin/sh
-./proc -s "/usr/local/apache/bin/httpd -DSSL" -d -p lagi.pid ./mich
