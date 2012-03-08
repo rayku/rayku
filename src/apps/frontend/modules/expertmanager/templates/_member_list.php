@@ -6,7 +6,7 @@ $_Max_Count = intval($tutorsCount / 15) + 1;  $loopCount = $_Max_Count; if($loop
 ?>
 
 <div class="body">
-	
+
   <?php $sfuser=$sf_user->getRaykuUser()->getID();?>
   <div id="cn-body">
     <div class="body-connect-left">
@@ -33,7 +33,7 @@ $_Max_Count = intval($tutorsCount / 15) + 1;  $loopCount = $_Max_Count; if($loop
         </label>
         <div class="cn-spacer"></div>
         <h3>Filtering Options:</h3>
-        
+
         <h4>Tutor Status: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
         <p><a href="" onClick="return setStatus(1)">Online</a></p>
         <p><a href="" onClick="return setStatus(2)">Offline</a></p>
@@ -48,14 +48,14 @@ $_Max_Count = intval($tutorsCount / 15) + 1;  $loopCount = $_Max_Count; if($loop
 <script language="javascript">
 
 function setStatus(value)
-{   
+{
 		 var onoff;
 		 document.cookie = "onoff"+ "=" +value;
 
 }
 
 function setSchool(value)
-{   
+{
 
 var school;
 document.cookie = "school"+ "=" +value;
@@ -74,12 +74,12 @@ function reSet(value)
 
 }
 
-</script> 
+</script>
 
         <script lang="text/javascript">
 
 		var count_checkboxclicks=0;
-	    	//var expertcount=0;  
+	    	//var expertcount=0;
 	    	var expertIds=new Array();
 		var origMouseX = 0;
 		var currentSliderValue = 0;
@@ -96,9 +96,9 @@ function reSet(value)
 		}
 		else
 		{
-			var icount = 0;		
+			var icount = 0;
 		}
-		
+
 		var expertscount = getCookie('expertscount');
 
 		if(expertscount)
@@ -107,114 +107,26 @@ function reSet(value)
 		}
 		else
 		{
-			var expertcount = 0;		
+			var expertcount = 0;
 		}
 
-		function callSetSession(checkboxid, type) {
-									
-
-			dv.ajax({ cache: false,
-				type : "POST",
-				url: "/expertmanager/checkbox?id="+checkboxid+"&type="+type
-
-				});
-
-			}
-		
-		/* dv("#tutorlist").ready(function() 
-		{			
-			dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) 
-			{
-				dv("#popup_content").html(response);
-		    
-			});
-			set_background(); */
-
-			/* var icount = getCookie('cooktotal');
-
-			for(j=1;j<=icount;j++)
-			{
-				var cookieval = getCookie("expert_"+j);
-				
-				if(cookieval)
-				{
-					var currcookie = "expert_"+j;	
-					var chkCook = getCookie(currcookie);
-					if(chkCook!='')
-					{			
-						var tcount = getCookie('expertscount');
-			
-						tcount=tcount-1;
-			
-						expertcount = tcount;
-			
-						setCookie("expertscount", tcount, 1)	
-			
-						var cookie_date = new Date();  // current date & time
-			
-						cookie_date.setTime(cookie_date.getTime() - 1);
-			
-						document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
-						
-						if(tcount==0)
-						{
-							var tcook = "expertscount";
-							var ccook = "cooktotal";
-							var cookie_date = new Date();  // current date & time
-			
-							cookie_date.setTime(cookie_date.getTime() - 1);
-
-							document.cookie = tcook += "=; expires=" + cookie_date.toGMTString();
-							
-							document.cookie = ccook += "=; expires=" + cookie_date.toGMTString();
-						}
-
-						/* dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
-			
-						   dv("#popup_content").html(response);			   
-						    
-						http://www.rayku.com});
-			
-						var chkbox = "checkbox_"+cookieval;
-			
-						if(document.getElementById(chkbox).checked==true)
-						{
-							document.getElementById(chkbox).checked = false;
-						}  */
-				/*	}							
-				} 
-			}*/
-			
-			/* var remaintcount = getCookie('tutorcount');			
-
-			var cookie_date = new Date();  // current date & time
-			
-			cookie_date.setTime(cookie_date.getTime() - 1);
-
-			document.cookie = remaintcount += "=; expires=" + cookie_date.toGMTString();
-
-			
-
-			var cookie_date = new Date();  // current date & time
-			
-			cookie_date.setTime(cookie_date.getTime() - 1);
-
-			document.cookie = icount += "=; expires=" + cookie_date.toGMTString();
-			
-			
-		});*/
+    function callSetSession(checkboxid, type) {
+      dv.ajax({ cache: false,
+        type : "POST",
+        url: "/expertmanager/checkbox?id="+checkboxid+"&type="+type
+      });
+    }
 
 		function setCheckboxColor(id)
 		{
 			if (document.getElementById("checkbox_"+id).checked == true)
 			{
-				document.getElementById("first"+id).style.backgroundColor = '#DEF3FE';	
+				document.getElementById("first"+id).style.backgroundColor = '#DEF3FE';
 
 			}
 
 		}
-		
+
 		function set_background()
 		{
 			var icount = getCookie('cooktotal');
@@ -224,18 +136,18 @@ function reSet(value)
 
 				if(cookieval)
 				{
-					document.getElementById("first"+cookieval).style.backgroundColor = '#DEF3FE';	
+					document.getElementById("first"+cookieval).style.backgroundColor = '#DEF3FE';
 				}
-				
-			}	 		
+
+			}
 		}
-		
+
 		function deletecookie(a)
 		{
 			var tid = parseInt(a);
-			
+
 			document.getElementById("first"+tid).style.backgroundColor = '';
-			
+
 			/* Delete Cookie */
 			var cooktotal = getCookie('cooktotal');
 
@@ -243,53 +155,59 @@ function reSet(value)
 			{
 				var icount=cooktotal;
 			}
-			
+
 			for(j=1;j<=icount;j++)
 			{
 				var cookieval = getCookie("expert_"+j);
-				
+
 				if(cookieval == tid)
 				{
-					var currcookie = "expert_"+j;								
+					var currcookie = "expert_"+j;
 				}
 			}
-			
+
 			//alert(currcookie);
-			
+
 			var chkCook = getCookie(currcookie);
-			
+
 			if(chkCook!='')
 			{
-			
+
 				var tcount = getCookie('expertscount');
-			
+
 				tcount=tcount-1;
-			
+
 				expertcount = tcount;
-			
-				setCookie("expertscount", tcount, 36000)	
-			
+
+				setCookie("expertscount", tcount, 36000)
+
 				var cookie_date = new Date();  // current date & time
-			
+
 				cookie_date.setTime(cookie_date.getTime() - 1);
-			
+
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
+<<<<<<< HEAD
+
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
+
+=======
+
+				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
+
+>>>>>>> removing commented code & hard coded hostnames
 				   dv("#popup_content").html(response);
-				    
+
 				});
-				
+
 				var chkbox = "checkbox_"+tid;
-			
+
 				if(document.getElementById(chkbox).checked==true)
 				{
-					document.getElementById(chkbox).checked = false;				    	
-				}	
+					document.getElementById(chkbox).checked = false;
+				}
 		    	}
 		}
-		
+
 		function setvalue(a)
 		{
 			//alert(a);
@@ -303,7 +221,7 @@ function reSet(value)
 
 				document.getElementById(a).checked = false;
 
-				
+
 				alert("You are Limited To Select Four Expers At Once");
 
 				return false;
@@ -315,91 +233,101 @@ function reSet(value)
 
 			if (document.getElementById(a).checked == true)
 			{
-				
+
 				var newId = a.split('_');
 
 				var lastOne = newId[1];
-			
+
 				var tid = lastOne;
-			
+
 				document.getElementById("first"+tid).style.backgroundColor = '#DEF3FE';
-			
+
 				var expertcount = getCookie('expertscount');
 				expertcount=parseInt(expertcount)+1;
-				
+
 				var cooktotal = getCookie('cooktotal');
 				var icount=parseInt(cooktotal)+1;
-					
-		
-				var tutname = "expert_"+icount;
-			
-				var maxcook = icount;
-			
-				setCookie(tutname, tid, 36000);
-			
-				setCookie("cooktotal", maxcook, 36000);
-												
-				setCookie("expertscount", expertcount, 36000);
-			
 
+
+				var tutname = "expert_"+icount;
+
+				var maxcook = icount;
+
+				setCookie(tutname, tid, 36000);
+
+				setCookie("cooktotal", maxcook, 36000);
+
+				setCookie("expertscount", expertcount, 36000);
+
+<<<<<<< HEAD
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
+
+=======
+
+				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
+
+>>>>>>> removing commented code & hard coded hostnames
 				    dv("#popup_content").html(response);
-				    
+
 				});
-		    	
+
 			}
 
 	        	if (document.getElementById(a).checked == false)
-			{									
-				
+			{
+
 				var newId = a.split('_');
 
 				var lastOne = newId[1];
 
 				var tid = lastOne;
-			
+
 				document.getElementById("first"+tid).style.backgroundColor = '';
-			
-				var b = 'checkbox_'+tid;			
-			
+
+				var b = 'checkbox_'+tid;
+
 				document.getElementById(b).checked = false;
-				
+
 				var cooktotal = getCookie('cooktotal');
 
 				if(cooktotal)
 				{
 					var icount=cooktotal;
 				}
-				
+
 				for(j=1;j<=icount;j++)
 				{
 					var cookieval = getCookie("expert_"+j);
-					
+
 					if(cookieval == tid)
 					{
-						var currcookie = "expert_"+j;									
+						var currcookie = "expert_"+j;
 					}
 				}
-				
+
 				var tcount = getCookie('expertscount');
-			
+
 				tcount=tcount-1;
-			
+
 				expertcount = tcount;
 
 				setCookie("expertscount", expertcount, 36000);
-			
+
 				var cookie_date = new Date();  // current date & time
-			
+
 				cookie_date.setTime(cookie_date.getTime() - 1);
-			
+
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 
+<<<<<<< HEAD
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
+
+=======
+				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
+
+>>>>>>> removing commented code & hard coded hostnames
 				    dv("#popup_content").html(response);
-				    
+
 				});
 
 
@@ -408,21 +336,21 @@ function reSet(value)
 
 
 		}
-		
-		
+
+
 		function rowCheck(a){
-		
-		
-			var newvalue = a.split('.');			
-			
-			var b = "checkbox_"+newvalue[0];			
-			
+
+
+			var newvalue = a.split('.');
+
+			var b = "checkbox_"+newvalue[0];
+
 			if(!document.getElementById(b).checked)
 			{
 				var expertcount = getCookie('expertscount');
 				expertcount = parseInt(expertcount);
-				if(expertcount == 4) 
-				{	
+				if(expertcount == 4)
+				{
 					alert("You are Limited To Select Four Expers At Once");
 					return false;
 				}
@@ -431,26 +359,32 @@ function reSet(value)
 					document.getElementById(b).checked=true;
 
 					document.getElementById("first"+newvalue[0]).style.backgroundColor = '#DEF3FE';
-				
+
 					var expertcount = getCookie('expertscount');
 					expertcount = parseInt(expertcount)+1;
-				
-					var icount = getCookie('cooktotal');	
-					icount = parseInt(icount)+1;								
-								
+
+					var icount = getCookie('cooktotal');
+					icount = parseInt(icount)+1;
+
 					var tid = newvalue[0];
 					var tutname = "expert_"+icount;
 					var maxcook = icount;
 					setCookie(tutname, tid, 36000);
 					setCookie("cooktotal", maxcook, 36000);
 					setCookie("expertscount", expertcount, 36000);
-				
+<<<<<<< HEAD
+
 						dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
+
+=======
+
+						dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
+
+>>>>>>> removing commented code & hard coded hostnames
 					    		dv("#popup_content").html(response);
-					    
+
 						});
-				
+
 					//icount = icount+1;
 				}
 			}
@@ -459,59 +393,65 @@ function reSet(value)
 				document.getElementById(b).checked=false;
 
 				document.getElementById("first"+newvalue[0]).style.backgroundColor = '';
-				
+
 				var tid = newvalue[0];
-				
+
 				var cooktotal = getCookie('cooktotal');
 				var expertcount = getCookie('expertscount');
-				
+
 
 				if(cooktotal)
 				{
 					var icount=cooktotal;
 				}
-				
+
 				for(m=1;m<=icount;m++)
 				{
 					var cookieval = getCookie("expert_"+m);
-					
+
 					if(cookieval == tid)
 					{
-						var currcookie = "expert_"+m;			
-						
+						var currcookie = "expert_"+m;
+
 					}
-				}	
+				}
 				expertcount=expertcount-1;
-				
+
 				setCookie("expertscount", expertcount, 36000);
-				
-				var cookie_date = new Date(); 
-			
+
+				var cookie_date = new Date();
+
 				cookie_date.setTime(cookie_date.getTime() - 1);
-			
+
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
+<<<<<<< HEAD
+
 					dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
+
+=======
+
+					dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
+
+>>>>>>> removing commented code & hard coded hostnames
 				    		dv("#popup_content").html(response);
-				    
+
 					});
-				
-				 
-				
-			}		
-			
-			
-		
+
+
+
+			}
+
+
+
 		}
-		
+
 
 		function checkExpertCheckBoxes()
-		{ 
+		{
 
 			var online_user = document.getElementById("online_user").value;
 			var expertcount = getCookie('expertscount');
-			
+
 			if(expertcount > 1)
 			{
 				return true;
@@ -545,9 +485,9 @@ function reSet(value)
 
 			}
 		}
-		
 
-        </script>    
+
+        </script>
 
         <br/><br />
         <p><a href="" onClick="return reSet(0)" style="color:darkred">Reset All Filter Settings</a></p>
@@ -555,9 +495,9 @@ function reSet(value)
       </div>
       <div class="cn-left-bottom"></div>
 
-	<div id="popup_connect">	    
-      	
-	</div>	
+	<div id="popup_connect">
+
+	</div>
     </div>
     <div class="body-connect-right" style="margin-top: 25px;">
       <form name='listform' id='listform' method='post' action="">
@@ -583,10 +523,14 @@ function reSet(value)
 <!--memberlist-->
 
 <script type="text/javascript">
-function loadingAjax()  
-{ 
+function loadingAjax()
+{
 	var imagejsconflict = jQuery.noConflict();
-	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');  
+<<<<<<< HEAD
+	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');
+=======
+	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');
+>>>>>>> removing commented code & hard coded hostnames
 	return true;
 }
 </script>

@@ -27,8 +27,8 @@ $(function() {
 	}
     });
 
-}); 
-</script>		
+});
+</script>
 <div class="body" >
   <?php $sfuser=$sf_user->getRaykuUser()->getID(); ?>
   <div id="cn-body">
@@ -59,13 +59,13 @@ $(function() {
         </label>
         <div class="cn-spacer"></div>
         <h3>Filtering Options:</h3>
-        
+
         <h4>Tutor Status: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
         <p><a href="" onClick="return setStatus(1)">Online</a></p>
         <p><a href="" onClick="return setStatus(2)">Offline</a></p>
         <script language="javascript">
 	function setStatus(value)
-	{   
+	{
 		 var onoff;
 		 document.cookie = "onoff"+ "=" +value;
 
@@ -78,23 +78,23 @@ $(function() {
           <option value="utoronto" <?php if($_COOKIE["school"] == "utoronto"): ?> selected="selected" <?php endif; ?> >University of Toronto</option>
           <option value="ubc" <?php if($_COOKIE["school"] == "ubc"): ?> selected="selected" <?php endif; ?> >University of British Columbia</option>
         </select>
-        
+
         <script language="javascript">
 
 function setSchool(value)
-{   
+{
 
 var school;
 document.cookie = "school"+ "=" +value;
 window.location.reload();
 }
 
-</script> 
+</script>
         <!--<h4>Price: <span id="currentPrice"></span></h4>
                             <div id="sliderContainer" style="width: 170px; height: 16px; margin: 0 auto; color: #1e1e1e; padding-bottom: 15px; background-image: url(images/slider/sliderBg.jpg); background-repeat: no-repeat; background-position: top center;">
                             	<img src="images/slider/sliderCarot.jpg" style="position: relative;" onMouseDown="return true;" id="sliderCarot" alt="" height="16" width="8"><br />
                                 <span class="cn-price-left">$0.25/min</span>     <span class="cn-price-right">$2.00/min</span> <div class="clear-both"></div>
-                            </div>--> 
+                            </div>-->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script lang="text/javascript">
 		var count_checkboxclicks=0;
@@ -109,43 +109,43 @@ window.location.reload();
 		slider.setAttribute('onmousedown','sliderOnMouseDown(event)');
 		slider.setAttribute('onmouseup','sliderOnMouseDown(event)');
 		onSliderChange();
-		
+
 		function sliderOnMouseDown(e){
 			if(origMouseX == 0) origMouseX = e.clientX;
 			document.onmouseup = sliderOnMouseUp;
 			document.onmousemove = slideSlider;
 			document.body.focus();
 			document.onselectstart = function(){ return false; };
-			slider.ondragstart = function() { return false; }; 
+			slider.ondragstart = function() { return false; };
 			return false;
 		}
-		
+
 		function sliderOnMouseUp(e){
 			document.onmouseup = '';
 			document.onmousemove = '';
 			onSliderChange();
 			return false;
 		}
-		
+
 		function slideSlider(e){
 			if (!e) e = window.event;
-			
+
 			if((e.clientX - origMouseX) > maxSliderValue)
 				return false;
-			
+
 			if((e.clientX - origMouseX) < minSliderValue)
 				return false;
-			
+
 			slider.style.left = (e.clientX - origMouseX) + "px";
 			currentSliderValue = e.clientX - origMouseX;
 			onSliderChange();
 			return false;
 		}
-		
+
 		function getCurrentSliderPercent(){
 			return parseInt((currentSliderValue / maxSliderValue) * 100);
 		}
-		
+
 		function onSliderChange(){
 			var sliderCost = 2.00 * (getCurrentSliderPercent() / 100);
 			if(sliderCost < .25) sliderCost = .25;
@@ -154,58 +154,55 @@ window.location.reload();
 			if(stringSliderCost.length == 1) stringSliderCost += ".00";
 			document.getElementById('currentPrice').innerHTML = "$" + stringSliderCost;
 		}*/
-		
-		
-		
-		
+
+
+
+
 		function deletecookie(a)
 		{
 			var tid = a;
-			
+
 			document.getElementById("first"+tid).style.backgroundColor = '';
-			
+
 			var chkbox = "checkbox_"+tid;
-			
+
 			document.getElementById(chkbox).checked = false;
-			
+
 			/* Delete Cookie */
-			
+
 			for(j=1;j<=icount;j++)
 			{
 				var cookieval = getCookie("tutor_"+j);
-				
+
 				if(cookieval == tid)
 				{
-					var currcookie = "tutor_"+j;			
+					var currcookie = "tutor_"+j;
 				}
 			}
-			
+
 			//alert(currcookie);
-			
+
 			var tcount = getCookie('tutorcount');
-			
+
 			tcount=tcount-1;
-			
+
 			expertcount = tcount;
-			
-			setCookie("tutorcount", tcount, 36000)	
-			
+
+			setCookie("tutorcount", tcount, 36000)
+
 			var cookie_date = new Date();  // current date & time
-			
+
 			cookie_date.setTime(cookie_date.getTime() - 1);
-			
+
 			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
-			$(document).ready(function(){
-			$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
-			
-			    $("#popup_connect").html(response);
-			    
-			});
-		    	});								    	
-		    	
+
+      $(document).ready(function() {
+        $('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
+          $("#popup_connect").html(response);
+        });
+      });
 		}
-		
+
 		function setvalue(a)
 		{
 			//alert(a);
@@ -216,7 +213,7 @@ window.location.reload();
 
 				document.getElementById(a).checked = false;
 
-				
+
 				alert("You are Limited To Select Four Expers At Once");
 
 				return false;
@@ -228,176 +225,172 @@ window.location.reload();
 
 			if (document.getElementById(a).checked == true)
 			{
-			
+
 			var newId = a.split('_');
 
 			var lastOne = newId[1];
-			
+
 			var tid = lastOne;
 			document.getElementById("first"+tid).style.backgroundColor = '#DEF3FE';
 
 				expertcount=expertcount+1;
-			
+
 			//alert(expertcount);
-			
+
 			var tutname = "tutor_"+icount;
-			
+
 			var maxcook = icount;
-			
+
 			setCookie(tutname, tid, 36000);
-			
+
 			setCookie("cookcount", maxcook, 36000);
-			
+
 			//var TID = getCookie(tutname);
-												
+
 			setCookie("tutorcount", expertcount, 36000);
-			
-			$(document).ready(function(){
-			$('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-			
-			    $("#popup_content").html(response);
-			    
-			});
-		    	});
-		    	
+
+      $(document).ready(function(){
+        $('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
+          $("#popup_content").html(response);
+
+        });
+      });
+
 			icount = icount+1;
-			
+
 			}
 
 	        	if (document.getElementById(a).checked == false)
-			{									
-			
-			var newId = a.split('_');
+            {
 
-			var lastOne = newId[1];
+              var newId = a.split('_');
 
-			var tid = lastOne;
-			
-			document.getElementById("first"+tid).style.backgroundColor = '';
-			
-			var b = 'checkbox_'+tid;			
-			
-			document.getElementById(b).checked = false;
-			
-			/* Delete Cookie */
+              var lastOne = newId[1];
 
-			for(j=1;j<=icount;j++)
-			{
-				var cookieval = getCookie("tutor_"+j);
-				if(cookieval == tid)
-				{
-					var currcookie = "tutor_"+j;			
-				}
-			}
-			
-			//var currcookie = "tutor_"+lvar newvalue = a.split('.');			
-			
-			expertcount=expertcount-1;
-			//alert(expertcount);
-			setCookie("tutorcount", expertcount, 36000);
-			
-			var cookie_date = new Date();  // current date & time
-			
-			cookie_date.setTime(cookie_date.getTime() - 1);
-			
-			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
-			$(document).ready(function(){
-			$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
-			
-			    $("#popup_connect").html(response);
-			    
-			});
-		    	});
+              var tid = lastOne;
 
-			}
+              document.getElementById("first"+tid).style.backgroundColor = '';
+
+              var b = 'checkbox_'+tid;
+
+              document.getElementById(b).checked = false;
+
+              /* Delete Cookie */
+
+              for(j=1;j<=icount;j++)
+              {
+                var cookieval = getCookie("tutor_"+j);
+                if(cookieval == tid)
+                {
+                  var currcookie = "tutor_"+j;
+                }
+              }
+
+              //var currcookie = "tutor_"+lvar newvalue = a.split('.');
+
+              expertcount=expertcount-1;
+              //alert(expertcount);
+              setCookie("tutorcount", expertcount, 36000);
+
+              var cookie_date = new Date();  // current date & time
+
+              cookie_date.setTime(cookie_date.getTime() - 1);
+
+              document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+
+              $(document).ready(function(){
+                $('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
+                  $("#popup_connect").html(response);
+
+                });
+              });
+
+            }
 
 
 
 		}
-		
-		
+
+
 		function rowCheck(a){
-		
-			var newvalue = a.split('.');			
-			
-			var b = "checkbox_"+newvalue[0];			
-			
+
+			var newvalue = a.split('.');
+
+			var b = "checkbox_"+newvalue[0];
+
 			if(!document.getElementById(b).checked)
-			{
-				//alert("Ex:Un-Checked:"+b);
-				document.getElementById(b).checked=true;
-				//alert("Current Box::"+document.getElementById(b).checked);
-				document.getElementById("first"+newvalue[0]).style.backgroundColor = '#DEF3FE';
-				expertcount=expertcount+1;
-				
-				var tid = newvalue[0];
-				
-				var tutname = "tutor_"+icount;
-			
-				var maxcook = icount;
-			
-				setCookie(tutname, tid, 36000);
-			
-				setCookie("cookcount", maxcook, 36000);
-				
-				setCookie("tutorcount", expertcount, 36000);
-				
-				$(document).ready(function()
-				{
-				
-					$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
-			
-				    	$("#popup_connect").html(response);
-				    
-					});
-			    	});	
-				
-				icount = icount+1;
-			}
+      {
+        //alert("Ex:Un-Checked:"+b);
+        document.getElementById(b).checked=true;
+        //alert("Current Box::"+document.getElementById(b).checked);
+        document.getElementById("first"+newvalue[0]).style.backgroundColor = '#DEF3FE';
+        expertcount=expertcount+1;
+
+        var tid = newvalue[0];
+
+        var tutname = "tutor_"+icount;
+
+        var maxcook = icount;
+
+        setCookie(tutname, tid, 36000);
+
+        setCookie("cookcount", maxcook, 36000);
+
+        setCookie("tutorcount", expertcount, 36000);
+
+        $(document).ready(function()
+      {
+        $('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
+
+          $("#popup_connect").html(response);
+
+        });
+      });
+
+        icount = icount+1;
+      }
 			else
-			{
-				//alert("Ex: Checked:"+b);
-				document.getElementById(b).checked=false;
-				//alert("Current Box::"+document.getElementById(b).checked);
-				document.getElementById("first"+newvalue[0]).style.backgroundColor = '';
-				expertcount=expertcount-1;
-				
-				setCookie("tutorcount", expertcount, 36000);
-				
-				var tid = newvalue[0];
-				
-				//Delete Cookie
-			
-				for(m=1;m<=icount;m++)
-				{
-					var cookieval = getCookie("tutor_"+m);
-				
-					if(cookieval == tid)
-					{
-						var currcookie = "tutor_"+m;			
-					}
-				}	
-				
-				var cookie_date = new Date(); 
-			
-				cookie_date.setTime(cookie_date.getTime() - 1);
-			
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-				
-				$(document).ready(function()
-				{
-					$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
-			
-				    	$("#popup_connect").html(response);
-				    
-					});
-			    	});					
-				 
-				
-			}
-			
-			
+      {
+        //alert("Ex: Checked:"+b);
+        document.getElementById(b).checked=false;
+        //alert("Current Box::"+document.getElementById(b).checked);
+        document.getElementById("first"+newvalue[0]).style.backgroundColor = '';
+        expertcount=expertcount-1;
+
+        setCookie("tutorcount", expertcount, 36000);
+
+        var tid = newvalue[0];
+
+        //Delete Cookie
+
+        for(m=1;m<=icount;m++)
+        {
+          var cookieval = getCookie("tutor_"+m);
+
+          if(cookieval == tid)
+          {
+            var currcookie = "tutor_"+m;
+          }
+        }
+
+        var cookie_date = new Date();
+
+        cookie_date.setTime(cookie_date.getTime() - 1);
+
+        document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+
+        $(document).ready(function()
+          {
+            $('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
+              $("#popup_connect").html(response);
+
+            });
+          });
+
+
+      }
+
+
 			if(expertcount == 5) {
 
 				if (document.getElementById(b).checked == true)
@@ -416,17 +409,17 @@ window.location.reload();
 
 
 			}
-			
-		
+
+
 		}
-		
+
 
 		function checkExpertCheckBoxes()
-		{ 
+		{
 
 			var online_user = document.getElementById("online_user").value;
 
-			
+
 			if(expertcount > 1)
 			{
 				return true;
@@ -468,7 +461,7 @@ var result = confirm("It's recommended to select 2 to 4 experts for best results
 function setScore(value)
 {
 		var ss;
-		
+
 		document.cookie = "ss"+ "=" +value;
 
 		window.location.reload();
@@ -485,12 +478,12 @@ function reSet(value)
 	     document.cookie = "school"+ "=" +value;
 
 }
-</script> 
+</script>
       </div>
       <div class="cn-left-bottom"></div>
-      
 
-      
+
+
     </div>
     <div class="body-connect-right" style="margin-top: 25px;">
       <div style="height:50px;margin-bottom:10px">
@@ -509,7 +502,7 @@ function reSet(value)
           <div class="cn-column-four" align="center">Connect</div>
           <div class="clear-both"></div>
         </div>
-        <?php 
+        <?php
         //print_r($_COOKIE);
 $connection = RaykuCommon::getDatabaseConnection();
 
@@ -518,17 +511,17 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 $c = new Criteria();
 	$rankexperts = ExpertCategoryPeer::doSelect($c);
 
-	$rankedUsers = array(); $ji =0; $newUserLimit = array(); 
+	$rankedUsers = array(); $ji =0; $newUserLimit = array();
 
-		 foreach($rankexperts as $exp): 
+		 foreach($rankexperts as $exp):
 
-	
+
 					if(!in_array($exp->getUserId(), $newUserLimit)) :
 
 					$newUserLimit[] = $exp->getUserId();
 
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
+						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
+						 if(mysql_num_rows($_query) > 0) :
 
 							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
 							$score = mysql_fetch_assoc($query);
@@ -542,15 +535,15 @@ $c = new Criteria();
 
 								$ji++;
 							endif;
-		      
-      						 endif; 
+
+      						 endif;
 
 					endif;
 
 
-		 endforeach; 
+		 endforeach;
 
-					asort($rankedUsers);  
+					asort($rankedUsers);
 
 					arsort($rankedUsers);
 
@@ -564,14 +557,14 @@ function cmp($a, $b)
 	return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-    
+
 }
 
 
 
 ?>
         <?php if($cat != NULL): ?>
-        <?php if(count($expert_cats) >= 1 ): 
+        <?php if(count($expert_cats) >= 1 ):
 
 
 
@@ -581,7 +574,7 @@ function cmp($a, $b)
 		$newUser= array(); $i =0;
 		$newOnlineUser= array(); $j =0;
 		$newOfflineUser= array(); $k =0;
-		foreach($expert_cats as $new): 
+		foreach($expert_cats as $new):
 
 
 //==========================================Expert Score increase when both user and asker belongs to the same school=======================================//
@@ -597,12 +590,12 @@ function cmp($a, $b)
 
 
 
-						 $mailExperts = explode("@", $newExperts->getEmail());	     
-															
+						 $mailExperts = explode("@", $newExperts->getEmail());
+
 						 $newMailExperts = explode(".", $mailExperts[1]);
 
-					 	 $mailUser = explode("@", $loginUser->getEmail());	     
-															
+					 	 $mailUser = explode("@", $loginUser->getEmail());
+
 						 $newMailUser = explode(".", $mailUser[1]);
 
 
@@ -638,7 +631,7 @@ $rowUser = mysql_fetch_assoc($queryUser);
 		if(!is_numeric($rowExp['course_year'])) {
 
 			if($rowExp['course_year'] == "graduated") {
-				
+
 				$rowExp['course_year'] = 5;
 
 			} else {
@@ -646,12 +639,12 @@ $rowUser = mysql_fetch_assoc($queryUser);
 				$rowExp['course_year'] = 4;
 			}
 
-		} 
+		}
 
 		if(!is_numeric($rowUser['course_year'])) {
 
 			if($rowUser['course_year'] == "graduated") {
-				
+
 				$rowUser['course_year'] = 5;
 
 			} else {
@@ -659,7 +652,7 @@ $rowUser = mysql_fetch_assoc($queryUser);
 				$rowUser['course_year'] = 4;
 			}
 
-		} 
+		}
 
 	$value = $rowExp['course_year'] - $rowUser['course_year'];
 
@@ -733,7 +726,7 @@ $newValue = $rowExp['course_performance'] - $rowUser['course_performance'];
 
 		$new['score'] = $new['score'] * 1.6;
 
-	} 
+	}
 
 
 //================================================================================================================================================================//
@@ -747,12 +740,12 @@ $onlinecheck = '';
 
 						$onlinecheck = "online";
 
-					} 
+					}
 
 
 					if(empty($onlinecheck)) {
 
-					
+
 						$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
 
 						if(mysql_num_rows($gtalkquery) > 0) {
@@ -762,7 +755,7 @@ $onlinecheck = '';
 							$gtalkmail = $status['gtalkid'];
 
 							 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-						} 
+						}
 
 					}
 
@@ -782,12 +775,12 @@ $onlinecheck = '';
 
 
 								foreach($Users as $key => $user) :
-	
+
 									if($user['username'] == $fb_username):
 
-										 $onlinecheck = 'online'; 	
-		
-										 break;	
+										 $onlinecheck = 'online';
+
+										 break;
 									endif;
 
 								endforeach;
@@ -797,24 +790,24 @@ $onlinecheck = '';
 					}
 
 						 if(empty($onlinecheck) || ($onlinecheck != "online")) {
-	
+
 							$onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 
 							$_Users = json_decode($onlineUsers, true);
 
 							foreach($_Users as $key => $_user) :
-	
+
 								if($_user['email'] == $newExperts->getEmail()):
 
-									 $onlinecheck = 'online'; 		
-									 break;	
+									 $onlinecheck = 'online';
+									 break;
 								endif;
 
 							endforeach;
 
 						}
-	
-					
+
+
 						if($onlinecheck == "online") {
 
 								$dv=new Criteria();
@@ -849,15 +842,15 @@ $onlinecheck = '';
 								$dv=new Criteria();
 								$dv->add(UserPeer::ID,$new['userid']);
 								$_thisUser = UserPeer::doSelectOne($dv);
-					
+
 						$newUser[$i] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $_thisUser->getCreatedAt());
 
 					 	$i++;
 				}
 
-	
 
-				 endforeach; 
+
+				 endforeach;
 
 
 
@@ -880,7 +873,7 @@ $_l = 1; $_h = 1; $_Tutor = array(); 	$_NonTutor = array();
 				$_user = UserPeer::retrieveByPk($user['userid']);
 
 					if($_user->getType() == 5):
-				
+
 						$_Tutor[$_l] = array("score" => $user['score'], "userid" => $user['userid'], "category" => $user['category']);
 
 						$_l++;
@@ -890,7 +883,7 @@ $_l = 1; $_h = 1; $_Tutor = array(); 	$_NonTutor = array();
 						$_NonTutor[$_h] = array("score" => $user['score'], "userid" => $user['userid'], "category" => $user['category']);
 
 						$_h++;
-					
+
 
 					endif;
 
@@ -898,12 +891,12 @@ $_l = 1; $_h = 1; $_Tutor = array(); 	$_NonTutor = array();
 
 
 
-					asort($_Tutor);  
+					asort($_Tutor);
 
 					arsort($_Tutor);
 
 
-					asort($_NonTutor);  
+					asort($_NonTutor);
 
 					arsort($_NonTutor);
 
@@ -926,7 +919,7 @@ $_dv = 1;  $_vd = 1;
 
 						$_vd++;
 
-					}	
+					}
 
 
 
@@ -938,18 +931,18 @@ $_dv = 1;  $_vd = 1;
 
 		$fianl_users = array(); $_fianl_users = array(); $_dd =1;  $_vx = 1;
 
-			
+
 		$rateUsersCount = count($_rateUsers);
 
 		if($rateUsersCount > 3) {
 
 			foreach($_rateUsers as $key => $user) :
-				
+
 				if($_dd%4==0 && $_vx <= 3 && !empty($_emptyRateUsers)):
 
 					$fianl_users[$_dd] = $_emptyRateUsers[$_vx];
-			
-					unset($_emptyRateUsers[$_vx]); 
+
+					unset($_emptyRateUsers[$_vx]);
 
 					$_vx++; $_dd++;
 
@@ -957,22 +950,22 @@ $_dv = 1;  $_vd = 1;
 				elseif($_dd%4==0 && $_vx > 3 && !empty($_emptyRateUsers)) :
 
 					$fianl_users[$_dd] = $_emptyRateUsers[$_vx];
-									
-					unset($_emptyRateUsers[$_vx]); 
+
+					unset($_emptyRateUsers[$_vx]);
 
 					$_vx++; $_dd++;
-			
- 
+
+
 				endif;
 
 					$fianl_users[$_dd] = array("score" => $user['score'], "userid" => $user['userid'], "category" => $user['category']);
 
-				
+
 					$_dd++;
 
 			//echo "List".$_dd++;print_r($fianl_users);echo "<br/><br/>";
 
-			
+
 			endforeach;
 
 			if(!empty($_emptyRateUsers)) :
@@ -1003,13 +996,13 @@ $_dv = 1;  $_vd = 1;
 
 					}
 
-			
+
 		}
 
 
 				if(empty($_COOKIE["onoff"])) {
 
-					asort($newOfflineUser);  
+					asort($newOfflineUser);
 
 					arsort($newOfflineUser);
 
@@ -1065,21 +1058,21 @@ $_dv = 1;  $_vd = 1;
 
 
 
-		//$xy = 1; 
+		//$xy = 1;
 
 
 
 
 		 $_count_online_user = 0;
 
-			
-					
+
+
 	$_count_check = count($newUser);
 
 
 
 
-	$_v = 1; 
+	$_v = 1;
 
 
 
@@ -1087,7 +1080,7 @@ $_dv = 1;  $_vd = 1;
 
 					$rankUsers = $newUser;
 
-					asort($rankUsers);  
+					asort($rankUsers);
 
 					arsort($rankUsers);
 
@@ -1096,7 +1089,7 @@ $_dv = 1;  $_vd = 1;
 
 
 
-				 foreach($newUser as $newOne): 
+				 foreach($newUser as $newOne):
 
 				$xy =  $newOne['userid'];
 
@@ -1105,41 +1098,41 @@ $_dv = 1;  $_vd = 1;
 						$c=new Criteria();
 						$c->add(UserPeer::ID,$newOne['userid']);
 						$experts=UserPeer::doSelectOne($c);
-						
+
 						if($sfcategory == 5) {
 
 						$query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
 
 						$query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
 						$detail3=mysql_fetch_assoc($query3);
-								
+
 	    				$query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
 						$detail2=mysql_fetch_assoc($query2);
-						
-						
+
+
 						$query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']."  ", $connection) or die(mysql_error());
 						$allsub= "General"." Student (Year: ".$detail3['course_year'].")";
-						
+
 						} else {
-						
+
 									$query1 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
 
 						$query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
 						$detail3=mysql_fetch_assoc($query3);
-								
+
 	    				$query2 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
 						$detail2=mysql_fetch_assoc($query2);
-							
 
-						  
-						
+
+
+
 						$query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
-		
+
 						$allsub=" ";
-						while ($row = mysql_fetch_array($query4, MYSQL_NUM)) 
+						while ($row = mysql_fetch_array($query4, MYSQL_NUM))
 						         {
-                                 //printf("ID: %s  Name: %s", $row[0], $row[3]); 
-								 
+                                 //printf("ID: %s  Name: %s", $row[0], $row[3]);
+
 								 if($allsub==" ")
 								 {
 									 $allsub=$row[3];
@@ -1149,24 +1142,24 @@ $_dv = 1;  $_vd = 1;
 								 $allsub=$allsub." | ".$row[3];
 								 }
                                   }
-								  
+
 						$allsub=$allsub." Student (Year: ".$detail3['course_year'].")";
-						
+
 					}
 
 						$query5 = mysql_query("select * from user_rate where userid=".$newOne['userid']." ", $connection) or die(mysql_error());
 						if(mysql_num_rows($query5) > 0) {
-			
+
 						$rowValues = mysql_fetch_assoc($query5);
 
 							$rate=$rowValues['rate']."RP";
-						
+
 						} else {
 
 							$rate="0.16RP";
 
 						}
-						
+
 						$usercoursedetail=$detail3['course_name']." Student (Year: ".$detail3['course_year'].")";
 						//$usercoursedetail=$experts->getName().$score1;
 
@@ -1200,7 +1193,7 @@ $_dv = 1;  $_vd = 1;
 
 			$fbRow = mysql_fetch_assoc($fb_query);
 
-			$fb_username = $fbRow['fb_username']; 
+			$fb_username = $fbRow['fb_username'];
 
 			$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 
@@ -1208,11 +1201,11 @@ $_dv = 1;  $_vd = 1;
 
 
 			foreach($Users as $key => $user) :
-	
+
 				if($user['username'] == $fb_username):
 
-					 $onlinecheck = "online"; 			
-					 break;	
+					 $onlinecheck = "online";
+					 break;
 				endif;
 
 			endforeach;
@@ -1222,17 +1215,17 @@ $_dv = 1;  $_vd = 1;
 	}
 
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
-	
+
 		$onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 
 		$_Users = json_decode($onlineUsers, true);
 
 		foreach($_Users as $key => $_user) :
-	
+
 			if($_user['email'] == $experts->getEmail()):
 
-				 $onlinecheck = 'online'; 		
-				 break;	
+				 $onlinecheck = 'online';
+				 break;
 			endif;
 
 		endforeach;
@@ -1242,9 +1235,9 @@ $_dv = 1;  $_vd = 1;
 ?>
 
 
-<?php 
+<?php
 
-       
+
 	$curr_user_rank=''; $ij =1;
 
 
@@ -1252,7 +1245,7 @@ $_dv = 1;  $_vd = 1;
 
 		if($_expert['userid'] == $experts->getId()):
 
-			$curr_user_rank=$ij;				 
+			$curr_user_rank=$ij;
 			break;
 
 		endif;
@@ -1268,7 +1261,7 @@ $_dv = 1;  $_vd = 1;
 
 if(strlen($allsub) > 100) :
 
- $allsub = substr($allsub,0,100); 
+ $allsub = substr($allsub,0,100);
 
  $allsub =  $allsub."&nbsp;&nbsp;...";
 endif;
@@ -1277,8 +1270,8 @@ endif;
 ?>
 
 <?php
-								
- if(!empty($_COOKIE["ss"]) && $_COOKIE["ss"] <= $newOne['score']) { 
+
+ if(!empty($_COOKIE["ss"]) && $_COOKIE["ss"] <= $newOne['score']) {
 
 $k = 1; ?>
 
@@ -1317,12 +1310,12 @@ $k = 1; ?>
             <?php endif; ?>
             </p>
           </div>
-          
+
           <div id="<?php echo $xy.'.4'; ?>"  class="cn-column-two" align="center">
 				            	<p class="cn-expertscore" style="font-size:13px;color:#333">
 										<?php echo $rate; ?></p>
 				       </div>
-          
+
           <div class="cn-column-four">
             <p class="cn-pricepermin" align="center" style="margin-top:10px">
 	     <?php
@@ -1330,11 +1323,11 @@ $k = 1; ?>
 		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid'], $connection) or die(mysql_error());
 
 		if(mysql_num_rows($query) > 0) {
-	
+
 			$newFlag = 1;
 
 		} else {
-	
+
 			$newFlag = 2;
 		} ?>
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
@@ -1354,10 +1347,10 @@ $k = 1; ?>
           <div class="clear-both"></div>
         </div>
 
-        <?php 	
-					
+        <?php
+
 	$_SESSION['temp1'][$newOne['userid']]=1;
-							 
+
 	} else if(!empty($_COOKIE['ss'])) {
 
 			///	//style="background-color:#DEF3FE;"
@@ -1404,12 +1397,12 @@ $k = 1; ?>
 
             </p>
           </div>
-          
+
           <div id="<?php echo $xy.'.4'; ?>"  class="cn-column-two" align="center">
 				            	<p class="cn-expertscore" style="font-size:13px;color:#333">
 										<?php echo $rate; ?></p>
 				       </div>
-          
+
           <div class="cn-column-four">
             <p class="cn-pricepermin" align="center" style="margin-top:10px">
 	     <?php
@@ -1417,11 +1410,11 @@ $k = 1; ?>
 		$query = mysql_query("select * from popup_close where user_id=".$newOne['userid'], $connection) or die(mysql_error());
 
 		if(mysql_num_rows($query) > 0) {
-	
+
 			$newFlag = 1;
 
 		} else {
-	
+
 			$newFlag = 2;
 		} ?>
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
@@ -1442,19 +1435,19 @@ $k = 1; ?>
         </div>
 
 
-        <?php 
-				
-				
-					
+        <?php
+
+
+
 							 $_SESSION['temp1'][$newOne['userid']]=1;
-	
+
 	}
 
 
-					
+
 					if($_count_check == $_v) :
-						
-						echo "<input type='hidden' name='online_user' id='online_user' value='".$_count_online_user."' >";	
+
+						echo "<input type='hidden' name='online_user' id='online_user' value='".$_count_online_user."' >";
 					endif;
 
 			 		$_v++;
@@ -1470,13 +1463,13 @@ $k = 1; ?>
 						} ?>
       <?php else: ?>
       </form>
-      <?php 
+      <?php
 
 if($_COOKIE["onoff"] == 1) {
 
-	 
+
 	  if(!empty($_COOKIE["ss"])) {
- 	
+
 									if(!empty($_COOKIE["school"])) {
 
 										?>
@@ -1491,7 +1484,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  } else {
-		
+
 		if(!empty($_COOKIE["school"])) {
 
 			?>
@@ -1505,9 +1498,9 @@ if($_COOKIE["onoff"] == 1) {
       <?php
 
 		}
-		
+
 	  }
-	
+
 
 
 } else if($_COOKIE["onoff"] == 2) {
@@ -1515,7 +1508,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  if(!empty($_COOKIE["ss"])) {
- 	
+
 									if(!empty($_COOKIE["school"])) {
 
 										?>
@@ -1530,7 +1523,7 @@ if($_COOKIE["onoff"] == 1) {
 
 
 	  } else {
-		
+
 		if(!empty($_COOKIE["school"])) {
 
 			?>
@@ -1544,21 +1537,21 @@ if($_COOKIE["onoff"] == 1) {
       <?php
 
 		}
-		
+
 	  }
-	
+
 
 } else {
 
      if(!empty($_COOKIE["ss"])) {
-	 
+
 						if(!empty($_COOKIE["school"])) {
-			
-						
+
+
 		?>
       <p class="cn-pricepermin" align="center" style="margin-top:10px"> No Experts found for this category with the criteria of Expert Score Level and School.... </p>
       <?php
-			
+
 						} else {
 
 				?>
@@ -1572,9 +1565,9 @@ if($_COOKIE["onoff"] == 1) {
 			?>
       <p class="cn-pricepermin" align="center" style="margin-top:10px"> No Experts found for this category with the criteria of School Level.... </p>
       <?php
-			
 
-		} 
+
+		}
 
       }
 
@@ -1584,7 +1577,7 @@ if($_COOKIE["onoff"] == 1) {
       <!--<p class="cn-pricepermin" align="center" style="margin-top:10px; color:#C30">
                         	    Please Select category from the category list
                       	    </p>-->
-      
+
       <div class="clear-both"></div>
       <? endif; ?>
       <?php else: ?>
@@ -1593,9 +1586,9 @@ if($_COOKIE["onoff"] == 1) {
       <p class="cn-pricepermin" align="center" style="margin-top:10px; color:#C30"> Please Select category from the category list </p>
       <div class="clear-both"></div>
       <?php endif; ?>
-    </div>      	
+    </div>
   </div>
-<div id="popup_connect" style="border:1px solid red;">		
+<div id="popup_connect" style="border:1px solid red;">
 	</div>
 </div>
 </div>
