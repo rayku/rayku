@@ -139,7 +139,7 @@ $uac = new UsersAvailabilityChecker;
 
 <!-- End of form validation files include -->
 
-
+<?php if ($_SERVER['HTTP_HOST'] != 'local.rayku.com') { ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-21399448-5']);
@@ -152,6 +152,7 @@ $uac = new UsersAvailabilityChecker;
   })();
 
 </script>
+<?php } ?>
 <style>
 #header {
     background: url("/images/landing/topnav/header-bg.gif") repeat-x scroll 0 0 transparent;
@@ -600,6 +601,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php endif; ?>
 
 <?php if( $sf_context->getModuleName() !='tutorsignup'): ?>
+<?php if ($_SERVER['HTTP_HOST'] != 'local.rayku.com') { ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-21399448-5']);
@@ -611,6 +613,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
+<?php } ?>
 <?php endif; ?>
 
 </head>
