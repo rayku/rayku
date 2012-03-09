@@ -821,9 +821,9 @@ $userId = $currentUser->getId();
  {	 
                 $connection = RaykuCommon::getDatabaseConnection();
 
-		if($_SESSION['modelPopupOpen']) :
+		if(@$_SESSION['modelPopupOpen']) :
 
-			if($_SESSION['popup_session']) {
+			if(@$_SESSION['popup_session']) {
 
 				$_now = time(); 
 
@@ -850,8 +850,6 @@ $userId = $currentUser->getId();
 		endif;
 
 
-
-	 $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
    $currentUser = $this->getUser()->getRaykuUser();
 

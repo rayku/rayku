@@ -103,7 +103,7 @@ $uac = new UsersAvailabilityChecker;
 
 			type : "POST",
 
-			url: "http://www.rayku.com/quickreg/duplicationcheck",
+			url: "/quickreg/duplicationcheck",
 			data: "emailId="+email,
 
 			success : function (data) {

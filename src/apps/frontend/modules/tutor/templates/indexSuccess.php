@@ -308,7 +308,9 @@ function followMe(expert_id, expertname) {
 	if($expert->isOnline())
 	{
 	  $web="Web";
-	}
+	} else {
+          $web = null;
+        }
 
 	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$expert->getId(), $connection) or die(mysql_error());
 	
@@ -346,7 +348,7 @@ function followMe(expert_id, expertname) {
 	
 	$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 								
-	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
+	 if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array(@$_Users)) {
 	
 		$_Users = json_decode($onlineTutorsByNotificationBot, true);
 		
@@ -389,17 +391,19 @@ function followMe(expert_id, expertname) {
 		$_Users = json_decode($onlineTutorsByNotificationBot, true);
 		
 		$desktopapplication = null;
-		foreach($_Users as $key => $_user) :
-		
-			if($_user['email'] == $expert->getEmail()):
-				 $onlinecheck = 'online'; 	
-				 
-				 $desktopapplication="Desktop Application";	
-				 
-				 break;	
-			endif;
+                if (is_array(@$_Users)) {
+                    foreach($_Users as $key => $_user) :
 
-		endforeach;
+                            if($_user['email'] == $expert->getEmail()):
+                                    $onlinecheck = 'online'; 	
+
+                                    $desktopapplication="Desktop Application";	
+
+                                    break;	
+                            endif;
+
+                    endforeach;
+                }
 		
 		
 		// Facebook Desktop Application

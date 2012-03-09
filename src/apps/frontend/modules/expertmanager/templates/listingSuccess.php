@@ -197,7 +197,7 @@ window.location.reload();
 			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 				
 			$(document).ready(function(){
-			$('#popup_content').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+			$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 			    $("#popup_connect").html(response);
 			    
@@ -253,7 +253,7 @@ window.location.reload();
 			setCookie("tutorcount", expertcount, 36000);
 			
 			$(document).ready(function(){
-			$('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+			$('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 			    $("#popup_content").html(response);
 			    
@@ -303,7 +303,7 @@ window.location.reload();
 			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 				
 			$(document).ready(function(){
-			$('#popup_content').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+			$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 			    $("#popup_connect").html(response);
 			    
@@ -346,7 +346,7 @@ window.location.reload();
 				$(document).ready(function()
 				{
 				
-					$('#popup_content').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+					$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				    	$("#popup_connect").html(response);
 				    
@@ -387,7 +387,7 @@ window.location.reload();
 				
 				$(document).ready(function()
 				{
-					$('#popup_content').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+					$('#popup_content').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				    	$("#popup_connect").html(response);
 				    
@@ -498,7 +498,7 @@ function reSet(value)
       <div style="float:left;width:650px;font-size:21px;color:#333;line-height:30px">Choose 1 to 4 online tutors below. Then <strong>click <a href="javascript: document.listform.submit()" onclick="return checkExpertCheckBoxes();" type="submit" id="submit_connect">here</a> to connect.</strong></div>
         <input type="hidden" name="hidden" value="hidden" />
         <div style="float:right;width:60px" align="right"><!--<a href="whiteboard">-->
-          <input type="button" name="post_on_boards" value="Skip" onclick="javascript:document.location='http://www.rayku.com/forum/newthread/<?=$_SESSION['subject'];?>?pob=1'" class="myButton" style="width:55px;font-weight:normal">
+          <input type="button" name="post_on_boards" value="Skip" onclick="javascript:document.location='/forum/newthread/<?=$_SESSION['subject'];?>?pob=1'" class="myButton" style="width:55px;font-weight:normal">
           </div>
 
           </div>
@@ -1289,12 +1289,12 @@ $k = 1; ?>
 
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
               <?php if($experts->getType() == 5): ?>
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php else: ?>
               <?php if($experts->getType() == 5): ?>
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php endif; ?>
@@ -1303,7 +1303,7 @@ $k = 1; ?>
 
  	<?php if(($experts->getType() == 5)) : ?>
 
- 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="http://www.rayku.com/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
+ 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
 
 	<?php elseif($curr_user_rank <= 10) : ?>
 
@@ -1373,12 +1373,12 @@ $k = 1; ?>
 
               <?php if($onlinecheck == "online" || $experts->isOnline()) : ?>
               <?php if($experts->getType() == 5): ?>
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php else: ?>
               <?php if($experts->getType() == 5): ?>
-              <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="/images/expert_saved.png" alt="Rayku Staff" />
               <?php endif; ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php endif; ?>
@@ -1388,7 +1388,7 @@ $k = 1; ?>
 
 		 	<?php if(($experts->getType() == 5)) : ?>
 
-		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="http://www.rayku.com/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
+		 		<div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
 
 			<?php elseif($curr_user_rank <= 10) : ?>
 

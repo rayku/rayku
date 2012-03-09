@@ -482,12 +482,12 @@ function cmp($a, $b)
 	}		      
       /* Automatic Tutor Select - End */
       if($experts->getType() == 5): ?>
-      <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+      <img src="/images/expert_saved.png" alt="Rayku Staff" />
       <?php endif; ?>
       <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
       <?php else: ?>
       <?php if($experts->getType() == 5): ?>
-      <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+      <img src="/images/expert_saved.png" alt="Rayku Staff" />
       <?php endif; ?>
       <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
       <?php endif; ?>
@@ -617,7 +617,7 @@ if(count($newUser)>15)
 </script>
 <script type="text/javascript">
 
-	 dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+	 dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 		dv("#popup_content").html(response);
 				    

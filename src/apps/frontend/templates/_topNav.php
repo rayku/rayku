@@ -259,8 +259,8 @@ if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/logi
 <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/encode_decode.js"></script> 
 <?php if($sf_user->isAuthenticated()) : ?>
 <link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
-<script type="text/javascript" src="/js/popup-window.js"></script> 
-<script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/question_popup.js"></script> 
+<script type="text/javascript" src="/scripts/popup-window.js"></script> 
+<script type="text/javascript" src="/js/question_popup.js"></script> 
 <script type="text/javascript" language="javascript">checkMissedQuestion();</script>
 <input type="hidden" value='1' name="question_hidden" id="question_hidden" />
 <!-- Missed Question Popup Start -->

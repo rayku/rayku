@@ -468,11 +468,11 @@ endif;
         <?php $_count_online_user += 1; ?>
         <?php 
 			    	
-			    	$totcook = $_COOKIE['cookcount'];
+			    	$totcook = @$_COOKIE['cookcount'];
 			    	$w=1;
 			    	for($u=1;$u<=$totcook;$u++)
 			    	{
-			    		$cookval.$w = $_COOKIE['tutor_'.$u];
+			    		$cookval.$w = @$_COOKIE['tutor_'.$u];
 			    		$cookvalue = $cookval.$w;
 			    		if($cookvalue)
 			    		{
@@ -494,7 +494,7 @@ endif;
 				
 			    ?>
 				
-        <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo ($cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
+        <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo (@$cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
 		
 		
         <?php } } else { ?>

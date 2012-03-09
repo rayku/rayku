@@ -115,7 +115,7 @@ function reSet(value)
 
 			dv.ajax({ cache: false,
 				type : "POST",
-				url: "http://www.rayku.com/expertmanager/checkbox?id="+checkboxid+"&type="+type
+				url: "/expertmanager/checkbox?id="+checkboxid+"&type="+type
 
 				});
 
@@ -123,7 +123,7 @@ function reSet(value)
 		
 		/* dv("#tutorlist").ready(function() 
 		{			
-			dv('#popup_connect').load('http://www.rayku.com/tutors/checkoutpopup', '', function(response) 
+			dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) 
 			{
 				dv("#popup_content").html(response);
 		    
@@ -170,7 +170,7 @@ function reSet(value)
 							document.cookie = ccook += "=; expires=" + cookie_date.toGMTString();
 						}
 
-						/* dv('#popup_connect').load('http://www.rayku.com/tutors/checkoutpopup', '', function(response) {
+						/* dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
 			
 						   dv("#popup_content").html(response);			   
 						    
@@ -275,7 +275,7 @@ function reSet(value)
 			
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 				
-				dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				   dv("#popup_content").html(response);
 				    
@@ -342,7 +342,7 @@ function reSet(value)
 				setCookie("expertscount", expertcount, 36000);
 			
 
-				dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				    dv("#popup_content").html(response);
 				    
@@ -396,7 +396,7 @@ function reSet(value)
 			
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 
-				dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				    dv("#popup_content").html(response);
 				    
@@ -445,7 +445,7 @@ function reSet(value)
 					setCookie("cooktotal", maxcook, 36000);
 					setCookie("expertscount", expertcount, 36000);
 				
-						dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+						dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 					    		dv("#popup_content").html(response);
 					    
@@ -491,7 +491,7 @@ function reSet(value)
 			
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 				
-					dv('#popup_connect').load('http://www.rayku.com/expertmanager/checkoutpopup', '', function(response) {
+					dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 			
 				    		dv("#popup_content").html(response);
 				    
@@ -572,7 +572,7 @@ function reSet(value)
 				<div class="clear-both"></div>
 	        </div>
       <!--<a href="whiteboard">-->
-          <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="http://www.rayku.com/images/loading1.gif"></div>
+          <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="/images/loading1.gif"></div>
 		<!-- new page -->
 
 			      </form>
@@ -586,7 +586,7 @@ function reSet(value)
 function loadingAjax()  
 { 
 	var imagejsconflict = jQuery.noConflict();
-	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="http://www.rayku.com/images/loading1.gif"></div>');  
+	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');  
 	return true;
 }
 </script>
