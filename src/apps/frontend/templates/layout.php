@@ -2,117 +2,7 @@
 <?php if( ( sfContext::getInstance()->getModuleName() == 'start' )) : ?>
 
 <?php
-
-$c = new Criteria();
-//$c->add(UserPeer::ID);
-$newUser  = UserPeer::doSelect($c);
-//print_r($newUser);
-
-
-////if no online expert available redirecting to the board page
-
-$onlineusers = array();  
-$offlineusers = array();
-$newOnlineUser = array();  
-$newOfflineUser = array();
-							
-$j=0; $k = 0;
-$facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
-$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
-
-$Users = json_decode($facebookTutors, true);
-$_Users = json_decode($onlineTutorsByNotificationBot, true);
-
-
-foreach($newUser as $new):
-	
-	
-	 $a=new Criteria();
-	 $a->add(UserPeer::ID,$new->getId());
-	 $users_online=UserPeer::doSelectOne($a);
-
-		$onlinecheck = '';
-
-		if($users_online->isOnline()) {
-
-			$onlinecheck = "online";
-
-		} 
-
-		if(empty($onlinecheck)) {
-		
-			$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new->getId()) or die(mysql_error());
-		
-			if(mysql_num_rows($gtalkquery) > 0) {
-		
-				$status = mysql_fetch_assoc($gtalkquery);
-		
-				$gtalkmail = $status['gtalkid'];
-		
-				 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-			} 
-		
-		}
-
-		if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
-
-					$fb_query = mysql_query("select * from user_fb where userid=".$new->getId()) or die(mysql_error());
-
-					if(mysql_num_rows($fb_query) > 0) {
-
-						$fbRow = mysql_fetch_assoc($fb_query);
-
-						$fb_username = $fbRow['fb_username'];
-
-
-					foreach($Users as $key => $user) :
-
-						if($user['username'] == $fb_username):
-
-							 $onlinecheck = 'online'; 	
-
-							 break;	
-						endif;
-
-					endforeach;
-
-					}
-
-		}
-	
-	  if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($_Users)) {
-
-
-
-		foreach($_Users as $key => $_user) :
-
-			if($_user['email'] == $users_online->getEmail()):
-
-				 $onlinecheck = 'online'; 		
-				 break;	
-			endif;
-
-		endforeach;
-
-	}
-	
-
-
-	if($onlinecheck == "online") {
-
-	$onlineusers[$j] = $new->getId();
-	$j++;
-
-	} elseif($users_online->isOnline()) {
-		$onlineusers[$j] = $new->getId();
-	    $j++;
-
-	} 
-							
-	endforeach;
-	//echo "<pre>";
-	//print_r($onlineusers);
-
+$uac = new UsersAvailabilityChecker;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -332,8 +222,11 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   <!--container-->
   <div class="container">
     <form name="register-form" id="register-form" action="quickreg/register" method="post">
-       
-      <h3>Ask any math question <span style="font-weight:normal"><?php if(count($onlineusers) > 0){ ?>(<span style="color:#003"><?php echo count($onlineusers); ?></span> tutors online):</span> <?php } ?></h3>
+      <h3>Ask any math question <span style="font-weight:normal">
+        <?php if($uac->getOnlineUsersCount() > 0) { ?>
+              (<span style="color:#003"><?php echo $uac->getOnlineUsersCount(); ?></span> tutors online):</span>
+        <?php } ?>
+      </h3>
       <p class="main-question">
         <input type="text" name="question" id="question" value="Type the question or topic you need help with here"/>
       </p>
