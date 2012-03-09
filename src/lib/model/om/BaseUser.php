@@ -561,6 +561,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastUserInterestCriteria = null;
 
 	/**
+	 * @var        UserGtalk one-to-one related UserGtalk object
+	 */
+	protected $singleUserGtalk;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -2165,6 +2170,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collUserInterests = null;
 			$this->lastUserInterestCriteria = null;
 
+			$this->singleUserGtalk = null;
+
 		} // if (deep)
 	}
 
@@ -2536,6 +2543,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->singleUserGtalk !== null) {
+				if (!$this->singleUserGtalk->isDeleted()) {
+						$affectedRows += $this->singleUserGtalk->save($con);
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -2862,6 +2875,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
+					}
+				}
+
+				if ($this->singleUserGtalk !== null) {
+					if (!$this->singleUserGtalk->validate($columns)) {
+						$failureMap = array_merge($failureMap, $this->singleUserGtalk->getValidationFailures());
 					}
 				}
 
@@ -3617,6 +3636,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserInterest($relObj->copy($deepCopy));
 				}
+			}
+
+			$relObj = $this->getUserGtalk();
+			if ($relObj) {
+				$copyObj->setUserGtalk($relObj->copy($deepCopy));
 			}
 
 		} // if ($deepCopy)
@@ -9047,6 +9071,42 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Gets a single UserGtalk object, which is related to this object by a one-to-one relationship.
+	 *
+	 * @param      PropelPDO $con
+	 * @return     UserGtalk
+	 * @throws     PropelException
+	 */
+	public function getUserGtalk(PropelPDO $con = null)
+	{
+
+		if ($this->singleUserGtalk === null && !$this->isNew()) {
+			$this->singleUserGtalk = UserGtalkPeer::retrieveByPK($this->id, $con);
+		}
+
+		return $this->singleUserGtalk;
+	}
+
+	/**
+	 * Sets a single UserGtalk object as related to this object by a one-to-one relationship.
+	 *
+	 * @param      UserGtalk $l UserGtalk
+	 * @return     User The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUserGtalk(UserGtalk $v)
+	{
+		$this->singleUserGtalk = $v;
+
+		// Make sure that that the passed-in UserGtalk isn't already associated with this object
+		if ($v->getUser() === null) {
+			$v->setUser($this);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -9208,6 +9268,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->singleUserGtalk) {
+				$this->singleUserGtalk->clearAllReferences($deep);
+			}
 		} // if ($deep)
 
 		$this->collClassrooms = null;
@@ -9240,6 +9303,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collUserGiftsRelatedByUserId = null;
 		$this->collUserGiftsRelatedByGiverId = null;
 		$this->collUserInterests = null;
+		$this->singleUserGtalk = null;
 			$this->aPicture = null;
 			$this->aNetwork = null;
 	}

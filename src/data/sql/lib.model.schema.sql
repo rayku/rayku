@@ -1853,6 +1853,23 @@ CREATE TABLE `user_interest`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- user_gtalk
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_gtalk`;
+
+
+CREATE TABLE `user_gtalk`
+(
+	`userid` INTEGER(11)  NOT NULL,
+	`gtalkid` VARCHAR(100)  NOT NULL,
+	PRIMARY KEY (`userid`),
+	CONSTRAINT `user_gtalk_FK_1`
+		FOREIGN KEY (`userid`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- usergroup
 #-----------------------------------------------------------------------------
 
