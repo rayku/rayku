@@ -13,8 +13,8 @@ class BaseThreadForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
-      'poster_id'    => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
-      'forum_id'     => new sfWidgetFormPropelChoice(array('model' => 'Forum', 'add_empty' => true)),
+      'poster_id'    => new sfWidgetFormInput(),
+      'forum_id'     => new sfWidgetFormInput(),
       'title'        => new sfWidgetFormInput(),
       'tags'         => new sfWidgetFormInput(),
       'visible'      => new sfWidgetFormInput(),
@@ -27,13 +27,14 @@ class BaseThreadForm extends BaseFormPropel
       'school_grade' => new sfWidgetFormInput(),
       'created_at'   => new sfWidgetFormDateTime(),
       'lastpost_at'  => new sfWidgetFormDateTime(),
+      'stickie'      => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'           => new sfValidatorPropelChoice(array('model' => 'Thread', 'column' => 'id', 'required' => false)),
-      'poster_id'    => new sfValidatorPropelChoice(array('model' => 'User', 'column' => 'id', 'required' => false)),
-      'forum_id'     => new sfValidatorPropelChoice(array('model' => 'Forum', 'column' => 'id', 'required' => false)),
-      'title'        => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'poster_id'    => new sfValidatorInteger(),
+      'forum_id'     => new sfValidatorInteger(),
+      'title'        => new sfValidatorString(array('max_length' => 100)),
       'tags'         => new sfValidatorString(array('max_length' => 100)),
       'visible'      => new sfValidatorInteger(),
       'cancel'       => new sfValidatorInteger(),
@@ -42,9 +43,10 @@ class BaseThreadForm extends BaseFormPropel
       'notify_pm'    => new sfValidatorInteger(),
       'notify_sms'   => new sfValidatorInteger(),
       'cell_number'  => new sfValidatorInteger(),
-      'school_grade' => new sfValidatorString(array('max_length' => 10)),
-      'created_at'   => new sfValidatorDateTime(array('required' => false)),
-      'lastpost_at'  => new sfValidatorDateTime(array('required' => false)),
+      'school_grade' => new sfValidatorString(array('max_length' => 100)),
+      'created_at'   => new sfValidatorDateTime(),
+      'lastpost_at'  => new sfValidatorDateTime(),
+      'stickie'      => new sfValidatorInteger(),
     ));
 
     $this->widgetSchema->setNameFormat('thread[%s]');

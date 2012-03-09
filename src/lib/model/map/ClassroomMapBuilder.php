@@ -76,8 +76,8 @@ class ClassroomMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('CLASS_USERNAME', 'ClassUsername', 'VARCHAR', true, 100);
 
-		$tMap->addColumn('EMAIL_PASSCODE', 'EmailPasscode', 'VARCHAR', true, 100); 
-		
+		$tMap->addColumn('EMAIL_PASSCODE', 'EmailPasscode', 'VARCHAR', true, 100);
+
 		$tMap->addColumn('CLASSROOM_EMAIL', 'ClassroomEmail', 'VARCHAR', true, 100);
 
 		$tMap->addColumn('LIVE_WEBCAM', 'LiveWebcam', 'INTEGER', true, 11);

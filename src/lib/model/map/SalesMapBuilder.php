@@ -64,7 +64,7 @@ class SalesMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, 11);
 
-		$tMap->addForeignKey('OFFER_VOUCHER_ID', 'OfferVoucherId', 'INTEGER', 'offer_voucher', 'ID', false, 11);
+		$tMap->addForeignKey('OFFER_VOUCHER_ID', 'OfferVoucherId', 'INTEGER', 'offer_voucher1', 'ID', false, 11);
 
 		$tMap->addForeignKey('STATUS_ID', 'StatusId', 'INTEGER', 'status', 'ID', false, 11);
 

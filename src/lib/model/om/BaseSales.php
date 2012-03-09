@@ -76,9 +76,9 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 	protected $total_item_price;
 
 	/**
-	 * @var        OfferVoucher
+	 * @var        OfferVoucher1
 	 */
-	protected $aOfferVoucher;
+	protected $aOfferVoucher1;
 
 	/**
 	 * @var        Status
@@ -313,8 +313,8 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = SalesPeer::OFFER_VOUCHER_ID;
 		}
 
-		if ($this->aOfferVoucher !== null && $this->aOfferVoucher->getId() !== $v) {
-			$this->aOfferVoucher = null;
+		if ($this->aOfferVoucher1 !== null && $this->aOfferVoucher1->getId() !== $v) {
+			$this->aOfferVoucher1 = null;
 		}
 
 		return $this;
@@ -604,8 +604,8 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aOfferVoucher !== null && $this->offer_voucher_id !== $this->aOfferVoucher->getId()) {
-			$this->aOfferVoucher = null;
+		if ($this->aOfferVoucher1 !== null && $this->offer_voucher_id !== $this->aOfferVoucher1->getId()) {
+			$this->aOfferVoucher1 = null;
 		}
 		if ($this->aStatus !== null && $this->status_id !== $this->aStatus->getId()) {
 			$this->aStatus = null;
@@ -649,7 +649,7 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aOfferVoucher = null;
+			$this->aOfferVoucher1 = null;
 			$this->aStatus = null;
 			$this->collPurchaseDetails = null;
 			$this->lastPurchaseDetailCriteria = null;
@@ -754,11 +754,11 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aOfferVoucher !== null) {
-				if ($this->aOfferVoucher->isModified() || $this->aOfferVoucher->isNew()) {
-					$affectedRows += $this->aOfferVoucher->save($con);
+			if ($this->aOfferVoucher1 !== null) {
+				if ($this->aOfferVoucher1->isModified() || $this->aOfferVoucher1->isNew()) {
+					$affectedRows += $this->aOfferVoucher1->save($con);
 				}
-				$this->setOfferVoucher($this->aOfferVoucher);
+				$this->setOfferVoucher1($this->aOfferVoucher1);
 			}
 
 			if ($this->aStatus !== null) {
@@ -869,9 +869,9 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aOfferVoucher !== null) {
-				if (!$this->aOfferVoucher->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aOfferVoucher->getValidationFailures());
+			if ($this->aOfferVoucher1 !== null) {
+				if (!$this->aOfferVoucher1->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aOfferVoucher1->getValidationFailures());
 				}
 			}
 
@@ -1226,13 +1226,13 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a OfferVoucher object.
+	 * Declares an association between this object and a OfferVoucher1 object.
 	 *
-	 * @param      OfferVoucher $v
+	 * @param      OfferVoucher1 $v
 	 * @return     Sales The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setOfferVoucher(OfferVoucher $v = null)
+	public function setOfferVoucher1(OfferVoucher1 $v = null)
 	{
 		if ($v === null) {
 			$this->setOfferVoucherId(NULL);
@@ -1240,10 +1240,10 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 			$this->setOfferVoucherId($v->getId());
 		}
 
-		$this->aOfferVoucher = $v;
+		$this->aOfferVoucher1 = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the OfferVoucher object, it will not be re-added.
+		// If this object has already been added to the OfferVoucher1 object, it will not be re-added.
 		if ($v !== null) {
 			$v->addSales($this);
 		}
@@ -1253,27 +1253,27 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated OfferVoucher object
+	 * Get the associated OfferVoucher1 object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     OfferVoucher The associated OfferVoucher object.
+	 * @return     OfferVoucher1 The associated OfferVoucher1 object.
 	 * @throws     PropelException
 	 */
-	public function getOfferVoucher(PropelPDO $con = null)
+	public function getOfferVoucher1(PropelPDO $con = null)
 	{
-		if ($this->aOfferVoucher === null && ($this->offer_voucher_id !== null)) {
-			$c = new Criteria(OfferVoucherPeer::DATABASE_NAME);
-			$c->add(OfferVoucherPeer::ID, $this->offer_voucher_id);
-			$this->aOfferVoucher = OfferVoucherPeer::doSelectOne($c, $con);
+		if ($this->aOfferVoucher1 === null && ($this->offer_voucher_id !== null)) {
+			$c = new Criteria(OfferVoucher1Peer::DATABASE_NAME);
+			$c->add(OfferVoucher1Peer::ID, $this->offer_voucher_id);
+			$this->aOfferVoucher1 = OfferVoucher1Peer::doSelectOne($c, $con);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aOfferVoucher->addSaless($this);
+			   $this->aOfferVoucher1->addSaless($this);
 			 */
 		}
-		return $this->aOfferVoucher;
+		return $this->aOfferVoucher1;
 	}
 
 	/**
@@ -1548,7 +1548,7 @@ abstract class BaseSales extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collPurchaseDetails = null;
-			$this->aOfferVoucher = null;
+			$this->aOfferVoucher1 = null;
 			$this->aStatus = null;
 	}
 

@@ -52,6 +52,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the visible field.
+	 * Note: this column has a database default value of: 1
 	 * @var        int
 	 */
 	protected $visible;
@@ -110,8 +111,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	 */
 	protected $lastpost_at;
 
+	/**
+	 * The value for the stickie field.
+	 * @var        int
+	 */
 	protected $stickie;
-
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -145,6 +149,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	 */
 	public function applyDefaultValues()
 	{
+		$this->visible = 1;
 	}
 
 	/**
@@ -353,6 +358,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		}
 	}
 
+	/**
+	 * Get the [stickie] column value.
+	 * 
+	 * @return     int
+	 */
 	public function getStickie()
 	{
 		return $this->stickie;
@@ -470,7 +480,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->visible !== $v) {
+		if ($this->visible !== $v || $v === 1) {
 			$this->visible = $v;
 			$this->modifiedColumns[] = ThreadPeer::VISIBLE;
 		}
@@ -716,10 +726,16 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		return $this;
 	} // setLastpostAt()
 
+	/**
+	 * Set the value of [stickie] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Thread The current object (for fluent API support)
+	 */
 	public function setStickie($v)
 	{
 		if ($v !== null) {
-			$v = (string) $v;
+			$v = (int) $v;
 		}
 
 		if ($this->stickie !== $v) {
@@ -728,7 +744,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		}
 
 		return $this;
-	} 
+	} // setStickie()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -741,7 +757,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array())) {
+			if (array_diff($this->modifiedColumns, array(ThreadPeer::VISIBLE))) {
+				return false;
+			}
+
+			if ($this->visible !== 1) {
 				return false;
 			}
 
@@ -782,7 +802,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			$this->school_grade = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->created_at = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->lastpost_at = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->stickie = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->stickie = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -792,7 +812,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = ThreadPeer::NUM_COLUMNS - ThreadPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 16; // 16 = ThreadPeer::NUM_COLUMNS - ThreadPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Thread object", $e);
@@ -1115,7 +1135,6 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getLastpostAt();
 				break;
-
 			case 15:
 				return $this->getStickie();
 				break;
@@ -1232,7 +1251,6 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			case 14:
 				$this->setLastpostAt($value);
 				break;
-
 			case 15:
 				$this->setStickie($value);
 				break;
@@ -1276,7 +1294,6 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setLastpostAt($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setStickie($arr[$keys[15]]);
-
 	}
 
 	/**
@@ -1387,6 +1404,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		$copyObj->setLastpostAt($this->lastpost_at);
 
 		$copyObj->setStickie($this->stickie);
+
 
 		$copyObj->setNew(true);
 

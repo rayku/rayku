@@ -13,8 +13,8 @@ class BasePostForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'            => new sfWidgetFormInputHidden(),
-      'poster_id'     => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
-      'thread_id'     => new sfWidgetFormPropelChoice(array('model' => 'Thread', 'add_empty' => true)),
+      'poster_id'     => new sfWidgetFormInput(),
+      'thread_id'     => new sfWidgetFormInput(),
       'created_at'    => new sfWidgetFormDateTime(),
       'updated_at'    => new sfWidgetFormDateTime(),
       'content'       => new sfWidgetFormTextarea(),
@@ -23,11 +23,11 @@ class BasePostForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'            => new sfValidatorPropelChoice(array('model' => 'Post', 'column' => 'id', 'required' => false)),
-      'poster_id'     => new sfValidatorPropelChoice(array('model' => 'User', 'column' => 'id', 'required' => false)),
-      'thread_id'     => new sfValidatorPropelChoice(array('model' => 'Thread', 'column' => 'id', 'required' => false)),
-      'created_at'    => new sfValidatorDateTime(array('required' => false)),
-      'updated_at'    => new sfValidatorDateTime(array('required' => false)),
-      'content'       => new sfValidatorString(array('required' => false)),
+      'poster_id'     => new sfValidatorInteger(),
+      'thread_id'     => new sfValidatorInteger(),
+      'created_at'    => new sfValidatorDateTime(),
+      'updated_at'    => new sfValidatorDateTime(),
+      'content'       => new sfValidatorString(),
       'best_response' => new sfValidatorInteger(),
     ));
 

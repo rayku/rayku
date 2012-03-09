@@ -13,7 +13,7 @@ class BaseSalesForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
-      'offer_voucher_id'      => new sfWidgetFormPropelChoice(array('model' => 'OfferVoucher', 'add_empty' => true)),
+      'offer_voucher_id'      => new sfWidgetFormPropelChoice(array('model' => 'OfferVoucher1', 'add_empty' => true)),
       'status_id'             => new sfWidgetFormPropelChoice(array('model' => 'Status', 'add_empty' => true)),
       'total_sale_price'      => new sfWidgetFormInput(),
       'total_shipping_charge' => new sfWidgetFormInput(),
@@ -25,7 +25,7 @@ class BaseSalesForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'                    => new sfValidatorPropelChoice(array('model' => 'Sales', 'column' => 'id', 'required' => false)),
-      'offer_voucher_id'      => new sfValidatorPropelChoice(array('model' => 'OfferVoucher', 'column' => 'id', 'required' => false)),
+      'offer_voucher_id'      => new sfValidatorPropelChoice(array('model' => 'OfferVoucher1', 'column' => 'id', 'required' => false)),
       'status_id'             => new sfValidatorPropelChoice(array('model' => 'Status', 'column' => 'id', 'required' => false)),
       'total_sale_price'      => new sfValidatorInteger(array('required' => false)),
       'total_shipping_charge' => new sfValidatorInteger(array('required' => false)),

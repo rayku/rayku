@@ -245,6 +245,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $network_id;
 
 	/**
+	 * The value for the login field.
+	 * @var        int
+	 */
+	protected $login;
+
+	/**
 	 * @var        Picture
 	 */
 	protected $aPicture;
@@ -385,14 +391,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastJournalEntryCriteria = null;
 
 	/**
-	 * @var        array OfferVoucher[] Collection to store aggregation of OfferVoucher objects.
+	 * @var        array OfferVoucher1[] Collection to store aggregation of OfferVoucher1 objects.
 	 */
-	protected $collOfferVouchers;
+	protected $collOfferVoucher1s;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collOfferVouchers.
+	 * @var        Criteria The criteria used to select the current contents of collOfferVoucher1s.
 	 */
-	private $lastOfferVoucherCriteria = null;
+	private $lastOfferVoucher1Criteria = null;
 
 	/**
 	 * @var        array Picture[] Collection to store aggregation of Picture objects.
@@ -403,16 +409,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collPictures.
 	 */
 	private $lastPictureCriteria = null;
-
-	/**
-	 * @var        array Post[] Collection to store aggregation of Post objects.
-	 */
-	protected $collPosts;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collPosts.
-	 */
-	private $lastPostCriteria = null;
 
 	/**
 	 * @var        array PurchaseDetail[] Collection to store aggregation of PurchaseDetail objects.
@@ -503,16 +499,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collSubscriptions.
 	 */
 	private $lastSubscriptionCriteria = null;
-
-	/**
-	 * @var        array Thread[] Collection to store aggregation of Thread objects.
-	 */
-	protected $collThreads;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collThreads.
-	 */
-	private $lastThreadCriteria = null;
 
 	/**
 	 * @var        array UserAwards[] Collection to store aggregation of UserAwards objects.
@@ -1054,6 +1040,16 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getNetworkId()
 	{
 		return $this->network_id;
+	}
+
+	/**
+	 * Get the [login] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getLogin()
+	{
+		return $this->login;
 	}
 
 	/**
@@ -1852,6 +1848,26 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setNetworkId()
 
 	/**
+	 * Set the value of [login] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     User The current object (for fluent API support)
+	 */
+	public function setLogin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->login !== $v) {
+			$this->login = $v;
+			$this->modifiedColumns[] = UserPeer::LOGIN;
+		}
+
+		return $this;
+	} // setLogin()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1979,6 +1995,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->notification = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
 			$this->phone_number = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
 			$this->network_id = ($row[$startcol + 34] !== null) ? (int) $row[$startcol + 34] : null;
+			$this->login = ($row[$startcol + 35] !== null) ? (int) $row[$startcol + 35] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1988,7 +2005,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 35; // 35 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2097,14 +2114,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collJournalEntrys = null;
 			$this->lastJournalEntryCriteria = null;
 
-			$this->collOfferVouchers = null;
-			$this->lastOfferVoucherCriteria = null;
+			$this->collOfferVoucher1s = null;
+			$this->lastOfferVoucher1Criteria = null;
 
 			$this->collPictures = null;
 			$this->lastPictureCriteria = null;
-
-			$this->collPosts = null;
-			$this->lastPostCriteria = null;
 
 			$this->collPurchaseDetails = null;
 			$this->lastPurchaseDetailCriteria = null;
@@ -2132,9 +2146,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->collSubscriptions = null;
 			$this->lastSubscriptionCriteria = null;
-
-			$this->collThreads = null;
-			$this->lastThreadCriteria = null;
 
 			$this->collUserAwardss = null;
 			$this->lastUserAwardsCriteria = null;
@@ -2389,8 +2400,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collOfferVouchers !== null) {
-				foreach ($this->collOfferVouchers as $referrerFK) {
+			if ($this->collOfferVoucher1s !== null) {
+				foreach ($this->collOfferVoucher1s as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2399,14 +2410,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collPictures !== null) {
 				foreach ($this->collPictures as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collPosts !== null) {
-				foreach ($this->collPosts as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2479,14 +2482,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collSubscriptions !== null) {
 				foreach ($this->collSubscriptions as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collThreads !== null) {
-				foreach ($this->collThreads as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2734,8 +2729,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collOfferVouchers !== null) {
-					foreach ($this->collOfferVouchers as $referrerFK) {
+				if ($this->collOfferVoucher1s !== null) {
+					foreach ($this->collOfferVoucher1s as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -2744,14 +2739,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collPictures !== null) {
 					foreach ($this->collPictures as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collPosts !== null) {
-					foreach ($this->collPosts as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -2824,14 +2811,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collSubscriptions !== null) {
 					foreach ($this->collSubscriptions as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collThreads !== null) {
-					foreach ($this->collThreads as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3024,6 +3003,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 34:
 				return $this->getNetworkId();
 				break;
+			case 35:
+				return $this->getLogin();
+				break;
 			default:
 				return null;
 				break;
@@ -3080,6 +3062,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[32] => $this->getNotification(),
 			$keys[33] => $this->getPhoneNumber(),
 			$keys[34] => $this->getNetworkId(),
+			$keys[35] => $this->getLogin(),
 		);
 		return $result;
 	}
@@ -3216,6 +3199,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 34:
 				$this->setNetworkId($value);
 				break;
+			case 35:
+				$this->setLogin($value);
+				break;
 		} // switch()
 	}
 
@@ -3275,6 +3261,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[32], $arr)) $this->setNotification($arr[$keys[32]]);
 		if (array_key_exists($keys[33], $arr)) $this->setPhoneNumber($arr[$keys[33]]);
 		if (array_key_exists($keys[34], $arr)) $this->setNetworkId($arr[$keys[34]]);
+		if (array_key_exists($keys[35], $arr)) $this->setLogin($arr[$keys[35]]);
 	}
 
 	/**
@@ -3321,6 +3308,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::NOTIFICATION)) $criteria->add(UserPeer::NOTIFICATION, $this->notification);
 		if ($this->isColumnModified(UserPeer::PHONE_NUMBER)) $criteria->add(UserPeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(UserPeer::NETWORK_ID)) $criteria->add(UserPeer::NETWORK_ID, $this->network_id);
+		if ($this->isColumnModified(UserPeer::LOGIN)) $criteria->add(UserPeer::LOGIN, $this->login);
 
 		return $criteria;
 	}
@@ -3443,6 +3431,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		$copyObj->setNetworkId($this->network_id);
 
+		$copyObj->setLogin($this->login);
+
 
 		if ($deepCopy) {
 			// important: temporarily setNew(false) because this affects the behavior of
@@ -3527,21 +3517,15 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getOfferVouchers() as $relObj) {
+			foreach ($this->getOfferVoucher1s() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addOfferVoucher($relObj->copy($deepCopy));
+					$copyObj->addOfferVoucher1($relObj->copy($deepCopy));
 				}
 			}
 
 			foreach ($this->getPictures() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addPicture($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getPosts() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addPost($relObj->copy($deepCopy));
 				}
 			}
 
@@ -3596,12 +3580,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getSubscriptions() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addSubscription($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getThreads() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addThread($relObj->copy($deepCopy));
 				}
 			}
 
@@ -6075,47 +6053,47 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collOfferVouchers collection (array).
+	 * Clears out the collOfferVoucher1s collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addOfferVouchers()
+	 * @see        addOfferVoucher1s()
 	 */
-	public function clearOfferVouchers()
+	public function clearOfferVoucher1s()
 	{
-		$this->collOfferVouchers = null; // important to set this to NULL since that means it is uninitialized
+		$this->collOfferVoucher1s = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collOfferVouchers collection (array).
+	 * Initializes the collOfferVoucher1s collection (array).
 	 *
-	 * By default this just sets the collOfferVouchers collection to an empty array (like clearcollOfferVouchers());
+	 * By default this just sets the collOfferVoucher1s collection to an empty array (like clearcollOfferVoucher1s());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initOfferVouchers()
+	public function initOfferVoucher1s()
 	{
-		$this->collOfferVouchers = array();
+		$this->collOfferVoucher1s = array();
 	}
 
 	/**
-	 * Gets an array of OfferVoucher objects which contain a foreign key that references this object.
+	 * Gets an array of OfferVoucher1 objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
 	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related OfferVouchers from storage. If this User is new, it will return
+	 * related OfferVoucher1s from storage. If this User is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
 	 * @param      Criteria $criteria
-	 * @return     array OfferVoucher[]
+	 * @return     array OfferVoucher1[]
 	 * @throws     PropelException
 	 */
-	public function getOfferVouchers($criteria = null, PropelPDO $con = null)
+	public function getOfferVoucher1s($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(UserPeer::DATABASE_NAME);
@@ -6125,15 +6103,15 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collOfferVouchers === null) {
+		if ($this->collOfferVoucher1s === null) {
 			if ($this->isNew()) {
-			   $this->collOfferVouchers = array();
+			   $this->collOfferVoucher1s = array();
 			} else {
 
-				$criteria->add(OfferVoucherPeer::USER_ID, $this->id);
+				$criteria->add(OfferVoucher1Peer::USER_ID, $this->id);
 
-				OfferVoucherPeer::addSelectColumns($criteria);
-				$this->collOfferVouchers = OfferVoucherPeer::doSelect($criteria, $con);
+				OfferVoucher1Peer::addSelectColumns($criteria);
+				$this->collOfferVoucher1s = OfferVoucher1Peer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -6143,28 +6121,28 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(OfferVoucherPeer::USER_ID, $this->id);
+				$criteria->add(OfferVoucher1Peer::USER_ID, $this->id);
 
-				OfferVoucherPeer::addSelectColumns($criteria);
-				if (!isset($this->lastOfferVoucherCriteria) || !$this->lastOfferVoucherCriteria->equals($criteria)) {
-					$this->collOfferVouchers = OfferVoucherPeer::doSelect($criteria, $con);
+				OfferVoucher1Peer::addSelectColumns($criteria);
+				if (!isset($this->lastOfferVoucher1Criteria) || !$this->lastOfferVoucher1Criteria->equals($criteria)) {
+					$this->collOfferVoucher1s = OfferVoucher1Peer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastOfferVoucherCriteria = $criteria;
-		return $this->collOfferVouchers;
+		$this->lastOfferVoucher1Criteria = $criteria;
+		return $this->collOfferVoucher1s;
 	}
 
 	/**
-	 * Returns the number of related OfferVoucher objects.
+	 * Returns the number of related OfferVoucher1 objects.
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct
 	 * @param      PropelPDO $con
-	 * @return     int Count of related OfferVoucher objects.
+	 * @return     int Count of related OfferVoucher1 objects.
 	 * @throws     PropelException
 	 */
-	public function countOfferVouchers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countOfferVoucher1s(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(UserPeer::DATABASE_NAME);
@@ -6178,14 +6156,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collOfferVouchers === null) {
+		if ($this->collOfferVoucher1s === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(OfferVoucherPeer::USER_ID, $this->id);
+				$criteria->add(OfferVoucher1Peer::USER_ID, $this->id);
 
-				$count = OfferVoucherPeer::doCount($criteria, $con);
+				$count = OfferVoucher1Peer::doCount($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -6195,35 +6173,35 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(OfferVoucherPeer::USER_ID, $this->id);
+				$criteria->add(OfferVoucher1Peer::USER_ID, $this->id);
 
-				if (!isset($this->lastOfferVoucherCriteria) || !$this->lastOfferVoucherCriteria->equals($criteria)) {
-					$count = OfferVoucherPeer::doCount($criteria, $con);
+				if (!isset($this->lastOfferVoucher1Criteria) || !$this->lastOfferVoucher1Criteria->equals($criteria)) {
+					$count = OfferVoucher1Peer::doCount($criteria, $con);
 				} else {
-					$count = count($this->collOfferVouchers);
+					$count = count($this->collOfferVoucher1s);
 				}
 			} else {
-				$count = count($this->collOfferVouchers);
+				$count = count($this->collOfferVoucher1s);
 			}
 		}
 		return $count;
 	}
 
 	/**
-	 * Method called to associate a OfferVoucher object to this object
-	 * through the OfferVoucher foreign key attribute.
+	 * Method called to associate a OfferVoucher1 object to this object
+	 * through the OfferVoucher1 foreign key attribute.
 	 *
-	 * @param      OfferVoucher $l OfferVoucher
+	 * @param      OfferVoucher1 $l OfferVoucher1
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addOfferVoucher(OfferVoucher $l)
+	public function addOfferVoucher1(OfferVoucher1 $l)
 	{
-		if ($this->collOfferVouchers === null) {
-			$this->initOfferVouchers();
+		if ($this->collOfferVoucher1s === null) {
+			$this->initOfferVoucher1s();
 		}
-		if (!in_array($l, $this->collOfferVouchers, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collOfferVouchers, $l);
+		if (!in_array($l, $this->collOfferVoucher1s, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collOfferVoucher1s, $l);
 			$l->setUser($this);
 		}
 	}
@@ -6427,207 +6405,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->lastPictureCriteria = $criteria;
 
 		return $this->collPictures;
-	}
-
-	/**
-	 * Clears out the collPosts collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addPosts()
-	 */
-	public function clearPosts()
-	{
-		$this->collPosts = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collPosts collection (array).
-	 *
-	 * By default this just sets the collPosts collection to an empty array (like clearcollPosts());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initPosts()
-	{
-		$this->collPosts = array();
-	}
-
-	/**
-	 * Gets an array of Post objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related Posts from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Post[]
-	 * @throws     PropelException
-	 */
-	public function getPosts($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collPosts === null) {
-			if ($this->isNew()) {
-			   $this->collPosts = array();
-			} else {
-
-				$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-				PostPeer::addSelectColumns($criteria);
-				$this->collPosts = PostPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-				PostPeer::addSelectColumns($criteria);
-				if (!isset($this->lastPostCriteria) || !$this->lastPostCriteria->equals($criteria)) {
-					$this->collPosts = PostPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastPostCriteria = $criteria;
-		return $this->collPosts;
-	}
-
-	/**
-	 * Returns the number of related Post objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Post objects.
-	 * @throws     PropelException
-	 */
-	public function countPosts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collPosts === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-				$count = PostPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-				if (!isset($this->lastPostCriteria) || !$this->lastPostCriteria->equals($criteria)) {
-					$count = PostPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collPosts);
-				}
-			} else {
-				$count = count($this->collPosts);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Post object to this object
-	 * through the Post foreign key attribute.
-	 *
-	 * @param      Post $l Post
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addPost(Post $l)
-	{
-		if ($this->collPosts === null) {
-			$this->initPosts();
-		}
-		if (!in_array($l, $this->collPosts, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collPosts, $l);
-			$l->setUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this User is new, it will return
-	 * an empty collection; or if this User has previously
-	 * been saved, it will retrieve related Posts from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in User.
-	 */
-	public function getPostsJoinThread($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collPosts === null) {
-			if ($this->isNew()) {
-				$this->collPosts = array();
-			} else {
-
-				$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-				$this->collPosts = PostPeer::doSelectJoinThread($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(PostPeer::POSTER_ID, $this->id);
-
-			if (!isset($this->lastPostCriteria) || !$this->lastPostCriteria->equals($criteria)) {
-				$this->collPosts = PostPeer::doSelectJoinThread($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastPostCriteria = $criteria;
-
-		return $this->collPosts;
 	}
 
 	/**
@@ -8252,207 +8029,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collThreads collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addThreads()
-	 */
-	public function clearThreads()
-	{
-		$this->collThreads = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collThreads collection (array).
-	 *
-	 * By default this just sets the collThreads collection to an empty array (like clearcollThreads());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initThreads()
-	{
-		$this->collThreads = array();
-	}
-
-	/**
-	 * Gets an array of Thread objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related Threads from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Thread[]
-	 * @throws     PropelException
-	 */
-	public function getThreads($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-			   $this->collThreads = array();
-			} else {
-
-				$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-				ThreadPeer::addSelectColumns($criteria);
-				$this->collThreads = ThreadPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-				ThreadPeer::addSelectColumns($criteria);
-				if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-					$this->collThreads = ThreadPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastThreadCriteria = $criteria;
-		return $this->collThreads;
-	}
-
-	/**
-	 * Returns the number of related Thread objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Thread objects.
-	 * @throws     PropelException
-	 */
-	public function countThreads(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-				$count = ThreadPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-				if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-					$count = ThreadPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collThreads);
-				}
-			} else {
-				$count = count($this->collThreads);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Thread object to this object
-	 * through the Thread foreign key attribute.
-	 *
-	 * @param      Thread $l Thread
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addThread(Thread $l)
-	{
-		if ($this->collThreads === null) {
-			$this->initThreads();
-		}
-		if (!in_array($l, $this->collThreads, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collThreads, $l);
-			$l->setUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this User is new, it will return
-	 * an empty collection; or if this User has previously
-	 * been saved, it will retrieve related Threads from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in User.
-	 */
-	public function getThreadsJoinForum($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-				$this->collThreads = array();
-			} else {
-
-				$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-				$this->collThreads = ThreadPeer::doSelectJoinForum($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(ThreadPeer::POSTER_ID, $this->id);
-
-			if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-				$this->collThreads = ThreadPeer::doSelectJoinForum($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastThreadCriteria = $criteria;
-
-		return $this->collThreads;
-	}
-
-	/**
 	 * Clears out the collUserAwardss collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -9547,18 +9123,13 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collOfferVouchers) {
-				foreach ((array) $this->collOfferVouchers as $o) {
+			if ($this->collOfferVoucher1s) {
+				foreach ((array) $this->collOfferVoucher1s as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
 			if ($this->collPictures) {
 				foreach ((array) $this->collPictures as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collPosts) {
-				foreach ((array) $this->collPosts as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -9607,11 +9178,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collThreads) {
-				foreach ((array) $this->collThreads as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collUserAwardss) {
 				foreach ((array) $this->collUserAwardss as $o) {
 					$o->clearAllReferences($deep);
@@ -9657,9 +9223,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collInvitations = null;
 		$this->collItemRatings = null;
 		$this->collJournalEntrys = null;
-		$this->collOfferVouchers = null;
+		$this->collOfferVoucher1s = null;
 		$this->collPictures = null;
-		$this->collPosts = null;
 		$this->collPurchaseDetails = null;
 		$this->collReportUsers = null;
 		$this->collShoppingCarts = null;
@@ -9669,7 +9234,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collStudentVoiceVotess = null;
 		$this->collSubmissions = null;
 		$this->collSubscriptions = null;
-		$this->collThreads = null;
 		$this->collUserAwardss = null;
 		$this->collUserDonationssRelatedByUserId = null;
 		$this->collUserDonationssRelatedByFromUserId = null;

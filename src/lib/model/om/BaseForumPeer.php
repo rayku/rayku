@@ -602,9 +602,6 @@ abstract class BaseForumPeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in ThreadPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ThreadPeer::clearInstancePool();
-
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

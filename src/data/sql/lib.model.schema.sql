@@ -1677,6 +1677,7 @@ CREATE TABLE `thread`
 	`school_grade` VARCHAR(100)  NOT NULL,
 	`created_at` DATETIME  NOT NULL,
 	`lastpost_at` DATETIME  NOT NULL,
+	`stickie` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -1724,6 +1725,7 @@ CREATE TABLE `user`
 	`notification` VARCHAR(10)  NOT NULL,
 	`phone_number` VARCHAR(20)  NOT NULL,
 	`network_id` INTEGER(11),
+	`login` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),

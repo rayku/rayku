@@ -92,6 +92,8 @@ class ThreadMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('LASTPOST_AT', 'LastpostAt', 'TIMESTAMP', true, null);
 
+		$tMap->addColumn('STICKIE', 'Stickie', 'INTEGER', true, null);
+
 	} // doBuild()
 
 } // ThreadMapBuilder

@@ -57,16 +57,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 	protected $top_or_bottom;
 
 	/**
-	 * @var        array Thread[] Collection to store aggregation of Thread objects.
-	 */
-	protected $collThreads;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collThreads.
-	 */
-	private $lastThreadCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -394,9 +384,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->collThreads = null;
-			$this->lastThreadCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -504,14 +491,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
-			if ($this->collThreads !== null) {
-				foreach ($this->collThreads as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -582,14 +561,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collThreads !== null) {
-					foreach ($this->collThreads as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 
 			$this->alreadyInValidation = false;
@@ -830,20 +801,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 		$copyObj->setTopOrBottom($this->top_or_bottom);
 
 
-		if ($deepCopy) {
-			// important: temporarily setNew(false) because this affects the behavior of
-			// the getter/setter methods for fkey referrer objects.
-			$copyObj->setNew(false);
-
-			foreach ($this->getThreads() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addThread($relObj->copy($deepCopy));
-				}
-			}
-
-		} // if ($deepCopy)
-
-
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -889,207 +846,6 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collThreads collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addThreads()
-	 */
-	public function clearThreads()
-	{
-		$this->collThreads = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collThreads collection (array).
-	 *
-	 * By default this just sets the collThreads collection to an empty array (like clearcollThreads());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initThreads()
-	{
-		$this->collThreads = array();
-	}
-
-	/**
-	 * Gets an array of Thread objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Forum has previously been saved, it will retrieve
-	 * related Threads from storage. If this Forum is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Thread[]
-	 * @throws     PropelException
-	 */
-	public function getThreads($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ForumPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-			   $this->collThreads = array();
-			} else {
-
-				$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-				ThreadPeer::addSelectColumns($criteria);
-				$this->collThreads = ThreadPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-				ThreadPeer::addSelectColumns($criteria);
-				if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-					$this->collThreads = ThreadPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastThreadCriteria = $criteria;
-		return $this->collThreads;
-	}
-
-	/**
-	 * Returns the number of related Thread objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Thread objects.
-	 * @throws     PropelException
-	 */
-	public function countThreads(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ForumPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-				$count = ThreadPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-				if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-					$count = ThreadPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collThreads);
-				}
-			} else {
-				$count = count($this->collThreads);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Thread object to this object
-	 * through the Thread foreign key attribute.
-	 *
-	 * @param      Thread $l Thread
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addThread(Thread $l)
-	{
-		if ($this->collThreads === null) {
-			$this->initThreads();
-		}
-		if (!in_array($l, $this->collThreads, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collThreads, $l);
-			$l->setForum($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Forum is new, it will return
-	 * an empty collection; or if this Forum has previously
-	 * been saved, it will retrieve related Threads from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Forum.
-	 */
-	public function getThreadsJoinUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ForumPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collThreads === null) {
-			if ($this->isNew()) {
-				$this->collThreads = array();
-			} else {
-
-				$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-				$this->collThreads = ThreadPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(ThreadPeer::FORUM_ID, $this->id);
-
-			if (!isset($this->lastThreadCriteria) || !$this->lastThreadCriteria->equals($criteria)) {
-				$this->collThreads = ThreadPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastThreadCriteria = $criteria;
-
-		return $this->collThreads;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1101,14 +857,8 @@ abstract class BaseForum extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collThreads) {
-				foreach ((array) $this->collThreads as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
-		$this->collThreads = null;
 	}
 
 } // BaseForum

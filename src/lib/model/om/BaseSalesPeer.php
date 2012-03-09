@@ -431,7 +431,7 @@ abstract class BaseSalesPeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related OfferVoucher table
+	 * Returns the number of rows matching criteria, joining the related OfferVoucher1 table
 	 *
 	 * @param      Criteria $c
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -439,7 +439,7 @@ abstract class BaseSalesPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinOfferVoucher(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinOfferVoucher1(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -466,7 +466,7 @@ abstract class BaseSalesPeer {
 			$con = Propel::getConnection(SalesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -531,7 +531,7 @@ abstract class BaseSalesPeer {
 
 
 	/**
-	 * Selects a collection of Sales objects pre-filled with their OfferVoucher objects.
+	 * Selects a collection of Sales objects pre-filled with their OfferVoucher1 objects.
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -539,7 +539,7 @@ abstract class BaseSalesPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinOfferVoucher(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinOfferVoucher1(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$c = clone $c;
 
@@ -550,9 +550,9 @@ abstract class BaseSalesPeer {
 
 		SalesPeer::addSelectColumns($c);
 		$startcol = (SalesPeer::NUM_COLUMNS - SalesPeer::NUM_LAZY_LOAD_COLUMNS);
-		OfferVoucherPeer::addSelectColumns($c);
+		OfferVoucher1Peer::addSelectColumns($c);
 
-		$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+		$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -572,20 +572,20 @@ abstract class BaseSalesPeer {
 				SalesPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = OfferVoucherPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = OfferVoucher1Peer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = OfferVoucherPeer::getInstanceFromPool($key2);
+				$obj2 = OfferVoucher1Peer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$omClass = OfferVoucherPeer::getOMClass();
+					$omClass = OfferVoucher1Peer::getOMClass();
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					OfferVoucherPeer::addInstanceToPool($obj2, $key2);
+					OfferVoucher1Peer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 
-				// Add the $obj1 (Sales) to $obj2 (OfferVoucher)
+				// Add the $obj1 (Sales) to $obj2 (OfferVoucher1)
 				$obj2->addSales($obj1);
 
 			} // if joined row was not null
@@ -700,7 +700,7 @@ abstract class BaseSalesPeer {
 			$con = Propel::getConnection(SalesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 		$criteria->addJoin(array(SalesPeer::STATUS_ID,), array(StatusPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -735,13 +735,13 @@ abstract class BaseSalesPeer {
 		SalesPeer::addSelectColumns($c);
 		$startcol2 = (SalesPeer::NUM_COLUMNS - SalesPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		OfferVoucherPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (OfferVoucherPeer::NUM_COLUMNS - OfferVoucherPeer::NUM_LAZY_LOAD_COLUMNS);
+		OfferVoucher1Peer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (OfferVoucher1Peer::NUM_COLUMNS - OfferVoucher1Peer::NUM_LAZY_LOAD_COLUMNS);
 
 		StatusPeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + (StatusPeer::NUM_COLUMNS - StatusPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+		$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 		$c->addJoin(array(SalesPeer::STATUS_ID,), array(StatusPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -761,23 +761,23 @@ abstract class BaseSalesPeer {
 				SalesPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined OfferVoucher rows
+			// Add objects for joined OfferVoucher1 rows
 
-			$key2 = OfferVoucherPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = OfferVoucher1Peer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = OfferVoucherPeer::getInstanceFromPool($key2);
+				$obj2 = OfferVoucher1Peer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$omClass = OfferVoucherPeer::getOMClass();
+					$omClass = OfferVoucher1Peer::getOMClass();
 
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					OfferVoucherPeer::addInstanceToPool($obj2, $key2);
+					OfferVoucher1Peer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (Sales) to the collection in $obj2 (OfferVoucher)
+				// Add the $obj1 (Sales) to the collection in $obj2 (OfferVoucher1)
 				$obj2->addSales($obj1);
 			} // if joined row not null
 
@@ -809,7 +809,7 @@ abstract class BaseSalesPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related OfferVoucher table
+	 * Returns the number of rows matching criteria, joining the related OfferVoucher1 table
 	 *
 	 * @param      Criteria $c
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -817,7 +817,7 @@ abstract class BaseSalesPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptOfferVoucher(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptOfferVoucher1(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -883,7 +883,7 @@ abstract class BaseSalesPeer {
 			$con = Propel::getConnection(SalesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-				$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+				$criteria->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -897,7 +897,7 @@ abstract class BaseSalesPeer {
 
 
 	/**
-	 * Selects a collection of Sales objects pre-filled with all related objects except OfferVoucher.
+	 * Selects a collection of Sales objects pre-filled with all related objects except OfferVoucher1.
 	 *
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
@@ -906,7 +906,7 @@ abstract class BaseSalesPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptOfferVoucher(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptOfferVoucher1(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$c = clone $c;
 
@@ -995,10 +995,10 @@ abstract class BaseSalesPeer {
 		SalesPeer::addSelectColumns($c);
 		$startcol2 = (SalesPeer::NUM_COLUMNS - SalesPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		OfferVoucherPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (OfferVoucherPeer::NUM_COLUMNS - OfferVoucherPeer::NUM_LAZY_LOAD_COLUMNS);
+		OfferVoucher1Peer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (OfferVoucher1Peer::NUM_COLUMNS - OfferVoucher1Peer::NUM_LAZY_LOAD_COLUMNS);
 
-				$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucherPeer::ID,), $join_behavior);
+				$c->addJoin(array(SalesPeer::OFFER_VOUCHER_ID,), array(OfferVoucher1Peer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -1018,23 +1018,23 @@ abstract class BaseSalesPeer {
 				SalesPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined OfferVoucher rows
+				// Add objects for joined OfferVoucher1 rows
 
-				$key2 = OfferVoucherPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = OfferVoucher1Peer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = OfferVoucherPeer::getInstanceFromPool($key2);
+					$obj2 = OfferVoucher1Peer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$omClass = OfferVoucherPeer::getOMClass();
+						$omClass = OfferVoucher1Peer::getOMClass();
 
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					OfferVoucherPeer::addInstanceToPool($obj2, $key2);
+					OfferVoucher1Peer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (Sales) to the collection in $obj2 (OfferVoucher)
+				// Add the $obj1 (Sales) to the collection in $obj2 (OfferVoucher1)
 				$obj2->addSales($obj1);
 
 			} // if joined row is not null

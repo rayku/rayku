@@ -69,9 +69,8 @@ abstract class BaseThreadPeer {
 	/** the column name for the LASTPOST_AT field */
 	const LASTPOST_AT = 'thread.LASTPOST_AT';
 
+	/** the column name for the STICKIE field */
 	const STICKIE = 'thread.STICKIE';
-
-
 
 	/**
 	 * An identiy map to hold any loaded instances of Thread objects.
@@ -96,9 +95,9 @@ abstract class BaseThreadPeer {
 	private static $fieldNames = array (
 		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'ForumId', 'Title', 'Tags', 'Visible', 'Cancel', 'CategoryId', 'NotifyEmail', 'NotifyPm', 'NotifySms', 'CellNumber', 'SchoolGrade', 'CreatedAt', 'LastpostAt', 'Stickie', ),
 		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'forumId', 'title', 'tags', 'visible', 'cancel', 'categoryId', 'notifyEmail', 'notifyPm', 'notifySms', 'cellNumber', 'schoolGrade', 'createdAt', 'lastpostAt', 'stickie', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::FORUM_ID, self::TITLE, self::TAGS, self::VISIBLE, self::CANCEL, self::CATEGORY_ID, self::NOTIFY_EMAIL, self::NOTIFY_PM, self::NOTIFY_SMS, self::CELL_NUMBER, self::SCHOOL_GRADE, self::CREATED_AT, self::LASTPOST_AT, self::STICKIE,),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'forum_id', 'title', 'tags', 'visible', 'cancel', 'category_id', 'notify_email', 'notify_pm', 'notify_sms', 'cell_number', 'school_grade', 'created_at', 'lastpost_at','stickie', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15, )
+		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::FORUM_ID, self::TITLE, self::TAGS, self::VISIBLE, self::CANCEL, self::CATEGORY_ID, self::NOTIFY_EMAIL, self::NOTIFY_PM, self::NOTIFY_SMS, self::CELL_NUMBER, self::SCHOOL_GRADE, self::CREATED_AT, self::LASTPOST_AT, self::STICKIE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'forum_id', 'title', 'tags', 'visible', 'cancel', 'category_id', 'notify_email', 'notify_pm', 'notify_sms', 'cell_number', 'school_grade', 'created_at', 'lastpost_at', 'stickie', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	/**
@@ -109,10 +108,10 @@ abstract class BaseThreadPeer {
 	 */
 	private static $fieldKeys = array (
 		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'ForumId' => 2, 'Title' => 3, 'Tags' => 4, 'Visible' => 5, 'Cancel' => 6, 'CategoryId' => 7, 'NotifyEmail' => 8, 'NotifyPm' => 9, 'NotifySms' => 10, 'CellNumber' => 11, 'SchoolGrade' => 12, 'CreatedAt' => 13, 'LastpostAt' => 14, 'Stickie' => 15, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'forumId' => 2, 'title' => 3, 'tags' => 4, 'visible' => 5, 'cancel' => 6, 'categoryId' => 7, 'notifyEmail' => 8, 'notifyPm' => 9, 'notifySms' => 10, 'cellNumber' => 11, 'schoolGrade' => 12, 'createdAt' => 13, 'lastpostAt' => 14, 'stickie' => 15,),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::FORUM_ID => 2, self::TITLE => 3, self::TAGS => 4, self::VISIBLE => 5, self::CANCEL => 6, self::CATEGORY_ID => 7, self::NOTIFY_EMAIL => 8, self::NOTIFY_PM => 9, self::NOTIFY_SMS => 10, self::CELL_NUMBER => 11, self::SCHOOL_GRADE => 12, self::CREATED_AT => 13, self::LASTPOST_AT => 14,  self::STICKIE => 15, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'forum_id' => 2, 'title' => 3, 'tags' => 4, 'visible' => 5, 'cancel' => 6, 'category_id' => 7, 'notify_email' => 8, 'notify_pm' => 9, 'notify_sms' => 10, 'cell_number' => 11, 'school_grade' => 12, 'created_at' => 13, 'lastpost_at' => 14, 'stickie' => 15,),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,)
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'forumId' => 2, 'title' => 3, 'tags' => 4, 'visible' => 5, 'cancel' => 6, 'categoryId' => 7, 'notifyEmail' => 8, 'notifyPm' => 9, 'notifySms' => 10, 'cellNumber' => 11, 'schoolGrade' => 12, 'createdAt' => 13, 'lastpostAt' => 14, 'stickie' => 15, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::FORUM_ID => 2, self::TITLE => 3, self::TAGS => 4, self::VISIBLE => 5, self::CANCEL => 6, self::CATEGORY_ID => 7, self::NOTIFY_EMAIL => 8, self::NOTIFY_PM => 9, self::NOTIFY_SMS => 10, self::CELL_NUMBER => 11, self::SCHOOL_GRADE => 12, self::CREATED_AT => 13, self::LASTPOST_AT => 14, self::STICKIE => 15, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'forum_id' => 2, 'title' => 3, 'tags' => 4, 'visible' => 5, 'cancel' => 6, 'category_id' => 7, 'notify_email' => 8, 'notify_pm' => 9, 'notify_sms' => 10, 'cell_number' => 11, 'school_grade' => 12, 'created_at' => 13, 'lastpost_at' => 14, 'stickie' => 15, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	/**
@@ -225,8 +224,6 @@ abstract class BaseThreadPeer {
 		$criteria->addSelectColumn(ThreadPeer::LASTPOST_AT);
 
 		$criteria->addSelectColumn(ThreadPeer::STICKIE);
-
-
 
 	}
 

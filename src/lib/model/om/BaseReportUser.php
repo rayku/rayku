@@ -932,7 +932,6 @@ abstract class BaseReportUser extends BaseObject  implements Persistent {
 	 */
 	public function getUser(PropelPDO $con = null)
 	{
-
 		if ($this->aUser === null && ($this->user_id !== null)) {
 			$c = new Criteria(UserPeer::DATABASE_NAME);
 			$c->add(UserPeer::ID, $this->user_id);

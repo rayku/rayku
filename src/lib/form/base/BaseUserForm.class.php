@@ -47,6 +47,7 @@ class BaseUserForm extends BaseFormPropel
       'notification'             => new sfWidgetFormInput(),
       'phone_number'             => new sfWidgetFormInput(),
       'network_id'               => new sfWidgetFormPropelChoice(array('model' => 'Network', 'add_empty' => true)),
+      'login'                    => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -85,6 +86,7 @@ class BaseUserForm extends BaseFormPropel
       'notification'             => new sfValidatorString(array('max_length' => 10)),
       'phone_number'             => new sfValidatorString(array('max_length' => 20)),
       'network_id'               => new sfValidatorPropelChoice(array('model' => 'Network', 'column' => 'id', 'required' => false)),
+      'login'                    => new sfValidatorInteger(),
     ));
 
     $this->validatorSchema->setPostValidator(

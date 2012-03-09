@@ -132,6 +132,8 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('NETWORK_ID', 'NetworkId', 'INTEGER', 'network', 'ID', false, 11);
 
+		$tMap->addColumn('LOGIN', 'Login', 'INTEGER', true, 10);
+
 	} // doBuild()
 
 } // UserMapBuilder
