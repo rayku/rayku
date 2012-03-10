@@ -456,7 +456,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 			$fb_username = $_POST['fbname'];
 
-			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://www.rayku.com/dashboard/facebookadd?username='.$fb_username);
+			$this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard/facebookadd?username='.$fb_username);
 
 
 	endif;

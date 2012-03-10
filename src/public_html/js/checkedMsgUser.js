@@ -8,7 +8,7 @@ function checkedMsgUser()
 
 		dvk.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/mapmsguser",
+			url: "http://"+getHostname()+"/expertmanager/mapmsguser",
 			success : function (data)  {
 
 				var result = data.split("<");
@@ -19,8 +19,8 @@ function checkedMsgUser()
 
 					 if(newChecking[0] == "msg") {
 
-						asker_row_id = newChecking[1];  
-						asker_chat_id = newChecking[4]; 
+						asker_row_id = newChecking[1];
+						asker_chat_id = newChecking[4];
 
 						setTimeout('askerMsgOpen(asker_row_id,asker_chat_id)', 5000);
 
@@ -45,7 +45,7 @@ function askerMsgOpen(row_id,chat_id) {
 
 			details[0] = row_id;
   			details[1] = chat_id;
-					 
-		document.location='http://www.rayku.com/expertmanager/answer?details='+details;
+
+		document.location='http://'+getHostname()+'/expertmanager/answer?details='+details;
 
 }
