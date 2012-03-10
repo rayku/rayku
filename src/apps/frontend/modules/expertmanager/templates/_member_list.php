@@ -186,15 +186,7 @@ function reSet(value)
 				cookie_date.setTime(cookie_date.getTime() - 1);
 
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-<<<<<<< HEAD
-
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-
-=======
-
-				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
-
->>>>>>> removing commented code & hard coded hostnames
 				   dv("#popup_content").html(response);
 
 				});
@@ -259,14 +251,7 @@ function reSet(value)
 
 				setCookie("expertscount", expertcount, 36000);
 
-<<<<<<< HEAD
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-
-=======
-
-				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
-
->>>>>>> removing commented code & hard coded hostnames
 				    dv("#popup_content").html(response);
 
 				});
@@ -319,13 +304,7 @@ function reSet(value)
 
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
 
-<<<<<<< HEAD
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-
-=======
-				dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
-
->>>>>>> removing commented code & hard coded hostnames
 				    dv("#popup_content").html(response);
 
 				});
@@ -372,15 +351,7 @@ function reSet(value)
 					setCookie(tutname, tid, 36000);
 					setCookie("cooktotal", maxcook, 36000);
 					setCookie("expertscount", expertcount, 36000);
-<<<<<<< HEAD
-
 						dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-
-=======
-
-						dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
-
->>>>>>> removing commented code & hard coded hostnames
 					    		dv("#popup_content").html(response);
 
 						});
@@ -424,15 +395,7 @@ function reSet(value)
 				cookie_date.setTime(cookie_date.getTime() - 1);
 
 				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-<<<<<<< HEAD
-
 					dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-
-=======
-
-					dv('#popup_connect').load('http://' + getHostname() + '/expertmanager/checkoutpopup', '', function(response) {
-
->>>>>>> removing commented code & hard coded hostnames
 				    		dv("#popup_content").html(response);
 
 					});
@@ -526,11 +489,7 @@ function reSet(value)
 function loadingAjax()
 {
 	var imagejsconflict = jQuery.noConflict();
-<<<<<<< HEAD
 	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');
-=======
-	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');
->>>>>>> removing commented code & hard coded hostnames
 	return true;
 }
 </script>
