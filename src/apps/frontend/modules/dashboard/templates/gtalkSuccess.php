@@ -12,7 +12,7 @@
     <div class="content">
       <div class="entry">
         <div class="spacer"></div>
-        <?php  if($_SESSION['adduser'] == 1) : ?>
+        <?php  if(@$_SESSION['adduser'] == 1) : ?>
         <div style="border-top:2px solid #900;padding:12px;color:#333;background:#FFF0F0;font-size:14px;line-height:18px;margin-bottom:20px;"> Our bot has just sent you a friend request to your google talk account. <strong>Click on the yes button</strong>, and you're all set!</div>
         <?php unset($_SESSION['adduser']); ?>
         <?php endif; ?>
