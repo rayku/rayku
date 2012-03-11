@@ -515,45 +515,35 @@ $connection = RaykuCommon::getDatabaseConnection();
   }
 
 
-  public function executeGtalk()
+    public function executeGtalk()
+    {
+        /* @var $user User */
+        $user = $this->getUser()->getRaykuUser();
+        $userGtalk = $user->getUserGtalk();
+        if ($userGtalk) {
+            $this->record = 1;
+            $this->gtalk = $userGtalk->getGtalkId();
+        } else {
+            $this->record = 0;
+        }
+    }
+
+  public function executeGtalkupdate($request)
   {
 
-$connection = RaykuCommon::getDatabaseConnection();
-	$userId = $this->getUser()->getRaykuUser()->getId();
+        $connection = RaykuCommon::getDatabaseConnection();
 
+        /* @var $user User */
+        $user = $this->getUser()->getRaykuUser();
+        $userGtalk = $user->getUserGtalk();
 
-
-	$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
-
-	 if(mysql_num_rows($query) > 0) :
-
-		$this->record = 1;
-
-		$row = mysql_fetch_assoc($query);
-
-		$this->gtalk = $row['gtalkid'];
-
-	 else :
-
-		$this->record = 0;
-
-	 endif;
-
-
-
-  }
-
-  public function executeGtalkupdate()
-  {
-
-$connection = RaykuCommon::getDatabaseConnection();
-
-		$userId = $this->getUser()->getRaykuUser()->getId();
-
-	$query = mysql_query("select * from user_gtalk where userid =".$userId." ", $connection) or die(mysql_error());
-
-	$email = $_POST['gtalkname'];
-
+        if (!$userGtalk) {
+            $userGtalk = new UserGtalk;
+            $userGtalk->setUser($user);
+        }
+        
+	$email = $request->getParameter('gtalkname');
+        
 	$checkemail = explode("@", $email);
 
 
@@ -576,21 +566,9 @@ $connection = RaykuCommon::getDatabaseConnection();
 		$this->redirect('/dashboard/gtalk');
 
 	}
-
-
-	 if(mysql_num_rows($query) > 0) :
-
-
-		mysql_query("update user_gtalk set gtalkid = '".$email."' where userid = ".$userId." ", $connection) or die(mysql_error());
-
-
-	 else :
-
-		mysql_query("insert into user_gtalk(userid, gtalkid) values(".$userId.", '".$email."' ) ", $connection) or die(mysql_error());
-
-	 endif;
-
-
+        
+        $userGtalk->setGtalkid($email);
+        $userGtalk->save();
 
 	$this->redirect('/dashboard/gtalk');
 

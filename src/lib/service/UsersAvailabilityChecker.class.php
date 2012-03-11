@@ -11,6 +11,7 @@ class UsersAvailabilityChecker
     function getOnlineUsersCount()
     {
         $c = new Criteria();
+        $c->addJoin(UserPeer::ID, UserGtalkPeer::USERID, Criteria::LEFT_JOIN);
         $allUsers = UserPeer::doSelect($c);
 
         $onlineusers = array();
@@ -28,16 +29,10 @@ class UsersAvailabilityChecker
                 $onlineusers[] = $user->getId();
                 continue;
             }
-
-            $gtalkquery = mysql_query("select * from user_gtalk where userid=" . $user->getId()) or die(mysql_error());
-
-            if (mysql_num_rows($gtalkquery) > 0) {
-
-                $status = mysql_fetch_assoc($gtalkquery);
-
-                $gtalkmail = $status['gtalkid'];
-
-                $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/' . $gtalkmail)->getContent();
+            
+            $gtalk = $user->getUserGtalk();
+            if ($gtalk && $gtalk->getGtalkid() != '') {
+                $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/' . $gtalk->getGtalkid())->getContent();
                 if ($onlinecheck == 'online') {
                     $onlineusers[] = $user->getId();
                     continue;

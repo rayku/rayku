@@ -24,27 +24,20 @@ if($count>0)
 		    	    		/* User Online Check - Start */
 					$a=new Criteria();
 					$a->add(UserPeer::ID,$_COOKIE['tutor_'.$i]);
-					$users_online=UserPeer::doSelectOne($a);
+					$user=UserPeer::doSelectOne($a);
 
 					$onlinecheck = '';
 
-					if($users_online->isOnline()) 
+					if($user->isOnline()) 
 					{
 						$onlinecheck = "online";
 					} 
-					if(empty($onlinecheck)) 
+					if(empty($onlinecheck))
 					{
-					$gtalkquery = mysql_query("select * from user_gtalk where userid=".$_COOKIE['tutor_'.$i], $connection) or die(mysql_error());
-
-					if(mysql_num_rows($gtalkquery) > 0) {
-
-						$status = mysql_fetch_assoc($gtalkquery);
-
-						$gtalkmail = $status['gtalkid'];
-
-						 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-					} 
-
+                                            $userGtalk = $user->getUserGtalk();
+                                            if($userGtalk) {
+					        $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                            }
 					}
 
 					if(empty($onlinecheck) || ($onlinecheck != "online")) {
@@ -60,11 +53,11 @@ if($count>0)
 
 					$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 
-					$Users = json_decode($details, true);
+					$fbUsers = json_decode($details, true);
 
-					foreach($Users as $key => $user) :
+					foreach($fbUsers as $key => $fbUser) :
 
-						if($user['username'] == $fb_username):
+						if($fbUser['username'] == $fb_username):
 
 							 $onlinecheck = 'online'; 	
 
@@ -85,7 +78,7 @@ if($count>0)
 
 					foreach($_Users as $key => $_user) :
 
-						if($_user['email'] == $users_online->getEmail()):
+						if($_user['email'] == $user->getEmail()):
 
 							 $onlinecheck = 'online'; 		
 							 break;	
@@ -107,9 +100,6 @@ if($count>0)
 
 					<?php 
 						$school = ''; $Year = '';
-						 $c=new Criteria();
-						 $c->add(UserPeer::ID,$_COOKIE['tutor_'.$i]);
-						 $user = UserPeer::doSelectOne($c);
 						   $mail = explode("@", $user->getEmail());	     
 						   $newMail = explode(".", $mail[1]);
 					

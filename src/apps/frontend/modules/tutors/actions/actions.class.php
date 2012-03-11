@@ -283,19 +283,10 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 
 								if(empty($onlinecheck)) {
-
-					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid']) or die(mysql_error());
-
-									if(mysql_num_rows($gtalkquery) > 0) {
-
-										$status = mysql_fetch_assoc($gtalkquery);
-
-										$gtalkmail = $status['gtalkid'];
-
-										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-									} 
-
+                                                                    $userGtalk = $users_online->getUserGtalk();
+                                                                    if($userGtalk) {
+                                                                        $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                                                    } 
 								}
 
 							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
@@ -780,19 +771,10 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 
 								if(empty($onlinecheck)) {
-
-					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid']) or die(mysql_error());
-
-									if(mysql_num_rows($gtalkquery) > 0) {
-
-										$status = mysql_fetch_assoc($gtalkquery);
-
-										$gtalkmail = $status['gtalkid'];
-
-										 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-									} 
-
+                                                                    $userGtalk = $users_online->getUserGtalk();
+                                                                    if($userGtalk) {
+                                                                        $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                                                    } 
 								}
 
 							      if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {

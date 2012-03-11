@@ -4,9 +4,10 @@
 <?php
 
 $connection = RaykuCommon::getDatabaseConnection();
-
-  $raykuUser = $sf_user->getRaykuUser();
-  $stats = $raykuUser->getStatisticsForDashboard();
+    
+/* @var $raykuUser User */
+$raykuUser = $sf_user->getRaykuUser();
+$stats = $raykuUser->getStatisticsForDashboard();
 
 	usort($rankUsers, "cmp");
 
@@ -42,8 +43,6 @@ function cmp($a, $b)
 
 
 ?>
-<?php $raykuUser = $sf_user->getRaykuUser(); ?>
-
 <div id="body">
       	<?php if($sf_user->getRaykuUser()->getType() != 5 && $changeUserType == 1): ?>
 
@@ -312,12 +311,16 @@ vd('#tutor-rate').mouseover(function() {
     <ul class="icon-list">
 	<li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:10px;text-indent:-5000px;" /></li>
 	
-	<?php $query = mysql_query("select * from user_gtalk where userid =".$logedUserId." ", $connection) or die(mysql_error());
-    if(mysql_num_rows($query) > 0) : ?>
-    <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
-    <?php else: ?>
-    <li><a href="http://rayku.com/dashboard/gtalk" class="icon gtalk-no">Google Talk</a></li>
-    <?php endif; ?>
+<?php
+    $userGtalk = $raykuUser->getUserGtalk();
+    if($userGtalk) {
+        $cssClass = 'icon gtalk';
+    } else {
+        $cssClass = 'icon gtalk-no';
+    }
+?>
+    <li><a href="http://rayku.com/dashboard/gtalk" class="<?php echo $cssClass; ?>">Google Talk</a></li>
+    
     
     <?php $query = mysql_query("select * from user_fb where userid =".$logedUserId." ", $connection) or die(mysql_error());
     if(mysql_num_rows($query) > 0) : ?>

@@ -744,19 +744,10 @@ $onlinecheck = '';
 
 
 					if(empty($onlinecheck)) {
-
-
-						$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-
-						if(mysql_num_rows($gtalkquery) > 0) {
-
-							$status = mysql_fetch_assoc($gtalkquery);
-
-							$gtalkmail = $status['gtalkid'];
-
-							 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-						}
-
+                                            $userGtalk = $newExperts->getUserGtalk();
+                                            if($userGtalk) {
+                                                $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                            }
 					}
 
 				      if(empty($onlinecheck) || ($onlinecheck != "online")) {
@@ -1167,21 +1158,9 @@ $_dv = 1;  $_vd = 1;
 
  $onlinecheck = '';
 
-	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$experts->getId(), $connection) or die(mysql_error());
-
-	if(mysql_num_rows($gtalkquery) > 0) {
-
-		$status = mysql_fetch_assoc($gtalkquery);
-
-		$gtalkmail = $status['gtalkid'];
-
-		$onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-
-
-	} else {
-
-		 $onlinecheck = '';
-
+        $userGtalk = $experts->getUserGtalk();
+	if($userGtalk) {
+            $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
 	}
 
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {

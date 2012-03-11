@@ -33,17 +33,10 @@ if($count>0)
 				} 
 				if(empty($onlinecheck)) 
 				{
-				$gtalkquery = mysql_query("select * from user_gtalk where userid=".$_COOKIE['expert_'.$i]) or die(mysql_error());
-
-				if(mysql_num_rows($gtalkquery) > 0) {
-
-					$status = mysql_fetch_assoc($gtalkquery);
-
-					$gtalkmail = $status['gtalkid'];
-
-					 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-				} 
-
+                                    $userGtalk = $users_online->getUserGtalk();
+                                    if($userGtalk) {
+					 $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                    } 
 				}
 
 				if(empty($onlinecheck) || ($onlinecheck != "online")) {

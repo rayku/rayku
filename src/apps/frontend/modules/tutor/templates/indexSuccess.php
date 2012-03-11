@@ -1,4 +1,11 @@
-<?php $connection = RaykuCommon::getDatabaseConnection(); ?>
+<?php
+   
+/* @var $expert User */
+
+
+$connection = RaykuCommon::getDatabaseConnection();
+
+?>
 <?php use_helper('MyAvatar', 'Javascript') ?>
 <?php
 	usort($rankUsers, "cmp");
@@ -312,20 +319,15 @@ function followMe(expert_id, expertname) {
           $web = null;
         }
 
-	$gtalkquery = mysql_query("select * from user_gtalk where userid=".$expert->getId(), $connection) or die(mysql_error());
+        $userGtalk = $expert->getUserGtalk();
 	
 	$googletalk=null;
-	if(mysql_num_rows($gtalkquery) > 0) {
-		$status = mysql_fetch_assoc($gtalkquery);
-		$gtalkmail = $status['gtalkid'];
-		
-		$onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
-		
-		 if($onlinecheck == "online") {
-		 
-		 	$googletalk="Google Talk";
-		 }
-	} 
+	if($userGtalk) {
+            $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+            if($onlinecheck == "online") {
+                $googletalk=true;
+            }
+	}
 	
 	 if(empty($onlinecheck) || ($onlinecheck != "online")) {
 
@@ -477,7 +479,7 @@ function followMe(expert_id, expertname) {
       
 	  <div class="row row-bg">
         <div class="left">Connected via: </div>
-        <div class="right"><span style="color:#CFCFCF;"> <span <?php if($web!="") { ?> style="color:#069; font-weight:bold;" <?php } ?>>web</span> | <span <?php if($googletalk!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>gtalk</span> | <span <?php if($facebookchat!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>fb chat</span> | <span <?php if($desktopapplication!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>desktop app</span> </span> </div>
+        <div class="right"><span style="color:#CFCFCF;"> <span <?php if($web!="") { ?> style="color:#069; font-weight:bold;" <?php } ?>>web</span> | <span <?php if($googletalk) { ?> style="color:#069;font-weight:bold;" <?php } ?>>gtalk</span> | <span <?php if($facebookchat!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>fb chat</span> | <span <?php if($desktopapplication!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>desktop app</span> </span> </div>
         <div class="clear-both"></div>
       </div>
 	  

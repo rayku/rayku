@@ -851,24 +851,18 @@ $userId = $currentUser->getId();
 
 
 
+    /* @var $currentUser User */
    $currentUser = $this->getUser()->getRaykuUser();
 
    $userId = $currentUser->getId();
 
    $time = time()-300;
 
-	 $gtalkquery = mysql_query("select * from user_gtalk where userid=".$userId, $connection) or die(mysql_error());
-
-	 if(mysql_num_rows($gtalkquery) > 0) {
-	   
-     $status = mysql_fetch_assoc($gtalkquery);
-		 $gtalkmail = $status['gtalkid'];
-		 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
-	 
-	 } else {
-	   
-		 $onlinecheck = '';
-	 }
+    $userGtalk = $currentUser->getUserGtalk();
+    $onlinecheck = '';
+    if($userGtalk) {
+        $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$userGtalk->getGtalkid())->getContent();
+    }
 // and status = 1
 
 	 $query = mysql_query("select * from user_expert where checked_id=".$userId." and exe_order = 1 and time >= ".$time."", $connection) or die(mysql_error());
@@ -1375,20 +1369,10 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 
 								if(empty($onlinecheck)) {
-
-					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-
-									if(mysql_num_rows($gtalkquery) > 0) {
-
-										$status = mysql_fetch_assoc($gtalkquery);
-
-										$gtalkmail = $status['gtalkid'];
-
-										 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
-									} 
-									
-
+                                                                    $userGtalk = $users_online->getUserGtalk();
+                                                                    if($userGtalk) {
+                                                                        $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                                                    } 
 								}
 
 							      if(empty($onlinecheck) || ($onlinecheck != "online")) {
@@ -2279,18 +2263,10 @@ $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/
 
 
 								if(empty($onlinecheck)) {
-
-					
-									$gtalkquery = mysql_query("select * from user_gtalk where userid=".$new['userid'], $connection) or die(mysql_error());
-
-									if(mysql_num_rows($gtalkquery) > 0) {
-
-										$status = mysql_fetch_assoc($gtalkquery);
-
-										$gtalkmail = $status['gtalkid'];
-
-										 $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$gtalkmail)->getContent();
-									} 
+                                                                    $userGtalk = $users_online->getUserGtalk();
+                                                                    if($userGtalk) {
+                                                                        $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$userGtalk->getGtalkid())->getContent();
+                                                                    } 
 
 								}
 

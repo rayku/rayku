@@ -4,6 +4,10 @@ require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/service/BotServiceProvider.class.php';
 sfCoreAutoload::register();
 
+/**
+ * @todo - reimplement that script using symfony tasks system and start using propel instead of mysql_connect/query 
+ */
+
 function checkquestion() {
     $connection = RaykuCommon::getDatabaseConnection();
 
