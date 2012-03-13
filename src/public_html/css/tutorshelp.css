@@ -1,0 +1,310 @@
+/* Header DIV */
+div#theader {
+	background: url('../images/tutorshelp/header-background.jpg') top left no-repeat;
+	border-bottom: 1px solid #1c517b;
+}
+	div#theader a#rayku {
+		display: block;
+		float: left;
+		width: 90px;
+		height: 55px;
+		text-indent: -5000px;
+		position: relative;
+		left: 35px;
+		top: 18px;
+	}
+	div#theader div#user-header {
+		float: left;
+		position: relative;
+		left: 85px;
+		top: 15px;
+		color: #5bc7fa;
+	}
+		div#theader div#user-header a[title="my portfolio"] {
+			color: #5bc7fa;
+			padding: 0 0 0 6px;
+			border-left: 1px solid #5bc7fa;
+			margin: 4px 0 0 10px;
+			display: block;
+			float: left;
+		}
+		div#theader div#user-header img {
+			border: 6px solid #a5c9db;
+			margin-right: 8px;
+			float: left;
+		}
+		div#theader div#user-header h4 {
+			font-size: 150%;
+			margin: 0;
+			padding: 0;
+			color: #5bc7fa;
+			float: left;
+		}
+		div#theader div#user-header #messages {
+			background: url('../images/tutorshelp/message-icon.jpg') center left no-repeat;
+			padding: 2px 0 2px 30px;
+			color: white;
+			display: block;
+			float: left;
+			margin: -10px 0 0 80px;
+			text-transform: uppercase;
+		}
+			div#theader div#user-header #messages a {
+				color: white;
+				text-decoration: none;
+				padding: 0;
+				border: none;
+			}
+	div#theader div#rp-box {
+		float: right;
+		background: url('../images/tutorshelp/rp-box-background.jpg') center center no-repeat;
+		height: 30px;
+		width: 105px;
+		color: #7bd1fd;
+		font-size: 150%;
+		padding: 9px 0 0 56px;
+		z-index: 50;
+		margin: 7px 10px 0 0;
+	}
+		div#theader div#rp-box a#help {
+			background: url('../images/tutorshelp/rp-box-question.jpg') center center no-repeat;
+			height: 13px;
+			width: 13px;
+			text-indent: -5000px;
+			display: block;
+			position: relative;
+			float: right;
+			clear: left;
+			right: 22px;
+			top: 5px;
+		}
+	div#theader ul#menu {
+	margin: 0;
+	padding: 43px 0 15px 45px;
+	list-style: none;
+	}
+		div#theader ul#menu li {
+			display: inline;
+			margin: 0 30px 0 0;
+			text-transform: uppercase;
+		}
+			div#theader ul#menu li a {
+				color: white;
+				text-decoration: none;
+			}
+			div#theader ul#menu li a:hover {
+				border-bottom: 1px solid #3874a3;
+			}
+
+/* Content DIV */
+div#tcontent {
+	padding: 20px 25px 60px;
+}
+	div#tcontent h1, div#lists-box div.list h3 {
+		color: #1c517b;
+		margin: 0 0 20px;
+		padding: 0 0 10px;
+		font-size: 180%;
+		border-bottom: 1px dashed #ddd;
+	}
+	div#tcontent p {
+		font-size:14px;
+		color:#333333;
+		margin-bottom:20px;
+	}
+
+/* Video BOX DIV */
+div#video-box {
+	height: 350px;
+}
+	div#video-box div.video {
+		float: left;
+		width: 608px;
+	}
+		div#video-box div.video iframe#video-content {
+			height: 324px;
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+	div#video-box div#video-title{
+		background: url('../images/tutorshelp/video-box-title.jpg') bottom left no-repeat #171717;	
+		font-size: 180%;
+		color: white;
+		padding-left: 20px;
+		line-height: 51px;	
+		z-index:20;
+		position: absolute;
+		width: 535px;
+		opacity: 0.7;
+		margin-top: 295px;
+	}
+	div#video-box ul#steps {
+		list-style: none;
+		width: 307px;
+		float: right;
+		padding: 0;
+		margin: 0;
+		left: 608px;
+	}
+		div#video-box ul#steps li {
+			width: 307px;
+			line-height: 65px;
+		}
+			div#video-box ul#steps li a {
+				color: white;
+				font-size: 170%;
+				background: url('../images/tutorshelp/video-box-link.jpg') center right no-repeat;
+				height: 65px;
+				display: block;
+				padding: 0 0 0 27px;
+			}
+				div#video-box ul#steps li a span {
+					font-weight: bold;
+					font-size: 140%;
+					margin-right: 5px;
+				}
+			div#video-box ul#steps li a:hover,div#video-box ul#steps li a.selected {
+				background: url('../images/tutorshelp/video-box-link-hover.gif') center right no-repeat;
+				padding: 0 0 0 27px;
+			}
+	div#video-box div#video-description {
+		padding: 20px;
+		background: #d2e6f6;
+		font-size: 140%;
+		color: #797d80;
+		line-height: 180%;
+		width: 575px;
+		margin: 0 0 25px;
+		float: left;
+	}
+		div#video-box div#video-description ul.icon-list {
+			list-style: none;
+			padding: 0;
+			margin: 20px 0 0;
+			background: #d2e6f6;
+		}
+			div#video-box div#video-description ul.icon-list li a {
+				display: block;
+				float: left;
+				width: 74px;
+				height: 73px;
+				margin-right: 10px;
+				text-indent: -5000px;
+			}
+				div#video-box div#video-description ul.icon-list li a.windows { background: url('../images/tutorshelp/icon-windows.jpg') center center no-repeat; }
+				div#video-box div#video-description ul.icon-list li a.windows:hover { background: url('../images/tutorshelp/icon-windows-hover.jpg') center center no-repeat;}
+				
+				div#video-box div#video-description ul.icon-list li a.mac { background: url('../images/tutorshelp/icon-mac.jpg') center center no-repeat; }
+				div#video-box div#video-description ul.icon-list li a.mac:hover { background: url('../images/tutorshelp/icon-mac-hover.jpg') center center no-repeat;}
+				
+				div#video-box div#video-description ul.icon-list li a.gtalk { background: url('../images/tutorshelp/icon-gtalk.jpg') center center no-repeat; }
+				div#video-box div#video-description ul.icon-list li a.gtalk:hover { background: url('../images/tutorshelp/icon-gtalk-hover.jpg') center center no-repeat;}
+				
+				div#video-box div#video-description ul.icon-list li a.msn { background: url('../images/tutorshelp/icon-msn.jpg') center center no-repeat; }
+				div#video-box div#video-description ul.icon-list li a.msn:hover { background: url('../images/tutorshelp/icon-msn-hover.jpg') center center no-repeat;}
+				
+				div#video-box div#video-description ul.icon-list li a.facebook { background: url('../images/tutorshelp/icon-facebook.jpg') center center no-repeat; }
+				div#video-box div#video-description ul.icon-list li a.facebook:hover { background: url('../images/tutorshelp/icon-facebook-hover.jpg') center center no-repeat;}
+
+/* Listsbox DIV */
+div#lists-box {
+	width: 85%;
+	margin: 20px auto 0;
+}
+	div#lists-box div.list {
+		width: 45%;
+		float: left;
+	}
+		div#lists-box div.list h3 {
+			border-bottom: 1px solid #ddd;
+			margin-bottom: 15px;
+			padding-left: 30px;
+		}
+		div#lists-box div.list ul {
+			width: 95%;
+			margin: 0 auto;
+			list-style: none;
+			}
+			div#lists-box div.list ul li {
+				padding: 7px 0 7px 25px;
+				background: url('../images/tutorshelp/bullet-icon.jpg') center left no-repeat;
+				font-size: 120%;
+			}
+	div#lists-box .list-one {
+		border-right: 1px solid #ddd;
+		margin-left: 5%;
+	}
+
+/* Search form */
+form#search-box {
+	border-top: 1px solid #b1b1b1;
+	border-bottom: 1px solid #b1b1b1;
+	padding: 15px 0;
+	text-align: center;
+	background: #ebebeb;
+	margin: 70px 0 0;
+}
+	form#search-box label {
+		display: inline;
+		color: #056a9e;
+		font-weight: bold;
+		margin-right: 10px;
+		font-size: 110%;
+	}
+	form#search-box input[type=text]{
+		display: inline;
+		border: none;
+		background: white;
+		color: #222;
+		padding: 3px;
+		font-size: 110%;
+		margin-right: 10px;
+	}
+	form#search-box select {
+		display: inline;
+		border: 1px solid #999;
+		padding: 2px;
+		font-size: 110%;
+		background: #ebebeb;
+		margin-right: 10px;
+	}
+	form#search-box input[type=submit]{
+		display: inline;
+		font-size: 110%;
+		color: #222;
+		background: #ebebeb;
+	}
+
+/* Misc classes */
+div.clear { clear: both; }
+* { outline: none; }
+a img { border: none; }
+div.separator { background: url('../images/tutorshelp/separator-background.jpg') center center repeat-x; height: 30px; width: 100%; display: block;}
+	a.blue-button {
+	display: block;
+	height: 49px;
+	line-height: 49px;
+	width: 212px;
+	text-align: center;
+	color: white;
+	background: url('../images/tutorshelp/blue-button1.jpg') center center no-repeat;
+	font-weight: bold;
+	margin: 20px 0 0 12%;
+}
+	a.alt {background: url('../images/tutorshelp/blue-button2.jpg') center center no-repeat;}
+	
+#play {
+	display: block;
+	width: 92px;
+	height: 92px;
+	background: url('../images/tutorshelp/play-button.png') center center no-repeat;
+	position: absolute;
+	margin: 120px 0 0 250px;
+}
+#pause {
+	display: block;
+	width: 608px;
+	height: 308px;
+	position: absolute;
+}
