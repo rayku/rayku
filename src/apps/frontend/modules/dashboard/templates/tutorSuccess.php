@@ -2,7 +2,7 @@
 $connection = RaykuCommon::getDatabaseConnection();
 ?>
 <div id="profile_content">
-<link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/tutor_profile/tprofile-style.css" />
+<link rel="stylesheet" type="text/css" href="/css/tutor_profile/tprofile-style.css" />
 <!--filter popup-->
 <div class="filter-popup">
 

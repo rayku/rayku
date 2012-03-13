@@ -1,6 +1,7 @@
-<link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/global.css" />
-<link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/widget/jquery.ui.css" />
-<link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/widget/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/css/widget/jquery.ui.css" />
+<link rel="stylesheet" type="text/css" href="/css/widget/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/tutor_profile/tprofile-style.css" />
 <!-- Tutor Profile Form -->
 <div id="tutor_profile" style="position:absolute;z-index:999999;margin-left:350px;"></div>
 <?php
