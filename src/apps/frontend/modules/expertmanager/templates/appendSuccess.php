@@ -512,12 +512,12 @@ function cmp($a, $b)
       <?php $_count_online_user += 1; ?>
       <?php
 
-			    	$totcook = $_COOKIE['cooktotal'];
+			    	$totcook = @$_COOKIE['cooktotal'];
 				//print_r($_COOKIE);
 			    	$w=1;
 			    	for($u=1;$u<=$totcook;$u++)
 			    	{
-			    		$cookval = $_COOKIE['expert_'.$u];
+			    		$cookval = @$_COOKIE['expert_'.$u];
 			    		$cookvalue = $cookval;
 			    		if($cookvalue)
 			    		{
