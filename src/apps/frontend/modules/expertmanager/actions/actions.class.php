@@ -163,18 +163,18 @@ class expertmanagerActions extends sfActions
 
     public function executeHistory()
     {
-        $this->less_id= $this->getrequestParameter('less_id') ;
+        $this->less_id= $this->getRequestParameter('less_id') ;
 
         $c = new Criteria();
-        $c->add(ExpertLessonPeer::ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonPeer::ID,$this->getRequestParameter('less_id'));
         $this->lesson = ExpertLessonPeer::doSelectOne($c);
 
         $c= new Criteria();
-        $c->add(ExpertLessonPeer::ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonPeer::ID,$this->getRequestParameter('less_id'));
         $this->expert_lesson = ExpertLessonPeer::doSelectOne($c);
 
         $c = new Criteria();
-        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getRequestParameter('less_id'));
         $this->lesson_shedules = ExpertLessonSchedulePeer::doSelect($c);
     }
 
@@ -1604,18 +1604,18 @@ class expertmanagerActions extends sfActions
 
     public function executeReschedule()
     {
-        $this->less_id= $this->getrequestParameter('less_id') ;
+        $this->less_id= $this->getRequestParameter('less_id') ;
 
         $c = new Criteria();
-        $c->add(ExpertLessonPeer::ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonPeer::ID,$this->getRequestParameter('less_id'));
         $this->lesson = ExpertLessonPeer::doSelectOne($c);
 
         $c= new Criteria();
-        $c->add(ExpertLessonPeer::ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonPeer::ID,$this->getRequestParameter('less_id'));
         $this->expert_lesson = ExpertLessonPeer::doSelectOne($c);
 
         $c = new Criteria();
-        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getrequestParameter('less_id'));
+        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getRequestParameter('less_id'));
         $this->lesson_shedules = ExpertLessonSchedulePeer::doSelect($c);
 
         if ($date = $this->getRequestParameter('date')) {
@@ -1693,7 +1693,7 @@ class expertmanagerActions extends sfActions
                 }
             }
 
-            return $this->redirect('/expertmanager/history?less_id = '.$this->getrequestParameter('less_id'));
+            return $this->redirect('/expertmanager/history?less_id = '.$this->getRequestParameter('less_id'));
         }
     }
 
@@ -1721,11 +1721,11 @@ class expertmanagerActions extends sfActions
         $this->l_id = $this->getRequestParameter('l_id');
 
         $c = new Criteria();
-        $c->add(ExpertLessonPeer::ID,$this->getrequestParameter('l_id'));
+        $c->add(ExpertLessonPeer::ID,$this->getRequestParameter('l_id'));
         $this->lesson = ExpertLessonPeer::doSelectOne($c);
 
         $c = new Criteria();
-        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getrequestParameter('l_id'));
+        $c->add(ExpertLessonSchedulePeer::EXPERT_LESSON_ID,$this->getRequestParameter('l_id'));
         $this->lesson_shedule = ExpertLessonSchedulePeer::doSelectOne($c);
 
         if ($this->getRequestParameter('date')) {
