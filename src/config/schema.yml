@@ -801,4 +801,20 @@ propel:
     filename: { type: VARCHAR, size: '255', required: true }
     created_at: { type: TIMESTAMP, required: true }
     _indexes: { whiteboard_snapshot_FI_1: [whiteboard_chat_id] }
-    
+  student_questions:
+    _attributes: { phpName: StudentQuestion }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true }
+    checked_id: { type: INTEGER, size: '11', required: true }
+    category_id: { type: INTEGER, size: '11', required: true }
+    course_id: { type: INTEGER, size: '11', required: true }
+    question: { type: VARCHAR, size: '500', required: true }
+    exe_order: { type: INTEGER, size: '11', required: true }
+    time: { type: INTEGER, size: '11', required: true }
+    course_code: { type: VARCHAR, size: '100', required: true }
+    year: { type: VARCHAR, size: '100', required: true }
+    school: { type: VARCHAR, size: '100', required: true }
+    status: { type: INTEGER, size: '10', required: true }
+    close: { type: INTEGER, size: '10', required: true }
+    cron: { type: INTEGER, size: '10', required: true }
+    source: { type: VARCHAR, size: '100', required: true }
