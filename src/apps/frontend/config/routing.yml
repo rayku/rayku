@@ -8,15 +8,15 @@ homepage:
 tos:
   url: /terms/*
   param: { module: static, action: tos }
-  
+
 about:
   url: /about/*
   param: { module: static, action: about }
-  
+
 faq:
   url: /faq/*
   param: { module: static, action: faq }
-  
+
 advertise:
   url: /advertise/*
   param: { module: static, action: advertise }
@@ -24,15 +24,15 @@ advertise:
 # ----
 # Login & Register
 # ----
-  
+
 login:
   url: /login
   param: { module: login, action: index }
-  
+
 logout:
   url: /logout
   param: { module: login, action: logout }
-  
+
 register:
   url: /register
   param: { module: register, action: index }
@@ -40,10 +40,10 @@ register:
 register_step3:
   url: /register/step3
   param: { module: register, action: stepthird }
-  
+
 register_step4:
   url: /register/step4
-  param: { module: register, action: stepforth }  
+  param: { module: register, action: stepforth }
 
 register_confirm:
   url: /register/confirm/:code/temp/*
@@ -52,11 +52,11 @@ register_confirm:
 recover_password:
   url: /recover-password
   param: { module: login, action: recoverPassword }
-  
+
 recover_password_sent:
   url: /recover-password/sent
   param: { module: login, action: recoverPasswordSent }
-  
+
 reset_password:
   url: /reset-password/:key
   param: { module: login, action: resetPassword }
@@ -64,23 +64,23 @@ reset_password:
 # ----
 # Forum
 # ----
-  
+
 make_post:
   url: /forum/post/
-  param: { module: forum, action: makePost }  
-  
+  param: { module: forum, action: makePost }
+
 search_thread:
   url: /forum/search/*
   param: { module: forum, action: search }
 
 thread_status:
   url: /forum/threadstatus/:thread_id/:status/*
-  param: { module: forum, action: threadstatus }  
+  param: { module: forum, action: threadstatus }
 
 best_response:
   url: /forum/bestresponse/post_id/:post_id/:temp/*
-  param: { module: forum, action: bestresponse }  
-      
+  param: { module: forum, action: bestresponse }
+
 view_thread:
   url: /forum/thread/:thread_id/:page/*
   param: { module: forum, action: thread, page: 1 }
@@ -94,30 +94,30 @@ view_page:
 view_forum:
   url: /forum/:forum_id/:page/*
   param: { module: forum, action: forum, page: 1 }
-  requirements: { forum_id: \d+, page: \d+ } 
-  
+  requirements: { forum_id: \d+, page: \d+ }
+
 new_thread:
   url: /forum/newthread/:forum_id/*
-  param: { module: forum, action: newThread } 
+  param: { module: forum, action: newThread }
 
 edit:
   url: /forum/edit/:thread_id/*
-  param: { module: forum, action: edit } 
+  param: { module: forum, action: edit }
 
-  
+
 expertreply_thread:
   url: /forum/expertreplythread/:forum_id/:thread_id/
-  param: { module: forum, action: expertReplyThread }  
-  
+  param: { module: forum, action: expertReplyThread }
+
 userreply_thread:
   url: /forum/userreplythread/:forum_id/:thread_id/
-  param: { module: forum, action: userReplyThread }  
+  param: { module: forum, action: userReplyThread }
 
 
-  
+
 view_forums:
   url: /forum/*
-  param: { module: forum, action: index } 
+  param: { module: forum, action: index }
 
 
 
@@ -129,7 +129,7 @@ view_forums:
 submit_friend_request:
   url: /friends/requestFriendship/:username/*
   param: { module: friends, action: friendshipRequest }
-  
+
 friend_remove:
   url: /friends/removeFriendship/:user_id
   param: { module: friends, action: removeFriendship }
@@ -144,7 +144,7 @@ friend_deny:
   url: /friends/denyFriendshipRequest/:user_id
   param: { module: friends, action: denyFriendshipRequest }
   requirements: { page: \d+ }
-  
+
 # ----
 # Gallery
 # ----
@@ -171,22 +171,22 @@ gallery_delete:
   url: /gallery/delete/:id
   param: { module: gallery, action: delete }
   requirements: { id: \d+ }
-  
+
 gallery_upload:
   url: /gallery/upload/:id
   param: { module: gallery, action: upload }
   requirements: { id: \d+ }
-  
+
 gallery_image_show:
   url: /gallery/item/:id/show
   param: { module: gallery, action: itemShow }
   requirements: { id: \d+ }
-  
+
 gallery_image_display:
   url: /gallery/item/:id
   param: { module: gallery, action: itemDisplay }
   requirements: { id: \d+ }
-  
+
 gallery_image_show_thumb:
   url: /gallery/item/:id/thumb
   param: { module: gallery, action: itemShow, thumb: true }
@@ -196,25 +196,25 @@ gallery_image_show_thumb2:
   url: /gallery/item/:id/thumb2
   param: { module: gallery, action: itemShow, thumb2: true }
   requirements: { id: \d+ }
-  
+
 gallery_item_download:
   url: /gallery/item/:id/download
   param: { module: gallery, action: itemDownload }
   requirements: { id: \d+ }
-  
+
 gallery_item_delete:
   url: /gallery/item/:id/delete
   param: { module: gallery, action: itemDelete }
   requirements: { id: \d+ }
-  
+
 gallery_item_set_as_avatar:
   url: /gallery/item/:id/as-avatar
   param: { module: gallery, action: setAsAvatar }
   requirements: { id: \d+ }
-  
 
-    
-  
+
+
+
 # ----
 # Private Messaging
 # ----
@@ -228,11 +228,11 @@ outbox:
   url: /message/outbox/:page
   param: { module: message, action: list, folder: outbox, page: 1 }
   requirements: { page: \d+ }
-  
+
 compose_to:
   url: /message/compose/:nickname/*
   param: { module: message, action: compose }
-  
+
 # ----
 # Journal
 # ----
@@ -241,7 +241,7 @@ journal_index:
   param: { module: journal, action: index }
   requirements: { user_id: \d+ }
 
-  
+
 # ----
 # CMS/Groups
 # ----
@@ -250,27 +250,27 @@ view_group_page:
   url: /group/page/:page_id
   param: { module: cms, action: view }
   requirements: { page_id: \d+ }
-  
-edit_group_site: 
+
+edit_group_site:
   url: /group/:group_id/site/edit/
   param: { module: cms, action: edit }
   requirements: { group_id: \d+ }
-  
+
 group:
   url: /group/:id/page/:page
   param: { module: group, action: index, page: 1 }
   requirements: { id: \d+, page: \d+ }
-  
+
 memberlist:
   url: /group/:id/memberlist/:page
   param: { module: group, action: memberlist, page: 1 }
   requirements: { id: \d+, page: \d+ }
-  
+
 join_group:
   url: /group/:id/join
   param: { module: group, action: join }
   requirements: { id: \d+ }
-  
+
 groups:
   url: /groups
   param: { module: group, action: list }
@@ -287,12 +287,12 @@ profile_edit:
 profile:
   url: /profile/:username
   param: { module: profile, action: index }
-  
+
 avatar:
   url: /avatar/:user_id/:size
   param: { module: profile, action: showAvatar, size: 1 }
-  
-  
+
+
 
 
 
@@ -352,8 +352,8 @@ training:
 # ----
 # Regtutor
 # ----
-  
-  
+
+
 regtutor:
   url: /regtutor
   param: { module: login, action: index }
@@ -361,8 +361,6 @@ regtutor:
 regtutor_confirm:
   url: /regtutor/confirm/:code/temp/*
   param: { module: regtutor, action: confirmUser }
-  
-
 
 # ----
 # Whiteboard
@@ -384,7 +382,7 @@ regtutor_confirm:
 #compose_to:
 #  url: /message/compose/:nickname/*
 #  param: { module: message, action: compose }
-    
+
 # ----
 # Symfony
 # ----
@@ -398,7 +396,6 @@ default_index:
   param: { action: index }
 
 default:
-  url:   /:module/:action/*  
-  
+  url:   /:module/:action/*
 
 
