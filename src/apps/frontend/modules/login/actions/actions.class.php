@@ -251,7 +251,10 @@ class loginActions extends sfActions
 
                 $connection = RaykuCommon::getDatabaseConnection();
 
-		$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+		$logedUserId = @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+        if (!$logedUserId) {
+            $this->redirect('/');
+        }
 
 		$currentUser = $this->getUser()->getRaykuUser(); $userId = $currentUser->getId();
 
