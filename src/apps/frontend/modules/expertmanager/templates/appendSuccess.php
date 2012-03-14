@@ -7,14 +7,10 @@ usort($rankCheckUsers, "cmp");
 function cmp($a, $b)
 {
     if ($a["score"] == $b["score"]) {
-	return strcmp($a["createdat"], $b["createdat"]);
+        return strcmp($a["createdat"], $b["createdat"]);
     }
     return ($a["score"] < $b["score"]) ? 1 : -1;
-
 }
-
-
-
 ?>
 <?php if($cat != NULL): ?>
 <?php if(count($expert_cats) >= 1 ):
@@ -83,10 +79,8 @@ function cmp($a, $b)
 
 			$finalusers = array(); $fianl_users = array(); $_fianl_users = array(); $_dd =1;  $_vx = 1;
 
-			$rateUsersCount = count($_rateUsers);
-
-			if($rateUsersCount > 3) {
-
+			$rateUsersCount = @count($_rateUsers);
+			if ($rateUsersCount > 3) {
 				foreach($_rateUsers as $key => $user) :
 
 					if($_dd%4==0 && $_vx <= 3 && !empty($_emptyRateUsers)):
@@ -311,7 +305,7 @@ function cmp($a, $b)
 
 							if(mysql_num_rows($titRes)){
 								$tutData 	= mysql_fetch_assoc($titRes);
-								$allsub		= $tutData['tutor_title'];
+								$allsub		= @$tutData['tutor_title'];
 								if($tutData['tutor_role'] != ''){
 									$allsub		.= $tutData['tutor_role'];
 
@@ -423,11 +417,12 @@ function cmp($a, $b)
 		}	}
 		endif;
 
-		if($_COOKIE["onoff"] == 1) :
+            $onoff = isset($_COOKIE['onoff']) ? $_COOKIE['onoff'] : null;
+		if($onoff == 1) :
 
 			$onlinecheck = "online";
 
-		elseif($_COOKIE["onoff"] == 2) :
+		elseif ($onoff == 2) :
 
 			$onlinecheck = "";
 
@@ -522,8 +517,8 @@ function cmp($a, $b)
 			    	$w=1;
 			    	for($u=1;$u<=$totcook;$u++)
 			    	{
-			    		$cookval.$w = $_COOKIE['expert_'.$u];
-			    		$cookvalue = $cookval.$w;
+			    		$cookval = $_COOKIE['expert_'.$u];
+			    		$cookvalue = $cookval;
 			    		if($cookvalue)
 			    		{
 				    		if($cookvalue == $xy)

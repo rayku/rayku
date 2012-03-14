@@ -41,8 +41,8 @@ $_Max_Count = intval($tutorsCount / 15) + 1;  $loopCount = $_Max_Count; if($loop
         <h4>School: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
         <select name="school" onchange="return setSchool(this.value)" style="background:none;padding:4px;height:auto;border:1px solid #CCC">
           <option value="">---- SELECT ----</option>
-          <option value="utoronto" <?php if($_COOKIE["school"] == "utoronto"): ?> selected="selected" <?php endif; ?> >University of Toronto</option>
-          <option value="ubc" <?php if($_COOKIE["school"] == "ubc"): ?> selected="selected" <?php endif; ?> >University of British Columbia</option>
+          <option value="utoronto" <?php if(@$_COOKIE["school"] == "utoronto"): ?> selected="selected" <?php endif; ?> >University of Toronto</option>
+          <option value="ubc" <?php if(@$_COOKIE["school"] == "ubc"): ?> selected="selected" <?php endif; ?> >University of British Columbia</option>
         </select>
 
 <script language="javascript">

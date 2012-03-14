@@ -767,7 +767,7 @@ class expertmanagerActions extends sfActions
                             $_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());
                             //echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
                         }
-                        if (mysql_num_rows($_queryCourse) > 0) {
+                        if (@mysql_num_rows($_queryCourse) > 0) {
                             $query = mysql_query("select * from user_score where user_id = ".$exp->getUserId(), $connection) or die(mysql_error());
                             $score = mysql_fetch_assoc($query);
 
@@ -945,7 +945,8 @@ class expertmanagerActions extends sfActions
             $this->redirect('/forum/newthread/'.$_SESSION['subject'].'?exp_online = 1');
         }
 
-        if ($_COOKIE["onoff"] == 1) {
+        $onoff = isset($_COOKIE["onoff"]) ? $_COOKIE["onoff"] : null;
+        if ($onoff == 1) {
             if (!empty($_COOKIE["school"])) {
                 $cookieSchool = array(); $m =0;
                 foreach ($newOnlineUser as $new) {
@@ -966,7 +967,7 @@ class expertmanagerActions extends sfActions
             } else {
                 $this->expert_cats = $newOnlineUser;
             }
-        } else if ($_COOKIE["onoff"] == 2) {
+        } else if ($onoff == 2) {
             if (!empty($_COOKIE["school"])) {
                 $cookieSchool = array(); $m =0;
                 foreach ($newOfflineUser as $new) {
@@ -1187,13 +1188,14 @@ class expertmanagerActions extends sfActions
             mysql_query("INSERT INTO `rayku_db`.`user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_POST['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
         }
 
-
         if (!empty($_POST['hidden'])) {
             $count = count($_POST['checkbox']);
             /* Clearing Cookies */
-            for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
-                $cookname =  'expert_'.$u;
-                setcookie($cookname,'', time()-3600, "/expertmanager/");
+            if (isset($_COOKIE['cookcount'])) {
+                for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
+                    $cookname =  'expert_'.$u;
+                    setcookie($cookname,'', time()-3600, "/expertmanager/");
+                }
             }
 
             setcookie("expertscount",'', time()-3600, "/expertmanager/");
@@ -1484,7 +1486,8 @@ class expertmanagerActions extends sfActions
             $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/'.$_SESSION['subject'].'?exp_online = 1');
         }
 
-        if ($_COOKIE["onoff"] == 1) {
+        $onoff = isset($_COOKIE['onoff']) ? $_COOKIE['onoff'] : null;
+        if ($onoff == 1) {
             if (!empty($_COOKIE["school"])) {
                 $cookieSchool = array(); $m =0;
                 foreach ($newOnlineUser as $new){
@@ -1503,7 +1506,7 @@ class expertmanagerActions extends sfActions
             } else {
                 $this->expert_cats = $newOnlineUser;
             }
-        } else if ($_COOKIE["onoff"] == 2) {
+        } else if ($onoff == 2) {
             if (!empty($_COOKIE["school"])) {
                 $cookieSchool = array(); $m =0;
                 foreach ($newOfflineUser as $new){
