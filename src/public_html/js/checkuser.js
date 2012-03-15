@@ -118,7 +118,7 @@ function checkedUser()
 
 		dv.ajax({ cache: false,
 			type : "POST",
-			url: 'http://'+getHostname()+'/expertmanager/mapuser',
+			url: '/expertmanager/mapuser',
 			success : function (data)  {
 
 				var result = data.split("<");
@@ -173,7 +173,7 @@ function askerOpen(row_id,chat_id) {
 			details[0] = row_id;
   			details[1] = chat_id;
 
-		document.location='http://'+getHostname()+'/expertmanager/answer?details='+details;
+		document.location='/expertmanager/answer?details='+details;
 
 }*/
 
@@ -257,7 +257,7 @@ if(modelbox == 1) {
 
 
 
-	Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1>A student is asking you this question:</h1> <div class="content"> <div class="question">'+ ques +' <span>('+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
+	Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1>A student is asking you this question:</h1> <div class="content"> <div class="question">'+ ques +' <span>('+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
 
 //countCheck();
 
@@ -324,7 +324,7 @@ stopTitle = 2;
 
 		dxv.ajax({ cache: false,
 			type : "POST",
-			url: "http://'+getHostname()+'/expertmanager/ignore?details="+ details,
+			url: "/expertmanager/ignore?details="+ details,
 			success : function (data)  {
 
 				stopTitle = 2;
@@ -365,7 +365,7 @@ stopTitle = 2;
 
 		dxv.ajax({ cache: false,
 			type : "POST",
-			url: "http://'+getHostname()+'/expertmanager/auto?details="+ details,
+			url: "/expertmanager/auto?details="+ details,
 			success : function (data)  {
 
 				stopTitle = 2;
