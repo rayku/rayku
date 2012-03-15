@@ -7,7 +7,7 @@
 
 			jk.ajax({ cache: false,
 			type : "GET",
-			url: "http://"+getHostname()+"/expertmanager/topic",
+			url: "/expertmanager/topic",
 			success : function (data)  {
 				   var respval = data.split('~');
 				   var chkpoint = respval[0]; 	
@@ -16,7 +16,7 @@
 				   		if(document.getElementById("question_hidden").value == 1)  {
 						/* jk.ajax({
 							type: "GET",
-							url: "http://"+getHostname()+"/expertmanager/missqryreload",
+							url: "/expertmanager/missqryreload",
 							data: '',
 							success: function(html){
 								document.getElementById('misqry').innerHTML = html;  
@@ -79,7 +79,7 @@ function popupCookieClear()
 
 		jk.ajax({ cache: false,
 			type : "POST",
-			url: "http://"+getHostname()+"/expertmanager/cookieadd?cookie=0"
+			url: "/expertmanager/cookieadd?cookie=0"
 		});
 
 
