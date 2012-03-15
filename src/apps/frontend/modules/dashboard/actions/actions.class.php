@@ -511,6 +511,8 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 
 	endif;
+        
+        BotServiceProvider::createFor("http://facebook.rayku.com/bot_enabled?action=1")->getContent();
 
   }
 
