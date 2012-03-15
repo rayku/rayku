@@ -191,7 +191,7 @@ class expertmanagerActions extends sfActions
         $this->redirect('/dashboard');
     }
 
-    public function executeAnswer()
+    public function executeAnswer($request)
     {
         $connection = RaykuCommon::getDatabaseConnection();
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
@@ -204,18 +204,22 @@ class expertmanagerActions extends sfActions
 
         @setcookie('_popupclose', '', time()-300, '/', null);
 
-        if ($_SESSION['modelPopupOpen']) {
+        if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
             if ($_SESSION['popup_session']) {
                 unset($_SESSION['popup_session']);
             }
         }
-
+        
         $details =  explode(",", $_REQUEST['details']);
+//        var_dump($details);
+        file_put_contents('/tmp/requestDetails.log', print_r($details, 1), FILE_APPEND);
 
         if ( count($details) > 4 ) {
             $_record_id = $details[6];
-            $_queryRecord = mysql_query("select * from user_expert where id = ".$_record_id." ", $connection) or die(mysql_error());
+            $query = "select * from user_expert where id = ".$_record_id." ";
+            
+            $_queryRecord = mysql_query($query, $connection) or die(mysql_error());
 
             if (mysql_num_rows($_queryRecord)) {
                 $newId = $details[6] + 1;
@@ -390,7 +394,7 @@ class expertmanagerActions extends sfActions
         $userId = $currentUser->getId();
         $_SESSION["_modelbox"] = 0;
         @setcookie('_popupclose', '', time()-300, '/', null);
-        if ($_SESSION['modelPopupOpen']) {
+        if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
             if ($_SESSION['popup_session']) {
                 unset($_SESSION['popup_session']);
@@ -811,7 +815,7 @@ class expertmanagerActions extends sfActions
                                             $mailUser = explode("@", $_thisUser->getEmail());
                                             $newMailUser = explode(".", $mailUser[1]);
 
-                                            if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
+                                            if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
                                                 $score['score'] = $score['score'] * 1.5;
                                             }
                                         }
@@ -854,7 +858,7 @@ class expertmanagerActions extends sfActions
                                     if (!empty($_SESSION["asker_school"])) {
                                         $mailUser = explode("@", $_thisUser->getEmail());
                                         $newMailUser = explode(".", $mailUser[1]);
-                                        if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
+                                        if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
                                             $score['score'] = $score['score'] * 1.5;
                                         }
                                     }
