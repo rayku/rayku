@@ -615,7 +615,7 @@ class expertmanagerActions extends sfActions
             $rowUser = mysql_fetch_array($queryUser);
 
             $x = new Criteria();
-            $x->add(UserPeer::ID,$row['checked_id']);
+            $x->add(UserPeer::ID, $row['checked_id']);
             $newloginId = UserPeer::doSelectOne($x);
             $queryRPRate = mysql_query("select * from user_rate where userid = ".$userId." ", $connection) or die(mysql_error());
 
@@ -645,16 +645,34 @@ class expertmanagerActions extends sfActions
             if (eregi ("(Chrome/)", $HTTP_USER_AGENT) == true) $browser = "chrome";
             if (eregi ("(Safari/)", $HTTP_USER_AGENT) == true) $browser = "safari";
 
-
-
             $_SESSION["_modelbox"] = $_SESSION["_modelbox"] + 1;
 
+            $criteria = new Criteria();
+            $criteria->add(StudentQuestionPeer::USER_ID, $row['user_id']);
+            $criteria->add(StudentQuestionPeer::CHECKED_ID, $row['checked_id']);
+            $studentQuestion = StudentQuestionPeer::doSelectOne($criteria);
+
             @setcookie('_popupclose', 1, time()+300, '/', null);
-            $question = base64_encode($question);
-            echo $row['checked_id']."-".$row['user_id']."-".$question."-".$school."-".$subject."-".$course_info."-".$row['id']."-".$newloginId->getName()."-expert"."-".$raykuCharge."-".$row['close']."-".$browser."-".$_SESSION["_modelbox"];
+            echo join('-', array(
+                $studentQuestion->getTutor()->getId(),
+                $studentQuestion->getStudent()->getId(),
+                base64_encode($studentQuestion->getQuestion()),
+                $school,
+                $subject,
+                $course_info,
+                $row['id'],
+                $newloginId->getName(),
+                "expert",
+                $raykuCharge,
+                $row['close'],
+                $browser,
+                $_SESSION["_modelbox"],
+                $studentQuestion->getId()
+            ));
         }
         exit(0);
     }
+
 
     public function executeMapmsguser()
     {
