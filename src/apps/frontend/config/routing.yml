@@ -362,6 +362,18 @@ regtutor_confirm:
   url: /regtutor/confirm/:code/temp/*
   param: { module: regtutor, action: confirmUser }
 
+
+# ----
+# Whiteboard session
+# ----
+whiteboard_session_info:
+  url: /session/:token
+  param: { module: session, action: info }
+
+whiteboard_session_id:
+  url: /session/:token/chat
+  param: { module: session, action: addChatId }
+
 # ----
 # Whiteboard
 # ----
@@ -397,5 +409,6 @@ default_index:
 
 default:
   url:   /:module/:action/*
+
 
 
