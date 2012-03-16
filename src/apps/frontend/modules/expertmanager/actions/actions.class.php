@@ -2122,11 +2122,13 @@ class expertmanagerActions extends sfActions
         }
     }
 
-    private function studentFromQuickRegistrationAskingAQuestion() {
+    private function studentFromQuickRegistrationAskingAQuestion()
+    {
         return !empty($_SESSION['dash_hidden']);
     }
 
-    private function loggedStudentAsksAQuestion() {
+    private function loggedStudentAsksAQuestion()
+    {
         return !empty($_POST['dash_hidden']);
     }
 }
