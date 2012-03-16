@@ -319,7 +319,6 @@ class expertmanagerActions extends sfActions
 
                 // redirect to rayku whiteboard
                 $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
-
             } else {
                 $this->redirect('/dashboard');
             }
@@ -626,7 +625,6 @@ class expertmanagerActions extends sfActions
             mysql_query("update user_expert set status = 0 where id = ".$row['id']." ", $connection) or die(mysql_error());
 
             //User Course Info
-
             $usr_course_query = mysql_query("select * from user_expert as u join courses as c on u.course_id = c.id where u.user_id = ".$row['user_id']."", $connection);
             $usr_course = mysql_fetch_array($usr_course_query);
             if (!empty($usr_course['year']) && !empty($usr_course['course_code'])) {
