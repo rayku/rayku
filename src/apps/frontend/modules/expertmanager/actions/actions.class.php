@@ -1247,7 +1247,21 @@ class expertmanagerActions extends sfActions
             mysql_query("DELETE FROM `student_questions` WHERE user_id = ".$userId."", $connection);
 
             for ($i = 0; $i < $count; $i++) {
-                mysql_query("INSERT INTO `student_questions` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close, source) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', '".$this->cat."', '".$course_id."','".$_SESSION['question']."','".(++$l)."', '".$time."', '".$course_code."', '".$year."', '".$school."', 1, '".$close."', '".$source."')", $connection) or die("Error In Insert-->".mysql_error());
+                $question = new StudentQuestion();
+                $question->setStudentId($userId);
+                $question->setTutorId($_POST['checkbox'][$i]);
+                $question->setCategoryId($this->cat);
+                $question->setCourseId($course_id);
+                $question->setQuestion($_SESSION['question']);
+                $question->setExeOrder(++$l);
+                $question->setTime($time);
+                $question->setCourseCode($course_code);
+                $question->setYear($year);
+                $question->setSchool($school);
+                $question->setStatus(1);
+                $question->setClose($close);
+                $question->setSource($source);
+                $question->save();
             }
 
             // Connect Whiteboard //
