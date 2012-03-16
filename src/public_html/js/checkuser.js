@@ -149,7 +149,7 @@ function popup(expid, userid, ques, school, sub, year, id,loginname, points, clo
             '        <div class="price"> Paying <span>' + points + 'RP</span> ($' + points +') per minute </div>' +
             '        <div class="connect">' +
             '            <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center">' +
-            '                <a href="http://' + getHostname() + '/expertmanager/answer?details=' + details + '">Connect!</a>' +
+            '                <a href="http://' + getHostname() + '/expertmanager/answer?details=' + details + '&questionId=' + questionId + '">Connect!</a>' +
             '            </div>' + musicCheck +
             '            <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div>' +
             '        </div>' +
