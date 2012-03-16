@@ -204,7 +204,7 @@ class expertmanagerActions extends sfActions
 
         @setcookie('_popupclose', '', time()-300, '/', null);
 
-        if ($_SESSION['modelPopupOpen']) {
+        if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
             if ($_SESSION['popup_session']) {
                 unset($_SESSION['popup_session']);
