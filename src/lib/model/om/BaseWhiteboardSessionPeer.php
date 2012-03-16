@@ -1,52 +1,55 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'whiteboard_connections' table.
+ * Base static class for performing query and update operations on the 'whiteboard_sessions' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseWhiteboardConnectionPeer {
+abstract class BaseWhiteboardSessionPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'whiteboard_connections';
+	const TABLE_NAME = 'whiteboard_sessions';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.WhiteboardConnection';
+	const CLASS_DEFAULT = 'lib.model.WhiteboardSession';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'whiteboard_connections.ID';
+	const ID = 'whiteboard_sessions.ID';
 
 	/** the column name for the QUESTION_ID field */
-	const QUESTION_ID = 'whiteboard_connections.QUESTION_ID';
-
-	/** the column name for the TYPE field */
-	const TYPE = 'whiteboard_connections.TYPE';
-
-	/** the column name for the TOKEN field */
-	const TOKEN = 'whiteboard_connections.TOKEN';
-
-	/** the column name for the CHAT_ID field */
-	const CHAT_ID = 'whiteboard_connections.CHAT_ID';
+	const QUESTION_ID = 'whiteboard_sessions.QUESTION_ID';
 
 	/** the column name for the USER_ID field */
-	const USER_ID = 'whiteboard_connections.USER_ID';
+	const USER_ID = 'whiteboard_sessions.USER_ID';
+
+	/** the column name for the TYPE field */
+	const TYPE = 'whiteboard_sessions.TYPE';
+
+	/** the column name for the TOKEN field */
+	const TOKEN = 'whiteboard_sessions.TOKEN';
+
+	/** the column name for the CHAT_ID field */
+	const CHAT_ID = 'whiteboard_sessions.CHAT_ID';
+
+	/** the column name for the LAST_ACTIVITY field */
+	const LAST_ACTIVITY = 'whiteboard_sessions.LAST_ACTIVITY';
 
 	/**
-	 * An identiy map to hold any loaded instances of WhiteboardConnection objects.
+	 * An identiy map to hold any loaded instances of WhiteboardSession objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array WhiteboardConnection[]
+	 * @var        array WhiteboardSession[]
 	 */
 	public static $instances = array();
 
@@ -63,11 +66,11 @@ abstract class BaseWhiteboardConnectionPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'QuestionId', 'Type', 'Token', 'ChatId', 'UserId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'questionId', 'type', 'token', 'chatId', 'userId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::QUESTION_ID, self::TYPE, self::TOKEN, self::CHAT_ID, self::USER_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'question_id', 'type', 'token', 'chat_id', 'user_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'QuestionId', 'UserId', 'Type', 'Token', 'ChatId', 'LastActivity', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'questionId', 'userId', 'type', 'token', 'chatId', 'lastActivity', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::QUESTION_ID, self::USER_ID, self::TYPE, self::TOKEN, self::CHAT_ID, self::LAST_ACTIVITY, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'question_id', 'user_id', 'type', 'token', 'chat_id', 'last_activity', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -77,11 +80,11 @@ abstract class BaseWhiteboardConnectionPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'QuestionId' => 1, 'Type' => 2, 'Token' => 3, 'ChatId' => 4, 'UserId' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'questionId' => 1, 'type' => 2, 'token' => 3, 'chatId' => 4, 'userId' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::QUESTION_ID => 1, self::TYPE => 2, self::TOKEN => 3, self::CHAT_ID => 4, self::USER_ID => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'question_id' => 1, 'type' => 2, 'token' => 3, 'chat_id' => 4, 'user_id' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'QuestionId' => 1, 'UserId' => 2, 'Type' => 3, 'Token' => 4, 'ChatId' => 5, 'LastActivity' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'questionId' => 1, 'userId' => 2, 'type' => 3, 'token' => 4, 'chatId' => 5, 'lastActivity' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::QUESTION_ID => 1, self::USER_ID => 2, self::TYPE => 3, self::TOKEN => 4, self::CHAT_ID => 5, self::LAST_ACTIVITY => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'question_id' => 1, 'user_id' => 2, 'type' => 3, 'token' => 4, 'chat_id' => 5, 'last_activity' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -91,7 +94,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			self::$mapBuilder = new WhiteboardConnectionMapBuilder();
+			self::$mapBuilder = new WhiteboardSessionMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -141,12 +144,12 @@ abstract class BaseWhiteboardConnectionPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. WhiteboardConnectionPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. WhiteboardSessionPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(WhiteboardConnectionPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(WhiteboardSessionPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -163,17 +166,19 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::ID);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::ID);
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::QUESTION_ID);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::QUESTION_ID);
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::TYPE);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::USER_ID);
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::TOKEN);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::TYPE);
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::CHAT_ID);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::TOKEN);
 
-		$criteria->addSelectColumn(WhiteboardConnectionPeer::USER_ID);
+		$criteria->addSelectColumn(WhiteboardSessionPeer::CHAT_ID);
+
+		$criteria->addSelectColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
 
 	}
 
@@ -193,21 +198,21 @@ abstract class BaseWhiteboardConnectionPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(WhiteboardConnectionPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(WhiteboardSessionPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// BasePeer returns a PDOStatement
@@ -226,7 +231,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     WhiteboardConnection
+	 * @return     WhiteboardSession
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -234,7 +239,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = WhiteboardConnectionPeer::doSelect($critcopy, $con);
+		$objects = WhiteboardSessionPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -251,7 +256,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return WhiteboardConnectionPeer::populateObjects(WhiteboardConnectionPeer::doSelectStmt($criteria, $con));
+		return WhiteboardSessionPeer::populateObjects(WhiteboardSessionPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -269,12 +274,12 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -292,10 +297,10 @@ abstract class BaseWhiteboardConnectionPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      WhiteboardConnection $value A WhiteboardConnection object.
+	 * @param      WhiteboardSession $value A WhiteboardSession object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(WhiteboardConnection $obj, $key = null)
+	public static function addInstanceToPool(WhiteboardSession $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -313,18 +318,18 @@ abstract class BaseWhiteboardConnectionPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A WhiteboardConnection object or a primary key value.
+	 * @param      mixed $value A WhiteboardSession object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof WhiteboardConnection) {
+			if (is_object($value) && $value instanceof WhiteboardSession) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or WhiteboardConnection object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or WhiteboardSession object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -339,7 +344,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     WhiteboardConnection Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     WhiteboardSession Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -393,12 +398,12 @@ abstract class BaseWhiteboardConnectionPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = WhiteboardConnectionPeer::getOMClass();
+		$cls = WhiteboardSessionPeer::getOMClass();
 		$cls = substr('.'.$cls, strrpos('.'.$cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = WhiteboardConnectionPeer::getInstanceFromPool($key))) {
+			$key = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = WhiteboardSessionPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -408,7 +413,7 @@ abstract class BaseWhiteboardConnectionPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				WhiteboardConnectionPeer::addInstanceToPool($obj, $key);
+				WhiteboardSessionPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -432,14 +437,14 @@ abstract class BaseWhiteboardConnectionPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(WhiteboardConnectionPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(WhiteboardSessionPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -448,10 +453,10 @@ abstract class BaseWhiteboardConnectionPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -482,14 +487,14 @@ abstract class BaseWhiteboardConnectionPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(WhiteboardConnectionPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(WhiteboardSessionPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -498,10 +503,10 @@ abstract class BaseWhiteboardConnectionPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -516,11 +521,11 @@ abstract class BaseWhiteboardConnectionPeer {
 
 
 	/**
-	 * Selects a collection of WhiteboardConnection objects pre-filled with their StudentQuestion objects.
+	 * Selects a collection of WhiteboardSession objects pre-filled with their StudentQuestion objects.
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of WhiteboardConnection objects.
+	 * @return     array Array of WhiteboardSession objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -533,28 +538,28 @@ abstract class BaseWhiteboardConnectionPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WhiteboardConnectionPeer::addSelectColumns($c);
-		$startcol = (WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS);
+		WhiteboardSessionPeer::addSelectColumns($c);
+		$startcol = (WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS);
 		StudentQuestionPeer::addSelectColumns($c);
 
-		$c->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+		$c->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WhiteboardConnectionPeer::getInstanceFromPool($key1))) {
+			$key1 = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WhiteboardSessionPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$omClass = WhiteboardConnectionPeer::getOMClass();
+				$omClass = WhiteboardSessionPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WhiteboardConnectionPeer::addInstanceToPool($obj1, $key1);
+				WhiteboardSessionPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = StudentQuestionPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -570,8 +575,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					StudentQuestionPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 
-				// Add the $obj1 (WhiteboardConnection) to $obj2 (StudentQuestion)
-				$obj2->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to $obj2 (StudentQuestion)
+				$obj2->addWhiteboardSession($obj1);
 
 			} // if joined row was not null
 
@@ -583,11 +588,11 @@ abstract class BaseWhiteboardConnectionPeer {
 
 
 	/**
-	 * Selects a collection of WhiteboardConnection objects pre-filled with their User objects.
+	 * Selects a collection of WhiteboardSession objects pre-filled with their User objects.
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of WhiteboardConnection objects.
+	 * @return     array Array of WhiteboardSession objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -600,28 +605,28 @@ abstract class BaseWhiteboardConnectionPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WhiteboardConnectionPeer::addSelectColumns($c);
-		$startcol = (WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS);
+		WhiteboardSessionPeer::addSelectColumns($c);
+		$startcol = (WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS);
 		UserPeer::addSelectColumns($c);
 
-		$c->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$c->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WhiteboardConnectionPeer::getInstanceFromPool($key1))) {
+			$key1 = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WhiteboardSessionPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$omClass = WhiteboardConnectionPeer::getOMClass();
+				$omClass = WhiteboardSessionPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WhiteboardConnectionPeer::addInstanceToPool($obj1, $key1);
+				WhiteboardSessionPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = UserPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -637,8 +642,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					UserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 
-				// Add the $obj1 (WhiteboardConnection) to $obj2 (User)
-				$obj2->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to $obj2 (User)
+				$obj2->addWhiteboardSession($obj1);
 
 			} // if joined row was not null
 
@@ -666,14 +671,14 @@ abstract class BaseWhiteboardConnectionPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(WhiteboardConnectionPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(WhiteboardSessionPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -682,11 +687,11 @@ abstract class BaseWhiteboardConnectionPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
-		$criteria->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -699,12 +704,12 @@ abstract class BaseWhiteboardConnectionPeer {
 	}
 
 	/**
-	 * Selects a collection of WhiteboardConnection objects pre-filled with all related objects.
+	 * Selects a collection of WhiteboardSession objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of WhiteboardConnection objects.
+	 * @return     array Array of WhiteboardSession objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -717,8 +722,8 @@ abstract class BaseWhiteboardConnectionPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WhiteboardConnectionPeer::addSelectColumns($c);
-		$startcol2 = (WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS);
+		WhiteboardSessionPeer::addSelectColumns($c);
+		$startcol2 = (WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		StudentQuestionPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (StudentQuestionPeer::NUM_COLUMNS - StudentQuestionPeer::NUM_LAZY_LOAD_COLUMNS);
@@ -726,24 +731,24 @@ abstract class BaseWhiteboardConnectionPeer {
 		UserPeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$c->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
-		$c->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$c->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+		$c->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WhiteboardConnectionPeer::getInstanceFromPool($key1))) {
+			$key1 = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WhiteboardSessionPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$omClass = WhiteboardConnectionPeer::getOMClass();
+				$omClass = WhiteboardSessionPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WhiteboardConnectionPeer::addInstanceToPool($obj1, $key1);
+				WhiteboardSessionPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 			// Add objects for joined StudentQuestion rows
@@ -762,8 +767,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					StudentQuestionPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (WhiteboardConnection) to the collection in $obj2 (StudentQuestion)
-				$obj2->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to the collection in $obj2 (StudentQuestion)
+				$obj2->addWhiteboardSession($obj1);
 			} // if joined row not null
 
 			// Add objects for joined User rows
@@ -782,8 +787,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					UserPeer::addInstanceToPool($obj3, $key3);
 				} // if obj3 loaded
 
-				// Add the $obj1 (WhiteboardConnection) to the collection in $obj3 (User)
-				$obj3->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to the collection in $obj3 (User)
+				$obj3->addWhiteboardSession($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -812,7 +817,7 @@ abstract class BaseWhiteboardConnectionPeer {
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -821,10 +826,10 @@ abstract class BaseWhiteboardConnectionPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-				$criteria->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+				$criteria->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -856,7 +861,7 @@ abstract class BaseWhiteboardConnectionPeer {
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WhiteboardConnectionPeer::addSelectColumns($criteria);
+			WhiteboardSessionPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -865,10 +870,10 @@ abstract class BaseWhiteboardConnectionPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-				$criteria->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+				$criteria->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -882,12 +887,12 @@ abstract class BaseWhiteboardConnectionPeer {
 
 
 	/**
-	 * Selects a collection of WhiteboardConnection objects pre-filled with all related objects except StudentQuestion.
+	 * Selects a collection of WhiteboardSession objects pre-filled with all related objects except StudentQuestion.
 	 *
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of WhiteboardConnection objects.
+	 * @return     array Array of WhiteboardSession objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -902,30 +907,30 @@ abstract class BaseWhiteboardConnectionPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WhiteboardConnectionPeer::addSelectColumns($c);
-		$startcol2 = (WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS);
+		WhiteboardSessionPeer::addSelectColumns($c);
+		$startcol2 = (WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		UserPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-				$c->addJoin(array(WhiteboardConnectionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+				$c->addJoin(array(WhiteboardSessionPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WhiteboardConnectionPeer::getInstanceFromPool($key1))) {
+			$key1 = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WhiteboardSessionPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$omClass = WhiteboardConnectionPeer::getOMClass();
+				$omClass = WhiteboardSessionPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WhiteboardConnectionPeer::addInstanceToPool($obj1, $key1);
+				WhiteboardSessionPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 				// Add objects for joined User rows
@@ -944,8 +949,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					UserPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (WhiteboardConnection) to the collection in $obj2 (User)
-				$obj2->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to the collection in $obj2 (User)
+				$obj2->addWhiteboardSession($obj1);
 
 			} // if joined row is not null
 
@@ -957,12 +962,12 @@ abstract class BaseWhiteboardConnectionPeer {
 
 
 	/**
-	 * Selects a collection of WhiteboardConnection objects pre-filled with all related objects except User.
+	 * Selects a collection of WhiteboardSession objects pre-filled with all related objects except User.
 	 *
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of WhiteboardConnection objects.
+	 * @return     array Array of WhiteboardSession objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -977,30 +982,30 @@ abstract class BaseWhiteboardConnectionPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WhiteboardConnectionPeer::addSelectColumns($c);
-		$startcol2 = (WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS);
+		WhiteboardSessionPeer::addSelectColumns($c);
+		$startcol2 = (WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		StudentQuestionPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (StudentQuestionPeer::NUM_COLUMNS - StudentQuestionPeer::NUM_LAZY_LOAD_COLUMNS);
 
-				$c->addJoin(array(WhiteboardConnectionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
+				$c->addJoin(array(WhiteboardSessionPeer::QUESTION_ID,), array(StudentQuestionPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WhiteboardConnectionPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WhiteboardConnectionPeer::getInstanceFromPool($key1))) {
+			$key1 = WhiteboardSessionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WhiteboardSessionPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$omClass = WhiteboardConnectionPeer::getOMClass();
+				$omClass = WhiteboardSessionPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WhiteboardConnectionPeer::addInstanceToPool($obj1, $key1);
+				WhiteboardSessionPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 				// Add objects for joined StudentQuestion rows
@@ -1019,8 +1024,8 @@ abstract class BaseWhiteboardConnectionPeer {
 					StudentQuestionPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (WhiteboardConnection) to the collection in $obj2 (StudentQuestion)
-				$obj2->addWhiteboardConnection($obj1);
+				// Add the $obj1 (WhiteboardSession) to the collection in $obj2 (StudentQuestion)
+				$obj2->addWhiteboardSession($obj1);
 
 			} // if joined row is not null
 
@@ -1058,13 +1063,13 @@ abstract class BaseWhiteboardConnectionPeer {
 	 */
 	public static function getOMClass()
 	{
-		return WhiteboardConnectionPeer::CLASS_DEFAULT;
+		return WhiteboardSessionPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a WhiteboardConnection or Criteria object.
+	 * Method perform an INSERT on the database, given a WhiteboardSession or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or WhiteboardConnection object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or WhiteboardSession object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1073,17 +1078,17 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from WhiteboardConnection object
+			$criteria = $values->buildCriteria(); // build Criteria from WhiteboardSession object
 		}
 
-		if ($criteria->containsKey(WhiteboardConnectionPeer::ID) && $criteria->keyContainsValue(WhiteboardConnectionPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.WhiteboardConnectionPeer::ID.')');
+		if ($criteria->containsKey(WhiteboardSessionPeer::ID) && $criteria->keyContainsValue(WhiteboardSessionPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.WhiteboardSessionPeer::ID.')');
 		}
 
 
@@ -1105,9 +1110,9 @@ abstract class BaseWhiteboardConnectionPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a WhiteboardConnection or Criteria object.
+	 * Method perform an UPDATE on the database, given a WhiteboardSession or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or WhiteboardConnection object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or WhiteboardSession object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1116,7 +1121,7 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -1124,10 +1129,10 @@ abstract class BaseWhiteboardConnectionPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(WhiteboardConnectionPeer::ID);
-			$selectCriteria->add(WhiteboardConnectionPeer::ID, $criteria->remove(WhiteboardConnectionPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(WhiteboardSessionPeer::ID);
+			$selectCriteria->add(WhiteboardSessionPeer::ID, $criteria->remove(WhiteboardSessionPeer::ID), $comparison);
 
-		} else { // $values is WhiteboardConnection object
+		} else { // $values is WhiteboardSession object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -1139,21 +1144,21 @@ abstract class BaseWhiteboardConnectionPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the whiteboard_connections table.
+	 * Method to DELETE all rows from the whiteboard_sessions table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(WhiteboardConnectionPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(WhiteboardSessionPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1163,9 +1168,9 @@ abstract class BaseWhiteboardConnectionPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a WhiteboardConnection or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a WhiteboardSession or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or WhiteboardConnection object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or WhiteboardSession object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1176,20 +1181,20 @@ abstract class BaseWhiteboardConnectionPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			WhiteboardConnectionPeer::clearInstancePool();
+			WhiteboardSessionPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof WhiteboardConnection) {
+		} elseif ($values instanceof WhiteboardSession) {
 			// invalidate the cache for this single object
-			WhiteboardConnectionPeer::removeInstanceFromPool($values);
+			WhiteboardSessionPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -1198,11 +1203,11 @@ abstract class BaseWhiteboardConnectionPeer {
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(WhiteboardConnectionPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(WhiteboardSessionPeer::ID, (array) $values, Criteria::IN);
 
 			foreach ((array) $values as $singleval) {
 				// we can invalidate the cache for this single object
-				WhiteboardConnectionPeer::removeInstanceFromPool($singleval);
+				WhiteboardSessionPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -1227,24 +1232,24 @@ abstract class BaseWhiteboardConnectionPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given WhiteboardConnection object.
+	 * Validates all modified columns of given WhiteboardSession object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      WhiteboardConnection $obj The object to validate.
+	 * @param      WhiteboardSession $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(WhiteboardConnection $obj, $cols = null)
+	public static function doValidate(WhiteboardSession $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(WhiteboardConnectionPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(WhiteboardConnectionPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(WhiteboardSessionPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(WhiteboardSessionPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -1260,11 +1265,11 @@ abstract class BaseWhiteboardConnectionPeer {
 
 		}
 
-		$res =  BasePeer::doValidate(WhiteboardConnectionPeer::DATABASE_NAME, WhiteboardConnectionPeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(WhiteboardSessionPeer::DATABASE_NAME, WhiteboardSessionPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = WhiteboardConnectionPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = WhiteboardSessionPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
         }
     }
 
@@ -1276,23 +1281,23 @@ abstract class BaseWhiteboardConnectionPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     WhiteboardConnection
+	 * @return     WhiteboardSession
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = WhiteboardConnectionPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = WhiteboardSessionPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(WhiteboardConnectionPeer::DATABASE_NAME);
-		$criteria->add(WhiteboardConnectionPeer::ID, $pk);
+		$criteria = new Criteria(WhiteboardSessionPeer::DATABASE_NAME);
+		$criteria->add(WhiteboardSessionPeer::ID, $pk);
 
-		$v = WhiteboardConnectionPeer::doSelect($criteria, $con);
+		$v = WhiteboardSessionPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -1308,30 +1313,30 @@ abstract class BaseWhiteboardConnectionPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(WhiteboardConnectionPeer::DATABASE_NAME);
-			$criteria->add(WhiteboardConnectionPeer::ID, $pks, Criteria::IN);
-			$objs = WhiteboardConnectionPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(WhiteboardSessionPeer::DATABASE_NAME);
+			$criteria->add(WhiteboardSessionPeer::ID, $pks, Criteria::IN);
+			$objs = WhiteboardSessionPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseWhiteboardConnectionPeer
+} // BaseWhiteboardSessionPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the WhiteboardConnectionPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the WhiteboardConnectionPeer class:
+// NOTE: This static code cannot call methods on the WhiteboardSessionPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the WhiteboardSessionPeer class:
 //
-// Propel::getDatabaseMap(WhiteboardConnectionPeer::DATABASE_NAME)->addTableBuilder(WhiteboardConnectionPeer::TABLE_NAME, WhiteboardConnectionPeer::getMapBuilder());
+// Propel::getDatabaseMap(WhiteboardSessionPeer::DATABASE_NAME)->addTableBuilder(WhiteboardSessionPeer::TABLE_NAME, WhiteboardSessionPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseWhiteboardConnectionPeer::DATABASE_NAME)->addTableBuilder(BaseWhiteboardConnectionPeer::TABLE_NAME, BaseWhiteboardConnectionPeer::getMapBuilder());
+Propel::getDatabaseMap(BaseWhiteboardSessionPeer::DATABASE_NAME)->addTableBuilder(BaseWhiteboardSessionPeer::TABLE_NAME, BaseWhiteboardSessionPeer::getMapBuilder());
 

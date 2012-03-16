@@ -1,5 +1,5 @@
 <?php
-class WhiteboardConnectionService
+class WhiteboardSessionService
 {
     public function connect($userId, $questionId)
     {

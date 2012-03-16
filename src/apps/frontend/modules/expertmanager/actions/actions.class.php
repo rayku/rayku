@@ -214,8 +214,8 @@ class expertmanagerActions extends sfActions
             $studentQuestion = $peer->retrieveByPk($this->getRequestParameter('questionId'));
 
             $questionId = $this->getRequestParameter('questionId');
-            $connectionService = new WhiteboardConnectionService();
-            $session = $connectionService->connect($userId, $questionId);
+            $sessionService = new WhiteboardSessionService();
+            $session = $sessionService->connect($userId, $questionId);
 
             mysql_query("delete from user_expert where user_id = ".$userId, $connection) or die(mysql_error());
 

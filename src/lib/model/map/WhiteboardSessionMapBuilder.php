@@ -2,7 +2,7 @@
 
 
 /**
- * This class adds structure of 'whiteboard_connections' table to 'propel' DatabaseMap object.
+ * This class adds structure of 'whiteboard_sessions' table to 'propel' DatabaseMap object.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class WhiteboardConnectionMapBuilder implements MapBuilder {
+class WhiteboardSessionMapBuilder implements MapBuilder {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.WhiteboardConnectionMapBuilder';
+	const CLASS_NAME = 'lib.model.map.WhiteboardSessionMapBuilder';
 
 	/**
 	 * The database map.
@@ -54,11 +54,11 @@ class WhiteboardConnectionMapBuilder implements MapBuilder {
 	 */
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap(WhiteboardConnectionPeer::DATABASE_NAME);
+		$this->dbMap = Propel::getDatabaseMap(WhiteboardSessionPeer::DATABASE_NAME);
 
-		$tMap = $this->dbMap->addTable(WhiteboardConnectionPeer::TABLE_NAME);
-		$tMap->setPhpName('WhiteboardConnection');
-		$tMap->setClassname('WhiteboardConnection');
+		$tMap = $this->dbMap->addTable(WhiteboardSessionPeer::TABLE_NAME);
+		$tMap->setPhpName('WhiteboardSession');
+		$tMap->setClassname('WhiteboardSession');
 
 		$tMap->setUseIdGenerator(true);
 
@@ -66,14 +66,16 @@ class WhiteboardConnectionMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('QUESTION_ID', 'QuestionId', 'INTEGER', 'student_questions', 'ID', true, 11);
 
+		$tMap->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'user', 'ID', true, 11);
+
 		$tMap->addColumn('TYPE', 'Type', 'INTEGER', true, 10);
 
 		$tMap->addColumn('TOKEN', 'Token', 'VARCHAR', true, 40);
 
 		$tMap->addColumn('CHAT_ID', 'ChatId', 'VARCHAR', false, 40);
 
-		$tMap->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'user', 'ID', true, 11);
+		$tMap->addColumn('LAST_ACTIVITY', 'LastActivity', 'INTEGER', true, 11);
 
 	} // doBuild()
 
-} // WhiteboardConnectionMapBuilder
+} // WhiteboardSessionMapBuilder

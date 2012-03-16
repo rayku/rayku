@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Base class that represents a row from the 'whiteboard_connections' table.
+ * Base class that represents a row from the 'whiteboard_sessions' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseWhiteboardConnection extends BaseObject  implements Persistent {
+abstract class BaseWhiteboardSession extends BaseObject  implements Persistent {
 
 
-  const PEER = 'WhiteboardConnectionPeer';
+  const PEER = 'WhiteboardSessionPeer';
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        WhiteboardConnectionPeer
+	 * @var        WhiteboardSessionPeer
 	 */
 	protected static $peer;
 
@@ -31,6 +31,12 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * @var        int
 	 */
 	protected $question_id;
+
+	/**
+	 * The value for the user_id field.
+	 * @var        int
+	 */
+	protected $user_id;
 
 	/**
 	 * The value for the type field.
@@ -51,10 +57,10 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	protected $chat_id;
 
 	/**
-	 * The value for the user_id field.
+	 * The value for the last_activity field.
 	 * @var        int
 	 */
-	protected $user_id;
+	protected $last_activity;
 
 	/**
 	 * @var        StudentQuestion
@@ -81,7 +87,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Initializes internal state of BaseWhiteboardConnection object.
+	 * Initializes internal state of BaseWhiteboardSession object.
 	 * @see        applyDefaults()
 	 */
 	public function __construct()
@@ -121,6 +127,16 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	}
 
 	/**
+	 * Get the [user_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getUserId()
+	{
+		return $this->user_id;
+	}
+
+	/**
 	 * Get the [type] column value.
 	 * 
 	 * @return     int
@@ -151,20 +167,20 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	}
 
 	/**
-	 * Get the [user_id] column value.
+	 * Get the [last_activity] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getUserId()
+	public function getLastActivity()
 	{
-		return $this->user_id;
+		return $this->last_activity;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
+	 * @return     WhiteboardSession The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -174,7 +190,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::ID;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::ID;
 		}
 
 		return $this;
@@ -184,7 +200,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * Set the value of [question_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
+	 * @return     WhiteboardSession The current object (for fluent API support)
 	 */
 	public function setQuestionId($v)
 	{
@@ -194,7 +210,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 		if ($this->question_id !== $v) {
 			$this->question_id = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::QUESTION_ID;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::QUESTION_ID;
 		}
 
 		if ($this->aStudentQuestion !== null && $this->aStudentQuestion->getId() !== $v) {
@@ -205,70 +221,10 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	} // setQuestionId()
 
 	/**
-	 * Set the value of [type] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
-	 */
-	public function setType($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->type !== $v) {
-			$this->type = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::TYPE;
-		}
-
-		return $this;
-	} // setType()
-
-	/**
-	 * Set the value of [token] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
-	 */
-	public function setToken($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->token !== $v) {
-			$this->token = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::TOKEN;
-		}
-
-		return $this;
-	} // setToken()
-
-	/**
-	 * Set the value of [chat_id] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
-	 */
-	public function setChatId($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->chat_id !== $v) {
-			$this->chat_id = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::CHAT_ID;
-		}
-
-		return $this;
-	} // setChatId()
-
-	/**
 	 * Set the value of [user_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     WhiteboardConnection The current object (for fluent API support)
+	 * @return     WhiteboardSession The current object (for fluent API support)
 	 */
 	public function setUserId($v)
 	{
@@ -278,7 +234,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 		if ($this->user_id !== $v) {
 			$this->user_id = $v;
-			$this->modifiedColumns[] = WhiteboardConnectionPeer::USER_ID;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::USER_ID;
 		}
 
 		if ($this->aUser !== null && $this->aUser->getId() !== $v) {
@@ -287,6 +243,86 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 		return $this;
 	} // setUserId()
+
+	/**
+	 * Set the value of [type] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WhiteboardSession The current object (for fluent API support)
+	 */
+	public function setType($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->type !== $v) {
+			$this->type = $v;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::TYPE;
+		}
+
+		return $this;
+	} // setType()
+
+	/**
+	 * Set the value of [token] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WhiteboardSession The current object (for fluent API support)
+	 */
+	public function setToken($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->token !== $v) {
+			$this->token = $v;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::TOKEN;
+		}
+
+		return $this;
+	} // setToken()
+
+	/**
+	 * Set the value of [chat_id] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WhiteboardSession The current object (for fluent API support)
+	 */
+	public function setChatId($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->chat_id !== $v) {
+			$this->chat_id = $v;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::CHAT_ID;
+		}
+
+		return $this;
+	} // setChatId()
+
+	/**
+	 * Set the value of [last_activity] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WhiteboardSession The current object (for fluent API support)
+	 */
+	public function setLastActivity($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->last_activity !== $v) {
+			$this->last_activity = $v;
+			$this->modifiedColumns[] = WhiteboardSessionPeer::LAST_ACTIVITY;
+		}
+
+		return $this;
+	} // setLastActivity()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -327,10 +363,11 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->question_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->type = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->token = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->chat_id = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->user_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->type = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->token = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->chat_id = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->last_activity = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -340,10 +377,10 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = WhiteboardConnectionPeer::NUM_COLUMNS - WhiteboardConnectionPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = WhiteboardSessionPeer::NUM_COLUMNS - WhiteboardSessionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating WhiteboardConnection object", $e);
+			throw new PropelException("Error populating WhiteboardSession object", $e);
 		}
 	}
 
@@ -392,13 +429,13 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = WhiteboardConnectionPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = WhiteboardSessionPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -429,12 +466,12 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
-			WhiteboardConnectionPeer::doDelete($this, $con);
+			WhiteboardSessionPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -463,14 +500,14 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(WhiteboardConnectionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WhiteboardSessionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$affectedRows = $this->doSave($con);
 			$con->commit();
-			WhiteboardConnectionPeer::addInstanceToPool($this);
+			WhiteboardSessionPeer::addInstanceToPool($this);
 			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollBack();
@@ -515,13 +552,13 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			}
 
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = WhiteboardConnectionPeer::ID;
+				$this->modifiedColumns[] = WhiteboardSessionPeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = WhiteboardConnectionPeer::doInsert($this, $con);
+					$pk = WhiteboardSessionPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -530,7 +567,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += WhiteboardConnectionPeer::doUpdate($this, $con);
+					$affectedRows += WhiteboardSessionPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
@@ -620,7 +657,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			}
 
 
-			if (($retval = WhiteboardConnectionPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = WhiteboardSessionPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -643,7 +680,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = WhiteboardConnectionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = WhiteboardSessionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -665,16 +702,19 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 				return $this->getQuestionId();
 				break;
 			case 2:
-				return $this->getType();
+				return $this->getUserId();
 				break;
 			case 3:
-				return $this->getToken();
+				return $this->getType();
 				break;
 			case 4:
-				return $this->getChatId();
+				return $this->getToken();
 				break;
 			case 5:
-				return $this->getUserId();
+				return $this->getChatId();
+				break;
+			case 6:
+				return $this->getLastActivity();
 				break;
 			default:
 				return null;
@@ -695,14 +735,15 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = WhiteboardConnectionPeer::getFieldNames($keyType);
+		$keys = WhiteboardSessionPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getQuestionId(),
-			$keys[2] => $this->getType(),
-			$keys[3] => $this->getToken(),
-			$keys[4] => $this->getChatId(),
-			$keys[5] => $this->getUserId(),
+			$keys[2] => $this->getUserId(),
+			$keys[3] => $this->getType(),
+			$keys[4] => $this->getToken(),
+			$keys[5] => $this->getChatId(),
+			$keys[6] => $this->getLastActivity(),
 		);
 		return $result;
 	}
@@ -719,7 +760,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = WhiteboardConnectionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = WhiteboardSessionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -741,16 +782,19 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 				$this->setQuestionId($value);
 				break;
 			case 2:
-				$this->setType($value);
+				$this->setUserId($value);
 				break;
 			case 3:
-				$this->setToken($value);
+				$this->setType($value);
 				break;
 			case 4:
-				$this->setChatId($value);
+				$this->setToken($value);
 				break;
 			case 5:
-				$this->setUserId($value);
+				$this->setChatId($value);
+				break;
+			case 6:
+				$this->setLastActivity($value);
 				break;
 		} // switch()
 	}
@@ -774,14 +818,15 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = WhiteboardConnectionPeer::getFieldNames($keyType);
+		$keys = WhiteboardSessionPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setQuestionId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setType($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setToken($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setChatId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setUserId($arr[$keys[5]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setType($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setToken($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setChatId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setLastActivity($arr[$keys[6]]);
 	}
 
 	/**
@@ -791,14 +836,15 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(WhiteboardConnectionPeer::DATABASE_NAME);
+		$criteria = new Criteria(WhiteboardSessionPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(WhiteboardConnectionPeer::ID)) $criteria->add(WhiteboardConnectionPeer::ID, $this->id);
-		if ($this->isColumnModified(WhiteboardConnectionPeer::QUESTION_ID)) $criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->question_id);
-		if ($this->isColumnModified(WhiteboardConnectionPeer::TYPE)) $criteria->add(WhiteboardConnectionPeer::TYPE, $this->type);
-		if ($this->isColumnModified(WhiteboardConnectionPeer::TOKEN)) $criteria->add(WhiteboardConnectionPeer::TOKEN, $this->token);
-		if ($this->isColumnModified(WhiteboardConnectionPeer::CHAT_ID)) $criteria->add(WhiteboardConnectionPeer::CHAT_ID, $this->chat_id);
-		if ($this->isColumnModified(WhiteboardConnectionPeer::USER_ID)) $criteria->add(WhiteboardConnectionPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(WhiteboardSessionPeer::ID)) $criteria->add(WhiteboardSessionPeer::ID, $this->id);
+		if ($this->isColumnModified(WhiteboardSessionPeer::QUESTION_ID)) $criteria->add(WhiteboardSessionPeer::QUESTION_ID, $this->question_id);
+		if ($this->isColumnModified(WhiteboardSessionPeer::USER_ID)) $criteria->add(WhiteboardSessionPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(WhiteboardSessionPeer::TYPE)) $criteria->add(WhiteboardSessionPeer::TYPE, $this->type);
+		if ($this->isColumnModified(WhiteboardSessionPeer::TOKEN)) $criteria->add(WhiteboardSessionPeer::TOKEN, $this->token);
+		if ($this->isColumnModified(WhiteboardSessionPeer::CHAT_ID)) $criteria->add(WhiteboardSessionPeer::CHAT_ID, $this->chat_id);
+		if ($this->isColumnModified(WhiteboardSessionPeer::LAST_ACTIVITY)) $criteria->add(WhiteboardSessionPeer::LAST_ACTIVITY, $this->last_activity);
 
 		return $criteria;
 	}
@@ -813,9 +859,9 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(WhiteboardConnectionPeer::DATABASE_NAME);
+		$criteria = new Criteria(WhiteboardSessionPeer::DATABASE_NAME);
 
-		$criteria->add(WhiteboardConnectionPeer::ID, $this->id);
+		$criteria->add(WhiteboardSessionPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -846,7 +892,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of WhiteboardConnection (or compatible) type.
+	 * @param      object $copyObj An object of WhiteboardSession (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -855,13 +901,15 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 
 		$copyObj->setQuestionId($this->question_id);
 
+		$copyObj->setUserId($this->user_id);
+
 		$copyObj->setType($this->type);
 
 		$copyObj->setToken($this->token);
 
 		$copyObj->setChatId($this->chat_id);
 
-		$copyObj->setUserId($this->user_id);
+		$copyObj->setLastActivity($this->last_activity);
 
 
 		$copyObj->setNew(true);
@@ -879,7 +927,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     WhiteboardConnection Clone of current object.
+	 * @return     WhiteboardSession Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -898,12 +946,12 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     WhiteboardConnectionPeer
+	 * @return     WhiteboardSessionPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new WhiteboardConnectionPeer();
+			self::$peer = new WhiteboardSessionPeer();
 		}
 		return self::$peer;
 	}
@@ -912,7 +960,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * Declares an association between this object and a StudentQuestion object.
 	 *
 	 * @param      StudentQuestion $v
-	 * @return     WhiteboardConnection The current object (for fluent API support)
+	 * @return     WhiteboardSession The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setStudentQuestion(StudentQuestion $v = null)
@@ -928,7 +976,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the StudentQuestion object, it will not be re-added.
 		if ($v !== null) {
-			$v->addWhiteboardConnection($this);
+			$v->addWhiteboardSession($this);
 		}
 
 		return $this;
@@ -953,7 +1001,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aStudentQuestion->addWhiteboardConnections($this);
+			   $this->aStudentQuestion->addWhiteboardSessions($this);
 			 */
 		}
 		return $this->aStudentQuestion;
@@ -963,7 +1011,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 	 * Declares an association between this object and a User object.
 	 *
 	 * @param      User $v
-	 * @return     WhiteboardConnection The current object (for fluent API support)
+	 * @return     WhiteboardSession The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setUser(User $v = null)
@@ -979,7 +1027,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the User object, it will not be re-added.
 		if ($v !== null) {
-			$v->addWhiteboardConnection($this);
+			$v->addWhiteboardSession($this);
 		}
 
 		return $this;
@@ -1004,7 +1052,7 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aUser->addWhiteboardConnections($this);
+			   $this->aUser->addWhiteboardSessions($this);
 			 */
 		}
 		return $this->aUser;
@@ -1028,4 +1076,4 @@ abstract class BaseWhiteboardConnection extends BaseObject  implements Persisten
 			$this->aUser = null;
 	}
 
-} // BaseWhiteboardConnection
+} // BaseWhiteboardSession
