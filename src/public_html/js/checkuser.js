@@ -89,7 +89,7 @@ function checkedUser()
                 var newChecking = result[0].split("-");
                 if (newChecking[8] == "expert") {
                     var newResult = result[0].split("-");
-                    popup(newResult[0], newResult[1], newResult[2], newResult[3], newResult[4], newResult[5], newResult[6], newResult[7], newResult[9], newResult[10], newResult[11], newResult[12]);
+                    popup(newResult[0], newResult[1], newResult[2], newResult[3], newResult[4], newResult[5], newResult[6], newResult[7], newResult[9], newResult[10], newResult[11], newResult[12], newResult[13]);
                 }
             }
         }
@@ -97,7 +97,7 @@ function checkedUser()
     setTimeout("checkedUser()", 5000);
 }
 
-function popup(expid, userid, ques, school, sub, year, id,loginname, points, close, browser, modelbox)
+function popup(expid, userid, ques, school, sub, year, id,loginname, points, close, browser, modelbox, questionId)
 {
     popPopOpen = true;
     var details = new Array();
