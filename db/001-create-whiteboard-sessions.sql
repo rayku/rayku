@@ -4,9 +4,11 @@ CREATE TABLE `whiteboard_sessions`
 (
     `id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
     `question_id` INTEGER(11)  NOT NULL,
+    `user_id` INTEGER(11)  NOT NULL,
     `type` INTEGER(10)  NOT NULL,
     `token` VARCHAR(40)  NOT NULL,
-    `user_id` INTEGER(11)  NOT NULL,
+    `chat_id` VARCHAR(40),
+    `last_activity` INTEGER(11)  NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `whiteboard_sessions_FI_1` (`question_id`),
     CONSTRAINT `whiteboard_sessions_FK_1`
@@ -17,4 +19,3 @@ CREATE TABLE `whiteboard_sessions`
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`id`)
 )Type=InnoDB;
-
