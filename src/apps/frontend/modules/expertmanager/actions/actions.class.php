@@ -193,6 +193,7 @@ class expertmanagerActions extends sfActions
 
     public function executeAnswer()
     {
+        $connection = RaykuCommon::getDatabaseConnection();
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $time = time();
@@ -262,7 +263,7 @@ class expertmanagerActions extends sfActions
                 $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
 
                 $a = new Criteria();
-                $a->add(UserPeer::ID, $logedUserId);
+                $a->add(UserPeer::ID, $currentUser);
                 $asker = UserPeer::doSelectOne($a);
 
                 $this->getResponse()->setCookie("askerpoints", $rowUser['points'],time()+3600);
@@ -276,7 +277,7 @@ class expertmanagerActions extends sfActions
                 $this->getResponse()->setCookie("check_nick", $name, time()+3600);
                 $this->getResponse()->setCookie("chatid", $details[1],time()+3600);
 
-                $cookiename = $logedUserId."_question";
+                $cookiename = $currentUser."_question";
 
                 if (!empty($_COOKIE[$cookiename])) {
                     $value = $_COOKIE[$cookiename] + 1;
@@ -623,7 +624,15 @@ class expertmanagerActions extends sfActions
             $criteria = new Criteria();
             $criteria->add(StudentQuestionPeer::USER_ID, $row['user_id']);
             $criteria->add(StudentQuestionPeer::CHECKED_ID, $row['checked_id']);
+            $criteria->add(StudentQuestionPeer::STATUS, '1');
             $studentQuestion = StudentQuestionPeer::doSelectOne($criteria);
+
+            if (!$studentQuestion) {
+                exit;
+            }
+
+            $studentQuestion->setStatus(0);
+            $studentQuestion->save();
 
             @setcookie('_popupclose', 1, time()+300, '/', null);
             echo join('-', array(
