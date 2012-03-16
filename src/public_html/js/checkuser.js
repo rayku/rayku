@@ -63,41 +63,37 @@ function defaultTitle() {
 
 /* Dynamic Title Bar Content - End */
 
-function music() {
-
+function music()
+{
     if (stopTitle == 1) {
-
-
         document.getElementById('music').innerHTML = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
-        //document.getElementById('music').innerHTML = '<embed  loop="1" autostart="1"  src="http://'+getHostname()+'/alert.mp3" height="0" width="2">';
         setTimeout('music()', 9000);
-
     }
-
-
 }
 
 
 function checkedUser()
 {
-    if (popCheck == 1) {
-        var dv = jQuery.noConflict();
+    if (popCheck != 1) {
+        setTimeout("checkedUser()", 5000);
+        return;
+    }
+    var dv = jQuery.noConflict();
 
-        dv.ajax({ cache: false,
-            type : "POST",
-            url: 'http://' + getHostname() + '/expertmanager/mapuser',
-            success : function (data)  {
-                var result = data.split("<");
-                if (result[0].length != 1) {
-                    var newChecking = result[0].split("-");
-                    if (newChecking[8] == "expert") {
-                        var newResult = result[0].split("-");
-                        popup(newResult[0],newResult[1],newResult[2],newResult[3],newResult[4],newResult[5],newResult[6],newResult[7],newResult[9],newResult[10], newResult[11], newResult[12]);
-                    }
+    dv.ajax({ cache: false,
+        type : "POST",
+        url: 'http://' + getHostname() + '/expertmanager/mapuser',
+        success : function (data)  {
+            var result = data.split("<");
+            if (result[0].length != 1) {
+                var newChecking = result[0].split("-");
+                if (newChecking[8] == "expert") {
+                    var newResult = result[0].split("-");
+                    popup(newResult[0], newResult[1], newResult[2], newResult[3], newResult[4], newResult[5], newResult[6], newResult[7], newResult[9], newResult[10], newResult[11], newResult[12]);
                 }
             }
-        });
-    }
+        }
+    });
     setTimeout("checkedUser()", 5000);
 }
 
@@ -135,17 +131,16 @@ function popup(expid, userid, ques, school, sub, year, id,loginname, points, clo
     newloginname = loginname;
 
     /* Dynamic Title Bar Content - End */
-
     if (modelbox == 1) {
         if (browser == 'others') {
-            musicCheck = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
+            musicCheck = '<embed src="http://' + getHostname() + '/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
             setTimeout('music()', 9000);
         } else {
-            musicCheck = '<iframe src="http://'+getHostname()+'/musical.php" width="1" height="1"></iframe>';
+            musicCheck = '<iframe src="http://' + getHostname() + '/musical.php" width="1" height="1"></iframe>';
         }
     }
 
-    Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1>A student is asking you this question:</h1> <div class="content"> <div class="question">'+ ques +' <span>('+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', {title: this.title,overlayClose: false,  width: 400 });
+    Modalbox.show('<div id="music" style="display:none;"> </div><div class="notifbg"><h1>A student is asking you this question:</h1> <div class="content"> <div class="question">'+ ques +' <span>('+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center"><a href="http://'+getHostname()+'/expertmanager/answer?details='+ details +'">Connect!</a></div> '+ musicCheck +'  <div class="expire">this question expires<br> in <span id="countDown"> '+countGlobal+' Seconds </span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div><script type="text/javacript"> setTimeout("countCheck()", 1000);</script>', { title: this.title,overlayClose: false,  width: 400 });
     setTimeout('autoclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)', close);
 }
 
