@@ -209,55 +209,21 @@ class expertmanagerActions extends sfActions
         }
 
         $details =  explode(",", $_REQUEST['details']);
+        if (count($details) > 4) {
+            $peer = new StudentQuestionPeer();
+            $studentQuestion = $peer->retrieveByPk($this->getRequestParameter('questionId'));
 
-        if ( count($details) > 4 ) {
-            $_record_id = $details[6];
-            $_queryRecord = mysql_query("select * from user_expert where id = ".$_record_id." ", $connection) or die(mysql_error());
+            $questionId = $this->getRequestParameter('questionId');
+            $connectionService = new WhiteboardConnectionService();
+            $session = $connectionService->connect($userId, $questionId);
 
-            if (mysql_num_rows($_queryRecord)) {
-                $newId = $details[6] + 1;
-                $asker = UserPeer::retrieveByPK($details[1]);
-                /**
-                 * @todo - make domain used below in setCookie flexible so we can have it working in development
-                 */
-                setCookie("question", urlencode($details[2]), time()+3600, '/', "rayku.com");
-                $this->getResponse()->setCookie("askerid", $details[1],time()+3600);
-                $this->getResponse()->setCookie("askerUsername", $asker->getUsername(), time()+3600);
-                $this->getResponse()->setCookie("expertid", $details[0],time()+3600);
+            mysql_query("delete from user_expert where user_id = ".$userId, $connection) or die(mysql_error());
 
-                $this->getResponse()->setCookie("check_nick", $asker->getName(), time()+3600);
+            $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
 
-                $name =  str_replace(" ","", $details[7]);
-                $this->getResponse()->setCookie("loginname", $name,time()+3600);
-                $query = mysql_query("select * from user_expert where id = ".$details[6]." and user_id = ".$details[1], $connection) or die(mysql_error());
-
-                if (mysql_num_rows($query) > 0) {
-                    $row = mysql_fetch_array($query);
-                    setcookie("asker_que",$row['question'], time()+600, "/");
-                }
-
-                mysql_query("delete from user_expert where user_id = ".$details[1], $connection) or die(mysql_error());
-
-                // Connect Whiteboard //
-                $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
-                    `id` ,
-                    `user_id` ,
-                    `connect_date_time`,
-                    `connect_status`
-                )
-                VALUES (
-                    NULL ,
-                    '".$logedUserId."',
-                    '".date("Y-m-d H:i:s")."',
-                    '1'
-                );";
-                mysql_query($insSQL, $connection);
-                // redirect to rayku whiteboard
-                $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
-            } else {
-                // redirect to rayku dashboard
-                $this->redirect('/login/answer');
-            }
+            // redirect to rayku whiteboard
+            $this->logWhiteboardConnection($userId);
+            $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
         } else {
             $_record_id = $details[0];
             $_queryRecord = mysql_query("select * from sendmessage where id = ".$_record_id." ", $connection) or die(mysql_error());
@@ -2143,5 +2109,24 @@ class expertmanagerActions extends sfActions
     private function loggedStudentAsksAQuestion()
     {
         return !empty($_POST['dash_hidden']);
+    }
+
+    private function logWhiteboardConnection($userId)
+    {
+        $connection = RaykuCommon::getDatabaseConnection();
+        // Connect Whiteboard //
+        $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
+            `id` ,
+            `user_id` ,
+            `connect_date_time`,
+            `connect_status`
+        )
+        VALUES (
+            NULL ,
+            '".$userId."',
+            '".date("Y-m-d H:i:s")."',
+            '1'
+        );";
+        mysql_query($insSQL, $connection);
     }
 }
