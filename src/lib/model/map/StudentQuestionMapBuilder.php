@@ -64,9 +64,9 @@ class StudentQuestionMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, 11);
 
-		$tMap->addColumn('USER_ID', 'UserId', 'INTEGER', true, 11);
+		$tMap->addForeignKey('USER_ID', 'StudentId', 'INTEGER', 'user', 'ID', true, 11);
 
-		$tMap->addColumn('CHECKED_ID', 'CheckedId', 'INTEGER', true, 11);
+		$tMap->addForeignKey('CHECKED_ID', 'TutorId', 'INTEGER', 'user', 'ID', true, 11);
 
 		$tMap->addColumn('CATEGORY_ID', 'CategoryId', 'INTEGER', true, 11);
 

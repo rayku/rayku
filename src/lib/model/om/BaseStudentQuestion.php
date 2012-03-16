@@ -111,6 +111,26 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	protected $source;
 
 	/**
+	 * @var        User
+	 */
+	protected $aUserRelatedByStudentId;
+
+	/**
+	 * @var        User
+	 */
+	protected $aUserRelatedByTutorId;
+
+	/**
+	 * @var        array WhiteboardConnection[] Collection to store aggregation of WhiteboardConnection objects.
+	 */
+	protected $collWhiteboardConnections;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collWhiteboardConnections.
+	 */
+	private $lastWhiteboardConnectionCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -159,7 +179,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	 * 
 	 * @return     int
 	 */
-	public function getUserId()
+	public function getStudentId()
 	{
 		return $this->user_id;
 	}
@@ -169,7 +189,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	 * 
 	 * @return     int
 	 */
-	public function getCheckedId()
+	public function getTutorId()
 	{
 		return $this->checked_id;
 	}
@@ -320,7 +340,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	 * @param      int $v new value
 	 * @return     StudentQuestion The current object (for fluent API support)
 	 */
-	public function setUserId($v)
+	public function setStudentId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
@@ -331,8 +351,12 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = StudentQuestionPeer::USER_ID;
 		}
 
+		if ($this->aUserRelatedByStudentId !== null && $this->aUserRelatedByStudentId->getId() !== $v) {
+			$this->aUserRelatedByStudentId = null;
+		}
+
 		return $this;
-	} // setUserId()
+	} // setStudentId()
 
 	/**
 	 * Set the value of [checked_id] column.
@@ -340,7 +364,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	 * @param      int $v new value
 	 * @return     StudentQuestion The current object (for fluent API support)
 	 */
-	public function setCheckedId($v)
+	public function setTutorId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
@@ -351,8 +375,12 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = StudentQuestionPeer::CHECKED_ID;
 		}
 
+		if ($this->aUserRelatedByTutorId !== null && $this->aUserRelatedByTutorId->getId() !== $v) {
+			$this->aUserRelatedByTutorId = null;
+		}
+
 		return $this;
-	} // setCheckedId()
+	} // setTutorId()
 
 	/**
 	 * Set the value of [category_id] column.
@@ -678,6 +706,12 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aUserRelatedByStudentId !== null && $this->user_id !== $this->aUserRelatedByStudentId->getId()) {
+			$this->aUserRelatedByStudentId = null;
+		}
+		if ($this->aUserRelatedByTutorId !== null && $this->checked_id !== $this->aUserRelatedByTutorId->getId()) {
+			$this->aUserRelatedByTutorId = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -716,6 +750,11 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		$this->hydrate($row, 0, true); // rehydrate
 
 		if ($deep) {  // also de-associate any related objects?
+
+			$this->aUserRelatedByStudentId = null;
+			$this->aUserRelatedByTutorId = null;
+			$this->collWhiteboardConnections = null;
+			$this->lastWhiteboardConnectionCriteria = null;
 
 		} // if (deep)
 	}
@@ -802,6 +841,25 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aUserRelatedByStudentId !== null) {
+				if ($this->aUserRelatedByStudentId->isModified() || $this->aUserRelatedByStudentId->isNew()) {
+					$affectedRows += $this->aUserRelatedByStudentId->save($con);
+				}
+				$this->setUserRelatedByStudentId($this->aUserRelatedByStudentId);
+			}
+
+			if ($this->aUserRelatedByTutorId !== null) {
+				if ($this->aUserRelatedByTutorId->isModified() || $this->aUserRelatedByTutorId->isNew()) {
+					$affectedRows += $this->aUserRelatedByTutorId->save($con);
+				}
+				$this->setUserRelatedByTutorId($this->aUserRelatedByTutorId);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = StudentQuestionPeer::ID;
 			}
@@ -822,6 +880,14 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
+			}
+
+			if ($this->collWhiteboardConnections !== null) {
+				foreach ($this->collWhiteboardConnections as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
 			}
 
 			$this->alreadyInSave = false;
@@ -890,10 +956,36 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aUserRelatedByStudentId !== null) {
+				if (!$this->aUserRelatedByStudentId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aUserRelatedByStudentId->getValidationFailures());
+				}
+			}
+
+			if ($this->aUserRelatedByTutorId !== null) {
+				if (!$this->aUserRelatedByTutorId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aUserRelatedByTutorId->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = StudentQuestionPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collWhiteboardConnections !== null) {
+					foreach ($this->collWhiteboardConnections as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -932,10 +1024,10 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getUserId();
+				return $this->getStudentId();
 				break;
 			case 2:
-				return $this->getCheckedId();
+				return $this->getTutorId();
 				break;
 			case 3:
 				return $this->getCategoryId();
@@ -995,8 +1087,8 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		$keys = StudentQuestionPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getUserId(),
-			$keys[2] => $this->getCheckedId(),
+			$keys[1] => $this->getStudentId(),
+			$keys[2] => $this->getTutorId(),
 			$keys[3] => $this->getCategoryId(),
 			$keys[4] => $this->getCourseId(),
 			$keys[5] => $this->getQuestion(),
@@ -1044,10 +1136,10 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setUserId($value);
+				$this->setStudentId($value);
 				break;
 			case 2:
-				$this->setCheckedId($value);
+				$this->setTutorId($value);
 				break;
 			case 3:
 				$this->setCategoryId($value);
@@ -1110,8 +1202,8 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		$keys = StudentQuestionPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setCheckedId($arr[$keys[2]]);
+		if (array_key_exists($keys[1], $arr)) $this->setStudentId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTutorId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setCategoryId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setCourseId($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setQuestion($arr[$keys[5]]);
@@ -1204,9 +1296,9 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setUserId($this->user_id);
+		$copyObj->setStudentId($this->user_id);
 
-		$copyObj->setCheckedId($this->checked_id);
+		$copyObj->setTutorId($this->checked_id);
 
 		$copyObj->setCategoryId($this->category_id);
 
@@ -1231,6 +1323,20 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		$copyObj->setCron($this->cron);
 
 		$copyObj->setSource($this->source);
+
+
+		if ($deepCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
+
+			foreach ($this->getWhiteboardConnections() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addWhiteboardConnection($relObj->copy($deepCopy));
+				}
+			}
+
+		} // if ($deepCopy)
 
 
 		$copyObj->setNew(true);
@@ -1278,6 +1384,309 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Declares an association between this object and a User object.
+	 *
+	 * @param      User $v
+	 * @return     StudentQuestion The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUserRelatedByStudentId(User $v = null)
+	{
+		if ($v === null) {
+			$this->setStudentId(NULL);
+		} else {
+			$this->setStudentId($v->getId());
+		}
+
+		$this->aUserRelatedByStudentId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the User object, it will not be re-added.
+		if ($v !== null) {
+			$v->addStudentQuestionRelatedByStudentId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated User object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     User The associated User object.
+	 * @throws     PropelException
+	 */
+	public function getUserRelatedByStudentId(PropelPDO $con = null)
+	{
+		if ($this->aUserRelatedByStudentId === null && ($this->user_id !== null)) {
+			$c = new Criteria(UserPeer::DATABASE_NAME);
+			$c->add(UserPeer::ID, $this->user_id);
+			$this->aUserRelatedByStudentId = UserPeer::doSelectOne($c, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aUserRelatedByStudentId->addStudentQuestionsRelatedByStudentId($this);
+			 */
+		}
+		return $this->aUserRelatedByStudentId;
+	}
+
+	/**
+	 * Declares an association between this object and a User object.
+	 *
+	 * @param      User $v
+	 * @return     StudentQuestion The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUserRelatedByTutorId(User $v = null)
+	{
+		if ($v === null) {
+			$this->setTutorId(NULL);
+		} else {
+			$this->setTutorId($v->getId());
+		}
+
+		$this->aUserRelatedByTutorId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the User object, it will not be re-added.
+		if ($v !== null) {
+			$v->addStudentQuestionRelatedByTutorId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated User object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     User The associated User object.
+	 * @throws     PropelException
+	 */
+	public function getUserRelatedByTutorId(PropelPDO $con = null)
+	{
+		if ($this->aUserRelatedByTutorId === null && ($this->checked_id !== null)) {
+			$c = new Criteria(UserPeer::DATABASE_NAME);
+			$c->add(UserPeer::ID, $this->checked_id);
+			$this->aUserRelatedByTutorId = UserPeer::doSelectOne($c, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aUserRelatedByTutorId->addStudentQuestionsRelatedByTutorId($this);
+			 */
+		}
+		return $this->aUserRelatedByTutorId;
+	}
+
+	/**
+	 * Clears out the collWhiteboardConnections collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addWhiteboardConnections()
+	 */
+	public function clearWhiteboardConnections()
+	{
+		$this->collWhiteboardConnections = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collWhiteboardConnections collection (array).
+	 *
+	 * By default this just sets the collWhiteboardConnections collection to an empty array (like clearcollWhiteboardConnections());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initWhiteboardConnections()
+	{
+		$this->collWhiteboardConnections = array();
+	}
+
+	/**
+	 * Gets an array of WhiteboardConnection objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this StudentQuestion has previously been saved, it will retrieve
+	 * related WhiteboardConnections from storage. If this StudentQuestion is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array WhiteboardConnection[]
+	 * @throws     PropelException
+	 */
+	public function getWhiteboardConnections($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWhiteboardConnections === null) {
+			if ($this->isNew()) {
+			   $this->collWhiteboardConnections = array();
+			} else {
+
+				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+				WhiteboardConnectionPeer::addSelectColumns($criteria);
+				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+				WhiteboardConnectionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
+					$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWhiteboardConnectionCriteria = $criteria;
+		return $this->collWhiteboardConnections;
+	}
+
+	/**
+	 * Returns the number of related WhiteboardConnection objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related WhiteboardConnection objects.
+	 * @throws     PropelException
+	 */
+	public function countWhiteboardConnections(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWhiteboardConnections === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+				$count = WhiteboardConnectionPeer::doCount($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
+					$count = WhiteboardConnectionPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWhiteboardConnections);
+				}
+			} else {
+				$count = count($this->collWhiteboardConnections);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a WhiteboardConnection object to this object
+	 * through the WhiteboardConnection foreign key attribute.
+	 *
+	 * @param      WhiteboardConnection $l WhiteboardConnection
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addWhiteboardConnection(WhiteboardConnection $l)
+	{
+		if ($this->collWhiteboardConnections === null) {
+			$this->initWhiteboardConnections();
+		}
+		if (!in_array($l, $this->collWhiteboardConnections, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWhiteboardConnections, $l);
+			$l->setStudentQuestion($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this StudentQuestion is new, it will return
+	 * an empty collection; or if this StudentQuestion has previously
+	 * been saved, it will retrieve related WhiteboardConnections from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in StudentQuestion.
+	 */
+	public function getWhiteboardConnectionsJoinUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWhiteboardConnections === null) {
+			if ($this->isNew()) {
+				$this->collWhiteboardConnections = array();
+			} else {
+
+				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
+
+			if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
+				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWhiteboardConnectionCriteria = $criteria;
+
+		return $this->collWhiteboardConnections;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1289,8 +1698,16 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collWhiteboardConnections) {
+				foreach ((array) $this->collWhiteboardConnections as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
+		$this->collWhiteboardConnections = null;
+			$this->aUserRelatedByStudentId = null;
+			$this->aUserRelatedByTutorId = null;
 	}
 
 } // BaseStudentQuestion
