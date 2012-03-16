@@ -193,9 +193,6 @@ class expertmanagerActions extends sfActions
 
     public function executeAnswer()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $time = time();
