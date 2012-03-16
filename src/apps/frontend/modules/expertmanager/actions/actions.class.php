@@ -217,9 +217,21 @@ class expertmanagerActions extends sfActions
             $sessionService = new WhiteboardSessionService();
             $session = $sessionService->connect($userId, $questionId);
 
-            mysql_query("delete from user_expert where user_id = ".$userId, $connection) or die(mysql_error());
+            mysql_query("delete from user_expert where user_id = " . $userId, $connection) or die(mysql_error());
 
             $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
+
+            $student = $studentQuestion->getStudent();
+            $tutor = $studentQuestion->getTutor();
+            $this->getResponse()->setCookie("question", urlencode($studentQuestion->getQuestion()), time() + 3600, '/', "rayku.com");
+            $this->getResponse()->setCookie("askerid", $student->getId(), time() + 3600);
+            $this->getResponse()->setCookie("askerUsername", $student->getUsername(), time() + 3600);
+            $this->getResponse()->setCookie("expertid", $tutor->getId(), time() + 3600);
+            $this->getResponse()->setCookie("check_nick", $student->getUsername(), time() + 3600);
+
+            $this->getResponse()->setCookie("loginname", str_replace(" ", "", $tutor->getUsername()), time() + 3600);
+            $this->getResponse()->setCookie("asker_que", $studentQuestion->getQuestion(), time() + 3600);
+            /** compatibility **/
 
             // redirect to rayku whiteboard
             $this->logWhiteboardConnection($userId);
