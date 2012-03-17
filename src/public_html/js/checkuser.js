@@ -66,7 +66,7 @@ function defaultTitle() {
 function music()
 {
     if (stopTitle == 1) {
-        document.getElementById('music').innerHTML = '<embed src="http://'+getHostname()+'/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
+        document.getElementById('music').innerHTML = '<embed src="http://' + getHostname() + '/alert.mp3" autostart="true" loop="loop" width="2" height="0"></embed><noembed><bgsound src="http://'+getHostname()+'/alert.mp3"></noembed>';
         setTimeout('music()', 9000);
     }
 }
@@ -199,7 +199,7 @@ function ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, n
 
     dxv.ajax({ cache: false,
         type : "POST",
-        url: "http://'+getHostname()+'/expertmanager/ignore?details="+ details,
+        url: 'http://' + getHostname() + '/expertmanager/ignore?details=' + details,
         success : function (data)  {
             stopTitle = 2;
             return false;
@@ -227,7 +227,7 @@ function autoclose(newexpid, newuserid, newques, newschool, newsub, newyear, new
 
     dxv.ajax({ cache: false,
         type : "POST",
-        url: "http://'+getHostname()+'/expertmanager/auto?details="+ details,
+        url: 'http://' + getHostname() + '/expertmanager/auto?details=' + details,
         success : function (data)  {
             stopTitle = 2;
             return false;
