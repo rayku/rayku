@@ -1,1 +1,0 @@
-DELETE FROM `forum` WHERE id IN (1,13);
