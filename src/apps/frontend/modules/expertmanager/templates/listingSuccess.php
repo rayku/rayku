@@ -812,14 +812,19 @@ if ($cat != NULL) {
                 $newFlag = 2;
             }
             if ($onlinecheck == "online" || $experts->isOnline()) {
-                if ($newFlag != 1) {
+                $criteria = new Criteria();
+                $criteria->add(WhiteboardSessionPeer::USER_ID, $newOne['userid']);
+                $criteria->addDescendingOrderByColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
+                $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
+
+                if ($lastSession != null && $lastSession->stillActive()) {
                     $_count_online_user += 1;
 ?>
-              <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']?>" onclick="setvalue(this.id)" />
+              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
 <?php
                 } else {
 ?>
-              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+              <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']?>" onclick="setvalue(this.id)" />
 <?php
                 }
             } else {

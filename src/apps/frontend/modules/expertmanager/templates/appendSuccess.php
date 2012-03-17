@@ -312,7 +312,16 @@ if ($cat != NULL) {
         $newFlag = 2;
     }
     if ($onlinecheck == "online") {
-        if ($newFlag != 1) {
+        $criteria = new Criteria();
+        $criteria->add(WhiteboardSessionPeer::USER_ID, $newOne['userid']);
+        $criteria->addDescendingOrderByColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
+        $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
+
+        if ($lastSession != null && $lastSession->stillActive()) {
+?>
+      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+<?php
+        } else {
             $_count_online_user += 1;
             $totcook = @$_COOKIE['cooktotal'];
             $w=1;
@@ -329,11 +338,7 @@ if ($cat != NULL) {
             }
 ?>
       <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo (@$cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
-    <script type='text/javascript'>setCheckboxColor(<?php echo $newOne['userid']; ?>);</script>
-<?php
-        } else {
-?>
-      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+            <script type='text/javascript'>setCheckboxColor(<?php echo $newOne['userid']; ?>);</script>
 <?php
         }
     } else {

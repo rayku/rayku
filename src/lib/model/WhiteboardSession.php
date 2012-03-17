@@ -10,4 +10,9 @@ class WhiteboardSession extends BaseWhiteboardSession
         $this->setLastActivity(time());
         $this->save();
     }
+
+    public function stillActive()
+    {
+        return $this->getLastActivity() > (time() - 5);
+    }
 }

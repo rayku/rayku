@@ -287,7 +287,16 @@ function cmp($a, $b)
             $newFlag = 2;
         }
         if ($onlinecheck == "online") {
-            if ($newFlag != 1) {
+            $criteria = new Criteria();
+            $criteria->add(WhiteboardSessionPeer::USER_ID, $newOne['userid']);
+            $criteria->addDescendingOrderByColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
+            $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
+
+            if ($lastSession != null && $lastSession->stillActive()) {
+?>
+        <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+<?php
+            } else {
                 $_count_online_user += 1;
                 $totcook = @$_COOKIE['cookcount'];
                 $w=1;
@@ -310,9 +319,6 @@ function cmp($a, $b)
 
 <?php
                 }
-            } else { ?>
-        <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
-<?php
             }
         } else {
 ?>
