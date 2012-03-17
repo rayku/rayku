@@ -374,6 +374,9 @@ whiteboard_session_id:
   url: /session/:token/chat
   param: { module: session, action: addChatId }
 
+whiteboard_session_keepalive:
+  url: /session/:token/keepalive
+  param: { module: session, action: keepAlive }
 # ----
 # Whiteboard
 # ----

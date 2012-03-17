@@ -30,7 +30,12 @@ class sessionActions extends sfActions
         )));
     }
 
-    public function executeKeepAlive() {
+    public function executeKeepAlive()
+    {
+        $session = $this->loadSession();
+        $session->keepAlive();
+
+        return sfView::HEADER_ONLY;
     }
 
     public function executeAddChatId()
