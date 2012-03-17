@@ -7,17 +7,17 @@ class sessionActions extends sfActions
 {
     public function executeInfo()
     {
-        $connection = $this->loadSessionFromRequest();
+        $session = $this->loadSession();
 
-        $studentQuestion = $connection->getStudentQuestion();
+        $studentQuestion = $session->getStudentQuestion();
         $tutor = $studentQuestion->getTutor();
         $student = $studentQuestion->getStudent();
 
         return $this->renderText(json_encode(array(
-            'id' => $connection->getId(),
+            'id' => $session->getId(),
             'question' => $studentQuestion->getQuestion(),
             'session' => array(
-                'type' => $connection->getType(),
+                'type' => $session->getType(),
             ),
             'tutor' => array(
                 'id' => $tutor->getId(),
@@ -35,16 +35,19 @@ class sessionActions extends sfActions
 
     public function executeAddChatId()
     {
-        $connection = $this->loadSessionFromRequest();
-        $connection->setChatId($this->getRequestParameter('chatId'));
-        $connection->save();
-        return $this->renderText('');
+        $session = $this->loadSession();
+        $session->setChatId($this->getRequestParameter('chatId'));
+        $session->save();
+
+        return sfView::HEADER_ONLY;
     }
 
-    private function loadSessionFromRequest()
+    private function loadSession()
     {
         $criteria = new Criteria();
         $criteria->add(WhiteboardSessionPeer::TOKEN, $this->getRequestParameter('token'));
+
         return WhiteboardSessionPeer::doSelectOne($criteria);
     }
+
 }
