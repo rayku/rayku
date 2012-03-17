@@ -532,7 +532,7 @@ function cmp($a, $b)
 				    	}
 			    	}
 			    ?>
-      <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo ($cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
+      <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo (@$cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
       <?php echo "<script type='text/javascript'>setCheckboxColor(".$newOne['userid'].");</script>"; ?>
       <?php } else { ?>
       <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>

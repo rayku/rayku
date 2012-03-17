@@ -804,8 +804,8 @@ propel:
   student_questions:
     _attributes: { phpName: StudentQuestion }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    checked_id: { type: INTEGER, size: '11', required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: StudentId }
+    checked_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: TutorId }
     category_id: { type: INTEGER, size: '11', required: true }
     course_id: { type: INTEGER, size: '11', required: true }
     question: { type: VARCHAR, size: '500', required: true }
