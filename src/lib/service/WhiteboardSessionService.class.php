@@ -20,7 +20,7 @@ class WhiteboardSessionService
     }
 
     private function getType($userId, $question) {
-        $question->getTutor()->getId() == $userId
+        return $question->getTutor()->getId() == $userId
             ? WhiteboardSession::TYPE_TUTOR
             : WhiteboardSession::TYPE_STUDENT;
     }
