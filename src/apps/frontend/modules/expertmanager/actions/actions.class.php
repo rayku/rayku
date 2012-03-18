@@ -238,21 +238,40 @@ class expertmanagerActions extends sfActions
             $this->logWhiteboardConnection($userId);
             $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
         } else {
+
+            $criteria = new Criteria();
+            $criteria->add(WhiteboardSessionPeer::CHAT_ID, $details[1]);
+            $tutorSession = WhiteboardSessionPeer::doSelectOne($criteria);
+
+            $studentQuestion = $tutorSession->getStudentQuestion();
+            $student = $studentQuestion->getStudent();
+            $tutor = $studentQuestion->getTutor();
+
+            $this->getResponse()->setCookie('ratingExpertId', $tutor->getId(), time() + 3600);
+            $this->getResponse()->setCookie('ratingUserId', $student->getId(), time() + 3600);
+            $this->getResponse()->setCookie("askerpoints", $student->getPoints(), time() + 3600);
+            $this->getResponse()->setCookie("loginname", $student->getUsername(), time() + 3600);
+            $this->getResponse()->setCookie("check_nick", $student->getUsername(), time() + 3600);
+            $this->getResponse()->setCookie("chatid", $tutorSession->getChatId(), time() + 3600);
+
+            $sessionService = new WhiteboardSessionService();
+            $studentSession = $sessionService->connect($student->getId(), $studentQuestion->getId());
+            $studentSession->setChatId($tutorSession->getChatId());
+            $studentSession->save();
+            $this->getResponse()->setCookie("sessionToken", $studentSession->getToken(), time() + 3600);
+
             $_record_id = $details[0];
             $_queryRecord = mysql_query("select * from sendmessage where id = ".$_record_id." ", $connection) or die(mysql_error());
-
             if (mysql_num_rows($_queryRecord)) {
-                $query = mysql_query("select * from sendmessage where id = ".$details[0], $connection) or die("error1".mysql_error());
-                $row = mysql_fetch_array($query);
+                $row = mysql_fetch_array($_queryRecord);
 
                 $queryUser = mysql_query("select * from user where id = ".$userId." ", $connection) or die("error2".mysql_error());
                 $rowUser = mysql_fetch_array($queryUser);
 
-                $this->getResponse()->setCookie("ratingExpertId", $row['expert_id'],time()+3600);
-                $this->getResponse()->setCookie("ratingUserId", $row['asker_id'],time()+3600);
+                //$this->getResponse()->setCookie("ratingExpertId", $row['expert_id'],time()+3600);
+                //$this->getResponse()->setCookie("ratingUserId", $row['asker_id'],time()+3600);
 
                 $queryRPRate = mysql_query("select * from user_rate where userid = ".$row['expert_id']." ", $connection) or die(mysql_error());
-
                 if (mysql_num_rows($queryRPRate)) {
                     $rowRPRate = mysql_fetch_assoc($queryRPRate);
                     $raykuCharge = $rowRPRate['rate'];
@@ -262,31 +281,9 @@ class expertmanagerActions extends sfActions
 
                 $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
 
-                $a = new Criteria();
-                $a->add(UserPeer::ID, $currentUser);
-                $asker = UserPeer::doSelectOne($a);
-
-                $this->getResponse()->setCookie("askerpoints", $rowUser['points'],time()+3600);
-                $this->getResponse()->setCookie("newredirect", 1,time()+100);
-                $this->getResponse()->setCookie("redirection", "",time()-600);
-                $this->getResponse()->setCookie("forumsub", "",time()-600);
-
-                $name =  str_replace(" ","", $rowUser['name']);
-                $this->getResponse()->setCookie("loginname", $name,time()+3600);
-
-                $this->getResponse()->setCookie("check_nick", $name, time()+3600);
-                $this->getResponse()->setCookie("chatid", $details[1],time()+3600);
-
-                $cookiename = $currentUser."_question";
-
-                if (!empty($_COOKIE[$cookiename])) {
-                    $value = $_COOKIE[$cookiename] + 1;
-                    $expire = time()+60*60*24*30;
-                    $this->getResponse()->setCookie($cookiename, $value, $expire);
-                } else {
-                    $expire = time()+60*60*24*30;
-                    $this->getResponse()->setCookie($cookiename, 1, $expire);
-                }
+                $this->getResponse()->setCookie("newredirect", 1, time()+  100);
+                $this->getResponse()->setCookie("redirection", "", time() - 600);
+                $this->getResponse()->setCookie("forumsub", "", time() - 600);
 
                 if (!empty($userId)) {
                     mysql_query("insert into popup_close(user_id) values(".$userId.")", $connection) or die("error3".mysql_error());
@@ -561,16 +558,13 @@ class expertmanagerActions extends sfActions
             $onlinecheck = BotServiceProvider::createFor('http://'.RaykuCommon::getCurrentHttpDomain().':8892/status/'.$userGtalk->getGtalkid())->getContent();
         }
 
-        $query = mysql_query("select * from user_expert where checked_id = ".$userId." and exe_order = 1 and time >= ".$time."", $connection) or die(mysql_error());
+        $query = mysql_query($s = "select * from user_expert where checked_id = ".$userId." and exe_order = 1 and time >= ".$time."", $connection) or die(mysql_error());
         if (mysql_num_rows($query) > 0) {
             $row = mysql_fetch_assoc($query);
 
-            $categories = CategoryPeer::doSelect(new Criteria());
-
-            foreach ( $categories as $category) {
-                if ($row['category_id'] == $category->getId()) {
-                    $subject = $category->getName();
-                }
+            if ($row['category_id']) {
+                $category = CategoryPeer::retrieveByPk($row['category_id']);
+                $subject = $category->getName();
             }
 
             //School Selection
@@ -624,7 +618,7 @@ class expertmanagerActions extends sfActions
             $criteria = new Criteria();
             $criteria->add(StudentQuestionPeer::USER_ID, $row['user_id']);
             $criteria->add(StudentQuestionPeer::CHECKED_ID, $row['checked_id']);
-            $criteria->add(StudentQuestionPeer::STATUS, '1');
+            $criteria->add(StudentQuestionPeer::TIME, $time, '>=');
             $studentQuestion = StudentQuestionPeer::doSelectOne($criteria);
 
             if (!$studentQuestion) {
