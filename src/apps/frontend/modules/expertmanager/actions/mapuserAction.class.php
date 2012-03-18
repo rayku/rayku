@@ -1,3 +1,11 @@
+<?php
+/**
+ * expertmanager actions.
+ */
+class mapuserAction extends sfAction
+{
+    public function execute($request)
+    {
         $connection = RaykuCommon::getDatabaseConnection();
         if (@$_SESSION['modelPopupOpen']) {
             if (@$_SESSION['popup_session']) {
@@ -90,3 +98,5 @@
             echo $row['checked_id']."-".$row['user_id']."-".$question."-".$school."-".$subject."-".$course_info."-".$row['id']."-".$newloginId->getName()."-expert"."-".$raykuCharge."-".$row['close']."-".$browser."-".$_SESSION["_modelbox"];
         }
         exit(0);
+    }
+}
