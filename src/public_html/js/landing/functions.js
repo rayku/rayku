@@ -1,7 +1,10 @@
-$('#register-block').hide();
+$('.register-block').hide();
+
 $(document).ready(function() {
 	$(function() {
-                $('a').bind('click',function(event){
+
+                $('a:not(#no-fb-button)').bind('click',function(event){
+
                     var $anchor = $(this);
                     
                     $('html, body').stop().animate({
@@ -51,8 +54,16 @@ mainQuestion.focus(function(){
 
 mainQuestion.keyup(function(){
     //animate opening here
-    $('#register-form').stop().animate({top:"-130px"},1000);
-    $('#register-block').slideDown();
+	if($('#no-fb').is(':visible')==true)
+	{
+		
+	}
+	else
+	{
+ 		    $('#register-form').animate({top:"-130px"},1000);
+			$('.register-block:not(#no-fb)').slideDown();
+			$('#no-fb').hide();
+	}
 });
 
 mainQuestion.blur(function(){
@@ -62,7 +73,11 @@ mainQuestion.blur(function(){
         mainQuestion.val(initialValue);
         //animate closing here
         $('#register-form').stop().animate({top:"0px"},500);
-        $('#register-block').slideUp(); 
+
+        $('.register-block').slideUp(); 
+
+       
+
     }
 });
 
