@@ -256,9 +256,6 @@ class expertmanagerActions extends sfActions
                 $queryUser = mysql_query("select * from user where id = ".$userId." ", $connection) or die("error2".mysql_error());
                 $rowUser = mysql_fetch_array($queryUser);
 
-                //$this->getResponse()->setCookie("ratingExpertId", $row['expert_id'],time()+3600);
-                //$this->getResponse()->setCookie("ratingUserId", $row['asker_id'],time()+3600);
-
                 $queryRPRate = mysql_query("select * from user_rate where userid = ".$row['expert_id']." ", $connection) or die(mysql_error());
                 if (mysql_num_rows($queryRPRate)) {
                     $rowRPRate = mysql_fetch_assoc($queryRPRate);
