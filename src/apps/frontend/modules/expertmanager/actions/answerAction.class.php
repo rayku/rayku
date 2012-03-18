@@ -30,10 +30,9 @@ class answerAction extends sfAction
         }
         
         $details =  explode(",", $_REQUEST['details']);
-//        var_dump($details);
-        file_put_contents('/tmp/requestDetails.log', print_r($details, 1), FILE_APPEND);
 
         if ( count($details) > 4 ) {
+            $details[2] = base64_decode($details[2]);
             $_record_id = $details[6];
             $query = "select * from user_expert where id = ".$_record_id." ";
             
