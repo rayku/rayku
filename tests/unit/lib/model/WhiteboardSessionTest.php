@@ -3,18 +3,16 @@
 class WhiteboardSessionTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * test
-     * database
-     * Not running now. Still need to adjust the database configuration
+     * @test
      */
     public function shouldUpdateTheLastActivityWhenKeepingSessionAlive()
     {
         $session = new WhiteboardSession();
-        $session->setLastActivity(time());
+        $session->setLastActivity(time() - 100);
 
         $session->keepAlive();
 
-        $this->assertTrue($session->getLastActivity() > time());
+        $this->assertTrue($session->getLastActivity() >= time());
     }
 
     /**

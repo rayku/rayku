@@ -8,7 +8,6 @@ class WhiteboardSession extends BaseWhiteboardSession
     public function keepAlive()
     {
         $this->setLastActivity(time());
-        $this->save();
     }
 
     public function stillActive()
@@ -16,3 +15,6 @@ class WhiteboardSession extends BaseWhiteboardSession
         return $this->getLastActivity() > (time() - 5);
     }
 }
+
+?>
+
