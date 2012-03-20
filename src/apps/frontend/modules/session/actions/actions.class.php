@@ -34,6 +34,7 @@ class sessionActions extends sfActions
     {
         $session = $this->loadSession();
         $session->keepAlive();
+        $session->save();
 
         return sfView::HEADER_ONLY;
     }
