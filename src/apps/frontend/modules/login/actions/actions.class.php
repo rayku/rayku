@@ -57,7 +57,8 @@ class loginActions extends sfActions
 
 		if( $sEmail == '' && $sPassword == '' )
 		{
-			$this->redirect( 'login/index' );
+                    StatsD::increment("login.failure");
+                    $this->redirect( 'login/index' );
 		}
 
 		//Check the user credentials
@@ -65,8 +66,15 @@ class loginActions extends sfActions
 
 		if(!$this->user)
 		{
-			$_SESSION['loginErrorMsg']='Your username or password was incorrect.';
-		}
+                    StatsD::increment("login.failure");
+                    $_SESSION['loginErrorMsg']='Your username or password was incorrect.';
+		} else {
+                    StatsD::increment("login.success");
+                }
+                
+                /**
+                 * @todo - check if we ever got a chance to hit this place with recaptch - it looks like no so either lets remove it or make it working
+                 */
 		if(isset($_SESSION['loginWrongPass']) && $_SESSION['loginWrongPass']>=5)
 		{
 

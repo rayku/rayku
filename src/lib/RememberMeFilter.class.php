@@ -22,7 +22,10 @@ class RememberMeFilter extends sfFilter
           if ($raykuUser instanceof User)
           {
             // sign in
+            StatsD::increment("login.remember_me_success");
             $user->signIn($raykuUser);
+          } else {
+            StatsD::increment("login.remember_me_failure");
           }
         }
       }
