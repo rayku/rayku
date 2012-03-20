@@ -354,9 +354,9 @@ training:
 # ----
 
 
-regtutor:
-  url: /regtutor
-  param: { module: login, action: index }
+#regtutor:
+#  url: /regtutor
+#  param: { module: login, action: index }
 
 regtutor_confirm:
   url: /regtutor/confirm/:code/temp/*
