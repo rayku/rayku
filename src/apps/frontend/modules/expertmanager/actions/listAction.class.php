@@ -264,6 +264,9 @@ class listAction extends sfAction
             setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/");
             $this->getResponse()->setCookie("redirection", 1,time()+600);
             $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
+            
+            StatsD::increment("whiteboard.session.create");
+            
             $this->redirect('expertmanager/connect');
         }
 

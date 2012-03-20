@@ -900,7 +900,10 @@ class expertmanagerActions extends sfActions
         $this->raykuUser = $this->getUser()->getRaykuUser();
     }
 
-    public function executeConnect() { }
+    public function executeConnect()
+    {
+        StatsD::increment("whiteboard.session.waiting");
+    }
 
     public function executeConnectagain()
     {
