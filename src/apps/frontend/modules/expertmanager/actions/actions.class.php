@@ -1090,7 +1090,7 @@ class expertmanagerActions extends sfActions
                 mysql_query("delete from user_question_tag where id =".$_rowDelete['id'], $connection) or die(mysql_error());
             }
 
-            mysql_query("INSERT INTO `rayku_db`.`user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_SESSION['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
+            mysql_query("INSERT INTO `user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_SESSION['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
 
         } else if ($this->loggedStudentAsksAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
@@ -1164,7 +1164,7 @@ class expertmanagerActions extends sfActions
                 mysql_query("delete from user_question_tag where id =".$_rowDelete['id'], $connection) or die(mysql_error());
             }
 
-            mysql_query("INSERT INTO `rayku_db`.`user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_POST['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
+            mysql_query("INSERT INTO `user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_POST['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
         }
 
         if (!empty($_POST['hidden'])) {
