@@ -26,7 +26,7 @@
         <exec
             dir="." logoutput="true" checkreturn="true"
             command="phpunit
-            --configuration src/phpunit.xml
+            --configuration phpunit.xml
             --include-path src:tests
             --log-junit '${reports.directory}/unit-tests.xml'
             --coverage-html '${reports.directory}/coverage'
@@ -67,7 +67,6 @@
             </fileset>
         </phplint>
     </target>
-
 
     <target name="prepare-directories">
         <delete dir="${reports.directory}" />
