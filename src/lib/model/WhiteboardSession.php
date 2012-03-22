@@ -17,4 +17,3 @@ class WhiteboardSession extends BaseWhiteboardSession
 }
 
 ?>
-

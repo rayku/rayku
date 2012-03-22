@@ -13,7 +13,7 @@ class sessionActions extends sfActions
         $tutor = $studentQuestion->getTutor();
         $student = $studentQuestion->getStudent();
 
-        return $this->renderText(json_encode(array(
+				$data = array(
             'id' => $session->getId(),
             'question' => $studentQuestion->getQuestion(),
             'session' => array(
@@ -27,7 +27,11 @@ class sessionActions extends sfActions
                 'id' => $student->getId(),
                 'username' => $student->getUsername()
             )
-        )));
+        );
+        if ($session->getChatId()) {
+            $data['whiteboard-session'] = $session->getChatId();
+        }
+        return $this->renderText(json_encode($data));
     }
 
     public function executeKeepAlive()
