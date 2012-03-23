@@ -111,7 +111,6 @@
 <?php else: ?>
 
 	<ul>
-		<!--<li><?php //echo link_to('Send a Gift', '/gifts/index') ?></li>-->
 		<li><?php echo link_to('View Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
 		<li><?php echo link_to('View Journal', '@journal_index?user_id=' . $user->getId()) ?></li>
 		<li><?php echo link_to('Send a Nudge', '/nudge/send/username/' . $user->getUsername()) ?></li>

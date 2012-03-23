@@ -350,14 +350,6 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { gallery_item_FI_1: [gallery_id], user_id: [user_id] }
-  gift:
-    _attributes: { phpName: Gift }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '50', required: false }
-    image: { type: VARCHAR, size: '100', required: false }
-    description: { type: LONGVARCHAR, required: false }
-    cost: { type: INTEGER, size: '11', required: false }
-    hidden: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
   group_site_page:
     _attributes: { phpName: GroupSitePage }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -728,16 +720,6 @@ propel:
     points: { type: INTEGER, size: '11', required: false }
     comments: { type: LONGVARCHAR, required: false }
     _indexes: { user_donations_FI_1: [user_id], user_donations_FI_2: [from_user_id] }
-  user_gift:
-    _attributes: { phpName: UserGift }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    gift_id: { type: INTEGER, size: '11', required: false, foreignTable: gift, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    giver_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: false }
-    message: { type: LONGVARCHAR, required: false }
-    type: { type: INTEGER, size: '11', required: false }
-    _indexes: { user_gift_FI_1: [user_id], user_gift_FI_2: [gift_id], user_gift_FI_3: [giver_id] }
   user_interest:
     _attributes: { phpName: UserInterest }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

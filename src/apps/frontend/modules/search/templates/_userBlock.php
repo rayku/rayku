@@ -103,7 +103,6 @@
       <div></div>
 
       <?php echo link_to('Send a message', '@compose_to?nickname=' . $user->getUsername(),array('class'=>'useraction')) ?>
-      <?php echo link_to('Send a Gift', '/gifts/index',array('class'=>'useraction')) ?>
       <?php echo link_to('View Galleries', '@gallery_index?user_id=' . $user->getId(),array('class'=>'useraction')) ?>
       <?php echo link_to('View Journal', '@journal_index?user_id=' . $user->getId(),array('class'=>'useraction')) ?>
       <?php echo link_to('Nudge', '@nudge?username=' . $user->getUsername(),array('class'=>'useraction')) ?>

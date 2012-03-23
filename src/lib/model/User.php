@@ -1170,26 +1170,6 @@ class User extends BaseUser
     return PrivateMessagePeer::getNrOfNewMessagesFor($this);
   }
 
-  function getReceivedGifts()
-  {
-    return UserGiftPeer::getGiftsReceivedBy($this);
-  }
-
-  function sendGift( Gift $gift, User $recipient, $sendType, $message)
-  {
-    $userGift = new UserGift;
-    $userGift->setGift( $gift );
-    $userGift->setUserRelatedByUserId($recipient);
-    $userGift->setUserRelatedByGiverId($this);
-    $userGift->setType($sendType);
-    $userGift->setMessage($message);
-    $userGift->save();
-
-    $this->setPoints( $this->getPoints() - $gift->getCost() );
-    $this->save();
-    return $userGift;
-  }
-
   function getTotalCreditsAmount()
   {
     return ExpertsCreditDetailsPeer::getTotalAmountFor($this);

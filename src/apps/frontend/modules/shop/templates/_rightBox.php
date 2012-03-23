@@ -7,9 +7,7 @@
                             <ul>--> 
     <!-- <li><a href="/shop/awardPurchase">Profile Icons</a></li> --> 
     <!-- <li><a href="/friends/games/">Play Games</a></li> --> 
-    <!--<li><a href="/gifts/index">Send Profile Gifts</a></li>--> 
     <!--<li><a href="/shop/donatePage">Donate to friends</a></li>--> 
-    <!-- <li><a href="/gifts/credit">Purchase point</a></li> --> 
     <!--</ul>-->
     
     <h1>Shop Categories</h1>

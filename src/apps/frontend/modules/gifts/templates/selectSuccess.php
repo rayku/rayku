@@ -1,1 +1,0 @@
-<?php include_partial('selectedgift',array('giftid' => $giftid, )); ?>

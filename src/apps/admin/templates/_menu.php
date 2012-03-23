@@ -42,7 +42,6 @@
     <li><?php echo link_to('Purchase detail', 'purchase_detail/list'); ?></li>
     <li><?php echo link_to('Sales', 'sales/list'); ?></li>
 	<li><?php echo link_to('Sales detail', 'sales_detail/list'); ?></li>
-    <li><?php echo link_to('RP Gifts', 'gifts/list' ); ?></li>
 
  <li><?php echo link_to('Featured Items', 'featured/index', array( 'class' => 'last' ) ); ?></li>
   </ul>

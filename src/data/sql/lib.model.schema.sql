@@ -847,24 +847,6 @@ CREATE TABLE `gallery_item`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- gift
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gift`;
-
-
-CREATE TABLE `gift`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50),
-	`image` VARCHAR(100),
-	`description` TEXT,
-	`cost` INTEGER(11),
-	`hidden` INTEGER(11) default 0,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- group_site_page
 #-----------------------------------------------------------------------------
 
@@ -1789,43 +1771,6 @@ CREATE TABLE `user_donations`
 		ON DELETE CASCADE,
 	CONSTRAINT `user_donations_FK_2`
 		FOREIGN KEY (`from_user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- user_gift
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_gift`;
-
-
-CREATE TABLE `user_gift`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`gift_id` INTEGER(11),
-	`giver_id` INTEGER(11),
-	`created_at` DATETIME,
-	`message` TEXT,
-	`type` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `user_gift_FI_1`(`user_id`),
-	KEY `user_gift_FI_2`(`gift_id`),
-	KEY `user_gift_FI_3`(`giver_id`),
-	CONSTRAINT `user_gift_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_gift_FK_2`
-		FOREIGN KEY (`gift_id`)
-		REFERENCES `gift` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_gift_FK_3`
-		FOREIGN KEY (`giver_id`)
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE

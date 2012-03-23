@@ -1,1 +1,0 @@
-<?php echo image_tag($gift->getImage()); ?>
