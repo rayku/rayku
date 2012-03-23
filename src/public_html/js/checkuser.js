@@ -106,13 +106,11 @@ function popup(expid, userid, ques, school, sub, year, id,loginname, points, clo
     closeCount =  close - 1000;
     countGlobal = (closeCount /1000);
     stopTitle = 1;
-    ques = decodeBase64(ques);
-    var newQues = ques.replace(",","");
-    newQues = urlEncode(newQues);
+    questionDecoded = decodeBase64(questionEncoded);
 
     details[0] = expid;
     details[1] = userid;
-    details[2] = newQues;
+    details[2] = questionEncoded;
     details[3] = school;
     details[4] = sub;
     details[5] = year;
@@ -123,7 +121,7 @@ function popup(expid, userid, ques, school, sub, year, id,loginname, points, clo
 
     newexpid = expid;
     newuserid= userid;
-    newques = ques;
+    newques = questionEncoded;
     newschool = school;
     newsub = sub;
     newyear = year;

@@ -1,0 +1,1 @@
+<a href="http://<?php echo $_SERVER["HTTP_HOST"]?>/profile?username=<?php echo $username?>">go to profile</a>

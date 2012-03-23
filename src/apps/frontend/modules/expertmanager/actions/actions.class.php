@@ -347,7 +347,7 @@ class expertmanagerActions extends sfActions
         $userId = $currentUser->getId();
         $_SESSION["_modelbox"] = 0;
         @setcookie('_popupclose', '', time()-300, '/', null);
-        if ($_SESSION['modelPopupOpen']) {
+        if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
             if ($_SESSION['popup_session']) {
                 unset($_SESSION['popup_session']);
@@ -790,7 +790,7 @@ class expertmanagerActions extends sfActions
                                             $mailUser = explode("@", $_thisUser->getEmail());
                                             $newMailUser = explode(".", $mailUser[1]);
 
-                                            if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
+                                            if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
                                                 $score['score'] = $score['score'] * 1.5;
                                             }
                                         }
@@ -833,7 +833,7 @@ class expertmanagerActions extends sfActions
                                     if (!empty($_SESSION["asker_school"])) {
                                         $mailUser = explode("@", $_thisUser->getEmail());
                                         $newMailUser = explode(".", $mailUser[1]);
-                                        if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
+                                        if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
                                             $score['score'] = $score['score'] * 1.5;
                                         }
                                     }
@@ -1570,7 +1570,10 @@ class expertmanagerActions extends sfActions
         $this->raykuUser = $this->getUser()->getRaykuUser();
     }
 
-    public function executeConnect() { }
+    public function executeConnect()
+    {
+        StatsD::increment("whiteboard.session.waiting");
+    }
 
     public function executeConnectagain()
     {

@@ -451,7 +451,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 
 
-	if($_POST['_hidden_facebook'] && !empty($_POST['fbname'])) :
+	if(@$_POST['_hidden_facebook'] && !empty($_POST['fbname'])) :
 
 
 			$fb_username = $_POST['fbname'];
