@@ -211,6 +211,7 @@ class expertmanagerActions extends sfActions
 
         $details =  explode(",", $_REQUEST['details']);
         if (count($details) > 4) {
+            $details[2] = base64_decode($details[2]);
             $peer = new StudentQuestionPeer();
             $studentQuestion = $peer->retrieveByPk($this->getRequestParameter('questionId'));
 
@@ -1260,6 +1261,9 @@ class expertmanagerActions extends sfActions
             setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/");
             $this->getResponse()->setCookie("redirection", 1,time()+600);
             $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
+            
+            StatsD::increment("whiteboard.session.create");
+            
             $this->redirect('expertmanager/connect');
         }
 

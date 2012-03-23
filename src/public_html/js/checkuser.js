@@ -97,7 +97,7 @@ function checkedUser()
     setTimeout("checkedUser()", 5000);
 }
 
-function popup(expid, userid, ques, school, sub, year, id,loginname, points, close, browser, modelbox, questionId)
+function popup(expid, userid, questionEncoded, school, sub, year, id,loginname, points, close, browser, modelbox, questionId)
 {
     popPopOpen = true;
     var details = new Array();
@@ -143,7 +143,7 @@ function popup(expid, userid, ques, school, sub, year, id,loginname, points, clo
             '<div class="notifbg">' +
             '    <h1>A student is asking you this question:</h1>' +
             '    <div class="content">' +
-            '        <div class="question">' + ques + ' <span>(' + year + ' ' + sub + ')</span></div>' +
+            '        <div class="question">' + questionDecoded + ' <span>(' + year + ' ' + sub + ')</span></div>' +
             '        <div class="price"> Paying <span>' + points + 'RP</span> ($' + points +') per minute </div>' +
             '        <div class="connect">' +
             '            <div style="float:left;width:120px;height:40px;font-size:20px;line-height:30px;font-weight:bold;" align="center">' +
