@@ -1180,20 +1180,6 @@ class User extends BaseUser
     ShoutPeer::createComment($recipient, $this, $content);
   }
 
-  function getAssignmentsForDashboard()
-  {
-    if( $this->getType() == UserPeer::getTypeFromValue('user') )
-    {
-      $classrooms = ClassroomPeer::getForStudentManager($this);
-      return AssignmentPeer::getForClassroomsWithUserSubmissions($classrooms,$this);
-    }
-    else
-    {
-      $classrooms = ClassroomPeer::getForStudentManager($this);
-      return AssignmentPeer::getTeacherClassroomsAssignmentsForDashboard($this);
-    }
-  }
-
   public function getMediaCount()
 	{
 

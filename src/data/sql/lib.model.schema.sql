@@ -22,54 +22,6 @@ CREATE TABLE `album`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- assignment
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `assignment`;
-
-
-CREATE TABLE `assignment`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`title` VARCHAR(50)  NOT NULL,
-	`description` TEXT  NOT NULL,
-	`format` VARCHAR(50)  NOT NULL,
-	`attachments` VARCHAR(100)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	`due_date` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `assignment_FI_1`(`classroom_id`),
-	CONSTRAINT `assignment_FK_1`
-		FOREIGN KEY (`classroom_id`)
-		REFERENCES `classroom` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- blog_attachments
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `blog_attachments`;
-
-
-CREATE TABLE `blog_attachments`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`classroom_blog_id` INTEGER(11)  NOT NULL,
-	`file` VARCHAR(50)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `classroom_blog_id`(`classroom_blog_id`),
-	CONSTRAINT `blog_attachments_FK_1`
-		FOREIGN KEY (`classroom_blog_id`)
-		REFERENCES `classroom_blog` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- bulletin
 #-----------------------------------------------------------------------------
 
@@ -175,181 +127,6 @@ CREATE TABLE `chat_user`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- classroom
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom`;
-
-
-CREATE TABLE `classroom`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`category_id` INTEGER(11)  NOT NULL,
-	`classroom_banner` VARCHAR(50)  NOT NULL,
-	`fullname` VARCHAR(50)  NOT NULL,
-	`shortname` VARCHAR(50)  NOT NULL,
-	`class_username` VARCHAR(100)  NOT NULL,
-	`email_passcode` VARCHAR(100)  NOT NULL,
-	`classroom_email` VARCHAR(100)  NOT NULL,
-	`live_webcam` INTEGER(11) default 0 NOT NULL,
-	`email_updateblog` INTEGER(11) default 0 NOT NULL,
-	`school_name` VARCHAR(100)  NOT NULL,
-	`location` VARCHAR(100)  NOT NULL,
-	`idnumber` VARCHAR(50)  NOT NULL,
-	`summary` TEXT  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `classroom_shortname_unique` (`shortname`),
-	KEY `classroom_FI_1`(`user_id`),
-	KEY `classroom_FI_2`(`category_id`),
-	CONSTRAINT `classroom_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_blog
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_blog`;
-
-
-CREATE TABLE `classroom_blog`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(200)  NOT NULL,
-	`message` TEXT  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `blog_FI_1`(`classroom_id`),
-	CONSTRAINT `classroom_blog_FK_1`
-		FOREIGN KEY (`classroom_id`)
-		REFERENCES `classroom` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_comment
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_comment`;
-
-
-CREATE TABLE `classroom_comment`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`classroom_blog_id` INTEGER(11)  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`posted_at` DATETIME  NOT NULL,
-	`approved` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `classroom_comment_FI_2`(`user_id`),
-	KEY `classroom_comment_FI_1`(`classroom_blog_id`),
-	CONSTRAINT `classroom_comment_FK_1`
-		FOREIGN KEY (`classroom_blog_id`)
-		REFERENCES `classroom_blog` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `classroom_comment_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_forum
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_forum`;
-
-
-CREATE TABLE `classroom_forum`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`forum_name` VARCHAR(50)  NOT NULL,
-	`description` TEXT  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_forum_comment
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_forum_comment`;
-
-
-CREATE TABLE `classroom_forum_comment`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`thread_id` INTEGER(11)  NOT NULL,
-	`commentor_id` INTEGER(11)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`approved` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_forum_post
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_forum_post`;
-
-
-CREATE TABLE `classroom_forum_post`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`poster_id` INTEGER(11)  NOT NULL,
-	`forum_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- classroom_members
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `classroom_members`;
-
-
-CREATE TABLE `classroom_members`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`category_id` INTEGER(11)  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`approved` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `classroom_members_FI_1`(`user_id`),
-	KEY `classroom_members_FI_2`(`category_id`),
-	KEY `classroom_members_FI_3`(`classroom_id`),
-	CONSTRAINT `classroom_members_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `classroom_members_FK_2`
-		FOREIGN KEY (`classroom_id`)
-		REFERENCES `classroom` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- comment
 #-----------------------------------------------------------------------------
 
@@ -377,40 +154,6 @@ CREATE TABLE `comment`
 		REFERENCES `journal_entry` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- content_page
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `content_page`;
-
-
-CREATE TABLE `content_page`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `content_page_FI_1`(`classroom_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- content_page_attachments
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `content_page_attachments`;
-
-
-CREATE TABLE `content_page_attachments`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`content_page_id` INTEGER(11)  NOT NULL,
-	`file` VARCHAR(100)  NOT NULL,
-	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -782,17 +525,11 @@ CREATE TABLE `gallery`
 	`classroom_id` INTEGER(11),
 	PRIMARY KEY (`id`),
 	KEY `gallery_FI_1`(`user_id`),
-	KEY `gallery_FI_2`(`classroom_id`),
 	CONSTRAINT `gallery_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `gallery_FK_2`
-		FOREIGN KEY (`classroom_id`)
-		REFERENCES `classroom` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
+		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1073,8 +810,7 @@ CREATE TABLE `live_video_chat`
 	`approved` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `video_live_chat_FI_1`(`receiver_id`),
-	KEY `video_live_chat_FI_2`(`sender_id`),
-	KEY `video_live_chat_FI_3`(`classroom_id`)
+	KEY `video_live_chat_FI_2`(`sender_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1501,67 +1237,6 @@ CREATE TABLE `status`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- student_voice
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `student_voice`;
-
-
-CREATE TABLE `student_voice`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`title` VARCHAR(100)  NOT NULL,
-	`description` TEXT  NOT NULL,
-	`status` INTEGER(11)  NOT NULL,
-	`vote` INTEGER(11)  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `student_voice_FI_1`(`user_id`),
-	KEY `student_voice_FI_2`(`classroom_id`),
-	CONSTRAINT `student_voice_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `student_voice_FK_2`
-		FOREIGN KEY (`classroom_id`)
-		REFERENCES `classroom` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- student_voice_votes
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `student_voice_votes`;
-
-
-CREATE TABLE `student_voice_votes`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`student_voice_id` INTEGER(11)  NOT NULL,
-	`value` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `student_voice_votes_FI_1`(`user_id`),
-	KEY `student_voice_votes_FI_2`(`student_voice_id`),
-	CONSTRAINT `student_voice_votes_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `student_voice_votes_FK_2`
-		FOREIGN KEY (`student_voice_id`)
-		REFERENCES `student_voice` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- students_instant_questions
 #-----------------------------------------------------------------------------
 
@@ -1576,63 +1251,6 @@ CREATE TABLE `students_instant_questions`
 	`expert_id` INTEGER(10)  NOT NULL,
 	`experts_accept` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- submission
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `submission`;
-
-
-CREATE TABLE `submission`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`assignment_id` INTEGER(11)  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`data` TEXT  NOT NULL,
-	`grade` VARCHAR(10) default 'null' NOT NULL,
-	`comment` TEXT  NOT NULL,
-	`approved` INTEGER(11) default 0 NOT NULL,
-	`path` VARCHAR(100),
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `assignment_submission_FI_1`(`assignment_id`),
-	KEY `assignment_submission_FI_2`(`user_id`),
-	CONSTRAINT `submission_FK_1`
-		FOREIGN KEY (`assignment_id`)
-		REFERENCES `assignment` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `submission_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- subscription
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `subscription`;
-
-
-CREATE TABLE `subscription`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`notification_type` INTEGER(11)  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`teacher_id` INTEGER(11)  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `subscription_FI_1`(`user_id`),
-	CONSTRAINT `subscription_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

@@ -364,8 +364,6 @@ vd('#tutor-rate').mouseover(function() {
 </div> -->
 
 <div id="myvar5">
-  <?php ##include_partial( 'assignments' ); ?>
-  <?php ##include_partial( 'homework' ); ?>
 </div>
 </div>
 <script type="text/javascript">

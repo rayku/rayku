@@ -68,11 +68,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 	protected $aUser;
 
 	/**
-	 * @var        Classroom
-	 */
-	protected $aClassroom;
-
-	/**
 	 * @var        array GalleryItem[] Collection to store aggregation of GalleryItem objects.
 	 */
 	protected $collGalleryItems;
@@ -441,10 +436,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = GalleryPeer::CLASSROOM_ID;
 		}
 
-		if ($this->aClassroom !== null && $this->aClassroom->getId() !== $v) {
-			$this->aClassroom = null;
-		}
-
 		return $this;
 	} // setClassroomId()
 
@@ -527,9 +518,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 		if ($this->aUser !== null && $this->user_id !== $this->aUser->getId()) {
 			$this->aUser = null;
 		}
-		if ($this->aClassroom !== null && $this->classroom_id !== $this->aClassroom->getId()) {
-			$this->aClassroom = null;
-		}
 	} // ensureConsistency
 
 	/**
@@ -570,7 +558,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aUser = null;
-			$this->aClassroom = null;
 			$this->collGalleryItems = null;
 			$this->lastGalleryItemCriteria = null;
 
@@ -681,13 +668,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 				$this->setUser($this->aUser);
 			}
 
-			if ($this->aClassroom !== null) {
-				if ($this->aClassroom->isModified() || $this->aClassroom->isNew()) {
-					$affectedRows += $this->aClassroom->save($con);
-				}
-				$this->setClassroom($this->aClassroom);
-			}
-
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = GalleryPeer::ID;
 			}
@@ -792,12 +772,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 			if ($this->aUser !== null) {
 				if (!$this->aUser->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aUser->getValidationFailures());
-				}
-			}
-
-			if ($this->aClassroom !== null) {
-				if (!$this->aClassroom->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aClassroom->getValidationFailures());
 				}
 			}
 
@@ -1175,57 +1149,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Classroom object.
-	 *
-	 * @param      Classroom $v
-	 * @return     Gallery The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setClassroom(Classroom $v = null)
-	{
-		if ($v === null) {
-			$this->setClassroomId(NULL);
-		} else {
-			$this->setClassroomId($v->getId());
-		}
-
-		$this->aClassroom = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Classroom object, it will not be re-added.
-		if ($v !== null) {
-			$v->addGallery($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Classroom object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Classroom The associated Classroom object.
-	 * @throws     PropelException
-	 */
-	public function getClassroom(PropelPDO $con = null)
-	{
-		if ($this->aClassroom === null && ($this->classroom_id !== null)) {
-			$c = new Criteria(ClassroomPeer::DATABASE_NAME);
-			$c->add(ClassroomPeer::ID, $this->classroom_id);
-			$this->aClassroom = ClassroomPeer::doSelectOne($c, $con);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aClassroom->addGallerys($this);
-			 */
-		}
-		return $this->aClassroom;
-	}
-
-	/**
 	 * Clears out the collGalleryItems collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -1447,7 +1370,6 @@ abstract class BaseGallery extends BaseObject  implements Persistent {
 
 		$this->collGalleryItems = null;
 			$this->aUser = null;
-			$this->aClassroom = null;
 	}
 
 } // BaseGallery

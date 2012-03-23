@@ -10,24 +10,6 @@ propel:
     owner_id: { type: INTEGER, size: '11', required: false }
     created_at: { type: TIMESTAMP, required: false }
     _indexes: { album_FI_1: [owner_id] }
-  assignment:
-    _attributes: { phpName: Assignment }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    title: { type: VARCHAR, size: '50', required: true }
-    description: { type: LONGVARCHAR, required: true }
-    format: { type: VARCHAR, size: '50', required: true }
-    attachments: { type: VARCHAR, size: '100', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    due_date: { type: TIMESTAMP, required: true }
-    _indexes: { assignment_FI_1: [classroom_id] }
-  blog_attachments:
-    _attributes: { phpName: BlogAttachments }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    classroom_blog_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom_blog, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    file: { type: VARCHAR, size: '50', required: true }
-    _indexes: { classroom_blog_id: [classroom_blog_id] }
   bulletin:
     _attributes: { phpName: Bulletin }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -72,77 +54,6 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_name: { type: VARCHAR, size: '100', required: true }
     status: { type: INTEGER, size: '11', required: true }
-  classroom:
-    _attributes: { phpName: Classroom }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    category_id: { type: INTEGER, size: '11', required: true }
-    classroom_banner: { type: VARCHAR, size: '50', required: true }
-    fullname: { type: VARCHAR, size: '50', required: true }
-    shortname: { type: VARCHAR, size: '50', required: true }
-    class_username: { type: VARCHAR, size: '100', required: true }
-    email_passcode: { type: VARCHAR, size: '100', required: true }
-    classroom_email: { type: VARCHAR, size: '100', required: true }
-    live_webcam: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
-    email_updateblog: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
-    school_name: { type: VARCHAR, size: '100', required: true }
-    location: { type: VARCHAR, size: '100', required: true }
-    idnumber: { type: VARCHAR, size: '50', required: true }
-    summary: { type: LONGVARCHAR, required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    _indexes: { classroom_FI_1: [user_id], classroom_FI_2: [category_id] }
-    _uniques: { classroom_shortname_unique: [shortname] }
-  classroom_blog:
-    _attributes: { phpName: ClassroomBlog }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '200', required: true }
-    message: { type: LONGVARCHAR, required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    _indexes: { blog_FI_1: [classroom_id] }
-  classroom_comment:
-    _attributes: { phpName: ClassroomComment }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    classroom_blog_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom_blog, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    content: { type: LONGVARCHAR, required: true }
-    posted_at: { type: TIMESTAMP, required: true }
-    approved: { type: INTEGER, size: '11', required: true }
-    _indexes: { classroom_comment_FI_2: [user_id], classroom_comment_FI_1: [classroom_blog_id] }
-  classroom_forum:
-    _attributes: { phpName: ClassroomForum }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    forum_name: { type: VARCHAR, size: '50', required: true }
-    description: { type: LONGVARCHAR, required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-  classroom_forum_comment:
-    _attributes: { phpName: ClassroomForumComment }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    thread_id: { type: INTEGER, size: '11', required: true }
-    commentor_id: { type: INTEGER, size: '11', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    approved: { type: INTEGER, size: '11', required: true }
-  classroom_forum_post:
-    _attributes: { phpName: ClassroomForumPost }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    poster_id: { type: INTEGER, size: '11', required: true }
-    forum_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-  classroom_members:
-    _attributes: { phpName: ClassroomMembers }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    category_id: { type: INTEGER, size: '11', required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    approved: { type: INTEGER, size: '11', required: true }
-    _indexes: { classroom_members_FI_1: [user_id], classroom_members_FI_2: [category_id], classroom_members_FI_3: [classroom_id] }
   comment:
     _attributes: { phpName: Comment }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -155,20 +66,6 @@ propel:
     type: { type: INTEGER, size: '11', required: false }
     approved: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
     _indexes: { comment_FI_1: [poster_id], comment_FI_2: [picture_id], comment_FI_3: [video_id], comment_FI_4: [journal_entry_id] }
-  content_page:
-    _attributes: { phpName: ContentPage }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    _indexes: { content_page_FI_1: [classroom_id] }
-  content_page_attachments:
-    _attributes: { phpName: ContentPageAttachments }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    content_page_id: { type: INTEGER, size: '11', required: true }
-    file: { type: VARCHAR, size: '100', required: true }
   expert:
     _attributes: { phpName: Expert }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -329,8 +226,8 @@ propel:
     user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
-    classroom_id: { type: INTEGER, size: '11', required: false, foreignTable: classroom, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
-    _indexes: { gallery_FI_1: [user_id], gallery_FI_2: [classroom_id] }
+    classroom_id: { type: INTEGER, size: '11', required: false }
+    _indexes: { gallery_FI_1: [user_id] }
   gallery_acl:
     _attributes: { phpName: GalleryAcl }
     gallery_id: { type: INTEGER, size: '11', required: false }
@@ -438,7 +335,7 @@ propel:
     sender_id: { type: INTEGER, size: '11', required: true }
     classroom_id: { type: INTEGER, size: '11', required: true }
     approved: { type: INTEGER, size: '11', required: true }
-    _indexes: { video_live_chat_FI_1: [receiver_id], video_live_chat_FI_2: [sender_id], video_live_chat_FI_3: [classroom_id] }
+    _indexes: { video_live_chat_FI_1: [receiver_id], video_live_chat_FI_2: [sender_id] }
   network:
     _attributes: { phpName: Network }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -601,25 +498,6 @@ propel:
     _attributes: { phpName: Status }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     name: { type: VARCHAR, size: '255', required: false }
-  student_voice:
-    _attributes: { phpName: StudentVoice }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    title: { type: VARCHAR, size: '100', required: true }
-    description: { type: LONGVARCHAR, required: true }
-    status: { type: INTEGER, size: '11', required: true }
-    vote: { type: INTEGER, size: '11', required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true, foreignTable: classroom, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    _indexes: { student_voice_FI_1: [user_id], student_voice_FI_2: [classroom_id] }
-  student_voice_votes:
-    _attributes: { phpName: StudentVoiceVotes }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    student_voice_id: { type: INTEGER, size: '11', required: true, foreignTable: student_voice, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    value: { type: INTEGER, size: '11', required: true }
-    _indexes: { student_voice_votes_FI_1: [user_id], student_voice_votes_FI_2: [student_voice_id] }
   students_instant_questions:
     _attributes: { phpName: StudentsInstantQuestions }
     id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
@@ -627,27 +505,6 @@ propel:
     student_id: { type: INTEGER, size: '10', required: true }
     expert_id: { type: INTEGER, size: '10', required: true }
     experts_accept: { type: INTEGER, size: '10', required: true }
-  submission:
-    _attributes: { phpName: Submission }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    assignment_id: { type: INTEGER, size: '11', required: true, foreignTable: assignment, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    data: { type: LONGVARCHAR, required: true }
-    grade: { type: VARCHAR, size: '10', required: true, defaultValue: null }
-    comment: { type: LONGVARCHAR, required: true }
-    approved: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
-    path: { type: VARCHAR, size: '100', required: false }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    _indexes: { assignment_submission_FI_1: [assignment_id], assignment_submission_FI_2: [user_id] }
-  subscription:
-    _attributes: { phpName: Subscription }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    notification_type: { type: INTEGER, size: '11', required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    teacher_id: { type: INTEGER, size: '11', required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true }
-    _indexes: { subscription_FI_1: [user_id] }
   thread:
     _attributes: { phpName: Thread }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

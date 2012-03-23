@@ -74,7 +74,7 @@ class GalleryMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
 
-		$tMap->addForeignKey('CLASSROOM_ID', 'ClassroomId', 'INTEGER', 'classroom', 'ID', false, 11);
+		$tMap->addColumn('CLASSROOM_ID', 'ClassroomId', 'INTEGER', false, 11);
 
 	} // doBuild()
 
