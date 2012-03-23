@@ -8,3 +8,4 @@ nohup.out
 chromedriver.log
 src/public_html/logs.txt
 .htaccess
+src/data

@@ -1589,5 +1589,32 @@ CREATE TABLE `student_questions`
 		REFERENCES `user` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- whiteboard_sessions
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `whiteboard_sessions`;
+
+
+CREATE TABLE `whiteboard_sessions`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`question_id` INTEGER(11)  NOT NULL,
+	`user_id` INTEGER(11)  NOT NULL,
+	`type` INTEGER(10)  NOT NULL,
+	`token` VARCHAR(40)  NOT NULL,
+	`chat_id` VARCHAR(40),
+	`last_activity` INTEGER(11)  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `whiteboard_sessions_FI_1` (`question_id`),
+	CONSTRAINT `whiteboard_sessions_FK_1`
+		FOREIGN KEY (`question_id`)
+		REFERENCES `student_questions` (`id`),
+	INDEX `whiteboard_sessions_FI_2` (`user_id`),
+	CONSTRAINT `whiteboard_sessions_FK_2`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

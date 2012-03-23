@@ -657,3 +657,12 @@ propel:
     close: { type: INTEGER, size: '10', required: true }
     cron: { type: INTEGER, size: '10', required: true }
     source: { type: VARCHAR, size: '100', required: true }
+  whiteboard_sessions:
+    _attributes: { phpName: WhiteboardSession }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    question_id: { type: INTEGER, size: '11', required: true, foreignTable: student_questions, foreignReference: id }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id }
+    type: { type: INTEGER, size: '10', required: true }
+    token: { type: VARCHAR, size: '40', required: true }
+    chat_id: { type: VARCHAR, size: '40' }
+    last_activity: { type: INTEGER, size: '11', required: true }

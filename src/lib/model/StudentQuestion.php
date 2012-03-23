@@ -14,7 +14,7 @@ class StudentQuestion extends BaseStudentQuestion
 
     public function setTutor(User $user = null)
     {
-        parent::setUserRelatedByTutor($user);
+        parent::setUserRelatedByTutorId($user);
     }
 
     public function getTutor()
