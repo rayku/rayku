@@ -7,7 +7,7 @@ dev:
   .settings:
     # E_ALL | E_STRICT = 8191
     error_reporting:        8191
-    web_debug:              on
+    web_debug:              off
     cache:                  off
     no_script_name:         true
     etag:                   off
