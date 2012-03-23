@@ -225,9 +225,7 @@ return $text;
 function getUsername($id) {
 $name = '';
 
-
-	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-	$db = mysql_select_db("rayku_db", $con);
+        RaykuCommon::getDatabaseConnection();
 
 	$_query = mysql_query("select * from user where id=".$id) or die("Error1".mysql_error());
 	if(mysql_num_rows($_query)) :

@@ -5,9 +5,8 @@ $latestUser = UserPeer::getNewestUser();
 ?>
 
 <?php
+$connection = RaykuCommon::getDatabaseConnection();
 
-$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-$db = mysql_select_db("rayku_db", $con);
 $query = mysql_query("select * from user_score where score=(select max(score) from user_score)") or die(mysql_error());
 $score = mysql_fetch_assoc($query);
 

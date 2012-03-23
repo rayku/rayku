@@ -10,6 +10,9 @@
  */
 class quickregActions extends sfActions
 {
+    public function preExecute() {
+        RaykuCommon::getDatabaseConnection();
+    }
  /**
   * Executes index action
   *
@@ -43,10 +46,6 @@ class quickregActions extends sfActions
 	
 	//$user->setPoints('10.11');
 	$user->setTypeUnconfirmed($this->requestedUserType);
-	
-	$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-
-	$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 	
 	/* Username Duplication Check */
 	$unamequery = mysql_query("select * from user where username='".$userName."'");
@@ -113,9 +112,6 @@ class quickregActions extends sfActions
 	
 	public function executeConfirmpopup()
 	{
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-
-		$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 	}
 	
 	public function executeConfirmuser()
@@ -187,10 +183,6 @@ class quickregActions extends sfActions
 			$kinkarsoUser = FriendPeer::createInitialFriendship($user);
 		} 
 		
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-
-		$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
 		if( $kinkarsoUser ) {
 
 		if($user) {
@@ -252,9 +244,6 @@ class quickregActions extends sfActions
 		$emailId = $_REQUEST['emailId'];
 		
 		
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		$db = mysql_select_db("rayku_db", $con);
-
 		$_query = mysql_query("select * from user where email='".$emailId."'") or die(mysql_error());
 
 		if(mysql_num_rows($_query) > 0) :
