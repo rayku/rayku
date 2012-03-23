@@ -531,26 +531,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastUserDonationsRelatedByFromUserIdCriteria = null;
 
 	/**
-	 * @var        array UserGift[] Collection to store aggregation of UserGift objects.
-	 */
-	protected $collUserGiftsRelatedByUserId;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collUserGiftsRelatedByUserId.
-	 */
-	private $lastUserGiftRelatedByUserIdCriteria = null;
-
-	/**
-	 * @var        array UserGift[] Collection to store aggregation of UserGift objects.
-	 */
-	protected $collUserGiftsRelatedByGiverId;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collUserGiftsRelatedByGiverId.
-	 */
-	private $lastUserGiftRelatedByGiverIdCriteria = null;
-
-	/**
 	 * @var        array UserInterest[] Collection to store aggregation of UserInterest objects.
 	 */
 	protected $collUserInterests;
@@ -584,16 +564,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collStudentQuestionsRelatedByTutorId.
 	 */
 	private $lastStudentQuestionRelatedByTutorIdCriteria = null;
-
-	/**
-	 * @var        array WhiteboardConnection[] Collection to store aggregation of WhiteboardConnection objects.
-	 */
-	protected $collWhiteboardConnections;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collWhiteboardConnections.
-	 */
-	private $lastWhiteboardConnectionCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -2191,12 +2161,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collUserDonationssRelatedByFromUserId = null;
 			$this->lastUserDonationsRelatedByFromUserIdCriteria = null;
 
-			$this->collUserGiftsRelatedByUserId = null;
-			$this->lastUserGiftRelatedByUserIdCriteria = null;
-
-			$this->collUserGiftsRelatedByGiverId = null;
-			$this->lastUserGiftRelatedByGiverIdCriteria = null;
-
 			$this->collUserInterests = null;
 			$this->lastUserInterestCriteria = null;
 
@@ -2207,9 +2171,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->collStudentQuestionsRelatedByTutorId = null;
 			$this->lastStudentQuestionRelatedByTutorIdCriteria = null;
-
-			$this->collWhiteboardConnections = null;
-			$this->lastWhiteboardConnectionCriteria = null;
 
 		} // if (deep)
 	}
@@ -2558,22 +2519,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collUserGiftsRelatedByUserId !== null) {
-				foreach ($this->collUserGiftsRelatedByUserId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collUserGiftsRelatedByGiverId !== null) {
-				foreach ($this->collUserGiftsRelatedByGiverId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->collUserInterests !== null) {
 				foreach ($this->collUserInterests as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -2598,14 +2543,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collStudentQuestionsRelatedByTutorId !== null) {
 				foreach ($this->collStudentQuestionsRelatedByTutorId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collWhiteboardConnections !== null) {
-				foreach ($this->collWhiteboardConnections as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2917,22 +2854,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collUserGiftsRelatedByUserId !== null) {
-					foreach ($this->collUserGiftsRelatedByUserId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collUserGiftsRelatedByGiverId !== null) {
-					foreach ($this->collUserGiftsRelatedByGiverId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 				if ($this->collUserInterests !== null) {
 					foreach ($this->collUserInterests as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -2957,14 +2878,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collStudentQuestionsRelatedByTutorId !== null) {
 					foreach ($this->collStudentQuestionsRelatedByTutorId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collWhiteboardConnections !== null) {
-					foreach ($this->collWhiteboardConnections as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3707,18 +3620,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getUserGiftsRelatedByUserId() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addUserGiftRelatedByUserId($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getUserGiftsRelatedByGiverId() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addUserGiftRelatedByGiverId($relObj->copy($deepCopy));
-				}
-			}
-
 			foreach ($this->getUserInterests() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserInterest($relObj->copy($deepCopy));
@@ -3739,12 +3640,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getStudentQuestionsRelatedByTutorId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentQuestionRelatedByTutorId($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getWhiteboardConnections() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addWhiteboardConnection($relObj->copy($deepCopy));
 				}
 			}
 
@@ -8620,408 +8515,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collUserGiftsRelatedByUserId collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addUserGiftsRelatedByUserId()
-	 */
-	public function clearUserGiftsRelatedByUserId()
-	{
-		$this->collUserGiftsRelatedByUserId = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collUserGiftsRelatedByUserId collection (array).
-	 *
-	 * By default this just sets the collUserGiftsRelatedByUserId collection to an empty array (like clearcollUserGiftsRelatedByUserId());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initUserGiftsRelatedByUserId()
-	{
-		$this->collUserGiftsRelatedByUserId = array();
-	}
-
-	/**
-	 * Gets an array of UserGift objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related UserGiftsRelatedByUserId from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array UserGift[]
-	 * @throws     PropelException
-	 */
-	public function getUserGiftsRelatedByUserId($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserGiftsRelatedByUserId === null) {
-			if ($this->isNew()) {
-			   $this->collUserGiftsRelatedByUserId = array();
-			} else {
-
-				$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-				UserGiftPeer::addSelectColumns($criteria);
-				$this->collUserGiftsRelatedByUserId = UserGiftPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-				UserGiftPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUserGiftRelatedByUserIdCriteria) || !$this->lastUserGiftRelatedByUserIdCriteria->equals($criteria)) {
-					$this->collUserGiftsRelatedByUserId = UserGiftPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastUserGiftRelatedByUserIdCriteria = $criteria;
-		return $this->collUserGiftsRelatedByUserId;
-	}
-
-	/**
-	 * Returns the number of related UserGift objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related UserGift objects.
-	 * @throws     PropelException
-	 */
-	public function countUserGiftsRelatedByUserId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collUserGiftsRelatedByUserId === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-				$count = UserGiftPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastUserGiftRelatedByUserIdCriteria) || !$this->lastUserGiftRelatedByUserIdCriteria->equals($criteria)) {
-					$count = UserGiftPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collUserGiftsRelatedByUserId);
-				}
-			} else {
-				$count = count($this->collUserGiftsRelatedByUserId);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a UserGift object to this object
-	 * through the UserGift foreign key attribute.
-	 *
-	 * @param      UserGift $l UserGift
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addUserGiftRelatedByUserId(UserGift $l)
-	{
-		if ($this->collUserGiftsRelatedByUserId === null) {
-			$this->initUserGiftsRelatedByUserId();
-		}
-		if (!in_array($l, $this->collUserGiftsRelatedByUserId, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collUserGiftsRelatedByUserId, $l);
-			$l->setUserRelatedByUserId($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this User is new, it will return
-	 * an empty collection; or if this User has previously
-	 * been saved, it will retrieve related UserGiftsRelatedByUserId from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in User.
-	 */
-	public function getUserGiftsRelatedByUserIdJoinGift($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserGiftsRelatedByUserId === null) {
-			if ($this->isNew()) {
-				$this->collUserGiftsRelatedByUserId = array();
-			} else {
-
-				$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-				$this->collUserGiftsRelatedByUserId = UserGiftPeer::doSelectJoinGift($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(UserGiftPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastUserGiftRelatedByUserIdCriteria) || !$this->lastUserGiftRelatedByUserIdCriteria->equals($criteria)) {
-				$this->collUserGiftsRelatedByUserId = UserGiftPeer::doSelectJoinGift($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastUserGiftRelatedByUserIdCriteria = $criteria;
-
-		return $this->collUserGiftsRelatedByUserId;
-	}
-
-	/**
-	 * Clears out the collUserGiftsRelatedByGiverId collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addUserGiftsRelatedByGiverId()
-	 */
-	public function clearUserGiftsRelatedByGiverId()
-	{
-		$this->collUserGiftsRelatedByGiverId = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collUserGiftsRelatedByGiverId collection (array).
-	 *
-	 * By default this just sets the collUserGiftsRelatedByGiverId collection to an empty array (like clearcollUserGiftsRelatedByGiverId());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initUserGiftsRelatedByGiverId()
-	{
-		$this->collUserGiftsRelatedByGiverId = array();
-	}
-
-	/**
-	 * Gets an array of UserGift objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related UserGiftsRelatedByGiverId from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array UserGift[]
-	 * @throws     PropelException
-	 */
-	public function getUserGiftsRelatedByGiverId($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserGiftsRelatedByGiverId === null) {
-			if ($this->isNew()) {
-			   $this->collUserGiftsRelatedByGiverId = array();
-			} else {
-
-				$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-				UserGiftPeer::addSelectColumns($criteria);
-				$this->collUserGiftsRelatedByGiverId = UserGiftPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-				UserGiftPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUserGiftRelatedByGiverIdCriteria) || !$this->lastUserGiftRelatedByGiverIdCriteria->equals($criteria)) {
-					$this->collUserGiftsRelatedByGiverId = UserGiftPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastUserGiftRelatedByGiverIdCriteria = $criteria;
-		return $this->collUserGiftsRelatedByGiverId;
-	}
-
-	/**
-	 * Returns the number of related UserGift objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related UserGift objects.
-	 * @throws     PropelException
-	 */
-	public function countUserGiftsRelatedByGiverId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collUserGiftsRelatedByGiverId === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-				$count = UserGiftPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-				if (!isset($this->lastUserGiftRelatedByGiverIdCriteria) || !$this->lastUserGiftRelatedByGiverIdCriteria->equals($criteria)) {
-					$count = UserGiftPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collUserGiftsRelatedByGiverId);
-				}
-			} else {
-				$count = count($this->collUserGiftsRelatedByGiverId);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a UserGift object to this object
-	 * through the UserGift foreign key attribute.
-	 *
-	 * @param      UserGift $l UserGift
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addUserGiftRelatedByGiverId(UserGift $l)
-	{
-		if ($this->collUserGiftsRelatedByGiverId === null) {
-			$this->initUserGiftsRelatedByGiverId();
-		}
-		if (!in_array($l, $this->collUserGiftsRelatedByGiverId, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collUserGiftsRelatedByGiverId, $l);
-			$l->setUserRelatedByGiverId($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this User is new, it will return
-	 * an empty collection; or if this User has previously
-	 * been saved, it will retrieve related UserGiftsRelatedByGiverId from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in User.
-	 */
-	public function getUserGiftsRelatedByGiverIdJoinGift($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserGiftsRelatedByGiverId === null) {
-			if ($this->isNew()) {
-				$this->collUserGiftsRelatedByGiverId = array();
-			} else {
-
-				$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-				$this->collUserGiftsRelatedByGiverId = UserGiftPeer::doSelectJoinGift($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(UserGiftPeer::GIVER_ID, $this->id);
-
-			if (!isset($this->lastUserGiftRelatedByGiverIdCriteria) || !$this->lastUserGiftRelatedByGiverIdCriteria->equals($criteria)) {
-				$this->collUserGiftsRelatedByGiverId = UserGiftPeer::doSelectJoinGift($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastUserGiftRelatedByGiverIdCriteria = $criteria;
-
-		return $this->collUserGiftsRelatedByGiverId;
-	}
-
-	/**
 	 * Clears out the collUserInterests collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -9520,207 +9013,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collWhiteboardConnections collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addWhiteboardConnections()
-	 */
-	public function clearWhiteboardConnections()
-	{
-		$this->collWhiteboardConnections = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collWhiteboardConnections collection (array).
-	 *
-	 * By default this just sets the collWhiteboardConnections collection to an empty array (like clearcollWhiteboardConnections());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initWhiteboardConnections()
-	{
-		$this->collWhiteboardConnections = array();
-	}
-
-	/**
-	 * Gets an array of WhiteboardConnection objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related WhiteboardConnections from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array WhiteboardConnection[]
-	 * @throws     PropelException
-	 */
-	public function getWhiteboardConnections($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-			   $this->collWhiteboardConnections = array();
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-				WhiteboardConnectionPeer::addSelectColumns($criteria);
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-				WhiteboardConnectionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-					$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastWhiteboardConnectionCriteria = $criteria;
-		return $this->collWhiteboardConnections;
-	}
-
-	/**
-	 * Returns the number of related WhiteboardConnection objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related WhiteboardConnection objects.
-	 * @throws     PropelException
-	 */
-	public function countWhiteboardConnections(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-				$count = WhiteboardConnectionPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-					$count = WhiteboardConnectionPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collWhiteboardConnections);
-				}
-			} else {
-				$count = count($this->collWhiteboardConnections);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a WhiteboardConnection object to this object
-	 * through the WhiteboardConnection foreign key attribute.
-	 *
-	 * @param      WhiteboardConnection $l WhiteboardConnection
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addWhiteboardConnection(WhiteboardConnection $l)
-	{
-		if ($this->collWhiteboardConnections === null) {
-			$this->initWhiteboardConnections();
-		}
-		if (!in_array($l, $this->collWhiteboardConnections, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collWhiteboardConnections, $l);
-			$l->setUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this User is new, it will return
-	 * an empty collection; or if this User has previously
-	 * been saved, it will retrieve related WhiteboardConnections from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in User.
-	 */
-	public function getWhiteboardConnectionsJoinStudentQuestion($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-				$this->collWhiteboardConnections = array();
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinStudentQuestion($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(WhiteboardConnectionPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinStudentQuestion($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWhiteboardConnectionCriteria = $criteria;
-
-		return $this->collWhiteboardConnections;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -9867,16 +9159,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collUserGiftsRelatedByUserId) {
-				foreach ((array) $this->collUserGiftsRelatedByUserId as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collUserGiftsRelatedByGiverId) {
-				foreach ((array) $this->collUserGiftsRelatedByGiverId as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collUserInterests) {
 				foreach ((array) $this->collUserInterests as $o) {
 					$o->clearAllReferences($deep);
@@ -9892,11 +9174,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 			if ($this->collStudentQuestionsRelatedByTutorId) {
 				foreach ((array) $this->collStudentQuestionsRelatedByTutorId as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collWhiteboardConnections) {
-				foreach ((array) $this->collWhiteboardConnections as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -9929,13 +9206,10 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collUserAwardss = null;
 		$this->collUserDonationssRelatedByUserId = null;
 		$this->collUserDonationssRelatedByFromUserId = null;
-		$this->collUserGiftsRelatedByUserId = null;
-		$this->collUserGiftsRelatedByGiverId = null;
 		$this->collUserInterests = null;
 		$this->singleUserGtalk = null;
 		$this->collStudentQuestionsRelatedByStudentId = null;
 		$this->collStudentQuestionsRelatedByTutorId = null;
-		$this->collWhiteboardConnections = null;
 			$this->aPicture = null;
 			$this->aNetwork = null;
 	}

@@ -1437,12 +1437,6 @@ abstract class BaseUserPeer {
 			// invalidate objects in UserDonationsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			UserDonationsPeer::clearInstancePool();
 
-			// invalidate objects in UserGiftPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserGiftPeer::clearInstancePool();
-
-			// invalidate objects in UserGiftPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserGiftPeer::clearInstancePool();
-
 			// invalidate objects in UserInterestPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			UserInterestPeer::clearInstancePool();
 

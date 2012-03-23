@@ -1936,5 +1936,40 @@ CREATE TABLE `whiteboard_snapshot`
 		ON DELETE CASCADE
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- student_questions
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_questions`;
+
+
+CREATE TABLE `student_questions`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER(11)  NOT NULL,
+	`checked_id` INTEGER(11)  NOT NULL,
+	`category_id` INTEGER(11)  NOT NULL,
+	`course_id` INTEGER(11)  NOT NULL,
+	`question` VARCHAR(500)  NOT NULL,
+	`exe_order` INTEGER(11)  NOT NULL,
+	`time` INTEGER(11)  NOT NULL,
+	`course_code` VARCHAR(100)  NOT NULL,
+	`year` VARCHAR(100)  NOT NULL,
+	`school` VARCHAR(100)  NOT NULL,
+	`status` INTEGER(10)  NOT NULL,
+	`close` INTEGER(10)  NOT NULL,
+	`cron` INTEGER(10)  NOT NULL,
+	`source` VARCHAR(100)  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `student_questions_FI_1` (`user_id`),
+	CONSTRAINT `student_questions_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `user` (`id`),
+	INDEX `student_questions_FI_2` (`checked_id`),
+	CONSTRAINT `student_questions_FK_2`
+		FOREIGN KEY (`checked_id`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

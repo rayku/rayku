@@ -121,16 +121,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	protected $aUserRelatedByTutorId;
 
 	/**
-	 * @var        array WhiteboardConnection[] Collection to store aggregation of WhiteboardConnection objects.
-	 */
-	protected $collWhiteboardConnections;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collWhiteboardConnections.
-	 */
-	private $lastWhiteboardConnectionCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -753,9 +743,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 
 			$this->aUserRelatedByStudentId = null;
 			$this->aUserRelatedByTutorId = null;
-			$this->collWhiteboardConnections = null;
-			$this->lastWhiteboardConnectionCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -882,14 +869,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
-			if ($this->collWhiteboardConnections !== null) {
-				foreach ($this->collWhiteboardConnections as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -978,14 +957,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collWhiteboardConnections !== null) {
-					foreach ($this->collWhiteboardConnections as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 
 			$this->alreadyInValidation = false;
@@ -1325,20 +1296,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 		$copyObj->setSource($this->source);
 
 
-		if ($deepCopy) {
-			// important: temporarily setNew(false) because this affects the behavior of
-			// the getter/setter methods for fkey referrer objects.
-			$copyObj->setNew(false);
-
-			foreach ($this->getWhiteboardConnections() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addWhiteboardConnection($relObj->copy($deepCopy));
-				}
-			}
-
-		} // if ($deepCopy)
-
-
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1486,207 +1443,6 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collWhiteboardConnections collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addWhiteboardConnections()
-	 */
-	public function clearWhiteboardConnections()
-	{
-		$this->collWhiteboardConnections = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collWhiteboardConnections collection (array).
-	 *
-	 * By default this just sets the collWhiteboardConnections collection to an empty array (like clearcollWhiteboardConnections());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initWhiteboardConnections()
-	{
-		$this->collWhiteboardConnections = array();
-	}
-
-	/**
-	 * Gets an array of WhiteboardConnection objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this StudentQuestion has previously been saved, it will retrieve
-	 * related WhiteboardConnections from storage. If this StudentQuestion is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array WhiteboardConnection[]
-	 * @throws     PropelException
-	 */
-	public function getWhiteboardConnections($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-			   $this->collWhiteboardConnections = array();
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-				WhiteboardConnectionPeer::addSelectColumns($criteria);
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-				WhiteboardConnectionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-					$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastWhiteboardConnectionCriteria = $criteria;
-		return $this->collWhiteboardConnections;
-	}
-
-	/**
-	 * Returns the number of related WhiteboardConnection objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related WhiteboardConnection objects.
-	 * @throws     PropelException
-	 */
-	public function countWhiteboardConnections(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-				$count = WhiteboardConnectionPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-				if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-					$count = WhiteboardConnectionPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collWhiteboardConnections);
-				}
-			} else {
-				$count = count($this->collWhiteboardConnections);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a WhiteboardConnection object to this object
-	 * through the WhiteboardConnection foreign key attribute.
-	 *
-	 * @param      WhiteboardConnection $l WhiteboardConnection
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addWhiteboardConnection(WhiteboardConnection $l)
-	{
-		if ($this->collWhiteboardConnections === null) {
-			$this->initWhiteboardConnections();
-		}
-		if (!in_array($l, $this->collWhiteboardConnections, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collWhiteboardConnections, $l);
-			$l->setStudentQuestion($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this StudentQuestion is new, it will return
-	 * an empty collection; or if this StudentQuestion has previously
-	 * been saved, it will retrieve related WhiteboardConnections from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in StudentQuestion.
-	 */
-	public function getWhiteboardConnectionsJoinUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(StudentQuestionPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWhiteboardConnections === null) {
-			if ($this->isNew()) {
-				$this->collWhiteboardConnections = array();
-			} else {
-
-				$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(WhiteboardConnectionPeer::QUESTION_ID, $this->id);
-
-			if (!isset($this->lastWhiteboardConnectionCriteria) || !$this->lastWhiteboardConnectionCriteria->equals($criteria)) {
-				$this->collWhiteboardConnections = WhiteboardConnectionPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWhiteboardConnectionCriteria = $criteria;
-
-		return $this->collWhiteboardConnections;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1698,14 +1454,8 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collWhiteboardConnections) {
-				foreach ((array) $this->collWhiteboardConnections as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
-		$this->collWhiteboardConnections = null;
 			$this->aUserRelatedByStudentId = null;
 			$this->aUserRelatedByTutorId = null;
 	}
