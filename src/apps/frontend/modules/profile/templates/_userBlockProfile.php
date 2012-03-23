@@ -78,9 +78,6 @@
 		<?php if($networkusers != NULL): ?>
 			<li><?php echo link_to('Networks', '/network/index'); ?></li>
 		<?php endif ; ?>
-
-	  	<?php if ( ($raykuUser->getType() == UserPeer::getTypeFromValue('teacher')) || ($raykuUser->getType() == UserPeer::getTypeFromValue('admin')) ) :?>
-		<li><?php echo link_to('Class Room', '/classmanager/index') ?></li>
         <li><?php 
 
 			$left = $raykuUser->howManyInvitationsLeft();

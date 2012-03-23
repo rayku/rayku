@@ -333,15 +333,6 @@ class UserPeer extends BaseUserPeer
     return $c;
   }
 
-  static function getWhoHasSubscription( $iClassroomId, $iType )
-  {
-    $c = new Criteria();
-		$c->addJoin( UserPeer::ID,SubscriptionPeer::USER_ID,Criteria::JOIN );
-		$c->add( SubscriptionPeer::CLASSROOM_ID, $iClassroomId );
-		$c->add( SubscriptionPeer::NOTIFICATION_TYPE, $iType );
-		return UserPeer::doSelect($c);
-  }
-
   static function getForClassroom( $iClassroomId )
   {
     $c = new Criteria();

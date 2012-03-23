@@ -1368,15 +1368,6 @@ abstract class BaseUserPeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in ClassroomPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ClassroomPeer::clearInstancePool();
-
-			// invalidate objects in ClassroomCommentPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ClassroomCommentPeer::clearInstancePool();
-
-			// invalidate objects in ClassroomMembersPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ClassroomMembersPeer::clearInstancePool();
-
 			// invalidate objects in ExpertPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			ExpertPeer::clearInstancePool();
 
@@ -1415,18 +1406,6 @@ abstract class BaseUserPeer {
 
 			// invalidate objects in ShoppingCartPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			ShoppingCartPeer::clearInstancePool();
-
-			// invalidate objects in StudentVoicePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			StudentVoicePeer::clearInstancePool();
-
-			// invalidate objects in StudentVoiceVotesPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			StudentVoiceVotesPeer::clearInstancePool();
-
-			// invalidate objects in SubmissionPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			SubmissionPeer::clearInstancePool();
-
-			// invalidate objects in SubscriptionPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			SubscriptionPeer::clearInstancePool();
 
 			// invalidate objects in UserAwardsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			UserAwardsPeer::clearInstancePool();

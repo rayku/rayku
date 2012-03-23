@@ -1,8 +1,0 @@
-all:
-  credentials: assignment_management
-index:
-  credentials: []
-list:
-  credentials: []
-show:
-  credentials: []

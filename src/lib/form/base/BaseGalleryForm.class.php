@@ -18,7 +18,7 @@ class BaseGalleryForm extends BaseFormPropel
       'user_id'      => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
       'created_at'   => new sfWidgetFormDateTime(),
       'updated_at'   => new sfWidgetFormDateTime(),
-      'classroom_id' => new sfWidgetFormPropelChoice(array('model' => 'Classroom', 'add_empty' => true)),
+      'classroom_id' => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -28,7 +28,7 @@ class BaseGalleryForm extends BaseFormPropel
       'user_id'      => new sfValidatorPropelChoice(array('model' => 'User', 'column' => 'id', 'required' => false)),
       'created_at'   => new sfValidatorDateTime(array('required' => false)),
       'updated_at'   => new sfValidatorDateTime(array('required' => false)),
-      'classroom_id' => new sfValidatorPropelChoice(array('model' => 'Classroom', 'column' => 'id', 'required' => false)),
+      'classroom_id' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('gallery[%s]');

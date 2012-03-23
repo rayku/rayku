@@ -18,8 +18,6 @@ allow from all
     #RewriteCond %{HTTP_HOST} !^dev1.rayku.com
     #RewriteCond %{HTTP_HOST} ^[^\.w{3}]+\.rayku.com$
     #RewriteRule ^(.*) %{HTTP_HOST}$1 [C]
-    #RewriteRule ^([^\.w{3}]+)\.rayku\.com(.*) http://www.rayku.com/static/classroom?classname=$1 [R=301,L]
-    #RewriteRule ^classroom/index/id/(.*)$ http://$1.rayku.com [R=301,L]
 
     # we skip all files with .something
     RewriteCond %{REQUEST_URI} \..+$

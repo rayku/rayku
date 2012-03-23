@@ -64,11 +64,6 @@ function cmp($a, $b)
   <?php $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id']; ?>
   <div class="body-left" style="margin-top:15px;">
     <?php include_partial('askquestion'); ?>
-    <!--<div id="myvar" style="width:650px;margin-top:10px">
-      <?php ##include_partial('statistics'); ?>
-    </div>-->
-
-
     <div>
       <?php include_partial('recent'); ?>
     </div>
@@ -437,8 +432,6 @@ vd('#tutor-rate').mouseover(function() {
 </div> -->
 
 <div id="myvar5">
-  <?php ##include_partial( 'assignments' ); ?>
-  <?php ##include_partial( 'homework' ); ?>
 </div>
 </div>
 <script type="text/javascript">

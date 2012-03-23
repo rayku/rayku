@@ -19,7 +19,7 @@ class BaseGalleryFormFilter extends BaseFormFilterPropel
       'user_id'      => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
       'created_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'updated_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'classroom_id' => new sfWidgetFormPropelChoice(array('model' => 'Classroom', 'add_empty' => true)),
+      'classroom_id' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -28,7 +28,7 @@ class BaseGalleryFormFilter extends BaseFormFilterPropel
       'user_id'      => new sfValidatorPropelChoice(array('required' => false, 'model' => 'User', 'column' => 'id')),
       'created_at'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'updated_at'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'classroom_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Classroom', 'column' => 'id')),
+      'classroom_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('gallery_filters[%s]');
@@ -52,7 +52,7 @@ class BaseGalleryFormFilter extends BaseFormFilterPropel
       'user_id'      => 'ForeignKey',
       'created_at'   => 'Date',
       'updated_at'   => 'Date',
-      'classroom_id' => 'ForeignKey',
+      'classroom_id' => 'Number',
     );
   }
 }
