@@ -7,6 +7,8 @@
 
 class StatsD {
 
+    static $enabled = false;
+    
     /**
      * Log timing information
      *
@@ -62,9 +64,12 @@ class StatsD {
      * Squirt the metrics over UDP
      **/
     public static function send($data, $sampleRate=1) {
+        if (!self::$enabled) {
+            return;
+        }
         // sampling
         $sampledData = array();
-
+        
         if ($sampleRate < 1) {
             foreach ($data as $stat => $value) {
                 if ((mt_rand() / mt_getrandmax()) <= $sampleRate) {
