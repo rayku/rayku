@@ -1,2 +1,4 @@
 default:
   stylesheets: [/styles/global.css]
+  javascripts:    [/sfProtoculousPlugin/js/prototype.js]
+  
