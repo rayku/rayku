@@ -97,6 +97,7 @@ class shopActions extends sfActions
 	else
 		$this->allowRate = true;
   	//this protoype script is put in response for rating compatibility
+	$this->getResponse()->addJavascript('/sf/prototype/js/prototype');
 	$this->getResponse()->addJavascript('prototype');
   	$this->getResponse()->addJavascript('protorater');
   }

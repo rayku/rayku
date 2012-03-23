@@ -9,5 +9,7 @@ default:
 
   stylesheets:    []
 
+  javascripts:    [/sfProtoculousPlugin/js/prototype.js]
+
   has_layout:     on
   layout:         layout
