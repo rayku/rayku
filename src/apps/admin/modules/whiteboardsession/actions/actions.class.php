@@ -9,9 +9,11 @@
  */
 class whiteboardsessionActions extends sfActions
 {
+    public function preExecute() {
+        RaykuCommon::getDatabaseConnection();
+    }
     public function executeIndex()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
         $_query = mysql_query("select * from whiteboard_chat", $connection) or die(mysql_error());
         $allChat = array();
         $i = 0;
@@ -25,8 +27,6 @@ class whiteboardsessionActions extends sfActions
 
   public function executeVerify()
   {
-	$connection = RaykuCommon::getDatabaseConnection();
-
 	$_query = mysql_query("select * from user_score where status = 1 and score <= 80", $connection) or die(mysql_error());
 
 	$userDetails = array();
@@ -43,6 +43,5 @@ class whiteboardsessionActions extends sfActions
 
 	public function executeTutor()
 	{
-		RaykuCommon::getDatabaseConnection();
     }
 }

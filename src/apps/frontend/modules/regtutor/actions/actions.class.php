@@ -8,6 +8,9 @@
  */
 class regtutorActions extends sfActions
 {
+    public function preExecute() {
+        RaykuCommon::getDatabaseConnection();
+    }
 	
 	/**
 	* Action to show the registration form
@@ -47,9 +50,6 @@ class regtutorActions extends sfActions
 			  }
 		}
 		
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-		$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
 		//Create and populate the User object
 		$user = new User();
 		//$user->setUsername($this->getRequestParameter('username'));
@@ -264,10 +264,6 @@ class regtutorActions extends sfActions
 
 
 	} 
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-
-			$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-   
     if( $kinkarsoUser ) {
 
 					if($user) {
@@ -340,9 +336,6 @@ class regtutorActions extends sfActions
 	}
 	
 	public function executeProfile(){
-		
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-		$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 		
 	}
 
@@ -599,9 +592,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode = $user->getUsername()."-".crypt($user->getUsername().$j,md5($user->getUsername().$j.time()));
 
-				$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-				$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
 				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
 
           sfProjectConfiguration::getActive()->loadHelpers( array( 'Partial' ) );
@@ -652,9 +642,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode=$user->getUsername()."-".crypt($username.$i,md5($username.$i.time()));
 
-				$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-				$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
 				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
 			
 			}
@@ -677,9 +664,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 		$user = $this->getUser()->getRaykuUser();
 		
 			if($user->getPoints() < 2) {
-
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
 
 					$query = mysql_query("select * from points_notify where userid=".$user->getId()) or die(mysql_error());
 
@@ -704,10 +688,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 			} else {
 
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
-
-			
 					mysql_query("delete from points_notify where userid=".$user->getId()) or die(mysql_error());
 
 			}
@@ -747,9 +727,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 	public function executeRedirect()
 	{
 
-					$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
-		                        $db = mysql_select_db("rayku_db", $con);
-
 	$user = $this->getUser()->getRaykuUser();
 
 	$query = mysql_query("select * from user_expert where user_id=".$user->getId()) or die(mysql_error());
@@ -782,9 +759,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 	/*public function executeCheckpoints()
 	{
-
-				$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-				$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
 		sfProjectConfiguration::getActive()->loadHelpers('Partial');
 

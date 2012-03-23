@@ -8,6 +8,9 @@
  */
 class registerActions extends sfActions
 {
+    public function preExecute() {
+        RaykuCommon::getDatabaseConnection();
+    }
 
 	/**
 	* Action to show the registration form
@@ -46,8 +49,6 @@ class registerActions extends sfActions
         return sfView::ERROR;
       }
 		}
-		$connection = RaykuCommon::getDatabaseConnection();
-
 		//Create and populate the User object
 		$user = new User();
 		$user->setUsername($this->getRequestParameter('username'));
@@ -97,9 +98,6 @@ class registerActions extends sfActions
 
 
 		if(!empty($_POST['coupon'])) :
-
-                        $connection = RaykuCommon::getDatabaseConnection();
-
 
 			$query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'", $connection) or die(mysql_error());
 
@@ -327,8 +325,6 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
 
 	}
-                $connection = RaykuCommon::getDatabaseConnection();
-
     if( $kinkarsoUser ) {
 
 					if($user) {
@@ -659,8 +655,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode = $user->getUsername()."-".crypt($user->getUsername().$j,md5($user->getUsername().$j.time()));
 
-                                $connection = RaykuCommon::getDatabaseConnection();
-
 				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ", $connection) or die(mysql_error());
 
           sfProjectConfiguration::getActive()->loadHelpers( array( 'Partial' ) );
@@ -711,8 +705,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode=$user->getUsername()."-".crypt($username.$i,md5($username.$i.time()));
 
-                                $connection = RaykuCommon::getDatabaseConnection();
-
 				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ", $connection) or die(mysql_error());
 
 			}
@@ -736,8 +728,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 			if($user->getPoints() < 2) {
 
-                                        $connection = RaykuCommon::getDatabaseConnection();
-
 					$query = mysql_query("select * from points_notify where userid=".$user->getId(), $connection) or die(mysql_error());
 
 					if(mysql_num_rows($query) == 0) {
@@ -760,9 +750,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 
 			} else {
-
-                                        $connection = RaykuCommon::getDatabaseConnection();
-
 
 					mysql_query("delete from points_notify where userid=".$user->getId(), $connection) or die(mysql_error());
 
@@ -803,8 +790,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 	public function executeRedirect()
 	{
 
-        $connection = RaykuCommon::getDatabaseConnection();
-
 	$user = $this->getUser()->getRaykuUser();
 
 	$query = mysql_query("select * from user_expert where user_id=".$user->getId(), $connection) or die(mysql_error());
@@ -837,9 +822,6 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 	/*public function executeCheckpoints()
 	{
-
-				$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
-				$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
 		sfProjectConfiguration::getActive()->loadHelpers('Partial');
 
