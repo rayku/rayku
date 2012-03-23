@@ -44,34 +44,6 @@ class RaykuCommon
     return $_SERVER['HTTP_HOST'];
   }
 
-  /**
-   * This is wrapper to store classroom object/id in a session
-   *
-   * @param sfUser $user
-   * @return Classroom
-   */
-  static function getCurrentClassroom( sfUser $user )
-  {
-    return ClassroomPeer::retrieveByPK( $user->getAttribute( 'classroomId' ) );
-  }
-  static function getCurrentClassroomId( sfUser $user )
-  {
-    return $user->getAttribute( 'classroomId' );
-  }
-
-  static function setCurrentClassroomId( $classroomId, sfUser $user )
-  {
-    $classroom = ClassroomPeer::retrieveByPK( $classroomId );
-    $raykuUser = $user->getRaykuUser();
-    if( !$classroom || !$raykuUser || $classroom && $classroom->isUserOwnerOrMember( $raykuUser ) )
-    {
-      sfContext::getInstance()->getUser()->setAttribute( 'classroomId', $classroomId );
-      return true;
-    }
-    else
-      return false;
-  }
-
   static function writeAvatarImage($sourceFile, $userId)
   {
 		$destinationDir = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . sfConfig::get('app_general_avatar_folder');

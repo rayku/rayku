@@ -1132,11 +1132,6 @@ class User extends BaseUser
       return $left;
   }
 
-  public function getTeacherStudentIds()
-  {
-    return ClassroomMembersPeer::getTeacherStudentIds( $this );
-  }
-
   /**
    * sets unconfirmed flag together with registration user type information
    * thanks to this when user confirms his accounts we know what type of user he should be
@@ -1233,14 +1228,7 @@ class User extends BaseUser
 	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 	$cookiename = $logedUserId."_question";
 
-    $classroomMembers = $this->getClassroomMemberssJoinClassroom();
-    $distinctTeachers = array();
-    foreach( $classroomMembers as $classroomMember ) {
-        $distinctTeachers[ $classroomMember->getClassroom()->getUserId() ] = true;
-    }
-
     $stats = array(
-        'classroomsCount' => @$_COOKIE[$cookiename],
         'teachersCount'   => count($this->getMediaCount()),
         'friendsCount'    => count($this->getAllFriends()),
         'ryakuCount'      => $this->getAllRyaku(),

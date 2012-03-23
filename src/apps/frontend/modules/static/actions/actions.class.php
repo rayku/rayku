@@ -30,10 +30,6 @@ class staticActions extends sfActions
 	{
 	}
 	
-	public function executeClassroom()
-	{
-		$this->classname = $this->getRequestParameter('classname');
-	}
 	public function executeQuickTour()
 	{
 	}

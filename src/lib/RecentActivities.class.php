@@ -20,13 +20,6 @@ class RecentActivities
     $this->limit = $limit;
   }
   
-  private function fetchForTeacher( User $teacher )
-  {
-		$classroomStudentIds = $teacher->getTeacherStudentIds();
-
-    return HistoryPeer::getFor( $classroomStudentIds, $this->limit );
-  }
-
   private function fetchForStudent( User $student )
   {
     return HistoryPeer::getFor( $student->getId(), $this->limit );
@@ -34,11 +27,7 @@ class RecentActivities
 
   function fetchForUser( User $user, $context = null )
   {
-    if( $user->getType() == UserPeer::getTypeFromValue( 'user' ) ||
-        $context == 'profile' )
       return $this->fetchForStudent($user);
-    else
-      return $this->fetchForTeacher($user);
   } 
   
    function fetchLiveFeed(User $user, $context = null)

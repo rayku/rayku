@@ -276,18 +276,6 @@ class UserPeer extends BaseUserPeer
     return UserPeer::doSelectOne( $oC );
   }
 
-  public static function generateConfirmationStudentHash( $oUser, $iClassRoomId )
-  {
-    return sha1( $oUser->getId() . self::INVITATION_STUDENT_CODE_HASH_SALT. $iClassRoomId );
-  }
-
-  public static function doSelectFromConfirmationStudentHash( $sHash, $iClassRoomId )
-  {
-    $oC = new Criteria();
-    $oC->add( UserPeer::ID, "SHA1( CONCAT( user.id, '".self::INVITATION_STUDENT_CODE_HASH_SALT."', $iClassRoomId ) ) = '$sHash'" , Criteria::CUSTOM );
-    return UserPeer::doSelectOne( $oC );
-  }
-
   static function getWithMatchingUsername( $matchingUsername, $limit = null )
   {
     $c = new Criteria;
@@ -331,25 +319,6 @@ class UserPeer extends BaseUserPeer
     self::addActiveUserCriteria($c);
 
     return $c;
-  }
-
-  static function getForClassroom( $iClassroomId )
-  {
-    $c = new Criteria();
-    $c->addJoin(UserPeer::ID, ClassroomPeer::USER_ID,Criteria::JOIN);
-    $c->add(ClassroomPeer::ID, $iClassroomId );
-
-    return self::doSelectOne( $c );
-  }
-
-  static function getForClassroomCategory( $iCategoryId )
-  {
-    $c = new criteria();
-    $c->add(ClassroomPeer::CATEGORY_ID, $iCategoryId );
-		$c->addJoin(UserPeer::ID,ClassroomPeer::USER_ID, Criteria::JOIN);
-		$c->setDistinct();
-    
-  	return UserPeer::doSelect($c);
   }
 
   static function getForExpertCategory( $iCategoryId )
