@@ -639,7 +639,7 @@ class expertmanagerActions extends sfActions
     public function executeMapmsguser()
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        if ($_SESSION['modelPopupOpen']) {
+        if (@$_SESSION['modelPopupOpen']) {
             if ($_SESSION['popup_session']) {
                 $_now = time();
                 $_remain_time = $_now - $_SESSION['popup_session'];

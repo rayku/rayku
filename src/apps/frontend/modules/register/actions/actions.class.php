@@ -65,7 +65,7 @@ class registerActions extends sfActions
 
 		$U_QRY = "select * from user where username='".$userName."'";
 
-		$u_res = mysql_query($U_QRY, $connection);
+		$u_res = mysql_query($U_QRY);
 
 		$unamecount = mysql_num_rows($u_res);
 
@@ -74,7 +74,7 @@ class registerActions extends sfActions
         if($unamecount>=1)
         {
                 $newUsername = $userName.$dupval;
-                $unamequery = mysql_query("select * from user where username='".$newUsername."'", $connection);
+                $unamequery = mysql_query("select * from user where username='".$newUsername."'");
                 $unamecount = mysql_num_rows($unamequery);
                 if($unamecount>=1)
                 {
@@ -99,21 +99,21 @@ class registerActions extends sfActions
 
 		if(!empty($_POST['coupon'])) :
 
-			$query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'", $connection) or die(mysql_error());
+			$query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
 
 			if(mysql_num_rows($query) > 0)
 			{
 
 				$rowValues = mysql_fetch_assoc($query);	//$rowValues['user_id'];
 
-				$query = mysql_query("select * from user where id=".$rowValues['user_id'], $connection) or die(mysql_error());
+				$query = mysql_query("select * from user where id=".$rowValues['user_id']) or die(mysql_error());
 				$rowDetails = mysql_fetch_assoc($query);
 
 				 $newPoints = $rowDetails['points'] + 0.5;
 
-				mysql_query("update user set points='".$newPoints."' where id=".$rowValues['user_id'], $connection) or die(mysql_error());
+				mysql_query("update user set points='".$newPoints."' where id=".$rowValues['user_id']) or die(mysql_error());
 
-				mysql_query("delete from referral_code where referral_code='".$_POST['coupon']."'", $connection) or die(mysql_error());
+				mysql_query("delete from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
 
 			} else {
 
@@ -152,19 +152,19 @@ class registerActions extends sfActions
 
 		if(!empty($_POST['coupon']) && !empty($points)) {
 
-				mysql_query("update user set points='".$points."' where id=".$user->getId(), $connection) or die(mysql_error());
+				mysql_query("update user set points='".$points."' where id=".$user->getId()) or die(mysql_error());
 
 		} elseif(!empty($_POST['coupon'])) {
 
-			mysql_query("update user set points='11' where id=".$user->getId(), $connection) or die(mysql_error());
+			mysql_query("update user set points='11' where id=".$user->getId()) or die(mysql_error());
 
 
 		}
 
 
-mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')", $connection) or die(mysql_error());
+mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
 
-mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')", $connection) or die(mysql_error());
+mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
 
     $this->sendConfirmationEmail( $user );
 
@@ -329,7 +329,7 @@ mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','
 
 					if($user) {
 
-					$query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."", $connection) or die(mysql_error());
+					$query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."") or die(mysql_error());
 						if(mysql_num_rows($query) == 0) {
 
 
@@ -655,7 +655,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode = $user->getUsername()."-".crypt($user->getUsername().$j,md5($user->getUsername().$j.time()));
 
-				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ", $connection) or die(mysql_error());
+				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
 
           sfProjectConfiguration::getActive()->loadHelpers( array( 'Partial' ) );
 
@@ -705,7 +705,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 				$refcode=$user->getUsername()."-".crypt($username.$i,md5($username.$i.time()));
 
-				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ", $connection) or die(mysql_error());
+				mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
 
 			}
 		}
@@ -728,7 +728,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 			if($user->getPoints() < 2) {
 
-					$query = mysql_query("select * from points_notify where userid=".$user->getId(), $connection) or die(mysql_error());
+					$query = mysql_query("select * from points_notify where userid=".$user->getId()) or die(mysql_error());
 
 					if(mysql_num_rows($query) == 0) {
 
@@ -743,7 +743,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 						$this->mail->addAddress($to);
 						$this->mail->send();
 
-					mysql_query("insert into points_notify(userid,status) values(".$user->getId().", 1)", $connection) or die(mysql_error());
+					mysql_query("insert into points_notify(userid,status) values(".$user->getId().", 1)") or die(mysql_error());
 
 				      }
 
@@ -751,7 +751,7 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 			} else {
 
-					mysql_query("delete from points_notify where userid=".$user->getId(), $connection) or die(mysql_error());
+					mysql_query("delete from points_notify where userid=".$user->getId()) or die(mysql_error());
 
 			}
 
@@ -792,9 +792,9 @@ $loginuser = $this->getUser()->getRaykuUser();
 
 	$user = $this->getUser()->getRaykuUser();
 
-	$query = mysql_query("select * from user_expert where user_id=".$user->getId(), $connection) or die(mysql_error());
+	$query = mysql_query("select * from user_expert where user_id=".$user->getId()) or die(mysql_error());
 
-	$chat_query = mysql_query("select * from sendmessage where asker_id=".$user->getId(), $connection) or die(mysql_error());
+	$chat_query = mysql_query("select * from sendmessage where asker_id=".$user->getId()) or die(mysql_error());
 
 	$expertResponse = mysql_num_rows($query);
 
