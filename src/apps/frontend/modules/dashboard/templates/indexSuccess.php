@@ -234,7 +234,7 @@ function cmp($a, $b)
       if($usrpro) : ?>
 
       <div id="tutor_profile_form">
-      	<a href="javascript:tutorprofileedit();">Edit Tutor Profile</a> | <a href="http://rayku.com/tutorshelp" target="_blank">Help Guide</a>
+      	<a href="javascript:tutorprofileedit();">Edit Tutor Profile</a> | <a href="/tutorshelp" target="_blank">Help Guide</a>
       </div>
       <?php endif; ?>
    </div><!--widget main-->
@@ -354,7 +354,7 @@ vd('#tutor-rate').mouseover(function() {
 
 				vd.ajax({ cache: false,
 					type : "GET",
-					url: "http://www.rayku.com/dashboard/chargerate?rate="+rate
+					url: "/dashboard/chargerate?rate="+rate
 				});
 
 
@@ -403,7 +403,7 @@ vd('#tutor-rate').mouseover(function() {
 		<?php elseif(mysql_num_rows($query) == 0) : ?>
    <!--widget main-->
    <div id="widget-main">
-       <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="http://rayku.com/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
+       <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
    </div>
 
 </div><!--widget-->
