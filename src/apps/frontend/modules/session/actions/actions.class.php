@@ -9,29 +9,8 @@ class sessionActions extends sfActions
     {
         $session = $this->loadSession();
 
-        $studentQuestion = $session->getStudentQuestion();
-        $tutor = $studentQuestion->getTutor();
-        $student = $studentQuestion->getStudent();
-
-				$data = array(
-            'id' => $session->getId(),
-            'question' => $studentQuestion->getQuestion(),
-            'session' => array(
-                'type' => $session->getType(),
-            ),
-            'tutor' => array(
-                'id' => $tutor->getId(),
-                'username' => $tutor->getUsername()
-            ),
-            'student' => array(
-                'id' => $student->getId(),
-                'username' => $student->getUsername()
-            )
-        );
-        if ($session->getChatId()) {
-            $data['whiteboard-session'] = $session->getChatId();
-        }
-        return $this->renderText(json_encode($data));
+        $info = $session->info();
+        return $this->renderText(json_encode($info));
     }
 
     public function executeKeepAlive()
