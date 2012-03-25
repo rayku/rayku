@@ -5,38 +5,55 @@
  */
 class sessionActions extends sfActions
 {
-    public function executeInfo()
-    {
-        $session = $this->loadSession();
+    private $whiteboardSessionPeer;
 
+    public function executeInfo(sfWebRequest $request)
+    {
+        $session = $this->loadSession($request);
         $info = $session->info();
         return $this->renderText(json_encode($info));
     }
 
-    public function executeKeepAlive()
+    public function executeKeepAlive(sfWebRequest $request)
     {
-        $session = $this->loadSession();
+        $session = $this->loadSession($request);
         $session->keepAlive();
         $session->save();
 
         return sfView::HEADER_ONLY;
     }
 
-    public function executeAddChatId()
+    public function executeAddChatId(sfWebRequest $request)
     {
-        $session = $this->loadSession();
+        $session = $this->loadSession($request);
         $session->setChatId($this->getRequestParameter('chatId'));
         $session->save();
 
         return sfView::HEADER_ONLY;
     }
 
-    private function loadSession()
+    /**
+     * Allow the setup for a mocked WhiteboardSessionPeer.
+     * Get rid of this ASAP after adding the DI component.
+     */
+    public function setWhiteboardSessionPeer($peer)
     {
-        $criteria = new Criteria();
-        $criteria->add(WhiteboardSessionPeer::TOKEN, $this->getRequestParameter('token'));
+        $this->whiteboardSessionPeer = $peer;
+    }
 
-        return WhiteboardSessionPeer::doSelectOne($criteria);
+    private function getWhiteboardSessionPeer()
+    {
+        if ($this->whiteboardSessionPeer === null) {
+            $this->whiteboardSessionPeer = new WhiteboardSessionPeer();
+        }
+        return $this->whiteboardSessionPeer;
+    }
+
+    private function loadSession($request)
+    {
+        $peer = $this->getWhiteboardSessionPeer();
+
+        return $peer->loadByToken($request->getParameter('token'));
     }
 
 }
