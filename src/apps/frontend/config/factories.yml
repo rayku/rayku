@@ -20,29 +20,11 @@ test:
 
   storage:
     class: sfSessionTestStorage
+    param:
+      session_path: %SF_TEST_CACHE_DIR%/sessions
 
 all:
-#  controller:
-#    class: sfFrontWebController
-#
-#  request:
-#    class: sfWebRequest
-#
-#  response:
-#    class: sfWebResponse
-#
-#  user:
-#    class: myUser
-#
   storage:
     class: sfSessionStorage
     param:
       session_name: rayku_frontend
-      
-#
-#  view_cache:
-#    class: sfFileCache
-#    param:
-#      automatic_cleaning_factor: 0
-#      prefix:                    %SF_APP_DIR%
-#      cache_dir:                %SF_TEMPLATE_CACHE_DIR%
