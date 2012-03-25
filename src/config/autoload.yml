@@ -1,0 +1,5 @@
+autoload:
+  all-modules:
+    name: modules
+    path: %SF_APP_DIR%/modules/*
+    recursive: on
