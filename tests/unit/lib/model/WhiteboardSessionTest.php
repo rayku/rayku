@@ -71,7 +71,7 @@ class WhiteboardSessionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(456, $sessionInfo['student']['id']);
         $this->assertEquals('theAsker', $sessionInfo['student']['username']);
 
-        $this->assertNull($sessionInfo['whiteboard-session']);
+        $this->assertFalse(array_key_exists('whiteboard-session', $sessionInfo));
     }
 
     /**
