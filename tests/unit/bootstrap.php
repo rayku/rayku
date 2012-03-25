@@ -16,7 +16,7 @@ function mock($className)
 $autoloader = sfCoreAutoload::getInstance();
 $autoloader->register();
 
-$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'unit-tests', true);
+$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'test', true);
 sfContext::createInstance($configuration);
 
 ?>
