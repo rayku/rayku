@@ -12,7 +12,7 @@ class whiteboardsessionActions extends sfActions
     public function preExecute() {
         RaykuCommon::getDatabaseConnection();
     }
-    public function executeIndex()
+    public function executeIndex($request)
     {
         $_query = mysql_query("select * from whiteboard_chat", $connection) or die(mysql_error());
         $allChat = array();
