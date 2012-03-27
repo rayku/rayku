@@ -128,7 +128,7 @@ $connection = RaykuCommon::getDatabaseConnection();
               <!--ch-->
               
               <?php endif; ?>
-              <div class="rpnote">*estimate is provided asuming an average tutoring rate of 0.40RP/minute.</div>
+              <div class="rpnote">*estimate is provided assuming an average tutoring rate of 0.40RP/minute.</div>
 
             </div>
             <!--cont--> 

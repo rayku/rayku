@@ -280,18 +280,21 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
     <!--bubble-->
     <div class="bubble">
       <h3>1. Ask a Question</h3>
+      <p>Let us know the math question or topic that you need help with.</p>
       <img src="images/landing/bubble-1-question.png" alt="Ask a Question" /> </div>
     <!--bubble--> 
     
     <!--bubble-->
     <div class="bubble">
       <h3>2. Select a Tutor</h3>
+      <p>We instantly generate a list of online tutors that are BEST suited to help you.</p>
       <img src="images/landing/bubble-2-tutor.png" alt="Tutor" /> </div>
     <!--bubble--> 
     
     <!--bubble-->
     <div class="bubble">
       <h3>3. Learn</h3>
+      <p>Within 60 seconds, you're connected to a shared whiteboard with a live tutor!</p>
       <a href="#whiteboard"><img src="images/landing/bubble-3-learn.png" alt="Learn" /></a> </div>
     <!--bubble--> 
     
@@ -468,10 +471,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php include_title() ?>
 <link rel="stylesheet" type="text/css" href="/css/navigation.css"/>
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/global.css" />
-<?php if($sf_context->getModuleName() =='journal'): ?>
-<link rel="stylesheet" type="text/css" href="/css/custom/read-journal.css"/>
-<link rel="stylesheet" type="text/css" href="/css/forum.css"/>
-<?php endif; ?>
 <?php if($sf_context->getModuleName() =='profile'): ?>
 <link rel="stylesheet" type="text/css" href="/css/custom/edit-profile.css"/>
 <?php endif; ?>
@@ -494,12 +493,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php endif; ?>
 <?php if($sf_context->getModuleName() =='gallery'): ?>
 <link rel="stylesheet" type="text/css" href="/css/custom/view-media.css"/>
-<?php endif; ?>
-<?php if($sf_context->getModuleName() =='network'): ?>
-<link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
-<link rel="stylesheet" type="text/css" href="/css/custom/network-homepage.css"/>
-<link rel="stylesheet" type="text/css" href="/styles/pf_global.css"/>
-<link rel="stylesheet" type="text/css" href="/css/46.css"/>
 <?php endif; ?>
 <?php if($sf_context->getModuleName() =='login'): ?>
 <link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
@@ -560,43 +553,19 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.notifier.js"></script>
 <style type="text/css">
-<?php if( ( ( sfContext::getInstance()->getModuleName() == 'classmanager' ) && ( sfContext::getInstance()->getActionName() == 'list') ) || ( ( sfContext::getInstance()->getModuleName() == 'profile' ) && ( sfContext::getInstance()->getActionName() == 'edit') ) ): ?> @import "/styles/cm_global.css";
- @import "/css/46.css";
- @import "/styles/donny.css";
-<?php endif;
-?> <?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
+<?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
  @import "css/46.css";
  @import "styles/ex_donny.css";
  @import "styles/ex_tabcontent.css";
 <?php endif;
 ?>
 </style>
-<?php if( ( sfContext::getInstance()->getModuleName() == 'profile' ) &&
-	          ( sfContext::getInstance()->getActionName() == 'index')): ?>
-<link href="/styles/pf_global.css" type="text/css" rel="stylesheet" />
-<?php endif; ?>
-<?php if( ( sfContext::getInstance()->getModuleName() == 'expert_lesson' ) &&
-	          ( sfContext::getInstance()->getActionName() == 'edit') ||
-            ( sfContext::getInstance()->getModuleName() == 'expert_lesson' ) &&
-	          ( sfContext::getInstance()->getActionName() == 'create') ): ?>
-<link rel="stylesheet" type="text/css" href="/styles/ex_create_lesson.css"/>
-<?php endif; ?>
-<?php if( ( sfContext::getInstance()->getModuleName() == 'experts_immediate_lesson' ) &&
-	          ( sfContext::getInstance()->getActionName() == 'edit') ||
-            ( sfContext::getInstance()->getModuleName() == 'experts_immediate_lesson' ) &&
-	          ( sfContext::getInstance()->getActionName() == 'create') ): ?>
-<link rel="stylesheet" type="text/css" href="/styles/ex_create_lesson.css"/>
-<?php endif; ?>
 <?php if( $sf_context->getModuleName() =='tourpage'
           && ( sfContext::getInstance()->getActionName() == 'index') ): ?>
 <?php echo stylesheet_tag('custom/tourpage') ?><?php echo javascript_include_tag('slider1') ?><?php echo javascript_include_tag('jquery-min') ?>
 <?php endif; ?>
 <?php if( $sf_context->getModuleName() =='register'): ?>
 <link rel="stylesheet" type="text/css" href="/css/46.css"/>
-<?php endif; ?>
-<?php if( $sf_context->getModuleName() =='register'
-          && ( sfContext::getInstance()->getActionName() == 'index'
-             || sfContext::getInstance()->getActionName() == 'stepthird' ) ): ?>
 <link rel="stylesheet" type="text/css" href="/css/custom/register.css"/>
 <?php endif; ?>
 
@@ -651,7 +620,12 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
           <!--<li><?php echo link_to( 'member list', 'friends/index' ); ?></li>-->
           <li><a href="mailto:cs[at]rayku.com">contact us</a></li>
           <li><a href="http://rayku.com/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
+          <?php if(!$sf_user->isAuthenticated())
+		  { ?>
           <li class="nobg"><a href="http://rayku.com/joinus">become a rayku tutor</a></li>
+          <?php } else { ?>
+          <li class="nobg"><a href="http://rayku.com/dashboard">activate tutor status</a></li>
+          <?php } ?>
         </ul>
         <div style="clear:both"></div>
       </div>

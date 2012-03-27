@@ -379,8 +379,8 @@ vd('#tutor-rate').mouseover(function() {
     <p>Connect with as many notification channels as you can:</p>
     <ul class="icon-list">
 	<li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:12px;text-indent:-5000px;" /></li>
-    <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
-	<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
+    <!--<li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
+	<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>-->
     <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
     <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
 	</ul>

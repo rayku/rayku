@@ -267,7 +267,17 @@ Bubble Section Styling
 	font-family:Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	text-shadow:0 1px 0 #fff;
-	margin-bottom:22px;
+	margin-bottom:15px;
+}
+.bubble p {
+	color: #8C8C8C;
+	font-size: 15px;
+	line-height: 22px;
+	text-align: center;
+	text-shadow: 0 1px 0 #FFFFFF;
+	width: 220px;
+	height:104px;
+	margin:0 auto;
 }
 /*
 ---------------------------------------------

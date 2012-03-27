@@ -141,9 +141,6 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
     <div class="clear"></div>
   </div>
   <!--div#top-nav-center-->
-  <div style="width:100%;padding:8px 0;background:#FFFECC;border-bottom:2px solid #D0CA82;font-size:14px;color:#666" align="center">
-We're currently in beta. If you find any bugs, please <a href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">report them</a>. We'll send some RP as a thank you :).
-</div>
 <!--[if IE]>
 <div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" align="center">
 Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or another browser.

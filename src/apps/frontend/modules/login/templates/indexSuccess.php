@@ -26,9 +26,9 @@ echo "</pre>";*/
       </div>
         <div class="ttle">Email address</div>
 
-			<?php $_Username  = isset($_COOKIE['rEmail']) ? $_COOKIE['rEmail'] : "Username" ;
+			<?php $_Username  = isset($_COOKIE['rEmail']) ? $_COOKIE['rEmail'] : "" ;
 
-			$_Password  = isset($_COOKIE['rPassword']) ? $_COOKIE['rPassword'] : "Password" ; ?>
+			$_Password  = isset($_COOKIE['rPassword']) ? $_COOKIE['rPassword'] : "" ; ?>
 
 
         <div> <?php echo input_tag('name',$_Username, array('id'=>'email') ); ?> 
