@@ -3,7 +3,7 @@ dev:
     param:
       classname: DebugPDO
 
-unit-tests:
+test:
   propel:
     param:
       classname: DebugPDO
