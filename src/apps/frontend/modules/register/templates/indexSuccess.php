@@ -1,8 +1,8 @@
 <?php use_helper('Javascript', 'MyForm') ?>
-<link href="../css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
 
 <div class="body-main">
-  <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(../../../images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Account</span> </div>
+  <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(/images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Account</span> </div>
   <div class="clear"></div>
   <div class="body-mains"> <?php echo form_tag('register/index', array('name' => 'register')) ?> <?php echo input_hidden_tag('utype',$requestedUserType) ?>
     <div class="box">
@@ -11,7 +11,7 @@
 	  	<div class="entry" style="padding-bottom:15px;">
           <div class="ttle">Full Name:</div>
           <div style="float:left">
-            <?php if($sf_request->hasError('username')): ?>
+            <?php if ($sf_request->hasError('username')): ?>
             <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('username') ?></div>
             <?php endif; ?>
             <?php echo input_tag('username') ?>
@@ -55,7 +55,7 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
-    
+
     <!-- for expert categories //-->
     <?php if($requestedUserType == UserPeer::getTypeFromValue( 'expert' ) ): ?>
     <div class="box">
@@ -71,7 +71,7 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
             <?php foreach( $categories as $key=>$category): ?>
             <?php $options[$category->getId()] = $category->getName(); ?>
             <?php endforeach; ?>
-            <?php echo select_tag('categories', 
+            <?php echo select_tag('categories',
 									   		options_for_select($options), array('style' => 'width: 300px; height: 80px;background: none', 'multiple' => true));
 										?> </div>
           <div class="spacer"></div>
@@ -80,11 +80,11 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
-    
-    <!-- end of expert categories //--> 
-    
+
+    <!-- end of expert categories //-->
+
     <!-- notifications -->
-    
+
     <div class="box">
       <div class="top"></div>
       <div class="content">
@@ -101,9 +101,9 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
       <div class="spacer"></div>
     </div>
     <?php endif; ?>
-    
+
     <!--  end -->
-    
+
     <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
       <label><strong>
@@ -155,46 +155,46 @@ var grade = document.getElementById('grade[0]').value;
 			document.getElementById('error').style.display = "block";
 			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
 			return false;
-		
+
 	}else if(year == '') {
 
 			document.getElementById('error').style.display = "block";
 			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
 			return false;
-		
+
 	} else if(grade == '') {
 
 			document.getElementById('error').style.display = "block";
 			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
 			return false;
-		
+
 	}
 
 }
-</script> 
+</script>
 <script type="text/javascript">
 	        function addRow(tableID) {
 
 
-	 
+
 	            var table = document.getElementById(tableID);
 	            var rowCount = table.rows.length;
 	            var row = table.insertRow(rowCount);
 
 
-	
+
 		   var newCount =  rowCount - 1;
 
 	            var colCount = table.rows[2].cells.length;
-	 
+
 	            for(var i=0; i<colCount; i++) {
- 
+
 	                var newcell = row.insertCell(i);
 
 
 			if(i == '2')
 			{
-				
+
 			 table.rows[rowCount].cells[i].innerHTML = "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='margin-right:10px'><tr><td align='center' style='border:0;padding:0'><label class='d'><input type='radio' name= grade[" + newCount + "] value='D'></label></td><td align='center' style='border:0;padding:0'><label class='c'><input type='radio' name= grade[" + newCount + "] value='C'></label></td><td align='center' style='border:0;padding:0'><label class='b'><input type='radio' name= grade[" + newCount + "] value='B'></label></td><td align='center' style='border:0;padding:0'><label class='a'><input  type='radio' name= grade[" + newCount + "] value='A'></label></td></tr></table>";
 
 				newcell.innerHTML = table.rows[rowCount].cells[i].innerHTML;
@@ -206,4 +206,4 @@ var grade = document.getElementById('grade[0]').value;
 
 	            }
         }
-</script> 
+</script>
