@@ -1,6 +1,5 @@
 <?php use_helper('Javascript', 'MyForm') ?>
 <link href="/css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
-
 <div class="body-main">
   <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(/images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Account</span> </div>
   <div class="clear"></div>
@@ -11,11 +10,11 @@
 	  	<div class="entry" style="padding-bottom:15px;">
           <div class="ttle">Full Name:</div>
           <div style="float:left">
-            <?php if ($sf_request->hasError('username')): ?>
-            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('username') ?></div>
+            <?php if ($sf_request->hasError('realname')): ?>
+            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('realname') ?></div>
             <?php endif; ?>
-            <?php echo input_tag('username') ?>
-            <input type="hidden" name="realname" id="realname" value="hiddenname">
+            <?php echo input_tag('realname') ?>
+            <input type="hidden" name="username" id="username" value="hiddenname">
           </div>
           <div class="spacer"></div>
         </div>
