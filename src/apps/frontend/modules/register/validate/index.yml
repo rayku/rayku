@@ -10,7 +10,7 @@ fields:
       msg: Please specify a full name
     sfRegexValidator:
       match: Yes
-      match_error: Your username should only contain alphanumeric characters and spaces
+      match_error: Your name should only contain alphanumeric characters and spaces
       pattern: /^[\w\d ]+$/
 
   password1:

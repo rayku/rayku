@@ -46,11 +46,11 @@ class regtutorActions extends sfActions
         $user = new User();
         $user->setEmail($this->getRequestParameter('email'));
         $user->setPassword($this->getRequestParameter('password1'));
-        $user->setName($this->getRequestParameter('username'));
+        $user->setName($this->getRequestParameter('realname'));
 
         // GENERATE USERNAME FROM FULL NAME FIELD
 
-        $userName = str_replace(' ','',strtolower($this->getRequestParameter('username')));
+        $userName = str_replace(' ', '', strtolower($this->getRequestParameter('realname')));
         $U_QRY = "select * from user where username='".$userName."'";
         $u_res = mysql_query($U_QRY);
         $unamecount = mysql_num_rows($u_res);

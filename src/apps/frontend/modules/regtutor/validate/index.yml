@@ -10,16 +10,16 @@ fields:
       msg: Please specify a full name
     sfRegexValidator:
       match: Yes
-      match_error: Your username should only contain alphanumeric characters and spaces
+      match_error: Your name should only contain alphanumeric characters and spaces
       pattern: /^[\w\d ]+$/
-      
+
   password1:
     required:
       msg: Please specify a password
     sfStringValidator:
       min: 6
       min_error: Your password should be at least 6 characters long
-      
+
   email:
     required:
       msg: Please specify an email
@@ -29,18 +29,14 @@ fields:
       class: User
       column: email
       unique_error: This email address is already in use
-  
+
   where_find_us:
     required:
       msg: Please specify an where did you find us?
-   
+
   username:
     required:
       msg: Please specify a username
-    sfPropelUniqueValidator:
-      class: User
-      column: username
-      unique_error: This username is already in use
     sfRegexValidator:
       match: Yes
       match_error: Your username should only contain alphanumeric characters
