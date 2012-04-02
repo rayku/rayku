@@ -14,7 +14,7 @@ class whiteboardsessionActions extends sfActions
     }
     public function executeIndex($request)
     {
-        $_query = mysql_query("select * from whiteboard_chat", $connection) or die(mysql_error());
+        $_query = mysql_query("select * from whiteboard_chat") or die(mysql_error());
         $allChat = array();
         $i = 0;
         while($_row = mysql_fetch_array($_query)) {
@@ -27,7 +27,7 @@ class whiteboardsessionActions extends sfActions
 
   public function executeVerify()
   {
-	$_query = mysql_query("select * from user_score where status = 1 and score <= 80", $connection) or die(mysql_error());
+	$_query = mysql_query("select * from user_score where status = 1 and score <= 80") or die(mysql_error());
 
 	$userDetails = array();
 	$i = 0;

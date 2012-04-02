@@ -39,7 +39,7 @@ $tbl_name_2 = "user";
 	$limit = 50; 
 
 								
-	$page = $_GET['page'];
+	$page = @$_GET['page'];
 	if($page) 
 		$start = ($page - 1) * $limit; 			
 	else

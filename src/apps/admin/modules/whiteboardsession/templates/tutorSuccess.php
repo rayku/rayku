@@ -55,10 +55,11 @@ $tbl_name = "whiteboard_tutor_feedback"; $adjacents = 1;
 
 	$targetpage = "/admin.php/whiteboardsession/tutor";  	$limit = 50; 
 
+	$page = @$_GET['page'];
 	if($page) 
-		$start = ($page - 1) * $limit; 			
+            $start = ($page - 1) * $limit; 			
 	else
-		$start = 0;	
+            $start = 0;	
 
 	$sql = "SELECT * FROM $tbl_name ORDER BY id DESC LIMIT $start, $limit";
 	$result = mysql_query($sql);
@@ -173,7 +174,7 @@ $row = $i%2 ; ?>
      <td><?php echo $_use; ?></td>
      <td><?php echo $_overall; ?></td>
      <td><?php echo $_row['feedback']; ?></td>
-      <td><a href="http://www.rayku.com/whiteboard/show/id/<?php echo $_row['whiteboard_chat_id ']; ?>">View</a></td>
+      <td><a href="/whiteboard/show/id/<?php echo @$_row['whiteboard_chat_id ']; ?>">View</a></td>
 
 
 
