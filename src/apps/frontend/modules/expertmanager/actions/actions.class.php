@@ -331,7 +331,7 @@ class expertmanagerActions extends sfActions
             if ($misqry['school']) {
                 $misssch = $misqry['school'].'</p></div>';
             }
-            echo 'yes~'.$misscont.$misscat.$missmsg.$missyr.$misssch;
+            echo 'yes~'.$misscont.@$misscat.$missmsg.@$missyr.@$misssch;
         } else {
             echo "no";
         }
@@ -599,7 +599,7 @@ class expertmanagerActions extends sfActions
             if (eregi ("(Chrome/)", $HTTP_USER_AGENT) == true) $browser = "chrome";
             if (eregi ("(Safari/)", $HTTP_USER_AGENT) == true) $browser = "safari";
 
-            $_SESSION["_modelbox"] = $_SESSION["_modelbox"] + 1;
+            $_SESSION["_modelbox"] = @$_SESSION["_modelbox"] + 1;
 
             $criteria = new Criteria();
             $criteria->add(StudentQuestionPeer::USER_ID, $row['user_id']);
