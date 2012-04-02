@@ -526,12 +526,10 @@ class expertmanagerActions extends sfActions
                 $_now = time();
                 $_remain_time = $_now - $_SESSION['popup_session'];
                 if ($_remain_time < 20) {
-                    echo "redirect";
-                    $this->redirect('/dashboard');
+                    return $this->renderText('redirect');
                 }
             } else {
-                echo "redirect";
-                $this->redirect('/dashboard');
+                return $this->renderText('redirect');
             }
         }
         /* @var $currentUser User */
@@ -644,12 +642,10 @@ class expertmanagerActions extends sfActions
                 $_now = time();
                 $_remain_time = $_now - $_SESSION['popup_session'];
                 if ($_remain_time < 20) {
-                    echo "redirect";
-                    $this->redirect('/dashboard');
+                    return $this->renderText('redirect');
                 }
             } else {
-                echo "redirect";
-                $this->redirect('/dashboard');
+                    return $this->renderText('redirect');
             }
         }
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
