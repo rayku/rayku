@@ -1616,5 +1616,30 @@ CREATE TABLE `whiteboard_sessions`
 		REFERENCES `user` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- whiteboard_tutor_feedback
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `whiteboard_tutor_feedback`;
+
+
+CREATE TABLE `whiteboard_tutor_feedback`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`whiteboard_chat_id` INTEGER(11)  NOT NULL,
+	`expert_id` INTEGER(11),
+	`audio` INTEGER(5)  NOT NULL,
+	`usability` INTEGER(5)  NOT NULL,
+	`overall` INTEGER(5)  NOT NULL,
+	`feedback` TEXT,
+	`created_at` DATETIME  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `whiteboard_tutor_feedback_FI_1` (`whiteboard_chat_id`),
+	CONSTRAINT `whiteboard_tutor_feedback_FK_1`
+		FOREIGN KEY (`whiteboard_chat_id`)
+		REFERENCES `whiteboard_chat` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

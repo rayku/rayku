@@ -107,6 +107,16 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 	private $lastWhiteboardSnapshotCriteria = null;
 
 	/**
+	 * @var        array WhiteboardTutorFeedback[] Collection to store aggregation of WhiteboardTutorFeedback objects.
+	 */
+	protected $collWhiteboardTutorFeedbacks;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collWhiteboardTutorFeedbacks.
+	 */
+	private $lastWhiteboardTutorFeedbackCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -766,6 +776,9 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			$this->collWhiteboardSnapshots = null;
 			$this->lastWhiteboardSnapshotCriteria = null;
 
+			$this->collWhiteboardTutorFeedbacks = null;
+			$this->lastWhiteboardTutorFeedbackCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -894,6 +907,14 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collWhiteboardTutorFeedbacks !== null) {
+				foreach ($this->collWhiteboardTutorFeedbacks as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -975,6 +996,14 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 
 				if ($this->collWhiteboardSnapshots !== null) {
 					foreach ($this->collWhiteboardSnapshots as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWhiteboardTutorFeedbacks !== null) {
+					foreach ($this->collWhiteboardTutorFeedbacks as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1289,6 +1318,12 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			foreach ($this->getWhiteboardSnapshots() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addWhiteboardSnapshot($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWhiteboardTutorFeedbacks() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addWhiteboardTutorFeedback($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1648,6 +1683,160 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collWhiteboardTutorFeedbacks collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addWhiteboardTutorFeedbacks()
+	 */
+	public function clearWhiteboardTutorFeedbacks()
+	{
+		$this->collWhiteboardTutorFeedbacks = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collWhiteboardTutorFeedbacks collection (array).
+	 *
+	 * By default this just sets the collWhiteboardTutorFeedbacks collection to an empty array (like clearcollWhiteboardTutorFeedbacks());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initWhiteboardTutorFeedbacks()
+	{
+		$this->collWhiteboardTutorFeedbacks = array();
+	}
+
+	/**
+	 * Gets an array of WhiteboardTutorFeedback objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this WhiteboardChat has previously been saved, it will retrieve
+	 * related WhiteboardTutorFeedbacks from storage. If this WhiteboardChat is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array WhiteboardTutorFeedback[]
+	 * @throws     PropelException
+	 */
+	public function getWhiteboardTutorFeedbacks($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WhiteboardChatPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWhiteboardTutorFeedbacks === null) {
+			if ($this->isNew()) {
+			   $this->collWhiteboardTutorFeedbacks = array();
+			} else {
+
+				$criteria->add(WhiteboardTutorFeedbackPeer::WHITEBOARD_CHAT_ID, $this->id);
+
+				WhiteboardTutorFeedbackPeer::addSelectColumns($criteria);
+				$this->collWhiteboardTutorFeedbacks = WhiteboardTutorFeedbackPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(WhiteboardTutorFeedbackPeer::WHITEBOARD_CHAT_ID, $this->id);
+
+				WhiteboardTutorFeedbackPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWhiteboardTutorFeedbackCriteria) || !$this->lastWhiteboardTutorFeedbackCriteria->equals($criteria)) {
+					$this->collWhiteboardTutorFeedbacks = WhiteboardTutorFeedbackPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWhiteboardTutorFeedbackCriteria = $criteria;
+		return $this->collWhiteboardTutorFeedbacks;
+	}
+
+	/**
+	 * Returns the number of related WhiteboardTutorFeedback objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related WhiteboardTutorFeedback objects.
+	 * @throws     PropelException
+	 */
+	public function countWhiteboardTutorFeedbacks(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WhiteboardChatPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWhiteboardTutorFeedbacks === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WhiteboardTutorFeedbackPeer::WHITEBOARD_CHAT_ID, $this->id);
+
+				$count = WhiteboardTutorFeedbackPeer::doCount($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(WhiteboardTutorFeedbackPeer::WHITEBOARD_CHAT_ID, $this->id);
+
+				if (!isset($this->lastWhiteboardTutorFeedbackCriteria) || !$this->lastWhiteboardTutorFeedbackCriteria->equals($criteria)) {
+					$count = WhiteboardTutorFeedbackPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWhiteboardTutorFeedbacks);
+				}
+			} else {
+				$count = count($this->collWhiteboardTutorFeedbacks);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a WhiteboardTutorFeedback object to this object
+	 * through the WhiteboardTutorFeedback foreign key attribute.
+	 *
+	 * @param      WhiteboardTutorFeedback $l WhiteboardTutorFeedback
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addWhiteboardTutorFeedback(WhiteboardTutorFeedback $l)
+	{
+		if ($this->collWhiteboardTutorFeedbacks === null) {
+			$this->initWhiteboardTutorFeedbacks();
+		}
+		if (!in_array($l, $this->collWhiteboardTutorFeedbacks, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWhiteboardTutorFeedbacks, $l);
+			$l->setWhiteboardChat($this);
+		}
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1669,10 +1858,16 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collWhiteboardTutorFeedbacks) {
+				foreach ((array) $this->collWhiteboardTutorFeedbacks as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collWhiteboardMessages = null;
 		$this->collWhiteboardSnapshots = null;
+		$this->collWhiteboardTutorFeedbacks = null;
 	}
 
 } // BaseWhiteboardChat

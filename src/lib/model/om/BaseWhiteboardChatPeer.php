@@ -633,6 +633,9 @@ abstract class BaseWhiteboardChatPeer {
 			// invalidate objects in WhiteboardSnapshotPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			WhiteboardSnapshotPeer::clearInstancePool();
 
+			// invalidate objects in WhiteboardTutorFeedbackPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+			WhiteboardTutorFeedbackPeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

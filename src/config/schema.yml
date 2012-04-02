@@ -666,3 +666,13 @@ propel:
     token: { type: VARCHAR, size: '40', required: true }
     chat_id: { type: VARCHAR, size: '40' }
     last_activity: { type: INTEGER, size: '11', required: true }
+  whiteboard_tutor_feedback:
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    whiteboard_chat_id: { type: INTEGER, size: '11', required: true, foreignTable: whiteboard_chat, foreignReference: id, onDelete: CASCADE }
+    expert_id: { type: INTEGER, size: '11', required: false }
+    audio: { type: INTEGER, size: '5', required: true }
+    usability: { type: INTEGER, size: '5', required: true }
+    overall: { type: INTEGER, size: '5', required: true }
+    feedback: { type: LONGVARCHAR, required: false }
+    created_at: { type: TIMESTAMP, required: true }
+   
