@@ -41,28 +41,23 @@ padding : 15px 15px 15px 875px;
   <tbody>
 
 <?php
-  
-$tbl_name = "whiteboard_tutor_feedback"; $adjacents = 1;
 
+    $adjacents = 1;
+    $total_pages = WhiteboardTutorFeedbackPeer::doCount(new Criteria);
+        
+    $targetpage = "/admin.php/whiteboardsession/tutor";  	$limit = 50; 
 
+    $page = @$_GET['page'];
+    if($page) 
+        $start = ($page - 1) * $limit; 			
+    else
+        $start = 0;	
 
-
-	$query = "SELECT COUNT(*) as num FROM $tbl_name";
-	$total_pages = mysql_fetch_array(mysql_query($query));
-	$total_pages = $total_pages['num'];
-
-
-
-	$targetpage = "/admin.php/whiteboardsession/tutor";  	$limit = 50; 
-
-	$page = @$_GET['page'];
-	if($page) 
-            $start = ($page - 1) * $limit; 			
-	else
-            $start = 0;	
-
-	$sql = "SELECT * FROM $tbl_name ORDER BY id DESC LIMIT $start, $limit";
-	$result = mysql_query($sql);
+    $criteria = new Criteria;
+    $criteria->setOffset($start);
+    $criteria->setLimit($limit);
+    $criteria->addDescendingOrderByColumn(WhiteboardTutorFeedbackPeer::CREATED_AT);
+    $wtfS = WhiteboardTutorFeedbackPeer::doSelect($criteria);
 
 
 	if ($page == 0) $page = 1;					
@@ -155,34 +150,32 @@ $pagination = "";
 
   	<?php $i=0; ?>
 	
-<?php while($_row = mysql_fetch_array($result))
-		{ 
-
-    
-$row = $i%2 ; ?>
+<?php
+/* @var $wtf WhiteboardTutorFeedback */
+foreach ($wtfS as $wtf) {
+    $row = $i%2 ;
+    $_audio = changeText($wtf->getAudio());
+    $_use = changeText($wtf->getUsability());
+    $_overall = changeText($wtf->getOverall());
+    $_tutor_name = getUsername($wtf->getExpertId());
+?>
 	
-	<tr class="sf_admin_row_<?=$row?>">
-
-<?php $_audio = changeText($_row['audio']);  $_use = changeText($_row['use']);  $_overall = changeText($_row['overall']);  ?>
-
-<?php $_tutor_name = getUsername($_row['expert_id']);  ?>
-
-      <td><?php echo $_row['whiteboard_chat_id']; ?></td>
-     <td><?php echo $_row['created_at']; ?></td>
-      <td><b><?php echo $_tutor_name; ?></b></td>
-     <td><?php echo $_audio; ?></td>
-     <td><?php echo $_use; ?></td>
-     <td><?php echo $_overall; ?></td>
-     <td><?php echo $_row['feedback']; ?></td>
-      <td><a href="/whiteboard/show/id/<?php echo @$_row['whiteboard_chat_id ']; ?>">View</a></td>
-
-
-
+<tr class="sf_admin_row_<?php echo $row; ?>">
+    <td><?php echo $wtf->getWhiteboardChatId(); ?></td>
+    <td><?php echo $wtf->getCreatedAt(); ?></td>
+    <td><b><?php echo $_tutor_name; ?></b></td>
+    <td><?php echo $_audio; ?></td>
+    <td><?php echo $_use; ?></td>
+    <td><?php echo $_overall; ?></td>
+    <td><?php echo $wtf->getFeedback(); ?></td>
+    <td><a href="/whiteboard/show/id/<?php echo $wtf->getWhiteboardChatId(); ?>">View</a></td>
+</tr>    
+<?php
 	
-	<?php $i++; ?>
+$i++;
+}
 
-
-	<?php } ?>
+?>
 
 
 

@@ -5,6 +5,10 @@
  */
 class whiteboardActions extends sfActions
 {
+    public function preExecute()
+    {
+        RaykuCommon::getDatabaseConnection();
+    }
 
     /**
      * Executes sessions action
@@ -16,9 +20,8 @@ class whiteboardActions extends sfActions
             $this->redirect('/dashboard/rating');
         }
 
-        $connection = RaykuCommon::getDatabaseConnection();
         $name = explode("/", $_SERVER['REQUEST_URI']);
-        $query = mysql_query("select * from user where username='" . $name[3] . "' ", $connection) or die(mysql_error());
+        $query = mysql_query("select * from user where username='" . $name[3] . "' ") or die(mysql_error());
         $row = mysql_fetch_array($query);
         $userId = $row['id'];
         $this->userName = $row['name'];
@@ -61,9 +64,8 @@ class whiteboardActions extends sfActions
             $this->redirect('/dashboard/rating');
         }
 
-        $connection = RaykuCommon::getDatabaseConnection();
         $name = explode("/", $_SERVER['REQUEST_URI']);
-        $query = mysql_query("select * from user where username='" . $name[3] . "' ", $connection) or die(mysql_error());
+        $query = mysql_query("select * from user where username='" . $name[3] . "' ") or die(mysql_error());
         $row = mysql_fetch_array($query);
 
         $expertId = $row['id'];

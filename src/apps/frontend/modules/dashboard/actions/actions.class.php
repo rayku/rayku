@@ -604,20 +604,15 @@ $connection = RaykuCommon::getDatabaseConnection();
 
 	if(!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
 
-
-		$_audio = !empty($_POST["audio"]) ? $_POST["audio"] : '';
-		$_use = !empty($_POST["use"]) ? $_POST["use"] : '';
-		$_overall = !empty($_POST["overall"]) ? $_POST["overall"] : '';
-
-		$_feedback = !empty($_POST["feedback"]) ? $_POST["feedback"] : '';
-
-
-		$_time = date("Y-m-d H:i:s");
-
-
-		mysql_query("INSERT INTO `whiteboard_tutor_feedback` ( `whiteboard_chat_id`, `expert_id`, `audio`, `use`, `overall`, `feedback`, `created_at`) VALUES (".$_COOKIE["whiteboardChatId"].", ".$_COOKIE["ratingExpertId"].", ".$_audio.", ".$_use.", ".$_overall.", '".$_feedback."',  '".$_time."') ", $connection) or die(mysql_error());
-
-
+                $wtf = new WhiteboardTutorFeedback;
+                $wtf->setWhiteboardChatId($_COOKIE["whiteboardChatId"]);
+                $wtf->setExpertId($_COOKIE["ratingExpertId"]);
+                $wtf->setAudio(!empty($_POST["audio"]) ? $_POST["audio"] : '');
+                $wtf->setUsability(!empty($_POST["use"]) ? $_POST["use"] : '');
+                $wtf->setOverall(!empty($_POST["overall"]) ? $_POST["overall"] : '');
+                $wtf->setFeedback(!empty($_POST["feedback"]) ? $_POST["feedback"] : '');
+                $wtf->setCreatedAt(date("Y-m-d H:i:s"));
+                $wtf->save();
 	}
 
 
