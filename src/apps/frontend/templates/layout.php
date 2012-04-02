@@ -636,6 +636,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   <!-- end of primary --> 
 </div>
 <!-- end of wrapper -->
+<?php if ($_SERVER['HTTP_HOST'] != 'local.rayku.com') { ?>
 <script type="text/javascript">
   var uvOptions = {};
   (function() {
@@ -644,6 +645,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
   })();
 </script>
+<?php } ?>
 </body>
 </html>
 <?php endif; ?>
