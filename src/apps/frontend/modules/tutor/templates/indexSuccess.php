@@ -661,7 +661,7 @@ function followMe(expert_id, expertname) {
      
       <!--thumbnail wrap begins-->
       
-      <div class="thumbnail"> <img src="http://rayku.com/images/portfolio/thumbnail.png" alt="Sidebar thumbnail" />
+      <div class="thumbnail"> <img src="/images/portfolio/thumbnail.png" alt="Sidebar thumbnail" />
         <p>
           <?php if ($lastSessions[$ls]->getQuestion() <> '') { ?>
           <a href="#<?php //echo url_for('whiteboard/show?id=' . $lastSessions[$ls]->getId()) ?>" style="color:#FFF"> <?php echo urldecode($lastSessions[$ls]->getQuestion()) ?> </a>
