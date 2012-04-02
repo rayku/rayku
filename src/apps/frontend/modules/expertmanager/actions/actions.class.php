@@ -1,11 +1,6 @@
 <?php
 /**
  * expertmanager actions.
- *
- * @package    elifes
- * @subpackage expertmanager
- * @author     Your name here
- * @version    SVN: $Id: actions.class.php 2692 2006-11-15 21:03:55Z fabien $
  */
 class expertmanagerActions extends sfActions
 {
@@ -594,8 +589,12 @@ class expertmanagerActions extends sfActions
 
             $browser = "others";
 
-            if (eregi ("(Chrome/)", $HTTP_USER_AGENT) == true) $browser = "chrome";
-            if (eregi ("(Safari/)", $HTTP_USER_AGENT) == true) $browser = "safari";
+            if (eregi("(Chrome/)", $HTTP_USER_AGENT) == true) {
+                $browser = "chrome";
+            }
+            if (eregi("(Safari/)", $HTTP_USER_AGENT) == true) {
+                $browser = "safari";
+            }
 
             $_SESSION["_modelbox"] = @$_SESSION["_modelbox"] + 1;
 
@@ -1257,9 +1256,9 @@ class expertmanagerActions extends sfActions
             setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/");
             $this->getResponse()->setCookie("redirection", 1,time()+600);
             $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
-            
+
             StatsD::increment("whiteboard.session.create");
-            
+
             $this->redirect('expertmanager/connect');
         }
 
