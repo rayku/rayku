@@ -180,6 +180,9 @@ class listAction extends sfAction
             mysql_query("INSERT INTO `user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_POST['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
         }
 
+        /**
+         * @todo - below block of code could be extracted to separate action 
+         */
         if (!empty($_POST['hidden'])) {
             $count = count($_POST['checkbox']);
             /* Clearing Cookies */
@@ -273,8 +276,6 @@ class listAction extends sfAction
             setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/");
             $this->getResponse()->setCookie("redirection", 1,time()+600);
             $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
-
-            StatsD::increment("whiteboard.session.create");
 
             $this->redirect('expertmanager/connect');
         }
