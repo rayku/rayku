@@ -67,6 +67,9 @@ class UsersAvailabilityChecker
             }
         }
 
+        StatsD::timing('onlineUsers', count($onlineusers));
+
+        
         return count($onlineusers);
     }
 
