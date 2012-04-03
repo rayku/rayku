@@ -442,7 +442,7 @@ class expertmanagerActions extends sfActions
                 $_SESSION['popup_session'] = time();
                 $row = mysql_fetch_array($query);
                 echo "msg-".$row['id']."-".$row['expert_id']."-".$row['asker_id']."-".$row['chat_id'];
-                StatsD::increment("whiteboard.session.accepted");
+                StatsD::increment("whiteboard.session.questionAccepted");
             }
         }
         exit(0);
