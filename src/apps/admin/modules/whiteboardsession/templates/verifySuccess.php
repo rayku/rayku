@@ -6,7 +6,7 @@
 
 
 </style> 
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/pagination.css" />
 
 
 
@@ -153,7 +153,7 @@ $row = $i%2 ; ?>
 
       <td><?php echo $_row['id']; ?></td>
   <td><?php echo $_rowUser['name']; ?></td>
-      <td><a href="http://www.rayku.com/admin.php/whiteboardsession/index/id/<?php echo $_row['user_id']; ?>">View</a></td>
+      <td><a href="/admin.php/whiteboardsession/index/id/<?php echo $_row['user_id']; ?>">View</a></td>
 
 
 	

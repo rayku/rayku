@@ -8,7 +8,7 @@
 </style> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/pagination.css" />
 
 
 
@@ -174,7 +174,7 @@ echo "<td>";
 				$id = ''; $_id = $_rowCategory['id'];
 				echo "<tr><td>"; echo $_rowcategory['name'];echo "</td>";
 
-				echo "<td> <a href='http://www.rayku.com/admin.php/manageusers/category?id=$_id&page=$page'>Delete</a>"; echo "</td></tr>";	
+				echo "<td> <a href='/admin.php/manageusers/category?id=$_id&page=$page'>Delete</a>"; echo "</td></tr>";	
 
 			endif;
 
@@ -188,7 +188,7 @@ echo "</td>";
 
 ?>
 
-	  <td><?php echo "<a href='http://www.rayku.com/admin.php/manageusers/users?id=$ID&page=$page'>Delete</a>"; ?></td>
+	  <td><?php echo "<a href='/admin.php/manageusers/users?id=$ID&page=$page'>Delete</a>"; ?></td>
 
 	<?php $i++; $j++;?>
 
@@ -224,11 +224,11 @@ var vd = jQuery.noConflict();
 
    vd.ajax({ cache: false,
 	    type : "GET",
-	    url: "http://www.rayku.com/admin.php/manageusers/category?id="+id	
+	    url: "/admin.php/manageusers/category?id="+id	
 
 	});
 
-//vd.ajax('#loaddiv').fadeOut('slow').load('http://www.rayku.com/admin.php/manageusers/index.php').fadeIn("slow");
+//vd.ajax('#loaddiv').fadeOut('slow').load('/admin.php/manageusers/index.php').fadeIn("slow");
 
 
 }

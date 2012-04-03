@@ -13,7 +13,7 @@ padding : 15px 15px 15px 875px;
 
 } 
 </style> 
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/pagination.css" />
 
 
 

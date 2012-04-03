@@ -26,7 +26,7 @@
 		
 		$.ajax({ 
 				type: "POST",
-				url: 'http://www.rayku.com/admin.php/statistics/ajaxstatistics?selectdate='+date,
+				url: '/admin.php/statistics/ajaxstatistics?selectdate='+date,
 				success: function(msg){
 				//alert(msg);
 					$("#logdisplay").html(msg);
@@ -46,7 +46,7 @@
 
 </style> 
 
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/pagination.css" />
 
 
 <div id="sf_admin_container">  

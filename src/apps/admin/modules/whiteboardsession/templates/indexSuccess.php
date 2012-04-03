@@ -13,7 +13,7 @@ padding : 15px 15px 15px 875px;
 
 } 
 </style> 
-<link rel="stylesheet" type="text/css" media="screen" href="http://www.rayku.com/css/pagination.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/pagination.css" />
 
 
 
@@ -226,7 +226,7 @@ $row = $i%2 ; ?>
      <td><?php echo $_row['started_at']; ?></td>
       <td><?php echo $_row['rating']; ?></td>
      <td><?php echo urldecode($_row['question']); ?></td>
-      <td><a href="http://www.rayku.com/whiteboard/show/id/<?php echo $_row['id']; ?>">View</a></td>
+      <td><a href="/whiteboard/show/id/<?php echo $_row['id']; ?>">View</a></td>
       <td><?php echo $_row['expert_nickname']; ?></td>
       <td><?php echo $_row['asker_nickname']; ?></td>
 	<td><?php echo $_row['timer']; ?></td>

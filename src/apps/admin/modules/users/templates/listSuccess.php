@@ -39,7 +39,7 @@ $count_users = count( $users );
 		<?php $row = $i%2 ; ?>
 	
 	<tr class="sf_admin_row_<?=$row?>">
-      <td><a href="http://www.rayku.com/expertmanager/portfolio/<?php echo $user->getUsername() ?>"><?php echo $user->getName() ?></a></td>
+      <td><a href="/expertmanager/portfolio/<?php echo $user->getUsername() ?>"><?php echo $user->getName() ?></a></td>
       <td><?php echo $user->getEmail() ?></td>
       
 	 

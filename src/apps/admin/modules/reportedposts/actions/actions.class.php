@@ -49,9 +49,9 @@ $i = 0;
 		$repthreads[$i] = array("id"=> $_row['id'], "poster_id" => $_row['poster_id'], "title" => $_row['title'], "user_ip"=>$IP, "date" => $_row['reported_date']);
 
 
-			$repthreads[$i]['delete']="<a  href='http://www.rayku.com/admin.php/reportedposts?page=".$_GET['page']."&del_id=".$_row['id']."'>Delete Post</a> ";
-			$repthreads[$i]['un_report']="<a  href='http://www.rayku.com/admin.php/reportedposts?page=".$_GET['page']."&un_report_id=".$_row['id']."'>Unreport</a> ";
-			$repthreads[$i]['viewthread']="<a  href='http://www.rayku.com/forum/thread/".$_row['id']."/1'>View Thread</a> ";
+			$repthreads[$i]['delete']="<a  href='/admin.php/reportedposts?page=".$_GET['page']."&del_id=".$_row['id']."'>Delete Post</a> ";
+			$repthreads[$i]['un_report']="<a  href='/admin.php/reportedposts?page=".$_GET['page']."&un_report_id=".$_row['id']."'>Unreport</a> ";
+			$repthreads[$i]['viewthread']="<a  href='/forum/thread/".$_row['id']."/1'>View Thread</a> ";
 	$i++;
 
 	}
@@ -97,10 +97,10 @@ $i = 0;
 		$repposts[$i] = array("id"=> $_row['id'], "poster_id" => $_row['poster_id'], "title" => substr($_row['content'],0,30), "user_ip"=>$IP, "date" => $_row['reported_date']);
 
 
-			$repposts[$i]['delete']="<a  href='http://www.rayku.com/admin.php/reportedposts?page=".$_GET['page']."&del_post_id=".$_row['id']."'>Delete Post</a> ";
-			$repposts[$i]['un_report']="<a  href='http://www.rayku.com/admin.php/reportedposts?page=".$_GET['page']."&un_report_post_id=".$_row['id']."'>Unreport</a> ";
+			$repposts[$i]['delete']="<a  href='/admin.php/reportedposts?page=".$_GET['page']."&del_post_id=".$_row['id']."'>Delete Post</a> ";
+			$repposts[$i]['un_report']="<a  href='/admin.php/reportedposts?page=".$_GET['page']."&un_report_post_id=".$_row['id']."'>Unreport</a> ";
 
-			$repposts[$i]['viewthread']="<a  href='http://www.rayku.com/forum/thread/".$_row['thread_id']."/1'>View Thread</a> ";
+			$repposts[$i]['viewthread']="<a  href='/forum/thread/".$_row['thread_id']."/1'>View Thread</a> ";
 
 	$i++;
 

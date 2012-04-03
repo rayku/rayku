@@ -45,11 +45,11 @@ class threadsActions extends sfActions
 
             if($_row['banned']==0)
             {
-                $allChat[$i]['banned']="<a  href='http://www.rayku.com/admin.php/threads?page=".$_GET['page']."&ban_id=".$_row['id']."'>Ban</a> ";
+                $allChat[$i]['banned']="<a  href='/admin.php/threads?page=".$_GET['page']."&ban_id=".$_row['id']."'>Ban</a> ";
             }
             else
             {
-                $allChat[$i]['banned']="<a  href='http://www.rayku.com/admin.php/threads?page=".$_GET['page']."&unban_id=".$_row['id']."'>Un-Ban</a> ";
+                $allChat[$i]['banned']="<a  href='/admin.php/threads?page=".$_GET['page']."&unban_id=".$_row['id']."'>Un-Ban</a> ";
             }
 
             $i++;

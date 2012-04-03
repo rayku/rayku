@@ -59,7 +59,7 @@
     
     
     	<div id="deleteusers" style="color:#FF0000; font-weight:bold;"></div>
-		<form action="http://www.rayku.com/admin.php/users/banIp" method="post">
+		<form action="/admin.php/users/banIp" method="post">
 		
 		  IP: &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <?php echo input_tag('banip', '', array('size' => 30), array('use_style' => true)); ?>
           &nbsp;&nbsp;&nbsp;
