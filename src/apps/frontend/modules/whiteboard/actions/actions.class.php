@@ -105,12 +105,14 @@ class whiteboardActions extends sfActions
         // chat query & check access
         $criteria = new Criteria();
         $criteria->add(WhiteboardChatPeer::ID, $chatId);
-        $cPublicA = $criteria->getNewCriterion(WhiteboardChatPeer::IS_PUBLIC, true);
-        $cPublicB = $criteria->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $userId);
-        $cPublicC = $criteria->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
-        $cPublicA->addOr($cPublicB);
-        $cPublicA->addOr($cPublicC);
-        $criteria->add($cPublicA);
+        if (!$this->getUser()->hasCredential('admin')) {
+            $cPublicA = $criteria->getNewCriterion(WhiteboardChatPeer::IS_PUBLIC, true);
+            $cPublicB = $criteria->getNewCriterion(WhiteboardChatPeer::EXPERT_ID, $userId);
+            $cPublicC = $criteria->getNewCriterion(WhiteboardChatPeer::ASKER_ID, $userId);
+            $cPublicA->addOr($cPublicB);
+            $cPublicA->addOr($cPublicC);
+            $criteria->add($cPublicA);
+        }
         $chat = WhiteboardChatPeer::doSelectOne($criteria);
 
         // messages query
