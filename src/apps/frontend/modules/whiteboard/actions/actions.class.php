@@ -115,6 +115,8 @@ class whiteboardActions extends sfActions
         }
         $chat = WhiteboardChatPeer::doSelectOne($criteria);
 
+        $this->forward404Unless($chat);
+
         // messages query
         $msgCriteria = new Criteria();
         $msgCriteria->add(WhiteboardMessagePeer::WHITEBOARD_CHAT_ID, $chatId);
