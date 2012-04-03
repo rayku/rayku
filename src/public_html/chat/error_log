@@ -1,2 +1,0 @@
-[21-Dec-2009 06:05:39] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/rayku/public_html/chat/index.php on line 402
-[21-Dec-2009 06:05:39] PHP Fatal error:  Call to undefined function aEzFxAzEzFxAzay() in /home/rayku/public_html/chat/index.php(375) : eval()'d code on line 1

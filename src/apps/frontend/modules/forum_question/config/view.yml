@@ -1,2 +1,0 @@
-default:
-  stylesheets: [/styles/global.css, /styles/donny.css, /styles/forum_donny.css, /css/custom/forum-threads-bit.css]

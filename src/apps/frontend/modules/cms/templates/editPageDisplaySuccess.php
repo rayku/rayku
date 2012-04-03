@@ -1,1 +1,0 @@
-<?php include_partial('editPage', array('page' => $page)); ?>
