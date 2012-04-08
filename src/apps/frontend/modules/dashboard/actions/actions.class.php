@@ -410,6 +410,7 @@ class dashboardActions extends sfActions
         } else {
             mysql_query("insert into user_rate(userid,rate) values(".$userId.", ".$_Rate.") ", $connection) or die(mysql_error());
         }
+        return sfView::HEADER_ONLY;
     }
 
     public function executeStay()
