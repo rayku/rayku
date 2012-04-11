@@ -18,7 +18,7 @@ $id=$raykuUser->getId();
                     <div id="expert-left">
                     <h1><span>1</span>Complete your Profile</h1>
 						<div class="step-body">
-                        	<p>Customize your profile to reflect who you are. Upload a picture, and give yourself an identity. <a href="http://rayku.com/profile/<?php echo $raykuUser ?>/edit" target="_blank">Click here</a>.</p></div>
+                        	<p>Customize your profile to reflect who you are. Upload a picture, and give yourself an identity. <a href="/profile/<?php echo $raykuUser->getUsername() ?>/edit" target="_blank">Click here</a>.</p></div>
 						<div class="step-footer"></div>
 						
 				     </div>
