@@ -25,21 +25,32 @@ class BotServiceProvider
      * @todo - move this to app.yml or somewhere else outside this class - look out for cronjobs/* because they don't have direct access to app.yml content
      */
     static $bots = array(
-//        'gtalk' => array(
-//            'prefix' => 'http://www.rayku.com:8892',
-//            'serviceUrl' => 'local.gtalk.bot.rayku.com:8892'
-//        )
-//        ,'facebook' => array(
-//            'prefix' => 'http://facebook.rayku.com',
-//            'serviceUrl' => 'local.facebook.bot.rayku.com:4567'
-//        )
+        'gtalk' => array(
+            'prefix' => 'http://www.rayku.com:8892',
+            'serviceUrl' => 'local.gtalk.bot.rayku.com:8892',
+            'enabled' => false
+        ),
+        'facebook' => array(
+            'prefix' => 'http://facebook.rayku.com',
+            'serviceUrl' => 'local.facebook.bot.rayku.com:4567',
+            'enabled' => false
+        ),
+        'mac-server' => array(
+            'prefix' => 'http://notification-bot.rayku.com',
+            'serviceUrl' => 'local.mac-server.bot.rayku.com:5678',
+            'enabled' => false
+        )
     );
     
+    private $logging = false;
+    private $logFilePath = '/tmp/botServiceProvider.log';
+            
+    
     /**
-     * @todo Move this config option to a better place - app.yml ?
+     * Default state of enabled flag
      */
-    static $enabled = false;
-
+    private $enabled = false;
+    
     /**
      * If you pass only $url it will be used directly - without any modifications
      * However if you pass $botId then $url should be just the Path + Query part of URL
@@ -51,24 +62,31 @@ class BotServiceProvider
         $this->url = $url;
         $this->botId = $botId;
     }
+    
+    function disable()
+    {
+        $this->enabled = false;
+    }
 
     function getContent()
     {
-        if (!self::$enabled) {
+        if (!$this->enabled) {
             return json_encode(array());
         }
         $time = time();
         $url = $this->getUrl();
         $content = file_get_contents($url);
-        file_put_contents(
-            '/tmp/botServiceProvider.log',
-            'time: '
-                . (time()-$time)
-                . ', url: '.$url
-                . ', response: '.$content
-                ."\n",
-            FILE_APPEND
-        );
+        if ($this->logging) {
+            file_put_contents(
+                $this->logFilePath,
+                'time: '
+                    . (time()-$time)
+                    . ', url: '.$url
+                    . ', response: '.$content
+                    ."\n",
+                FILE_APPEND
+            );
+        }
         return $content;
     }
 
@@ -81,14 +99,22 @@ class BotServiceProvider
         }
     }
 
+    /**
+     * @return BotServiceProvider
+     */
     static function createFor($url)
     {
         foreach (self::$bots as $botId => $botParams) {
             if (is_numeric(strpos($url, $botParams['prefix']))) {
-                return new self(
+                $botService = new self(
                     str_replace($botParams['prefix'], '', $url),
                     $botId
                 );
+                if (!$botParams['enabled']) {
+                    $botService->disable();
+                }
+                
+                return $botService;
             }
         }
 
