@@ -275,14 +275,6 @@ propel:
     data: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
     _indexes: { history_FI_1: [user_id] }
-  invitation:
-    _attributes: { phpName: Invitation }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    receiver_email: { type: VARCHAR, size: '100', required: true }
-    receiver_code: { type: VARCHAR, size: '100', required: true }
-    sent: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
-    _indexes: { invitation_FI_1: [user_id] }
   item:
     _attributes: { phpName: Item }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
