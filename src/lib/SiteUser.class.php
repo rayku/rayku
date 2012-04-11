@@ -109,9 +109,6 @@ class SiteUser extends sfBasicSecurityUser
     $credentials = array();
     switch( $userType )
     {
-      case UserPeer::getTypeFromValue( 'teacher' ):
-          $credentials[] = 'teacher';
-        break;
       case UserPeer::getTypeFromValue( 'admin' ):
           $credentials[] = 'admin';
         break;

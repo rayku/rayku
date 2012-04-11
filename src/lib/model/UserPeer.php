@@ -6,7 +6,7 @@
 class UserPeer extends BaseUserPeer
 {
 
-    protected static $typeCodes = array(1 => 'user', 2 => 'teacher', 3 => 'moderator', 4 => 'admin', 5 => 'expert');
+    protected static $typeCodes = array(1 => 'user', 3 => 'moderator', 4 => 'admin', 5 => 'expert');
     protected static $typeValues;
     protected static $genderCodes = array(0 => 'male', 1 => 'female');
     protected static $genderValues;
@@ -53,17 +53,6 @@ class UserPeer extends BaseUserPeer
         $c->add(UserPeer::PASSWORD, sha1($sPassword));
 
         return UserPeer::doSelectOne($c);
-    }
-
-    /**
-     * Returns an indexed list of all of the user types after applying the
-     * ucfirst() function to make the list suitable for direct output
-     * 
-     * @return array
-     */
-    public static function getTypes()
-    {
-        return array_map('ucfirst', self::$typeCodes);
     }
 
     /**

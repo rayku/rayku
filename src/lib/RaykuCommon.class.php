@@ -12,7 +12,7 @@ class RaykuCommon
    *
    * We are fetching him from database based on username and here this username is defined
    *
-   * This user must be type of student, teacher or expert and can not be hidden
+   * This user must be type of student or expert and can not be hidden
    *
    */
   const SITE_USER_USERNAME = 'rayku';
