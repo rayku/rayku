@@ -13,9 +13,6 @@ class UserPeer extends BaseUserPeer
     protected static $relationshipStatusCodes = array(0 => 'undisclosed', 1 => 'single', 2 => 'in a relationship', 3 => 'married');
     protected static $relationshipStatusValues;
 
-    const INVITATION_CODE_HASH_SALT = 'asd23da12dasFS!@#$AF!@';
-    const INVITATION_STUDENT_CODE_HASH_SALT = 'iopjljkuiosjkl!@$#AF!@';
-
     /**
      * Returns the value associated with a given typeCode index
      */
@@ -262,18 +259,6 @@ class UserPeer extends BaseUserPeer
         $oC = new Criteria();
         $oC->add(UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$code'", Criteria::CUSTOM);
         $oC->add(UserPeer::TYPE, '0', Criteria::LESS_THAN);
-        return UserPeer::doSelectOne($oC);
-    }
-
-    public static function generateInvitationHash($oUser)
-    {
-        return sha1($oUser->getId() . self::INVITATION_CODE_HASH_SALT);
-    }
-
-    public static function doSelectFromInvitationHash($sHash)
-    {
-        $oC = new Criteria();
-        $oC->add(UserPeer::ID, "SHA1( CONCAT( user.id, '" . self::INVITATION_CODE_HASH_SALT . "' ) ) = '$sHash'", Criteria::CUSTOM);
         return UserPeer::doSelectOne($oC);
     }
 

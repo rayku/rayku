@@ -78,12 +78,6 @@
 		<?php if($networkusers != NULL): ?>
 			<li><?php echo link_to('Networks', '/network/index'); ?></li>
 		<?php endif ; ?>
-        <li><?php 
-
-			$left = $raykuUser->howManyInvitationsLeft();
-      		$invitationText = 'Invite Teacher ('.$left.'/'.User::NR_OF_INVITATIONS.' left!)';
-      		echo link_to( " $invitationText", '/invitation/index');
-		?></li>
 		<?php endif ?>
         
     	<?php 

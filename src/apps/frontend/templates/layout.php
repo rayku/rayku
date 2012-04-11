@@ -501,9 +501,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <link rel="stylesheet" type="text/css" href="/styles/pf_global.css"/>
 <link rel="stylesheet" type="text/css" href="/css/46.css"/>
 <?php endif; ?>
-<?php if($sf_context->getModuleName() =='invitation'): ?>
-<link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
-<?php endif; ?>
 <?php if($sf_context->getModuleName() == 'expertmanager'):?>
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/styles/classroom.css" />
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/custom/button.css"/>

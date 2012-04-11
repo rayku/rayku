@@ -135,28 +135,6 @@ class loginActions extends sfActions
 			return sfView::ERROR;
 		}
 
-		//If user is teacher account expires after 6 month
-		if($this->user->getType() == UserPeer::getTypeFromValue('teacher'))
-		{
-
-			$currentdate = time();
-			$prevdate = strtotime($this->user->getCreatedAt());
-
-			$dateDiff = $currentdate - $prevdate ;
-
-			$fullDays = floor($dateDiff/(60*60*24*30*6));
-
-			if($fullDays == 1)
-			{
-				$this->msg = 'You need to upgrade your account to continue.';
-
-				return sfView::ERROR;
-			}
-
-			//echo date_interval_create_from_date_string($this->user->getCreatedAt());
-
-		}
-
 		//If the user is banned, display a message
 		if($this->user->getHidden())
 		{
@@ -437,9 +415,10 @@ class loginActions extends sfActions
 
 	private function getRequestedUserType()
 	{
-		$allowedTypes = array( UserPeer::getTypeFromValue( 'user' ),
-				UserPeer::getTypeFromValue( 'teacher' ),
-				UserPeer::getTypeFromValue( 'expert' ) );
+		$allowedTypes = array(
+            UserPeer::getTypeFromValue( 'user' ),
+            UserPeer::getTypeFromValue( 'expert' )
+        );
 
 		$requestedType = $this->getRequestParameter( 'utype' );
 
