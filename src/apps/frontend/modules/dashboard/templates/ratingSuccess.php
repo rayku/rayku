@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="http://www.rayku.com/css/global.css" />
-<link href="http://www.rayku.com/css/validation/validationEngine.jquery.css" rel="stylesheet" media="screen" type="text/css" />
-<script src="http://www.rayku.com/js/validation/jquery-1.6.min.js" type="text/javascript"> </script>
-<script src="http://www.rayku.com/js/validation/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="http://www.rayku.com/js/validation/jquery.validationEngine.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/global.css" />
+<link href="/css/validation/validationEngine.jquery.css" rel="stylesheet" media="screen" type="text/css" />
+<script src="/js/validation/jquery-1.6.min.js" type="text/javascript"> </script>
+<script src="/js/validation/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/js/validation/jquery.validationEngine.js"></script>
 <script>
 var frmVal = jQuery.noConflict();
 frmVal(document).ready(function(){
