@@ -13,7 +13,15 @@
  * You can define your local instances by defining self::$bots - see commented definitions
  * 
  * @todo - we should handle cases when any of bot services is not available
- *
+ * @todo - refactorings:
+ *  * abstract out common InternetMessagingService PHP library
+ *  * it should be easy to use in any PHP project - let's not tie it strictly to symfony1.2
+ *  * define common interface for different IMs that will define what we can ask any bot for
+ *  * library will be responsible for talking with our bot services
+ *  * lets use DI to allow easy creation of a class which represents a bot that we currently want to ask for something
+ *  * lets handle TCP/HTTP communication in separate set of classes and use CURL
+ *  ** it should handle cases when any service is not available at the moment
+ * 
  * @author lukas
  */
 class BotServiceProvider
