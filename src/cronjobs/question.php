@@ -8,16 +8,17 @@ sfCoreAutoload::register();
  * @todo - reimplement that script using symfony tasks system and start using propel instead of mysql_connect/query 
  */
 
+RaykuCommon::getDatabaseConnection();
+
 function checkquestion() {
-    $connection = RaykuCommon::getDatabaseConnection();
 
     $time = time()-300;
-    mysql_query("delete from user_expert where status = 7 ", $connection) or die("Error5--1".mysql_error());
+    mysql_query("delete from user_expert where status = 7 ") or die("Error5--1".mysql_error());
     $check_time = time();
-    $_expire_msg = mysql_query("select * from user_expire_msg where expire_time <= '".$check_time."'", $connection) or die("Error_Expire1".mysql_error());
+    $_expire_msg = mysql_query("select * from user_expire_msg where expire_time <= '".$check_time."'") or die("Error_Expire1".mysql_error());
     if(mysql_num_rows($_expire_msg) > 0) {
         while($_row_expire_msg = mysql_fetch_assoc($_expire_msg)) {
-            $_send_expire_msg = mysql_query("select * from user_gtalk where userid=".$_row_expire_msg['userid'], $connection) or die("Error11".mysql_error());
+            $_send_expire_msg = mysql_query("select * from user_gtalk where userid=".$_row_expire_msg['userid']) or die("Error11".mysql_error());
             if(mysql_num_rows($_send_expire_msg) > 0) {
                 $getInfo = mysql_fetch_assoc($_send_expire_msg);
                 $_gtalk_email_id = $getInfo['gtalkid'];
@@ -31,7 +32,7 @@ function checkquestion() {
                 }
             }
 
-            $fb_query = mysql_query("select * from user_fb where userid=".$_row_expire_msg['userid'], $connection) or die(mysql_error());
+            $fb_query = mysql_query("select * from user_fb where userid=".$_row_expire_msg['userid']) or die(mysql_error());
             if(mysql_num_rows($fb_query) > 0) {
                 $fbRow = mysql_fetch_assoc($fb_query);
                 $fb_username = $fbRow['fb_username'];
@@ -66,41 +67,41 @@ function checkquestion() {
                 }
             }
 
-            mysql_query("delete from user_expire_msg where userid=".$_row_expire_msg['userid'], $connection) or die("Error_Expire2".mysql_error());
+            mysql_query("delete from user_expire_msg where userid=".$_row_expire_msg['userid']) or die("Error_Expire2".mysql_error());
         }
     }
 
-    $select = mysql_query("select * from gtalkcron where expire_time <= '".$check_time."'", $connection) or die("Error1".mysql_error());
+    $select = mysql_query("select * from gtalkcron where expire_time <= '".$check_time."'") or die("Error1".mysql_error());
     if(mysql_num_rows($select) > 0) {
         while($rowvalues = mysql_fetch_assoc($select)) {
             $updateId = $rowvalues['id'] + 1;
-            $checkprevious = mysql_query("select * from user_expert where id=".$updateId." and user_id=".$rowvalues['userid'], $connection) or die("Error".mysql_error());
+            $checkprevious = mysql_query("select * from user_expert where id=".$updateId." and user_id=".$rowvalues['userid']) or die("Error".mysql_error());
             if(mysql_num_rows($checkprevious) > 0) {
-                mysql_query("update user_expert set exe_order = 1 where id=".$updateId, $connection) or die("Error2".mysql_error());
+                mysql_query("update user_expert set exe_order = 1 where id=".$updateId) or die("Error2".mysql_error());
             }
-            mysql_query("delete from user_expert where id=".$rowvalues['id'], $connection) or die("Error3".mysql_error());
-            mysql_query("delete from gtalkcron where id=".$rowvalues['id'], $connection) or die("Error4".mysql_error());
+            mysql_query("delete from user_expert where id=".$rowvalues['id']) or die("Error3".mysql_error());
+            mysql_query("delete from gtalkcron where id=".$rowvalues['id']) or die("Error4".mysql_error());
         }
     }
 
-    $query = mysql_query("select * from user_expert where exe_order = 1 and time >= '".$time."' and cron = 1", $connection) or die("Error5".mysql_error());
+    $query = mysql_query("select * from user_expert where exe_order = 1 and time >= '".$time."' and cron = 1") or die("Error5".mysql_error());
     if(mysql_num_rows($query) > 0) {
         while($row = mysql_fetch_assoc($query)) {
             $storetime = time();
             $expire_time = '';
-            $category = mysql_query("select * from category where id = ".$row['category_id']."", $connection) or die("Error6".mysql_error());
+            $category = mysql_query("select * from category where id = ".$row['category_id']."") or die("Error6".mysql_error());
             if(mysql_num_rows($category) > 0) {
                 $rowcategory = mysql_fetch_assoc($category);
                 $subject = $rowcategory['name'];
             }
 
-            $userdetail = mysql_query("select * from user where id = ".$row['user_id']."", $connection) or die("Error7".mysql_error());
+            $userdetail = mysql_query("select * from user where id = ".$row['user_id']."") or die("Error7".mysql_error());
             if(mysql_num_rows($userdetail) > 0) {
                 $rowuserdetail = mysql_fetch_assoc($userdetail);
                 $email = $rowuserdetail['email'];
             }
 
-            $usercourse = mysql_query("select * from user_course where user_id = ".$row['user_id']."", $connection) or die("Error7".mysql_error());
+            $usercourse = mysql_query("select * from user_course where user_id = ".$row['user_id']."") or die("Error7".mysql_error());
             $grade = '';
             if(mysql_num_rows($usercourse) > 0) {
                 $rowCourse = mysql_fetch_assoc($usercourse);
@@ -121,17 +122,17 @@ function checkquestion() {
                 $question = substr(trim($row['question']), 0, 100);
             }
 
-            $queryUser = mysql_query("select * from user_course where user_id=".$row['user_id']." and course_subject=".$row['category_id'], $connection) or die("Error8".mysql_error());
+            $queryUser = mysql_query("select * from user_course where user_id=".$row['user_id']." and course_subject=".$row['category_id']) or die("Error8".mysql_error());
             $rowUser = mysql_fetch_array($queryUser);
 
-            $userTutor = mysql_query("select * from user where id = ".$row['checked_id']."", $connection) or die("Error9".mysql_error());
+            $userTutor = mysql_query("select * from user where id = ".$row['checked_id']."") or die("Error9".mysql_error());
             if(mysql_num_rows($userTutor) > 0) {
                 $rowuserTutor = mysql_fetch_assoc($userTutor);
                 $name  = $rowuserTutor['name'];
                 $tutorEmail  = $rowuserTutor['email'];
             }
 
-            $queryRPRate = mysql_query("select * from user_rate where userid=".$row['checked_id']." ", $connection) or die("Error10".mysql_error());
+            $queryRPRate = mysql_query("select * from user_rate where userid=".$row['checked_id']." ") or die("Error10".mysql_error());
             if(mysql_num_rows($queryRPRate)) {
                 $rowRPRate = mysql_fetch_assoc($queryRPRate);
                 $raykuCharge = $rowRPRate['rate'];
@@ -155,7 +156,7 @@ function checkquestion() {
             $message .= $newline;
             $message .= "(earns%20you%20$".$raykuCharge."%2Fminute)";
             $message .= $newline;
-            $gtalkquery = mysql_query("select * from user_gtalk where userid=".$row['checked_id'], $connection) or die("Error11".mysql_error());
+            $gtalkquery = mysql_query("select * from user_gtalk where userid=".$row['checked_id']) or die("Error11".mysql_error());
             $onlinecheck = ''; $flag = 1;
             if(mysql_num_rows($gtalkquery) > 0) {
                 $status = mysql_fetch_assoc($gtalkquery);
@@ -166,7 +167,7 @@ function checkquestion() {
                     $flag = 1;
                 }
             }
-            $fb_query = mysql_query("select * from user_fb where userid=".$row['checked_id'], $connection) or die(mysql_error());
+            $fb_query = mysql_query("select * from user_fb where userid=".$row['checked_id']) or die(mysql_error());
             if(mysql_num_rows($fb_query) > 0) {
                 $fbRow = mysql_fetch_assoc($fb_query);
                 $fb_username = $fbRow['fb_username'];
@@ -235,9 +236,9 @@ function checkquestion() {
             if($flag == 1) {
                 $expire_time = $row['close']-11;
                 $expire_time = ($expire_time/1000) + time();
-                mysql_query("insert into gtalkcron(id,userid,expire_time) values(".$row['id'].",".$row['user_id'].",  '".$expire_time."')", $connection) or die("Error12".mysql_error());
-                mysql_query("insert into user_expire_msg(userid,expire_time) values(".$row['checked_id'].",  '".$expire_time."')", $connection) or die("Error13".mysql_error());
-                mysql_query("update user_expert set cron = 2 where id =".$row['id'], $connection) or die("Error5".mysql_error());
+                mysql_query("insert into gtalkcron(id,userid,expire_time) values(".$row['id'].",".$row['user_id'].",  '".$expire_time."')") or die("Error12".mysql_error());
+                mysql_query("insert into user_expire_msg(userid,expire_time) values(".$row['checked_id'].",  '".$expire_time."')") or die("Error13".mysql_error());
+                mysql_query("update user_expert set cron = 2 where id =".$row['id']) or die("Error5".mysql_error());
             }
         }
     }
