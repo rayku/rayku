@@ -8,7 +8,7 @@ exports.newBot = function(params)
 	var bot = new xmpp.bot(params);
 	bot.on('presence',function(jid,status)
 	{
-		if (status == 'offline')
+		if (status != 'online')
 		{
 			try{ delete(onlines[jid]); } catch(e) { }
 		}
@@ -41,11 +41,12 @@ exports.newBot = function(params)
 	});
 	api.on('onlines',function(res)
 	{
-		for(var j in onlines)
-		{
-			res.write(j+' '+onlines[j]+'\r\n');
-		}
-		res.end('over');
+                res.write(
+                    JSON.stringify(
+                        onlines
+                    )
+                );
+                res.end();
 	});
 	api.on('add',function(res,jid,name)
 	{
