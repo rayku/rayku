@@ -649,29 +649,6 @@ CREATE TABLE `history`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- invitation
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `invitation`;
-
-
-CREATE TABLE `invitation`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`receiver_email` VARCHAR(100)  NOT NULL,
-	`receiver_code` VARCHAR(100)  NOT NULL,
-	`sent` INTEGER(11) default 0 NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `invitation_FI_1`(`user_id`),
-	CONSTRAINT `invitation_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- item
 #-----------------------------------------------------------------------------
 

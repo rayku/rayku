@@ -10,8 +10,6 @@ require_once 'om/BaseUser.php';
 
 class User extends BaseUser
 {
-  const NR_OF_INVITATIONS = 3;
-
 	/**
 	* Generates the confirmation code for this user
 	*/
@@ -1111,26 +1109,6 @@ class User extends BaseUser
 		else
 			return 0;
 	}
-
-  /**
-   * This method is little tricky :)
-   *
-   * Showing number of invitations left to teachers has only Marketing meanings - we dont really want to limit nr of invitations.
-   * So invitation counter will show 3/3, then 2/3, then 1/3 and then again 3/3 - for this we must make some math here
-   */
-  public function howManyInvitationsLeft()
-  {
-    $nrOfInvitationsUsed = InvitationPeer::countUserInvitations($this);
-
-    if( $nrOfInvitationsUsed > self::NR_OF_INVITATIONS )
-      $nrOfInvitationsUsed -= floor( $nrOfInvitationsUsed / 3 ) * 3;
-
-    $left = self::NR_OF_INVITATIONS - $nrOfInvitationsUsed;
-    if( $left < 1 )
-      return self::NR_OF_INVITATIONS;
-    else
-      return $left;
-  }
 
   /**
    * sets unconfirmed flag together with registration user type information

@@ -6,15 +6,12 @@
 class UserPeer extends BaseUserPeer
 {
 
-    protected static $typeCodes = array(1 => 'user', 2 => 'teacher', 3 => 'moderator', 4 => 'admin', 5 => 'expert');
+    protected static $typeCodes = array(1 => 'user', 3 => 'moderator', 4 => 'admin', 5 => 'expert');
     protected static $typeValues;
     protected static $genderCodes = array(0 => 'male', 1 => 'female');
     protected static $genderValues;
     protected static $relationshipStatusCodes = array(0 => 'undisclosed', 1 => 'single', 2 => 'in a relationship', 3 => 'married');
     protected static $relationshipStatusValues;
-
-    const INVITATION_CODE_HASH_SALT = 'asd23da12dasFS!@#$AF!@';
-    const INVITATION_STUDENT_CODE_HASH_SALT = 'iopjljkuiosjkl!@$#AF!@';
 
     /**
      * Returns the value associated with a given typeCode index
@@ -56,17 +53,6 @@ class UserPeer extends BaseUserPeer
         $c->add(UserPeer::PASSWORD, sha1($sPassword));
 
         return UserPeer::doSelectOne($c);
-    }
-
-    /**
-     * Returns an indexed list of all of the user types after applying the
-     * ucfirst() function to make the list suitable for direct output
-     * 
-     * @return array
-     */
-    public static function getTypes()
-    {
-        return array_map('ucfirst', self::$typeCodes);
     }
 
     /**
@@ -262,18 +248,6 @@ class UserPeer extends BaseUserPeer
         $oC = new Criteria();
         $oC->add(UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$code'", Criteria::CUSTOM);
         $oC->add(UserPeer::TYPE, '0', Criteria::LESS_THAN);
-        return UserPeer::doSelectOne($oC);
-    }
-
-    public static function generateInvitationHash($oUser)
-    {
-        return sha1($oUser->getId() . self::INVITATION_CODE_HASH_SALT);
-    }
-
-    public static function doSelectFromInvitationHash($sHash)
-    {
-        $oC = new Criteria();
-        $oC->add(UserPeer::ID, "SHA1( CONCAT( user.id, '" . self::INVITATION_CODE_HASH_SALT . "' ) ) = '$sHash'", Criteria::CUSTOM);
         return UserPeer::doSelectOne($oC);
     }
 

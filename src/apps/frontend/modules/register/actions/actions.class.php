@@ -36,12 +36,6 @@ class registerActions extends sfActions
             return sfView::ERROR;
         }
 
-        if ($this->requestedUserType == UserPeer::getTypeFromValue('teacher')) {
-            if (!$this->checkInvitationCode($this->getRequestParameter('confirmationcode'))) {
-                $this->error = 'Please enter a valid confirmation code!';
-                return sfView::ERROR;
-            }
-        }
         //Create and populate the User object
         $user = new User();
         $user->setEmail($this->getRequestParameter('email'));
@@ -118,7 +112,6 @@ class registerActions extends sfActions
     {
         $allowedTypes = array(
             UserPeer::getTypeFromValue('user'),
-            UserPeer::getTypeFromValue('teacher'),
             UserPeer::getTypeFromValue('expert')
         );
 
@@ -169,16 +162,6 @@ class registerActions extends sfActions
                 array('activationLink' => url_for('@register_confirm?code='.$user->getConfirmationCode(), true),
                 'user' => $user)));
         $mail->send();
-    }
-
-    private function checkInvitationCode($invitationCode)
-    {
-        if ($invitationCode != '') {
-            $user = UserPeer::doSelectFromInvitationHash($invitationCode);
-            return is_object($user);
-        }
-
-        return false;
     }
 
     /**

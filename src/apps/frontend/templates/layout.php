@@ -224,8 +224,10 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   <div class="container">
     <form name="register-form" id="register-form" action="quickreg/register" method="post">
       <h3>Ask any math question <span style="font-weight:normal">
-        <?php if($uac->getOnlineUsersCount() > 0) { ?>
-              (<span style="color:#003"><?php echo $uac->getOnlineUsersCount(); ?></span> tutors online):</span>
+        <?php
+            $onlineUsersCount = $uac->getOnlineUsersCount();
+            if( $onlineUsersCount > 0) { ?>
+              (<span style="color:#003"><?php echo $onlineUsersCount; ?></span> tutors online):</span>
         <?php } ?>
       </h3>
       <p class="main-question">
@@ -500,9 +502,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php if($sf_context->getModuleName() =='dashboard'): ?>
 <link rel="stylesheet" type="text/css" href="/styles/pf_global.css"/>
 <link rel="stylesheet" type="text/css" href="/css/46.css"/>
-<?php endif; ?>
-<?php if($sf_context->getModuleName() =='invitation'): ?>
-<link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
 <?php endif; ?>
 <?php if($sf_context->getModuleName() == 'expertmanager'):?>
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/styles/classroom.css" />

@@ -1,6 +1,5 @@
 <div id="shop_right">
   <div class="header"> <a href="/shop/paypal">Deposit Money (get RP)</a> </div>
-  <div class="header"> <a href="/register/invitation">Invite Friends (get RP)</a> </div>
   <div class="text"> 
     
     <!--<h1>Rayku On-Site Products</h1>

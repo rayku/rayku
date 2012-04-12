@@ -14,7 +14,6 @@
 						$query = mysql_query("select * from user where id=".$logedUserId." ") or die(mysql_error());
 						$detailPoints = mysql_fetch_assoc($query); 
 						echo $detailPoints['points']; ?>RP</span> AVAILABLE.</h1>
-                            <a class="earn" href="../register/invitation">Earn more</a>
                             <div class="clear"></div>
                         </div>  <!--rp_av-->
                         

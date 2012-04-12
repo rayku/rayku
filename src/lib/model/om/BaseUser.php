@@ -331,16 +331,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastHistoryCriteria = null;
 
 	/**
-	 * @var        array Invitation[] Collection to store aggregation of Invitation objects.
-	 */
-	protected $collInvitations;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collInvitations.
-	 */
-	private $lastInvitationCriteria = null;
-
-	/**
 	 * @var        array ItemRating[] Collection to store aggregation of ItemRating objects.
 	 */
 	protected $collItemRatings;
@@ -2041,9 +2031,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collHistorys = null;
 			$this->lastHistoryCriteria = null;
 
-			$this->collInvitations = null;
-			$this->lastInvitationCriteria = null;
-
 			$this->collItemRatings = null;
 			$this->lastItemRatingCriteria = null;
 
@@ -2275,14 +2262,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collHistorys !== null) {
 				foreach ($this->collHistorys as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collInvitations !== null) {
-				foreach ($this->collInvitations as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2562,14 +2541,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collHistorys !== null) {
 					foreach ($this->collHistorys as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collInvitations !== null) {
-					foreach ($this->collInvitations as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3323,12 +3294,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getHistorys() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addHistory($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getInvitations() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addInvitation($relObj->copy($deepCopy));
 				}
 			}
 
@@ -4750,160 +4715,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collHistorys, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collHistorys, $l);
-			$l->setUser($this);
-		}
-	}
-
-	/**
-	 * Clears out the collInvitations collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addInvitations()
-	 */
-	public function clearInvitations()
-	{
-		$this->collInvitations = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collInvitations collection (array).
-	 *
-	 * By default this just sets the collInvitations collection to an empty array (like clearcollInvitations());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initInvitations()
-	{
-		$this->collInvitations = array();
-	}
-
-	/**
-	 * Gets an array of Invitation objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related Invitations from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Invitation[]
-	 * @throws     PropelException
-	 */
-	public function getInvitations($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collInvitations === null) {
-			if ($this->isNew()) {
-			   $this->collInvitations = array();
-			} else {
-
-				$criteria->add(InvitationPeer::USER_ID, $this->id);
-
-				InvitationPeer::addSelectColumns($criteria);
-				$this->collInvitations = InvitationPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(InvitationPeer::USER_ID, $this->id);
-
-				InvitationPeer::addSelectColumns($criteria);
-				if (!isset($this->lastInvitationCriteria) || !$this->lastInvitationCriteria->equals($criteria)) {
-					$this->collInvitations = InvitationPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastInvitationCriteria = $criteria;
-		return $this->collInvitations;
-	}
-
-	/**
-	 * Returns the number of related Invitation objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Invitation objects.
-	 * @throws     PropelException
-	 */
-	public function countInvitations(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collInvitations === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(InvitationPeer::USER_ID, $this->id);
-
-				$count = InvitationPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(InvitationPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastInvitationCriteria) || !$this->lastInvitationCriteria->equals($criteria)) {
-					$count = InvitationPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collInvitations);
-				}
-			} else {
-				$count = count($this->collInvitations);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Invitation object to this object
-	 * through the Invitation foreign key attribute.
-	 *
-	 * @param      Invitation $l Invitation
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addInvitation(Invitation $l)
-	{
-		if ($this->collInvitations === null) {
-			$this->initInvitations();
-		}
-		if (!in_array($l, $this->collInvitations, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collInvitations, $l);
 			$l->setUser($this);
 		}
 	}
@@ -7690,11 +7501,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collInvitations) {
-				foreach ((array) $this->collInvitations as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collItemRatings) {
 				foreach ((array) $this->collItemRatings as $o) {
 					$o->clearAllReferences($deep);
@@ -7787,7 +7593,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collGallerys = null;
 		$this->collGalleryItems = null;
 		$this->collHistorys = null;
-		$this->collInvitations = null;
 		$this->collItemRatings = null;
 		$this->collJournalEntrys = null;
 		$this->collOfferVoucher1s = null;

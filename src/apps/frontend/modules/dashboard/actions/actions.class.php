@@ -383,14 +383,6 @@ $connection = RaykuCommon::getDatabaseConnection();
 	 $this->user = $this->getUser()->getRaykuUser();
   }
 
-  public function executePointserror()
-  {
-
-
-
-
-  }
-
   public function executeExpire()
   {
 
