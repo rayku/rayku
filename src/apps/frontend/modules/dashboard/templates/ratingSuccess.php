@@ -1,26 +1,21 @@
-<link rel="stylesheet" type="text/css" href="http://www.rayku.com/css/global.css" />
-<link href="http://www.rayku.com/css/validation/validationEngine.jquery.css" rel="stylesheet" media="screen" type="text/css" />
- <script src="http://www.rayku.com/js/validation/jquery-1.6.min.js" type="text/javascript"> </script>
-<script src="http://www.rayku.com/js/validation/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="http://www.rayku.com/js/validation/jquery.validationEngine.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/global.css" />
+<link href="/css/validation/validationEngine.jquery.css" rel="stylesheet" media="screen" type="text/css" />
+<script src="/js/validation/jquery-1.6.min.js" type="text/javascript"> </script>
+<script src="/js/validation/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/js/validation/jquery.validationEngine.js"></script>
 <script>
-
-	var frmVal = jQuery.noConflict();
-
-   frmVal(document).ready(function(){
-                // binds form submission and fields to the validation engine
-            frmVal("#rating-form").validationEngine();
-   });
-   
-</script>			
-			
-
+var frmVal = jQuery.noConflict();
+frmVal(document).ready(function(){
+    // binds form submission and fields to the validation engine
+    frmVal("#rating-form").validationEngine();
+});
+</script>
 <style>
 .option {
-	font-size:18px;
-	font-weight:bold;
-	color:#666;
-	line-height:28px;
+    font-size:18px;
+    font-weight:bold;
+    color:#666;
+    line-height:28px;
 }
 </style>
 
@@ -33,37 +28,22 @@
   <br>
 <?php
 $connection = RaykuCommon::getDatabaseConnection();
-
-
-     if(!empty($_COOKIE['raykuCharge'])) {
-
-			$rate = $_COOKIE['raykuCharge'];
-
-		} else {
-
-			$queryRPRate = mysql_query("select * from user_rate where userid=".$_COOKIE["ratingExpertId"]." ", $connection) or die(mysql_error());
-
-				if(mysql_num_rows($queryRPRate)) {
-				
-					$rowRPRate = mysql_fetch_assoc($queryRPRate); 
-					$rate = $rowRPRate['rate'];
-	
-				} else {
-	
-					$rate = '0.00';
-	
-				}
-
-	   }
-
-	$timer = explode(":", $_COOKIE["timer"]);
-
-	$newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
-
-	$raykuPercentage = $newTimer * $rate;
-
-?>  
-  <form action="" id="rating-form" method="post">
+if(!empty($_COOKIE['raykuCharge'])) {
+    $rate = $_COOKIE['raykuCharge'];
+} else {
+    $queryRPRate = mysql_query("select * from user_rate where userid=".$_COOKIE["ratingExpertId"]." ", $connection) or die(mysql_error());
+    if(mysql_num_rows($queryRPRate)) {
+        $rowRPRate = mysql_fetch_assoc($queryRPRate);
+        $rate = $rowRPRate['rate'];
+    } else {
+        $rate = '0.00';
+    }
+}
+$timer = explode(":", $_COOKIE["timer"]);
+$newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
+$raykuPercentage = $newTimer * $rate;
+?>
+<form action="" id="rating-form" method="post">
     <table width="750" align="center">
       <tr>
         <td colspan="3">&nbsp;</td>
@@ -72,13 +52,14 @@ $connection = RaykuCommon::getDatabaseConnection();
             <td width="253"><font  class="option">Describe the Experience (optional):</font>
               <p>
                 <textarea class="comment-content" style="width:365px;padding:5px;font-size:14px;font-weight:normal" id="txtbox" rows="5" cols="45" name="content"></textarea>
-              </p></td>
+              </p>
+            </td>
             </tr>
-			 <tr>
+             <tr>
             <td width="253" style="padding:20px 0"><font  class="option">Tip Tutor (optional):</font>
               <p>
-			    <font style="font-size: 14px; color:#333; margin-left: 3px;"> Amount:</font>&nbsp;
-                <input name="tiptutor" type="textbox" id="tiptutor" maxlength="3" style=" width:40px;" width="30"  class="validate[custom[integer],min[1],max[<?php echo $raykuPercentage;?>]]"  />  
+                <font style="font-size: 14px; color:#333; margin-left: 3px;"> Amount:</font>&nbsp;
+                <input name="tiptutor" type="textbox" id="tiptutor" maxlength="3" style=" width:40px;" width="30"  class="validate[custom[integer],min[1],max[<?php echo $raykuPercentage;?>]]"  />
               </p></td>
             </tr>
           <tr>
