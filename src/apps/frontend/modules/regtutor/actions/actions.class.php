@@ -191,16 +191,16 @@ class regtutorActions extends sfActions
                 }
             }
 
-            $subject='Start tutoring at Rayku!';
+            $subject='Here\'s how to start tutoring on Rayku';
             if ($user) {
                 $body='Hey '.$user->getName().', welcome to Rayku.com!<br><br>';
             }
             $body .='Thanks for joining our community!<br><br>
 
                 Before you get started, there are 3 important steps before you can start tutoring!<br><br>
-                1) Make sure to have activated your tutor status by clicking \'on\' in your <a href="http://rayku.com/dashboard">dashboard page</a>.<br>
-                2) Learn how to tutor effectively on Rayku in 5 minutes by watching our <a href="http://rayku.com/tutorshelp">tutor help videos</a>.<br>
-                3) Lastly, make sure you are prepared to receive question notifications by connecting to <a href="http://rayku.com/dashboard/gtalk">google talk</a>, <a href="http://rayku.com/dashboard/facebook">facebook chat</a>, and <a href="http://notification-bot.rayku.com/download/rayku.dmg">MacOS</a> / <a href="http://notification-bot.rayku.com/download/rayku.exe">Windows</a> software.<br><br>
+                1) Activated your tutor status by clicking \'on\' in your <a href="http://rayku.com/dashboard">dashboard page</a>.<br>
+                2) Important: Learn how to tutor on Rayku in 10 minutes by watching our <a href="http://rayku.com/tutorshelp">tutor help videos</a>.<br>
+                3) Prepare to receive question notifications by connecting to our <strong><a href="http://notification-bot.rayku.com/download/rayku.dmg">MacOS</a> / <a href="http://notification-bot.rayku.com/download/rayku.exe">Windows</a> notification software</strong>, <a href="http://rayku.com/dashboard/gtalk">google talk</a> and <a href="http://rayku.com/dashboard/facebook">facebook chat</a>.<br><br>
 
                 Enjoy, and do let us know if you ever have any questions - we\'re here to help!<br><br>
 

@@ -225,7 +225,7 @@ class dashboardActions extends sfActions
                     mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
                 }
 
-                $this->redirect('/tutorshelp');
+                $this->redirect('/tutorshelp?tutor=activate');
             }
         }
     }
