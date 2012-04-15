@@ -98,7 +98,7 @@ div#theader {
 
 /* Content DIV */
 div#tcontent {
-	padding: 20px 25px 60px;
+	padding: 20px 25px 20px;
 }
 	div#tcontent h1, div#lists-box div.list h3 {
 		color: #1c517b;
@@ -135,9 +135,10 @@ div#video-box {
 		line-height: 51px;	
 		z-index:20;
 		position: absolute;
-		width: 535px;
+		width: 475px;
 		opacity: 0.7;
 		margin-top: 295px;
+		margin-left:60px;
 	}
 	div#video-box ul#steps {
 		list-style: none;
@@ -172,7 +173,7 @@ div#video-box {
 		padding: 20px;
 		background: #d2e6f6;
 		font-size: 140%;
-		color: #797d80;
+		color: #333;
 		line-height: 180%;
 		width: 575px;
 		margin: 0 0 25px;

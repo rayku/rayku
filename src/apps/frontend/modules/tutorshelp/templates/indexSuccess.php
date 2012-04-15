@@ -4,10 +4,15 @@
 <!--div#top-nav-->
   <div id="tcontent">
     <h1 style="font-size:20px"><a href="/dashboard" style="text-decoration:underline">Dashboard</a> > Tutor Help Videos</h1>
-    <div style="padding:10px;background:#FFFFCC;height:43px;margin-bottom:20px;">
-    <p><strong>Your tutor status is activated!</strong><br /><br />
-    <strong>Important:</strong> Please spend 5 minutes to watch all 4 videos thoroughly to get started as a Rayku tutor!</p>
-    </div>
+    <?php 
+	if($_GET['tutor'] == "activate"):
+	?>
+    <div style="padding:16px;background:#408CB3;border-bottom:2px solid #069;font-size:16px;color:#FFF;">
+    Your tutor status is activated!</div>
+    <?php
+	endif;
+	?>
+    <p style="margin-top:20px;"><strong>Important:</strong> Make sure to spend 10 minutes to watch all 4 videos thoroughly to get started as a Rayku tutor!</p>
     <div id="video-box">
       <div class="video">
         <div id="video-title">Get started with tutoring on Rayku</div>
@@ -35,8 +40,10 @@
     <div class="clear"></div>
     <div class="separator">&nbsp;</div>
     <!--#cropeed bg separator-->
+    <div align="right"><a href="http://wistia.com/?badge" target="_blank"><span style="font-family:Arial;font-size:12px;color:#000;margin:0;padding:0 10px 0 0;position:relative;top:-3px;display:inline-block;text-shadow: #ccc 1px -1px">VIDEO HOSTING BY</span><img src="http://static.wistia.com/images/badges/wistia_100x96_black.png" width="100" height="16" alt="Wistia" style="border:0;margin:0;padding:0;display:inline;"/></a></div>
 
   </div>
   <!--div#content-->
+
 
   <div class="clear"></div>
