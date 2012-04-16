@@ -129,6 +129,8 @@ view_forums:
 submit_friend_request:
   url: /friends/requestFriendship/:username/*
   param: { module: friends, action: friendshipRequest }
+  options:
+    segment_separators: ['/']
 
 friend_remove:
   url: /friends/removeFriendship/:user_id
@@ -283,10 +285,14 @@ groups:
 profile_edit:
   url: /profile/:username/edit
   param: { module: profile, action: edit }
+  options:
+    segment_separators: ['/']
 
 profile:
   url: /profile/:username
   param: { module: profile, action: index }
+  options:
+    segment_separators: ['/']
 
 avatar:
   url: /avatar/:user_id/:size
@@ -303,10 +309,14 @@ avatar:
 nudge_remove:
   url: /nudge/ignore/:username
   param: { module: nudge, action: remove }
+  options:
+    segment_separators: ['/']
 
 nudge:
   url: /nudge/:username
   param: { module: nudge, action: send }
+  options:
+    segment_separators: ['/']
 
 
 # ----
@@ -316,6 +326,8 @@ nudge:
 tutor:
   url: /tutor/:username
   param: { module: tutor, action: index }
+  options:
+    segment_separators: ['/']
 
 # ----
 # Tutors
@@ -333,6 +345,8 @@ tutors:
 testtutor:
   url: /testtutor/:username
   param: { module: testtutor, action: index }
+  options:
+    segment_separators: ['/']
 
 
 
