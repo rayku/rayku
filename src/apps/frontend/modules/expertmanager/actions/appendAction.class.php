@@ -261,8 +261,6 @@ class appendAction extends sfAction
             $this->redirect('/forum/newthread/'.$_SESSION['subject'].'?exp_online = 1');
         }
         
-        StatsD::timing('onlineUsers', count($onlineusers));
-
         $onoff = isset($_COOKIE["onoff"]) ? $_COOKIE["onoff"] : null;
         if ($onoff == 1) {
             if (!empty($_COOKIE["school"])) {
