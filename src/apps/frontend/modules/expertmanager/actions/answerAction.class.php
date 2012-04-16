@@ -37,7 +37,6 @@ class answerAction extends sfAction
             $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
 
             // redirect to rayku whiteboard
-            StatsD::increment("whiteboard.session.success");
             $this->logWhiteboardConnection($userId);
             $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
         } else {

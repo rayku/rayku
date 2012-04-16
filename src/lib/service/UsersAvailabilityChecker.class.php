@@ -66,6 +66,13 @@ class UsersAvailabilityChecker
     
     function getOnlineUsers()
     {
+        $this->counts = array(
+            'web' => 0,
+            'gtalk' => 0,
+            'fb' => 0,
+            'mac' => 0
+        );
+    
         $c = new Criteria();
         $c->addJoin(UserPeer::ID, UserGtalkPeer::USERID, Criteria::LEFT_JOIN);
         $allUsers = UserPeer::doSelect($c);
@@ -76,25 +83,36 @@ class UsersAvailabilityChecker
 
         /* @var $user User */
         foreach ($allUsers as $user) {
-            if (
-                $user->isOnline()
-                || $this->isGtalkOnline($user)
-                || $this->isFBOnline($user)
-                || $this->isMACOnline($user)
-            ) {
-                $onlineusers[] = $user->getId();
+
+            if ($user->isOnline()) {
+                $this->counts['web']++;
+            } else if($this->isGtalkOnline($user)) {
+                $this->counts['gtalk']++;
+            } else if($this->isFBOnline($user)) {
+                $this->counts['fb']++;
+            } else if ($this->isMACOnline($user)) {
+                $this->counts['mac']++;
+            } else {
+                continue;
             }
+            
+            $onlineusers[] = $user->getId();
         }
-        
+
         return $onlineusers;
+    }
+    
+    /**
+     * Returns array with number of online users for each comunication channel
+     */
+    function getCountsByCC()
+    {
+        return $this->counts;
     }
     
     function getOnlineUsersCount()
     {
         $onlineUsersCount = count($this->getOnlineUsers());
-
-        StatsD::timing('onlineUsers', $onlineUsersCount);
-        
         return $onlineUsersCount;
     }
 
