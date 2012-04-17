@@ -246,17 +246,6 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { gallery_item_FI_1: [gallery_id], user_id: [user_id] }
-  group_site_page:
-    _attributes: { phpName: GroupSitePage }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: false }
-    group_id: { type: INTEGER, size: '11', required: false }
-    content: { type: LONGVARCHAR, required: false }
-    page_order: { type: INTEGER, size: '11', required: false }
-    template: { type: VARCHAR, size: '150', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    _indexes: { group_site_page_FI_1: [group_id] }
   history:
     _attributes: { phpName: History }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

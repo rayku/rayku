@@ -577,27 +577,6 @@ CREATE TABLE `gallery_item`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- group_site_page
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `group_site_page`;
-
-
-CREATE TABLE `group_site_page`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100),
-	`group_id` INTEGER(11),
-	`content` TEXT,
-	`page_order` INTEGER(11),
-	`template` VARCHAR(150),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `group_site_page_FI_1`(`group_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- history
 #-----------------------------------------------------------------------------
 
