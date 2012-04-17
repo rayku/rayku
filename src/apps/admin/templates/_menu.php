@@ -6,8 +6,7 @@
     <li><?php echo link_to('Award Points', 'users/givePoints'); ?></li>
     <li><?php echo link_to('Categories', 'category/index'); ?></li>
     <li><?php echo link_to('Boards', 'forums/index'); ?></li>
-   <!-- <li><?php // echo link_to('Group', 'groups/list'); ?></li>-->
-	<li><?php echo link_to('Experts Payouts', 'experts_payouts/index'); ?></li>
+    <li><?php echo link_to('Experts Payouts', 'experts_payouts/index'); ?></li>
     <li><?php echo link_to('Regenerate Cache', 'cache/index'); ?></li>
     <li><?php echo link_to('News Update', 'news/index'); ?></li>
     <li><?php echo link_to('Mass Mail', 'massmail/index'); ?></li>
