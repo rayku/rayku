@@ -270,7 +270,6 @@ class registerActions extends sfActions
             $user->setMobilePhone($this->getRequestParameter('mobile_phone'));
             $user->setAddress($this->getRequestParameter('address'));
             $user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
-            $user->setAboutMe($this->getRequestParameter('about_me'));
 
             $user->save();
             if ($this->getRequest()->getFileName('file')!="") {

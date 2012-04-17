@@ -13,8 +13,6 @@ $hometown=$fbuser["hometown_location"]['city']." ".$fbuser["hometown_location"][
 if($hometown!='')
 mysql_query("UPDATE user SET hometown = '$hometown' where id='$id'", $connection);
 $abtme=$fbuser['about_me'];
-if($abtme!='')
-mysql_query("UPDATE user SET about_me = '$abtme' where id='$id'", $connection);
 if($fbuser['sex']=='male')
 $sex=0;
 else

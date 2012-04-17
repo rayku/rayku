@@ -133,12 +133,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $relationship_status;
 
 	/**
-	 * The value for the about_me field.
-	 * @var        string
-	 */
-	protected $about_me;
-
-	/**
 	 * The value for the show_email field.
 	 * Note: this column has a database default value of: 1
 	 * @var        int
@@ -790,16 +784,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [about_me] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getAboutMe()
-	{
-		return $this->about_me;
-	}
-
-	/**
 	 * Get the [show_email] column value.
 	 * 
 	 * @return     int
@@ -1411,26 +1395,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setRelationshipStatus()
 
 	/**
-	 * Set the value of [about_me] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setAboutMe($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->about_me !== $v) {
-			$this->about_me = $v;
-			$this->modifiedColumns[] = UserPeer::ABOUT_ME;
-		}
-
-		return $this;
-	} // setAboutMe()
-
-	/**
 	 * Set the value of [show_email] column.
 	 * 
 	 * @param      int $v new value
@@ -1861,23 +1825,22 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->birthdate = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
 			$this->address = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
 			$this->relationship_status = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
-			$this->about_me = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
-			$this->show_email = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
-			$this->show_gender = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
-			$this->show_hometown = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
-			$this->show_home_phone = ($row[$startcol + 22] !== null) ? (int) $row[$startcol + 22] : null;
-			$this->show_mobile_phone = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
-			$this->show_birthdate = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
-			$this->show_address = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
-			$this->show_relationship_status = ($row[$startcol + 26] !== null) ? (int) $row[$startcol + 26] : null;
-			$this->password_recover_key = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
-			$this->cookie_key = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
-			$this->credit = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
-			$this->invisible = ($row[$startcol + 30] !== null) ? (int) $row[$startcol + 30] : null;
-			$this->notification = ($row[$startcol + 31] !== null) ? (string) $row[$startcol + 31] : null;
-			$this->phone_number = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
-			$this->network_id = ($row[$startcol + 33] !== null) ? (int) $row[$startcol + 33] : null;
-			$this->login = ($row[$startcol + 34] !== null) ? (int) $row[$startcol + 34] : null;
+			$this->show_email = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
+			$this->show_gender = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
+			$this->show_hometown = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
+			$this->show_home_phone = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
+			$this->show_mobile_phone = ($row[$startcol + 22] !== null) ? (int) $row[$startcol + 22] : null;
+			$this->show_birthdate = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
+			$this->show_address = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
+			$this->show_relationship_status = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
+			$this->password_recover_key = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
+			$this->cookie_key = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->credit = ($row[$startcol + 28] !== null) ? (int) $row[$startcol + 28] : null;
+			$this->invisible = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
+			$this->notification = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
+			$this->phone_number = ($row[$startcol + 31] !== null) ? (string) $row[$startcol + 31] : null;
+			$this->network_id = ($row[$startcol + 32] !== null) ? (int) $row[$startcol + 32] : null;
+			$this->login = ($row[$startcol + 33] !== null) ? (int) $row[$startcol + 33] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1887,7 +1850,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 35; // 35 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 34; // 34 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2697,54 +2660,51 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return $this->getRelationshipStatus();
 				break;
 			case 18:
-				return $this->getAboutMe();
-				break;
-			case 19:
 				return $this->getShowEmail();
 				break;
-			case 20:
+			case 19:
 				return $this->getShowGender();
 				break;
-			case 21:
+			case 20:
 				return $this->getShowHometown();
 				break;
-			case 22:
+			case 21:
 				return $this->getShowHomePhone();
 				break;
-			case 23:
+			case 22:
 				return $this->getShowMobilePhone();
 				break;
-			case 24:
+			case 23:
 				return $this->getShowBirthdate();
 				break;
-			case 25:
+			case 24:
 				return $this->getShowAddress();
 				break;
-			case 26:
+			case 25:
 				return $this->getShowRelationshipStatus();
 				break;
-			case 27:
+			case 26:
 				return $this->getPasswordRecoverKey();
 				break;
-			case 28:
+			case 27:
 				return $this->getCookieKey();
 				break;
-			case 29:
+			case 28:
 				return $this->getCredit();
 				break;
-			case 30:
+			case 29:
 				return $this->getInvisible();
 				break;
-			case 31:
+			case 30:
 				return $this->getNotification();
 				break;
-			case 32:
+			case 31:
 				return $this->getPhoneNumber();
 				break;
-			case 33:
+			case 32:
 				return $this->getNetworkId();
 				break;
-			case 34:
+			case 33:
 				return $this->getLogin();
 				break;
 			default:
@@ -2786,23 +2746,22 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[15] => $this->getBirthdate(),
 			$keys[16] => $this->getAddress(),
 			$keys[17] => $this->getRelationshipStatus(),
-			$keys[18] => $this->getAboutMe(),
-			$keys[19] => $this->getShowEmail(),
-			$keys[20] => $this->getShowGender(),
-			$keys[21] => $this->getShowHometown(),
-			$keys[22] => $this->getShowHomePhone(),
-			$keys[23] => $this->getShowMobilePhone(),
-			$keys[24] => $this->getShowBirthdate(),
-			$keys[25] => $this->getShowAddress(),
-			$keys[26] => $this->getShowRelationshipStatus(),
-			$keys[27] => $this->getPasswordRecoverKey(),
-			$keys[28] => $this->getCookieKey(),
-			$keys[29] => $this->getCredit(),
-			$keys[30] => $this->getInvisible(),
-			$keys[31] => $this->getNotification(),
-			$keys[32] => $this->getPhoneNumber(),
-			$keys[33] => $this->getNetworkId(),
-			$keys[34] => $this->getLogin(),
+			$keys[18] => $this->getShowEmail(),
+			$keys[19] => $this->getShowGender(),
+			$keys[20] => $this->getShowHometown(),
+			$keys[21] => $this->getShowHomePhone(),
+			$keys[22] => $this->getShowMobilePhone(),
+			$keys[23] => $this->getShowBirthdate(),
+			$keys[24] => $this->getShowAddress(),
+			$keys[25] => $this->getShowRelationshipStatus(),
+			$keys[26] => $this->getPasswordRecoverKey(),
+			$keys[27] => $this->getCookieKey(),
+			$keys[28] => $this->getCredit(),
+			$keys[29] => $this->getInvisible(),
+			$keys[30] => $this->getNotification(),
+			$keys[31] => $this->getPhoneNumber(),
+			$keys[32] => $this->getNetworkId(),
+			$keys[33] => $this->getLogin(),
 		);
 		return $result;
 	}
@@ -2889,54 +2848,51 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$this->setRelationshipStatus($value);
 				break;
 			case 18:
-				$this->setAboutMe($value);
-				break;
-			case 19:
 				$this->setShowEmail($value);
 				break;
-			case 20:
+			case 19:
 				$this->setShowGender($value);
 				break;
-			case 21:
+			case 20:
 				$this->setShowHometown($value);
 				break;
-			case 22:
+			case 21:
 				$this->setShowHomePhone($value);
 				break;
-			case 23:
+			case 22:
 				$this->setShowMobilePhone($value);
 				break;
-			case 24:
+			case 23:
 				$this->setShowBirthdate($value);
 				break;
-			case 25:
+			case 24:
 				$this->setShowAddress($value);
 				break;
-			case 26:
+			case 25:
 				$this->setShowRelationshipStatus($value);
 				break;
-			case 27:
+			case 26:
 				$this->setPasswordRecoverKey($value);
 				break;
-			case 28:
+			case 27:
 				$this->setCookieKey($value);
 				break;
-			case 29:
+			case 28:
 				$this->setCredit($value);
 				break;
-			case 30:
+			case 29:
 				$this->setInvisible($value);
 				break;
-			case 31:
+			case 30:
 				$this->setNotification($value);
 				break;
-			case 32:
+			case 31:
 				$this->setPhoneNumber($value);
 				break;
-			case 33:
+			case 32:
 				$this->setNetworkId($value);
 				break;
-			case 34:
+			case 33:
 				$this->setLogin($value);
 				break;
 		} // switch()
@@ -2981,23 +2937,22 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[15], $arr)) $this->setBirthdate($arr[$keys[15]]);
 		if (array_key_exists($keys[16], $arr)) $this->setAddress($arr[$keys[16]]);
 		if (array_key_exists($keys[17], $arr)) $this->setRelationshipStatus($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setAboutMe($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setShowEmail($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setShowGender($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setShowHometown($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setShowHomePhone($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setShowMobilePhone($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setShowBirthdate($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setShowAddress($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setShowRelationshipStatus($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setPasswordRecoverKey($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setCookieKey($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setCredit($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setInvisible($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setNotification($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setPhoneNumber($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setNetworkId($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setLogin($arr[$keys[34]]);
+		if (array_key_exists($keys[18], $arr)) $this->setShowEmail($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setShowGender($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setShowHometown($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setShowHomePhone($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setShowMobilePhone($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setShowBirthdate($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setShowAddress($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setShowRelationshipStatus($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setPasswordRecoverKey($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setCookieKey($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setCredit($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setInvisible($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setNotification($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setPhoneNumber($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setNetworkId($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setLogin($arr[$keys[33]]);
 	}
 
 	/**
@@ -3027,7 +2982,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::BIRTHDATE)) $criteria->add(UserPeer::BIRTHDATE, $this->birthdate);
 		if ($this->isColumnModified(UserPeer::ADDRESS)) $criteria->add(UserPeer::ADDRESS, $this->address);
 		if ($this->isColumnModified(UserPeer::RELATIONSHIP_STATUS)) $criteria->add(UserPeer::RELATIONSHIP_STATUS, $this->relationship_status);
-		if ($this->isColumnModified(UserPeer::ABOUT_ME)) $criteria->add(UserPeer::ABOUT_ME, $this->about_me);
 		if ($this->isColumnModified(UserPeer::SHOW_EMAIL)) $criteria->add(UserPeer::SHOW_EMAIL, $this->show_email);
 		if ($this->isColumnModified(UserPeer::SHOW_GENDER)) $criteria->add(UserPeer::SHOW_GENDER, $this->show_gender);
 		if ($this->isColumnModified(UserPeer::SHOW_HOMETOWN)) $criteria->add(UserPeer::SHOW_HOMETOWN, $this->show_hometown);
@@ -3131,8 +3085,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setAddress($this->address);
 
 		$copyObj->setRelationshipStatus($this->relationship_status);
-
-		$copyObj->setAboutMe($this->about_me);
 
 		$copyObj->setShowEmail($this->show_email);
 

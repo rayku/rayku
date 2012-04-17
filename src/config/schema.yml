@@ -535,7 +535,6 @@ propel:
     birthdate: { type: DATE, required: false }
     address: { type: LONGVARCHAR, required: false }
     relationship_status: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    about_me: { type: LONGVARCHAR, required: false }
     show_email: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_gender: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_hometown: { type: INTEGER, size: '11', required: false, defaultValue: '1' }

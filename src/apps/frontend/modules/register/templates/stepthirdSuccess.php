@@ -31,25 +31,6 @@
                             <div class="spacer"></div>
                       </div>
                       
-					 	<div class="box">
-					    <div class="top"></div>
-					    <div class="content">
-					      <div class="title">  Profile Information</div>
-
-					      <div class="subtitle">Fill out as much info as you can below, and show off your true colors on your profile, while making it easier for your friends to find you on Rayku.com! The information below will be displayed on your public profile.</div>
-					      <div class="entry">
-					        <div class="ttle">About Me</div>
-					        <div class="spacer"></div>
-					        <div class="txtareabg"></div>
-                            <?php echo textarea_tag('about_me', $user->getAboutMe(), array('cols' => 50, 'rows' => 5)) ?>
-					        <div class="spacer"></div>
-
-				          </div>
-                        </div>
-					    <div class="bottom"></div>
-				      </div>
-					  
-					  
 					  <div class="box">
                        	<div class="top"></div>
                         <div class="content">

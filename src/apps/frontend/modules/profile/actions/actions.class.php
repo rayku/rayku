@@ -127,7 +127,6 @@ class profileActions extends sfActions
 
 			$user->setAddress($this->getRequestParameter('address'));
 			$user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
-			$user->setAboutMe($this->getRequestParameter('about_me'));
 
 			// if the password is set
 			if ('' !== $this->getRequestParameter('password1'))

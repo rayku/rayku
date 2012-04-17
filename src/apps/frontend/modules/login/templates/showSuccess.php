@@ -29,22 +29,3 @@
   </div>
 </div>
 <br class="clear-both" />
-
-<?php
-/*require_once (sfConfig::get('sf_lib_dir') .'/Services/Facebook.php');
- echo "hi";
-  Services_Facebook::$apiKey = '0b60aa8352658ae667308f301eeda8ce';
-   Services_Facebook::$secret = 'f6f39f025954444c01061415d2510bbf';
-   echo "hi".Services_Facebook::$apiKey;
-    try {
-	 $uid="ghonatemanju";
-	$api = new Services_Facebook();
-	 $api->sessionKey = 'someones-session-key-here';
-	  $info = $api->users->getInfo($uid);
-	   echo (string)$info->user->about_me . "\n";
-	    // A list of uid's $uids = array(11111, 2222, 3333, 4444); $fql = 'SELECT uid, about_me FROM user WHERE uid IN (' . implode(',', $uids) . ')'; $result = $api->fql->query($fql); foreach ($result->user as $user) { echo (string)$user->about_me . "\n"; }
-		 } catch (Services_Facebook_Exception $e) 
-		 { echo $e->getLastCall() . "\n";
-		   echo $e->getMessage();
-		 } */
-		?>

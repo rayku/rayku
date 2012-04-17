@@ -98,8 +98,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('RELATIONSHIP_STATUS', 'RelationshipStatus', 'INTEGER', false, 11);
 
-		$tMap->addColumn('ABOUT_ME', 'AboutMe', 'LONGVARCHAR', false, null);
-
 		$tMap->addColumn('SHOW_EMAIL', 'ShowEmail', 'INTEGER', false, 11);
 
 		$tMap->addColumn('SHOW_GENDER', 'ShowGender', 'INTEGER', false, 11);

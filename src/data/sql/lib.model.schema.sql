@@ -1285,7 +1285,6 @@ CREATE TABLE `user`
 	`birthdate` DATE,
 	`address` TEXT,
 	`relationship_status` INTEGER(11) default 0,
-	`about_me` TEXT,
 	`show_email` INTEGER(11) default 1,
 	`show_gender` INTEGER(11) default 1,
 	`show_hometown` INTEGER(11) default 1,
