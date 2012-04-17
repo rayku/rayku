@@ -1385,9 +1385,6 @@ abstract class BaseUserPeer {
 			// invalidate objects in PurchaseDetailPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			PurchaseDetailPeer::clearInstancePool();
 
-			// invalidate objects in ReportUserPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ReportUserPeer::clearInstancePool();
-
 			// invalidate objects in ShoppingCartPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			ShoppingCartPeer::clearInstancePool();
 

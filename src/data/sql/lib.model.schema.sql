@@ -905,61 +905,6 @@ CREATE TABLE `purchase_detail`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- report_entity
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `report_entity`;
-
-
-CREATE TABLE `report_entity`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`report_count` INTEGER(11),
-	`thread_id` INTEGER(11),
-	`post_id` INTEGER(11),
-	`group_id` INTEGER(11),
-	`bulletin_id` INTEGER(11),
-	`group_site_page_id` INTEGER(11),
-	`comment_id` INTEGER(11),
-	`picture_id` INTEGER(11),
-	`video_id` INTEGER(11),
-	`shout_id` INTEGER(11),
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `report_entity_thread_id_unique` (`thread_id`),
-	UNIQUE KEY `report_entity_post_id_unique` (`post_id`),
-	UNIQUE KEY `report_entity_group_id_unique` (`group_id`),
-	UNIQUE KEY `report_entity_bulletin_id_unique` (`bulletin_id`),
-	UNIQUE KEY `report_entity_group_site_page_id_unique` (`group_site_page_id`),
-	UNIQUE KEY `report_entity_comment_id_unique` (`comment_id`),
-	UNIQUE KEY `report_entity_picture_id_unique` (`picture_id`),
-	UNIQUE KEY `report_entity_video_id_unique` (`video_id`),
-	UNIQUE KEY `report_entity_shout_id_unique` (`shout_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- report_user
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `report_user`;
-
-
-CREATE TABLE `report_user`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`type` INTEGER(11),
-	`entity_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `report_user_FI_1`(`user_id`),
-	CONSTRAINT `report_user_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- sales
 #-----------------------------------------------------------------------------
 

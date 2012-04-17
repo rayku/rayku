@@ -358,16 +358,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastPurchaseDetailCriteria = null;
 
 	/**
-	 * @var        array ReportUser[] Collection to store aggregation of ReportUser objects.
-	 */
-	protected $collReportUsers;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collReportUsers.
-	 */
-	private $lastReportUserCriteria = null;
-
-	/**
 	 * @var        array ShoppingCart[] Collection to store aggregation of ShoppingCart objects.
 	 */
 	protected $collShoppingCarts;
@@ -1943,9 +1933,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collPurchaseDetails = null;
 			$this->lastPurchaseDetailCriteria = null;
 
-			$this->collReportUsers = null;
-			$this->lastReportUserCriteria = null;
-
 			$this->collShoppingCarts = null;
 			$this->lastShoppingCartCriteria = null;
 
@@ -2188,14 +2175,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collPurchaseDetails !== null) {
 				foreach ($this->collPurchaseDetails as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collReportUsers !== null) {
-				foreach ($this->collReportUsers as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2451,14 +2430,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collPurchaseDetails !== null) {
 					foreach ($this->collPurchaseDetails as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collReportUsers !== null) {
-					foreach ($this->collReportUsers as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3158,12 +3129,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getPurchaseDetails() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addPurchaseDetail($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getReportUsers() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addReportUser($relObj->copy($deepCopy));
 				}
 			}
 
@@ -5305,160 +5270,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collReportUsers collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addReportUsers()
-	 */
-	public function clearReportUsers()
-	{
-		$this->collReportUsers = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collReportUsers collection (array).
-	 *
-	 * By default this just sets the collReportUsers collection to an empty array (like clearcollReportUsers());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initReportUsers()
-	{
-		$this->collReportUsers = array();
-	}
-
-	/**
-	 * Gets an array of ReportUser objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related ReportUsers from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array ReportUser[]
-	 * @throws     PropelException
-	 */
-	public function getReportUsers($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collReportUsers === null) {
-			if ($this->isNew()) {
-			   $this->collReportUsers = array();
-			} else {
-
-				$criteria->add(ReportUserPeer::USER_ID, $this->id);
-
-				ReportUserPeer::addSelectColumns($criteria);
-				$this->collReportUsers = ReportUserPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(ReportUserPeer::USER_ID, $this->id);
-
-				ReportUserPeer::addSelectColumns($criteria);
-				if (!isset($this->lastReportUserCriteria) || !$this->lastReportUserCriteria->equals($criteria)) {
-					$this->collReportUsers = ReportUserPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastReportUserCriteria = $criteria;
-		return $this->collReportUsers;
-	}
-
-	/**
-	 * Returns the number of related ReportUser objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related ReportUser objects.
-	 * @throws     PropelException
-	 */
-	public function countReportUsers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collReportUsers === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(ReportUserPeer::USER_ID, $this->id);
-
-				$count = ReportUserPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(ReportUserPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastReportUserCriteria) || !$this->lastReportUserCriteria->equals($criteria)) {
-					$count = ReportUserPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collReportUsers);
-				}
-			} else {
-				$count = count($this->collReportUsers);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a ReportUser object to this object
-	 * through the ReportUser foreign key attribute.
-	 *
-	 * @param      ReportUser $l ReportUser
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addReportUser(ReportUser $l)
-	{
-		if ($this->collReportUsers === null) {
-			$this->initReportUsers();
-		}
-		if (!in_array($l, $this->collReportUsers, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collReportUsers, $l);
-			$l->setUser($this);
-		}
-	}
-
-	/**
 	 * Clears out the collShoppingCarts collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -7041,11 +6852,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collReportUsers) {
-				foreach ((array) $this->collReportUsers as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collShoppingCarts) {
 				foreach ((array) $this->collShoppingCarts as $o) {
 					$o->clearAllReferences($deep);
@@ -7107,7 +6913,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collOfferVoucher1s = null;
 		$this->collPictures = null;
 		$this->collPurchaseDetails = null;
-		$this->collReportUsers = null;
 		$this->collShoppingCarts = null;
 		$this->collShoutsRelatedByPosterId = null;
 		$this->collShoutsRelatedByRecipientId = null;
