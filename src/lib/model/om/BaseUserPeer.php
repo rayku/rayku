@@ -19,7 +19,7 @@ abstract class BaseUserPeer {
 	const CLASS_DEFAULT = 'lib.model.User';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 36;
+	const NUM_COLUMNS = 35;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -105,9 +105,6 @@ abstract class BaseUserPeer {
 	/** the column name for the SHOW_RELATIONSHIP_STATUS field */
 	const SHOW_RELATIONSHIP_STATUS = 'user.SHOW_RELATIONSHIP_STATUS';
 
-	/** the column name for the SHOW_HOBBIES field */
-	const SHOW_HOBBIES = 'user.SHOW_HOBBIES';
-
 	/** the column name for the PASSWORD_RECOVER_KEY field */
 	const PASSWORD_RECOVER_KEY = 'user.PASSWORD_RECOVER_KEY';
 
@@ -153,11 +150,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'PictureId', 'Username', 'Email', 'Password', 'Points', 'CreatedAt', 'LastActivityAt', 'Type', 'Hidden', 'Name', 'Gender', 'Hometown', 'HomePhone', 'MobilePhone', 'Birthdate', 'Address', 'RelationshipStatus', 'AboutMe', 'ShowEmail', 'ShowGender', 'ShowHometown', 'ShowHomePhone', 'ShowMobilePhone', 'ShowBirthdate', 'ShowAddress', 'ShowRelationshipStatus', 'ShowHobbies', 'PasswordRecoverKey', 'CookieKey', 'Credit', 'Invisible', 'Notification', 'PhoneNumber', 'NetworkId', 'Login', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'pictureId', 'username', 'email', 'password', 'points', 'createdAt', 'lastActivityAt', 'type', 'hidden', 'name', 'gender', 'hometown', 'homePhone', 'mobilePhone', 'birthdate', 'address', 'relationshipStatus', 'aboutMe', 'showEmail', 'showGender', 'showHometown', 'showHomePhone', 'showMobilePhone', 'showBirthdate', 'showAddress', 'showRelationshipStatus', 'showHobbies', 'passwordRecoverKey', 'cookieKey', 'credit', 'invisible', 'notification', 'phoneNumber', 'networkId', 'login', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PICTURE_ID, self::USERNAME, self::EMAIL, self::PASSWORD, self::POINTS, self::CREATED_AT, self::LAST_ACTIVITY_AT, self::TYPE, self::HIDDEN, self::NAME, self::GENDER, self::HOMETOWN, self::HOME_PHONE, self::MOBILE_PHONE, self::BIRTHDATE, self::ADDRESS, self::RELATIONSHIP_STATUS, self::ABOUT_ME, self::SHOW_EMAIL, self::SHOW_GENDER, self::SHOW_HOMETOWN, self::SHOW_HOME_PHONE, self::SHOW_MOBILE_PHONE, self::SHOW_BIRTHDATE, self::SHOW_ADDRESS, self::SHOW_RELATIONSHIP_STATUS, self::SHOW_HOBBIES, self::PASSWORD_RECOVER_KEY, self::COOKIE_KEY, self::CREDIT, self::INVISIBLE, self::NOTIFICATION, self::PHONE_NUMBER, self::NETWORK_ID, self::LOGIN, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'picture_id', 'username', 'email', 'password', 'points', 'created_at', 'last_activity_at', 'type', 'hidden', 'name', 'gender', 'hometown', 'home_phone', 'mobile_phone', 'birthdate', 'address', 'relationship_status', 'about_me', 'show_email', 'show_gender', 'show_hometown', 'show_home_phone', 'show_mobile_phone', 'show_birthdate', 'show_address', 'show_relationship_status', 'show_hobbies', 'password_recover_key', 'cookie_key', 'credit', 'invisible', 'notification', 'phone_number', 'network_id', 'login', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'PictureId', 'Username', 'Email', 'Password', 'Points', 'CreatedAt', 'LastActivityAt', 'Type', 'Hidden', 'Name', 'Gender', 'Hometown', 'HomePhone', 'MobilePhone', 'Birthdate', 'Address', 'RelationshipStatus', 'AboutMe', 'ShowEmail', 'ShowGender', 'ShowHometown', 'ShowHomePhone', 'ShowMobilePhone', 'ShowBirthdate', 'ShowAddress', 'ShowRelationshipStatus', 'PasswordRecoverKey', 'CookieKey', 'Credit', 'Invisible', 'Notification', 'PhoneNumber', 'NetworkId', 'Login', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'pictureId', 'username', 'email', 'password', 'points', 'createdAt', 'lastActivityAt', 'type', 'hidden', 'name', 'gender', 'hometown', 'homePhone', 'mobilePhone', 'birthdate', 'address', 'relationshipStatus', 'aboutMe', 'showEmail', 'showGender', 'showHometown', 'showHomePhone', 'showMobilePhone', 'showBirthdate', 'showAddress', 'showRelationshipStatus', 'passwordRecoverKey', 'cookieKey', 'credit', 'invisible', 'notification', 'phoneNumber', 'networkId', 'login', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PICTURE_ID, self::USERNAME, self::EMAIL, self::PASSWORD, self::POINTS, self::CREATED_AT, self::LAST_ACTIVITY_AT, self::TYPE, self::HIDDEN, self::NAME, self::GENDER, self::HOMETOWN, self::HOME_PHONE, self::MOBILE_PHONE, self::BIRTHDATE, self::ADDRESS, self::RELATIONSHIP_STATUS, self::ABOUT_ME, self::SHOW_EMAIL, self::SHOW_GENDER, self::SHOW_HOMETOWN, self::SHOW_HOME_PHONE, self::SHOW_MOBILE_PHONE, self::SHOW_BIRTHDATE, self::SHOW_ADDRESS, self::SHOW_RELATIONSHIP_STATUS, self::PASSWORD_RECOVER_KEY, self::COOKIE_KEY, self::CREDIT, self::INVISIBLE, self::NOTIFICATION, self::PHONE_NUMBER, self::NETWORK_ID, self::LOGIN, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'picture_id', 'username', 'email', 'password', 'points', 'created_at', 'last_activity_at', 'type', 'hidden', 'name', 'gender', 'hometown', 'home_phone', 'mobile_phone', 'birthdate', 'address', 'relationship_status', 'about_me', 'show_email', 'show_gender', 'show_hometown', 'show_home_phone', 'show_mobile_phone', 'show_birthdate', 'show_address', 'show_relationship_status', 'password_recover_key', 'cookie_key', 'credit', 'invisible', 'notification', 'phone_number', 'network_id', 'login', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
 	);
 
 	/**
@@ -167,11 +164,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PictureId' => 1, 'Username' => 2, 'Email' => 3, 'Password' => 4, 'Points' => 5, 'CreatedAt' => 6, 'LastActivityAt' => 7, 'Type' => 8, 'Hidden' => 9, 'Name' => 10, 'Gender' => 11, 'Hometown' => 12, 'HomePhone' => 13, 'MobilePhone' => 14, 'Birthdate' => 15, 'Address' => 16, 'RelationshipStatus' => 17, 'AboutMe' => 18, 'ShowEmail' => 19, 'ShowGender' => 20, 'ShowHometown' => 21, 'ShowHomePhone' => 22, 'ShowMobilePhone' => 23, 'ShowBirthdate' => 24, 'ShowAddress' => 25, 'ShowRelationshipStatus' => 26, 'ShowHobbies' => 27, 'PasswordRecoverKey' => 28, 'CookieKey' => 29, 'Credit' => 30, 'Invisible' => 31, 'Notification' => 32, 'PhoneNumber' => 33, 'NetworkId' => 34, 'Login' => 35, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'pictureId' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'createdAt' => 6, 'lastActivityAt' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'homePhone' => 13, 'mobilePhone' => 14, 'birthdate' => 15, 'address' => 16, 'relationshipStatus' => 17, 'aboutMe' => 18, 'showEmail' => 19, 'showGender' => 20, 'showHometown' => 21, 'showHomePhone' => 22, 'showMobilePhone' => 23, 'showBirthdate' => 24, 'showAddress' => 25, 'showRelationshipStatus' => 26, 'showHobbies' => 27, 'passwordRecoverKey' => 28, 'cookieKey' => 29, 'credit' => 30, 'invisible' => 31, 'notification' => 32, 'phoneNumber' => 33, 'networkId' => 34, 'login' => 35, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PICTURE_ID => 1, self::USERNAME => 2, self::EMAIL => 3, self::PASSWORD => 4, self::POINTS => 5, self::CREATED_AT => 6, self::LAST_ACTIVITY_AT => 7, self::TYPE => 8, self::HIDDEN => 9, self::NAME => 10, self::GENDER => 11, self::HOMETOWN => 12, self::HOME_PHONE => 13, self::MOBILE_PHONE => 14, self::BIRTHDATE => 15, self::ADDRESS => 16, self::RELATIONSHIP_STATUS => 17, self::ABOUT_ME => 18, self::SHOW_EMAIL => 19, self::SHOW_GENDER => 20, self::SHOW_HOMETOWN => 21, self::SHOW_HOME_PHONE => 22, self::SHOW_MOBILE_PHONE => 23, self::SHOW_BIRTHDATE => 24, self::SHOW_ADDRESS => 25, self::SHOW_RELATIONSHIP_STATUS => 26, self::SHOW_HOBBIES => 27, self::PASSWORD_RECOVER_KEY => 28, self::COOKIE_KEY => 29, self::CREDIT => 30, self::INVISIBLE => 31, self::NOTIFICATION => 32, self::PHONE_NUMBER => 33, self::NETWORK_ID => 34, self::LOGIN => 35, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'picture_id' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'created_at' => 6, 'last_activity_at' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'home_phone' => 13, 'mobile_phone' => 14, 'birthdate' => 15, 'address' => 16, 'relationship_status' => 17, 'about_me' => 18, 'show_email' => 19, 'show_gender' => 20, 'show_hometown' => 21, 'show_home_phone' => 22, 'show_mobile_phone' => 23, 'show_birthdate' => 24, 'show_address' => 25, 'show_relationship_status' => 26, 'show_hobbies' => 27, 'password_recover_key' => 28, 'cookie_key' => 29, 'credit' => 30, 'invisible' => 31, 'notification' => 32, 'phone_number' => 33, 'network_id' => 34, 'login' => 35, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PictureId' => 1, 'Username' => 2, 'Email' => 3, 'Password' => 4, 'Points' => 5, 'CreatedAt' => 6, 'LastActivityAt' => 7, 'Type' => 8, 'Hidden' => 9, 'Name' => 10, 'Gender' => 11, 'Hometown' => 12, 'HomePhone' => 13, 'MobilePhone' => 14, 'Birthdate' => 15, 'Address' => 16, 'RelationshipStatus' => 17, 'AboutMe' => 18, 'ShowEmail' => 19, 'ShowGender' => 20, 'ShowHometown' => 21, 'ShowHomePhone' => 22, 'ShowMobilePhone' => 23, 'ShowBirthdate' => 24, 'ShowAddress' => 25, 'ShowRelationshipStatus' => 26, 'PasswordRecoverKey' => 27, 'CookieKey' => 28, 'Credit' => 29, 'Invisible' => 30, 'Notification' => 31, 'PhoneNumber' => 32, 'NetworkId' => 33, 'Login' => 34, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'pictureId' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'createdAt' => 6, 'lastActivityAt' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'homePhone' => 13, 'mobilePhone' => 14, 'birthdate' => 15, 'address' => 16, 'relationshipStatus' => 17, 'aboutMe' => 18, 'showEmail' => 19, 'showGender' => 20, 'showHometown' => 21, 'showHomePhone' => 22, 'showMobilePhone' => 23, 'showBirthdate' => 24, 'showAddress' => 25, 'showRelationshipStatus' => 26, 'passwordRecoverKey' => 27, 'cookieKey' => 28, 'credit' => 29, 'invisible' => 30, 'notification' => 31, 'phoneNumber' => 32, 'networkId' => 33, 'login' => 34, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PICTURE_ID => 1, self::USERNAME => 2, self::EMAIL => 3, self::PASSWORD => 4, self::POINTS => 5, self::CREATED_AT => 6, self::LAST_ACTIVITY_AT => 7, self::TYPE => 8, self::HIDDEN => 9, self::NAME => 10, self::GENDER => 11, self::HOMETOWN => 12, self::HOME_PHONE => 13, self::MOBILE_PHONE => 14, self::BIRTHDATE => 15, self::ADDRESS => 16, self::RELATIONSHIP_STATUS => 17, self::ABOUT_ME => 18, self::SHOW_EMAIL => 19, self::SHOW_GENDER => 20, self::SHOW_HOMETOWN => 21, self::SHOW_HOME_PHONE => 22, self::SHOW_MOBILE_PHONE => 23, self::SHOW_BIRTHDATE => 24, self::SHOW_ADDRESS => 25, self::SHOW_RELATIONSHIP_STATUS => 26, self::PASSWORD_RECOVER_KEY => 27, self::COOKIE_KEY => 28, self::CREDIT => 29, self::INVISIBLE => 30, self::NOTIFICATION => 31, self::PHONE_NUMBER => 32, self::NETWORK_ID => 33, self::LOGIN => 34, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'picture_id' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'created_at' => 6, 'last_activity_at' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'home_phone' => 13, 'mobile_phone' => 14, 'birthdate' => 15, 'address' => 16, 'relationship_status' => 17, 'about_me' => 18, 'show_email' => 19, 'show_gender' => 20, 'show_hometown' => 21, 'show_home_phone' => 22, 'show_mobile_phone' => 23, 'show_birthdate' => 24, 'show_address' => 25, 'show_relationship_status' => 26, 'password_recover_key' => 27, 'cookie_key' => 28, 'credit' => 29, 'invisible' => 30, 'notification' => 31, 'phone_number' => 32, 'network_id' => 33, 'login' => 34, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
 	);
 
 	/**
@@ -306,8 +303,6 @@ abstract class BaseUserPeer {
 		$criteria->addSelectColumn(UserPeer::SHOW_ADDRESS);
 
 		$criteria->addSelectColumn(UserPeer::SHOW_RELATIONSHIP_STATUS);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_HOBBIES);
 
 		$criteria->addSelectColumn(UserPeer::PASSWORD_RECOVER_KEY);
 
@@ -1412,9 +1407,6 @@ abstract class BaseUserPeer {
 
 			// invalidate objects in UserDonationsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			UserDonationsPeer::clearInstancePool();
-
-			// invalidate objects in UserInterestPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserInterestPeer::clearInstancePool();
 
 			$con->commit();
 			return $affectedRows;

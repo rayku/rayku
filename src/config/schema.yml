@@ -544,7 +544,6 @@ propel:
     show_birthdate: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_address: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_relationship_status: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
-    show_hobbies: { type: VARCHAR, size: '200', required: false, defaultValue: '1' }
     password_recover_key: { type: VARCHAR, size: '40', required: false }
     cookie_key: { type: VARCHAR, size: '40', required: false }
     credit: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
@@ -569,12 +568,6 @@ propel:
     points: { type: INTEGER, size: '11', required: false }
     comments: { type: LONGVARCHAR, required: false }
     _indexes: { user_donations_FI_1: [user_id], user_donations_FI_2: [from_user_id] }
-  user_interest:
-    _attributes: { phpName: UserInterest }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    interest: { type: LONGVARCHAR, required: false }
-    _indexes: { user_interest_FI_1: [user_id] }
   user_gtalk:
     userid: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
     gtalkid: { type: VARCHAR, size: 100, required: true }

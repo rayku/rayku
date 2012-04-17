@@ -45,13 +45,6 @@
 					        <div class="spacer"></div>
 
 				          </div>
-					      <div class="entry">
-					        <div class="ttle">My Hobbies</div>
-					        <div class="spacer"></div>
-					        <div class="txtareabg"></div>
-                            <?php echo textarea_tag('hobbies', $user->getInterestsAsString(), array('cols' => 50, 'rows' => 5)) ?>
-					        <div class="spacer"></div>
-				          </div>
 
                         </div>
 					    <div class="bottom"></div>

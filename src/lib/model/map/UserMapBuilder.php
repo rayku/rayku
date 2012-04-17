@@ -116,8 +116,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('SHOW_RELATIONSHIP_STATUS', 'ShowRelationshipStatus', 'INTEGER', false, 11);
 
-		$tMap->addColumn('SHOW_HOBBIES', 'ShowHobbies', 'VARCHAR', false, 200);
-
 		$tMap->addColumn('PASSWORD_RECOVER_KEY', 'PasswordRecoverKey', 'VARCHAR', false, 40);
 
 		$tMap->addColumn('COOKIE_KEY', 'CookieKey', 'VARCHAR', false, 40);

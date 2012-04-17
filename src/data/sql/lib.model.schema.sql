@@ -1294,7 +1294,6 @@ CREATE TABLE `user`
 	`show_birthdate` INTEGER(11) default 1,
 	`show_address` INTEGER(11) default 1,
 	`show_relationship_status` INTEGER(11) default 1,
-	`show_hobbies` VARCHAR(200) default '1',
 	`password_recover_key` VARCHAR(40),
 	`cookie_key` VARCHAR(40),
 	`credit` INTEGER(11) default 0 NOT NULL,
@@ -1366,27 +1365,6 @@ CREATE TABLE `user_donations`
 		ON DELETE CASCADE,
 	CONSTRAINT `user_donations_FK_2`
 		FOREIGN KEY (`from_user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- user_interest
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_interest`;
-
-
-CREATE TABLE `user_interest`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`interest` TEXT,
-	PRIMARY KEY (`id`),
-	KEY `user_interest_FI_1`(`user_id`),
-	CONSTRAINT `user_interest_FK_1`
-		FOREIGN KEY (`user_id`)
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE

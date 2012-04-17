@@ -128,7 +128,6 @@ class profileActions extends sfActions
 			$user->setAddress($this->getRequestParameter('address'));
 			$user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
 			$user->setAboutMe($this->getRequestParameter('about_me'));
-			$user->setUserInterestsFromString($this->getRequestParameter('hobbies'));
 
 			// if the password is set
 			if ('' !== $this->getRequestParameter('password1'))
@@ -145,7 +144,6 @@ class profileActions extends sfActions
 			$user->setShowBirthdate($this->getRequestParameter('show_birthdate', 0));
 			$user->setShowAddress($this->getRequestParameter('show_address', 0));
 			$user->setShowRelationshipStatus($this->getRequestParameter('show_relationship_status', 0));
-			$user->setShowHobbies($this->getRequestParameter('show_hobbies', 0));
 
 			$user->save();
 

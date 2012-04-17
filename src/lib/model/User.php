@@ -930,62 +930,6 @@ class User extends BaseUser
 	}
 
 	/**
-	 * Returns the list of interests as a comma separated string
-	 *
-	 * @param string $separator
-	 */
-	public function getInterestsAsString($separator = ', ')
-	{
-		$interests = $this->getUserInterests();
-
-		$interest_names = array();
-		foreach ($interests as $interest)
-		{
-			/* @var $interest UserInterest */
-			$interest_names[] = $interest->getInterest();
-		}
-
-		return implode($separator, $interest_names);
-	}
-
-	/**
-	 * Creates user interests from string
-	 *
-	 * @param string $string Comma separated string of interests
-	 * @return boolean
-	 */
-	public function setUserInterestsFromString($string)
-	{
-		$string = str_replace(', ', ',', $string);
-		$interests = explode(',', $string);
-
-		$this->deleteUserInterests();
-
-		foreach ($interests as $interest)
-		{
-			$ui = new UserInterest();
-			$ui->setUser($this);
-			$ui->setInterest($interest);
-			$ui->save();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Delete a user's interests
-	 *
-	 * @return integer Number of affected rows
-	 */
-	public function deleteUserInterests()
-	{
-		$c = new Criteria();
-		$c->add(UserInterestPeer::USER_ID, $this->getId());
-
-		return UserInterestPeer::doDelete($c);
-	}
-
-	/**
 	 * Determines if the birth date is valid for display (not-null, greater than zero)
 	 *
 	 * @return boolean

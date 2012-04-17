@@ -271,7 +271,6 @@ class registerActions extends sfActions
             $user->setAddress($this->getRequestParameter('address'));
             $user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
             $user->setAboutMe($this->getRequestParameter('about_me'));
-            $user->setUserInterestsFromString($this->getRequestParameter('hobbies'));
 
             $user->save();
             if ($this->getRequest()->getFileName('file')!="") {

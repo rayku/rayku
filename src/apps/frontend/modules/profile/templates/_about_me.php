@@ -104,17 +104,6 @@
       </div>
     </div>
     <?php endif; ?>
-    <?php if ($user->getShowHobbies() && '' !== $user->getInterestsAsString()): ?>
-    <div class="spacer-row">&nbsp;</div>
-    <div class="about-row about-me">
-      <div class="about-row-label">
-        Hobbies:
-      </div>
-      <div class="about-row-content">
-        <?php echo $user->getInterestsAsString() ?>
-      </div>
-    </div>
-    <?php endif; ?>
   <?php endif; ?>
   <br class="clear-both" />
 </div>

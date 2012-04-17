@@ -195,13 +195,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $show_relationship_status;
 
 	/**
-	 * The value for the show_hobbies field.
-	 * Note: this column has a database default value of: '1'
-	 * @var        string
-	 */
-	protected $show_hobbies;
-
-	/**
 	 * The value for the password_recover_key field.
 	 * @var        string
 	 */
@@ -451,16 +444,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastUserDonationsRelatedByFromUserIdCriteria = null;
 
 	/**
-	 * @var        array UserInterest[] Collection to store aggregation of UserInterest objects.
-	 */
-	protected $collUserInterests;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collUserInterests.
-	 */
-	private $lastUserInterestCriteria = null;
-
-	/**
 	 * @var        UserGtalk one-to-one related UserGtalk object
 	 */
 	protected $singleUserGtalk;
@@ -539,7 +522,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->show_birthdate = 1;
 		$this->show_address = 1;
 		$this->show_relationship_status = 1;
-		$this->show_hobbies = '1';
 		$this->credit = 0;
 	}
 
@@ -895,16 +877,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getShowRelationshipStatus()
 	{
 		return $this->show_relationship_status;
-	}
-
-	/**
-	 * Get the [show_hobbies] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getShowHobbies()
-	{
-		return $this->show_hobbies;
 	}
 
 	/**
@@ -1619,26 +1591,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setShowRelationshipStatus()
 
 	/**
-	 * Set the value of [show_hobbies] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setShowHobbies($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->show_hobbies !== $v || $v === '1') {
-			$this->show_hobbies = $v;
-			$this->modifiedColumns[] = UserPeer::SHOW_HOBBIES;
-		}
-
-		return $this;
-	} // setShowHobbies()
-
-	/**
 	 * Set the value of [password_recover_key] column.
 	 * 
 	 * @param      string $v new value
@@ -1813,7 +1765,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::SHOW_HOBBIES,UserPeer::CREDIT))) {
+			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT))) {
 				return false;
 			}
 
@@ -1862,10 +1814,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			if ($this->show_relationship_status !== 1) {
-				return false;
-			}
-
-			if ($this->show_hobbies !== '1') {
 				return false;
 			}
 
@@ -1922,15 +1870,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->show_birthdate = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
 			$this->show_address = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
 			$this->show_relationship_status = ($row[$startcol + 26] !== null) ? (int) $row[$startcol + 26] : null;
-			$this->show_hobbies = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
-			$this->password_recover_key = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
-			$this->cookie_key = ($row[$startcol + 29] !== null) ? (string) $row[$startcol + 29] : null;
-			$this->credit = ($row[$startcol + 30] !== null) ? (int) $row[$startcol + 30] : null;
-			$this->invisible = ($row[$startcol + 31] !== null) ? (int) $row[$startcol + 31] : null;
-			$this->notification = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
-			$this->phone_number = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
-			$this->network_id = ($row[$startcol + 34] !== null) ? (int) $row[$startcol + 34] : null;
-			$this->login = ($row[$startcol + 35] !== null) ? (int) $row[$startcol + 35] : null;
+			$this->password_recover_key = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->cookie_key = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
+			$this->credit = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
+			$this->invisible = ($row[$startcol + 30] !== null) ? (int) $row[$startcol + 30] : null;
+			$this->notification = ($row[$startcol + 31] !== null) ? (string) $row[$startcol + 31] : null;
+			$this->phone_number = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
+			$this->network_id = ($row[$startcol + 33] !== null) ? (int) $row[$startcol + 33] : null;
+			$this->login = ($row[$startcol + 34] !== null) ? (int) $row[$startcol + 34] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1940,7 +1887,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 35; // 35 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2066,9 +2013,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->collUserDonationssRelatedByFromUserId = null;
 			$this->lastUserDonationsRelatedByFromUserIdCriteria = null;
-
-			$this->collUserInterests = null;
-			$this->lastUserInterestCriteria = null;
 
 			$this->singleUserGtalk = null;
 
@@ -2364,14 +2308,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collUserInterests !== null) {
-				foreach ($this->collUserInterests as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->singleUserGtalk !== null) {
 				if (!$this->singleUserGtalk->isDeleted()) {
 						$affectedRows += $this->singleUserGtalk->save($con);
@@ -2643,14 +2579,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collUserInterests !== null) {
-					foreach ($this->collUserInterests as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 				if ($this->singleUserGtalk !== null) {
 					if (!$this->singleUserGtalk->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singleUserGtalk->getValidationFailures());
@@ -2796,30 +2724,27 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return $this->getShowRelationshipStatus();
 				break;
 			case 27:
-				return $this->getShowHobbies();
-				break;
-			case 28:
 				return $this->getPasswordRecoverKey();
 				break;
-			case 29:
+			case 28:
 				return $this->getCookieKey();
 				break;
-			case 30:
+			case 29:
 				return $this->getCredit();
 				break;
-			case 31:
+			case 30:
 				return $this->getInvisible();
 				break;
-			case 32:
+			case 31:
 				return $this->getNotification();
 				break;
-			case 33:
+			case 32:
 				return $this->getPhoneNumber();
 				break;
-			case 34:
+			case 33:
 				return $this->getNetworkId();
 				break;
-			case 35:
+			case 34:
 				return $this->getLogin();
 				break;
 			default:
@@ -2870,15 +2795,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[24] => $this->getShowBirthdate(),
 			$keys[25] => $this->getShowAddress(),
 			$keys[26] => $this->getShowRelationshipStatus(),
-			$keys[27] => $this->getShowHobbies(),
-			$keys[28] => $this->getPasswordRecoverKey(),
-			$keys[29] => $this->getCookieKey(),
-			$keys[30] => $this->getCredit(),
-			$keys[31] => $this->getInvisible(),
-			$keys[32] => $this->getNotification(),
-			$keys[33] => $this->getPhoneNumber(),
-			$keys[34] => $this->getNetworkId(),
-			$keys[35] => $this->getLogin(),
+			$keys[27] => $this->getPasswordRecoverKey(),
+			$keys[28] => $this->getCookieKey(),
+			$keys[29] => $this->getCredit(),
+			$keys[30] => $this->getInvisible(),
+			$keys[31] => $this->getNotification(),
+			$keys[32] => $this->getPhoneNumber(),
+			$keys[33] => $this->getNetworkId(),
+			$keys[34] => $this->getLogin(),
 		);
 		return $result;
 	}
@@ -2992,30 +2916,27 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$this->setShowRelationshipStatus($value);
 				break;
 			case 27:
-				$this->setShowHobbies($value);
-				break;
-			case 28:
 				$this->setPasswordRecoverKey($value);
 				break;
-			case 29:
+			case 28:
 				$this->setCookieKey($value);
 				break;
-			case 30:
+			case 29:
 				$this->setCredit($value);
 				break;
-			case 31:
+			case 30:
 				$this->setInvisible($value);
 				break;
-			case 32:
+			case 31:
 				$this->setNotification($value);
 				break;
-			case 33:
+			case 32:
 				$this->setPhoneNumber($value);
 				break;
-			case 34:
+			case 33:
 				$this->setNetworkId($value);
 				break;
-			case 35:
+			case 34:
 				$this->setLogin($value);
 				break;
 		} // switch()
@@ -3069,15 +2990,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[24], $arr)) $this->setShowBirthdate($arr[$keys[24]]);
 		if (array_key_exists($keys[25], $arr)) $this->setShowAddress($arr[$keys[25]]);
 		if (array_key_exists($keys[26], $arr)) $this->setShowRelationshipStatus($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setShowHobbies($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setPasswordRecoverKey($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setCookieKey($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setCredit($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setInvisible($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setNotification($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setPhoneNumber($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setNetworkId($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setLogin($arr[$keys[35]]);
+		if (array_key_exists($keys[27], $arr)) $this->setPasswordRecoverKey($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setCookieKey($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setCredit($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setInvisible($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setNotification($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setPhoneNumber($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setNetworkId($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setLogin($arr[$keys[34]]);
 	}
 
 	/**
@@ -3116,7 +3036,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::SHOW_BIRTHDATE)) $criteria->add(UserPeer::SHOW_BIRTHDATE, $this->show_birthdate);
 		if ($this->isColumnModified(UserPeer::SHOW_ADDRESS)) $criteria->add(UserPeer::SHOW_ADDRESS, $this->show_address);
 		if ($this->isColumnModified(UserPeer::SHOW_RELATIONSHIP_STATUS)) $criteria->add(UserPeer::SHOW_RELATIONSHIP_STATUS, $this->show_relationship_status);
-		if ($this->isColumnModified(UserPeer::SHOW_HOBBIES)) $criteria->add(UserPeer::SHOW_HOBBIES, $this->show_hobbies);
 		if ($this->isColumnModified(UserPeer::PASSWORD_RECOVER_KEY)) $criteria->add(UserPeer::PASSWORD_RECOVER_KEY, $this->password_recover_key);
 		if ($this->isColumnModified(UserPeer::COOKIE_KEY)) $criteria->add(UserPeer::COOKIE_KEY, $this->cookie_key);
 		if ($this->isColumnModified(UserPeer::CREDIT)) $criteria->add(UserPeer::CREDIT, $this->credit);
@@ -3230,8 +3149,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setShowAddress($this->show_address);
 
 		$copyObj->setShowRelationshipStatus($this->show_relationship_status);
-
-		$copyObj->setShowHobbies($this->show_hobbies);
 
 		$copyObj->setPasswordRecoverKey($this->password_recover_key);
 
@@ -3366,12 +3283,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getUserDonationssRelatedByFromUserId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserDonationsRelatedByFromUserId($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getUserInterests() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addUserInterest($relObj->copy($deepCopy));
 				}
 			}
 
@@ -6756,160 +6667,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collUserInterests collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addUserInterests()
-	 */
-	public function clearUserInterests()
-	{
-		$this->collUserInterests = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collUserInterests collection (array).
-	 *
-	 * By default this just sets the collUserInterests collection to an empty array (like clearcollUserInterests());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initUserInterests()
-	{
-		$this->collUserInterests = array();
-	}
-
-	/**
-	 * Gets an array of UserInterest objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related UserInterests from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array UserInterest[]
-	 * @throws     PropelException
-	 */
-	public function getUserInterests($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserInterests === null) {
-			if ($this->isNew()) {
-			   $this->collUserInterests = array();
-			} else {
-
-				$criteria->add(UserInterestPeer::USER_ID, $this->id);
-
-				UserInterestPeer::addSelectColumns($criteria);
-				$this->collUserInterests = UserInterestPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(UserInterestPeer::USER_ID, $this->id);
-
-				UserInterestPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUserInterestCriteria) || !$this->lastUserInterestCriteria->equals($criteria)) {
-					$this->collUserInterests = UserInterestPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastUserInterestCriteria = $criteria;
-		return $this->collUserInterests;
-	}
-
-	/**
-	 * Returns the number of related UserInterest objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related UserInterest objects.
-	 * @throws     PropelException
-	 */
-	public function countUserInterests(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collUserInterests === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(UserInterestPeer::USER_ID, $this->id);
-
-				$count = UserInterestPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(UserInterestPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastUserInterestCriteria) || !$this->lastUserInterestCriteria->equals($criteria)) {
-					$count = UserInterestPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collUserInterests);
-				}
-			} else {
-				$count = count($this->collUserInterests);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a UserInterest object to this object
-	 * through the UserInterest foreign key attribute.
-	 *
-	 * @param      UserInterest $l UserInterest
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addUserInterest(UserInterest $l)
-	{
-		if ($this->collUserInterests === null) {
-			$this->initUserInterests();
-		}
-		if (!in_array($l, $this->collUserInterests, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collUserInterests, $l);
-			$l->setUser($this);
-		}
-	}
-
-	/**
 	 * Gets a single UserGtalk object, which is related to this object by a one-to-one relationship.
 	 *
 	 * @param      PropelPDO $con
@@ -7561,11 +7318,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collUserInterests) {
-				foreach ((array) $this->collUserInterests as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->singleUserGtalk) {
 				$this->singleUserGtalk->clearAllReferences($deep);
 			}
@@ -7605,7 +7357,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collUserAwardss = null;
 		$this->collUserDonationssRelatedByUserId = null;
 		$this->collUserDonationssRelatedByFromUserId = null;
-		$this->collUserInterests = null;
 		$this->singleUserGtalk = null;
 		$this->collStudentQuestionsRelatedByStudentId = null;
 		$this->collStudentQuestionsRelatedByTutorId = null;

@@ -218,14 +218,6 @@ $date = date('Y')+1;
         <div class="text" style="top:52px; left:-295px; !left:-284px;"><em>must be displayed</em></div>
         <div class="spacer"></div>
       </div>
-      <div class="entry">
-        <div class="ttle">What are your Hobbies?</div>
-        <div class="spacer"></div>
-        <div class="txtareabg"></div>
-        <?php echo textarea_tag('hobbies', $user->getInterestsAsString()); ?> <?php echo form_error('hobbies'); ?> <?php echo checkbox_tag('show_hobbies', '1', $user->getShowHobbies(),array('class'=>"chkbox",'style'=>'top:50px; left:-295px; !left:-284px;')); ?>
-        <div class="text" style="top:52px; left:-295px; !left:-284px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
       <!--<div class="entry">
         <div class="ttle">Relationship Status</div>
         <div class="spacer"></div>
