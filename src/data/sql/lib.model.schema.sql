@@ -598,27 +598,6 @@ CREATE TABLE `group_site_page`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- group_user
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `group_user`;
-
-
-CREATE TABLE `group_user`
-(
-	`group_id` INTEGER(11),
-	`inviter_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`status` INTEGER(11),
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `group_user_FI_1`(`group_id`),
-	KEY `group_user_FI_2`(`inviter_id`),
-	KEY `group_user_FI_3`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- history
 #-----------------------------------------------------------------------------
 

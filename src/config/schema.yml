@@ -257,15 +257,6 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { group_site_page_FI_1: [group_id] }
-  group_user:
-    _attributes: { phpName: GroupUser }
-    group_id: { type: INTEGER, size: '11', required: false }
-    inviter_id: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false }
-    status: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { group_user_FI_1: [group_id], group_user_FI_2: [inviter_id], group_user_FI_3: [user_id] }
   history:
     _attributes: { phpName: History }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
