@@ -136,7 +136,6 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`
 (
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`journal_entry_id` INTEGER(11),
 	`poster_id` INTEGER(11),
 	`picture_id` INTEGER(11),
 	`video_id` INTEGER(11),
@@ -147,13 +146,7 @@ CREATE TABLE `comment`
 	PRIMARY KEY (`id`),
 	KEY `comment_FI_1`(`poster_id`),
 	KEY `comment_FI_2`(`picture_id`),
-	KEY `comment_FI_3`(`video_id`),
-	KEY `comment_FI_4`(`journal_entry_id`),
-	CONSTRAINT `comment_FK_1`
-		FOREIGN KEY (`journal_entry_id`)
-		REFERENCES `journal_entry` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
+	KEY `comment_FI_3`(`video_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -728,47 +721,6 @@ CREATE TABLE `item_type`
 	`name` VARCHAR(255),
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- journal_entry
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `journal_entry`;
-
-
-CREATE TABLE `journal_entry`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`subject` VARCHAR(150),
-	`content` TEXT,
-	`created_at` DATETIME,
-	`show_entity` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `journal_entry_FI_1`(`user_id`),
-	CONSTRAINT `journal_entry_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- journal_entry_acl
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `journal_entry_acl`;
-
-
-CREATE TABLE `journal_entry_acl`
-(
-	`journal_entry_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `journal_entry_acl_FI_1`(`journal_entry_id`),
-	KEY `journal_entry_acl_FI_2`(`user_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

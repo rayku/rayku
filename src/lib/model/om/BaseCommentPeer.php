@@ -19,16 +19,13 @@ abstract class BaseCommentPeer {
 	const CLASS_DEFAULT = 'lib.model.Comment';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
 	const ID = 'comment.ID';
-
-	/** the column name for the JOURNAL_ENTRY_ID field */
-	const JOURNAL_ENTRY_ID = 'comment.JOURNAL_ENTRY_ID';
 
 	/** the column name for the POSTER_ID field */
 	const POSTER_ID = 'comment.POSTER_ID';
@@ -72,11 +69,11 @@ abstract class BaseCommentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'JournalEntryId', 'PosterId', 'PictureId', 'VideoId', 'Content', 'CreatedAt', 'Type', 'Approved', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'journalEntryId', 'posterId', 'pictureId', 'videoId', 'content', 'createdAt', 'type', 'approved', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::JOURNAL_ENTRY_ID, self::POSTER_ID, self::PICTURE_ID, self::VIDEO_ID, self::CONTENT, self::CREATED_AT, self::TYPE, self::APPROVED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'journal_entry_id', 'poster_id', 'picture_id', 'video_id', 'content', 'created_at', 'type', 'approved', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'PictureId', 'VideoId', 'Content', 'CreatedAt', 'Type', 'Approved', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'pictureId', 'videoId', 'content', 'createdAt', 'type', 'approved', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::PICTURE_ID, self::VIDEO_ID, self::CONTENT, self::CREATED_AT, self::TYPE, self::APPROVED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'picture_id', 'video_id', 'content', 'created_at', 'type', 'approved', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -86,11 +83,11 @@ abstract class BaseCommentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'JournalEntryId' => 1, 'PosterId' => 2, 'PictureId' => 3, 'VideoId' => 4, 'Content' => 5, 'CreatedAt' => 6, 'Type' => 7, 'Approved' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'journalEntryId' => 1, 'posterId' => 2, 'pictureId' => 3, 'videoId' => 4, 'content' => 5, 'createdAt' => 6, 'type' => 7, 'approved' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::JOURNAL_ENTRY_ID => 1, self::POSTER_ID => 2, self::PICTURE_ID => 3, self::VIDEO_ID => 4, self::CONTENT => 5, self::CREATED_AT => 6, self::TYPE => 7, self::APPROVED => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'journal_entry_id' => 1, 'poster_id' => 2, 'picture_id' => 3, 'video_id' => 4, 'content' => 5, 'created_at' => 6, 'type' => 7, 'approved' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'PictureId' => 2, 'VideoId' => 3, 'Content' => 4, 'CreatedAt' => 5, 'Type' => 6, 'Approved' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'pictureId' => 2, 'videoId' => 3, 'content' => 4, 'createdAt' => 5, 'type' => 6, 'approved' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::PICTURE_ID => 2, self::VIDEO_ID => 3, self::CONTENT => 4, self::CREATED_AT => 5, self::TYPE => 6, self::APPROVED => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'picture_id' => 2, 'video_id' => 3, 'content' => 4, 'created_at' => 5, 'type' => 6, 'approved' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -173,8 +170,6 @@ abstract class BaseCommentPeer {
 	{
 
 		$criteria->addSelectColumn(CommentPeer::ID);
-
-		$criteria->addSelectColumn(CommentPeer::JOURNAL_ENTRY_ID);
 
 		$criteria->addSelectColumn(CommentPeer::POSTER_ID);
 
@@ -429,242 +424,6 @@ abstract class BaseCommentPeer {
 		$stmt->closeCursor();
 		return $results;
 	}
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related JournalEntry table
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinJournalEntry(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(CommentPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			CommentPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(CommentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(array(CommentPeer::JOURNAL_ENTRY_ID,), array(JournalEntryPeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of Comment objects pre-filled with their JournalEntry objects.
-	 * @param      Criteria  $c
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Comment objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinJournalEntry(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		CommentPeer::addSelectColumns($c);
-		$startcol = (CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS);
-		JournalEntryPeer::addSelectColumns($c);
-
-		$c->addJoin(array(CommentPeer::JOURNAL_ENTRY_ID,), array(JournalEntryPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = CommentPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = CommentPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-
-				$omClass = CommentPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				CommentPeer::addInstanceToPool($obj1, $key1);
-			} // if $obj1 already loaded
-
-			$key2 = JournalEntryPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = JournalEntryPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$omClass = JournalEntryPeer::getOMClass();
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					JournalEntryPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 already loaded
-
-				// Add the $obj1 (Comment) to $obj2 (JournalEntry)
-				$obj2->addComment($obj1);
-
-			} // if joined row was not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining all related tables
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(CommentPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			CommentPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(CommentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(array(CommentPeer::JOURNAL_ENTRY_ID,), array(JournalEntryPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-	/**
-	 * Selects a collection of Comment objects pre-filled with all related objects.
-	 *
-	 * @param      Criteria  $c
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Comment objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAll(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		CommentPeer::addSelectColumns($c);
-		$startcol2 = (CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		JournalEntryPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (JournalEntryPeer::NUM_COLUMNS - JournalEntryPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$c->addJoin(array(CommentPeer::JOURNAL_ENTRY_ID,), array(JournalEntryPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = CommentPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = CommentPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$omClass = CommentPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				CommentPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-			// Add objects for joined JournalEntry rows
-
-			$key2 = JournalEntryPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-			if ($key2 !== null) {
-				$obj2 = JournalEntryPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$omClass = JournalEntryPeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					JournalEntryPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 loaded
-
-				// Add the $obj1 (Comment) to the collection in $obj2 (JournalEntry)
-				$obj2->addComment($obj1);
-			} // if joined row not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
 
   static public function getUniqueColumnNames()
   {

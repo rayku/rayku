@@ -191,9 +191,6 @@ class quickregActions extends sfActions
 
 
 				 ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
-
-		  	 	 JournalEntryPeer::createHelloWorldEntryFor($user);
-
 			}
 
 		} 

@@ -64,8 +64,6 @@ class CommentMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, 11);
 
-		$tMap->addForeignKey('JOURNAL_ENTRY_ID', 'JournalEntryId', 'INTEGER', 'journal_entry', 'ID', false, 11);
-
 		$tMap->addColumn('POSTER_ID', 'PosterId', 'INTEGER', false, 11);
 
 		$tMap->addColumn('PICTURE_ID', 'PictureId', 'INTEGER', false, 11);

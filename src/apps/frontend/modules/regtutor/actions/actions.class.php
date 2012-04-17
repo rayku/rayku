@@ -187,7 +187,6 @@ class regtutorActions extends sfActions
                 $query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."") or die(mysql_error());
                 if (mysql_num_rows($query) == 0) {
                     ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
-                    JournalEntryPeer::createHelloWorldEntryFor($user);
                 }
             }
 

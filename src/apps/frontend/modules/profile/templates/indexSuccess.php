@@ -58,13 +58,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
     echo '</div>';
 
     ?>
-<div class="texts">
-      <?php include_component('journal', 'mostRecentEntry', array('user' => $user)) ?>
-    </div>
-    <ul class="comment">
-      <li><?php echo link_to('Read more...', '@journal_index?user_id=' . $user->getId()); ?></li>
-    </ul>
-
     <br class="clear-both" />
     <div class="friends">
       <?php

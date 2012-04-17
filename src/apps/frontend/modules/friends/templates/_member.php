@@ -28,9 +28,5 @@
             'See galleries',
             '@gallery_index?user_id=' . $user->getId(),
             array( 'class' => 'gallery' ) );
-    echo link_to(
-            'Read journal',
-            '@journal_index?user_id=' . $user->getId(),
-            array( 'class' => 'journal' ) );
   ?>
 </div>

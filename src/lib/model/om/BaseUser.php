@@ -328,16 +328,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastItemRatingCriteria = null;
 
 	/**
-	 * @var        array JournalEntry[] Collection to store aggregation of JournalEntry objects.
-	 */
-	protected $collJournalEntrys;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collJournalEntrys.
-	 */
-	private $lastJournalEntryCriteria = null;
-
-	/**
 	 * @var        array OfferVoucher1[] Collection to store aggregation of OfferVoucher1 objects.
 	 */
 	protected $collOfferVoucher1s;
@@ -1944,9 +1934,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collItemRatings = null;
 			$this->lastItemRatingCriteria = null;
 
-			$this->collJournalEntrys = null;
-			$this->lastJournalEntryCriteria = null;
-
 			$this->collOfferVoucher1s = null;
 			$this->lastOfferVoucher1Criteria = null;
 
@@ -2177,14 +2164,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collItemRatings !== null) {
 				foreach ($this->collItemRatings as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collJournalEntrys !== null) {
-				foreach ($this->collJournalEntrys as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2448,14 +2427,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collItemRatings !== null) {
 					foreach ($this->collItemRatings as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collJournalEntrys !== null) {
-					foreach ($this->collJournalEntrys as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3169,12 +3140,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			foreach ($this->getItemRatings() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addItemRating($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getJournalEntrys() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addJournalEntry($relObj->copy($deepCopy));
 				}
 			}
 
@@ -4781,160 +4746,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->lastItemRatingCriteria = $criteria;
 
 		return $this->collItemRatings;
-	}
-
-	/**
-	 * Clears out the collJournalEntrys collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addJournalEntrys()
-	 */
-	public function clearJournalEntrys()
-	{
-		$this->collJournalEntrys = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collJournalEntrys collection (array).
-	 *
-	 * By default this just sets the collJournalEntrys collection to an empty array (like clearcollJournalEntrys());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initJournalEntrys()
-	{
-		$this->collJournalEntrys = array();
-	}
-
-	/**
-	 * Gets an array of JournalEntry objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related JournalEntrys from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array JournalEntry[]
-	 * @throws     PropelException
-	 */
-	public function getJournalEntrys($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collJournalEntrys === null) {
-			if ($this->isNew()) {
-			   $this->collJournalEntrys = array();
-			} else {
-
-				$criteria->add(JournalEntryPeer::USER_ID, $this->id);
-
-				JournalEntryPeer::addSelectColumns($criteria);
-				$this->collJournalEntrys = JournalEntryPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(JournalEntryPeer::USER_ID, $this->id);
-
-				JournalEntryPeer::addSelectColumns($criteria);
-				if (!isset($this->lastJournalEntryCriteria) || !$this->lastJournalEntryCriteria->equals($criteria)) {
-					$this->collJournalEntrys = JournalEntryPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastJournalEntryCriteria = $criteria;
-		return $this->collJournalEntrys;
-	}
-
-	/**
-	 * Returns the number of related JournalEntry objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related JournalEntry objects.
-	 * @throws     PropelException
-	 */
-	public function countJournalEntrys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collJournalEntrys === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(JournalEntryPeer::USER_ID, $this->id);
-
-				$count = JournalEntryPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(JournalEntryPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastJournalEntryCriteria) || !$this->lastJournalEntryCriteria->equals($criteria)) {
-					$count = JournalEntryPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collJournalEntrys);
-				}
-			} else {
-				$count = count($this->collJournalEntrys);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a JournalEntry object to this object
-	 * through the JournalEntry foreign key attribute.
-	 *
-	 * @param      JournalEntry $l JournalEntry
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addJournalEntry(JournalEntry $l)
-	{
-		if ($this->collJournalEntrys === null) {
-			$this->initJournalEntrys();
-		}
-		if (!in_array($l, $this->collJournalEntrys, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collJournalEntrys, $l);
-			$l->setUser($this);
-		}
 	}
 
 	/**
@@ -7215,11 +7026,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collJournalEntrys) {
-				foreach ((array) $this->collJournalEntrys as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collOfferVoucher1s) {
 				foreach ((array) $this->collOfferVoucher1s as $o) {
 					$o->clearAllReferences($deep);
@@ -7298,7 +7104,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collGalleryItems = null;
 		$this->collHistorys = null;
 		$this->collItemRatings = null;
-		$this->collJournalEntrys = null;
 		$this->collOfferVoucher1s = null;
 		$this->collPictures = null;
 		$this->collPurchaseDetails = null;

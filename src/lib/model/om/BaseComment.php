@@ -27,12 +27,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the journal_entry_id field.
-	 * @var        int
-	 */
-	protected $journal_entry_id;
-
-	/**
 	 * The value for the poster_id field.
 	 * @var        int
 	 */
@@ -74,11 +68,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $approved;
-
-	/**
-	 * @var        JournalEntry
-	 */
-	protected $aJournalEntry;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -123,16 +112,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	public function getId()
 	{
 		return $this->id;
-	}
-
-	/**
-	 * Get the [journal_entry_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getJournalEntryId()
-	{
-		return $this->journal_entry_id;
 	}
 
 	/**
@@ -252,30 +231,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setId()
-
-	/**
-	 * Set the value of [journal_entry_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     Comment The current object (for fluent API support)
-	 */
-	public function setJournalEntryId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->journal_entry_id !== $v) {
-			$this->journal_entry_id = $v;
-			$this->modifiedColumns[] = CommentPeer::JOURNAL_ENTRY_ID;
-		}
-
-		if ($this->aJournalEntry !== null && $this->aJournalEntry->getId() !== $v) {
-			$this->aJournalEntry = null;
-		}
-
-		return $this;
-	} // setJournalEntryId()
 
 	/**
 	 * Set the value of [poster_id] column.
@@ -488,14 +443,13 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->journal_entry_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->poster_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->picture_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->video_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->content = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->type = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
-			$this->approved = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->poster_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->picture_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->video_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->type = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -505,7 +459,7 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Comment object", $e);
@@ -528,9 +482,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aJournalEntry !== null && $this->journal_entry_id !== $this->aJournalEntry->getId()) {
-			$this->aJournalEntry = null;
-		}
 	} // ensureConsistency
 
 	/**
@@ -570,7 +521,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aJournalEntry = null;
 		} // if (deep)
 	}
 
@@ -661,18 +611,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
-			// We call the save method on the following object(s) if they
-			// were passed to this object by their coresponding set
-			// method.  This object relates to these object(s) by a
-			// foreign key reference.
-
-			if ($this->aJournalEntry !== null) {
-				if ($this->aJournalEntry->isModified() || $this->aJournalEntry->isNew()) {
-					$affectedRows += $this->aJournalEntry->save($con);
-				}
-				$this->setJournalEntry($this->aJournalEntry);
-			}
-
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = CommentPeer::ID;
 			}
@@ -761,18 +699,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			// We call the validate method on the following object(s) if they
-			// were passed to this object by their coresponding set
-			// method.  This object relates to these object(s) by a
-			// foreign key reference.
-
-			if ($this->aJournalEntry !== null) {
-				if (!$this->aJournalEntry->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aJournalEntry->getValidationFailures());
-				}
-			}
-
-
 			if (($retval = CommentPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -815,27 +741,24 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getJournalEntryId();
-				break;
-			case 2:
 				return $this->getPosterId();
 				break;
-			case 3:
+			case 2:
 				return $this->getPictureId();
 				break;
-			case 4:
+			case 3:
 				return $this->getVideoId();
 				break;
-			case 5:
+			case 4:
 				return $this->getContent();
 				break;
-			case 6:
+			case 5:
 				return $this->getCreatedAt();
 				break;
-			case 7:
+			case 6:
 				return $this->getType();
 				break;
-			case 8:
+			case 7:
 				return $this->getApproved();
 				break;
 			default:
@@ -860,14 +783,13 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		$keys = CommentPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getJournalEntryId(),
-			$keys[2] => $this->getPosterId(),
-			$keys[3] => $this->getPictureId(),
-			$keys[4] => $this->getVideoId(),
-			$keys[5] => $this->getContent(),
-			$keys[6] => $this->getCreatedAt(),
-			$keys[7] => $this->getType(),
-			$keys[8] => $this->getApproved(),
+			$keys[1] => $this->getPosterId(),
+			$keys[2] => $this->getPictureId(),
+			$keys[3] => $this->getVideoId(),
+			$keys[4] => $this->getContent(),
+			$keys[5] => $this->getCreatedAt(),
+			$keys[6] => $this->getType(),
+			$keys[7] => $this->getApproved(),
 		);
 		return $result;
 	}
@@ -903,27 +825,24 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setJournalEntryId($value);
-				break;
-			case 2:
 				$this->setPosterId($value);
 				break;
-			case 3:
+			case 2:
 				$this->setPictureId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setVideoId($value);
 				break;
-			case 5:
+			case 4:
 				$this->setContent($value);
 				break;
-			case 6:
+			case 5:
 				$this->setCreatedAt($value);
 				break;
-			case 7:
+			case 6:
 				$this->setType($value);
 				break;
-			case 8:
+			case 7:
 				$this->setApproved($value);
 				break;
 		} // switch()
@@ -951,14 +870,13 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		$keys = CommentPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setJournalEntryId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setPosterId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setPictureId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setVideoId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setContent($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setType($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setApproved($arr[$keys[8]]);
+		if (array_key_exists($keys[1], $arr)) $this->setPosterId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setPictureId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setVideoId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setType($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setApproved($arr[$keys[7]]);
 	}
 
 	/**
@@ -971,7 +889,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		$criteria = new Criteria(CommentPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(CommentPeer::ID)) $criteria->add(CommentPeer::ID, $this->id);
-		if ($this->isColumnModified(CommentPeer::JOURNAL_ENTRY_ID)) $criteria->add(CommentPeer::JOURNAL_ENTRY_ID, $this->journal_entry_id);
 		if ($this->isColumnModified(CommentPeer::POSTER_ID)) $criteria->add(CommentPeer::POSTER_ID, $this->poster_id);
 		if ($this->isColumnModified(CommentPeer::PICTURE_ID)) $criteria->add(CommentPeer::PICTURE_ID, $this->picture_id);
 		if ($this->isColumnModified(CommentPeer::VIDEO_ID)) $criteria->add(CommentPeer::VIDEO_ID, $this->video_id);
@@ -1033,8 +950,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setJournalEntryId($this->journal_entry_id);
-
 		$copyObj->setPosterId($this->poster_id);
 
 		$copyObj->setPictureId($this->picture_id);
@@ -1095,57 +1010,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a JournalEntry object.
-	 *
-	 * @param      JournalEntry $v
-	 * @return     Comment The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setJournalEntry(JournalEntry $v = null)
-	{
-		if ($v === null) {
-			$this->setJournalEntryId(NULL);
-		} else {
-			$this->setJournalEntryId($v->getId());
-		}
-
-		$this->aJournalEntry = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the JournalEntry object, it will not be re-added.
-		if ($v !== null) {
-			$v->addComment($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated JournalEntry object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     JournalEntry The associated JournalEntry object.
-	 * @throws     PropelException
-	 */
-	public function getJournalEntry(PropelPDO $con = null)
-	{
-		if ($this->aJournalEntry === null && ($this->journal_entry_id !== null)) {
-			$c = new Criteria(JournalEntryPeer::DATABASE_NAME);
-			$c->add(JournalEntryPeer::ID, $this->journal_entry_id);
-			$this->aJournalEntry = JournalEntryPeer::doSelectOne($c, $con);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aJournalEntry->addComments($this);
-			 */
-		}
-		return $this->aJournalEntry;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1159,7 +1023,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		if ($deep) {
 		} // if ($deep)
 
-			$this->aJournalEntry = null;
 	}
 
 } // BaseComment

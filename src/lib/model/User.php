@@ -646,67 +646,6 @@ class User extends BaseUser
 	}
 
 	/**
-	* Checks to see if this user can view a given journal entry
-	*
-	* @param int $entryID
-	* @return bool
-	*/
-	public function canViewJournalEntry($entryID)
-	{
-		$journal = JournalEntryPeer::retrieveByPK($entryID);
-
-		//If the journal entry doesn't even exist, return an error
-		if(!$journal)
-			return false;
-
-		//If it's public, anyone can access
-		if($journal->getShowEntity() == JournalEntry::TYPE_PUBLIC)
-			return true;
-
-		//If it belongs to themselves, they can see it
-		if ($this->equals($journal->getUser()))
-		{
-			return true;
-		}
-
-		//If it's a friends & family or if it's a family only
-		if($journal->getShowEntity() < JournalEntry::TYPE_FAMILY_ONLY)
-		{
-			//Get friendship status
-			$friendshipStatus = $this->getFriendshipStatus($journal->getUserId());
-
-			//If they aren't even friends, return false
-			if($friendshipStatus < Friend::TYPE_FRIENDS)
-				return false;
-
-			//If they aren't family and this is family only, return false
-			if($friendshipStatus < Friend::TYPE_FAMILY && $journal->getShowEntity() == JournalEntry::TYPE_FAMILY_ONLY )
-				return false;
-
-			return true;
-		}
-
-		//If it's an ACL-only thing...
-		if($journal->getShowEntity() == JournalEntry::TYPE_SPECIFIC_PEOPLE_ONLY)
-		{
-			//See if the user's on the ACL
-			$c = new Criteria();
-			$c->add(JournalEntrYAclPeer::JOURNAL_ENTRY_ID, $journal->getId());
-			$c->add(JournalEntryAclPeer::USER_ID, $this->getId());
-
-			//If not, return false
-			if(JournalEntryAclPeer::doCount($c) != 1)
-				return false;
-
-			//Otherwise, return true
-			return true;
-		}
-
-		//If it doesn't fit any of the above criteria, something's badly wrong
-		return false;
-	}
-
-	/**
 	* Checks to see if a user can view the contents of a group
 	*
 	* @param int $groupID
@@ -817,20 +756,6 @@ class User extends BaseUser
 
 		$forum = ForumPeer::doSelectOne($c);
 		return $forum->getId();
-	}
-
-	/**
-	 * Get the latest journal entry for this user
-	 *
-	 * @return JournalEntry
-	 */
-	public function getLatestJournalEntry()
-	{
-		$c = new Criteria();
-		$c->addDescendingOrderByColumn(JournalEntryPeer::CREATED_AT);
-		$c->add(JournalEntryPeer::USER_ID, $this->getId());
-
-		return JournalEntryPeer::doSelectOne($c);
 	}
 
 	/**
@@ -1116,19 +1041,6 @@ class User extends BaseUser
 	return $awards->getPoints();
 	}
 
-	public function getAllJournals()
-	{
-		$connection = RaykuCommon::getDatabaseConnection();
-
-			$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
-	 $querynew = mysql_query("select * from journal_entry where user_id=".$logedUserId." ", $connection) or die(mysql_error());
-	$countJournal = mysql_num_rows($querynew);
-
-	 return $countJournal;
-
-	}
-
 	public function getExpertScore()
 	{
 
@@ -1154,7 +1066,6 @@ class User extends BaseUser
         'teachersCount'   => count($this->getMediaCount()),
         'friendsCount'    => count($this->getAllFriends()),
         'ryakuCount'      => $this->getAllRyaku(),
-        'journalCount' => $this->getAllJournals(),
         'expertCount' => $this->getExpertScore()
     );
 

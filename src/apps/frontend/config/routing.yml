@@ -236,15 +236,6 @@ compose_to:
   param: { module: message, action: compose }
 
 # ----
-# Journal
-# ----
-journal_index:
-  url: /journal/:user_id
-  param: { module: journal, action: index }
-  requirements: { user_id: \d+ }
-
-
-# ----
 # CMS/Groups
 # ----
 
