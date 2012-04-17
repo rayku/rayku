@@ -1242,26 +1242,6 @@ CREATE TABLE `user_gtalk`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- usergroup
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `usergroup`;
-
-
-CREATE TABLE `usergroup`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`points` INTEGER(11) default 0,
-	`description` TEXT,
-	`type` INTEGER(11) default 0,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`bankrupt_since` DATE,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- users_networks
 #-----------------------------------------------------------------------------
 
