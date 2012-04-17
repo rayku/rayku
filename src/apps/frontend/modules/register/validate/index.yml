@@ -37,3 +37,35 @@ fields:
       match: Yes
       match_error: Your username should only contain alphanumeric characters
       pattern: /^[\w\d]+$/
+
+  credit_card:
+      required:
+        msg: Please enter a credit card
+      sfRegexValidator:
+        match: Yes
+        match_error: Your credit card should only contain numeric characters
+        pattern: /^[\d]+$/
+
+  expiry_date:
+      required:
+        msg: Please specify a expiry date
+      sfRegexValidator:
+        match: Yes
+        match_error: Your expiry date should only contain alphanumeric characters
+        pattern: /^[\w\d]+$/
+
+  cvv:
+    required:
+      msg: Please specify the cvv on the back of your card
+    sfRegexValidator:
+      match: Yes
+      match_error: Your cvv should only contain alphanumeric characters
+      pattern: /^[\d]+$/
+      
+  card_name:
+      required:
+        msg: Please specify a full name
+      sfRegexValidator:
+        match: Yes
+        match_error: Your name should only contain alphanumeric characters and spaces
+        pattern: /^[\w\d ]+$/
