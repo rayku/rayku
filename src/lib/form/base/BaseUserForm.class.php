@@ -44,7 +44,6 @@ class BaseUserForm extends BaseFormPropel
       'invisible'                => new sfWidgetFormInput(),
       'notification'             => new sfWidgetFormInput(),
       'phone_number'             => new sfWidgetFormInput(),
-      'network_id'               => new sfWidgetFormPropelChoice(array('model' => 'Network', 'add_empty' => true)),
       'login'                    => new sfWidgetFormInput(),
     ));
 
@@ -81,7 +80,6 @@ class BaseUserForm extends BaseFormPropel
       'invisible'                => new sfValidatorInteger(),
       'notification'             => new sfValidatorString(array('max_length' => 10)),
       'phone_number'             => new sfValidatorString(array('max_length' => 20)),
-      'network_id'               => new sfValidatorPropelChoice(array('model' => 'Network', 'column' => 'id', 'required' => false)),
       'login'                    => new sfValidatorInteger(),
     ));
 

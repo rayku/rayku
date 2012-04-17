@@ -226,12 +226,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $phone_number;
 
 	/**
-	 * The value for the network_id field.
-	 * @var        int
-	 */
-	protected $network_id;
-
-	/**
 	 * The value for the login field.
 	 * @var        int
 	 */
@@ -241,11 +235,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        Picture
 	 */
 	protected $aPicture;
-
-	/**
-	 * @var        Network
-	 */
-	protected $aNetwork;
 
 	/**
 	 * @var        array Expert[] Collection to store aggregation of Expert objects.
@@ -901,16 +890,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getPhoneNumber()
 	{
 		return $this->phone_number;
-	}
-
-	/**
-	 * Get the [network_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getNetworkId()
-	{
-		return $this->network_id;
 	}
 
 	/**
@@ -1655,30 +1634,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setPhoneNumber()
 
 	/**
-	 * Set the value of [network_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setNetworkId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->network_id !== $v) {
-			$this->network_id = $v;
-			$this->modifiedColumns[] = UserPeer::NETWORK_ID;
-		}
-
-		if ($this->aNetwork !== null && $this->aNetwork->getId() !== $v) {
-			$this->aNetwork = null;
-		}
-
-		return $this;
-	} // setNetworkId()
-
-	/**
 	 * Set the value of [login] column.
 	 * 
 	 * @param      int $v new value
@@ -1819,8 +1774,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->invisible = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
 			$this->notification = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
 			$this->phone_number = ($row[$startcol + 31] !== null) ? (string) $row[$startcol + 31] : null;
-			$this->network_id = ($row[$startcol + 32] !== null) ? (int) $row[$startcol + 32] : null;
-			$this->login = ($row[$startcol + 33] !== null) ? (int) $row[$startcol + 33] : null;
+			$this->login = ($row[$startcol + 32] !== null) ? (int) $row[$startcol + 32] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1830,7 +1784,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 34; // 34 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 33; // 33 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -1855,9 +1809,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		if ($this->aPicture !== null && $this->picture_id !== $this->aPicture->getId()) {
 			$this->aPicture = null;
-		}
-		if ($this->aNetwork !== null && $this->network_id !== $this->aNetwork->getId()) {
-			$this->aNetwork = null;
 		}
 	} // ensureConsistency
 
@@ -1899,7 +1850,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aPicture = null;
-			$this->aNetwork = null;
 			$this->collExperts = null;
 			$this->lastExpertCriteria = null;
 
@@ -2062,13 +2012,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$affectedRows += $this->aPicture->save($con);
 				}
 				$this->setPicture($this->aPicture);
-			}
-
-			if ($this->aNetwork !== null) {
-				if ($this->aNetwork->isModified() || $this->aNetwork->isNew()) {
-					$affectedRows += $this->aNetwork->save($con);
-				}
-				$this->setNetwork($this->aNetwork);
 			}
 
 			if ($this->isNew() ) {
@@ -2333,12 +2276,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			if ($this->aPicture !== null) {
 				if (!$this->aPicture->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aPicture->getValidationFailures());
-				}
-			}
-
-			if ($this->aNetwork !== null) {
-				if (!$this->aNetwork->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aNetwork->getValidationFailures());
 				}
 			}
 
@@ -2644,9 +2581,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return $this->getPhoneNumber();
 				break;
 			case 32:
-				return $this->getNetworkId();
-				break;
-			case 33:
 				return $this->getLogin();
 				break;
 			default:
@@ -2702,8 +2636,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[29] => $this->getInvisible(),
 			$keys[30] => $this->getNotification(),
 			$keys[31] => $this->getPhoneNumber(),
-			$keys[32] => $this->getNetworkId(),
-			$keys[33] => $this->getLogin(),
+			$keys[32] => $this->getLogin(),
 		);
 		return $result;
 	}
@@ -2832,9 +2765,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$this->setPhoneNumber($value);
 				break;
 			case 32:
-				$this->setNetworkId($value);
-				break;
-			case 33:
 				$this->setLogin($value);
 				break;
 		} // switch()
@@ -2893,8 +2823,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[29], $arr)) $this->setInvisible($arr[$keys[29]]);
 		if (array_key_exists($keys[30], $arr)) $this->setNotification($arr[$keys[30]]);
 		if (array_key_exists($keys[31], $arr)) $this->setPhoneNumber($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setNetworkId($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setLogin($arr[$keys[33]]);
+		if (array_key_exists($keys[32], $arr)) $this->setLogin($arr[$keys[32]]);
 	}
 
 	/**
@@ -2938,7 +2867,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::INVISIBLE)) $criteria->add(UserPeer::INVISIBLE, $this->invisible);
 		if ($this->isColumnModified(UserPeer::NOTIFICATION)) $criteria->add(UserPeer::NOTIFICATION, $this->notification);
 		if ($this->isColumnModified(UserPeer::PHONE_NUMBER)) $criteria->add(UserPeer::PHONE_NUMBER, $this->phone_number);
-		if ($this->isColumnModified(UserPeer::NETWORK_ID)) $criteria->add(UserPeer::NETWORK_ID, $this->network_id);
 		if ($this->isColumnModified(UserPeer::LOGIN)) $criteria->add(UserPeer::LOGIN, $this->login);
 
 		return $criteria;
@@ -3055,8 +2983,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setNotification($this->notification);
 
 		$copyObj->setPhoneNumber($this->phone_number);
-
-		$copyObj->setNetworkId($this->network_id);
 
 		$copyObj->setLogin($this->login);
 
@@ -3287,57 +3213,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aPicture;
-	}
-
-	/**
-	 * Declares an association between this object and a Network object.
-	 *
-	 * @param      Network $v
-	 * @return     User The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setNetwork(Network $v = null)
-	{
-		if ($v === null) {
-			$this->setNetworkId(NULL);
-		} else {
-			$this->setNetworkId($v->getId());
-		}
-
-		$this->aNetwork = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Network object, it will not be re-added.
-		if ($v !== null) {
-			$v->addUser($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Network object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Network The associated Network object.
-	 * @throws     PropelException
-	 */
-	public function getNetwork(PropelPDO $con = null)
-	{
-		if ($this->aNetwork === null && ($this->network_id !== null)) {
-			$c = new Criteria(NetworkPeer::DATABASE_NAME);
-			$c->add(NetworkPeer::ID, $this->network_id);
-			$this->aNetwork = NetworkPeer::doSelectOne($c, $con);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aNetwork->addUsers($this);
-			 */
-		}
-		return $this->aNetwork;
 	}
 
 	/**
@@ -6924,7 +6799,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collStudentQuestionsRelatedByTutorId = null;
 		$this->collWhiteboardSessions = null;
 			$this->aPicture = null;
-			$this->aNetwork = null;
 	}
 
 } // BaseUser

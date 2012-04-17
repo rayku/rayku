@@ -19,7 +19,7 @@ abstract class BaseUserPeer {
 	const CLASS_DEFAULT = 'lib.model.User';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 34;
+	const NUM_COLUMNS = 33;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -120,9 +120,6 @@ abstract class BaseUserPeer {
 	/** the column name for the PHONE_NUMBER field */
 	const PHONE_NUMBER = 'user.PHONE_NUMBER';
 
-	/** the column name for the NETWORK_ID field */
-	const NETWORK_ID = 'user.NETWORK_ID';
-
 	/** the column name for the LOGIN field */
 	const LOGIN = 'user.LOGIN';
 
@@ -147,11 +144,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'PictureId', 'Username', 'Email', 'Password', 'Points', 'CreatedAt', 'LastActivityAt', 'Type', 'Hidden', 'Name', 'Gender', 'Hometown', 'HomePhone', 'MobilePhone', 'Birthdate', 'Address', 'RelationshipStatus', 'ShowEmail', 'ShowGender', 'ShowHometown', 'ShowHomePhone', 'ShowMobilePhone', 'ShowBirthdate', 'ShowAddress', 'ShowRelationshipStatus', 'PasswordRecoverKey', 'CookieKey', 'Credit', 'Invisible', 'Notification', 'PhoneNumber', 'NetworkId', 'Login', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'pictureId', 'username', 'email', 'password', 'points', 'createdAt', 'lastActivityAt', 'type', 'hidden', 'name', 'gender', 'hometown', 'homePhone', 'mobilePhone', 'birthdate', 'address', 'relationshipStatus', 'showEmail', 'showGender', 'showHometown', 'showHomePhone', 'showMobilePhone', 'showBirthdate', 'showAddress', 'showRelationshipStatus', 'passwordRecoverKey', 'cookieKey', 'credit', 'invisible', 'notification', 'phoneNumber', 'networkId', 'login', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PICTURE_ID, self::USERNAME, self::EMAIL, self::PASSWORD, self::POINTS, self::CREATED_AT, self::LAST_ACTIVITY_AT, self::TYPE, self::HIDDEN, self::NAME, self::GENDER, self::HOMETOWN, self::HOME_PHONE, self::MOBILE_PHONE, self::BIRTHDATE, self::ADDRESS, self::RELATIONSHIP_STATUS, self::SHOW_EMAIL, self::SHOW_GENDER, self::SHOW_HOMETOWN, self::SHOW_HOME_PHONE, self::SHOW_MOBILE_PHONE, self::SHOW_BIRTHDATE, self::SHOW_ADDRESS, self::SHOW_RELATIONSHIP_STATUS, self::PASSWORD_RECOVER_KEY, self::COOKIE_KEY, self::CREDIT, self::INVISIBLE, self::NOTIFICATION, self::PHONE_NUMBER, self::NETWORK_ID, self::LOGIN, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'picture_id', 'username', 'email', 'password', 'points', 'created_at', 'last_activity_at', 'type', 'hidden', 'name', 'gender', 'hometown', 'home_phone', 'mobile_phone', 'birthdate', 'address', 'relationship_status', 'show_email', 'show_gender', 'show_hometown', 'show_home_phone', 'show_mobile_phone', 'show_birthdate', 'show_address', 'show_relationship_status', 'password_recover_key', 'cookie_key', 'credit', 'invisible', 'notification', 'phone_number', 'network_id', 'login', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'PictureId', 'Username', 'Email', 'Password', 'Points', 'CreatedAt', 'LastActivityAt', 'Type', 'Hidden', 'Name', 'Gender', 'Hometown', 'HomePhone', 'MobilePhone', 'Birthdate', 'Address', 'RelationshipStatus', 'ShowEmail', 'ShowGender', 'ShowHometown', 'ShowHomePhone', 'ShowMobilePhone', 'ShowBirthdate', 'ShowAddress', 'ShowRelationshipStatus', 'PasswordRecoverKey', 'CookieKey', 'Credit', 'Invisible', 'Notification', 'PhoneNumber', 'Login', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'pictureId', 'username', 'email', 'password', 'points', 'createdAt', 'lastActivityAt', 'type', 'hidden', 'name', 'gender', 'hometown', 'homePhone', 'mobilePhone', 'birthdate', 'address', 'relationshipStatus', 'showEmail', 'showGender', 'showHometown', 'showHomePhone', 'showMobilePhone', 'showBirthdate', 'showAddress', 'showRelationshipStatus', 'passwordRecoverKey', 'cookieKey', 'credit', 'invisible', 'notification', 'phoneNumber', 'login', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PICTURE_ID, self::USERNAME, self::EMAIL, self::PASSWORD, self::POINTS, self::CREATED_AT, self::LAST_ACTIVITY_AT, self::TYPE, self::HIDDEN, self::NAME, self::GENDER, self::HOMETOWN, self::HOME_PHONE, self::MOBILE_PHONE, self::BIRTHDATE, self::ADDRESS, self::RELATIONSHIP_STATUS, self::SHOW_EMAIL, self::SHOW_GENDER, self::SHOW_HOMETOWN, self::SHOW_HOME_PHONE, self::SHOW_MOBILE_PHONE, self::SHOW_BIRTHDATE, self::SHOW_ADDRESS, self::SHOW_RELATIONSHIP_STATUS, self::PASSWORD_RECOVER_KEY, self::COOKIE_KEY, self::CREDIT, self::INVISIBLE, self::NOTIFICATION, self::PHONE_NUMBER, self::LOGIN, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'picture_id', 'username', 'email', 'password', 'points', 'created_at', 'last_activity_at', 'type', 'hidden', 'name', 'gender', 'hometown', 'home_phone', 'mobile_phone', 'birthdate', 'address', 'relationship_status', 'show_email', 'show_gender', 'show_hometown', 'show_home_phone', 'show_mobile_phone', 'show_birthdate', 'show_address', 'show_relationship_status', 'password_recover_key', 'cookie_key', 'credit', 'invisible', 'notification', 'phone_number', 'login', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, )
 	);
 
 	/**
@@ -161,11 +158,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PictureId' => 1, 'Username' => 2, 'Email' => 3, 'Password' => 4, 'Points' => 5, 'CreatedAt' => 6, 'LastActivityAt' => 7, 'Type' => 8, 'Hidden' => 9, 'Name' => 10, 'Gender' => 11, 'Hometown' => 12, 'HomePhone' => 13, 'MobilePhone' => 14, 'Birthdate' => 15, 'Address' => 16, 'RelationshipStatus' => 17, 'ShowEmail' => 18, 'ShowGender' => 19, 'ShowHometown' => 20, 'ShowHomePhone' => 21, 'ShowMobilePhone' => 22, 'ShowBirthdate' => 23, 'ShowAddress' => 24, 'ShowRelationshipStatus' => 25, 'PasswordRecoverKey' => 26, 'CookieKey' => 27, 'Credit' => 28, 'Invisible' => 29, 'Notification' => 30, 'PhoneNumber' => 31, 'NetworkId' => 32, 'Login' => 33, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'pictureId' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'createdAt' => 6, 'lastActivityAt' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'homePhone' => 13, 'mobilePhone' => 14, 'birthdate' => 15, 'address' => 16, 'relationshipStatus' => 17, 'showEmail' => 18, 'showGender' => 19, 'showHometown' => 20, 'showHomePhone' => 21, 'showMobilePhone' => 22, 'showBirthdate' => 23, 'showAddress' => 24, 'showRelationshipStatus' => 25, 'passwordRecoverKey' => 26, 'cookieKey' => 27, 'credit' => 28, 'invisible' => 29, 'notification' => 30, 'phoneNumber' => 31, 'networkId' => 32, 'login' => 33, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PICTURE_ID => 1, self::USERNAME => 2, self::EMAIL => 3, self::PASSWORD => 4, self::POINTS => 5, self::CREATED_AT => 6, self::LAST_ACTIVITY_AT => 7, self::TYPE => 8, self::HIDDEN => 9, self::NAME => 10, self::GENDER => 11, self::HOMETOWN => 12, self::HOME_PHONE => 13, self::MOBILE_PHONE => 14, self::BIRTHDATE => 15, self::ADDRESS => 16, self::RELATIONSHIP_STATUS => 17, self::SHOW_EMAIL => 18, self::SHOW_GENDER => 19, self::SHOW_HOMETOWN => 20, self::SHOW_HOME_PHONE => 21, self::SHOW_MOBILE_PHONE => 22, self::SHOW_BIRTHDATE => 23, self::SHOW_ADDRESS => 24, self::SHOW_RELATIONSHIP_STATUS => 25, self::PASSWORD_RECOVER_KEY => 26, self::COOKIE_KEY => 27, self::CREDIT => 28, self::INVISIBLE => 29, self::NOTIFICATION => 30, self::PHONE_NUMBER => 31, self::NETWORK_ID => 32, self::LOGIN => 33, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'picture_id' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'created_at' => 6, 'last_activity_at' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'home_phone' => 13, 'mobile_phone' => 14, 'birthdate' => 15, 'address' => 16, 'relationship_status' => 17, 'show_email' => 18, 'show_gender' => 19, 'show_hometown' => 20, 'show_home_phone' => 21, 'show_mobile_phone' => 22, 'show_birthdate' => 23, 'show_address' => 24, 'show_relationship_status' => 25, 'password_recover_key' => 26, 'cookie_key' => 27, 'credit' => 28, 'invisible' => 29, 'notification' => 30, 'phone_number' => 31, 'network_id' => 32, 'login' => 33, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PictureId' => 1, 'Username' => 2, 'Email' => 3, 'Password' => 4, 'Points' => 5, 'CreatedAt' => 6, 'LastActivityAt' => 7, 'Type' => 8, 'Hidden' => 9, 'Name' => 10, 'Gender' => 11, 'Hometown' => 12, 'HomePhone' => 13, 'MobilePhone' => 14, 'Birthdate' => 15, 'Address' => 16, 'RelationshipStatus' => 17, 'ShowEmail' => 18, 'ShowGender' => 19, 'ShowHometown' => 20, 'ShowHomePhone' => 21, 'ShowMobilePhone' => 22, 'ShowBirthdate' => 23, 'ShowAddress' => 24, 'ShowRelationshipStatus' => 25, 'PasswordRecoverKey' => 26, 'CookieKey' => 27, 'Credit' => 28, 'Invisible' => 29, 'Notification' => 30, 'PhoneNumber' => 31, 'Login' => 32, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'pictureId' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'createdAt' => 6, 'lastActivityAt' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'homePhone' => 13, 'mobilePhone' => 14, 'birthdate' => 15, 'address' => 16, 'relationshipStatus' => 17, 'showEmail' => 18, 'showGender' => 19, 'showHometown' => 20, 'showHomePhone' => 21, 'showMobilePhone' => 22, 'showBirthdate' => 23, 'showAddress' => 24, 'showRelationshipStatus' => 25, 'passwordRecoverKey' => 26, 'cookieKey' => 27, 'credit' => 28, 'invisible' => 29, 'notification' => 30, 'phoneNumber' => 31, 'login' => 32, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PICTURE_ID => 1, self::USERNAME => 2, self::EMAIL => 3, self::PASSWORD => 4, self::POINTS => 5, self::CREATED_AT => 6, self::LAST_ACTIVITY_AT => 7, self::TYPE => 8, self::HIDDEN => 9, self::NAME => 10, self::GENDER => 11, self::HOMETOWN => 12, self::HOME_PHONE => 13, self::MOBILE_PHONE => 14, self::BIRTHDATE => 15, self::ADDRESS => 16, self::RELATIONSHIP_STATUS => 17, self::SHOW_EMAIL => 18, self::SHOW_GENDER => 19, self::SHOW_HOMETOWN => 20, self::SHOW_HOME_PHONE => 21, self::SHOW_MOBILE_PHONE => 22, self::SHOW_BIRTHDATE => 23, self::SHOW_ADDRESS => 24, self::SHOW_RELATIONSHIP_STATUS => 25, self::PASSWORD_RECOVER_KEY => 26, self::COOKIE_KEY => 27, self::CREDIT => 28, self::INVISIBLE => 29, self::NOTIFICATION => 30, self::PHONE_NUMBER => 31, self::LOGIN => 32, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'picture_id' => 1, 'username' => 2, 'email' => 3, 'password' => 4, 'points' => 5, 'created_at' => 6, 'last_activity_at' => 7, 'type' => 8, 'hidden' => 9, 'name' => 10, 'gender' => 11, 'hometown' => 12, 'home_phone' => 13, 'mobile_phone' => 14, 'birthdate' => 15, 'address' => 16, 'relationship_status' => 17, 'show_email' => 18, 'show_gender' => 19, 'show_hometown' => 20, 'show_home_phone' => 21, 'show_mobile_phone' => 22, 'show_birthdate' => 23, 'show_address' => 24, 'show_relationship_status' => 25, 'password_recover_key' => 26, 'cookie_key' => 27, 'credit' => 28, 'invisible' => 29, 'notification' => 30, 'phone_number' => 31, 'login' => 32, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, )
 	);
 
 	/**
@@ -310,8 +307,6 @@ abstract class BaseUserPeer {
 		$criteria->addSelectColumn(UserPeer::NOTIFICATION);
 
 		$criteria->addSelectColumn(UserPeer::PHONE_NUMBER);
-
-		$criteria->addSelectColumn(UserPeer::NETWORK_ID);
 
 		$criteria->addSelectColumn(UserPeer::LOGIN);
 
@@ -606,56 +601,6 @@ abstract class BaseUserPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Network table
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinNetwork(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			UserPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
 	 * Selects a collection of User objects pre-filled with their Picture objects.
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
@@ -723,73 +668,6 @@ abstract class BaseUserPeer {
 
 
 	/**
-	 * Selects a collection of User objects pre-filled with their Network objects.
-	 * @param      Criteria  $c
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of User objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinNetwork(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserPeer::addSelectColumns($c);
-		$startcol = (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
-		NetworkPeer::addSelectColumns($c);
-
-		$c->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-
-				$omClass = UserPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				UserPeer::addInstanceToPool($obj1, $key1);
-			} // if $obj1 already loaded
-
-			$key2 = NetworkPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = NetworkPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$omClass = NetworkPeer::getOMClass();
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					NetworkPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 already loaded
-
-				// Add the $obj1 (User) to $obj2 (Network)
-				$obj2->addUser($obj1);
-
-			} // if joined row was not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
 	 * @param      Criteria $c
@@ -826,7 +704,6 @@ abstract class BaseUserPeer {
 		}
 
 		$criteria->addJoin(array(UserPeer::PICTURE_ID,), array(PicturePeer::ID,), $join_behavior);
-		$criteria->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -863,11 +740,7 @@ abstract class BaseUserPeer {
 		PicturePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (PicturePeer::NUM_COLUMNS - PicturePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		NetworkPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + (NetworkPeer::NUM_COLUMNS - NetworkPeer::NUM_LAZY_LOAD_COLUMNS);
-
 		$c->addJoin(array(UserPeer::PICTURE_ID,), array(PicturePeer::ID,), $join_behavior);
-		$c->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -905,264 +778,6 @@ abstract class BaseUserPeer {
 				// Add the $obj1 (User) to the collection in $obj2 (Picture)
 				$obj2->addUser($obj1);
 			} // if joined row not null
-
-			// Add objects for joined Network rows
-
-			$key3 = NetworkPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-			if ($key3 !== null) {
-				$obj3 = NetworkPeer::getInstanceFromPool($key3);
-				if (!$obj3) {
-
-					$omClass = NetworkPeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					NetworkPeer::addInstanceToPool($obj3, $key3);
-				} // if obj3 loaded
-
-				// Add the $obj1 (User) to the collection in $obj3 (Network)
-				$obj3->addUser($obj1);
-			} // if joined row not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related Picture table
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAllExceptPicture(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			UserPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-				$criteria->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related Network table
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAllExceptNetwork(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			UserPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-				$criteria->addJoin(array(UserPeer::PICTURE_ID,), array(PicturePeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of User objects pre-filled with all related objects except Picture.
-	 *
-	 * @param      Criteria  $c
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of User objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptPicture(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		// $c->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserPeer::addSelectColumns($c);
-		$startcol2 = (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		NetworkPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (NetworkPeer::NUM_COLUMNS - NetworkPeer::NUM_LAZY_LOAD_COLUMNS);
-
-				$c->addJoin(array(UserPeer::NETWORK_ID,), array(NetworkPeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$omClass = UserPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				UserPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined Network rows
-
-				$key2 = NetworkPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = NetworkPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$omClass = NetworkPeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					NetworkPeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (User) to the collection in $obj2 (Network)
-				$obj2->addUser($obj1);
-
-			} // if joined row is not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of User objects pre-filled with all related objects except Network.
-	 *
-	 * @param      Criteria  $c
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of User objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptNetwork(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		// $c->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserPeer::addSelectColumns($c);
-		$startcol2 = (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		PicturePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (PicturePeer::NUM_COLUMNS - PicturePeer::NUM_LAZY_LOAD_COLUMNS);
-
-				$c->addJoin(array(UserPeer::PICTURE_ID,), array(PicturePeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$omClass = UserPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				UserPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined Picture rows
-
-				$key2 = PicturePeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = PicturePeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$omClass = PicturePeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					PicturePeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (User) to the collection in $obj2 (Picture)
-				$obj2->addUser($obj1);
-
-			} // if joined row is not null
 
 			$results[] = $obj1;
 		}

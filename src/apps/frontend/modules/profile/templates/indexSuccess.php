@@ -12,14 +12,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 ?>
   <?php if ($sf_user->isAuthenticated() && $user->equals($sf_user->getRaykuUser())): ?>
   <?php include_component('nudge', 'showNudges', array('user' => $user)) ?>
-  <?php 
-			$c= new Criteria();
-			$c->add(UsersNetworksPeer::USER_ID,$sf_user->getRaykuUser()->getId());
-			$networkusers = UsersNetworksPeer::doSelectOne($c);
-	?>
-  <?php if($networkusers == NULL): ?>
-  <?php include_component('network', 'network'); ?>
-  <?php endif ; ?>
   <h2><?php echo $user->getName();?>'s Profile (<?php echo link_to('edit', '@profile_edit?username=' . $user->getUsername()); ?>)</h2>
   <?php else: ?>
   <h2><?php echo $user->getName();?>'s Profile</h2>

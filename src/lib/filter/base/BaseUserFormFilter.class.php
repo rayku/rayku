@@ -45,7 +45,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'invisible'                => new sfWidgetFormFilterInput(),
       'notification'             => new sfWidgetFormFilterInput(),
       'phone_number'             => new sfWidgetFormFilterInput(),
-      'network_id'               => new sfWidgetFormPropelChoice(array('model' => 'Network', 'add_empty' => true)),
       'login'                    => new sfWidgetFormFilterInput(),
     ));
 
@@ -81,7 +80,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'invisible'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'notification'             => new sfValidatorPass(array('required' => false)),
       'phone_number'             => new sfValidatorPass(array('required' => false)),
-      'network_id'               => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Network', 'column' => 'id')),
       'login'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -132,7 +130,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'invisible'                => 'Number',
       'notification'             => 'Text',
       'phone_number'             => 'Text',
-      'network_id'               => 'ForeignKey',
       'login'                    => 'Number',
     );
   }

@@ -126,8 +126,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PHONE_NUMBER', 'PhoneNumber', 'VARCHAR', true, 20);
 
-		$tMap->addForeignKey('NETWORK_ID', 'NetworkId', 'INTEGER', 'network', 'ID', false, 11);
-
 		$tMap->addColumn('LOGIN', 'Login', 'INTEGER', true, 10);
 
 	} // doBuild()

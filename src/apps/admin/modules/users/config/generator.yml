@@ -5,7 +5,7 @@ generator:
     theme:            default
 
     list:
-      display: [=name, email, type_name, network]
+      display: [=name, email, type_name]
       
       fields:
         type_name: { name: User Type }

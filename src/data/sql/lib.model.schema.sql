@@ -701,22 +701,6 @@ CREATE TABLE `live_video_chat`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- network
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `network`;
-
-
-CREATE TABLE `network`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`type` INTEGER(11),
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- notification_emails
 #-----------------------------------------------------------------------------
 
@@ -1154,24 +1138,17 @@ CREATE TABLE `user`
 	`invisible` INTEGER(11)  NOT NULL,
 	`notification` VARCHAR(10)  NOT NULL,
 	`phone_number` VARCHAR(20)  NOT NULL,
-	`network_id` INTEGER(11),
 	`login` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),
 	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`),
 	KEY `user_FI_1`(`picture_id`),
-	KEY `network_id`(`network_id`),
 	CONSTRAINT `user_FK_1`
 		FOREIGN KEY (`picture_id`)
 		REFERENCES `picture` (`id`)
 		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_FK_2`
-		FOREIGN KEY (`network_id`)
-		REFERENCES `network` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
+		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1239,22 +1216,6 @@ CREATE TABLE `user_gtalk`
 	CONSTRAINT `user_gtalk_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- users_networks
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `users_networks`;
-
-
-CREATE TABLE `users_networks`
-(
-	`id` INTEGER(40)  NOT NULL AUTO_INCREMENT,
-	`network_id` INTEGER(10)  NOT NULL,
-	`user_id` INTEGER(10)  NOT NULL,
-	`joined_on` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

@@ -69,14 +69,6 @@
 		<li><?php echo link_to('View/Edit Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
         <li><?php echo link_to('Edit Course Information', 'profile/course?name='.$user->getUsername()); ?> </li>			
 		<li><?php echo link_to('Profile Display Permissions', '@profile_edit?username=' . $user->getUsername()); ?></li>
-        <?php 
-			$c= new Criteria();
-			$c->add(UsersNetworksPeer::USER_ID,$sf_user->getRaykuUser()->getId());
-			$networkusers = UsersNetworksPeer::doSelectOne($c);
-		?>
-		<?php if($networkusers != NULL): ?>
-			<li><?php echo link_to('Networks', '/network/index'); ?></li>
-		<?php endif ; ?>
 		<?php endif ?>
         
     	<?php 

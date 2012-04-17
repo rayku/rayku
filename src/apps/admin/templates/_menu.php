@@ -6,7 +6,6 @@
     <li><?php echo link_to('Award Points', 'users/givePoints'); ?></li>
     <li><?php echo link_to('Categories', 'category/index'); ?></li>
     <li><?php echo link_to('Boards', 'forums/index'); ?></li>
-    <li><?php echo link_to('Network', 'networks/list'); ?></li>
    <!-- <li><?php // echo link_to('Group', 'groups/list'); ?></li>-->
 	<li><?php echo link_to('Experts Payouts', 'experts_payouts/index'); ?></li>
     <li><?php echo link_to('Regenerate Cache', 'cache/index'); ?></li>
