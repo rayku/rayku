@@ -1,0 +1,29 @@
+Options +FollowSymLinks +ExecCGI
+order allow,deny
+allow from all
+
+<IfModule mod_rewrite.c>
+
+  RewriteEngine On
+
+  # uncomment the following line, if you are having trouble
+  # getting no_script_name to work
+  # RewriteBase /
+
+  RewriteCond %{HTTP_HOST} !^www\.rayku\.com$ [NC]
+  RewriteCond %{HTTP_HOST} !^local\.rayku\.com$ [NC]
+  RewriteRule ^(.*)$ http://www.rayku.com/$1 [R=301,L]
+
+  # we check if the .html version is here (caching)
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+
+  # no, so we redirect to our front web controller
+  RewriteRule ^(.*)$ index.php [QSA,L]
+
+</IfModule>
+
+# big crash from our front web controller
+ErrorDocument 500 "<h2>Application error</h2>symfony application failed to start properly"
+
+
