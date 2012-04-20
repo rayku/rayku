@@ -251,14 +251,12 @@ class UserPeer extends BaseUserPeer
         return UserPeer::doSelectOne($oC);
     }
 
-    static public function getWithMatchingUsername($matchingUsername, $limit = null)
+    static public function getWithMatchingUsername($matchingUsername, $limit = 10)
     {
         $c = new Criteria;
         $c->add(self::USERNAME, "%$matchingUsername%", Criteria::LIKE);
         $c->add(self::HIDDEN, 0);
-        if (is_null($limit)) {
-            $c->setLimit($limit);
-        }
+        $c->setLimit($limit);
         return self::doSelect($c);
     }
 

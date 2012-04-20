@@ -13,7 +13,7 @@
                         
                         <form method="post" action="/shop/donate">
                             <label>Send To</label><br />
-                              <?php echo input_auto_complete_tag('name', '', 'friends/autocomplete', array('id'=>'referalinput', 'class'=>'field'), array('use_style' => true, 'id'=>'referalinput')) ?>
+                              <?php echo input_auto_complete_tag('name', '', 'user/autocomplete', array('id'=>'referalinput', 'class'=>'field'), array('use_style' => true, 'id'=>'referalinput')) ?>
                             
                           <div class="hint">Type the USERNAME of receipent here.</div>
                             

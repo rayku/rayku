@@ -13,7 +13,7 @@
     <div class="content"> <?php echo form_tag('message/send') ?>
       <div class="entry">
         <div class="ttle">To (username):</div>
-        <div> <?php echo input_auto_complete_tag('name', $to, 'friends/autocomplete', array(), array('use_style' => true)); ?> <?php echo form_error('name'); ?>
+        <div> <?php echo input_auto_complete_tag('name', $to, 'user/autocomplete', array(), array('use_style' => true)); ?> <?php echo form_error('name'); ?>
           <div class="availableb">Type a username, or select a friend to PM.</div>
         </div>
       </div>

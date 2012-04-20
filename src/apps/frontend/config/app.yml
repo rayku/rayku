@@ -56,7 +56,8 @@ all:
                              # bankrupt before dissolution
     members_per_page: 30 # Number of users to show on each page of the list of
                          # members
-    
+  users:
+    autocomplete_limit: 10
                         
   profile:
     threads_per_page: 5 # Maximum number of threads for one page (in the profile
