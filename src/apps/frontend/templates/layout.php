@@ -416,15 +416,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
       
       <!--video-->
       <div class="video">
-        <object width="465" height="260" id="wistia_355291" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
-          <param name="movie" value="http://embed.wistia.com/flash/embed_player_v1.1.swf"/>
-          <param name="allowfullscreen" value="true"/>
-          <param name="allowscriptaccess" value="always"/>
-          <param name="wmode" value="opaque"/>
-          <param name="flashvars" value="videoUrl=http://embed.wistia.com/deliveries/ba0a68c9caf8ac95d7db03fa1af41508ce3aae18.bin&stillUrl=http://embed.wistia.com/deliveries/25764ea6e2c447c5d69d07633de6e3ff91fa0e14.bin&unbufferedSeek=false&controlsVisibleOnLoad=false&autoPlay=false&endVideoBehavior=reset&playButtonVisible=true&embedServiceURL=http://distillery.wistia.com/x&accountKey=wistia-production_6330&mediaID=wistia-production_355291&mediaDuration=116.08"/>
-          <embed src="http://embed.wistia.com/flash/embed_player_v1.1.swf" width="465" height="260" name="wistia_355291" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" wmode="opaque" flashvars="videoUrl=http://embed.wistia.com/deliveries/ba0a68c9caf8ac95d7db03fa1af41508ce3aae18.bin&stillUrl=http://embed.wistia.com/deliveries/25764ea6e2c447c5d69d07633de6e3ff91fa0e14.bin&unbufferedSeek=false&controlsVisibleOnLoad=false&autoPlay=false&endVideoBehavior=reset&playButtonVisible=true&embedServiceURL=http://distillery.wistia.com/x&accountKey=wistia-production_6330&mediaID=wistia-production_355291&mediaDuration=116.08"></embed>
-        </object>
-        <script src="http://embed.wistia.com/embeds/v.js" charset="ISO-8859-1"></script><script>if(!navigator.mimeTypes['application/x-shockwave-flash'] || navigator.userAgent.match(/Android/i)!==null)Wistia.VideoEmbed('wistia_355291',465,260,{videoUrl:'http://embed.wistia.com/deliveries/aeee0f5fed348f465177b871fde7bb0b30ab7405.bin',stillUrl:'http://embed.wistia.com/deliveries/25764ea6e2c447c5d69d07633de6e3ff91fa0e14.bin',distilleryUrl:'http://distillery.wistia.com/x',accountKey:'wistia-production_6330',mediaId:'wistia-production_355291',mediaDuration:116.08})</script>
+        <iframe src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&videoHeight=262&volumeControl=true&playerColor=313131&plugin%5BpostRoll%5D%5Bversion%5D=v1&plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="465" height="262"></iframe>
         <form action="#" id="newsletter-form">
           <p>Take 30 seconds</p>
           <p><a href="/register">Register Now</a></p>

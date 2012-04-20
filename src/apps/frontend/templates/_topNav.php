@@ -141,11 +141,6 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
     <div class="clear"></div>
   </div>
   <!--div#top-nav-center-->
-<!--[if IE]>
-<div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" align="center">
-Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or another browser.
-</div>
-<![endif]-->
 </div>
 <!--div#top-nav-->
 
@@ -166,7 +161,8 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/themes/smoothness/jquery-ui.css"/>
  <script type="text/javascript" src="/js/jquery.idle-timer.js"></script>
 
-
+<!-- User Idle State Script, Not Working -->
+<!--
 <div id="status" style="padding:0 5px;">&nbsp;</div>
 <form name="idleform" id="idleform" >
 <input type="hidden" name="user_val" id="user_val"  value="<?php echo @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];?>"/>
@@ -217,7 +213,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
 
     })(jQuery);
 
-    </script>
+    </script>-->
 
 
 <div id="tt-questions-tooltip" class="tooltip"> Ask a Question </div>

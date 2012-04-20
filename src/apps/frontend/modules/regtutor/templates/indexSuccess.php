@@ -69,7 +69,7 @@
       <div class="top"></div>
       <div class="content" style="position:relative; _top:-3px; _bottom:-3px; padding-right:20px; width:264px">
         <div class="text">
-          <p>Your password is immediately MD5 encrypted, so that only you know what it is - no one else. </p>
+          <p>Your password is immediately encrypted, so that only you know what it is - no one else. </p>
         </div>
       </div>
       <div class="bottom"></div>
