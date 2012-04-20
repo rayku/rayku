@@ -20,24 +20,11 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
     <?php
     $urlIndex = url_for('@profile?username=' . $user->getUsername(), true);
 
-    if( $sf_user->isAuthenticated() )
-      $isFriend = $current->isFriendsWith( $user );
-    else
-      $isFriend = false;
-
-    if( $isFriend )
-    {
-      echo '<h3>'.$user->getName().'  is in your Friends Network!</h3>';
-    }
-
     echo '<div class="url" align="center">';
       if($sf_user->isAuthenticated())
       { 
         if( $sf_user->getRaykuUser()->getUsername() != $user->getUsername() )
         {
-          if( $isFriend )
-            echo link_to( $urlIndex, '@profile?username=' . $user->getUsername());
-          else
             echo link_to( $urlIndex, '@profile?username=' . $user->getUsername());
         }
         else
@@ -51,31 +38,10 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 
     ?>
     <br class="clear-both" />
-    <div class="friends">
-      <?php
-     	 $friends = $user->getAllFriends(); 
-
-
-		
-    ?>
-  <!--    <h4> <?php echo link_to('view all', 'friends/members?type=1'); ?><em>+</em></a> Friends of <strong><?php echo $user ?></strong> (<?php echo count($friends); ?>) </h4>-->
-<!--============================================================Modified By DAC021===============================================================================-->
-      <h4> <?php echo link_to('view all', 'friends/members?username='.$user->getUsername(), array("style"=>"font-size:14px;text-decoration:underline")); ?><em>+</em></a> Friends of <strong><?php echo $user ?></strong> (<?php echo count($friends); ?>) </h4>
-<!--============================================================Modified By DAC021===============================================================================-->
-      <?php include_partial('friends/profilelist', array('friends' => $friends)) ?>
-    </div>
     <a name="comments" id="comments"></a>
         <div id="newone" class="newone">
       <?php include_partial( 'shoutbox', array( 'raykuPager' => $raykuPagerNew, 'user' => $user, 'current' => $current) ); ?>
     </div>
-
-<?php
-if( $sf_user->isAuthenticated()
-    && $user->isFriendsWith( $current ) )
-{
-  include_partial( 'shoutbox_form' );
-}
-?>
 
   </div>
   <div class="content-side">
@@ -98,10 +64,6 @@ if( $sf_user->isAuthenticated()
         <?php echo link_to('View All Photos', '@gallery_index?user_id=' . $user->getId(),array('class' => 'all-photos')) ?> </div>
     </div>
     <?php include_partial( 'about_me', array( 'user' => $user ) ); ?>
-<div id="new" class="new">
-    <?php include_partial( 'recent', array( 'raykuPager' => $raykuPager, 'user' => $user) ); ?>
-  </div>
-
   </div>
 </div>
 

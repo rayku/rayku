@@ -209,14 +209,6 @@ propel:
     created_at: { type: TIMESTAMP, required: true }
     updated_at: { type: TIMESTAMP, required: true }
     _indexes: { forum_question_FI_1: [category_id], forum_question_FI_2: [user_id] }
-  friend:
-    _attributes: { phpName: Friend }
-    user_id1: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id2: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    status: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { friend_FI_1: [user_id1], friend_FI_2: [user_id2] }
   gallery:
     _attributes: { phpName: Gallery }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

@@ -472,35 +472,6 @@ CREATE TABLE `forum_question`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- friend
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `friend`;
-
-
-CREATE TABLE `friend`
-(
-	`user_id1` INTEGER(11),
-	`user_id2` INTEGER(11),
-	`status` INTEGER(11) default 0,
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `friend_FI_1`(`user_id1`),
-	KEY `friend_FI_2`(`user_id2`),
-	CONSTRAINT `friend_FK_1`
-		FOREIGN KEY (`user_id1`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `friend_FK_2`
-		FOREIGN KEY (`user_id2`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- gallery
 #-----------------------------------------------------------------------------
 

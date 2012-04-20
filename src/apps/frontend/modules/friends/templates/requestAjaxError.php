@@ -1,1 +1,0 @@
-<p>There was an error with your friendship request.</p>

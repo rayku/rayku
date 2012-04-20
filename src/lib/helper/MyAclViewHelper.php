@@ -17,38 +17,3 @@ window.onload = function()
 	}
 }');
 }
-
-function acl_select_friends($friends, $selectedFriends = array(), $hidden = true, $container_id = 'visible-by-container')
-{
-	$contents = '';
-	
-	if (isset($friends) && is_array($friends))
-	{
-		foreach ($friends as $friend)
-		{
-			$string = sprintf(
-				'<div class="form-row-indented">
-					<input type="checkbox" name="friend[%s]" value="1" %s/> %s
-				</div>',
-				$friend->getId(),
-				in_array($friend->getId(), $selectedFriends) ? 'checked="checked" ' : '',
-				$friend
-			);
-			
-			
-			$contents .= $string;
-		}
-	}
-	else
-	{
-		$contents = 'You have no friends.';
-	}
-	
-	return '
-		<div id="' . $container_id . '" style="' . ($hidden ? 'display: none; ' : '') . 'margin-top: 10px;">
-			<!-- AJAX THIS EVENTUALLY. -->
-			' . $contents . '
-		</div>
-	';
-}
-

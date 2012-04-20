@@ -33,7 +33,6 @@
             ?>
            </div>
         </div>   
-        <p><?php echo acl_select_friends($friends, $selectedFriends, !$gallery->isSpecifiedList()) ?></p>
       <?php echo submit_tag('Save',array('class'=>'button-sm','style'=>'margin-top:2px;')); ?>
     </form>
     </div>

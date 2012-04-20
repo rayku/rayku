@@ -35,4 +35,3 @@
   </div>
   <br class="clear" />
 </div>
-<?php include_partial('message/rightSideBlock', array('friends' => $friends)); ?>

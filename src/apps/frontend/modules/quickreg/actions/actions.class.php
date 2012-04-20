@@ -179,10 +179,6 @@ class quickregActions extends sfActions
 		$this->getUser()->signIn($userCheck);
 		}
 
-		if($user) {
-			$kinkarsoUser = FriendPeer::createInitialFriendship($user);
-		} 
-		
 		if( $kinkarsoUser ) {
 
 		if($user) {

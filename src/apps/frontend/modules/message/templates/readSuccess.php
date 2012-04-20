@@ -69,4 +69,3 @@ if($message->getSender()->getType() == 5): ?>
   </div>
   <div style="float:right;"> <a href="/message/compose/<?php echo $message->getSender()->getUsername();?>/subject/Re: <?php echo $message->getSubject(); ?>" style="width: 81px; height: 35px; float: left;margin-right:5px;" id="reply"></a> <a href="/message/delete/id/<?php echo $message->getId();?>" style="width: 81px; height: 35px; float: left;" id="delete"></a> </div>
 </div>
-<?php include_partial('message/rightSideBlock', array('friends' => $friends)); ?>

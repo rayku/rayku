@@ -179,9 +179,6 @@ class regtutorActions extends sfActions
         } else {
             $this->getUser()->signIn($userCheck);
         }
-        if ($user) {
-            $kinkarsoUser = FriendPeer::createInitialFriendship($user);
-        }
         if ($kinkarsoUser) {
             if ($user) {
                 $query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."") or die(mysql_error());

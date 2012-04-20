@@ -116,215 +116,6 @@ class User extends BaseUser
 	}
 
 	/**
-	* Causes this user to send a request for friendship to $user
-	*
-	* @param int $userID User requesting friendship
-	* @return bool
-	*/
-	public function requestFriendshipFrom( User $user, $dontSendPM = false )
-	{
-		//Uhh, you're not allowed to add yourself as a friend... that's just sad
-		if( $user->getId() == $this->getId() )
-			return false;
-
-    if( !$user->isRequestedBy( $this ) )
-    {
-      $friend = new Friend();
-
-      $friend->setUserRelatedByUserId1( $this );
-      $friend->setUserRelatedByUserId2( $user );
-
-      $saveStatus = $friend->save();
-
-
-
-
-      if( !$dontSendPM )
-      {
-        sfProjectConfiguration::getActive()->loadHelpers(array('Url','Tag'));
-      //  $kinkarsoUser = UserPeer::getByUsername(RaykuCommon::SITE_USER_USERNAME);
-
-
-        if( $user )
-        {
-		  $link = link_to( 'Manage your Friend Requests', 'friends/members?username='.$user->getUsername() );
-          $this->sendMessage(
-            $user->getId(),
-            $this->getUsername() . ' sent you a friend request',
-            'Do you know this person? <a href="http://www.rayku.com/friends/acceptFriendshipRequest/'.$this->getID().'">Accept Friend Request</a> or you can '. $link,
-            false
-          );
-        }
-      }
-
-      return $saveStatus;
-    }
-    else
-      return false;
-	}
-
-	/**
-	* Accepts/denies a friendship request from $friendID
-	*
-	* @param int $friendID UserID to accept/deny request from
-	* @param bool $response
-	*/
-	public function respondToFriendshipRequestFrom($frienduser, $response)
-	{
-		//Grab the relevant friendship row
-		$c = new Criteria();
-		$c->add(FriendPeer::USER_ID1, $frienduser->getId());
-		$c->add(FriendPeer::USER_ID2, $this->getId());
-		$friend = FriendPeer::doSelectOne($c);
-
-		//If there's no such friendship request, return false
-		if(!$friend)
-			return false;
-
-		//If the user wants to be friends...
-		if($response)
-		{
-
-			sfProjectConfiguration::getActive()->loadHelpers(array('Url','Tag'));
-			//$kinkarsoUser = UserPeer::getByUsername(RaykuCommon::SITE_USER_USERNAME);
-
-			if( $frienduser )
-			{
-			  $link = link_to( 'Your friends page', 'friends/members?username='.$frienduser->getUsername() );
-			  $this->sendMessage(
-				$frienduser->getId(),
-				$this->getUsername() . ' has accepted your friend request!',
-				'You may manage your friend requests and friend requests sent to you here: ' . $link,
-				false
-			  );
-			}
-
-			$friend->setStatus( 1 );
-			return $friend->save();
-
-
-		}
-
-		//If the user would rather not be friends...
-		$friend->delete();
-
-		return true;
-	}
-
-	/**
-	 * Removes a friendship between this user and the parameter user
-	 *
-	 * @param User $friendUser
-	 */
-	public function removeFriendshipWith(User $friendUser)
-	{
-		$c = new Criteria();
-		$c->add(FriendPeer::USER_ID1, $this->getId());
-		$c->add(FriendPeer::USER_ID2, $friendUser->getId());
-		$friend = FriendPeer::doSelectOne($c);
-
-		if ($friend instanceof Friend)
-		{
-			$friend->delete();
-      return true;
-		}
-    else
-      return false;
-	}
-
-	/**
-	* Returns the Friendship type associated with this user's connection to
-	* $friendID. Returns -1 if there is no connection.
-	*
-	* @param int $friendID
-	* @return int
-	*/
-	public function getFriendshipStatus($friendID)
-	{
-		$c = new Criteria();
-
-		//Look for cases where this user is ID1 and the friend is ID2
-		$c1 = $c->getNewCriterion(FriendPeer::USER_ID1, $this->getId());
-		$c1->addAnd($c->getNewCriterion(FriendPeer::USER_ID2, $friendID));
-		$c->add($c1);
-
-		//And cases where the friend is ID1 and this user is ID2
-		$c2 = $c->getNewCriterion(FriendPeer::USER_ID1, $friendID);
-		$c2->addAnd($c->getNewCriterion(FriendPeer::USER_ID2, $this->getId()));
-		$c->addOr($c2);
-
-		$friend = FriendPeer::doSelectOne($c);
-
-		//If they aren't friends or there is no friend request, return -1
-		if(!$friend)
-			return -1;
-
-		//Else return their friendship status
-		return $friend->getStatus();
-	}
-
-	/**
-	 * Gets all friends for this user.
-	 *
-	 * @return array
-	 */
-	public function getAllFriends()
-	{
-			return FriendPeer::getFriendsOf( $this );
-	}
-
-
-
-
-
-  /**
-	 * Determines if a user is friends with another user
-	 *
-	 * @param User $friend
-	 * @return boolean
-	 */
-	public function isFriendsWith(User $friend)
-	{
-    $iStatus = $this->getFriendshipStatus($friend->getId() );
-
-    return ( ( -1 !== $iStatus ) && ( $iStatus != 0 ) );
-	}
-
-  /**
-	 * Determines if a user is requested by another user
-	 *
-	 * @param User $friend
-	 * @return boolean
-	 */
-  public function isRequestedBy(User $friend)
-	{
-    $c = new Criteria();
-
-		//Look for cases where ID1 is requester and ID2 is this user and is requestee
-		$c->add( FriendPeer::USER_ID1, $friend->getId() );
-		$c->add( FriendPeer::USER_ID2, $this->getId() );
-    $c->add( FriendPeer::STATUS, 0 );//don't send request to friend
-
-    $requester = FriendPeer::doSelectOne($c);
-
-    if( $requester instanceof Friend )
-      return true;
-    else
-      return false;
-	}
-
-  public function canRequestForFriendship(User $friend)
-  {
-    if( !$this->isFriendsWith( $friend ) &&
-        !$this->isRequestedBy( $friend ) &&
-        !$friend->isRequestedBy( $this ) &&
-        $this->getId() != $friend->getId() )
-      return true;
-    else
-      return false;
-  }
-
-	/**
 	* Sends a private message from this user to $recipientID
 	*
 	* @param int $recipientID
@@ -584,24 +375,6 @@ class User extends BaseUser
 		if ($this->equals($gallery->getUser()))
 			return true;
 
-		// if it's a friends & family or if it's a family only
-		if ($gallery->getShowEntity() < Gallery::TYPE_FAMILY_ONLY)
-		{
-			// get friendship status
-			$friendshipStatus = $this->getFriendshipStatus($gallery->getUserId());
-
-			// if they aren't even friends, return false
-			if ($friendshipStatus < Friend::TYPE_FRIENDS)
-				return false;
-
-			// if they aren't family and this is family only, return false
-			if ($friendshipStatus < Friend::TYPE_FAMILY &&
-				$gallery->getShowEntity() == Gallery::TYPE_FAMILY_ONLY)
-				return false;
-
-			return true;
-		}
-
 		// if it's an ACL-only thing...
 		if ($gallery->getShowEntity() == Gallery::TYPE_SPECIFIC_PEOPLE_ONLY)
 		{
@@ -687,14 +460,6 @@ class User extends BaseUser
     $rssContext = sfContext::getInstance()->getModuleName() == 'profile' ? 'profile' : null;
 
     return $recentActivities->fetchForUser($this, $rssContext);
-	}
-
-	public function getLiveFeed($limit = 1)
-	{
-		$recentActivities = new RecentActivities();
-		// $recentActivities->setLimit( $limit );
-		$rssContext = sfContext::getInstance()->getModuleName() == 'profile' ? 'profile' : null;
-		return $recentActivities->fetchLiveFeed($this, $rssContext);
 	}
 
 	/**
@@ -874,7 +639,6 @@ class User extends BaseUser
 
     $stats = array(
         'teachersCount'   => count($this->getMediaCount()),
-        'friendsCount'    => count($this->getAllFriends()),
         'ryakuCount'      => $this->getAllRyaku(),
         'expertCount' => $this->getExpertScore()
     );

@@ -35,7 +35,7 @@ all:
     avatar_default_image: anon
     avatar_default_image_type: jpg
   login:
-    facebook_notification:    You were invited to join <a href=”http://www.rayku.com”>Rayku</a>! http://www.rayku.com
+    facebook_notification:    You were invited to join <a href=ï¿½http://www.rayku.comï¿½>Rayku</a>! http://www.rayku.com
   homepage:
     count_newest_users: 4 # number of "newest users" to appear on homepage
   
@@ -62,19 +62,8 @@ all:
     threads_per_page: 5 # Maximum number of threads for one page (in the profile
                         # page only)
     posts_per_page: 25   # Maximum number of posts for one page (profile page)
-    friends_per_page: 8 # Maximum number of friends displayed on profile pages
     online_activity_timeout: 60 # Number in seconds of how long someone is "online" after their last page hit
     
-    
-  friends:
-    friends_per_page: 25 # Maximum number of friends to display on one page
-    autocomplete_limit: 10 # The maximum number of friend usernames to display
-                           # on the autocomplete list at one time
-    max_mutual_friends: 5 # Maximum number of mutual friends to show in a "Get
-                          # More Info" request
-    request_exipry_time: 30 # Number of days until a group request expires
-  
-  
   messages:
     messages_per_page: 25 # Maximum number of PMs to display on any one page
     

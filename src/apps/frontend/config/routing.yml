@@ -119,34 +119,6 @@ view_forums:
   url: /forum/*
   param: { module: forum, action: index }
 
-
-
-
-# ----
-# Friends
-# ----
-
-submit_friend_request:
-  url: /friends/requestFriendship/:username/*
-  param: { module: friends, action: friendshipRequest }
-  options:
-    segment_separators: ['/']
-
-friend_remove:
-  url: /friends/removeFriendship/:user_id
-  param: { module: friends, action: removeFriendship }
-  requirements: { page: \d+ }
-
-friend_accept:
-  url: /friends/acceptFriendshipRequest/:user_id
-  param: { module: friends, action: acceptFriendshipRequest }
-  requirements: { page: \d+ }
-
-friend_deny:
-  url: /friends/denyFriendshipRequest/:user_id
-  param: { module: friends, action: denyFriendshipRequest }
-  requirements: { page: \d+ }
-
 # ----
 # Gallery
 # ----

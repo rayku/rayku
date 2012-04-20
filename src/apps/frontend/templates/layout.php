@@ -471,7 +471,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php if($sf_context->getModuleName() =='message' and $sf_context->getActionName() !='compose'): ?>
 <link rel="stylesheet" type="text/css" href="/css/custom/pm-homepage.css"/>
 <?php endif; ?>
-<?php if($sf_context->getModuleName() =='search' || $sf_context->getModuleName() =='friends' || $sf_context->getModuleName() =='profile' || $sf_context->getModuleName() =='tutors'): ?>
+<?php if($sf_context->getModuleName() =='search' || $sf_context->getModuleName() =='profile' || $sf_context->getModuleName() =='tutors'): ?>
 <link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
 <link rel="stylesheet" type="text/css" href="/css/custom/pplsrch-results.css"/>
 <link rel="stylesheet" type="text/css" href="/css/pager.css"/>
@@ -608,7 +608,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
         <div class="partners"><a href="http://rayku.com" target="_blank"><img src="/images/img-footer-logo-1.png" alt="rayku.com"/></a> </div>
         <p style="margin-top:10px">Copyright 2012 Rayku, Inc.  All rights reserved.</p>
         <ul>
-          <!--<li><?php echo link_to( 'member list', 'friends/index' ); ?></li>-->
           <li><a href="mailto:cs[at]rayku.com">contact us</a></li>
           <li><a href="http://rayku.com/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
           <?php if(!$sf_user->isAuthenticated())

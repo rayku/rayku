@@ -70,7 +70,6 @@ class galleryActions extends sfActions
 
   private function prepareDataForGalleryForm()
   {
-    $this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
   }
 
 	public function handleErrorCreate()
@@ -160,7 +159,6 @@ class galleryActions extends sfActions
 			$this->redirect('@gallery_show?id=' . $gallery->getId());
 		}
 
-		$this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
     $this->selectedFriends = GalleryAclPeer::getSpecyficPeopleForGalleryForSelect($this->getRequestParameter('id'));
 		$this->gallery = $gallery;
 	}
@@ -171,10 +169,6 @@ class galleryActions extends sfActions
 
 		$this->forward404Unless($gallery instanceof Gallery);
 
-		$friends = $this->getUser()->getRaykuUser()->getAllFriends();
-
-		// assign to view
-		$this->friends = $friends;
 		$this->gallery = $gallery;
 
 		return sfView::SUCCESS;

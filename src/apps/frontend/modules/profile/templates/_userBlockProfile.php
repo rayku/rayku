@@ -123,59 +123,5 @@
 						<?php endif; ?>
 				
 		<?php  endif; ?>
-				
-				
-		<?php if ($sf_user->isAuthenticated() && !empty($raykuUser) ): ?>
-			<li id="friendActions[<?php echo $user->getId() ?>]">
-
-				<?php if ($user->isFriendsWith($raykuUser) && !empty($raykuUser) ): ?>
-
-					<?php if (isset($ajaxAdd) && $ajaxAdd): ?>
-
-						<?php echo link_to_remote(
-							'Remove as Friend',
-
-							array(
-								'url' => '@friend_remove?ajax=1&user_id=' . $user->getId(),
-
-								'update' => 'friendActions[' . $user->getId() . ']',
-
-							),
-
-							array('href' => url_for('@friend_remove?user_id=' . $user->getId()))
-
-						) ?>
-					<?php else: ?>
-						<?php echo link_to('Remove as Friend', '@friend_remove?user_id=' . $user->getId()) ?>
-
-					<?php endif ?>
-
-				<?php else: ?>
-
-					<?php if (isset($ajaxAdd) && $ajaxAdd): ?>
-						<?php echo link_to_remote(
-
-							'Add as Friend',
-							array(
-
-								'url' => '@submit_friend_request?username=' . $user->getUsername(),
-								'update' => 'friendActions[' . $user->getId() . ']',
-
-							),
-
-							array('href' => url_for('@submit_friend_request?username=' . $user->getUsername()))
-
-						) ?>
-						<?php else: ?>
-
-						<?php echo link_to('Add as Friend', '@submit_friend_request?username=' . $user->getUsername()) ?>
-
-					<?php endif ?>
-
-				<?php endif ?>
-
-			</li>
-		<?php endif ?>
-
 	</ul>
 <?php endif ?>

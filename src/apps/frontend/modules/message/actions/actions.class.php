@@ -55,8 +55,6 @@ class messageActions extends sfActions
 		$pager->setPage($this->getRequestParameter('page', 1));
 		$pager->init();
 
-    $this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
-
     $this->raykuPager = new RaykuPagerRenderer( $pager );
     $this->raykuPager->setBaseUrl( $url );
 	}
@@ -96,8 +94,6 @@ class messageActions extends sfActions
 
 
 		// address book kind of thing
-		$this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
-
 		$this->to = $this->getRequestParameter('nickname');
 	}
 
@@ -142,7 +138,5 @@ class messageActions extends sfActions
       $this->message->setReadStatus( PrivateMessage::STATUS_READED );
       $this->message->save();
 		}
-
-    $this->friends = $this->getUser()->getRaykuUser()->getAllFriends();
 	}
 }

@@ -25,7 +25,6 @@
         ?>
         </div>
       </div>
-      <?php echo acl_select_friends($friends) ?> <?php echo submit_tag('Create',array('class'=>'button-sm','style'=>'margin-top:2px;')); ?>
       <?php //echo form_row_no_label(submit_tag('Create')) ?>
       </form>
     </div>

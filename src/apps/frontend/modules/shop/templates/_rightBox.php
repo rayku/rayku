@@ -5,8 +5,6 @@
     <!--<h1>Rayku On-Site Products</h1>
                             <ul>--> 
     <!-- <li><a href="/shop/awardPurchase">Profile Icons</a></li> --> 
-    <!-- <li><a href="/friends/games/">Play Games</a></li> --> 
-    <!--<li><a href="/shop/donatePage">Donate to friends</a></li>--> 
     <!--</ul>-->
     
     <h1>Shop Categories</h1>

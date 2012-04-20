@@ -257,26 +257,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	private $lastExpertCategoryCriteria = null;
 
 	/**
-	 * @var        array Friend[] Collection to store aggregation of Friend objects.
-	 */
-	protected $collFriendsRelatedByUserId1;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collFriendsRelatedByUserId1.
-	 */
-	private $lastFriendRelatedByUserId1Criteria = null;
-
-	/**
-	 * @var        array Friend[] Collection to store aggregation of Friend objects.
-	 */
-	protected $collFriendsRelatedByUserId2;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collFriendsRelatedByUserId2.
-	 */
-	private $lastFriendRelatedByUserId2Criteria = null;
-
-	/**
 	 * @var        array Gallery[] Collection to store aggregation of Gallery objects.
 	 */
 	protected $collGallerys;
@@ -1856,12 +1836,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->collExpertCategorys = null;
 			$this->lastExpertCategoryCriteria = null;
 
-			$this->collFriendsRelatedByUserId1 = null;
-			$this->lastFriendRelatedByUserId1Criteria = null;
-
-			$this->collFriendsRelatedByUserId2 = null;
-			$this->lastFriendRelatedByUserId2Criteria = null;
-
 			$this->collGallerys = null;
 			$this->lastGalleryCriteria = null;
 
@@ -2046,22 +2020,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collExpertCategorys !== null) {
 				foreach ($this->collExpertCategorys as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collFriendsRelatedByUserId1 !== null) {
-				foreach ($this->collFriendsRelatedByUserId1 as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collFriendsRelatedByUserId2 !== null) {
-				foreach ($this->collFriendsRelatedByUserId2 as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2295,22 +2253,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collExpertCategorys !== null) {
 					foreach ($this->collExpertCategorys as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collFriendsRelatedByUserId1 !== null) {
-					foreach ($this->collFriendsRelatedByUserId1 as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collFriendsRelatedByUserId2 !== null) {
-					foreach ($this->collFriendsRelatedByUserId2 as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -3004,18 +2946,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getFriendsRelatedByUserId1() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addFriendRelatedByUserId1($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getFriendsRelatedByUserId2() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addFriendRelatedByUserId2($relObj->copy($deepCopy));
-				}
-			}
-
 			foreach ($this->getGallerys() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addGallery($relObj->copy($deepCopy));
@@ -3568,314 +3498,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->lastExpertCategoryCriteria = $criteria;
 
 		return $this->collExpertCategorys;
-	}
-
-	/**
-	 * Clears out the collFriendsRelatedByUserId1 collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addFriendsRelatedByUserId1()
-	 */
-	public function clearFriendsRelatedByUserId1()
-	{
-		$this->collFriendsRelatedByUserId1 = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collFriendsRelatedByUserId1 collection (array).
-	 *
-	 * By default this just sets the collFriendsRelatedByUserId1 collection to an empty array (like clearcollFriendsRelatedByUserId1());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initFriendsRelatedByUserId1()
-	{
-		$this->collFriendsRelatedByUserId1 = array();
-	}
-
-	/**
-	 * Gets an array of Friend objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related FriendsRelatedByUserId1 from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Friend[]
-	 * @throws     PropelException
-	 */
-	public function getFriendsRelatedByUserId1($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collFriendsRelatedByUserId1 === null) {
-			if ($this->isNew()) {
-			   $this->collFriendsRelatedByUserId1 = array();
-			} else {
-
-				$criteria->add(FriendPeer::USER_ID1, $this->id);
-
-				FriendPeer::addSelectColumns($criteria);
-				$this->collFriendsRelatedByUserId1 = FriendPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(FriendPeer::USER_ID1, $this->id);
-
-				FriendPeer::addSelectColumns($criteria);
-				if (!isset($this->lastFriendRelatedByUserId1Criteria) || !$this->lastFriendRelatedByUserId1Criteria->equals($criteria)) {
-					$this->collFriendsRelatedByUserId1 = FriendPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastFriendRelatedByUserId1Criteria = $criteria;
-		return $this->collFriendsRelatedByUserId1;
-	}
-
-	/**
-	 * Returns the number of related Friend objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Friend objects.
-	 * @throws     PropelException
-	 */
-	public function countFriendsRelatedByUserId1(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collFriendsRelatedByUserId1 === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(FriendPeer::USER_ID1, $this->id);
-
-				$count = FriendPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(FriendPeer::USER_ID1, $this->id);
-
-				if (!isset($this->lastFriendRelatedByUserId1Criteria) || !$this->lastFriendRelatedByUserId1Criteria->equals($criteria)) {
-					$count = FriendPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collFriendsRelatedByUserId1);
-				}
-			} else {
-				$count = count($this->collFriendsRelatedByUserId1);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Friend object to this object
-	 * through the Friend foreign key attribute.
-	 *
-	 * @param      Friend $l Friend
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addFriendRelatedByUserId1(Friend $l)
-	{
-		if ($this->collFriendsRelatedByUserId1 === null) {
-			$this->initFriendsRelatedByUserId1();
-		}
-		if (!in_array($l, $this->collFriendsRelatedByUserId1, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collFriendsRelatedByUserId1, $l);
-			$l->setUserRelatedByUserId1($this);
-		}
-	}
-
-	/**
-	 * Clears out the collFriendsRelatedByUserId2 collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addFriendsRelatedByUserId2()
-	 */
-	public function clearFriendsRelatedByUserId2()
-	{
-		$this->collFriendsRelatedByUserId2 = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collFriendsRelatedByUserId2 collection (array).
-	 *
-	 * By default this just sets the collFriendsRelatedByUserId2 collection to an empty array (like clearcollFriendsRelatedByUserId2());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initFriendsRelatedByUserId2()
-	{
-		$this->collFriendsRelatedByUserId2 = array();
-	}
-
-	/**
-	 * Gets an array of Friend objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related FriendsRelatedByUserId2 from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Friend[]
-	 * @throws     PropelException
-	 */
-	public function getFriendsRelatedByUserId2($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collFriendsRelatedByUserId2 === null) {
-			if ($this->isNew()) {
-			   $this->collFriendsRelatedByUserId2 = array();
-			} else {
-
-				$criteria->add(FriendPeer::USER_ID2, $this->id);
-
-				FriendPeer::addSelectColumns($criteria);
-				$this->collFriendsRelatedByUserId2 = FriendPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(FriendPeer::USER_ID2, $this->id);
-
-				FriendPeer::addSelectColumns($criteria);
-				if (!isset($this->lastFriendRelatedByUserId2Criteria) || !$this->lastFriendRelatedByUserId2Criteria->equals($criteria)) {
-					$this->collFriendsRelatedByUserId2 = FriendPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastFriendRelatedByUserId2Criteria = $criteria;
-		return $this->collFriendsRelatedByUserId2;
-	}
-
-	/**
-	 * Returns the number of related Friend objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Friend objects.
-	 * @throws     PropelException
-	 */
-	public function countFriendsRelatedByUserId2(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collFriendsRelatedByUserId2 === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(FriendPeer::USER_ID2, $this->id);
-
-				$count = FriendPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(FriendPeer::USER_ID2, $this->id);
-
-				if (!isset($this->lastFriendRelatedByUserId2Criteria) || !$this->lastFriendRelatedByUserId2Criteria->equals($criteria)) {
-					$count = FriendPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collFriendsRelatedByUserId2);
-				}
-			} else {
-				$count = count($this->collFriendsRelatedByUserId2);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Friend object to this object
-	 * through the Friend foreign key attribute.
-	 *
-	 * @param      Friend $l Friend
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addFriendRelatedByUserId2(Friend $l)
-	{
-		if ($this->collFriendsRelatedByUserId2 === null) {
-			$this->initFriendsRelatedByUserId2();
-		}
-		if (!in_array($l, $this->collFriendsRelatedByUserId2, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collFriendsRelatedByUserId2, $l);
-			$l->setUserRelatedByUserId2($this);
-		}
 	}
 
 	/**
@@ -6682,16 +6304,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collFriendsRelatedByUserId1) {
-				foreach ((array) $this->collFriendsRelatedByUserId1 as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collFriendsRelatedByUserId2) {
-				foreach ((array) $this->collFriendsRelatedByUserId2 as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collGallerys) {
 				foreach ((array) $this->collGallerys as $o) {
 					$o->clearAllReferences($deep);
@@ -6779,8 +6391,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		$this->collExperts = null;
 		$this->collExpertCategorys = null;
-		$this->collFriendsRelatedByUserId1 = null;
-		$this->collFriendsRelatedByUserId2 = null;
 		$this->collGallerys = null;
 		$this->collGalleryItems = null;
 		$this->collHistorys = null;
