@@ -43,8 +43,14 @@
       <div class="spacer"></div>
     </div>
     <div class="box">
+        
       <div class="top"></div>
       <div class="content">
+      <div class="entry">
+        <div class="ttle">Enter your credit card info (Optional)</div>
+        
+        <div class="spacer"></div>
+      </div>
       <div class="entry">
         <div class="ttle">Cardholder Name:</div>
         <div style="float:left">

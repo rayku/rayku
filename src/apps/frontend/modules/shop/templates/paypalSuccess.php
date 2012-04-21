@@ -63,7 +63,7 @@ $connection = RaykuCommon::getDatabaseConnection();
                 <div class="rpdivider"></div>
 
                 <?php
-                $con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
+                $con = mysql_connect("localhost", "rayku", "rayku") or die(mysql_error());
                 $db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
                 $query = mysql_query("Select * from points_paypal", $connection) or die(mysql_error());
@@ -127,10 +127,90 @@ $connection = RaykuCommon::getDatabaseConnection();
               </div>
               <!--ch-->
               
+              
+              
+              
+              
               <?php endif; ?>
               <div class="rpnote">*estimate is provided assuming an average tutoring rate of 0.40RP/minute.</div>
 
             </div>
+              
+              <div class="rpdivider"></div>
+              
+              <div class="cont">
+                  
+                  <?php
+                    if (!empty($cardNum)){
+                        echo 'You have registered a card: xxxxxxxxxxxx-' . $cardNum;
+                        ?>
+                        
+                         <?php echo $error; ?>
+                        
+                        <?php echo form_tag('shop/paypal', array('name' => 'pay_balance')) ?>
+                            <?php echo submit_tag('', array('id' => 'pay_balance','name' => 'pay_balance', 'value'=>'Pay the balance')) ?>
+                  
+                        </form>
+                        
+                        
+                        <?php
+                    }else{
+                        
+                  ?>
+                  
+                        <br/>
+                        <?php echo $error; ?>
+                        <?php echo form_tag('shop/paypal', array('name' => 'submit_card')) ?>
+                        <div class="top"></div>
+                            <div class="content">
+                            <div class="entry">
+                                <div class="ttle">Enter your credit card info for automatic payment</div>
+
+                                <div class="spacer"></div>
+                            </div>
+                            <div class="entry">
+                                <div class="ttle">Cardholder Name:</div>
+                                <div style="float:left">
+                                
+                                <?php echo input_tag('card_name', '', array('type' => 'card_name')) ?> </div>
+                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+                                <div class="spacer"></div>
+                            </div>
+                                
+                            <div class="entry">
+                                <div class="ttle">Credit Card Number:</div>
+                                <div style="float:left">
+                                
+                                <?php echo input_tag('credit_card', '', array('type' => 'credit_card')) ?> </div>
+                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+                                <div class="spacer"></div>
+                            </div>          
+
+                            <div class="entry">
+                                <div class="ttle">CVV:</div>
+                                <div style="float:left">
+                                
+                                <?php echo input_tag('cvv', '', array('type' => 'cvv')) ?> </div>
+                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+                                <div class="spacer"></div>
+                            </div>       
+
+                            <div class="entry">
+                                <div class="ttle">Expiry Date:</div>
+                                <div style="float:left">
+                                   
+                                    <?php echo input_tag('expiry_date', '', array('type' => 'expiry_date')) ?> </div>
+                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">Format: mmyy</div>
+                                <div class="spacer"></div>
+                                </div>
+                                </div>
+                            <div class="bottom"></div>
+                            <div class="spacer"></div>
+
+                        <?php echo submit_tag('', array('id' => 'submit_card','name' => 'submit_card', 'value'=>'Submit')) ?>
+                        </form>
+                <?php } ?>
+              </div>
             <!--cont--> 
           </div>
           <!--b--> 

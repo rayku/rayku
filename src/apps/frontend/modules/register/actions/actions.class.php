@@ -41,7 +41,7 @@ class registerActions extends sfActions
         $user->setEmail($this->getRequestParameter('email'));
         $user->setPassword($this->getRequestParameter('password1'));
         $user->setName($this->getRequestParameter('realname'));
-                
+               
         $expiration = substr($this->getRequestParameter('expiry_date'),0,2) .'/'. substr($this->getRequestParameter('expiry_date'),-2);
         
         require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
