@@ -42,6 +42,7 @@
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
+<<<<<<< HEAD
     <div class="box">
         
       <div class="top"></div>
@@ -139,27 +140,9 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
     </div>
 
     <!-- end of expert categories //-->
+=======
+>>>>>>> 9be7e97087293e84d117eb215502b7a050ea1334
 
-    <!-- notifications -->
-
-    <div class="box">
-      <div class="top"></div>
-      <div class="content">
-        <div class="title">Notification options</div>
-        <div class="subtitle">once student asks question within expert's subject of expertise</div>
-        <input type="checkbox" name="notify_email" value="email" />
-        <label style="font-size:13px; font-family: Arial; color:#056A9A; font-weight:bold;">Email</label>
-        <br />
-        <input type="checkbox" name="notify_sms" value="sms" />
-        <label style="font-size:13px; font-family: Arial; color:#056A9A; font-weight:bold;">SMS &nbsp;&nbsp;&nbsp; Enter Phone Number</label>
-        <input type="text" name="phone_number" value="" />
-      </div>
-      <div class="bottom"></div>
-      <div class="spacer"></div>
-    </div>
-    <?php endif; ?>
-
-    <!--  end -->
 
     <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
@@ -178,89 +161,10 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
       <div class="top"></div>
       <div class="content" style="position:relative; _top:-3px; _bottom:-3px; padding-right:20px; width:264px">
         <div class="text">
-          <p>Your password is immediately MD5 encrypted, so that only you know what it is - no one else. </p>
+          <p>Your password is immediately encrypted, so that only you know what it is - no one else. </p>
         </div>
       </div>
       <div class="bottom"></div>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-
-function emailValidateNew()
-{
-var email = document.getElementById('email').value;
-
-var subject = document.getElementById('course_subject[]').value;
-
-var course = document.getElementById('course_name[]').value;
-
-var year = document.getElementById('course_year').value;
-
-var grade = document.getElementById('grade[0]').value;
-
-
-
-	if(subject == '')
-	{
-			document.getElementById('error').style.display = "block";
-			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
-			return false;
-
-	} else if(course == '') {
-
-			document.getElementById('error').style.display = "block";
-			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
-			return false;
-
-	}else if(year == '') {
-
-			document.getElementById('error').style.display = "block";
-			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
-			return false;
-
-	} else if(grade == '') {
-
-			document.getElementById('error').style.display = "block";
-			document.getElementById('error').innerHTML = 'Please enter at least one course entry.';
-			return false;
-
-	}
-
-}
-</script>
-<script type="text/javascript">
-	        function addRow(tableID) {
-
-
-
-	            var table = document.getElementById(tableID);
-	            var rowCount = table.rows.length;
-	            var row = table.insertRow(rowCount);
-
-
-
-		   var newCount =  rowCount - 1;
-
-	            var colCount = table.rows[2].cells.length;
-
-	            for(var i=0; i<colCount; i++) {
-
-	                var newcell = row.insertCell(i);
-
-
-			if(i == '2')
-			{
-
-			 table.rows[rowCount].cells[i].innerHTML = "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='margin-right:10px'><tr><td align='center' style='border:0;padding:0'><label class='d'><input type='radio' name= grade[" + newCount + "] value='D'></label></td><td align='center' style='border:0;padding:0'><label class='c'><input type='radio' name= grade[" + newCount + "] value='C'></label></td><td align='center' style='border:0;padding:0'><label class='b'><input type='radio' name= grade[" + newCount + "] value='B'></label></td><td align='center' style='border:0;padding:0'><label class='a'><input  type='radio' name= grade[" + newCount + "] value='A'></label></td></tr></table>";
-
-				newcell.innerHTML = table.rows[rowCount].cells[i].innerHTML;
-
-			} else {
-	                	newcell.innerHTML = table.rows[2].cells[i].innerHTML;
-			}
-
-
-	            }
-        }
-</script>

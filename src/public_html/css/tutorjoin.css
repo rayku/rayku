@@ -1,0 +1,144 @@
+#want {
+	background-color: #FFF;
+	width: 536px;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 20px;
+	margin-left: 10px;
+	padding-top: 25px;
+	padding-right: 25px;
+	padding-bottom: 30px;
+	padding-left: 25px;
+	height: 210px;
+	border: none;
+}
+#want span {
+	color:#333;
+	font-weight:normal;
+}
+#want h3 {
+	color: #1C517C;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 30px;
+	margin-bottom:25px;
+}
+#want p {
+	font-size:16px;
+	color:#666;
+	line-height:20px;
+}
+#want #notice {
+	padding:8px;
+	margin:14px 0;
+	border-bottom:1px solid #CCC;
+	background:#F5F5F5;
+	font-size:14px;
+	color:#666
+}
+#table {
+	font-size:20px;
+	line-height:24px;
+	color:#666
+}
+#table sup {
+	 font-size:8px;
+	 line-height:2px;
+}
+#bottom {
+	 padding:25px 35px
+}
+#bottom .content {
+	font-size:16px;
+	color:#666;
+	line-height:20px;
+}
+#bottom .footnote {
+	font-size:12px;
+	color:#777;
+	line-height:18px;
+}
+#bottom .footnote sup {
+	font-size:10px;
+	line-height:5px;
+}
+#sidebar {
+	border-bottom: 1px solid #D0E2E8;
+	border-left: 1px solid #D0E2E8;
+	float: right;
+	height: 255px;
+	margin: 45px 25px 0 0;
+	width: 294px;
+}
+#sidebar h1 {
+	background: none repeat scroll 0 0 #F5F7F7;
+	border-bottom: 1px solid #B7CCD3;
+	color: #056A9A;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 15px;
+}
+#sidebar h1.fb {
+	background: url("http://www.rayku.com/images/new_fb.png") no-repeat scroll left center #F5F7F7;
+	padding: 15px 15px 15px 55px;
+}
+#sidebar .text {
+	color: #7F8189;
+	font-size: 12px;
+	line-height: 18px;
+	padding: 15px 15px 20px;
+}
+#sidebar .text p {
+	margin: 0 0 10px;
+}
+#sidebar label {
+	color: #056A9A;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0 0 10px;
+}
+#sidebar input[type="text"] {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #94BBE9;
+	display: block;
+	margin: 0 0 7px;
+	padding: 5px;
+	width: 180px;
+}
+#sidebar input[type="email"] {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #94BBE9;
+	display: block;
+	margin: 0 0 7px;
+	padding: 5px;
+	width: 180px;
+}
+#sidebar a {
+	color: #257000;
+	text-decoration: underline;
+}
+table.hovertable {
+	font-family: verdana, arial, sans-serif;
+	font-size:11px;
+	color:#1C517B;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+	margin-left:35px;
+	margin-bottom:35px;
+}
+table.hovertable th {
+	background-color:#1C517B;
+	padding: 8px;
+	border-right: 1px dotted #CCC;
+}
+table.hovertable tr {
+	background-color:#EEF7FB;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
