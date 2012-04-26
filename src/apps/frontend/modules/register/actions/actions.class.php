@@ -41,71 +41,104 @@ class registerActions extends sfActions
         $user->setEmail($this->getRequestParameter('email'));
         $user->setPassword($this->getRequestParameter('password1'));
         $user->setName($this->getRequestParameter('realname'));
+               
+        $expiration = substr($this->getRequestParameter('expiry_date'),0,2) .'/'. substr($this->getRequestParameter('expiry_date'),-2);
+        
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
+               
+        $result = Braintree_Customer::create(array(
+            'firstName' => $this->getRequestParameter('realname'),
+            'lastName' => '',
+            'creditCard' => array(
+                'cardholderName' => $this->getRequestParameter('realname'),
+                'number' => $this->getRequestParameter('credit_card'),
+                'cvv' => $this->getRequestParameter('cvv'),
+                'expirationDate' => $expiration,
+                'options' => array(
+                    'verifyCard' => true
+                )
+            )
+        ));
+        
+        //error_log($result->customer->creditCards[0]->token, 0);
+        
+        
+        if (!$result->success){
+            //error_log("invalid", 0);
+            $this->error = 'Your credit card is invalid.';
+            return sfView::ERROR;
+            
+            
+        }else{
+            //should only save last 4 digit
+            $user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
+            $user->setCreditCardToken($result->customer->creditCards[0]->token);
 
-        $userName = str_replace(' ','',strtolower($this->getRequestParameter('realname')));
-        $U_QRY = "select * from user where username='".$userName."'";
-        $u_res = mysql_query($U_QRY);
-        $unamecount = mysql_num_rows($u_res);
+            $userName = str_replace(' ','',strtolower($this->getRequestParameter('realname')));
+            $U_QRY = "select * from user where username='".$userName."'";
+            $u_res = mysql_query($U_QRY);
+            $unamecount = mysql_num_rows($u_res);
 
-        $dupval = 2;
-        duplicationCheck:
-            if ($unamecount>=1) {
-                $newUsername = $userName.$dupval;
-                $unamequery = mysql_query("select * from user where username='".$newUsername."'");
-                $unamecount = mysql_num_rows($unamequery);
+            $dupval = 2;
+            duplicationCheck:
                 if ($unamecount>=1) {
-                    $dupval++;
-                    goto duplicationCheck;
+                    $newUsername = $userName.$dupval;
+                    $unamequery = mysql_query("select * from user where username='".$newUsername."'");
+                    $unamecount = mysql_num_rows($unamequery);
+                    if ($unamecount>=1) {
+                        $dupval++;
+                        goto duplicationCheck;
+                    } else {
+                        $userName = $newUsername;
+                    }
+                }
+            $user->setUsername($userName);
+            $user->setTypeUnconfirmed($this->requestedUserType);
+
+            if (!empty($_POST['coupon'])) {
+                $query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
+
+                if (mysql_num_rows($query) > 0) {
+                    $rowValues = mysql_fetch_assoc($query);	//$rowValues['user_id'];
+                    $query = mysql_query("select * from user where id=".$rowValues['user_id']) or die(mysql_error());
+                    $rowDetails = mysql_fetch_assoc($query);
+                    $newPoints = $rowDetails['points'] + 0.5;
+                    mysql_query("update user set points='".$newPoints."' where id=".$rowValues['user_id']) or die(mysql_error());
+                    mysql_query("delete from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
                 } else {
-                    $userName = $newUsername;
+                    if ($_POST['coupon'] == 'launch11') {
+                        $points = "10";
+                    } elseif ($_POST['coupon'] == 'promo92') {
+                        $points = "12";
+                    } elseif ($_POST['coupon'] == 'uoft9211') {
+                        $points = "8";
+                    }
                 }
             }
-        $user->setUsername($userName);
-        $user->setTypeUnconfirmed($this->requestedUserType);
 
-        if (!empty($_POST['coupon'])) {
-            $query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
-
-            if (mysql_num_rows($query) > 0) {
-                $rowValues = mysql_fetch_assoc($query);	//$rowValues['user_id'];
-                $query = mysql_query("select * from user where id=".$rowValues['user_id']) or die(mysql_error());
-                $rowDetails = mysql_fetch_assoc($query);
-                $newPoints = $rowDetails['points'] + 0.5;
-                mysql_query("update user set points='".$newPoints."' where id=".$rowValues['user_id']) or die(mysql_error());
-                mysql_query("delete from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
-            } else {
-                if ($_POST['coupon'] == 'launch11') {
-                    $points = "10";
-                } elseif ($_POST['coupon'] == 'promo92') {
-                    $points = "12";
-                } elseif ($_POST['coupon'] == 'uoft9211') {
-                    $points = "8";
-                }
+            if (!$user->save()) {
+                throw new PropelException('User creation failed');
             }
+
+            if ($this->requestedUserType == UserPeer::getTypeFromValue('expert')) {
+                $this->notify = $this->getRequestParameter('notify_email').','.$this->getRequestParameter('notify_sms');
+                $user->setNotification($this->notify);
+                $user->setPhoneNumber($this->getRequestParameter('phone_number'));
+                $this->subscribeExpertToCategories($this->getRequestParameter('categories'), $user);
+            }
+
+            if (!empty($_POST['coupon']) && !empty($points)) {
+                mysql_query("update user set points='".$points."' where id=".$user->getId()) or die(mysql_error());
+            } elseif (!empty($_POST['coupon'])) {
+                mysql_query("update user set points='11' where id=".$user->getId()) or die(mysql_error());
+            }
+            mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
+            mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
+
+            $this->sendConfirmationEmail($user);
+
+            $this->forward('register', 'confirmationCodeSent');
         }
-
-        if (!$user->save()) {
-            throw new PropelException('User creation failed');
-        }
-
-        if ($this->requestedUserType == UserPeer::getTypeFromValue('expert')) {
-            $this->notify = $this->getRequestParameter('notify_email').','.$this->getRequestParameter('notify_sms');
-            $user->setNotification($this->notify);
-            $user->setPhoneNumber($this->getRequestParameter('phone_number'));
-            $this->subscribeExpertToCategories($this->getRequestParameter('categories'), $user);
-        }
-
-        if (!empty($_POST['coupon']) && !empty($points)) {
-            mysql_query("update user set points='".$points."' where id=".$user->getId()) or die(mysql_error());
-        } elseif (!empty($_POST['coupon'])) {
-            mysql_query("update user set points='11' where id=".$user->getId()) or die(mysql_error());
-        }
-        mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
-        mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
-
-        $this->sendConfirmationEmail($user);
-
-        $this->forward('register', 'confirmationCodeSent');
     }
 
     private function getRequestedUserType()

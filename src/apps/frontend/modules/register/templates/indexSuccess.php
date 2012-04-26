@@ -7,7 +7,7 @@
     <div class="box">
       <div class="top"></div>
       <div class="content">
-	  	<div class="entry" style="padding-bottom:15px;">
+        <div class="entry" style="padding-bottom:15px;">
           <div class="ttle">Full Name:</div>
           <div style="float:left">
             <?php if ($sf_request->hasError('realname')): ?>
@@ -42,6 +42,106 @@
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
+<<<<<<< HEAD
+    <div class="box">
+        
+      <div class="top"></div>
+      <div class="content">
+      <div class="entry">
+        <div class="ttle">Enter your credit card info (Optional)</div>
+        
+        <div class="spacer"></div>
+      </div>
+      <div class="entry">
+        <div class="ttle">Cardholder Name:</div>
+        <div style="float:left">
+        <?php if($sf_request->hasError('card_name')): ?>
+        <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('card_name') ?></div>
+        <?php endif; ?>
+        <?php echo input_tag('card_name', '', array('type' => 'card_name')) ?> </div>
+        <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+        <div class="spacer"></div>
+      </div>
+          
+      <div class="entry">
+        <div class="ttle">Credit Card Number:</div>
+        <div style="float:left">
+        <?php if($sf_request->hasError('credit_card')): ?>
+        <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('credit_card') ?></div>
+        <?php endif; ?>
+        <?php echo input_tag('credit_card', '', array('type' => 'credit_card')) ?> </div>
+        <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+        <div class="spacer"></div>
+      </div>          
+          
+      <div class="entry">
+        <div class="ttle">CVV:</div>
+        <div style="float:left">
+        <?php if($sf_request->hasError('cvv')): ?>
+        <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('cvv') ?></div>
+        <?php endif; ?>
+        <?php echo input_tag('cvv', '', array('type' => 'cvv')) ?> </div>
+        <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
+        <div class="spacer"></div>
+      </div>       
+      
+      <div class="entry">
+          <div class="ttle">Expiry Date:</div>
+          <div style="float:left">
+            <?php if($sf_request->hasError('expiry_date')): ?>
+            <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('expiry_date') ?></div>
+            <?php endif; ?>
+            <?php echo input_tag('expiry_date', '', array('type' => 'expiry_date')) ?> </div>
+          <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">Format: mmyy</div>
+          <div class="spacer"></div>
+        </div>
+          </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+      
+    </div>
+      
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+      <span id="referaltext">Referrer (optional):</span>
+        <input style="background:url('/images/registerinputbg.gif') no-repeat scroll 0 0 transparent;border:0 none;
+color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="text" name="coupon" id="coupon" />
+          <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">Enter the username of your referrer</div>
+        <div class="spacer"></div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- for expert categories //-->
+    <?php if($requestedUserType == UserPeer::getTypeFromValue( 'expert' ) ): ?>
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+        <div class="title">Select Expert Categories</div>
+        <div class="subtitle">Every expert needs to select atleast one category (You may select multiple categories using the shift button)</div>
+        <div class="entry">
+          <div class="ttle">Categories</div>
+          <div style="clear:left;">
+            <?php $options = array(); ?>
+            <?php $categories = CategoryPeer::getAll(); ?>
+            <?php foreach( $categories as $key=>$category): ?>
+            <?php $options[$category->getId()] = $category->getName(); ?>
+            <?php endforeach; ?>
+            <?php echo select_tag('categories',
+									   		options_for_select($options), array('style' => 'width: 300px; height: 80px;background: none', 'multiple' => true));
+										?> </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- end of expert categories //-->
+=======
+>>>>>>> 9be7e97087293e84d117eb215502b7a050ea1334
 
 
     <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
