@@ -1,8 +1,8 @@
 <?php 
 
-$connection = RaykuCommon::getDatabaseConnection();
+RaykuCommon::getDatabaseConnection();
 
-			$query = mysql_query("select * from user where id=".$userId." ", $connection) or die(mysql_error());
+			$query = mysql_query("select * from user where id=".$userId." ") or die(mysql_error());
 			$detailPoints = mysql_fetch_assoc($query);
 
 	if(!empty($_POST)) :
@@ -63,10 +63,7 @@ $connection = RaykuCommon::getDatabaseConnection();
                 <div class="rpdivider"></div>
 
                 <?php
-                $con = mysql_connect("localhost", "rayku", "rayku") or die(mysql_error());
-                $db = mysql_select_db("rayku_db", $con) or die(mysql_error());
-
-                $query = mysql_query("Select * from points_paypal", $connection) or die(mysql_error());
+                $query = mysql_query("Select * from points_paypal") or die(mysql_error());
                 $i = 0;
 //
                 ?>
@@ -91,7 +88,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 
               if(!empty($item)) :
 
-              $queryOne = mysql_query("Select * from points_paypal where price=".$item, $connection) or die(mysql_error());
+              $queryOne = mysql_query("Select * from points_paypal where price=".$item) or die(mysql_error());
 
               $rowOne = mysql_fetch_assoc($queryOne);
               
