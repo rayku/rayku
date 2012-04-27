@@ -611,24 +611,6 @@ CREATE TABLE `notification_emails`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- nudge
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `nudge`;
-
-
-CREATE TABLE `nudge`
-(
-	`user_from_id` INTEGER(11),
-	`user_to_id` INTEGER(11),
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `nudge_FI_1`(`user_from_id`),
-	KEY `nudge_FI_2`(`user_to_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- offer_voucher
 #-----------------------------------------------------------------------------
 

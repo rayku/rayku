@@ -188,23 +188,6 @@ avatar:
 
 
 # ----
-# Nudge
-# ----
-
-nudge_remove:
-  url: /nudge/ignore/:username
-  param: { module: nudge, action: remove }
-  options:
-    segment_separators: ['/']
-
-nudge:
-  url: /nudge/:username
-  param: { module: nudge, action: send }
-  options:
-    segment_separators: ['/']
-
-
-# ----
 # Tutor
 # ----
 

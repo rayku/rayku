@@ -89,9 +89,6 @@
 <?php else: ?>
 
 	<ul>
-		<li><?php echo link_to('Send a Nudge', '/nudge/send/username/' . $user->getUsername()) ?></li>
-
-		
 		<?php if($user->getType() == '5'): ?>
 		
 			<?php 

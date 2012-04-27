@@ -360,35 +360,6 @@ class User extends BaseUser
 	}
 
 	/**
-	 * Removes nudges from a user
-	 *
-	 * @param User $user
-	 * @return integer Count of affected rows
-	 */
-	public function removeNudgesFromUser(User $user)
-	{
-		$c = new Criteria();
-		$c->add(NudgePeer::USER_FROM_ID, $user->getId());
-		$c->add(NudgePeer::USER_TO_ID, $this->getId());
-
-		return NudgePeer::doDelete($c);
-	}
-
-	/**
-	 * Get nudges for a user
-	 *
-	 * @return array
-	 */
-	public function getNudges()
-	{
-		$c = new Criteria();
-		$c->add(NudgePeer::USER_TO_ID, $this->getId());
-		$c->addAscendingOrderByColumn(NudgePeer::CREATED_AT);
-
-		return NudgePeer::doSelect($c);
-	}
-
-	/**
 	 * Determines if you have content in your 'About Me'
 	 *
 	 * @return boolean

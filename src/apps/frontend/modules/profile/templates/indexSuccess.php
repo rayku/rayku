@@ -11,7 +11,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 	$_COOKIE["newUser"] = $user->getId();
 ?>
   <?php if ($sf_user->isAuthenticated() && $user->equals($sf_user->getRaykuUser())): ?>
-  <?php include_component('nudge', 'showNudges', array('user' => $user)) ?>
   <h2><?php echo $user->getName();?>'s Profile (<?php echo link_to('edit', '@profile_edit?username=' . $user->getUsername()); ?>)</h2>
   <?php else: ?>
   <h2><?php echo $user->getName();?>'s Profile</h2>

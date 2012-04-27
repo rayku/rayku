@@ -260,13 +260,6 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '100', required: true }
     on_off: { type: INTEGER, size: '11', required: true }
-  nudge:
-    _attributes: { phpName: Nudge }
-    user_from_id: { type: INTEGER, size: '11', required: false }
-    user_to_id: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { nudge_FI_1: [user_from_id], nudge_FI_2: [user_to_id] }
   offer_voucher:
     _attributes: { phpName: OfferVoucher }
     id: { type: INTEGER, size: '40', primaryKey: true, autoIncrement: true, required: true }
