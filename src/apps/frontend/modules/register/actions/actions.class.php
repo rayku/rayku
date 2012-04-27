@@ -63,7 +63,7 @@ class registerActions extends sfActions
         //error_log($result->customer->creditCards[0]->token, 0);
         
         
-        if (!$result->success){
+        if (false && !$result->success){
             //error_log("invalid", 0);
             $this->error = 'Your credit card is invalid.';
             return sfView::ERROR;
@@ -71,8 +71,8 @@ class registerActions extends sfActions
             
         }else{
             //should only save last 4 digit
-            $user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
-            $user->setCreditCardToken($result->customer->creditCards[0]->token);
+//            $user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
+//            $user->setCreditCardToken($result->customer->creditCards[0]->token);
 
             $userName = str_replace(' ','',strtolower($this->getRequestParameter('realname')));
             $U_QRY = "select * from user where username='".$userName."'";
@@ -257,98 +257,6 @@ class registerActions extends sfActions
      */
     public function executeConfirmationCodeSent()
     {
-    }
-
-    /**
-     * Action to Send the invitation
-     */
-    public function executeSendInvitation()
-    {
-        $user = $this->getUser()->getRaykuUser();
-        $this->mail = Mailman::createCleanMailer();
-        $this->mail->setSubject('Rayku.com Coupon Credit');
-        $this->mail->setFrom($user->getName().' <'.$user->getEmail().'>');
-
-        $list=$this->getRequestParameter('list');
-
-        $j = 1;
-        $date = date("Y-m-d");
-
-        if ($user) {
-            foreach($list as $name_email) {
-                $user->sendPointsFromAdmin(sfConfig::get('app_general_invite_points'));
-                list($to,$name) = @split('x22z',$name_email);
-
-                if (ereg('@',$name)){
-                    $name = "";
-                }
-
-                if ($to) {
-
-                    $refcode = $user->getUsername()."-".crypt($user->getUsername().$j,md5($user->getUsername().$j.time()));
-                    mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
-                    sfProjectConfiguration::getActive()->loadHelpers(array('Partial'));
-                    $this->mail->setBody("<p>".$user->getName()." has given you coupon credit through Rayku.com.</p><p>Value of Coupon: <strong>5.5 Rayku Points</strong> ($5.50 Canadian Dollars)<br />Eligibility: <strong>University of Toronto Students</strong><br />Expiration Date: <strong>xx/xx/2011</strong><br />Unique Coupon Code: <b>".$refcode."</b></p>". get_partial('invitationEmailHtml', array('name' => $name, 'user' => $user)));
-
-                    $this->mail->setContentType('text/html');
-                    $this->mail->addAddress($to);
-                    $this->mail->send();
-                    $j++;
-                }
-            }
-        }
-        $this->redirect('@register_step4');
-    }
-
-    public function executeInvitation()
-    {
-        $user = $this->getUser()->getRaykuUser();
-        $this->user = $user;
-        $username = $user->getUsername();
-        $date = date("Y-m-d");
-        if (!empty($_POST)) {
-            for($i=0; $i < 5; $i++) {
-                if ($user<>''){
-                    $refcode=$user->getUsername()."-".crypt($username.$i,md5($username.$i.time()));
-                    mysql_query("insert into referral_code(user_id, referral_code, date) values(".$user->getId().", '".$refcode."', '".$date."') ") or die(mysql_error());
-                }
-            }
-
-            $this->flag = 1;
-        }
-    }
-
-    /**
-     * show the latest user header
-     */
-    public function executeLatestUserHeader()
-    {
-        sfProjectConfiguration::getActive()->loadHelpers('Partial');
-
-        $user = $this->getUser()->getRaykuUser();
-
-        if ($user->getPoints() < 2) {
-            $query = mysql_query("select * from points_notify where userid=".$user->getId()) or die(mysql_error());
-
-            if (mysql_num_rows($query) == 0) {
-
-                $this->mail = Mailman::createCleanMailer();
-                $this->mail->setSubject('Rayku Points - Almost used up!');
-                $this->mail->setFrom('Bonnie Pang <bonniecs@rayku.com>');
-                $to = $user->getEmail();
-
-                $this->mail->setBody("<p>Hi there,<br /><br />I've noticed that your Rayku \$RP balance has just fallen below 2$RP. I really hope you've spent them well!<br /><br />In order to get more Rayku Points, here's two quick & instant options: <br /><a href='/shop/paypal'><strong>Buy Rayku Points</strong></a><br /><a href='/register/invitation'><strong>Invite Your Friends (get \$RP)</strong></a><br /><br />Or, if you need help with any of those two options I listed above, just send me a reply and I'll do my best to help you out!<br /><br />Thanks for using Rayku.com!<br />Bonnie Pang<br />Rayku Account Rep<br /><br />http://www.rayku.com</p>");
-
-                $this->mail->setContentType('text/html');
-                $this->mail->addAddress($to);
-                $this->mail->send();
-
-                mysql_query("insert into points_notify(userid,status) values(".$user->getId().", 1)") or die(mysql_error());
-            }
-        } else {
-            mysql_query("delete from points_notify where userid=".$user->getId()) or die(mysql_error());
-        }
-        return $this->renderText(get_partial('topNavNewUser'));
     }
 
     public function executeRedirect()

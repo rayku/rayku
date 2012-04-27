@@ -4,7 +4,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 //-->
 </script>
 
-<div class="skyscrapers"> <a href="http://rayku.com/register/invitation"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/ad-unit-1.jpg" alt="ad" /></a> </div>
 <div class="content">
 <?php  
 	setcookie("newUser",$user->getId(), time()*60*60*24*30);
