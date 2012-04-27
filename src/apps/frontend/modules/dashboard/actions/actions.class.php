@@ -239,11 +239,6 @@ class dashboardActions extends sfActions
         $this->user = $this->getUser()->getRaykuUser();
     }
 
-    public function executeProcessprofile()
-    {
-        $this->user = $this->getUser()->getRaykuUser();
-    }
-
     public function executePointserror()
     {
     }

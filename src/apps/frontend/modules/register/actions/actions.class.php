@@ -260,40 +260,6 @@ class registerActions extends sfActions
     }
 
     /**
-     * Action to show the registration step 4 form
-     */
-    public function executeGetcontact()
-    {
-        $loginuser = $this->getUser()->getRaykuUser();
-        require_once('/home/rayku/lib/OpenInviter/openinviter.php');
-
-        $user = UserPeer::retrieveByPk($loginuser->getId());
-        $display_array=array();
-        if (sfWebRequest::POST === $this->getRequest()->getMethod()) {
-            $username = $this->getRequestParameter('username');
-            $password = $this->getRequestParameter('password');
-
-            if ($password == '') {
-                return false;
-            }
-
-            $inviter=new OpenInviter();
-
-            if (!$inviter->startPlugin($this->getRequestParameter('webmailProvider'),$inviter->getPlugins())) {
-                var_dump($inviter->getInternalError());
-                return false;
-            } elseif (!$inviter->login($username,$password)) {
-                var_dump($inviter->getInternalError());
-                return false;
-            } else {
-                $this->display_array=$inviter->getMyContacts();
-                $this->user = $user;
-            }
-        }
-
-    }
-
-    /**
      * Action to Send the invitation
      */
     public function executeSendInvitation()
@@ -400,32 +366,5 @@ class registerActions extends sfActions
             }
         }
         exit(0);
-    }
-
-    public function executeTest()
-    {
-        sfProjectConfiguration::getActive()->loadHelpers('Partial');
-        $email= $this->getRequestParameter('email');
-        $mailer_1=explode('@', $email);
-        $mailer_2= explode('.',$mailer_1[1]) ;
-        $webmailer = $mailer_2[0];
-        require_once('/home/rayku/lib/OpenInviter/openinviter.php');
-
-        $user = $this->getUser()->getRaykuUser();
-        // passing to view
-        $this->user = $user;
-        /* getting all email providers array */
-
-        $inviter=new OpenInviter();
-        $oi_services=$inviter->getPlugins();
-        $this->email = array();
-        foreach ($oi_services as $type=>$providers) {
-            foreach ($providers as $provider=>$details) {
-                $this->email[$provider] = $details['name'];
-            }
-            break;
-        }
-
-        return $this->renderText(get_partial('webmailer', array('mailer' => $webmailer ,'email' => $this->email)));
     }
 }

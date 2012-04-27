@@ -34,8 +34,6 @@ all:
     avatar_folder: avatar
     avatar_default_image: anon
     avatar_default_image_type: jpg
-  login:
-    facebook_notification:    You were invited to join <a href=�http://www.rayku.com�>Rayku</a>! http://www.rayku.com
   homepage:
     count_newest_users: 4 # number of "newest users" to appear on homepage
   
