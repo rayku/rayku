@@ -1068,35 +1068,6 @@ CREATE TABLE `user_awards`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- user_donations
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_donations`;
-
-
-CREATE TABLE `user_donations`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`from_user_id` INTEGER(11),
-	`points` INTEGER(11),
-	`comments` TEXT,
-	PRIMARY KEY (`id`),
-	KEY `user_donations_FI_1`(`user_id`),
-	KEY `user_donations_FI_2`(`from_user_id`),
-	CONSTRAINT `user_donations_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_donations_FK_2`
-		FOREIGN KEY (`from_user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- user_gtalk
 #-----------------------------------------------------------------------------
 

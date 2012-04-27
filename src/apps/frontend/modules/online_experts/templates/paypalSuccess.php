@@ -329,7 +329,6 @@ function verify()
 
 <form name="paypalfrm" action="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/online_experts/confirmation/e_id/<?php echo $expert_id;?>/el_id/<?php echo $expert_immediate_lesson_id; ?>/min/<?php echo $minutes; ?>" method="post">
 
-<input type="submit" name="Submit" value="Donate" style="display:none;">
 <input type="hidden" id="return" name="return" value="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/online_experts/confirmation/e_id/<?php echo $expert_id;?>/el_id/<?php echo $expert_immediate_lesson_id; ?>/min/<?php echo $minutes; ?>">
 <input type="hidden" name="cancel_return" value="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/payout/payment_error">
 <input type="hidden" name="cmd" value="_xclick">

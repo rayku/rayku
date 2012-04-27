@@ -277,7 +277,6 @@ function generateamount()
 
 <form name="paypalfrm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
-<input type="submit" name="Submit" value="Donate" style="display:none;">
 <input type="hidden" id="return" name="return" value="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/expertmanager/confirmation/e_id/<?php echo $expert_id;?>/l_id/<?php echo $expert_lesson_id; ?>/amt/10">
 <input type="hidden" name="cancel_return" value="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/payout/payment_error">
 <input type="hidden" name="cmd" value="_xclick">

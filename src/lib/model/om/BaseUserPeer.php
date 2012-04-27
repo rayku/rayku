@@ -994,12 +994,6 @@ abstract class BaseUserPeer {
 			// invalidate objects in UserAwardsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			UserAwardsPeer::clearInstancePool();
 
-			// invalidate objects in UserDonationsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserDonationsPeer::clearInstancePool();
-
-			// invalidate objects in UserDonationsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserDonationsPeer::clearInstancePool();
-
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
