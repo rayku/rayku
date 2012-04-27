@@ -360,42 +360,6 @@ class User extends BaseUser
 	}
 
 	/**
-	* Checks to see if this user can view a given gallery
-	*
-	* @param Gallery $gallery
-	* @return bool
-	*/
-	public function canViewGallery($gallery)
-	{
-		// if it's public, anyone can access
-		if ($gallery->getShowEntity() == Gallery::TYPE_PUBLIC)
-			return true;
-
-		// if it's the owner, they're allowed access
-		if ($this->equals($gallery->getUser()))
-			return true;
-
-		// if it's an ACL-only thing...
-		if ($gallery->getShowEntity() == Gallery::TYPE_SPECIFIC_PEOPLE_ONLY)
-		{
-			// see if the user's on the ACL
-			$c = new Criteria();
-			$c->add(GalleryAclPeer::GALLERY_ID, $gallery->getId());
-			$c->add(GalleryAclPeer::USER_ID, $this->getId());
-
-			// if not, return false
-			if (GalleryAclPeer::doCount($c) !== 1)
-				return false;
-
-			// otherwise, return true
-			return true;
-		}
-
-		// if it doesn't fit any of the above criteria, something's badly wrong
-		return false;
-	}
-
-	/**
 	 * Removes nudges from a user
 	 *
 	 * @param User $user
@@ -597,16 +561,6 @@ class User extends BaseUser
     ShoutPeer::createComment($recipient, $this, $content);
   }
 
-  public function getMediaCount()
-	{
-
-    	$c = new Criteria();
-    	$c->add(GalleryItemPeer::USER_ID, $this->getId());
-	$media = GalleryItemPeer::doSelect($c);
-	return $media;
-
-	}
-
   public function getAllRyaku()
 	{
 
@@ -638,7 +592,6 @@ class User extends BaseUser
 	$cookiename = $logedUserId."_question";
 
     $stats = array(
-        'teachersCount'   => count($this->getMediaCount()),
         'ryakuCount'      => $this->getAllRyaku(),
         'expertCount' => $this->getExpertScore()
     );

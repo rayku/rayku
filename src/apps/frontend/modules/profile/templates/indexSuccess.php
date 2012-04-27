@@ -61,7 +61,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
         echo link_to('<div style="font-size:12px">'.$user->getName().' is online</div>', '@profile?username=' . $user->getUsername(),array('class' => 'online'));
       else
         echo link_to('<span style="color:#000000">'.$user->getName().' is offline</span>', '@profile?username=' . $user->getUsername(),array('class' => 'offline')); ?>
-        <?php echo link_to('View All Photos', '@gallery_index?user_id=' . $user->getId(),array('class' => 'all-photos')) ?> </div>
     </div>
     <?php include_partial( 'about_me', array( 'user' => $user ) ); ?>
   </div>

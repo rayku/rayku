@@ -476,18 +476,6 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <link rel="stylesheet" type="text/css" href="/css/custom/pplsrch-results.css"/>
 <link rel="stylesheet" type="text/css" href="/css/pager.css"/>
 <?php endif; ?>
-<?php if($sf_context->getModuleName() =='gallery' and $sf_context->getActionName() =='home'): ?>
-<link rel="stylesheet" type="text/css" href="/css/custom/gallery-homepage.css"/>
-<?php endif; ?>
-<?php if($sf_context->getModuleName() =='gallery' and $sf_context->getActionName() =='show'): ?>
-<link rel="stylesheet" type="text/css" href="/css/custom/album-homepage.css"/>
-<?php endif; ?>
-<?php if($sf_context->getModuleName() =='gallery' and $sf_context->getActionName() =='upload'): ?>
-<link rel="stylesheet" type="text/css" href="/css/custom/upload-media.css"/>
-<?php endif; ?>
-<?php if($sf_context->getModuleName() =='gallery'): ?>
-<link rel="stylesheet" type="text/css" href="/css/custom/view-media.css"/>
-<?php endif; ?>
 <?php if($sf_context->getModuleName() =='login'): ?>
 <link rel="stylesheet" type="text/css" href="/styles/donny.css"/>
 <?php endif; ?>

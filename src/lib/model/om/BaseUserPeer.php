@@ -976,12 +976,6 @@ abstract class BaseUserPeer {
 			// invalidate objects in ExpertPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			ExpertPeer::clearInstancePool();
 
-			// invalidate objects in GalleryPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			GalleryPeer::clearInstancePool();
-
-			// invalidate objects in GalleryItemPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			GalleryItemPeer::clearInstancePool();
-
 			// invalidate objects in HistoryPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			HistoryPeer::clearInstancePool();
 

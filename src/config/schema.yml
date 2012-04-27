@@ -209,35 +209,6 @@ propel:
     created_at: { type: TIMESTAMP, required: true }
     updated_at: { type: TIMESTAMP, required: true }
     _indexes: { forum_question_FI_1: [category_id], forum_question_FI_2: [user_id] }
-  gallery:
-    _attributes: { phpName: Gallery }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '255', required: false }
-    show_entity: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    classroom_id: { type: INTEGER, size: '11', required: false }
-    _indexes: { gallery_FI_1: [user_id] }
-  gallery_acl:
-    _attributes: { phpName: GalleryAcl }
-    gallery_id: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { gallery_acl_FI_1: [gallery_id], gallery_acl_FI_2: [user_id] }
-  gallery_item:
-    _attributes: { phpName: GalleryItem }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '255', required: false }
-    gallery_id: { type: INTEGER, size: '11', required: false, foreignTable: gallery, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    file_name: { type: VARCHAR, size: '255', required: false }
-    file_system_path: { type: VARCHAR, size: '255', required: false }
-    mime_type: { type: VARCHAR, size: '255', required: false }
-    is_image: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    _indexes: { gallery_item_FI_1: [gallery_id], user_id: [user_id] }
   history:
     _attributes: { phpName: History }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
