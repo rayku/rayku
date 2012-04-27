@@ -60,7 +60,6 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
       else
         echo link_to('<span style="color:#000000">'.$user->getName().' is offline</span>', '@profile?username=' . $user->getUsername(),array('class' => 'offline')); ?>
     </div>
-    <?php include_partial( 'about_me', array( 'user' => $user ) ); ?>
   </div>
 </div>
 

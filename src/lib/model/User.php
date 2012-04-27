@@ -360,19 +360,6 @@ class User extends BaseUser
 	}
 
 	/**
-	 * Determines if you have content in your 'About Me'
-	 *
-	 * @return boolean
-	 */
-	public function hasAboutMe()
-	{
-		return !(
-			null === $this->getAboutMe()
-			|| '' === trim($this->getAboutMe())
-		);
-	}
-
-	/**
 	 * Determines if the birth date is valid for display (not-null, greater than zero)
 	 *
 	 * @return boolean
