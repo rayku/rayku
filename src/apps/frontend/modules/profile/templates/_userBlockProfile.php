@@ -86,34 +86,4 @@
     
 	</ul>
 
-<?php else: ?>
-
-	<ul>
-		<?php if($user->getType() == '5'): ?>
-		
-			<?php 
-			
-					
-					//echo $currentuser->getId().','.$user->getId();
-						if(!empty($raykuUser)) :
-								$c = new Criteria();
-								//if(!empty($raykuUser)) {
-									$c->add(SavedExpertsPeer::USER_ID,$currentuser->getId());
-								//}
-								$c->add(SavedExpertsPeer::EXPERT_ID,$user->getId());
-								$savedexperts = SavedExpertsPeer::doSelectOne($c);
-					
-								if($savedexperts == NULL) :?>
-		
-								<li><?php echo link_to('Save this Expert', 'expertsconnect/saveanexpert?expid='.$user->getId()) ?></li>
-					
-								<?php else: ?>
-					
-								<li><?php echo link_to('Saved', '@profile?username='.$user->getUsername()); ?></li>
-					
-								<?php endif; ?>
-						<?php endif; ?>
-				
-		<?php  endif; ?>
-	</ul>
 <?php endif ?>

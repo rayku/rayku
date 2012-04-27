@@ -349,11 +349,6 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { sales_detail_FI_1: [item_id] }
-  saved_experts:
-    _attributes: { phpName: SavedExperts }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    expert_id: { type: INTEGER, size: '11', required: true }
   shopping_cart:
     _attributes: { phpName: ShoppingCart }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

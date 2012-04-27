@@ -825,21 +825,6 @@ CREATE TABLE `sales_detail`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- saved_experts
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `saved_experts`;
-
-
-CREATE TABLE `saved_experts`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`expert_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- shopping_cart
 #-----------------------------------------------------------------------------
 
