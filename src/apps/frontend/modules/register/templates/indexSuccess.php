@@ -42,7 +42,6 @@
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
-<<<<<<< HEAD
     <div class="box">
         
       <div class="top"></div>
@@ -140,9 +139,7 @@ color:#7F8189;float:right;font:19px 'Arial';padding:9px;width:352px;"  type="tex
     </div>
 
     <!-- end of expert categories //-->
-=======
->>>>>>> 9be7e97087293e84d117eb215502b7a050ea1334
-
+<?php endif; ?>
 
     <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
