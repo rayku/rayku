@@ -472,82 +472,6 @@ CREATE TABLE `forum_question`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- gallery
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery`;
-
-
-CREATE TABLE `gallery`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(255),
-	`show_entity` INTEGER(11),
-	`user_id` INTEGER(11),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`classroom_id` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `gallery_FI_1`(`user_id`),
-	CONSTRAINT `gallery_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- gallery_acl
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery_acl`;
-
-
-CREATE TABLE `gallery_acl`
-(
-	`gallery_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `gallery_acl_FI_1`(`gallery_id`),
-	KEY `gallery_acl_FI_2`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- gallery_item
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery_item`;
-
-
-CREATE TABLE `gallery_item`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(255),
-	`gallery_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`file_name` VARCHAR(255),
-	`file_system_path` VARCHAR(255),
-	`mime_type` VARCHAR(255),
-	`is_image` INTEGER(11),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `gallery_item_FI_1`(`gallery_id`),
-	KEY `user_id`(`user_id`),
-	CONSTRAINT `gallery_item_FK_1`
-		FOREIGN KEY (`gallery_id`)
-		REFERENCES `gallery` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `gallery_item_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- history
 #-----------------------------------------------------------------------------
 
@@ -684,24 +608,6 @@ CREATE TABLE `notification_emails`
 	`user_id` INTEGER(100)  NOT NULL,
 	`on_off` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- nudge
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `nudge`;
-
-
-CREATE TABLE `nudge`
-(
-	`user_from_id` INTEGER(11),
-	`user_to_id` INTEGER(11),
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `nudge_FI_1`(`user_from_id`),
-	KEY `nudge_FI_2`(`user_to_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -919,21 +825,6 @@ CREATE TABLE `sales_detail`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- saved_experts
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `saved_experts`;
-
-
-CREATE TABLE `saved_experts`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`expert_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- shopping_cart
 #-----------------------------------------------------------------------------
 
@@ -1138,35 +1029,6 @@ CREATE TABLE `user_awards`
 	KEY `user_awards_FI_1`(`user_id`),
 	CONSTRAINT `user_awards_FK_1`
 		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- user_donations
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_donations`;
-
-
-CREATE TABLE `user_donations`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`from_user_id` INTEGER(11),
-	`points` INTEGER(11),
-	`comments` TEXT,
-	PRIMARY KEY (`id`),
-	KEY `user_donations_FI_1`(`user_id`),
-	KEY `user_donations_FI_2`(`from_user_id`),
-	CONSTRAINT `user_donations_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_donations_FK_2`
-		FOREIGN KEY (`from_user_id`)
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE

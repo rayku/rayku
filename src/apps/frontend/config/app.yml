@@ -34,8 +34,6 @@ all:
     avatar_folder: avatar
     avatar_default_image: anon
     avatar_default_image_type: jpg
-  login:
-    facebook_notification:    You were invited to join <a href=�http://www.rayku.com�>Rayku</a>! http://www.rayku.com
   homepage:
     count_newest_users: 4 # number of "newest users" to appear on homepage
   
@@ -73,22 +71,6 @@ all:
     expiry_time: 30 # Number of days before a bulletin expires
     
   gallery:
-    upload_folder: gallery
-    valid_mime_types:
-      image:
-        - image/jpeg
-        - image/pjpeg
-        - image/gif
-        - image/png
-      video:
-        - video/mp4
-        - video/mpeg
-        - video/quicktime
-        - video/x-ms-wmv
-    image_max_width: 600
-    image_max_height: 600
-    thumbnail_max_width: 40
-    thumbnail_max_height: 40
     thumbnail2_max_width: 120
     thumbnail2_max_height: 120
   items:

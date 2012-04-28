@@ -4,14 +4,12 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
 //-->
 </script>
 
-<div class="skyscrapers"> <a href="http://rayku.com/register/invitation"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/ad-unit-1.jpg" alt="ad" /></a> </div>
 <div class="content">
 <?php  
 	setcookie("newUser",$user->getId(), time()*60*60*24*30);
 	$_COOKIE["newUser"] = $user->getId();
 ?>
   <?php if ($sf_user->isAuthenticated() && $user->equals($sf_user->getRaykuUser())): ?>
-  <?php include_component('nudge', 'showNudges', array('user' => $user)) ?>
   <h2><?php echo $user->getName();?>'s Profile (<?php echo link_to('edit', '@profile_edit?username=' . $user->getUsername()); ?>)</h2>
   <?php else: ?>
   <h2><?php echo $user->getName();?>'s Profile</h2>
@@ -61,9 +59,7 @@ window.location = "http://rayku.com/tutor/<?php echo $user->getUsername();?>";
         echo link_to('<div style="font-size:12px">'.$user->getName().' is online</div>', '@profile?username=' . $user->getUsername(),array('class' => 'online'));
       else
         echo link_to('<span style="color:#000000">'.$user->getName().' is offline</span>', '@profile?username=' . $user->getUsername(),array('class' => 'offline')); ?>
-        <?php echo link_to('View All Photos', '@gallery_index?user_id=' . $user->getId(),array('class' => 'all-photos')) ?> </div>
     </div>
-    <?php include_partial( 'about_me', array( 'user' => $user ) ); ?>
   </div>
 </div>
 

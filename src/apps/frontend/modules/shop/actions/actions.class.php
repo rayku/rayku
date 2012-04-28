@@ -544,64 +544,6 @@ class shopActions extends sfActions
       $this->msg = "<p style='font-size:14px;color:#444444'>Unauthorized access.</p>";
   }
   
-  public function executeDonatePage()
-  {
-
-  	$this->user = $this->getUser()->getRaykuUser();
-		
-
-
-
-//$this->items = $allItems;
-
-
-	
-  }
-  
-  public function executeDonate()
-  {
-
-
-
-
-  	if($this->getRequest()->getMethod() == sfRequest::POST)
-	{
-		$amount = htmlentities($this->getRequestParameter('points'));
-		$username = htmlentities($this->getRequestParameter('name'));
-		$comment = htmlentities($this->getRequestParameter('comments'));
-		$this->user = $this->getUser()->getRaykuUser();
-		
-		if($this->user && $this->user->getPoints() > $amount)
-		{
-			
-			$c = new Criteria();
-			$c->add(UserPeer::USERNAME, $username);
-			$c->add(UserPeer::HIDDEN, false);
-			
-			$receiver = UserPeer::doSelectOne($c);
-			if($receiver)
-			{
-				$user_donations = new UserDonations();
-				$user_donations->setUserId($receiver->getId());
-				$user_donations->setFromUserId($this->user->getId());
-				$user_donations->setPoints($amount);
-				$user_donations->save();
-				$this->user->setPoints($this->user->getPoints() - $amount);
-				$this->user->save();
-				$receiver->setPoints($receiver->getPoints() + $amount);
-				$receiver->save();
-				$this->msg = "Successful donation of ".$amount."RP!";
-			}
-			else
-			 $this->msg = "The user you want to donate to can not be found.";
-		}
-		else
-		  $this->msg = "Unauthorized access.";	
-	}
-	else
-		$this->msg = "Unauthorized access.";
-  }
-  
   public function executeAwardPurchase()
   {
 

@@ -360,84 +360,6 @@ class User extends BaseUser
 	}
 
 	/**
-	* Checks to see if this user can view a given gallery
-	*
-	* @param Gallery $gallery
-	* @return bool
-	*/
-	public function canViewGallery($gallery)
-	{
-		// if it's public, anyone can access
-		if ($gallery->getShowEntity() == Gallery::TYPE_PUBLIC)
-			return true;
-
-		// if it's the owner, they're allowed access
-		if ($this->equals($gallery->getUser()))
-			return true;
-
-		// if it's an ACL-only thing...
-		if ($gallery->getShowEntity() == Gallery::TYPE_SPECIFIC_PEOPLE_ONLY)
-		{
-			// see if the user's on the ACL
-			$c = new Criteria();
-			$c->add(GalleryAclPeer::GALLERY_ID, $gallery->getId());
-			$c->add(GalleryAclPeer::USER_ID, $this->getId());
-
-			// if not, return false
-			if (GalleryAclPeer::doCount($c) !== 1)
-				return false;
-
-			// otherwise, return true
-			return true;
-		}
-
-		// if it doesn't fit any of the above criteria, something's badly wrong
-		return false;
-	}
-
-	/**
-	 * Removes nudges from a user
-	 *
-	 * @param User $user
-	 * @return integer Count of affected rows
-	 */
-	public function removeNudgesFromUser(User $user)
-	{
-		$c = new Criteria();
-		$c->add(NudgePeer::USER_FROM_ID, $user->getId());
-		$c->add(NudgePeer::USER_TO_ID, $this->getId());
-
-		return NudgePeer::doDelete($c);
-	}
-
-	/**
-	 * Get nudges for a user
-	 *
-	 * @return array
-	 */
-	public function getNudges()
-	{
-		$c = new Criteria();
-		$c->add(NudgePeer::USER_TO_ID, $this->getId());
-		$c->addAscendingOrderByColumn(NudgePeer::CREATED_AT);
-
-		return NudgePeer::doSelect($c);
-	}
-
-	/**
-	 * Determines if you have content in your 'About Me'
-	 *
-	 * @return boolean
-	 */
-	public function hasAboutMe()
-	{
-		return !(
-			null === $this->getAboutMe()
-			|| '' === trim($this->getAboutMe())
-		);
-	}
-
-	/**
 	 * Determines if the birth date is valid for display (not-null, greater than zero)
 	 *
 	 * @return boolean
@@ -597,16 +519,6 @@ class User extends BaseUser
     ShoutPeer::createComment($recipient, $this, $content);
   }
 
-  public function getMediaCount()
-	{
-
-    	$c = new Criteria();
-    	$c->add(GalleryItemPeer::USER_ID, $this->getId());
-	$media = GalleryItemPeer::doSelect($c);
-	return $media;
-
-	}
-
   public function getAllRyaku()
 	{
 
@@ -638,7 +550,6 @@ class User extends BaseUser
 	$cookiename = $logedUserId."_question";
 
     $stats = array(
-        'teachersCount'   => count($this->getMediaCount()),
         'ryakuCount'      => $this->getAllRyaku(),
         'expertCount' => $this->getExpertScore()
     );

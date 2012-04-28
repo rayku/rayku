@@ -12,9 +12,6 @@
 
 					$user_id=$raykuUser->getId();
 			
-					//echo "select * from gallery where 	user_id=".$user_id;
-			//	$query_gallery_pf = mysql_query("select * from gallery where 	user_id=".$user_id) ;
-				//echo $fetch_gallery_pf=mysql_num_rows($query_gallery_pf);
 				 $profile_pic_exist=0;
 				 
 				 $action=base64_decode($_GET['action']);
@@ -66,7 +63,6 @@
 
 <?php if ($sf_user->isAuthenticated() && $user->equals($raykuUser) && !empty($raykuUser)): ?>
 	<ul>
-		<li><?php echo link_to('View/Edit Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
         <li><?php echo link_to('Edit Course Information', 'profile/course?name='.$user->getUsername()); ?> </li>			
 		<li><?php echo link_to('Profile Display Permissions', '@profile_edit?username=' . $user->getUsername()); ?></li>
 		<?php endif ?>
@@ -90,38 +86,4 @@
     
 	</ul>
 
-<?php else: ?>
-
-	<ul>
-		<li><?php echo link_to('View Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
-		<li><?php echo link_to('Send a Nudge', '/nudge/send/username/' . $user->getUsername()) ?></li>
-
-		
-		<?php if($user->getType() == '5'): ?>
-		
-			<?php 
-			
-					
-					//echo $currentuser->getId().','.$user->getId();
-						if(!empty($raykuUser)) :
-								$c = new Criteria();
-								//if(!empty($raykuUser)) {
-									$c->add(SavedExpertsPeer::USER_ID,$currentuser->getId());
-								//}
-								$c->add(SavedExpertsPeer::EXPERT_ID,$user->getId());
-								$savedexperts = SavedExpertsPeer::doSelectOne($c);
-					
-								if($savedexperts == NULL) :?>
-		
-								<li><?php echo link_to('Save this Expert', 'expertsconnect/saveanexpert?expid='.$user->getId()) ?></li>
-					
-								<?php else: ?>
-					
-								<li><?php echo link_to('Saved', '@profile?username='.$user->getUsername()); ?></li>
-					
-								<?php endif; ?>
-						<?php endif; ?>
-				
-		<?php  endif; ?>
-	</ul>
 <?php endif ?>

@@ -219,12 +219,6 @@ class quickregActions extends sfActions
 		} 
 
 
-		$gallery = new Gallery();
-		$gallery->setTitle('Profile Pictures');
-		$gallery->setShowEntity(0);
-		$gallery->save();
-
-
 		}
 
 
