@@ -509,11 +509,6 @@ class User extends BaseUser
     return PrivateMessagePeer::getNrOfNewMessagesFor($this);
   }
 
-  function getTotalCreditsAmount()
-  {
-    return ExpertsCreditDetailsPeer::getTotalAmountFor($this);
-  }
-
   function createShoutFor( $recipient, $content )
   {
     ShoutPeer::createComment($recipient, $this, $content);

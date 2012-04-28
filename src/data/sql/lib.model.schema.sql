@@ -229,65 +229,6 @@ CREATE TABLE `expert_category`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- expert_lesson
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_lesson`;
-
-
-CREATE TABLE `expert_lesson`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`price` FLOAT  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	`day` VARCHAR(50)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `expert_lesson_FI_1`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- expert_lesson_schedule
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_lesson_schedule`;
-
-
-CREATE TABLE `expert_lesson_schedule`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`date` INTEGER(11)  NOT NULL,
-	`timings` VARCHAR(100)  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`expert_lesson_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `expert_lesson_schedule_FI_1`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- expert_student_schedules
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_student_schedules`;
-
-
-CREATE TABLE `expert_student_schedules`
-(
-	`id` INTEGER(10)  NOT NULL AUTO_INCREMENT,
-	`exp_id` INTEGER(11)  NOT NULL,
-	`student_id` INTEGER(11)  NOT NULL,
-	`date` INTEGER(11)  NOT NULL,
-	`time` INTEGER(11)  NOT NULL,
-	`message` TEXT  NOT NULL,
-	`expert_lesson_id` INTEGER(11)  NOT NULL,
-	`accept_reject` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- experts_admin_payout
 #-----------------------------------------------------------------------------
 
@@ -301,24 +242,6 @@ CREATE TABLE `experts_admin_payout`
 	`amount` FLOAT(5,2)  NOT NULL,
 	`paypal_id` VARCHAR(100)  NOT NULL,
 	`paid` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_credit_details
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_credit_details`;
-
-
-CREATE TABLE `experts_credit_details`
-(
-	`id` INTEGER(100)  NOT NULL AUTO_INCREMENT,
-	`student_id` INTEGER(10)  NOT NULL,
-	`expert_id` INTEGER(10)  NOT NULL,
-	`credit_amount` FLOAT(5,2)  NOT NULL,
-	`lesson_id` INTEGER(20)  NOT NULL,
-	`immediate_lesson_id` INTEGER(20)  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -350,45 +273,6 @@ CREATE TABLE `experts_final_credit`
 	`id` INTEGER(100)  NOT NULL AUTO_INCREMENT,
 	`expert_id` INTEGER(10)  NOT NULL,
 	`amount` FLOAT(5,2)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_immediate_lesson
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_immediate_lesson`;
-
-
-CREATE TABLE `experts_immediate_lesson`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(50)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`price` FLOAT  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_lesson_members
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_lesson_members`;
-
-
-CREATE TABLE `experts_lesson_members`
-(
-	`id` INTEGER(10)  NOT NULL AUTO_INCREMENT,
-	`student_id` INTEGER(20)  NOT NULL,
-	`category_id` INTEGER(20)  NOT NULL,
-	`expert_id` INTEGER(20)  NOT NULL,
-	`lesson_id` INTEGER(20)  NOT NULL,
-	`approve` INTEGER(10)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

@@ -98,35 +98,6 @@ propel:
     user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     _indexes: { expert_category_FI_1: [user_id], expert_category_FI_2: [category_id] }
-  expert_lesson:
-    _attributes: { phpName: ExpertLesson }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    price: { type: FLOAT, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    day: { type: VARCHAR, size: '50', required: true }
-    _indexes: { expert_lesson_FI_1: [user_id] }
-  expert_lesson_schedule:
-    _attributes: { phpName: ExpertLessonSchedule }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    date: { type: INTEGER, size: '11', required: true }
-    timings: { type: VARCHAR, size: '100', required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    expert_lesson_id: { type: INTEGER, size: '11', required: true }
-    _indexes: { expert_lesson_schedule_FI_1: [user_id] }
-  expert_student_schedules:
-    _attributes: { phpName: ExpertStudentSchedules }
-    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
-    exp_id: { type: INTEGER, size: '11', required: true }
-    student_id: { type: INTEGER, size: '11', required: true }
-    date: { type: INTEGER, size: '11', required: true }
-    time: { type: INTEGER, size: '11', required: true }
-    message: { type: LONGVARCHAR, required: true }
-    expert_lesson_id: { type: INTEGER, size: '11', required: true }
-    accept_reject: { type: INTEGER, size: '11', required: true }
   experts_admin_payout:
     _attributes: { phpName: ExpertsAdminPayout }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -134,14 +105,6 @@ propel:
     amount: { type: FLOAT, size: '5', scale: '2', required: true }
     paypal_id: { type: VARCHAR, size: '100', required: true }
     paid: { type: INTEGER, size: '11', required: true }
-  experts_credit_details:
-    _attributes: { phpName: ExpertsCreditDetails }
-    id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
-    student_id: { type: INTEGER, size: '10', required: true }
-    expert_id: { type: INTEGER, size: '10', required: true }
-    credit_amount: { type: FLOAT, size: '5', scale: '2', required: true }
-    lesson_id: { type: INTEGER, size: '20', required: true }
-    immediate_lesson_id: { type: INTEGER, size: '20', required: true }
   experts_debit_details:
     _attributes: { phpName: ExpertsDebitDetails }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -153,25 +116,6 @@ propel:
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
     expert_id: { type: INTEGER, size: '10', required: true }
     amount: { type: FLOAT, size: '5', scale: '2', required: true }
-  experts_immediate_lesson:
-    _attributes: { phpName: ExpertsImmediateLesson }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '50', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    price: { type: FLOAT, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-  experts_lesson_members:
-    _attributes: { phpName: ExpertsLessonMembers }
-    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
-    student_id: { type: INTEGER, size: '20', required: true }
-    category_id: { type: INTEGER, size: '20', required: true }
-    expert_id: { type: INTEGER, size: '20', required: true }
-    lesson_id: { type: INTEGER, size: '20', required: true }
-    approve: { type: INTEGER, size: '10', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
   experts_promo_text:
     _attributes: { phpName: ExpertsPromoText }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
