@@ -36,6 +36,10 @@ class answerAction extends sfAction
 
             $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
 
+            $expertId = $details[0];
+            $raykuCharge = $this->getRaykuCharge($expertId);
+            $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
+
             // redirect to rayku whiteboard
             $this->logWhiteboardConnection($userId);
             $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
@@ -67,17 +71,7 @@ class answerAction extends sfAction
             if (mysql_num_rows($_queryRecord)) {
                 $row = mysql_fetch_array($_queryRecord);
 
-                $queryUser = mysql_query("select * from user where id = ".$userId." ", $connection) or die("error2".mysql_error());
-                $rowUser = mysql_fetch_array($queryUser);
-
-                $queryRPRate = mysql_query("select * from user_rate where userid = ".$row['expert_id']." ", $connection) or die(mysql_error());
-                if (mysql_num_rows($queryRPRate)) {
-                    $rowRPRate = mysql_fetch_assoc($queryRPRate);
-                    $raykuCharge = $rowRPRate['rate'];
-                } else {
-                    $raykuCharge = '0.16';
-                }
-
+                $raykuCharge = $this->getRaykuCharge($row['expert_id']);
                 $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
 
                 $this->getResponse()->setCookie("newredirect", 1, time()+  100);
@@ -118,4 +112,17 @@ class answerAction extends sfAction
         );";
         mysql_query($insSQL, $connection);
     }
+    
+    private function getRaykuCharge($expertId)
+    {
+        $queryRPRate = mysql_query("select * from user_rate where userid = $expertId") or die(mysql_error());
+        if (mysql_num_rows($queryRPRate)) {
+            $rowRPRate = mysql_fetch_assoc($queryRPRate);
+            $raykuCharge = $rowRPRate['rate'];
+        } else {
+            $raykuCharge = '0.16';
+        }
+        
+        return $raykuCharge;
+     }
 }
