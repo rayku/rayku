@@ -6,7 +6,7 @@ class answerAction extends sfAction
 {
     public function execute($request)
     {
-        $connection = RaykuCommon::getDatabaseConnection();
+        RaykuCommon::getDatabaseConnection();
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $time = time();
@@ -32,9 +32,13 @@ class answerAction extends sfAction
             $sessionService = new WhiteboardSessionService();
             $session = $sessionService->connect($userId, $questionId);
 
-            mysql_query("delete from user_expert where user_id = " . $userId, $connection) or die(mysql_error());
+            mysql_query("delete from user_expert where user_id = " . $userId) or die(mysql_error());
 
             $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
+
+            $expertId = $details[0];
+            $raykuCharge = $this->getRaykuCharge($expertId);
+            $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
 
             // redirect to rayku whiteboard
             $this->logWhiteboardConnection($userId);
@@ -63,21 +67,11 @@ class answerAction extends sfAction
             $this->getResponse()->setCookie("sessionToken", $studentSession->getToken(), time() + 3600);
 
             $_record_id = $details[0];
-            $_queryRecord = mysql_query("select * from sendmessage where id = ".$_record_id." ", $connection) or die(mysql_error());
+            $_queryRecord = mysql_query("select * from sendmessage where id = ".$_record_id." ") or die(mysql_error());
             if (mysql_num_rows($_queryRecord)) {
                 $row = mysql_fetch_array($_queryRecord);
 
-                $queryUser = mysql_query("select * from user where id = ".$userId." ", $connection) or die("error2".mysql_error());
-                $rowUser = mysql_fetch_array($queryUser);
-
-                $queryRPRate = mysql_query("select * from user_rate where userid = ".$row['expert_id']." ", $connection) or die(mysql_error());
-                if (mysql_num_rows($queryRPRate)) {
-                    $rowRPRate = mysql_fetch_assoc($queryRPRate);
-                    $raykuCharge = $rowRPRate['rate'];
-                } else {
-                    $raykuCharge = '0.16';
-                }
-
+                $raykuCharge = $this->getRaykuCharge($row['expert_id']);
                 $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
 
                 $this->getResponse()->setCookie("newredirect", 1, time()+  100);
@@ -85,11 +79,11 @@ class answerAction extends sfAction
                 $this->getResponse()->setCookie("forumsub", "", time() - 600);
 
                 if (!empty($userId)) {
-                    mysql_query("insert into popup_close(user_id) values(".$userId.")", $connection) or die("error3".mysql_error());
+                    mysql_query("insert into popup_close(user_id) values(".$userId.")") or die("error3".mysql_error());
                 }
 
                 if (!empty($details[0])) {
-                    mysql_query("delete from sendmessage where id = ".$details[0], $connection) or die("error4".mysql_error());
+                    mysql_query("delete from sendmessage where id = ".$details[0]) or die("error4".mysql_error());
                 }
 
                 // redirect to rayku whiteboard
@@ -102,7 +96,6 @@ class answerAction extends sfAction
 
     private function logWhiteboardConnection($userId)
     {
-        $connection = RaykuCommon::getDatabaseConnection();
         // Connect Whiteboard //
         $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
             `id` ,
@@ -116,6 +109,19 @@ class answerAction extends sfAction
             '".date("Y-m-d H:i:s")."',
             '1'
         );";
-        mysql_query($insSQL, $connection);
+        mysql_query($insSQL);
     }
+    
+    private function getRaykuCharge($expertId)
+    {
+        $queryRPRate = mysql_query("select * from user_rate where userid = $expertId") or die(mysql_error());
+        if (mysql_num_rows($queryRPRate)) {
+            $rowRPRate = mysql_fetch_assoc($queryRPRate);
+            $raykuCharge = $rowRPRate['rate'];
+        } else {
+            $raykuCharge = '0.16';
+        }
+        
+        return $raykuCharge;
+     }
 }
