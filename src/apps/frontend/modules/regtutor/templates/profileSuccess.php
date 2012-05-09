@@ -6,12 +6,10 @@
   <!--filter popup inner-->
   <div class="filter-popup-inner"> 
     
-    <!--close button--> 
-    <!-- <a class="filter-popup-close" href="#"><img src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/images/tutor_profile/cross.png" alt="Close"/></a> -->
     <form name="tutor_profile_data" action="/dashboard/tutor" method="post">      
       <!--row-2-->
       <div class="row-2 clearfix">
-        <h3>You're finished!</h3>
+        <h3>Activate Tutor Status</h3>
         
         <p style="color:#000">Your account is now activated and you may begin using the website.<br />
           <br />
@@ -29,7 +27,7 @@
 	
 	?>
         <input type="hidden" name="usrid" id="usrid" value="<?php echo $usrid; ?>" />
-        <div class="categories" style="width:340px">
+        <div class="categories">
 	        <?php
         	$catquery = mysql_query("SELECT s.id,c.id as catid,s.course_name,c.name FROM courses AS s JOIN category AS c ON c.id=s.category_id WHERE c.status=1");	
         	$e=1;
@@ -64,7 +62,7 @@
           <!--Description-->
           <p>What best describes you?</p>
           
-          <select style="padding:10px;font-size:12px;color:#666;border:1px solid #ccc;" name="description" id="description">
+          <select style="padding:6px;font-size:14px;color:#666;border:1px solid #ccc;" name="description" id="description">
             <option value=""></option>
             <option value="Freshman" <?php if($usrdata['tutor_role']=='Freshman') { ?> selected="selected" <?php } ?>>Freshman</option>
             <option value="Sophomore" <?php if($usrdata['tutor_role']=='Sophomore') { ?> selected="selected" <?php } ?>>Sophomore</option>
@@ -85,13 +83,10 @@
           <!--Description-->
           
            <!--School Name-->
-          <p>School name:</p>
-          <!--<p class="info university-name" id="autocompleschool">
-          <?php echo input_auto_complete_tag('school', $usrdata['school'], 'dashboard/autocomplete', array('use_style' => true)); ?>
-		  </p>-->
+          <p>College / University name:</p>
 		  
 		 <p class="info university-name" id="autocompleschool">
-            <?php $to = ''; echo input_auto_complete_tag('school', '', 'dashboard/autocomplete', array('placeholder' => 'School Name'), array('use_style' => true)); ?>
+            <?php $to = ''; echo input_auto_complete_tag('school', '', 'dashboard/autocomplete', array('use_style' => true)); ?>
           </p> 
 		  
           <br/>
@@ -100,7 +95,7 @@
           <!--Study-->
           <p><span id="e">Study:</span></p>
           		  
-		  <input name='study' type="text" id="study" placeholder="example: Electrical Engineering" value="<?php echo $usrdata['study']; ?>"/>
+		  <input name='study' type="text" id="study" placeholder="e.g. Civil Engineering" value="<?php echo $usrdata['study']; ?>"/>
           <br />
           <br />
           <!--Study-->
@@ -108,7 +103,7 @@
           <!--Course Codes-->
           <p>List all relevant couse codes (1 per line):</p>
           
-          <textarea name="CourseCodes" placeholder="example: MAT133" cols="30" rows="5" style="padding:10px;font-size:12px;color:#666;border:1px solid #ccc;"><?php echo $usrdata['course_code']; ?></textarea><br /><br />
+          <textarea name="CourseCodes" placeholder="example: MAT133" cols="30" rows="5" style="padding:10px;font-size:12px;color:#666;border:1px solid #ccc;width:240px"><?php echo $usrdata['course_code']; ?></textarea><br /><br />
           <!--Course Codes-->
         </div>
         

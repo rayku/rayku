@@ -1,16 +1,3 @@
-
-
-
-/*************************
-**************************
-
-Required Styles for the Popup
-
-
-**************************
-**************************/
-
-
 #trans
 {
 	position:fixed;
@@ -42,12 +29,6 @@ Required Styles for the Popup
 .filter-popup-inner
 {
 	position:relative;
-}
-.filter-popup-close
-{
-	position:absolute;
-	right:20px;
-	top:20px;
 }
 .filter-popup h3
 {
@@ -92,14 +73,14 @@ Required Styles for the Popup
 }
 
 .row-2 .categories {
-	width:270px;
+	width:500px;
 	float:left;
 	color:#666;
 }
 
 .categories label
 {
-	width:125px;
+	width:180px;
 	float:left;
 	padding:3px;
 }
@@ -110,7 +91,7 @@ Required Styles for the Popup
 	border:none;
 	border:1px solid #d7d7d7;
 	height:30px;
-	width:180px;
+	width:240px;
 	line-height:30px/9;
 	text-indent:12px;
 	-webkit-border-radius: 2px;

@@ -222,18 +222,17 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   
   <!--container-->
   <div class="container">
-    <form name="register-form" id="register-form" action="quickreg/register" method="post">
+    <form name="register-form" id="register-form" action="quickreg/register" method="post" style="height:265px;background:url(/images/media-logos.png) no-repeat center bottom;">
       <h3>Ask any math question <span style="font-weight:normal">
         <?php
             $onlineUsersCount = $uac->getOnlineUsersCount();
             if( $onlineUsersCount > 0) { ?>
-              (<span style="color:#003"><?php echo $onlineUsersCount; ?></span> tutors online):</span>
+              (<span style="color:#919294;text-shadow:#000 0 1px 0;"><?php echo $onlineUsersCount; ?></span> tutors online):</span>
         <?php } ?>
       </h3>
       <p class="main-question">
         <input type="text" name="question" id="question" value="Type the question or topic you need help with here"/>
       </p>
-      <!-- class="validate[required,custom[onlyLetterNumber]]"  -->
       <!--register-block-->
       <div id="register-block">
         <h4 class="clearfix">Create account as you ask your first question (it's free!):</h4>
