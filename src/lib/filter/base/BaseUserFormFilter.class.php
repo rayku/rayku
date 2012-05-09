@@ -46,6 +46,9 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'notification'             => new sfWidgetFormFilterInput(),
       'phone_number'             => new sfWidgetFormFilterInput(),
       'login'                    => new sfWidgetFormFilterInput(),
+      'credit_card'              => new sfWidgetFormFilterInput(),
+      'credit_card_token'        => new sfWidgetFormFilterInput(),
+      'first_charge'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -81,6 +84,9 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'notification'             => new sfValidatorPass(array('required' => false)),
       'phone_number'             => new sfValidatorPass(array('required' => false)),
       'login'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'credit_card'              => new sfValidatorPass(array('required' => false)),
+      'credit_card_token'        => new sfValidatorPass(array('required' => false)),
+      'first_charge'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('user_filters[%s]');
@@ -131,6 +137,9 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'notification'             => 'Text',
       'phone_number'             => 'Text',
       'login'                    => 'Number',
+      'credit_card'              => 'Text',
+      'credit_card_token'        => 'Text',
+      'first_charge'             => 'Date',
     );
   }
 }

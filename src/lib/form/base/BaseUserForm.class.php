@@ -45,6 +45,9 @@ class BaseUserForm extends BaseFormPropel
       'notification'             => new sfWidgetFormInput(),
       'phone_number'             => new sfWidgetFormInput(),
       'login'                    => new sfWidgetFormInput(),
+      'credit_card'              => new sfWidgetFormInput(),
+      'credit_card_token'        => new sfWidgetFormInput(),
+      'first_charge'             => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -81,6 +84,9 @@ class BaseUserForm extends BaseFormPropel
       'notification'             => new sfValidatorString(array('max_length' => 10)),
       'phone_number'             => new sfValidatorString(array('max_length' => 20)),
       'login'                    => new sfValidatorInteger(),
+      'credit_card'              => new sfValidatorString(array('max_length' => 4, 'required' => false)),
+      'credit_card_token'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'first_charge'             => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

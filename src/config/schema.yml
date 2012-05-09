@@ -381,6 +381,9 @@ propel:
     notification: { type: VARCHAR, size: '10', required: true }
     phone_number: { type: VARCHAR, size: '20', required: true }
     login: { type: INTEGER, size: '10', required: true }
+    credit_card: { type: VARCHAR, size: '4', required: false }
+    credit_card_token: { type: VARCHAR, size: '10', required: false }
+    first_charge: { type: TIMESTAMP, required: false }
     _indexes: { user_FI_1: [picture_id] }
     _uniques: { user_username_unique: [username], user_email_unique: [email], user_password_recover_key_unique: [password_recover_key] }
   user_awards:
