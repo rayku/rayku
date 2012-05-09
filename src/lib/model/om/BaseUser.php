@@ -251,6 +251,24 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $login;
 
 	/**
+	 * The value for the credit_card field.
+	 * @var        string
+	 */
+	protected $credit_card;
+
+	/**
+	 * The value for the credit_card_token field.
+	 * @var        string
+	 */
+	protected $credit_card_token;
+
+	/**
+	 * The value for the first_charge field.
+	 * @var        string
+	 */
+	protected $first_charge;
+
+	/**
 	 * @var        Picture
 	 */
 	protected $aPicture;
@@ -985,6 +1003,64 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getLogin()
 	{
 		return $this->login;
+	}
+
+	/**
+	 * Get the [credit_card] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCreditCard()
+	{
+		return $this->credit_card;
+	}
+
+	/**
+	 * Get the [credit_card_token] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCreditCardToken()
+	{
+		return $this->credit_card_token;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [first_charge] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getFirstCharge($format = 'Y-m-d H:i:s')
+	{
+		if ($this->first_charge === null) {
+			return null;
+		}
+
+
+		if ($this->first_charge === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->first_charge);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->first_charge, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -1803,6 +1879,95 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setLogin()
 
 	/**
+	 * Set the value of [credit_card] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     User The current object (for fluent API support)
+	 */
+	public function setCreditCard($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->credit_card !== $v) {
+			$this->credit_card = $v;
+			$this->modifiedColumns[] = UserPeer::CREDIT_CARD;
+		}
+
+		return $this;
+	} // setCreditCard()
+
+	/**
+	 * Set the value of [credit_card_token] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     User The current object (for fluent API support)
+	 */
+	public function setCreditCardToken($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->credit_card_token !== $v) {
+			$this->credit_card_token = $v;
+			$this->modifiedColumns[] = UserPeer::CREDIT_CARD_TOKEN;
+		}
+
+		return $this;
+	} // setCreditCardToken()
+
+	/**
+	 * Sets the value of [first_charge] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     User The current object (for fluent API support)
+	 */
+	public function setFirstCharge($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->first_charge !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->first_charge !== null && $tmpDt = new DateTime($this->first_charge)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->first_charge = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = UserPeer::FIRST_CHARGE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setFirstCharge()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1931,6 +2096,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->phone_number = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
 			$this->network_id = ($row[$startcol + 34] !== null) ? (int) $row[$startcol + 34] : null;
 			$this->login = ($row[$startcol + 35] !== null) ? (int) $row[$startcol + 35] : null;
+			$this->credit_card = ($row[$startcol + 36] !== null) ? (string) $row[$startcol + 36] : null;
+			$this->credit_card_token = ($row[$startcol + 37] !== null) ? (string) $row[$startcol + 37] : null;
+			$this->first_charge = ($row[$startcol + 38] !== null) ? (string) $row[$startcol + 38] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1940,7 +2108,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 39; // 39 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2822,6 +2990,15 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				return $this->getLogin();
 				break;
+			case 36:
+				return $this->getCreditCard();
+				break;
+			case 37:
+				return $this->getCreditCardToken();
+				break;
+			case 38:
+				return $this->getFirstCharge();
+				break;
 			default:
 				return null;
 				break;
@@ -2879,6 +3056,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[33] => $this->getPhoneNumber(),
 			$keys[34] => $this->getNetworkId(),
 			$keys[35] => $this->getLogin(),
+			$keys[36] => $this->getCreditCard(),
+			$keys[37] => $this->getCreditCardToken(),
+			$keys[38] => $this->getFirstCharge(),
 		);
 		return $result;
 	}
@@ -3018,6 +3198,15 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				$this->setLogin($value);
 				break;
+			case 36:
+				$this->setCreditCard($value);
+				break;
+			case 37:
+				$this->setCreditCardToken($value);
+				break;
+			case 38:
+				$this->setFirstCharge($value);
+				break;
 		} // switch()
 	}
 
@@ -3078,6 +3267,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[33], $arr)) $this->setPhoneNumber($arr[$keys[33]]);
 		if (array_key_exists($keys[34], $arr)) $this->setNetworkId($arr[$keys[34]]);
 		if (array_key_exists($keys[35], $arr)) $this->setLogin($arr[$keys[35]]);
+		if (array_key_exists($keys[36], $arr)) $this->setCreditCard($arr[$keys[36]]);
+		if (array_key_exists($keys[37], $arr)) $this->setCreditCardToken($arr[$keys[37]]);
+		if (array_key_exists($keys[38], $arr)) $this->setFirstCharge($arr[$keys[38]]);
 	}
 
 	/**
@@ -3125,6 +3317,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::PHONE_NUMBER)) $criteria->add(UserPeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(UserPeer::NETWORK_ID)) $criteria->add(UserPeer::NETWORK_ID, $this->network_id);
 		if ($this->isColumnModified(UserPeer::LOGIN)) $criteria->add(UserPeer::LOGIN, $this->login);
+		if ($this->isColumnModified(UserPeer::CREDIT_CARD)) $criteria->add(UserPeer::CREDIT_CARD, $this->credit_card);
+		if ($this->isColumnModified(UserPeer::CREDIT_CARD_TOKEN)) $criteria->add(UserPeer::CREDIT_CARD_TOKEN, $this->credit_card_token);
+		if ($this->isColumnModified(UserPeer::FIRST_CHARGE)) $criteria->add(UserPeer::FIRST_CHARGE, $this->first_charge);
 
 		return $criteria;
 	}
@@ -3248,6 +3443,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setNetworkId($this->network_id);
 
 		$copyObj->setLogin($this->login);
+
+		$copyObj->setCreditCard($this->credit_card);
+
+		$copyObj->setCreditCardToken($this->credit_card_token);
+
+		$copyObj->setFirstCharge($this->first_charge);
 
 
 		if ($deepCopy) {

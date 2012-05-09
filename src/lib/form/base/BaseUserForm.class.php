@@ -48,6 +48,9 @@ class BaseUserForm extends BaseFormPropel
       'phone_number'             => new sfWidgetFormInput(),
       'network_id'               => new sfWidgetFormPropelChoice(array('model' => 'Network', 'add_empty' => true)),
       'login'                    => new sfWidgetFormInput(),
+      'credit_card'              => new sfWidgetFormInput(),
+      'credit_card_token'        => new sfWidgetFormInput(),
+      'first_charge'             => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -87,6 +90,9 @@ class BaseUserForm extends BaseFormPropel
       'phone_number'             => new sfValidatorString(array('max_length' => 20)),
       'network_id'               => new sfValidatorPropelChoice(array('model' => 'Network', 'column' => 'id', 'required' => false)),
       'login'                    => new sfValidatorInteger(),
+      'credit_card'              => new sfValidatorString(array('max_length' => 4, 'required' => false)),
+      'credit_card_token'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'first_charge'             => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
