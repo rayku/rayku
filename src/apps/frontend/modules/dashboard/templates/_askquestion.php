@@ -15,7 +15,7 @@ $connection = RaykuCommon::getDatabaseConnection();
     <input type="hidden" name="dash_hidden"  id="dash_hidden" value="1" />
     
     <!--question form-->
-    <div id="question-form"> 
+    <div id="question-form" style="background:#F5F5F5"> 
       
       <!--question form container-->
       <div class="question-form-container">

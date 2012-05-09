@@ -10,25 +10,25 @@
 <div class="body-main" style="width:600px">
   <div id="want">
     <h3>Tutor Math Online, Get Paid!</h3>
-    <p>Rayku lets you teach math students online at your own self-determined schedule. Start today, and charge at by-the-minute rates of your choice ($0.40/min. or $24/hour is recommended).<br />
+    <p>Rayku lets you teach math students online. Start today, and charge by-the-minute rates of your choice (recommended $0.40/min. or $24/hour).<br />
       <br />
-      Sessions are carried out through a live shared whiteboard, where users can interact using a whiteboard with video, audio, and a math equation writer.</p>
-    <div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>
+      Sessions are carried out through a live shared whiteboard, where students can interact with video, audio, and math equation writer tools. With passive notifications, you can log in and tutor at your own self-determined schedule.</p>
   </div>
   <!--want-->
   
   <div id="table"> 
     <!-- Table goes in the document BODY -->
+    <a name="benefits" id="benefits"></a>
     <table width="560" align="left" class="hovertable">
       <tr>
-        <th colspan="2" align="left" style="border-left:1px solid #1C517B;"><span style="font-size:16px;color:#F9F9F9;padding:5px 0 20px 0;"><strong>Main Benefits</strong></span></th>
+        <th colspan="2" align="left" style="border-left:1px solid #1C517B;"><span style="font-size:16px;color:#F9F9F9;padding:5px 0 20px 0;"><strong>Benefits</strong></span></th>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td width="350">Teach online via a live shared whiteboard</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
-        <td>Instant chat / desktop notifications</td>
+        <td>Instant chat / desktop tutoring request notifications</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -37,6 +37,10 @@
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Set your own rates</td>
+        <td><strong>Yes</strong></td>
+      </tr>
+      <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
+        <td>Full billing system with monthly payments</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -57,15 +61,13 @@
       </tr>
     </table>
   </div>
+  <div style="clear:both"></div>
   <div id="bottom">
+  	<div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>
     <p class="content">Tutor when you want, wherever you want.  Your salary and work hours are yours to decide. <a href="http://rayku.com/regtutor">Register today</a>, it's free!</p>
-    <p class="footnote"><br />
-<br />
-<br />
-<br />
-<br />
+    <p class="footnote"><br /><br /><br /><br />
       <sup>1</sup>As a new tutor, you will be asked to set your rate at $0/min. Once you have reached sufficient experience (approximately 3-4 quality sessions), your account will be automatically verified and you will be allowed to charge a flexible rate, as well as rank higher on our tutor lists.</p>
-      <p class="footnote"><br /><sup>2</sup>This is dependent on the quality of the tutoring session. The higher the quality, the more you will be paid.</p>
+      <p class="footnote"><br /><sup>2</sup>Dependent on the quality of the tutoring session. The higher the quality, the more you earn.</p>
   </div>
 </div>
 <div id="sidebar" style="height:auto">
