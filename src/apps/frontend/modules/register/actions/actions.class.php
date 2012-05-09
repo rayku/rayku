@@ -243,10 +243,6 @@ class registerActions extends sfActions
         }
     }
 
-    public function executeNew()
-    {
-    }
-
     /**
      * Action to show the page that says "The confirmation code has been sent to
      * your e-mail address."

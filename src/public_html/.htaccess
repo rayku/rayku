@@ -19,6 +19,11 @@ allow from all
   RewriteCond %{REQUEST_URI} ^/join.*$ [NC]
   RewriteRule ^(.*)$ /joinus [R=301,L]
 
+  RewriteCond %{REQUEST_URI} ^/register/new$ [NC]
+  RewriteRule ^(.*)$ /dashboard/getstarted [R=301,L]
+
+  RewriteCond %{REQUEST_URI} ^/regtutor/new$ [NC]
+  RewriteRule ^(.*)$ /dashboard/getstarted [R=301,L]
 
   # we check if the .html version is here (caching)
 

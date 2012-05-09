@@ -213,10 +213,6 @@ class regtutorActions extends sfActions
         $this->forward('regtutor', 'profile');
     }
 
-    public function executeNew()
-    {
-    }
-
     public function executeProfile(){
     }
 
