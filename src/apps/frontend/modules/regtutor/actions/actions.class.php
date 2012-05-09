@@ -220,10 +220,6 @@ class regtutorActions extends sfActions
     public function executeProfile(){
     }
 
-    public function executeOther()
-    {
-    }
-
     /**
      * Action to show the page that says "The confirmation code has been sent to
      * your e-mail address."
