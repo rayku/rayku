@@ -9,7 +9,7 @@
 	padding-right: 25px;
 	padding-bottom: 30px;
 	padding-left: 25px;
-	height: 210px;
+	height: 175px;
 	border: none;
 }
 #want span {
@@ -28,13 +28,31 @@
 	color:#666;
 	line-height:20px;
 }
-#want #notice {
-	padding:8px;
-	margin:14px 0;
-	border-bottom:1px solid #CCC;
-	background:#F5F5F5;
-	font-size:14px;
-	color:#666
+#want .section1 {
+	border-bottom:2px solid #069;
+	padding-bottom:10px;
+	width:560px;
+	background:#E1EDF2;
+}
+#want .section1 p {
+	font-size:12px;
+	padding:5px 10px 0 10px;
+}
+#want .section1 #whiteboard {
+	border-top:2px solid #069;
+}
+#want .section2 {
+	border-bottom:2px solid #008213;
+	padding-bottom:10px;
+	width:560px;
+	background:#E2F3E7;
+}
+#want .section2 p {
+	font-size:12px;
+	padding:5px 10px 0 10px;
+}
+#want .section2 #clients {
+	border-top:2px solid #008213;
 }
 #table {
 	font-size:20px;
@@ -46,12 +64,20 @@
 	 line-height:2px;
 }
 #bottom {
-	 padding:25px 35px
+	 padding:0 35px 80px 35px;
 }
 #bottom .content {
 	font-size:16px;
 	color:#666;
 	line-height:20px;
+}
+#bottom #notice {
+	padding:8px;
+	margin:0 0 30px 0;
+	border-bottom:1px solid #CCC;
+	background:#F5F5F5;
+	font-size:14px;
+	color:#666
 }
 #bottom .footnote {
 	font-size:12px;
@@ -126,7 +152,7 @@ table.hovertable {
 	border-color: #999999;
 	border-collapse: collapse;
 	margin-left:35px;
-	margin-bottom:35px;
+	margin-bottom:20px;
 }
 table.hovertable th {
 	background-color:#1C517B;
