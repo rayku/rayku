@@ -17,7 +17,7 @@ class tutorjoinActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->getResponse()->setCookie('wherefind', 'Sarah called me');
+    $this->getResponse()->setCookie('wherefind', 'Ayse called me');
   }
   
   public function executeApplied()
