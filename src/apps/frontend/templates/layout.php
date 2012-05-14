@@ -226,7 +226,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
       <h3>Ask any math question <span style="font-weight:normal">
         <?php
             $onlineUsersCount = $uac->getOnlineUsersCount();
-            if( $onlineUsersCount > 0) { ?>
+            if( $onlineUsersCount > 5) { ?>
               (<span style="color:#919294;text-shadow:#000 0 1px 0;"><?php echo $onlineUsersCount; ?></span> tutors online):</span>
         <?php } ?>
       </h3>
