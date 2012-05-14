@@ -180,28 +180,6 @@ CREATE TABLE `expert`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- expert_available_days
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_available_days`;
-
-
-CREATE TABLE `expert_available_days`
-(
-	`id` INTEGER(40)  NOT NULL AUTO_INCREMENT,
-	`expert_id` INTEGER(40)  NOT NULL,
-	`monday` INTEGER(10)  NOT NULL,
-	`tuesday` INTEGER(10)  NOT NULL,
-	`wednesday` INTEGER(10)  NOT NULL,
-	`thursday` INTEGER(10)  NOT NULL,
-	`friday` INTEGER(10)  NOT NULL,
-	`saturday` INTEGER(10)  NOT NULL,
-	`sunday` INTEGER(10)  NOT NULL,
-	`timings` VARCHAR(100)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- expert_category
 #-----------------------------------------------------------------------------
 
