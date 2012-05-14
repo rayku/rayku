@@ -205,7 +205,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 							if($score['score'] != 0):
 
-								if($_points == '' || $_points == '0.00' ) {
+								if(false) { //$_points == '' || $_points == '0.00'     Temporary hack
 
 									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ") or die("Error In rate".mysql_error());
 
@@ -691,7 +691,7 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 							if($score['score'] != 0):
 
-								if($_points == '' || $_points == '0.00' ) {
+								if(false) { //$_points == '' || $_points == '0.00'   Temporary hack
 
 									$emptyRCquery = mysql_query("select * from user_rate where userid=".$exp->getUserId()." and (rate = 0.00 || rate = 0) ") or die("Error In rate".mysql_error());
 
