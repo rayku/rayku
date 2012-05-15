@@ -56,7 +56,7 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'username'                 => new sfValidatorPass(array('required' => false)),
       'email'                    => new sfValidatorPass(array('required' => false)),
       'password'                 => new sfValidatorPass(array('required' => false)),
-      'points'                   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'points'                   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'created_at'               => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'last_activity_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'type'                     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),

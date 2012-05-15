@@ -72,7 +72,7 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PASSWORD', 'Password', 'VARCHAR', false, 40);
 
-		$tMap->addColumn('POINTS', 'Points', 'INTEGER', false, 11);
+		$tMap->addColumn('POINTS', 'Points', 'FLOAT', false, 11);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 

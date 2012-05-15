@@ -56,7 +56,7 @@ class BaseUserForm extends BaseFormPropel
       'username'                 => new sfValidatorString(array('max_length' => 100, 'required' => false)),
       'email'                    => new sfValidatorString(array('max_length' => 100, 'required' => false)),
       'password'                 => new sfValidatorString(array('max_length' => 40, 'required' => false)),
-      'points'                   => new sfValidatorInteger(array('required' => false)),
+      'points'                   => new sfValidatorNumber(array('required' => false)),
       'created_at'               => new sfValidatorDateTime(array('required' => false)),
       'last_activity_at'         => new sfValidatorDateTime(array('required' => false)),
       'type'                     => new sfValidatorInteger(array('required' => false)),
