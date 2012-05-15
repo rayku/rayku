@@ -53,7 +53,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	/**
 	 * The value for the points field.
 	 * Note: this column has a database default value of: 0
-	 * @var        int
+	 * @var        double
 	 */
 	protected $points;
 
@@ -614,7 +614,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	/**
 	 * Get the [points] column value.
 	 * 
-	 * @return     int
+	 * @return     double
 	 */
 	public function getPoints()
 	{
@@ -1170,13 +1170,13 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	/**
 	 * Set the value of [points] column.
 	 * 
-	 * @param      int $v new value
+	 * @param      double $v new value
 	 * @return     User The current object (for fluent API support)
 	 */
 	public function setPoints($v)
 	{
 		if ($v !== null) {
-			$v = (int) $v;
+			$v = (double) $v;
 		}
 
 		if ($this->points !== $v || $v === 0) {
@@ -2065,7 +2065,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->username = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->email = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->password = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->points = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->points = ($row[$startcol + 5] !== null) ? (double) $row[$startcol + 5] : null;
 			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->last_activity_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->type = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;

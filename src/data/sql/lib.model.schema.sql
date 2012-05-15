@@ -1272,7 +1272,7 @@ CREATE TABLE `user`
 	`username` VARCHAR(100),
 	`email` VARCHAR(100),
 	`password` VARCHAR(40),
-	`points` INTEGER(11) default 0,
+	`points` FLOAT(11,2) default 0,
 	`created_at` DATETIME,
 	`last_activity_at` DATETIME,
 	`type` INTEGER(11) default 0,
