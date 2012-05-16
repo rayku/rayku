@@ -133,7 +133,7 @@ class quickregActions extends sfActions
 				
 				$_SESSION['confirm_user_error'] = "Invalid Confirmation Code.";
 				
-				$this->redirect("http://www.rayku.com/quickreg/confirmationcode");
+				$this->redirect("/quickreg/confirmationcode");
 				//return sfView::ERROR;
 		}
 
@@ -223,7 +223,7 @@ class quickregActions extends sfActions
 
 
 
-			$this->redirect("http://www.rayku.com/expertmanager/list");
+			$this->redirect("/expertmanager/list");
 	}
 	
 	public function executeDuplicationcheck()
