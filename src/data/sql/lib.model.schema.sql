@@ -440,25 +440,6 @@ CREATE TABLE `item_type`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- live_video_chat
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `live_video_chat`;
-
-
-CREATE TABLE `live_video_chat`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`receiver_id` INTEGER(11)  NOT NULL,
-	`sender_id` INTEGER(11)  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`approved` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `video_live_chat_FI_1`(`receiver_id`),
-	KEY `video_live_chat_FI_2`(`sender_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- notification_emails
 #-----------------------------------------------------------------------------
 

@@ -180,14 +180,6 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     name: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
-  live_video_chat:
-    _attributes: { phpName: LiveVideoChat }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    receiver_id: { type: INTEGER, size: '11', required: true }
-    sender_id: { type: INTEGER, size: '11', required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true }
-    approved: { type: INTEGER, size: '11', required: true }
-    _indexes: { video_live_chat_FI_1: [receiver_id], video_live_chat_FI_2: [sender_id] }
   notification_emails:
     _attributes: { phpName: NotificationEmails }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
