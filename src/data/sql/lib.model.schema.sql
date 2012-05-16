@@ -4,24 +4,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 #-----------------------------------------------------------------------------
-#-- album
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `album`;
-
-
-CREATE TABLE `album`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`owner_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `album_FI_1`(`owner_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- bulletin
 #-----------------------------------------------------------------------------
 
@@ -512,18 +494,11 @@ CREATE TABLE `picture`
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(150),
 	`description` TEXT,
-	`album_id` INTEGER(11),
 	`owner_id` INTEGER(11),
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
-	KEY `picture_FI_1`(`album_id`),
 	KEY `picture_FI_2`(`owner_id`),
 	CONSTRAINT `picture_FK_1`
-		FOREIGN KEY (`album_id`)
-		REFERENCES `album` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT,
-	CONSTRAINT `picture_FK_2`
 		FOREIGN KEY (`owner_id`)
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT

@@ -68,8 +68,6 @@ class PictureMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'LONGVARCHAR', false, null);
 
-		$tMap->addForeignKey('ALBUM_ID', 'AlbumId', 'INTEGER', 'album', 'ID', false, 11);
-
 		$tMap->addForeignKey('OWNER_ID', 'OwnerId', 'INTEGER', 'user', 'ID', false, 11);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);

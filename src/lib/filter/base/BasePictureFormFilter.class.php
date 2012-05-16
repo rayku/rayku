@@ -16,7 +16,6 @@ class BasePictureFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'name'        => new sfWidgetFormFilterInput(),
       'description' => new sfWidgetFormFilterInput(),
-      'album_id'    => new sfWidgetFormPropelChoice(array('model' => 'Album', 'add_empty' => true)),
       'owner_id'    => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
       'created_at'  => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
     ));
@@ -24,7 +23,6 @@ class BasePictureFormFilter extends BaseFormFilterPropel
     $this->setValidators(array(
       'name'        => new sfValidatorPass(array('required' => false)),
       'description' => new sfValidatorPass(array('required' => false)),
-      'album_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Album', 'column' => 'id')),
       'owner_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'User', 'column' => 'id')),
       'created_at'  => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
@@ -47,7 +45,6 @@ class BasePictureFormFilter extends BaseFormFilterPropel
       'id'          => 'Number',
       'name'        => 'Text',
       'description' => 'Text',
-      'album_id'    => 'ForeignKey',
       'owner_id'    => 'ForeignKey',
       'created_at'  => 'Date',
     );

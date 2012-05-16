@@ -2,14 +2,6 @@ propel:
   _attributes:
     package: lib.model
     defaultIdMethod: native
-  album:
-    _attributes: { phpName: Album }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '150', required: false }
-    description: { type: LONGVARCHAR, required: false }
-    owner_id: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    _indexes: { album_FI_1: [owner_id] }
   bulletin:
     _attributes: { phpName: Bulletin }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -210,10 +202,9 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     name: { type: VARCHAR, size: '150', required: false }
     description: { type: LONGVARCHAR, required: false }
-    album_id: { type: INTEGER, size: '11', required: false, foreignTable: album, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     owner_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     created_at: { type: TIMESTAMP, required: false }
-    _indexes: { picture_FI_1: [album_id], picture_FI_2: [owner_id] }
+    _indexes: { picture_FI_2: [owner_id] }
   post:
     _attributes: { phpName: Post }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

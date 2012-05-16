@@ -39,12 +39,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
-	 * The value for the album_id field.
-	 * @var        int
-	 */
-	protected $album_id;
-
-	/**
 	 * The value for the owner_id field.
 	 * @var        int
 	 */
@@ -55,11 +49,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 	 * @var        string
 	 */
 	protected $created_at;
-
-	/**
-	 * @var        Album
-	 */
-	protected $aAlbum;
 
 	/**
 	 * @var        User
@@ -138,16 +127,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
-	}
-
-	/**
-	 * Get the [album_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getAlbumId()
-	{
-		return $this->album_id;
 	}
 
 	/**
@@ -257,30 +236,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setDescription()
-
-	/**
-	 * Set the value of [album_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     Picture The current object (for fluent API support)
-	 */
-	public function setAlbumId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->album_id !== $v) {
-			$this->album_id = $v;
-			$this->modifiedColumns[] = PicturePeer::ALBUM_ID;
-		}
-
-		if ($this->aAlbum !== null && $this->aAlbum->getId() !== $v) {
-			$this->aAlbum = null;
-		}
-
-		return $this;
-	} // setAlbumId()
 
 	/**
 	 * Set the value of [owner_id] column.
@@ -395,9 +350,8 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->album_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->owner_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->owner_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -407,7 +361,7 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = PicturePeer::NUM_COLUMNS - PicturePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = PicturePeer::NUM_COLUMNS - PicturePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Picture object", $e);
@@ -430,9 +384,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aAlbum !== null && $this->album_id !== $this->aAlbum->getId()) {
-			$this->aAlbum = null;
-		}
 		if ($this->aUser !== null && $this->owner_id !== $this->aUser->getId()) {
 			$this->aUser = null;
 		}
@@ -475,7 +426,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aAlbum = null;
 			$this->aUser = null;
 			$this->collUsers = null;
 			$this->lastUserCriteria = null;
@@ -574,13 +524,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			// were passed to this object by their coresponding set
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
-
-			if ($this->aAlbum !== null) {
-				if ($this->aAlbum->isModified() || $this->aAlbum->isNew()) {
-					$affectedRows += $this->aAlbum->save($con);
-				}
-				$this->setAlbum($this->aAlbum);
-			}
 
 			if ($this->aUser !== null) {
 				if ($this->aUser->isModified() || $this->aUser->isNew()) {
@@ -690,12 +633,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aAlbum !== null) {
-				if (!$this->aAlbum->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aAlbum->getValidationFailures());
-				}
-			}
-
 			if ($this->aUser !== null) {
 				if (!$this->aUser->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aUser->getValidationFailures());
@@ -759,12 +696,9 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 3:
-				return $this->getAlbumId();
-				break;
-			case 4:
 				return $this->getOwnerId();
 				break;
-			case 5:
+			case 4:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -791,9 +725,8 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getName(),
 			$keys[2] => $this->getDescription(),
-			$keys[3] => $this->getAlbumId(),
-			$keys[4] => $this->getOwnerId(),
-			$keys[5] => $this->getCreatedAt(),
+			$keys[3] => $this->getOwnerId(),
+			$keys[4] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -835,12 +768,9 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 3:
-				$this->setAlbumId($value);
-				break;
-			case 4:
 				$this->setOwnerId($value);
 				break;
-			case 5:
+			case 4:
 				$this->setCreatedAt($value);
 				break;
 		} // switch()
@@ -870,9 +800,8 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setAlbumId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setOwnerId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[3], $arr)) $this->setOwnerId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
 	}
 
 	/**
@@ -887,7 +816,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PicturePeer::ID)) $criteria->add(PicturePeer::ID, $this->id);
 		if ($this->isColumnModified(PicturePeer::NAME)) $criteria->add(PicturePeer::NAME, $this->name);
 		if ($this->isColumnModified(PicturePeer::DESCRIPTION)) $criteria->add(PicturePeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(PicturePeer::ALBUM_ID)) $criteria->add(PicturePeer::ALBUM_ID, $this->album_id);
 		if ($this->isColumnModified(PicturePeer::OWNER_ID)) $criteria->add(PicturePeer::OWNER_ID, $this->owner_id);
 		if ($this->isColumnModified(PicturePeer::CREATED_AT)) $criteria->add(PicturePeer::CREATED_AT, $this->created_at);
 
@@ -947,8 +875,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 		$copyObj->setName($this->name);
 
 		$copyObj->setDescription($this->description);
-
-		$copyObj->setAlbumId($this->album_id);
 
 		$copyObj->setOwnerId($this->owner_id);
 
@@ -1011,57 +937,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 			self::$peer = new PicturePeer();
 		}
 		return self::$peer;
-	}
-
-	/**
-	 * Declares an association between this object and a Album object.
-	 *
-	 * @param      Album $v
-	 * @return     Picture The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setAlbum(Album $v = null)
-	{
-		if ($v === null) {
-			$this->setAlbumId(NULL);
-		} else {
-			$this->setAlbumId($v->getId());
-		}
-
-		$this->aAlbum = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Album object, it will not be re-added.
-		if ($v !== null) {
-			$v->addPicture($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Album object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Album The associated Album object.
-	 * @throws     PropelException
-	 */
-	public function getAlbum(PropelPDO $con = null)
-	{
-		if ($this->aAlbum === null && ($this->album_id !== null)) {
-			$c = new Criteria(AlbumPeer::DATABASE_NAME);
-			$c->add(AlbumPeer::ID, $this->album_id);
-			$this->aAlbum = AlbumPeer::doSelectOne($c, $con);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aAlbum->addPictures($this);
-			 */
-		}
-		return $this->aAlbum;
 	}
 
 	/**
@@ -1289,7 +1164,6 @@ abstract class BasePicture extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collUsers = null;
-			$this->aAlbum = null;
 			$this->aUser = null;
 	}
 

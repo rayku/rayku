@@ -15,7 +15,6 @@ class BasePictureForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'name'        => new sfWidgetFormInput(),
       'description' => new sfWidgetFormTextarea(),
-      'album_id'    => new sfWidgetFormPropelChoice(array('model' => 'Album', 'add_empty' => true)),
       'owner_id'    => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
       'created_at'  => new sfWidgetFormDateTime(),
     ));
@@ -24,7 +23,6 @@ class BasePictureForm extends BaseFormPropel
       'id'          => new sfValidatorPropelChoice(array('model' => 'Picture', 'column' => 'id', 'required' => false)),
       'name'        => new sfValidatorString(array('max_length' => 150, 'required' => false)),
       'description' => new sfValidatorString(array('required' => false)),
-      'album_id'    => new sfValidatorPropelChoice(array('model' => 'Album', 'column' => 'id', 'required' => false)),
       'owner_id'    => new sfValidatorPropelChoice(array('model' => 'User', 'column' => 'id', 'required' => false)),
       'created_at'  => new sfValidatorDateTime(array('required' => false)),
     ));
