@@ -49,6 +49,7 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'credit_card'              => new sfWidgetFormFilterInput(),
       'credit_card_token'        => new sfWidgetFormFilterInput(),
       'first_charge'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'where_find_us'            => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -87,6 +88,7 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'credit_card'              => new sfValidatorPass(array('required' => false)),
       'credit_card_token'        => new sfValidatorPass(array('required' => false)),
       'first_charge'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'where_find_us'            => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('user_filters[%s]');
@@ -140,6 +142,7 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'credit_card'              => 'Text',
       'credit_card_token'        => 'Text',
       'first_charge'             => 'Date',
+      'where_find_us'            => 'Text',
     );
   }
 }

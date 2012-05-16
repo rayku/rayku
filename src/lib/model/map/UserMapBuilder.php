@@ -72,7 +72,7 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PASSWORD', 'Password', 'VARCHAR', false, 40);
 
-		$tMap->addColumn('POINTS', 'Points', 'FLOAT', false, 11);
+		$tMap->addColumn('POINTS', 'Points', 'DECIMAL', false, 11);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 
@@ -133,6 +133,8 @@ class UserMapBuilder implements MapBuilder {
 		$tMap->addColumn('CREDIT_CARD_TOKEN', 'CreditCardToken', 'VARCHAR', false, 10);
 
 		$tMap->addColumn('FIRST_CHARGE', 'FirstCharge', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('WHERE_FIND_US', 'WhereFindUs', 'LONGVARCHAR', true, null);
 
 	} // doBuild()
 

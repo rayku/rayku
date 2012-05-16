@@ -23,6 +23,10 @@ class BaseWhiteboardChatForm extends BaseFormPropel
       'ended_at'        => new sfWidgetFormDateTime(),
       'directory'       => new sfWidgetFormInput(),
       'created_at'      => new sfWidgetFormDateTime(),
+      'timer'           => new sfWidgetFormInput(),
+      'rating'          => new sfWidgetFormInput(),
+      'amount'          => new sfWidgetFormInput(),
+      'comments'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -37,6 +41,10 @@ class BaseWhiteboardChatForm extends BaseFormPropel
       'ended_at'        => new sfValidatorDateTime(array('required' => false)),
       'directory'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'created_at'      => new sfValidatorDateTime(array('required' => false)),
+      'timer'           => new sfValidatorString(array('max_length' => 100)),
+      'rating'          => new sfValidatorInteger(),
+      'amount'          => new sfValidatorNumber(),
+      'comments'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('whiteboard_chat[%s]');

@@ -20,6 +20,10 @@ class BasePostFormFilter extends BaseFormFilterPropel
       'updated_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'content'       => new sfWidgetFormFilterInput(),
       'best_response' => new sfWidgetFormFilterInput(),
+      'reported'      => new sfWidgetFormFilterInput(),
+      'user_ip'       => new sfWidgetFormFilterInput(),
+      'banned'        => new sfWidgetFormFilterInput(),
+      'reported_date' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -29,6 +33,10 @@ class BasePostFormFilter extends BaseFormFilterPropel
       'updated_at'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'content'       => new sfValidatorPass(array('required' => false)),
       'best_response' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'reported'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'user_ip'       => new sfValidatorPass(array('required' => false)),
+      'banned'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'reported_date' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('post_filters[%s]');
@@ -53,6 +61,10 @@ class BasePostFormFilter extends BaseFormFilterPropel
       'updated_at'    => 'Date',
       'content'       => 'Text',
       'best_response' => 'Number',
+      'reported'      => 'Number',
+      'user_ip'       => 'Text',
+      'banned'        => 'Number',
+      'reported_date' => 'Date',
     );
   }
 }

@@ -19,7 +19,7 @@ abstract class BaseWhiteboardChatPeer {
 	const CLASS_DEFAULT = 'lib.model.WhiteboardChat';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 15;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -57,6 +57,18 @@ abstract class BaseWhiteboardChatPeer {
 	/** the column name for the CREATED_AT field */
 	const CREATED_AT = 'whiteboard_chat.CREATED_AT';
 
+	/** the column name for the TIMER field */
+	const TIMER = 'whiteboard_chat.TIMER';
+
+	/** the column name for the RATING field */
+	const RATING = 'whiteboard_chat.RATING';
+
+	/** the column name for the AMOUNT field */
+	const AMOUNT = 'whiteboard_chat.AMOUNT';
+
+	/** the column name for the COMMENTS field */
+	const COMMENTS = 'whiteboard_chat.COMMENTS';
+
 	/**
 	 * An identiy map to hold any loaded instances of WhiteboardChat objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -78,11 +90,11 @@ abstract class BaseWhiteboardChatPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'IsPublic', 'ExpertId', 'AskerId', 'ExpertNickname', 'AskerNickname', 'Question', 'StartedAt', 'EndedAt', 'Directory', 'CreatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'isPublic', 'expertId', 'askerId', 'expertNickname', 'askerNickname', 'question', 'startedAt', 'endedAt', 'directory', 'createdAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::IS_PUBLIC, self::EXPERT_ID, self::ASKER_ID, self::EXPERT_NICKNAME, self::ASKER_NICKNAME, self::QUESTION, self::STARTED_AT, self::ENDED_AT, self::DIRECTORY, self::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'is_public', 'expert_id', 'asker_id', 'expert_nickname', 'asker_nickname', 'question', 'started_at', 'ended_at', 'directory', 'created_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'IsPublic', 'ExpertId', 'AskerId', 'ExpertNickname', 'AskerNickname', 'Question', 'StartedAt', 'EndedAt', 'Directory', 'CreatedAt', 'Timer', 'Rating', 'Amount', 'Comments', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'isPublic', 'expertId', 'askerId', 'expertNickname', 'askerNickname', 'question', 'startedAt', 'endedAt', 'directory', 'createdAt', 'timer', 'rating', 'amount', 'comments', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::IS_PUBLIC, self::EXPERT_ID, self::ASKER_ID, self::EXPERT_NICKNAME, self::ASKER_NICKNAME, self::QUESTION, self::STARTED_AT, self::ENDED_AT, self::DIRECTORY, self::CREATED_AT, self::TIMER, self::RATING, self::AMOUNT, self::COMMENTS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'is_public', 'expert_id', 'asker_id', 'expert_nickname', 'asker_nickname', 'question', 'started_at', 'ended_at', 'directory', 'created_at', 'timer', 'rating', 'amount', 'comments', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -92,11 +104,11 @@ abstract class BaseWhiteboardChatPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IsPublic' => 1, 'ExpertId' => 2, 'AskerId' => 3, 'ExpertNickname' => 4, 'AskerNickname' => 5, 'Question' => 6, 'StartedAt' => 7, 'EndedAt' => 8, 'Directory' => 9, 'CreatedAt' => 10, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'isPublic' => 1, 'expertId' => 2, 'askerId' => 3, 'expertNickname' => 4, 'askerNickname' => 5, 'question' => 6, 'startedAt' => 7, 'endedAt' => 8, 'directory' => 9, 'createdAt' => 10, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::IS_PUBLIC => 1, self::EXPERT_ID => 2, self::ASKER_ID => 3, self::EXPERT_NICKNAME => 4, self::ASKER_NICKNAME => 5, self::QUESTION => 6, self::STARTED_AT => 7, self::ENDED_AT => 8, self::DIRECTORY => 9, self::CREATED_AT => 10, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'is_public' => 1, 'expert_id' => 2, 'asker_id' => 3, 'expert_nickname' => 4, 'asker_nickname' => 5, 'question' => 6, 'started_at' => 7, 'ended_at' => 8, 'directory' => 9, 'created_at' => 10, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IsPublic' => 1, 'ExpertId' => 2, 'AskerId' => 3, 'ExpertNickname' => 4, 'AskerNickname' => 5, 'Question' => 6, 'StartedAt' => 7, 'EndedAt' => 8, 'Directory' => 9, 'CreatedAt' => 10, 'Timer' => 11, 'Rating' => 12, 'Amount' => 13, 'Comments' => 14, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'isPublic' => 1, 'expertId' => 2, 'askerId' => 3, 'expertNickname' => 4, 'askerNickname' => 5, 'question' => 6, 'startedAt' => 7, 'endedAt' => 8, 'directory' => 9, 'createdAt' => 10, 'timer' => 11, 'rating' => 12, 'amount' => 13, 'comments' => 14, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::IS_PUBLIC => 1, self::EXPERT_ID => 2, self::ASKER_ID => 3, self::EXPERT_NICKNAME => 4, self::ASKER_NICKNAME => 5, self::QUESTION => 6, self::STARTED_AT => 7, self::ENDED_AT => 8, self::DIRECTORY => 9, self::CREATED_AT => 10, self::TIMER => 11, self::RATING => 12, self::AMOUNT => 13, self::COMMENTS => 14, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'is_public' => 1, 'expert_id' => 2, 'asker_id' => 3, 'expert_nickname' => 4, 'asker_nickname' => 5, 'question' => 6, 'started_at' => 7, 'ended_at' => 8, 'directory' => 9, 'created_at' => 10, 'timer' => 11, 'rating' => 12, 'amount' => 13, 'comments' => 14, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -199,6 +211,14 @@ abstract class BaseWhiteboardChatPeer {
 		$criteria->addSelectColumn(WhiteboardChatPeer::DIRECTORY);
 
 		$criteria->addSelectColumn(WhiteboardChatPeer::CREATED_AT);
+
+		$criteria->addSelectColumn(WhiteboardChatPeer::TIMER);
+
+		$criteria->addSelectColumn(WhiteboardChatPeer::RATING);
+
+		$criteria->addSelectColumn(WhiteboardChatPeer::AMOUNT);
+
+		$criteria->addSelectColumn(WhiteboardChatPeer::COMMENTS);
 
 	}
 

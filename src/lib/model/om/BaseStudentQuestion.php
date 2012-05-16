@@ -40,12 +40,14 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the category_id field.
+	 * Note: this column has a database default value of: 1
 	 * @var        int
 	 */
 	protected $category_id;
 
 	/**
 	 * The value for the course_id field.
+	 * Note: this column has a database default value of: 1
 	 * @var        int
 	 */
 	protected $course_id;
@@ -88,18 +90,21 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the status field.
+	 * Note: this column has a database default value of: 0
 	 * @var        int
 	 */
 	protected $status;
 
 	/**
 	 * The value for the close field.
+	 * Note: this column has a database default value of: 61000
 	 * @var        int
 	 */
 	protected $close;
 
 	/**
 	 * The value for the cron field.
+	 * Note: this column has a database default value of: 1
 	 * @var        int
 	 */
 	protected $cron;
@@ -162,6 +167,11 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	 */
 	public function applyDefaultValues()
 	{
+		$this->category_id = 1;
+		$this->course_id = 1;
+		$this->status = 0;
+		$this->close = 61000;
+		$this->cron = 1;
 	}
 
 	/**
@@ -394,7 +404,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->category_id !== $v) {
+		if ($this->category_id !== $v || $v === 1) {
 			$this->category_id = $v;
 			$this->modifiedColumns[] = StudentQuestionPeer::CATEGORY_ID;
 		}
@@ -414,7 +424,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->course_id !== $v) {
+		if ($this->course_id !== $v || $v === 1) {
 			$this->course_id = $v;
 			$this->modifiedColumns[] = StudentQuestionPeer::COURSE_ID;
 		}
@@ -554,7 +564,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->status !== $v) {
+		if ($this->status !== $v || $v === 0) {
 			$this->status = $v;
 			$this->modifiedColumns[] = StudentQuestionPeer::STATUS;
 		}
@@ -574,7 +584,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->close !== $v) {
+		if ($this->close !== $v || $v === 61000) {
 			$this->close = $v;
 			$this->modifiedColumns[] = StudentQuestionPeer::CLOSE;
 		}
@@ -594,7 +604,7 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->cron !== $v) {
+		if ($this->cron !== $v || $v === 1) {
 			$this->cron = $v;
 			$this->modifiedColumns[] = StudentQuestionPeer::CRON;
 		}
@@ -633,7 +643,27 @@ abstract class BaseStudentQuestion extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array())) {
+			if (array_diff($this->modifiedColumns, array(StudentQuestionPeer::CATEGORY_ID,StudentQuestionPeer::COURSE_ID,StudentQuestionPeer::STATUS,StudentQuestionPeer::CLOSE,StudentQuestionPeer::CRON))) {
+				return false;
+			}
+
+			if ($this->category_id !== 1) {
+				return false;
+			}
+
+			if ($this->course_id !== 1) {
+				return false;
+			}
+
+			if ($this->status !== 0) {
+				return false;
+			}
+
+			if ($this->close !== 61000) {
+				return false;
+			}
+
+			if ($this->cron !== 1) {
 				return false;
 			}
 

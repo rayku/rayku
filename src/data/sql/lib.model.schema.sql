@@ -53,6 +53,7 @@ CREATE TABLE `category`
 	`parent` INTEGER(11)  NOT NULL,
 	`prefix` VARCHAR(10)  NOT NULL,
 	`updated_at` DATE  NOT NULL,
+	`status` INTEGER(11),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `category_name_unique` (`name`),
 	UNIQUE KEY `category_prefix_unique` (`prefix`)
@@ -564,7 +565,13 @@ CREATE TABLE `post`
 	`updated_at` DATETIME  NOT NULL,
 	`content` TEXT  NOT NULL,
 	`best_response` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
+	`reported` INTEGER(4) default 0 NOT NULL,
+	`user_ip` VARCHAR(255),
+	`banned` INTEGER(2) default 0 NOT NULL,
+	`reported_date` DATETIME,
+	PRIMARY KEY (`id`),
+	KEY `reported`(`reported`),
+	KEY `user_ip`(`user_ip`, `banned`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -817,8 +824,13 @@ CREATE TABLE `thread`
 	`school_grade` VARCHAR(100)  NOT NULL,
 	`created_at` DATETIME  NOT NULL,
 	`lastpost_at` DATETIME  NOT NULL,
-	`stickie` INTEGER  NOT NULL,
-	PRIMARY KEY (`id`)
+	`user_ip` VARCHAR(255),
+	`banned` INTEGER(4) default 0 NOT NULL,
+	`reported` INTEGER(4) default 0 NOT NULL,
+	`reported_date` DATETIME,
+	`stickie` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `reported`(`reported`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -835,7 +847,7 @@ CREATE TABLE `user`
 	`username` VARCHAR(100),
 	`email` VARCHAR(100),
 	`password` VARCHAR(40),
-	`points` FLOAT(11,2) default 0,
+	`points` DECIMAL(11,2) default 0,
 	`created_at` DATETIME,
 	`last_activity_at` DATETIME,
 	`type` INTEGER(11) default 0,
@@ -862,10 +874,11 @@ CREATE TABLE `user`
 	`invisible` INTEGER(11)  NOT NULL,
 	`notification` VARCHAR(10)  NOT NULL,
 	`phone_number` VARCHAR(20)  NOT NULL,
-	`login` INTEGER(10)  NOT NULL,
+	`login` INTEGER(10) default 0 NOT NULL,
 	`credit_card` VARCHAR(4),
 	`credit_card_token` VARCHAR(10),
 	`first_charge` DATETIME,
+	`where_find_us` TEXT  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),
@@ -908,7 +921,7 @@ DROP TABLE IF EXISTS `user_gtalk`;
 
 CREATE TABLE `user_gtalk`
 (
-	`userid` INTEGER(11)  NOT NULL,
+	`userid` INTEGER(10)  NOT NULL,
 	`gtalkid` VARCHAR(100)  NOT NULL,
 	PRIMARY KEY (`userid`),
 	CONSTRAINT `user_gtalk_FK_1`
@@ -955,6 +968,10 @@ CREATE TABLE `whiteboard_chat`
 	`ended_at` DATETIME,
 	`directory` VARCHAR(255),
 	`created_at` DATETIME,
+	`timer` VARCHAR(100)  NOT NULL,
+	`rating` INTEGER(11)  NOT NULL,
+	`amount` FLOAT(5,2)  NOT NULL,
+	`comments` VARCHAR(255),
 	PRIMARY KEY (`id`),
 	KEY `whiteboard_chat_FI_1`(`expert_id`, `asker_id`)
 )Type=InnoDB;
@@ -1014,17 +1031,17 @@ CREATE TABLE `student_questions`
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER(11)  NOT NULL,
 	`checked_id` INTEGER(11)  NOT NULL,
-	`category_id` INTEGER(11)  NOT NULL,
-	`course_id` INTEGER(11)  NOT NULL,
+	`category_id` INTEGER(11) default 1 NOT NULL,
+	`course_id` INTEGER(11) default 1 NOT NULL,
 	`question` VARCHAR(500)  NOT NULL,
 	`exe_order` INTEGER(11)  NOT NULL,
-	`time` INTEGER(11)  NOT NULL,
+	`time` INTEGER(100)  NOT NULL,
 	`course_code` VARCHAR(100)  NOT NULL,
 	`year` VARCHAR(100)  NOT NULL,
 	`school` VARCHAR(100)  NOT NULL,
-	`status` INTEGER(10)  NOT NULL,
-	`close` INTEGER(10)  NOT NULL,
-	`cron` INTEGER(10)  NOT NULL,
+	`status` INTEGER(10) default 0 NOT NULL,
+	`close` INTEGER(10) default 61000 NOT NULL,
+	`cron` INTEGER(10) default 1 NOT NULL,
 	`source` VARCHAR(100)  NOT NULL,
 	PRIMARY KEY (`id`),
 	INDEX `student_questions_FI_1` (`user_id`),

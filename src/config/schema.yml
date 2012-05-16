@@ -25,6 +25,7 @@ propel:
     parent: { type: INTEGER, size: '11', required: true }
     prefix: { type: VARCHAR, size: '10', required: true }
     updated_at: { type: DATE, required: true }
+    status: { type: INTEGER, size: '11'}
     _uniques: { category_name_unique: [name], category_prefix_unique: [prefix] }
   chat_data:
     _attributes: { phpName: ChatData }
@@ -230,6 +231,11 @@ propel:
     updated_at: { type: TIMESTAMP, required: true }
     content: { type: LONGVARCHAR, required: true }
     best_response: { type: INTEGER, size: '11', required: true }
+    reported: { type: INTEGER, size: '4', default: '0', required: true }
+    user_ip: { type: VARCHAR, size: '255' }
+    banned: { type: INTEGER, size: '2', default: '0', required: true }
+    reported_date: { type: TIMESTAMP }
+    _indexes: { reported: [reported], user_ip: [user_ip,banned] }
   private_message:
     _attributes: { phpName: PrivateMessage }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -333,7 +339,12 @@ propel:
     school_grade: { type: VARCHAR, size: '100', required: true }
     created_at: { type: TIMESTAMP, required: true }
     lastpost_at: { type: TIMESTAMP, required: true }
-    stickie: { type: INTEGER, required: true }
+    user_ip: { type: VARCHAR, size: '255' }
+    banned: { type: INTEGER, size: '4', default: '0', required: true }
+    reported: { type: INTEGER, size: '4', default: '0', required: true }
+    reported_date: { type: TIMESTAMP }
+    stickie: { type: INTEGER, required: true, default: '0' }
+    _indexes: { reported: [reported] }
   user:
     _attributes: { phpName: User }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -341,7 +352,7 @@ propel:
     username: { type: VARCHAR, size: '100', required: false }
     email: { type: VARCHAR, size: '100', required: false }
     password: { type: VARCHAR, size: '40', required: false }
-    points: { type: FLOAT, size: '11', scale: '2', defaultValue: '0' }    
+    points: { type: DECIMAL, size: '11', scale: '2', defaultValue: '0' }    
     created_at: { type: TIMESTAMP, required: false }
     last_activity_at: { type: TIMESTAMP, required: false }
     type: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
@@ -368,10 +379,11 @@ propel:
     invisible: { type: INTEGER, size: '11', required: true }
     notification: { type: VARCHAR, size: '10', required: true }
     phone_number: { type: VARCHAR, size: '20', required: true }
-    login: { type: INTEGER, size: '10', required: true }
+    login: { type: INTEGER, size: '10', required: true, default: '0' }
     credit_card: { type: VARCHAR, size: '4', required: false }
     credit_card_token: { type: VARCHAR, size: '10', required: false }
     first_charge: { type: TIMESTAMP, required: false }
+    where_find_us: { type: LONGVARCHAR, required: true}
     _indexes: { user_FI_1: [picture_id] }
     _uniques: { user_username_unique: [username], user_email_unique: [email], user_password_recover_key_unique: [password_recover_key] }
   user_awards:
@@ -381,7 +393,7 @@ propel:
     awards: { type: INTEGER, size: '11', required: false }
     _indexes: { user_awards_FI_1: [user_id] }
   user_gtalk:
-    userid: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
+    userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
     gtalkid: { type: VARCHAR, size: 100, required: true }
   video:
     _attributes: { phpName: Video }
@@ -405,6 +417,10 @@ propel:
     ended_at: { type: TIMESTAMP, required: false }
     directory: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
+    timer: { type: VARCHAR, size: '100', required: true }
+    rating: { type: INTEGER, size: '11', required: true }
+    amount: { type: FLOAT, size: '5', scale: '2', required: true }
+    comments: { type: VARCHAR, size: '255' }
     _indexes: { whiteboard_chat_FI_1: [expert_id, asker_id] }
   whiteboard_message:
     _attributes: { phpName: WhiteboardMessage }
@@ -426,17 +442,17 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: StudentId }
     checked_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: TutorId }
-    category_id: { type: INTEGER, size: '11', required: true }
-    course_id: { type: INTEGER, size: '11', required: true }
+    category_id: { type: INTEGER, size: '11', required: true, default: '1' }
+    course_id: { type: INTEGER, size: '11', required: true, default: '1' }
     question: { type: VARCHAR, size: '500', required: true }
     exe_order: { type: INTEGER, size: '11', required: true }
-    time: { type: INTEGER, size: '11', required: true }
+    time: { type: INTEGER, size: '100', required: true }
     course_code: { type: VARCHAR, size: '100', required: true }
     year: { type: VARCHAR, size: '100', required: true }
     school: { type: VARCHAR, size: '100', required: true }
-    status: { type: INTEGER, size: '10', required: true }
-    close: { type: INTEGER, size: '10', required: true }
-    cron: { type: INTEGER, size: '10', required: true }
+    status: { type: INTEGER, size: '10', required: true, default: '0' }
+    close: { type: INTEGER, size: '10', required: true, default: '61000' }
+    cron: { type: INTEGER, size: '10', required: true, default: '1' }
     source: { type: VARCHAR, size: '100', required: true }
   whiteboard_sessions:
     _attributes: { phpName: WhiteboardSession }

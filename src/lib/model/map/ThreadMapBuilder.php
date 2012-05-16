@@ -92,6 +92,14 @@ class ThreadMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('LASTPOST_AT', 'LastpostAt', 'TIMESTAMP', true, null);
 
+		$tMap->addColumn('USER_IP', 'UserIp', 'VARCHAR', false, 255);
+
+		$tMap->addColumn('BANNED', 'Banned', 'INTEGER', true, 4);
+
+		$tMap->addColumn('REPORTED', 'Reported', 'INTEGER', true, 4);
+
+		$tMap->addColumn('REPORTED_DATE', 'ReportedDate', 'TIMESTAMP', false, null);
+
 		$tMap->addColumn('STICKIE', 'Stickie', 'INTEGER', true, null);
 
 	} // doBuild()

@@ -112,7 +112,34 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	protected $lastpost_at;
 
 	/**
+	 * The value for the user_ip field.
+	 * @var        string
+	 */
+	protected $user_ip;
+
+	/**
+	 * The value for the banned field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $banned;
+
+	/**
+	 * The value for the reported field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $reported;
+
+	/**
+	 * The value for the reported_date field.
+	 * @var        string
+	 */
+	protected $reported_date;
+
+	/**
 	 * The value for the stickie field.
+	 * Note: this column has a database default value of: 0
 	 * @var        int
 	 */
 	protected $stickie;
@@ -150,6 +177,9 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->visible = 1;
+		$this->banned = 0;
+		$this->reported = 0;
+		$this->stickie = 0;
 	}
 
 	/**
@@ -345,6 +375,74 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 				$dt = new DateTime($this->lastpost_at);
 			} catch (Exception $x) {
 				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->lastpost_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [user_ip] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUserIp()
+	{
+		return $this->user_ip;
+	}
+
+	/**
+	 * Get the [banned] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getBanned()
+	{
+		return $this->banned;
+	}
+
+	/**
+	 * Get the [reported] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getReported()
+	{
+		return $this->reported;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [reported_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getReportedDate($format = 'Y-m-d H:i:s')
+	{
+		if ($this->reported_date === null) {
+			return null;
+		}
+
+
+		if ($this->reported_date === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->reported_date);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->reported_date, true), $x);
 			}
 		}
 
@@ -727,6 +825,115 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	} // setLastpostAt()
 
 	/**
+	 * Set the value of [user_ip] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Thread The current object (for fluent API support)
+	 */
+	public function setUserIp($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->user_ip !== $v) {
+			$this->user_ip = $v;
+			$this->modifiedColumns[] = ThreadPeer::USER_IP;
+		}
+
+		return $this;
+	} // setUserIp()
+
+	/**
+	 * Set the value of [banned] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Thread The current object (for fluent API support)
+	 */
+	public function setBanned($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->banned !== $v || $v === 0) {
+			$this->banned = $v;
+			$this->modifiedColumns[] = ThreadPeer::BANNED;
+		}
+
+		return $this;
+	} // setBanned()
+
+	/**
+	 * Set the value of [reported] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Thread The current object (for fluent API support)
+	 */
+	public function setReported($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->reported !== $v || $v === 0) {
+			$this->reported = $v;
+			$this->modifiedColumns[] = ThreadPeer::REPORTED;
+		}
+
+		return $this;
+	} // setReported()
+
+	/**
+	 * Sets the value of [reported_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Thread The current object (for fluent API support)
+	 */
+	public function setReportedDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->reported_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->reported_date !== null && $tmpDt = new DateTime($this->reported_date)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->reported_date = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = ThreadPeer::REPORTED_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setReportedDate()
+
+	/**
 	 * Set the value of [stickie] column.
 	 * 
 	 * @param      int $v new value
@@ -738,7 +945,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->stickie !== $v) {
+		if ($this->stickie !== $v || $v === 0) {
 			$this->stickie = $v;
 			$this->modifiedColumns[] = ThreadPeer::STICKIE;
 		}
@@ -757,11 +964,23 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(ThreadPeer::VISIBLE))) {
+			if (array_diff($this->modifiedColumns, array(ThreadPeer::VISIBLE,ThreadPeer::BANNED,ThreadPeer::REPORTED,ThreadPeer::STICKIE))) {
 				return false;
 			}
 
 			if ($this->visible !== 1) {
+				return false;
+			}
+
+			if ($this->banned !== 0) {
+				return false;
+			}
+
+			if ($this->reported !== 0) {
+				return false;
+			}
+
+			if ($this->stickie !== 0) {
 				return false;
 			}
 
@@ -802,7 +1021,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			$this->school_grade = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->created_at = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->lastpost_at = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->stickie = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
+			$this->user_ip = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->banned = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
+			$this->reported = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
+			$this->reported_date = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->stickie = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -812,7 +1035,7 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 16; // 16 = ThreadPeer::NUM_COLUMNS - ThreadPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 20; // 20 = ThreadPeer::NUM_COLUMNS - ThreadPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Thread object", $e);
@@ -1136,6 +1359,18 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 				return $this->getLastpostAt();
 				break;
 			case 15:
+				return $this->getUserIp();
+				break;
+			case 16:
+				return $this->getBanned();
+				break;
+			case 17:
+				return $this->getReported();
+				break;
+			case 18:
+				return $this->getReportedDate();
+				break;
+			case 19:
 				return $this->getStickie();
 				break;
 			default:
@@ -1174,7 +1409,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 			$keys[12] => $this->getSchoolGrade(),
 			$keys[13] => $this->getCreatedAt(),
 			$keys[14] => $this->getLastpostAt(),
-			$keys[15] => $this->getStickie(),
+			$keys[15] => $this->getUserIp(),
+			$keys[16] => $this->getBanned(),
+			$keys[17] => $this->getReported(),
+			$keys[18] => $this->getReportedDate(),
+			$keys[19] => $this->getStickie(),
 		);
 		return $result;
 	}
@@ -1252,6 +1491,18 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 				$this->setLastpostAt($value);
 				break;
 			case 15:
+				$this->setUserIp($value);
+				break;
+			case 16:
+				$this->setBanned($value);
+				break;
+			case 17:
+				$this->setReported($value);
+				break;
+			case 18:
+				$this->setReportedDate($value);
+				break;
+			case 19:
 				$this->setStickie($value);
 				break;
 		} // switch()
@@ -1293,7 +1544,11 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setSchoolGrade($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setLastpostAt($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setStickie($arr[$keys[15]]);
+		if (array_key_exists($keys[15], $arr)) $this->setUserIp($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setBanned($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setReported($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setReportedDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setStickie($arr[$keys[19]]);
 	}
 
 	/**
@@ -1320,6 +1575,10 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ThreadPeer::SCHOOL_GRADE)) $criteria->add(ThreadPeer::SCHOOL_GRADE, $this->school_grade);
 		if ($this->isColumnModified(ThreadPeer::CREATED_AT)) $criteria->add(ThreadPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(ThreadPeer::LASTPOST_AT)) $criteria->add(ThreadPeer::LASTPOST_AT, $this->lastpost_at);
+		if ($this->isColumnModified(ThreadPeer::USER_IP)) $criteria->add(ThreadPeer::USER_IP, $this->user_ip);
+		if ($this->isColumnModified(ThreadPeer::BANNED)) $criteria->add(ThreadPeer::BANNED, $this->banned);
+		if ($this->isColumnModified(ThreadPeer::REPORTED)) $criteria->add(ThreadPeer::REPORTED, $this->reported);
+		if ($this->isColumnModified(ThreadPeer::REPORTED_DATE)) $criteria->add(ThreadPeer::REPORTED_DATE, $this->reported_date);
 		if ($this->isColumnModified(ThreadPeer::STICKIE)) $criteria->add(ThreadPeer::STICKIE, $this->stickie);
 
 		return $criteria;
@@ -1402,6 +1661,14 @@ abstract class BaseThread extends BaseObject  implements Persistent {
 		$copyObj->setCreatedAt($this->created_at);
 
 		$copyObj->setLastpostAt($this->lastpost_at);
+
+		$copyObj->setUserIp($this->user_ip);
+
+		$copyObj->setBanned($this->banned);
+
+		$copyObj->setReported($this->reported);
+
+		$copyObj->setReportedDate($this->reported_date);
 
 		$copyObj->setStickie($this->stickie);
 

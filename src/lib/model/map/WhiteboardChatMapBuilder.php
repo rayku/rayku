@@ -84,6 +84,14 @@ class WhiteboardChatMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 
+		$tMap->addColumn('TIMER', 'Timer', 'VARCHAR', true, 100);
+
+		$tMap->addColumn('RATING', 'Rating', 'INTEGER', true, 11);
+
+		$tMap->addColumn('AMOUNT', 'Amount', 'FLOAT', true, 5);
+
+		$tMap->addColumn('COMMENTS', 'Comments', 'VARCHAR', false, 255);
+
 	} // doBuild()
 
 } // WhiteboardChatMapBuilder

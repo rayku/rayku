@@ -52,8 +52,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the points field.
-	 * Note: this column has a database default value of: 0
-	 * @var        double
+	 * Note: this column has a database default value of: '0'
+	 * @var        string
 	 */
 	protected $points;
 
@@ -227,6 +227,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the login field.
+	 * Note: this column has a database default value of: 0
 	 * @var        int
 	 */
 	protected $login;
@@ -248,6 +249,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        string
 	 */
 	protected $first_charge;
+
+	/**
+	 * The value for the where_find_us field.
+	 * @var        string
+	 */
+	protected $where_find_us;
 
 	/**
 	 * @var        Picture
@@ -431,7 +438,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 */
 	public function applyDefaultValues()
 	{
-		$this->points = 0;
+		$this->points = '0';
 		$this->type = 0;
 		$this->hidden = 0;
 		$this->relationship_status = 0;
@@ -444,6 +451,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->show_address = 1;
 		$this->show_relationship_status = 1;
 		$this->credit = 0;
+		$this->login = 0;
 	}
 
 	/**
@@ -499,7 +507,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	/**
 	 * Get the [points] column value.
 	 * 
-	 * @return     double
+	 * @return     string
 	 */
 	public function getPoints()
 	{
@@ -919,6 +927,16 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [where_find_us] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getWhereFindUs()
+	{
+		return $this->where_find_us;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -1025,16 +1043,16 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	/**
 	 * Set the value of [points] column.
 	 * 
-	 * @param      double $v new value
+	 * @param      string $v new value
 	 * @return     User The current object (for fluent API support)
 	 */
 	public function setPoints($v)
 	{
 		if ($v !== null) {
-			$v = (double) $v;
+			$v = (string) $v;
 		}
 
-		if ($this->points !== $v || $v === 0) {
+		if ($this->points !== $v || $v === '0') {
 			$this->points = $v;
 			$this->modifiedColumns[] = UserPeer::POINTS;
 		}
@@ -1661,7 +1679,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->login !== $v) {
+		if ($this->login !== $v || $v === 0) {
 			$this->login = $v;
 			$this->modifiedColumns[] = UserPeer::LOGIN;
 		}
@@ -1759,6 +1777,26 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setFirstCharge()
 
 	/**
+	 * Set the value of [where_find_us] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     User The current object (for fluent API support)
+	 */
+	public function setWhereFindUs($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->where_find_us !== $v) {
+			$this->where_find_us = $v;
+			$this->modifiedColumns[] = UserPeer::WHERE_FIND_US;
+		}
+
+		return $this;
+	} // setWhereFindUs()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1769,11 +1807,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT))) {
+			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT,UserPeer::LOGIN))) {
 				return false;
 			}
 
-			if ($this->points !== 0) {
+			if ($this->points !== '0') {
 				return false;
 			}
 
@@ -1825,6 +1863,10 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return false;
 			}
 
+			if ($this->login !== 0) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -1852,7 +1894,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->username = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->email = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->password = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->points = ($row[$startcol + 5] !== null) ? (double) $row[$startcol + 5] : null;
+			$this->points = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->last_activity_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->type = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
@@ -1883,6 +1925,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->credit_card = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
 			$this->credit_card_token = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
 			$this->first_charge = ($row[$startcol + 35] !== null) ? (string) $row[$startcol + 35] : null;
+			$this->where_find_us = ($row[$startcol + 36] !== null) ? (string) $row[$startcol + 36] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1892,7 +1935,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 37; // 37 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2586,6 +2629,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				return $this->getFirstCharge();
 				break;
+			case 36:
+				return $this->getWhereFindUs();
+				break;
 			default:
 				return null;
 				break;
@@ -2643,6 +2689,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[33] => $this->getCreditCard(),
 			$keys[34] => $this->getCreditCardToken(),
 			$keys[35] => $this->getFirstCharge(),
+			$keys[36] => $this->getWhereFindUs(),
 		);
 		return $result;
 	}
@@ -2782,6 +2829,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				$this->setFirstCharge($value);
 				break;
+			case 36:
+				$this->setWhereFindUs($value);
+				break;
 		} // switch()
 	}
 
@@ -2842,6 +2892,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[33], $arr)) $this->setCreditCard($arr[$keys[33]]);
 		if (array_key_exists($keys[34], $arr)) $this->setCreditCardToken($arr[$keys[34]]);
 		if (array_key_exists($keys[35], $arr)) $this->setFirstCharge($arr[$keys[35]]);
+		if (array_key_exists($keys[36], $arr)) $this->setWhereFindUs($arr[$keys[36]]);
 	}
 
 	/**
@@ -2889,6 +2940,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::CREDIT_CARD)) $criteria->add(UserPeer::CREDIT_CARD, $this->credit_card);
 		if ($this->isColumnModified(UserPeer::CREDIT_CARD_TOKEN)) $criteria->add(UserPeer::CREDIT_CARD_TOKEN, $this->credit_card_token);
 		if ($this->isColumnModified(UserPeer::FIRST_CHARGE)) $criteria->add(UserPeer::FIRST_CHARGE, $this->first_charge);
+		if ($this->isColumnModified(UserPeer::WHERE_FIND_US)) $criteria->add(UserPeer::WHERE_FIND_US, $this->where_find_us);
 
 		return $criteria;
 	}
@@ -3012,6 +3064,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setCreditCardToken($this->credit_card_token);
 
 		$copyObj->setFirstCharge($this->first_charge);
+
+		$copyObj->setWhereFindUs($this->where_find_us);
 
 
 		if ($deepCopy) {
