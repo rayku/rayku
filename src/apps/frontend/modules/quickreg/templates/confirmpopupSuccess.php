@@ -7,7 +7,7 @@
   <!--filter popup inner-->
   <div class="filter-popup-inner"> 
   
-    <form name="quick_registration" action="http://www.rayku.com/quickreg/confirmuser" method="post">
+    <form name="quick_registration" action="/quickreg/confirmuser" method="post">
     <!--row-1-->
     <div class="row-1">
      
