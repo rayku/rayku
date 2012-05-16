@@ -7,7 +7,10 @@ DROP TABLE `assignment`, `blog_attachments`, `classroom`, `classroom_blog`, `cla
 `gallery_acl`, `gallery_item`, `gift`, `group_site_page`, `group_user`, `invitation`,
 `journal_entry`, `journal_entry_acl`, `network`, `nudge`, `report_entity`, `report_user`,
 `saved_experts`, `student_voice`, `student_voice_votes`, `submission`, `subscription`,
-`users_networks`, `user_donations`, `user_gift`, `user_interest`;
+`users_networks`, `user_donations`, `user_gift`, `user_interest`, `live_video_chat`, `album`, `comment`, `picture`;
+
+-- removing non relevant anymore history items
+DELETE FROM `history` WHERE entity_type IN ('Friend','JournalEntry');
 
 
 -- this is just for reference
@@ -86,14 +89,11 @@ SET FOREIGN_KEY_CHECKS=0;
 ALTER TABLE  `whiteboard_tutor_feedback` ADD FOREIGN KEY (  `whiteboard_chat_id` ) REFERENCES  `rayku_db`.`whiteboard_chat` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT ;
 
 
--- removing of journal related elements
-ALTER TABLE  `comment` DROP FOREIGN KEY  `comment_FK_1` ;
-ALTER TABLE `comment` DROP INDEX `comment_FI_4`;
-ALTER TABLE `comment` DROP `journal_entry_id`;
-
-ALTER TABLE live_video_chat DROP INDEX video_live_chat_FI_3;
-
 ALTER TABLE  `user` DROP  `about_me` , DROP  `show_hobbies` ;
 
 ALTER TABLE `user` DROP FOREIGN KEY  `user_ibfk_1` ;
 ALTER TABLE `user` DROP `network_id`;
+
+ALTER TABLE `user` DROP FOREIGN KEY  `user_FK_1` ;
+ALTER TABLE `user` DROP INDEX user_FI_1;
+ALTER TABLE `user` DROP `picture_id`;
