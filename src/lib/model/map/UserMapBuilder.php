@@ -64,8 +64,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, 11);
 
-		$tMap->addForeignKey('PICTURE_ID', 'PictureId', 'INTEGER', 'picture', 'ID', false, 11);
-
 		$tMap->addColumn('USERNAME', 'Username', 'VARCHAR', false, 100);
 
 		$tMap->addColumn('EMAIL', 'Email', 'VARCHAR', false, 100);

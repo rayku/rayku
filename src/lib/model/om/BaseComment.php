@@ -33,12 +33,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	protected $poster_id;
 
 	/**
-	 * The value for the picture_id field.
-	 * @var        int
-	 */
-	protected $picture_id;
-
-	/**
 	 * The value for the video_id field.
 	 * @var        int
 	 */
@@ -122,16 +116,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	public function getPosterId()
 	{
 		return $this->poster_id;
-	}
-
-	/**
-	 * Get the [picture_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getPictureId()
-	{
-		return $this->picture_id;
 	}
 
 	/**
@@ -251,26 +235,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setPosterId()
-
-	/**
-	 * Set the value of [picture_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     Comment The current object (for fluent API support)
-	 */
-	public function setPictureId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->picture_id !== $v) {
-			$this->picture_id = $v;
-			$this->modifiedColumns[] = CommentPeer::PICTURE_ID;
-		}
-
-		return $this;
-	} // setPictureId()
 
 	/**
 	 * Set the value of [video_id] column.
@@ -444,12 +408,11 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->poster_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->picture_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->video_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->type = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
-			$this->approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->video_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->type = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->approved = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -459,7 +422,7 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = CommentPeer::NUM_COLUMNS - CommentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Comment object", $e);
@@ -744,21 +707,18 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 				return $this->getPosterId();
 				break;
 			case 2:
-				return $this->getPictureId();
-				break;
-			case 3:
 				return $this->getVideoId();
 				break;
-			case 4:
+			case 3:
 				return $this->getContent();
 				break;
-			case 5:
+			case 4:
 				return $this->getCreatedAt();
 				break;
-			case 6:
+			case 5:
 				return $this->getType();
 				break;
-			case 7:
+			case 6:
 				return $this->getApproved();
 				break;
 			default:
@@ -784,12 +744,11 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getPosterId(),
-			$keys[2] => $this->getPictureId(),
-			$keys[3] => $this->getVideoId(),
-			$keys[4] => $this->getContent(),
-			$keys[5] => $this->getCreatedAt(),
-			$keys[6] => $this->getType(),
-			$keys[7] => $this->getApproved(),
+			$keys[2] => $this->getVideoId(),
+			$keys[3] => $this->getContent(),
+			$keys[4] => $this->getCreatedAt(),
+			$keys[5] => $this->getType(),
+			$keys[6] => $this->getApproved(),
 		);
 		return $result;
 	}
@@ -828,21 +787,18 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 				$this->setPosterId($value);
 				break;
 			case 2:
-				$this->setPictureId($value);
-				break;
-			case 3:
 				$this->setVideoId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setContent($value);
 				break;
-			case 5:
+			case 4:
 				$this->setCreatedAt($value);
 				break;
-			case 6:
+			case 5:
 				$this->setType($value);
 				break;
-			case 7:
+			case 6:
 				$this->setApproved($value);
 				break;
 		} // switch()
@@ -871,12 +827,11 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPosterId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setPictureId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setVideoId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setType($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setApproved($arr[$keys[7]]);
+		if (array_key_exists($keys[2], $arr)) $this->setVideoId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setType($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setApproved($arr[$keys[6]]);
 	}
 
 	/**
@@ -890,7 +845,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(CommentPeer::ID)) $criteria->add(CommentPeer::ID, $this->id);
 		if ($this->isColumnModified(CommentPeer::POSTER_ID)) $criteria->add(CommentPeer::POSTER_ID, $this->poster_id);
-		if ($this->isColumnModified(CommentPeer::PICTURE_ID)) $criteria->add(CommentPeer::PICTURE_ID, $this->picture_id);
 		if ($this->isColumnModified(CommentPeer::VIDEO_ID)) $criteria->add(CommentPeer::VIDEO_ID, $this->video_id);
 		if ($this->isColumnModified(CommentPeer::CONTENT)) $criteria->add(CommentPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(CommentPeer::CREATED_AT)) $criteria->add(CommentPeer::CREATED_AT, $this->created_at);
@@ -951,8 +905,6 @@ abstract class BaseComment extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setPosterId($this->poster_id);
-
-		$copyObj->setPictureId($this->picture_id);
 
 		$copyObj->setVideoId($this->video_id);
 

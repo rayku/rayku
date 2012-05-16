@@ -14,7 +14,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'picture_id'               => new sfWidgetFormPropelChoice(array('model' => 'Picture', 'add_empty' => true)),
       'username'                 => new sfWidgetFormFilterInput(),
       'email'                    => new sfWidgetFormFilterInput(),
       'password'                 => new sfWidgetFormFilterInput(),
@@ -53,7 +52,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
-      'picture_id'               => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Picture', 'column' => 'id')),
       'username'                 => new sfValidatorPass(array('required' => false)),
       'email'                    => new sfValidatorPass(array('required' => false)),
       'password'                 => new sfValidatorPass(array('required' => false)),
@@ -107,7 +105,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'                       => 'Number',
-      'picture_id'               => 'ForeignKey',
       'username'                 => 'Text',
       'email'                    => 'Text',
       'password'                 => 'Text',

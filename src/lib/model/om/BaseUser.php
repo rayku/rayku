@@ -27,12 +27,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the picture_id field.
-	 * @var        int
-	 */
-	protected $picture_id;
-
-	/**
 	 * The value for the username field.
 	 * @var        string
 	 */
@@ -257,11 +251,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $where_find_us;
 
 	/**
-	 * @var        Picture
-	 */
-	protected $aPicture;
-
-	/**
 	 * @var        array Expert[] Collection to store aggregation of Expert objects.
 	 */
 	protected $collExperts;
@@ -310,16 +299,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collOfferVoucher1s.
 	 */
 	private $lastOfferVoucher1Criteria = null;
-
-	/**
-	 * @var        array Picture[] Collection to store aggregation of Picture objects.
-	 */
-	protected $collPictures;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collPictures.
-	 */
-	private $lastPictureCriteria = null;
 
 	/**
 	 * @var        array PurchaseDetail[] Collection to store aggregation of PurchaseDetail objects.
@@ -462,16 +441,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getId()
 	{
 		return $this->id;
-	}
-
-	/**
-	 * Get the [picture_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getPictureId()
-	{
-		return $this->picture_id;
 	}
 
 	/**
@@ -955,30 +924,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setId()
-
-	/**
-	 * Set the value of [picture_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setPictureId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->picture_id !== $v) {
-			$this->picture_id = $v;
-			$this->modifiedColumns[] = UserPeer::PICTURE_ID;
-		}
-
-		if ($this->aPicture !== null && $this->aPicture->getId() !== $v) {
-			$this->aPicture = null;
-		}
-
-		return $this;
-	} // setPictureId()
 
 	/**
 	 * Set the value of [username] column.
@@ -1890,42 +1835,41 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->picture_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->username = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->email = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->password = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->points = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->last_activity_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->type = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-			$this->hidden = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
-			$this->name = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->gender = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
-			$this->hometown = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->home_phone = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->mobile_phone = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->birthdate = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
-			$this->address = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->relationship_status = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
-			$this->show_email = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
-			$this->show_gender = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
-			$this->show_hometown = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
-			$this->show_home_phone = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
-			$this->show_mobile_phone = ($row[$startcol + 22] !== null) ? (int) $row[$startcol + 22] : null;
-			$this->show_birthdate = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
-			$this->show_address = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
-			$this->show_relationship_status = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
-			$this->password_recover_key = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
-			$this->cookie_key = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
-			$this->credit = ($row[$startcol + 28] !== null) ? (int) $row[$startcol + 28] : null;
-			$this->invisible = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
-			$this->notification = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
-			$this->phone_number = ($row[$startcol + 31] !== null) ? (string) $row[$startcol + 31] : null;
-			$this->login = ($row[$startcol + 32] !== null) ? (int) $row[$startcol + 32] : null;
-			$this->credit_card = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
-			$this->credit_card_token = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
-			$this->first_charge = ($row[$startcol + 35] !== null) ? (string) $row[$startcol + 35] : null;
-			$this->where_find_us = ($row[$startcol + 36] !== null) ? (string) $row[$startcol + 36] : null;
+			$this->username = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->email = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->password = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->points = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->last_activity_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->type = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->hidden = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->name = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->gender = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->hometown = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->home_phone = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->mobile_phone = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->birthdate = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->address = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->relationship_status = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
+			$this->show_email = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
+			$this->show_gender = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
+			$this->show_hometown = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
+			$this->show_home_phone = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
+			$this->show_mobile_phone = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
+			$this->show_birthdate = ($row[$startcol + 22] !== null) ? (int) $row[$startcol + 22] : null;
+			$this->show_address = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
+			$this->show_relationship_status = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
+			$this->password_recover_key = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
+			$this->cookie_key = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
+			$this->credit = ($row[$startcol + 27] !== null) ? (int) $row[$startcol + 27] : null;
+			$this->invisible = ($row[$startcol + 28] !== null) ? (int) $row[$startcol + 28] : null;
+			$this->notification = ($row[$startcol + 29] !== null) ? (string) $row[$startcol + 29] : null;
+			$this->phone_number = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
+			$this->login = ($row[$startcol + 31] !== null) ? (int) $row[$startcol + 31] : null;
+			$this->credit_card = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
+			$this->credit_card_token = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
+			$this->first_charge = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
+			$this->where_find_us = ($row[$startcol + 35] !== null) ? (string) $row[$startcol + 35] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1935,7 +1879,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 37; // 37 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -1958,9 +1902,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aPicture !== null && $this->picture_id !== $this->aPicture->getId()) {
-			$this->aPicture = null;
-		}
 	} // ensureConsistency
 
 	/**
@@ -2000,7 +1941,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aPicture = null;
 			$this->collExperts = null;
 			$this->lastExpertCriteria = null;
 
@@ -2015,9 +1955,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->collOfferVoucher1s = null;
 			$this->lastOfferVoucher1Criteria = null;
-
-			$this->collPictures = null;
-			$this->lastPictureCriteria = null;
 
 			$this->collPurchaseDetails = null;
 			$this->lastPurchaseDetailCriteria = null;
@@ -2135,18 +2072,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
-			// We call the save method on the following object(s) if they
-			// were passed to this object by their coresponding set
-			// method.  This object relates to these object(s) by a
-			// foreign key reference.
-
-			if ($this->aPicture !== null) {
-				if ($this->aPicture->isModified() || $this->aPicture->isNew()) {
-					$affectedRows += $this->aPicture->save($con);
-				}
-				$this->setPicture($this->aPicture);
-			}
-
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = UserPeer::ID;
 			}
@@ -2203,14 +2128,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			if ($this->collOfferVoucher1s !== null) {
 				foreach ($this->collOfferVoucher1s as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collPictures !== null) {
-				foreach ($this->collPictures as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -2353,18 +2270,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			// We call the validate method on the following object(s) if they
-			// were passed to this object by their coresponding set
-			// method.  This object relates to these object(s) by a
-			// foreign key reference.
-
-			if ($this->aPicture !== null) {
-				if (!$this->aPicture->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aPicture->getValidationFailures());
-				}
-			}
-
-
 			if (($retval = UserPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -2404,14 +2309,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 				if ($this->collOfferVoucher1s !== null) {
 					foreach ($this->collOfferVoucher1s as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collPictures !== null) {
-					foreach ($this->collPictures as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -2525,111 +2422,108 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getPictureId();
-				break;
-			case 2:
 				return $this->getUsername();
 				break;
-			case 3:
+			case 2:
 				return $this->getEmail();
 				break;
-			case 4:
+			case 3:
 				return $this->getPassword();
 				break;
-			case 5:
+			case 4:
 				return $this->getPoints();
 				break;
-			case 6:
+			case 5:
 				return $this->getCreatedAt();
 				break;
-			case 7:
+			case 6:
 				return $this->getLastActivityAt();
 				break;
-			case 8:
+			case 7:
 				return $this->getType();
 				break;
-			case 9:
+			case 8:
 				return $this->getHidden();
 				break;
-			case 10:
+			case 9:
 				return $this->getName();
 				break;
-			case 11:
+			case 10:
 				return $this->getGender();
 				break;
-			case 12:
+			case 11:
 				return $this->getHometown();
 				break;
-			case 13:
+			case 12:
 				return $this->getHomePhone();
 				break;
-			case 14:
+			case 13:
 				return $this->getMobilePhone();
 				break;
-			case 15:
+			case 14:
 				return $this->getBirthdate();
 				break;
-			case 16:
+			case 15:
 				return $this->getAddress();
 				break;
-			case 17:
+			case 16:
 				return $this->getRelationshipStatus();
 				break;
-			case 18:
+			case 17:
 				return $this->getShowEmail();
 				break;
-			case 19:
+			case 18:
 				return $this->getShowGender();
 				break;
-			case 20:
+			case 19:
 				return $this->getShowHometown();
 				break;
-			case 21:
+			case 20:
 				return $this->getShowHomePhone();
 				break;
-			case 22:
+			case 21:
 				return $this->getShowMobilePhone();
 				break;
-			case 23:
+			case 22:
 				return $this->getShowBirthdate();
 				break;
-			case 24:
+			case 23:
 				return $this->getShowAddress();
 				break;
-			case 25:
+			case 24:
 				return $this->getShowRelationshipStatus();
 				break;
-			case 26:
+			case 25:
 				return $this->getPasswordRecoverKey();
 				break;
-			case 27:
+			case 26:
 				return $this->getCookieKey();
 				break;
-			case 28:
+			case 27:
 				return $this->getCredit();
 				break;
-			case 29:
+			case 28:
 				return $this->getInvisible();
 				break;
-			case 30:
+			case 29:
 				return $this->getNotification();
 				break;
-			case 31:
+			case 30:
 				return $this->getPhoneNumber();
 				break;
-			case 32:
+			case 31:
 				return $this->getLogin();
 				break;
-			case 33:
+			case 32:
 				return $this->getCreditCard();
 				break;
-			case 34:
+			case 33:
 				return $this->getCreditCardToken();
 				break;
-			case 35:
+			case 34:
 				return $this->getFirstCharge();
 				break;
-			case 36:
+			case 35:
 				return $this->getWhereFindUs();
 				break;
 			default:
@@ -2654,42 +2548,41 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$keys = UserPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getPictureId(),
-			$keys[2] => $this->getUsername(),
-			$keys[3] => $this->getEmail(),
-			$keys[4] => $this->getPassword(),
-			$keys[5] => $this->getPoints(),
-			$keys[6] => $this->getCreatedAt(),
-			$keys[7] => $this->getLastActivityAt(),
-			$keys[8] => $this->getType(),
-			$keys[9] => $this->getHidden(),
-			$keys[10] => $this->getName(),
-			$keys[11] => $this->getGender(),
-			$keys[12] => $this->getHometown(),
-			$keys[13] => $this->getHomePhone(),
-			$keys[14] => $this->getMobilePhone(),
-			$keys[15] => $this->getBirthdate(),
-			$keys[16] => $this->getAddress(),
-			$keys[17] => $this->getRelationshipStatus(),
-			$keys[18] => $this->getShowEmail(),
-			$keys[19] => $this->getShowGender(),
-			$keys[20] => $this->getShowHometown(),
-			$keys[21] => $this->getShowHomePhone(),
-			$keys[22] => $this->getShowMobilePhone(),
-			$keys[23] => $this->getShowBirthdate(),
-			$keys[24] => $this->getShowAddress(),
-			$keys[25] => $this->getShowRelationshipStatus(),
-			$keys[26] => $this->getPasswordRecoverKey(),
-			$keys[27] => $this->getCookieKey(),
-			$keys[28] => $this->getCredit(),
-			$keys[29] => $this->getInvisible(),
-			$keys[30] => $this->getNotification(),
-			$keys[31] => $this->getPhoneNumber(),
-			$keys[32] => $this->getLogin(),
-			$keys[33] => $this->getCreditCard(),
-			$keys[34] => $this->getCreditCardToken(),
-			$keys[35] => $this->getFirstCharge(),
-			$keys[36] => $this->getWhereFindUs(),
+			$keys[1] => $this->getUsername(),
+			$keys[2] => $this->getEmail(),
+			$keys[3] => $this->getPassword(),
+			$keys[4] => $this->getPoints(),
+			$keys[5] => $this->getCreatedAt(),
+			$keys[6] => $this->getLastActivityAt(),
+			$keys[7] => $this->getType(),
+			$keys[8] => $this->getHidden(),
+			$keys[9] => $this->getName(),
+			$keys[10] => $this->getGender(),
+			$keys[11] => $this->getHometown(),
+			$keys[12] => $this->getHomePhone(),
+			$keys[13] => $this->getMobilePhone(),
+			$keys[14] => $this->getBirthdate(),
+			$keys[15] => $this->getAddress(),
+			$keys[16] => $this->getRelationshipStatus(),
+			$keys[17] => $this->getShowEmail(),
+			$keys[18] => $this->getShowGender(),
+			$keys[19] => $this->getShowHometown(),
+			$keys[20] => $this->getShowHomePhone(),
+			$keys[21] => $this->getShowMobilePhone(),
+			$keys[22] => $this->getShowBirthdate(),
+			$keys[23] => $this->getShowAddress(),
+			$keys[24] => $this->getShowRelationshipStatus(),
+			$keys[25] => $this->getPasswordRecoverKey(),
+			$keys[26] => $this->getCookieKey(),
+			$keys[27] => $this->getCredit(),
+			$keys[28] => $this->getInvisible(),
+			$keys[29] => $this->getNotification(),
+			$keys[30] => $this->getPhoneNumber(),
+			$keys[31] => $this->getLogin(),
+			$keys[32] => $this->getCreditCard(),
+			$keys[33] => $this->getCreditCardToken(),
+			$keys[34] => $this->getFirstCharge(),
+			$keys[35] => $this->getWhereFindUs(),
 		);
 		return $result;
 	}
@@ -2725,111 +2618,108 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setPictureId($value);
-				break;
-			case 2:
 				$this->setUsername($value);
 				break;
-			case 3:
+			case 2:
 				$this->setEmail($value);
 				break;
-			case 4:
+			case 3:
 				$this->setPassword($value);
 				break;
-			case 5:
+			case 4:
 				$this->setPoints($value);
 				break;
-			case 6:
+			case 5:
 				$this->setCreatedAt($value);
 				break;
-			case 7:
+			case 6:
 				$this->setLastActivityAt($value);
 				break;
-			case 8:
+			case 7:
 				$this->setType($value);
 				break;
-			case 9:
+			case 8:
 				$this->setHidden($value);
 				break;
-			case 10:
+			case 9:
 				$this->setName($value);
 				break;
-			case 11:
+			case 10:
 				$this->setGender($value);
 				break;
-			case 12:
+			case 11:
 				$this->setHometown($value);
 				break;
-			case 13:
+			case 12:
 				$this->setHomePhone($value);
 				break;
-			case 14:
+			case 13:
 				$this->setMobilePhone($value);
 				break;
-			case 15:
+			case 14:
 				$this->setBirthdate($value);
 				break;
-			case 16:
+			case 15:
 				$this->setAddress($value);
 				break;
-			case 17:
+			case 16:
 				$this->setRelationshipStatus($value);
 				break;
-			case 18:
+			case 17:
 				$this->setShowEmail($value);
 				break;
-			case 19:
+			case 18:
 				$this->setShowGender($value);
 				break;
-			case 20:
+			case 19:
 				$this->setShowHometown($value);
 				break;
-			case 21:
+			case 20:
 				$this->setShowHomePhone($value);
 				break;
-			case 22:
+			case 21:
 				$this->setShowMobilePhone($value);
 				break;
-			case 23:
+			case 22:
 				$this->setShowBirthdate($value);
 				break;
-			case 24:
+			case 23:
 				$this->setShowAddress($value);
 				break;
-			case 25:
+			case 24:
 				$this->setShowRelationshipStatus($value);
 				break;
-			case 26:
+			case 25:
 				$this->setPasswordRecoverKey($value);
 				break;
-			case 27:
+			case 26:
 				$this->setCookieKey($value);
 				break;
-			case 28:
+			case 27:
 				$this->setCredit($value);
 				break;
-			case 29:
+			case 28:
 				$this->setInvisible($value);
 				break;
-			case 30:
+			case 29:
 				$this->setNotification($value);
 				break;
-			case 31:
+			case 30:
 				$this->setPhoneNumber($value);
 				break;
-			case 32:
+			case 31:
 				$this->setLogin($value);
 				break;
-			case 33:
+			case 32:
 				$this->setCreditCard($value);
 				break;
-			case 34:
+			case 33:
 				$this->setCreditCardToken($value);
 				break;
-			case 35:
+			case 34:
 				$this->setFirstCharge($value);
 				break;
-			case 36:
+			case 35:
 				$this->setWhereFindUs($value);
 				break;
 		} // switch()
@@ -2857,42 +2747,41 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$keys = UserPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setPictureId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEmail($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setPassword($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setPoints($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setLastActivityAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setType($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setHidden($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setName($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setGender($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setHometown($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setHomePhone($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setMobilePhone($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setBirthdate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setAddress($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setRelationshipStatus($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setShowEmail($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setShowGender($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setShowHometown($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setShowHomePhone($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setShowMobilePhone($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setShowBirthdate($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setShowAddress($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setShowRelationshipStatus($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setPasswordRecoverKey($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setCookieKey($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setCredit($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setInvisible($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setNotification($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setPhoneNumber($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setLogin($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setCreditCard($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setCreditCardToken($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setFirstCharge($arr[$keys[35]]);
-		if (array_key_exists($keys[36], $arr)) $this->setWhereFindUs($arr[$keys[36]]);
+		if (array_key_exists($keys[1], $arr)) $this->setUsername($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setEmail($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setPoints($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setLastActivityAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setType($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setHidden($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setName($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setGender($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setHometown($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setHomePhone($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setMobilePhone($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setBirthdate($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setAddress($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setRelationshipStatus($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setShowEmail($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setShowGender($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setShowHometown($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setShowHomePhone($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setShowMobilePhone($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setShowBirthdate($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setShowAddress($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setShowRelationshipStatus($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setPasswordRecoverKey($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setCookieKey($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setCredit($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setInvisible($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setNotification($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setPhoneNumber($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setLogin($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setCreditCard($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setCreditCardToken($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setFirstCharge($arr[$keys[34]]);
+		if (array_key_exists($keys[35], $arr)) $this->setWhereFindUs($arr[$keys[35]]);
 	}
 
 	/**
@@ -2905,7 +2794,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$criteria = new Criteria(UserPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(UserPeer::ID)) $criteria->add(UserPeer::ID, $this->id);
-		if ($this->isColumnModified(UserPeer::PICTURE_ID)) $criteria->add(UserPeer::PICTURE_ID, $this->picture_id);
 		if ($this->isColumnModified(UserPeer::USERNAME)) $criteria->add(UserPeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserPeer::EMAIL)) $criteria->add(UserPeer::EMAIL, $this->email);
 		if ($this->isColumnModified(UserPeer::PASSWORD)) $criteria->add(UserPeer::PASSWORD, $this->password);
@@ -2994,8 +2882,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
-
-		$copyObj->setPictureId($this->picture_id);
 
 		$copyObj->setUsername($this->username);
 
@@ -3103,12 +2989,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getPictures() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addPicture($relObj->copy($deepCopy));
-				}
-			}
-
 			foreach ($this->getPurchaseDetails() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addPurchaseDetail($relObj->copy($deepCopy));
@@ -3207,57 +3087,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			self::$peer = new UserPeer();
 		}
 		return self::$peer;
-	}
-
-	/**
-	 * Declares an association between this object and a Picture object.
-	 *
-	 * @param      Picture $v
-	 * @return     User The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setPicture(Picture $v = null)
-	{
-		if ($v === null) {
-			$this->setPictureId(NULL);
-		} else {
-			$this->setPictureId($v->getId());
-		}
-
-		$this->aPicture = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Picture object, it will not be re-added.
-		if ($v !== null) {
-			$v->addUser($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Picture object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Picture The associated Picture object.
-	 * @throws     PropelException
-	 */
-	public function getPicture(PropelPDO $con = null)
-	{
-		if ($this->aPicture === null && ($this->picture_id !== null)) {
-			$c = new Criteria(PicturePeer::DATABASE_NAME);
-			$c->add(PicturePeer::ID, $this->picture_id);
-			$this->aPicture = PicturePeer::doSelectOne($c, $con);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aPicture->addUsers($this);
-			 */
-		}
-		return $this->aPicture;
 	}
 
 	/**
@@ -4120,160 +3949,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collOfferVoucher1s, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collOfferVoucher1s, $l);
-			$l->setUser($this);
-		}
-	}
-
-	/**
-	 * Clears out the collPictures collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addPictures()
-	 */
-	public function clearPictures()
-	{
-		$this->collPictures = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collPictures collection (array).
-	 *
-	 * By default this just sets the collPictures collection to an empty array (like clearcollPictures());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initPictures()
-	{
-		$this->collPictures = array();
-	}
-
-	/**
-	 * Gets an array of Picture objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related Pictures from storage. If this User is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Picture[]
-	 * @throws     PropelException
-	 */
-	public function getPictures($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collPictures === null) {
-			if ($this->isNew()) {
-			   $this->collPictures = array();
-			} else {
-
-				$criteria->add(PicturePeer::OWNER_ID, $this->id);
-
-				PicturePeer::addSelectColumns($criteria);
-				$this->collPictures = PicturePeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(PicturePeer::OWNER_ID, $this->id);
-
-				PicturePeer::addSelectColumns($criteria);
-				if (!isset($this->lastPictureCriteria) || !$this->lastPictureCriteria->equals($criteria)) {
-					$this->collPictures = PicturePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastPictureCriteria = $criteria;
-		return $this->collPictures;
-	}
-
-	/**
-	 * Returns the number of related Picture objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Picture objects.
-	 * @throws     PropelException
-	 */
-	public function countPictures(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collPictures === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(PicturePeer::OWNER_ID, $this->id);
-
-				$count = PicturePeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(PicturePeer::OWNER_ID, $this->id);
-
-				if (!isset($this->lastPictureCriteria) || !$this->lastPictureCriteria->equals($criteria)) {
-					$count = PicturePeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collPictures);
-				}
-			} else {
-				$count = count($this->collPictures);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Picture object to this object
-	 * through the Picture foreign key attribute.
-	 *
-	 * @param      Picture $l Picture
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addPicture(Picture $l)
-	{
-		if ($this->collPictures === null) {
-			$this->initPictures();
-		}
-		if (!in_array($l, $this->collPictures, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collPictures, $l);
 			$l->setUser($this);
 		}
 	}
@@ -5724,11 +5399,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collPictures) {
-				foreach ((array) $this->collPictures as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collPurchaseDetails) {
 				foreach ((array) $this->collPurchaseDetails as $o) {
 					$o->clearAllReferences($deep);
@@ -5779,7 +5449,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collHistorys = null;
 		$this->collItemRatings = null;
 		$this->collOfferVoucher1s = null;
-		$this->collPictures = null;
 		$this->collPurchaseDetails = null;
 		$this->collShoppingCarts = null;
 		$this->collShoutsRelatedByPosterId = null;
@@ -5789,7 +5458,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collStudentQuestionsRelatedByStudentId = null;
 		$this->collStudentQuestionsRelatedByTutorId = null;
 		$this->collWhiteboardSessions = null;
-			$this->aPicture = null;
 	}
 
 } // BaseUser

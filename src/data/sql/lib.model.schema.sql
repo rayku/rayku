@@ -120,7 +120,6 @@ CREATE TABLE `comment`
 (
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`poster_id` INTEGER(11),
-	`picture_id` INTEGER(11),
 	`video_id` INTEGER(11),
 	`content` TEXT,
 	`created_at` DATETIME,
@@ -128,7 +127,6 @@ CREATE TABLE `comment`
 	`approved` INTEGER(11) default 0,
 	PRIMARY KEY (`id`),
 	KEY `comment_FI_1`(`poster_id`),
-	KEY `comment_FI_2`(`picture_id`),
 	KEY `comment_FI_3`(`video_id`)
 )Type=InnoDB;
 
@@ -483,29 +481,6 @@ CREATE TABLE `offer_voucher1`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- picture
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `picture`;
-
-
-CREATE TABLE `picture`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`owner_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `picture_FI_2`(`owner_id`),
-	CONSTRAINT `picture_FK_1`
-		FOREIGN KEY (`owner_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- post
 #-----------------------------------------------------------------------------
 
@@ -799,7 +774,6 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`picture_id` INTEGER(11),
 	`username` VARCHAR(100),
 	`email` VARCHAR(100),
 	`password` VARCHAR(40),
@@ -838,13 +812,7 @@ CREATE TABLE `user`
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),
-	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`),
-	KEY `user_FI_1`(`picture_id`),
-	CONSTRAINT `user_FK_1`
-		FOREIGN KEY (`picture_id`)
-		REFERENCES `picture` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
+	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

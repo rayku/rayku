@@ -19,7 +19,7 @@ abstract class BaseCommentPeer {
 	const CLASS_DEFAULT = 'lib.model.Comment';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,9 +29,6 @@ abstract class BaseCommentPeer {
 
 	/** the column name for the POSTER_ID field */
 	const POSTER_ID = 'comment.POSTER_ID';
-
-	/** the column name for the PICTURE_ID field */
-	const PICTURE_ID = 'comment.PICTURE_ID';
 
 	/** the column name for the VIDEO_ID field */
 	const VIDEO_ID = 'comment.VIDEO_ID';
@@ -69,11 +66,11 @@ abstract class BaseCommentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'PictureId', 'VideoId', 'Content', 'CreatedAt', 'Type', 'Approved', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'pictureId', 'videoId', 'content', 'createdAt', 'type', 'approved', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::PICTURE_ID, self::VIDEO_ID, self::CONTENT, self::CREATED_AT, self::TYPE, self::APPROVED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'picture_id', 'video_id', 'content', 'created_at', 'type', 'approved', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'VideoId', 'Content', 'CreatedAt', 'Type', 'Approved', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'videoId', 'content', 'createdAt', 'type', 'approved', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::VIDEO_ID, self::CONTENT, self::CREATED_AT, self::TYPE, self::APPROVED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'video_id', 'content', 'created_at', 'type', 'approved', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -83,11 +80,11 @@ abstract class BaseCommentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'PictureId' => 2, 'VideoId' => 3, 'Content' => 4, 'CreatedAt' => 5, 'Type' => 6, 'Approved' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'pictureId' => 2, 'videoId' => 3, 'content' => 4, 'createdAt' => 5, 'type' => 6, 'approved' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::PICTURE_ID => 2, self::VIDEO_ID => 3, self::CONTENT => 4, self::CREATED_AT => 5, self::TYPE => 6, self::APPROVED => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'picture_id' => 2, 'video_id' => 3, 'content' => 4, 'created_at' => 5, 'type' => 6, 'approved' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'VideoId' => 2, 'Content' => 3, 'CreatedAt' => 4, 'Type' => 5, 'Approved' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'videoId' => 2, 'content' => 3, 'createdAt' => 4, 'type' => 5, 'approved' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::VIDEO_ID => 2, self::CONTENT => 3, self::CREATED_AT => 4, self::TYPE => 5, self::APPROVED => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'video_id' => 2, 'content' => 3, 'created_at' => 4, 'type' => 5, 'approved' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -172,8 +169,6 @@ abstract class BaseCommentPeer {
 		$criteria->addSelectColumn(CommentPeer::ID);
 
 		$criteria->addSelectColumn(CommentPeer::POSTER_ID);
-
-		$criteria->addSelectColumn(CommentPeer::PICTURE_ID);
 
 		$criteria->addSelectColumn(CommentPeer::VIDEO_ID);
 

@@ -66,8 +66,6 @@ class CommentMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('POSTER_ID', 'PosterId', 'INTEGER', false, 11);
 
-		$tMap->addColumn('PICTURE_ID', 'PictureId', 'INTEGER', false, 11);
-
 		$tMap->addColumn('VIDEO_ID', 'VideoId', 'INTEGER', false, 11);
 
 		$tMap->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null);
