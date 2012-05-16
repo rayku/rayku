@@ -47,16 +47,6 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_name: { type: VARCHAR, size: '100', required: true }
     status: { type: INTEGER, size: '11', required: true }
-  comment:
-    _attributes: { phpName: Comment }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    poster_id: { type: INTEGER, size: '11', required: false }
-    video_id: { type: INTEGER, size: '11', required: false }
-    content: { type: LONGVARCHAR, required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    type: { type: INTEGER, size: '11', required: false }
-    approved: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    _indexes: { comment_FI_1: [poster_id], comment_FI_3: [video_id] }
   expert:
     _attributes: { phpName: Expert }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

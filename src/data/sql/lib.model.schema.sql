@@ -110,27 +110,6 @@ CREATE TABLE `chat_user`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- comment
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `comment`;
-
-
-CREATE TABLE `comment`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`poster_id` INTEGER(11),
-	`video_id` INTEGER(11),
-	`content` TEXT,
-	`created_at` DATETIME,
-	`type` INTEGER(11),
-	`approved` INTEGER(11) default 0,
-	PRIMARY KEY (`id`),
-	KEY `comment_FI_1`(`poster_id`),
-	KEY `comment_FI_3`(`video_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- expert
 #-----------------------------------------------------------------------------
 
