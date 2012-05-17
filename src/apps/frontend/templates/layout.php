@@ -564,11 +564,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <?php endif; ?>
 
 </head>
-<?php if(( sfContext::getInstance()->getModuleName() == 'profile' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?>
-<body id="subpage" style="background:none">
-<?php else: ?>
 <body style="background:none">
-<?php endif; ?>
 <?php include_partial('global/topNav'); ?>
 <div id="wrapper">
   <div class="primary">

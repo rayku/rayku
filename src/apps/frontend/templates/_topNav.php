@@ -52,34 +52,6 @@
   if(!$sf_user->isAuthenticated())
   {
 ?>
-<style>
-#navigation {
-	background: url("/images/landing/topnav/navigation-gradient.png") repeat-x scroll 0 0 transparent;
-	border-radius: 5px 5px 5px 5px;
-	float: right;
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 13px;
-	height: 32px;
-	line-height: 32px;
-	margin-left: 24px;
-	margin-top: 7px;
-}
-#navigation li {
-	background: url("/images/landing/topnav/nav-border.png") no-repeat scroll right 6px transparent;
-	display: inline-block;
-	padding: 0 11px;
-}
-#navigation li a {
-	color:#FFF;
-}
-#navigation li a:hover {
-	text-decoration: underline;
-}
-#navigation li:last-child {
-	background: none repeat scroll 0 0 transparent;
-}
-</style>
-
 <div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
