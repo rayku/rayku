@@ -162,4 +162,3 @@
   <div class="spacer" style="margin-bottom: 15px;"></div>
   <?php include_partial('global/pager', array('raykuPager' => $raykuPager)); ?>
 </div>
-<?php include_partial('message/rightSideBlock', array('friends' => !isset( $friends ) ? array() : $friends ) ); ?>

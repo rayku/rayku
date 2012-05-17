@@ -10,77 +10,26 @@
 
 class profileActions extends sfActions
 {
-	/**
-	* Executes index action
-	*
-	*/
-	public function executeIndex()
-	{
-
- $userId = $this->getUser()->getRaykuUserId();
-
-	if(empty($userId)) {
-
-		$this->redirect('/login');
-
-	}
-
- if(!empty($_COOKIE["timer"])) :
-
-
-	$this->redirect('/dashboard/rating');
-
- endif;
-
-
-
-	 $c = new Criteria();
-	 $c->add(UserPeer::USERNAME,$this->getRequestParameter('username'));
-	 $user = UserPeer::doSelectOne($c);
-   	 $this->user = $user;
-
-//Paginaton Code For Shout//
-
-	 $v = ShoutPeer::getShoutCriteria( $user );
-	 $pagernew = new sfPropelPager('Shout', 5);
-		$pagernew->setCriteria($v);
-		$pagernew->setPage($this->getRequestParameter('page', 1));
-		$pagernew->init();
-
-    $raykuPagerNew = new RaykuPagerRenderer( $pagernew );
-    $raykuPagerNew->setBaseUrl( '/profile?username=' . $this->user->getUsername() );
-    $raykuPagerNew->setLinkToRemoteElementId('newone');
-
-    $this->raykuPagerNew = $raykuPagerNew;
-
-//============================================================Modified By DAC021===============================================================================//
-
-    $this->current = $this->getUser()->getRaykuUser();
-
-		if (sfWebRequest::POST === $this->getRequest()->getMethod())
-		{
-			$comment = $this->getRequestParameter('content');
-			if($this->getRequestParameter('action_comment') && $comment != '')
-			{
-				$poster = $this->getUser()->getRaykuUser();
-
-      		  $poster->createShoutFor($this->user, $comment);
-
-
-        $this->redirect('@profile?username=' . $this->user->getUsername());
-			}
-		}
-//============================================================Modified By DAC021===============================================================================//
-   if( $this->getRequest()->isXmlHttpRequest() )
+    public function executeIndex()
     {
-	     sfProjectConfiguration::getActive()->loadHelpers('Partial');
-	     return $this->renderText( get_partial( 'shoutbox', array( 'raykuPager' => $raykuPagerNew) ) );
+        $userId = $this->getUser()->getRaykuUserId();
+
+        if (empty($userId)) {
+            $this->redirect('/login');
+        }
+
+        if (!empty($_COOKIE["timer"])) {
+            $this->redirect('/dashboard/rating');
+        }
+
+        $c = new Criteria();
+        $c->add(UserPeer::USERNAME, $this->getRequestParameter('username'));
+        $user = UserPeer::doSelectOne($c);
+        
+        $this->redirect('/tutor/'.($user ? $user->getUsername(): ''));
     }
-//========================================================Modified By  DAC021================================================================//
 
-	}
-
-	public function executeEdit()
+    public function executeEdit()
 	{
 
 
@@ -127,8 +76,6 @@ class profileActions extends sfActions
 
 			$user->setAddress($this->getRequestParameter('address'));
 			$user->setRelationshipStatus($this->getRequestParameter('user[relationshipstatuse]'));
-			$user->setAboutMe($this->getRequestParameter('about_me'));
-			$user->setUserInterestsFromString($this->getRequestParameter('hobbies'));
 
 			// if the password is set
 			if ('' !== $this->getRequestParameter('password1'))
@@ -145,7 +92,6 @@ class profileActions extends sfActions
 			$user->setShowBirthdate($this->getRequestParameter('show_birthdate', 0));
 			$user->setShowAddress($this->getRequestParameter('show_address', 0));
 			$user->setShowRelationshipStatus($this->getRequestParameter('show_relationship_status', 0));
-			$user->setShowHobbies($this->getRequestParameter('show_hobbies', 0));
 
 			$user->save();
 

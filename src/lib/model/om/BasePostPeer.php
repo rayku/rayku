@@ -19,7 +19,7 @@ abstract class BasePostPeer {
 	const CLASS_DEFAULT = 'lib.model.Post';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -45,6 +45,18 @@ abstract class BasePostPeer {
 	/** the column name for the BEST_RESPONSE field */
 	const BEST_RESPONSE = 'post.BEST_RESPONSE';
 
+	/** the column name for the REPORTED field */
+	const REPORTED = 'post.REPORTED';
+
+	/** the column name for the USER_IP field */
+	const USER_IP = 'post.USER_IP';
+
+	/** the column name for the BANNED field */
+	const BANNED = 'post.BANNED';
+
+	/** the column name for the REPORTED_DATE field */
+	const REPORTED_DATE = 'post.REPORTED_DATE';
+
 	/**
 	 * An identiy map to hold any loaded instances of Post objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -66,11 +78,11 @@ abstract class BasePostPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'ThreadId', 'CreatedAt', 'UpdatedAt', 'Content', 'BestResponse', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'threadId', 'createdAt', 'updatedAt', 'content', 'bestResponse', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::THREAD_ID, self::CREATED_AT, self::UPDATED_AT, self::CONTENT, self::BEST_RESPONSE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'thread_id', 'created_at', 'updated_at', 'content', 'best_response', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'PosterId', 'ThreadId', 'CreatedAt', 'UpdatedAt', 'Content', 'BestResponse', 'Reported', 'UserIp', 'Banned', 'ReportedDate', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'posterId', 'threadId', 'createdAt', 'updatedAt', 'content', 'bestResponse', 'reported', 'userIp', 'banned', 'reportedDate', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::POSTER_ID, self::THREAD_ID, self::CREATED_AT, self::UPDATED_AT, self::CONTENT, self::BEST_RESPONSE, self::REPORTED, self::USER_IP, self::BANNED, self::REPORTED_DATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'poster_id', 'thread_id', 'created_at', 'updated_at', 'content', 'best_response', 'reported', 'user_ip', 'banned', 'reported_date', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -80,11 +92,11 @@ abstract class BasePostPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'ThreadId' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, 'Content' => 5, 'BestResponse' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'threadId' => 2, 'createdAt' => 3, 'updatedAt' => 4, 'content' => 5, 'bestResponse' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::THREAD_ID => 2, self::CREATED_AT => 3, self::UPDATED_AT => 4, self::CONTENT => 5, self::BEST_RESPONSE => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'thread_id' => 2, 'created_at' => 3, 'updated_at' => 4, 'content' => 5, 'best_response' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'PosterId' => 1, 'ThreadId' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, 'Content' => 5, 'BestResponse' => 6, 'Reported' => 7, 'UserIp' => 8, 'Banned' => 9, 'ReportedDate' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'posterId' => 1, 'threadId' => 2, 'createdAt' => 3, 'updatedAt' => 4, 'content' => 5, 'bestResponse' => 6, 'reported' => 7, 'userIp' => 8, 'banned' => 9, 'reportedDate' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::POSTER_ID => 1, self::THREAD_ID => 2, self::CREATED_AT => 3, self::UPDATED_AT => 4, self::CONTENT => 5, self::BEST_RESPONSE => 6, self::REPORTED => 7, self::USER_IP => 8, self::BANNED => 9, self::REPORTED_DATE => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'poster_id' => 1, 'thread_id' => 2, 'created_at' => 3, 'updated_at' => 4, 'content' => 5, 'best_response' => 6, 'reported' => 7, 'user_ip' => 8, 'banned' => 9, 'reported_date' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -179,6 +191,14 @@ abstract class BasePostPeer {
 		$criteria->addSelectColumn(PostPeer::CONTENT);
 
 		$criteria->addSelectColumn(PostPeer::BEST_RESPONSE);
+
+		$criteria->addSelectColumn(PostPeer::REPORTED);
+
+		$criteria->addSelectColumn(PostPeer::USER_IP);
+
+		$criteria->addSelectColumn(PostPeer::BANNED);
+
+		$criteria->addSelectColumn(PostPeer::REPORTED_DATE);
 
 	}
 

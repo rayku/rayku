@@ -87,6 +87,30 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 	protected $created_at;
 
 	/**
+	 * The value for the timer field.
+	 * @var        string
+	 */
+	protected $timer;
+
+	/**
+	 * The value for the rating field.
+	 * @var        int
+	 */
+	protected $rating;
+
+	/**
+	 * The value for the amount field.
+	 * @var        double
+	 */
+	protected $amount;
+
+	/**
+	 * The value for the comments field.
+	 * @var        string
+	 */
+	protected $comments;
+
+	/**
 	 * @var        array WhiteboardMessage[] Collection to store aggregation of WhiteboardMessage objects.
 	 */
 	protected $collWhiteboardMessages;
@@ -342,6 +366,46 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [timer] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTimer()
+	{
+		return $this->timer;
+	}
+
+	/**
+	 * Get the [rating] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRating()
+	{
+		return $this->rating;
+	}
+
+	/**
+	 * Get the [amount] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getAmount()
+	{
+		return $this->amount;
+	}
+
+	/**
+	 * Get the [comments] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getComments()
+	{
+		return $this->comments;
 	}
 
 	/**
@@ -652,6 +716,86 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 	} // setCreatedAt()
 
 	/**
+	 * Set the value of [timer] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WhiteboardChat The current object (for fluent API support)
+	 */
+	public function setTimer($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->timer !== $v) {
+			$this->timer = $v;
+			$this->modifiedColumns[] = WhiteboardChatPeer::TIMER;
+		}
+
+		return $this;
+	} // setTimer()
+
+	/**
+	 * Set the value of [rating] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WhiteboardChat The current object (for fluent API support)
+	 */
+	public function setRating($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rating !== $v) {
+			$this->rating = $v;
+			$this->modifiedColumns[] = WhiteboardChatPeer::RATING;
+		}
+
+		return $this;
+	} // setRating()
+
+	/**
+	 * Set the value of [amount] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     WhiteboardChat The current object (for fluent API support)
+	 */
+	public function setAmount($v)
+	{
+		if ($v !== null) {
+			$v = (double) $v;
+		}
+
+		if ($this->amount !== $v) {
+			$this->amount = $v;
+			$this->modifiedColumns[] = WhiteboardChatPeer::AMOUNT;
+		}
+
+		return $this;
+	} // setAmount()
+
+	/**
+	 * Set the value of [comments] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WhiteboardChat The current object (for fluent API support)
+	 */
+	public function setComments($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->comments !== $v) {
+			$this->comments = $v;
+			$this->modifiedColumns[] = WhiteboardChatPeer::COMMENTS;
+		}
+
+		return $this;
+	} // setComments()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -699,6 +843,10 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			$this->ended_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->directory = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->created_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->timer = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->rating = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->amount = ($row[$startcol + 13] !== null) ? (double) $row[$startcol + 13] : null;
+			$this->comments = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -708,7 +856,7 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = WhiteboardChatPeer::NUM_COLUMNS - WhiteboardChatPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = WhiteboardChatPeer::NUM_COLUMNS - WhiteboardChatPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WhiteboardChat object", $e);
@@ -1076,6 +1224,18 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			case 10:
 				return $this->getCreatedAt();
 				break;
+			case 11:
+				return $this->getTimer();
+				break;
+			case 12:
+				return $this->getRating();
+				break;
+			case 13:
+				return $this->getAmount();
+				break;
+			case 14:
+				return $this->getComments();
+				break;
 			default:
 				return null;
 				break;
@@ -1108,6 +1268,10 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			$keys[8] => $this->getEndedAt(),
 			$keys[9] => $this->getDirectory(),
 			$keys[10] => $this->getCreatedAt(),
+			$keys[11] => $this->getTimer(),
+			$keys[12] => $this->getRating(),
+			$keys[13] => $this->getAmount(),
+			$keys[14] => $this->getComments(),
 		);
 		return $result;
 	}
@@ -1172,6 +1336,18 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 			case 10:
 				$this->setCreatedAt($value);
 				break;
+			case 11:
+				$this->setTimer($value);
+				break;
+			case 12:
+				$this->setRating($value);
+				break;
+			case 13:
+				$this->setAmount($value);
+				break;
+			case 14:
+				$this->setComments($value);
+				break;
 		} // switch()
 	}
 
@@ -1207,6 +1383,10 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setEndedAt($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setDirectory($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setTimer($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setRating($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setAmount($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setComments($arr[$keys[14]]);
 	}
 
 	/**
@@ -1229,6 +1409,10 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WhiteboardChatPeer::ENDED_AT)) $criteria->add(WhiteboardChatPeer::ENDED_AT, $this->ended_at);
 		if ($this->isColumnModified(WhiteboardChatPeer::DIRECTORY)) $criteria->add(WhiteboardChatPeer::DIRECTORY, $this->directory);
 		if ($this->isColumnModified(WhiteboardChatPeer::CREATED_AT)) $criteria->add(WhiteboardChatPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(WhiteboardChatPeer::TIMER)) $criteria->add(WhiteboardChatPeer::TIMER, $this->timer);
+		if ($this->isColumnModified(WhiteboardChatPeer::RATING)) $criteria->add(WhiteboardChatPeer::RATING, $this->rating);
+		if ($this->isColumnModified(WhiteboardChatPeer::AMOUNT)) $criteria->add(WhiteboardChatPeer::AMOUNT, $this->amount);
+		if ($this->isColumnModified(WhiteboardChatPeer::COMMENTS)) $criteria->add(WhiteboardChatPeer::COMMENTS, $this->comments);
 
 		return $criteria;
 	}
@@ -1302,6 +1486,14 @@ abstract class BaseWhiteboardChat extends BaseObject  implements Persistent {
 		$copyObj->setDirectory($this->directory);
 
 		$copyObj->setCreatedAt($this->created_at);
+
+		$copyObj->setTimer($this->timer);
+
+		$copyObj->setRating($this->rating);
+
+		$copyObj->setAmount($this->amount);
+
+		$copyObj->setComments($this->comments);
 
 
 		if ($deepCopy) {

@@ -14,7 +14,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'picture_id'               => new sfWidgetFormPropelChoice(array('model' => 'Picture', 'add_empty' => true)),
       'username'                 => new sfWidgetFormFilterInput(),
       'email'                    => new sfWidgetFormFilterInput(),
       'password'                 => new sfWidgetFormFilterInput(),
@@ -31,7 +30,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'birthdate'                => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'address'                  => new sfWidgetFormFilterInput(),
       'relationship_status'      => new sfWidgetFormFilterInput(),
-      'about_me'                 => new sfWidgetFormFilterInput(),
       'show_email'               => new sfWidgetFormFilterInput(),
       'show_gender'              => new sfWidgetFormFilterInput(),
       'show_hometown'            => new sfWidgetFormFilterInput(),
@@ -40,22 +38,20 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'show_birthdate'           => new sfWidgetFormFilterInput(),
       'show_address'             => new sfWidgetFormFilterInput(),
       'show_relationship_status' => new sfWidgetFormFilterInput(),
-      'show_hobbies'             => new sfWidgetFormFilterInput(),
       'password_recover_key'     => new sfWidgetFormFilterInput(),
       'cookie_key'               => new sfWidgetFormFilterInput(),
       'credit'                   => new sfWidgetFormFilterInput(),
       'invisible'                => new sfWidgetFormFilterInput(),
       'notification'             => new sfWidgetFormFilterInput(),
       'phone_number'             => new sfWidgetFormFilterInput(),
-      'network_id'               => new sfWidgetFormPropelChoice(array('model' => 'Network', 'add_empty' => true)),
       'login'                    => new sfWidgetFormFilterInput(),
       'credit_card'              => new sfWidgetFormFilterInput(),
       'credit_card_token'        => new sfWidgetFormFilterInput(),
       'first_charge'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'where_find_us'            => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'picture_id'               => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Picture', 'column' => 'id')),
       'username'                 => new sfValidatorPass(array('required' => false)),
       'email'                    => new sfValidatorPass(array('required' => false)),
       'password'                 => new sfValidatorPass(array('required' => false)),
@@ -72,7 +68,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'birthdate'                => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'address'                  => new sfValidatorPass(array('required' => false)),
       'relationship_status'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'about_me'                 => new sfValidatorPass(array('required' => false)),
       'show_email'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'show_gender'              => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'show_hometown'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -81,18 +76,17 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'show_birthdate'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'show_address'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'show_relationship_status' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'show_hobbies'             => new sfValidatorPass(array('required' => false)),
       'password_recover_key'     => new sfValidatorPass(array('required' => false)),
       'cookie_key'               => new sfValidatorPass(array('required' => false)),
       'credit'                   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'invisible'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'notification'             => new sfValidatorPass(array('required' => false)),
       'phone_number'             => new sfValidatorPass(array('required' => false)),
-      'network_id'               => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Network', 'column' => 'id')),
       'login'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'credit_card'              => new sfValidatorPass(array('required' => false)),
       'credit_card_token'        => new sfValidatorPass(array('required' => false)),
       'first_charge'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'where_find_us'            => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('user_filters[%s]');
@@ -111,7 +105,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'                       => 'Number',
-      'picture_id'               => 'ForeignKey',
       'username'                 => 'Text',
       'email'                    => 'Text',
       'password'                 => 'Text',
@@ -128,7 +121,6 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'birthdate'                => 'Date',
       'address'                  => 'Text',
       'relationship_status'      => 'Number',
-      'about_me'                 => 'Text',
       'show_email'               => 'Number',
       'show_gender'              => 'Number',
       'show_hometown'            => 'Number',
@@ -137,18 +129,17 @@ class BaseUserFormFilter extends BaseFormFilterPropel
       'show_birthdate'           => 'Number',
       'show_address'             => 'Number',
       'show_relationship_status' => 'Number',
-      'show_hobbies'             => 'Text',
       'password_recover_key'     => 'Text',
       'cookie_key'               => 'Text',
       'credit'                   => 'Number',
       'invisible'                => 'Number',
       'notification'             => 'Text',
       'phone_number'             => 'Text',
-      'network_id'               => 'ForeignKey',
       'login'                    => 'Number',
       'credit_card'              => 'Text',
       'credit_card_token'        => 'Text',
       'first_charge'             => 'Date',
+      'where_find_us'            => 'Text',
     );
   }
 }

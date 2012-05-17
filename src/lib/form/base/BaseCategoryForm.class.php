@@ -18,6 +18,7 @@ class BaseCategoryForm extends BaseFormPropel
       'parent'      => new sfWidgetFormInput(),
       'prefix'      => new sfWidgetFormInput(),
       'updated_at'  => new sfWidgetFormDate(),
+      'status'      => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ class BaseCategoryForm extends BaseFormPropel
       'parent'      => new sfValidatorInteger(),
       'prefix'      => new sfValidatorString(array('max_length' => 10)),
       'updated_at'  => new sfValidatorDate(),
+      'status'      => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

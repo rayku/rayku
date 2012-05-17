@@ -4,24 +4,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 #-----------------------------------------------------------------------------
-#-- album
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `album`;
-
-
-CREATE TABLE `album`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`owner_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `album_FI_1`(`owner_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- bulletin
 #-----------------------------------------------------------------------------
 
@@ -53,6 +35,7 @@ CREATE TABLE `category`
 	`parent` INTEGER(11)  NOT NULL,
 	`prefix` VARCHAR(10)  NOT NULL,
 	`updated_at` DATE  NOT NULL,
+	`status` INTEGER(11),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `category_name_unique` (`name`),
 	UNIQUE KEY `category_prefix_unique` (`prefix`)
@@ -127,36 +110,6 @@ CREATE TABLE `chat_user`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- comment
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `comment`;
-
-
-CREATE TABLE `comment`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`journal_entry_id` INTEGER(11),
-	`poster_id` INTEGER(11),
-	`picture_id` INTEGER(11),
-	`video_id` INTEGER(11),
-	`content` TEXT,
-	`created_at` DATETIME,
-	`type` INTEGER(11),
-	`approved` INTEGER(11) default 0,
-	PRIMARY KEY (`id`),
-	KEY `comment_FI_1`(`poster_id`),
-	KEY `comment_FI_2`(`picture_id`),
-	KEY `comment_FI_3`(`video_id`),
-	KEY `comment_FI_4`(`journal_entry_id`),
-	CONSTRAINT `comment_FK_1`
-		FOREIGN KEY (`journal_entry_id`)
-		REFERENCES `journal_entry` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- expert
 #-----------------------------------------------------------------------------
 
@@ -187,28 +140,6 @@ CREATE TABLE `expert`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- expert_available_days
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_available_days`;
-
-
-CREATE TABLE `expert_available_days`
-(
-	`id` INTEGER(40)  NOT NULL AUTO_INCREMENT,
-	`expert_id` INTEGER(40)  NOT NULL,
-	`monday` INTEGER(10)  NOT NULL,
-	`tuesday` INTEGER(10)  NOT NULL,
-	`wednesday` INTEGER(10)  NOT NULL,
-	`thursday` INTEGER(10)  NOT NULL,
-	`friday` INTEGER(10)  NOT NULL,
-	`saturday` INTEGER(10)  NOT NULL,
-	`sunday` INTEGER(10)  NOT NULL,
-	`timings` VARCHAR(100)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- expert_category
 #-----------------------------------------------------------------------------
 
@@ -236,65 +167,6 @@ CREATE TABLE `expert_category`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- expert_lesson
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_lesson`;
-
-
-CREATE TABLE `expert_lesson`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`price` FLOAT  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	`day` VARCHAR(50)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `expert_lesson_FI_1`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- expert_lesson_schedule
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_lesson_schedule`;
-
-
-CREATE TABLE `expert_lesson_schedule`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`date` INTEGER(11)  NOT NULL,
-	`timings` VARCHAR(100)  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`expert_lesson_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `expert_lesson_schedule_FI_1`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- expert_student_schedules
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `expert_student_schedules`;
-
-
-CREATE TABLE `expert_student_schedules`
-(
-	`id` INTEGER(10)  NOT NULL AUTO_INCREMENT,
-	`exp_id` INTEGER(11)  NOT NULL,
-	`student_id` INTEGER(11)  NOT NULL,
-	`date` INTEGER(11)  NOT NULL,
-	`time` INTEGER(11)  NOT NULL,
-	`message` TEXT  NOT NULL,
-	`expert_lesson_id` INTEGER(11)  NOT NULL,
-	`accept_reject` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- experts_admin_payout
 #-----------------------------------------------------------------------------
 
@@ -308,24 +180,6 @@ CREATE TABLE `experts_admin_payout`
 	`amount` FLOAT(5,2)  NOT NULL,
 	`paypal_id` VARCHAR(100)  NOT NULL,
 	`paid` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_credit_details
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_credit_details`;
-
-
-CREATE TABLE `experts_credit_details`
-(
-	`id` INTEGER(100)  NOT NULL AUTO_INCREMENT,
-	`student_id` INTEGER(10)  NOT NULL,
-	`expert_id` INTEGER(10)  NOT NULL,
-	`credit_amount` FLOAT(5,2)  NOT NULL,
-	`lesson_id` INTEGER(20)  NOT NULL,
-	`immediate_lesson_id` INTEGER(20)  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -357,45 +211,6 @@ CREATE TABLE `experts_final_credit`
 	`id` INTEGER(100)  NOT NULL AUTO_INCREMENT,
 	`expert_id` INTEGER(10)  NOT NULL,
 	`amount` FLOAT(5,2)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_immediate_lesson
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_immediate_lesson`;
-
-
-CREATE TABLE `experts_immediate_lesson`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(50)  NOT NULL,
-	`content` TEXT  NOT NULL,
-	`price` FLOAT  NOT NULL,
-	`user_id` INTEGER(11)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- experts_lesson_members
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `experts_lesson_members`;
-
-
-CREATE TABLE `experts_lesson_members`
-(
-	`id` INTEGER(10)  NOT NULL AUTO_INCREMENT,
-	`student_id` INTEGER(20)  NOT NULL,
-	`category_id` INTEGER(20)  NOT NULL,
-	`expert_id` INTEGER(20)  NOT NULL,
-	`lesson_id` INTEGER(20)  NOT NULL,
-	`approve` INTEGER(10)  NOT NULL,
-	`created_at` DATETIME  NOT NULL,
-	`updated_at` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -476,153 +291,6 @@ CREATE TABLE `forum_question`
 	PRIMARY KEY (`id`),
 	KEY `forum_question_FI_1`(`category_id`),
 	KEY `forum_question_FI_2`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- friend
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `friend`;
-
-
-CREATE TABLE `friend`
-(
-	`user_id1` INTEGER(11),
-	`user_id2` INTEGER(11),
-	`status` INTEGER(11) default 0,
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `friend_FI_1`(`user_id1`),
-	KEY `friend_FI_2`(`user_id2`),
-	CONSTRAINT `friend_FK_1`
-		FOREIGN KEY (`user_id1`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `friend_FK_2`
-		FOREIGN KEY (`user_id2`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- gallery
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery`;
-
-
-CREATE TABLE `gallery`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(255),
-	`show_entity` INTEGER(11),
-	`user_id` INTEGER(11),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`classroom_id` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `gallery_FI_1`(`user_id`),
-	CONSTRAINT `gallery_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- gallery_acl
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery_acl`;
-
-
-CREATE TABLE `gallery_acl`
-(
-	`gallery_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `gallery_acl_FI_1`(`gallery_id`),
-	KEY `gallery_acl_FI_2`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- gallery_item
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gallery_item`;
-
-
-CREATE TABLE `gallery_item`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(255),
-	`gallery_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`file_name` VARCHAR(255),
-	`file_system_path` VARCHAR(255),
-	`mime_type` VARCHAR(255),
-	`is_image` INTEGER(11),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `gallery_item_FI_1`(`gallery_id`),
-	KEY `user_id`(`user_id`),
-	CONSTRAINT `gallery_item_FK_1`
-		FOREIGN KEY (`gallery_id`)
-		REFERENCES `gallery` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `gallery_item_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- group_site_page
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `group_site_page`;
-
-
-CREATE TABLE `group_site_page`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(100),
-	`group_id` INTEGER(11),
-	`content` TEXT,
-	`page_order` INTEGER(11),
-	`template` VARCHAR(150),
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `group_site_page_FI_1`(`group_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- group_user
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `group_user`;
-
-
-CREATE TABLE `group_user`
-(
-	`group_id` INTEGER(11),
-	`inviter_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`status` INTEGER(11),
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `group_user_FI_1`(`group_id`),
-	KEY `group_user_FI_2`(`inviter_id`),
-	KEY `group_user_FI_3`(`user_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -731,82 +399,6 @@ CREATE TABLE `item_type`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- journal_entry
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `journal_entry`;
-
-
-CREATE TABLE `journal_entry`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`subject` VARCHAR(150),
-	`content` TEXT,
-	`created_at` DATETIME,
-	`show_entity` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `journal_entry_FI_1`(`user_id`),
-	CONSTRAINT `journal_entry_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- journal_entry_acl
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `journal_entry_acl`;
-
-
-CREATE TABLE `journal_entry_acl`
-(
-	`journal_entry_id` INTEGER(11),
-	`user_id` INTEGER(11),
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `journal_entry_acl_FI_1`(`journal_entry_id`),
-	KEY `journal_entry_acl_FI_2`(`user_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- live_video_chat
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `live_video_chat`;
-
-
-CREATE TABLE `live_video_chat`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`receiver_id` INTEGER(11)  NOT NULL,
-	`sender_id` INTEGER(11)  NOT NULL,
-	`classroom_id` INTEGER(11)  NOT NULL,
-	`approved` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`),
-	KEY `video_live_chat_FI_1`(`receiver_id`),
-	KEY `video_live_chat_FI_2`(`sender_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- network
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `network`;
-
-
-CREATE TABLE `network`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`type` INTEGER(11),
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- notification_emails
 #-----------------------------------------------------------------------------
 
@@ -819,24 +411,6 @@ CREATE TABLE `notification_emails`
 	`user_id` INTEGER(100)  NOT NULL,
 	`on_off` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- nudge
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `nudge`;
-
-
-CREATE TABLE `nudge`
-(
-	`user_from_id` INTEGER(11),
-	`user_to_id` INTEGER(11),
-	`created_at` DATETIME,
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (`id`),
-	KEY `nudge_FI_1`(`user_from_id`),
-	KEY `nudge_FI_2`(`user_to_id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -886,36 +460,6 @@ CREATE TABLE `offer_voucher1`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- picture
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `picture`;
-
-
-CREATE TABLE `picture`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`description` TEXT,
-	`album_id` INTEGER(11),
-	`owner_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `picture_FI_1`(`album_id`),
-	KEY `picture_FI_2`(`owner_id`),
-	CONSTRAINT `picture_FK_1`
-		FOREIGN KEY (`album_id`)
-		REFERENCES `album` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT,
-	CONSTRAINT `picture_FK_2`
-		FOREIGN KEY (`owner_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- post
 #-----------------------------------------------------------------------------
 
@@ -931,7 +475,13 @@ CREATE TABLE `post`
 	`updated_at` DATETIME  NOT NULL,
 	`content` TEXT  NOT NULL,
 	`best_response` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
+	`reported` INTEGER(4) default 0 NOT NULL,
+	`user_ip` VARCHAR(255),
+	`banned` INTEGER(2) default 0 NOT NULL,
+	`reported_date` DATETIME,
+	PRIMARY KEY (`id`),
+	KEY `reported`(`reported`),
+	KEY `user_ip`(`user_ip`, `banned`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -995,61 +545,6 @@ CREATE TABLE `purchase_detail`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- report_entity
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `report_entity`;
-
-
-CREATE TABLE `report_entity`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`report_count` INTEGER(11),
-	`thread_id` INTEGER(11),
-	`post_id` INTEGER(11),
-	`group_id` INTEGER(11),
-	`bulletin_id` INTEGER(11),
-	`group_site_page_id` INTEGER(11),
-	`comment_id` INTEGER(11),
-	`picture_id` INTEGER(11),
-	`video_id` INTEGER(11),
-	`shout_id` INTEGER(11),
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `report_entity_thread_id_unique` (`thread_id`),
-	UNIQUE KEY `report_entity_post_id_unique` (`post_id`),
-	UNIQUE KEY `report_entity_group_id_unique` (`group_id`),
-	UNIQUE KEY `report_entity_bulletin_id_unique` (`bulletin_id`),
-	UNIQUE KEY `report_entity_group_site_page_id_unique` (`group_site_page_id`),
-	UNIQUE KEY `report_entity_comment_id_unique` (`comment_id`),
-	UNIQUE KEY `report_entity_picture_id_unique` (`picture_id`),
-	UNIQUE KEY `report_entity_video_id_unique` (`video_id`),
-	UNIQUE KEY `report_entity_shout_id_unique` (`shout_id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- report_user
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `report_user`;
-
-
-CREATE TABLE `report_user`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`type` INTEGER(11),
-	`entity_id` INTEGER(11),
-	`created_at` DATETIME,
-	PRIMARY KEY (`id`),
-	KEY `report_user_FI_1`(`user_id`),
-	CONSTRAINT `report_user_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- sales
 #-----------------------------------------------------------------------------
 
@@ -1106,21 +601,6 @@ CREATE TABLE `sales_detail`
 		REFERENCES `item` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- saved_experts
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `saved_experts`;
-
-
-CREATE TABLE `saved_experts`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11)  NOT NULL,
-	`expert_id` INTEGER(11)  NOT NULL,
-	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1254,8 +734,13 @@ CREATE TABLE `thread`
 	`school_grade` VARCHAR(100)  NOT NULL,
 	`created_at` DATETIME  NOT NULL,
 	`lastpost_at` DATETIME  NOT NULL,
-	`stickie` INTEGER  NOT NULL,
-	PRIMARY KEY (`id`)
+	`user_ip` VARCHAR(255),
+	`banned` INTEGER(4) default 0 NOT NULL,
+	`reported` INTEGER(4) default 0 NOT NULL,
+	`reported_date` DATETIME,
+	`stickie` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `reported`(`reported`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1268,11 +753,10 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`picture_id` INTEGER(11),
 	`username` VARCHAR(100),
 	`email` VARCHAR(100),
 	`password` VARCHAR(40),
-	`points` FLOAT(11,2) default 0,
+	`points` DECIMAL(11,2) default 0,
 	`created_at` DATETIME,
 	`last_activity_at` DATETIME,
 	`type` INTEGER(11) default 0,
@@ -1285,7 +769,6 @@ CREATE TABLE `user`
 	`birthdate` DATE,
 	`address` TEXT,
 	`relationship_status` INTEGER(11) default 0,
-	`about_me` TEXT,
 	`show_email` INTEGER(11) default 1,
 	`show_gender` INTEGER(11) default 1,
 	`show_hometown` INTEGER(11) default 1,
@@ -1294,34 +777,21 @@ CREATE TABLE `user`
 	`show_birthdate` INTEGER(11) default 1,
 	`show_address` INTEGER(11) default 1,
 	`show_relationship_status` INTEGER(11) default 1,
-	`show_hobbies` VARCHAR(200) default '1',
 	`password_recover_key` VARCHAR(40),
 	`cookie_key` VARCHAR(40),
 	`credit` INTEGER(11) default 0 NOT NULL,
 	`invisible` INTEGER(11)  NOT NULL,
 	`notification` VARCHAR(10)  NOT NULL,
 	`phone_number` VARCHAR(20)  NOT NULL,
-	`network_id` INTEGER(11),
-	`login` INTEGER(10)  NOT NULL,
+	`login` INTEGER(10) default 0 NOT NULL,
 	`credit_card` VARCHAR(4),
 	`credit_card_token` VARCHAR(10),
 	`first_charge` DATETIME,
+	`where_find_us` TEXT  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),
-	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`),
-	KEY `user_FI_1`(`picture_id`),
-	KEY `network_id`(`network_id`),
-	CONSTRAINT `user_FK_1`
-		FOREIGN KEY (`picture_id`)
-		REFERENCES `picture` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_FK_2`
-		FOREIGN KEY (`network_id`)
-		REFERENCES `network` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
+	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1346,56 +816,6 @@ CREATE TABLE `user_awards`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- user_donations
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_donations`;
-
-
-CREATE TABLE `user_donations`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`from_user_id` INTEGER(11),
-	`points` INTEGER(11),
-	`comments` TEXT,
-	PRIMARY KEY (`id`),
-	KEY `user_donations_FI_1`(`user_id`),
-	KEY `user_donations_FI_2`(`from_user_id`),
-	CONSTRAINT `user_donations_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-	CONSTRAINT `user_donations_FK_2`
-		FOREIGN KEY (`from_user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- user_interest
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_interest`;
-
-
-CREATE TABLE `user_interest`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`interest` TEXT,
-	PRIMARY KEY (`id`),
-	KEY `user_interest_FI_1`(`user_id`),
-	CONSTRAINT `user_interest_FK_1`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- user_gtalk
 #-----------------------------------------------------------------------------
 
@@ -1404,48 +824,12 @@ DROP TABLE IF EXISTS `user_gtalk`;
 
 CREATE TABLE `user_gtalk`
 (
-	`userid` INTEGER(11)  NOT NULL,
+	`userid` INTEGER(10)  NOT NULL,
 	`gtalkid` VARCHAR(100)  NOT NULL,
 	PRIMARY KEY (`userid`),
 	CONSTRAINT `user_gtalk_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- usergroup
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `usergroup`;
-
-
-CREATE TABLE `usergroup`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150),
-	`points` INTEGER(11) default 0,
-	`description` TEXT,
-	`type` INTEGER(11) default 0,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`bankrupt_since` DATE,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- users_networks
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `users_networks`;
-
-
-CREATE TABLE `users_networks`
-(
-	`id` INTEGER(40)  NOT NULL AUTO_INCREMENT,
-	`network_id` INTEGER(10)  NOT NULL,
-	`user_id` INTEGER(10)  NOT NULL,
-	`joined_on` DATETIME  NOT NULL,
-	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1487,6 +871,10 @@ CREATE TABLE `whiteboard_chat`
 	`ended_at` DATETIME,
 	`directory` VARCHAR(255),
 	`created_at` DATETIME,
+	`timer` VARCHAR(100)  NOT NULL,
+	`rating` INTEGER(11)  NOT NULL,
+	`amount` FLOAT(5,2)  NOT NULL,
+	`comments` VARCHAR(255),
 	PRIMARY KEY (`id`),
 	KEY `whiteboard_chat_FI_1`(`expert_id`, `asker_id`)
 )Type=InnoDB;
@@ -1546,17 +934,17 @@ CREATE TABLE `student_questions`
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER(11)  NOT NULL,
 	`checked_id` INTEGER(11)  NOT NULL,
-	`category_id` INTEGER(11)  NOT NULL,
-	`course_id` INTEGER(11)  NOT NULL,
+	`category_id` INTEGER(11) default 1 NOT NULL,
+	`course_id` INTEGER(11) default 1 NOT NULL,
 	`question` VARCHAR(500)  NOT NULL,
 	`exe_order` INTEGER(11)  NOT NULL,
-	`time` INTEGER(11)  NOT NULL,
+	`time` INTEGER(100)  NOT NULL,
 	`course_code` VARCHAR(100)  NOT NULL,
 	`year` VARCHAR(100)  NOT NULL,
 	`school` VARCHAR(100)  NOT NULL,
-	`status` INTEGER(10)  NOT NULL,
-	`close` INTEGER(10)  NOT NULL,
-	`cron` INTEGER(10)  NOT NULL,
+	`status` INTEGER(10) default 0 NOT NULL,
+	`close` INTEGER(10) default 61000 NOT NULL,
+	`cron` INTEGER(10) default 1 NOT NULL,
 	`source` VARCHAR(100)  NOT NULL,
 	PRIMARY KEY (`id`),
 	INDEX `student_questions_FI_1` (`user_id`),

@@ -44,7 +44,6 @@
 			
 						<form name="paypalfrm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 						
-						<input type="submit" name="Submit" value="Donate" style="display:none;">
 						<input type="hidden" id="return" name="return" value="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/admin.php/experts_payouts/unpaidExperties/e_id/<?php echo $expertspayout->getExpertId();?>/id/<?php echo $expertspayout->getId(); ?>">
 						<input type="hidden" name="cmd" value="_xclick">
 						<input type="hidden" name="item_name" value="testing">

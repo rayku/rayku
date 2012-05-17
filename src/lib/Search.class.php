@@ -16,28 +16,7 @@ class Search
 
   function withinUsers( sfUser $user )
   {
-
-//================================================DAC021================================================//
-$pos = strrpos($this->criteria, "'");
-
-if ($pos) { 
-    	
-	$this->criteria = str_replace("'","",$this->criteria); 
-}
-//================================================DAC021================================================//
-
-		if( $user->isAuthenticated() )
-			$query="select * from user_interest where interest like '%".$this->criteria."%' and user_id!='".$user->getRaykuUserId()."' " ;
-		else
-			$query="select * from user_interest where interest like '%".$this->criteria."%' " ;
-
-		$stmt = Propel::getConnection()->query($query);
-
-		$ids=array();
-    while( $row = $stmt->fetch() )
-      $ids[]=$row['user_id'];
-    
-    $this->addFromStatement( UserPeer::search($this->criteria, join( ',', $ids), $user) );
+      $this->addFromStatement( UserPeer::search($this->criteria, $user) );
   }
 
   function withinPosts()

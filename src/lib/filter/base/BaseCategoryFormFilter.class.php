@@ -19,6 +19,7 @@ class BaseCategoryFormFilter extends BaseFormFilterPropel
       'parent'      => new sfWidgetFormFilterInput(),
       'prefix'      => new sfWidgetFormFilterInput(),
       'updated_at'  => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'status'      => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ class BaseCategoryFormFilter extends BaseFormFilterPropel
       'parent'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'prefix'      => new sfValidatorPass(array('required' => false)),
       'updated_at'  => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'status'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('category_filters[%s]');
@@ -50,6 +52,7 @@ class BaseCategoryFormFilter extends BaseFormFilterPropel
       'parent'      => 'Number',
       'prefix'      => 'Text',
       'updated_at'  => 'Date',
+      'status'      => 'Number',
     );
   }
 }

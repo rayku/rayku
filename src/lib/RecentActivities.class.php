@@ -30,29 +30,6 @@ class RecentActivities
       return $this->fetchForStudent($user);
   } 
   
-   function fetchLiveFeed(User $user, $context = null)
-  {
-		
-	if( $user->getType() == UserPeer::getTypeFromValue( 'user' ) || $context == 'profile' )
-	{	
-		$friends = FriendPeer::getFriendsOf($user);
-		
-		foreach($friends as $friend) 
-		{
-				
-				if($friend->getId() != '124')
-				{
-					return HistoryPeer::getFor( $friend->getId(), 1 );
-			
-			
-				}
-		}
-		
-	}
-	
-  }
-   
-
   private function createFeed()
   {
     $this->feed = new sfRss201Feed();

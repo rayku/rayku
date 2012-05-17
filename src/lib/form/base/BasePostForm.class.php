@@ -19,6 +19,10 @@ class BasePostForm extends BaseFormPropel
       'updated_at'    => new sfWidgetFormDateTime(),
       'content'       => new sfWidgetFormTextarea(),
       'best_response' => new sfWidgetFormInput(),
+      'reported'      => new sfWidgetFormInput(),
+      'user_ip'       => new sfWidgetFormInput(),
+      'banned'        => new sfWidgetFormInput(),
+      'reported_date' => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -29,6 +33,10 @@ class BasePostForm extends BaseFormPropel
       'updated_at'    => new sfValidatorDateTime(),
       'content'       => new sfValidatorString(),
       'best_response' => new sfValidatorInteger(),
+      'reported'      => new sfValidatorInteger(),
+      'user_ip'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'banned'        => new sfValidatorInteger(),
+      'reported_date' => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('post[%s]');

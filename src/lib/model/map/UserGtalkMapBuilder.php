@@ -62,7 +62,7 @@ class UserGtalkMapBuilder implements MapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addForeignPrimaryKey('USERID', 'Userid', 'INTEGER' , 'user', 'ID', true, 11);
+		$tMap->addForeignPrimaryKey('USERID', 'Userid', 'INTEGER' , 'user', 'ID', true, 10);
 
 		$tMap->addColumn('GTALKID', 'Gtalkid', 'VARCHAR', true, 100);
 

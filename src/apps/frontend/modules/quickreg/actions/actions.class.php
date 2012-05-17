@@ -179,10 +179,6 @@ class quickregActions extends sfActions
 		$this->getUser()->signIn($userCheck);
 		}
 
-		if($user) {
-			$kinkarsoUser = FriendPeer::createInitialFriendship($user);
-		} 
-		
 		if( $kinkarsoUser ) {
 
 		if($user) {
@@ -191,9 +187,6 @@ class quickregActions extends sfActions
 
 
 				 ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
-
-		  	 	 JournalEntryPeer::createHelloWorldEntryFor($user);
-
 			}
 
 		} 
@@ -224,12 +217,6 @@ class quickregActions extends sfActions
 		if($user) {
 			$currentuser->sendMessage($user->getId(),$subject,$body);
 		} 
-
-
-		$gallery = new Gallery();
-		$gallery->setTitle('Profile Pictures');
-		$gallery->setShowEntity(0);
-		$gallery->save();
 
 
 		}

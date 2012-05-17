@@ -37,14 +37,6 @@ register:
   url: /register
   param: { module: register, action: index }
 
-register_step3:
-  url: /register/step3
-  param: { module: register, action: stepthird }
-
-register_step4:
-  url: /register/step4
-  param: { module: register, action: stepforth }
-
 register_confirm:
   url: /register/confirm/:code/temp/*
   param: { module: register, action: confirmUser }
@@ -119,104 +111,6 @@ view_forums:
   url: /forum/*
   param: { module: forum, action: index }
 
-
-
-
-# ----
-# Friends
-# ----
-
-submit_friend_request:
-  url: /friends/requestFriendship/:username/*
-  param: { module: friends, action: friendshipRequest }
-  options:
-    segment_separators: ['/']
-
-friend_remove:
-  url: /friends/removeFriendship/:user_id
-  param: { module: friends, action: removeFriendship }
-  requirements: { page: \d+ }
-
-friend_accept:
-  url: /friends/acceptFriendshipRequest/:user_id
-  param: { module: friends, action: acceptFriendshipRequest }
-  requirements: { page: \d+ }
-
-friend_deny:
-  url: /friends/denyFriendshipRequest/:user_id
-  param: { module: friends, action: denyFriendshipRequest }
-  requirements: { page: \d+ }
-
-# ----
-# Gallery
-# ----
-gallery_create:
-  url: /gallery/new
-  param: { module: gallery, action: create }
-
-gallery_index:
-  url: /gallery/list/:user_id
-  param: { module: gallery, action: index }
-  requirements: { id: \d+ }
-
-gallery_show:
-  url: /gallery/show/:id
-  param: { module: gallery, action: show }
-  requirements: { id: \d+ }
-
-gallery_edit:
-  url: /gallery/edit/:id
-  param: { module: gallery, action: edit }
-  requirements: { id: \d+ }
-
-gallery_delete:
-  url: /gallery/delete/:id
-  param: { module: gallery, action: delete }
-  requirements: { id: \d+ }
-
-gallery_upload:
-  url: /gallery/upload/:id
-  param: { module: gallery, action: upload }
-  requirements: { id: \d+ }
-
-gallery_image_show:
-  url: /gallery/item/:id/show
-  param: { module: gallery, action: itemShow }
-  requirements: { id: \d+ }
-
-gallery_image_display:
-  url: /gallery/item/:id
-  param: { module: gallery, action: itemDisplay }
-  requirements: { id: \d+ }
-
-gallery_image_show_thumb:
-  url: /gallery/item/:id/thumb
-  param: { module: gallery, action: itemShow, thumb: true }
-  requirements: { id: \d+ }
-
-gallery_image_show_thumb2:
-  url: /gallery/item/:id/thumb2
-  param: { module: gallery, action: itemShow, thumb2: true }
-  requirements: { id: \d+ }
-
-gallery_item_download:
-  url: /gallery/item/:id/download
-  param: { module: gallery, action: itemDownload }
-  requirements: { id: \d+ }
-
-gallery_item_delete:
-  url: /gallery/item/:id/delete
-  param: { module: gallery, action: itemDelete }
-  requirements: { id: \d+ }
-
-gallery_item_set_as_avatar:
-  url: /gallery/item/:id/as-avatar
-  param: { module: gallery, action: setAsAvatar }
-  requirements: { id: \d+ }
-
-
-
-
 # ----
 # Private Messaging
 # ----
@@ -234,15 +128,6 @@ outbox:
 compose_to:
   url: /message/compose/:nickname/*
   param: { module: message, action: compose }
-
-# ----
-# Journal
-# ----
-journal_index:
-  url: /journal/:user_id
-  param: { module: journal, action: index }
-  requirements: { user_id: \d+ }
-
 
 # ----
 # CMS/Groups
@@ -300,23 +185,6 @@ avatar:
 
 
 
-
-
-# ----
-# Nudge
-# ----
-
-nudge_remove:
-  url: /nudge/ignore/:username
-  param: { module: nudge, action: remove }
-  options:
-    segment_separators: ['/']
-
-nudge:
-  url: /nudge/:username
-  param: { module: nudge, action: send }
-  options:
-    segment_separators: ['/']
 
 
 # ----
