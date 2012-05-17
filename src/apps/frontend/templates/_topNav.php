@@ -118,7 +118,6 @@
 
 
 <script type="text/javascript" src="/js/checkuser.js"></script>
-<script type="text/javascript" src="/js/checkuserstay.js"></script>
 
 
 <?php
@@ -127,7 +126,6 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
     && ($_SERVER['REDIRECT_URL'] != "/register")
     && ($_SERVER['REDIRECT_URL'] != "/start")
     && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")) {
-    
     ?>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
@@ -156,7 +154,6 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
         echo '
             <script type="text/javascript">
                 checkedUser();
-                checkUserStay();
             </script>';
     }
 
