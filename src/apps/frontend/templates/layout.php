@@ -530,6 +530,9 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="/js/jquerynav.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.notifier.js"></script>
+<script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>
+<script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimeout.js" type="text/javascript"></script>
+
 <style type="text/css">
 <?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
  @import "css/46.css";

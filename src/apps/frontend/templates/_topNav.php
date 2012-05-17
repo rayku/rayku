@@ -1,4 +1,14 @@
-<?php
+<style type="text/css">
+#idletimeout { background:#CC5100; border:3px solid #FF6500; color:#fff; font-family:arial, sans-serif; text-align:center; font-size:12px; padding:10px; position:relative; top:0px; left:0; right:0; z-index:100000; display:none; }
+#idletimeout a { color:#fff; font-weight:bold }
+#idletimeout span { font-weight:bold }
+</style>
+<div id="idletimeout">
+	You will be logged off in <span><!-- countdown place holder --></span>&nbsp;seconds due to inactivity. 
+	<a id="idletimeout-resume" href="#">Click here to continue using this web page</a>.
+</div>
+
+    <?php
     RaykuCommon::getDatabaseConnection();
     use_helper('MyAvatar', 'Javascript');
     
@@ -154,6 +164,30 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
             <script type="text/javascript">
                 checkedUser();
             </script>';
+        
+        
+        echo '
+            <script type="text/javascript">
+                jQuery.idleTimeout(\'#idletimeout\', \'#idletimeout a\', {
+                        idleAfter: 5,
+                        onTimeout: function(){
+                                jQuery(this).slideUp();
+                                window.location = "timeout.htm";
+                        },
+                        onIdle: function(){
+                                window.alert(\'WAKE UP!\');
+                                jQuery(this).slideDown(); // show the warning bar
+                        },
+                        onCountdown: function( counter ){
+                                console.log(jQuery(this));
+                                jQuery(this).find("span").html( counter ); // update the counter
+                        },
+                        onResume: function(){
+                                jQuery(this).slideUp(); // hide the warning bar
+                        }
+                });            
+            </script>
+        ';
     }
 
     include_partial('global/topNav_someJSScripts');
