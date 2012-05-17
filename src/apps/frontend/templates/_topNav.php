@@ -1,56 +1,19 @@
 <?php
-  use_helper('MyAvatar', 'Javascript');
-  $raykuUser = $sf_user->getRaykuUser();
+    RaykuCommon::getDatabaseConnection();
+    use_helper('MyAvatar', 'Javascript');
+    
+    /**
+     * @todo - fix this if needed at all - or it would be better to wipe this out
+     *         currently it creates infinite loop of redirects
+     */
+    // include_partial('global/topNav_bannedIps');
+    
+    $raykuUser = $sf_user->getRaykuUser();
 
-    ////////checking user is authirzed to the site
-	$num_of_row=0;
-
-    $connection = RaykuCommon::getDatabaseConnection();
-
-		 $IP=$_SERVER['REMOTE_ADDR'];
-
-	$_query = mysql_query("select * from thread  where user_ip='".$IP."' and banned=1", $connection);
-	$num_of_row= mysql_num_rows($_query);
-	if($num_of_row>0)
-	{
-		echo "
-        <script type='text/javascript'>
-     document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
-		</script>";
-
-	}
-
-	$_query = mysql_query("select * from banned_ips  where ip like '%".$IP."%' ", $connection);
-	$num_of_row= mysql_num_rows($_query);
-	if($num_of_row>0)
-	{
-		echo "
-        <script type='text/javascript'>
-     document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
-		</script>";
-
-	}
-
-  $logedUserId = @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-	if($logedUserId<>'')
-	{
-			$user_id=$raykuUser->getId();
-			$num_of_row=0;
-			$_query = mysql_query("select * from thread  where 	poster_id='".$user_id."' and banned=1", $connection);
-			$num_of_row= mysql_num_rows($_query);
-			if($num_of_row>0)
-			{
-				echo "
-				<script type='text/javascript'>
-     document.location='http://" . RaykuCommon::getCurrentHttpDomain() . "/error';
-				</script>";
-
-			}
-	}
-//////////////////////////
-
-  if(!$sf_user->isAuthenticated())
-  {
+    if(!$sf_user->isAuthenticated())
+    {
+        
+        
 ?>
 <div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
@@ -72,12 +35,19 @@
 </div>
 </div>
 <!--div#top-nav-->
-<?php } else { ?>
 <?php
-$queryPoints = mysql_query("select * from user where id=".$raykuUser->getId(), $connection) or die(mysql_error());
-$detailPoints = mysql_fetch_assoc($queryPoints);
+
+
+
+} else {
+    
+    $queryPoints = mysql_query("select * from user where id=".$raykuUser->getId()) or die(mysql_error());
+    $detailPoints = mysql_fetch_assoc($queryPoints);
+
+    
+    $email=$raykuUser->getEmail();
+    
 ?>
-<?php $email=$raykuUser->getEmail();  ?>
 <div id="top-nav">
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
@@ -131,178 +101,65 @@ $detailPoints = mysql_fetch_assoc($queryPoints);
 
 
  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/themes/smoothness/jquery-ui.css"/>
- <script type="text/javascript" src="/js/jquery.idle-timer.js"></script>
-
-<!-- User Idle State Script, Not Working -->
-<!--
-<div id="status" style="padding:0 5px;">&nbsp;</div>
-<form name="idleform" id="idleform" >
-<input type="hidden" name="user_val" id="user_val"  value="<?php echo @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];?>"/>
-</form>
-    <script type="text/javascript">
-    var ds = jQuery.noConflict();
-    (function(ds){
-
-        var timeout = 600000;
-
-		var usid = document.getElementById("user_val").value;
-
-        ds(document).bind("idle.idleTimer", function(){
-            //ds("#status").html("User is idle :(").css("backgroundColor", "silver");
-			//alert(usid)
-			ds.ajax({
-				type: "GET",
-				url: 'http://'+getHostname()+'/tutors/ajaxidle?userid='+usid+'&status=1',
-				success: function(msg){
-				//alert(msg);
-
-				}
-			});
-
-
-        });
-
-        ds(document).bind("active.idleTimer", function(){
-            // ds("#status").html("User is active :D").css("backgroundColor", "yellow");
-
-			 ds.ajax({
-				type: "GET",
-				url: 'http://'+getHostname()+'/tutors/ajaxidle?userid='+usid+'&status=2',
-				success: function(msg){
-				//alert(msg);
-
-				}
-			});
-
-
-        });
-
-        ds.idleTimer(timeout);
-
-        // correct the page
-        ds('#timeout').text(timeout/1000);
-
-
-    })(jQuery);
-
-    </script>-->
-
-
 <div id="tt-questions-tooltip" class="tooltip"> Ask a Question </div>
 <div id="tt-boards-tooltip" class="tooltip"> Q&A Boards </div>
 <div id="tt-messages-tooltip" class="tooltip"> You have <strong><?php echo $raykuUser->getNrOfNewMessages(); ?></strong> new messages </div>
 <div id="tt-tutors-tooltip" class="tooltip"> Tutors List </div>
 <div id="tt-points-tooltip" class="tooltip"> You have <strong><?php echo $detailPoints['points'];?>RP</strong> </div>
 <div id="tt-whiteboard-tooltip" class="tooltip"> Practice Whiteboard </div>
-<?php } ?>
-<ul class="main-nav">
-  <li class="home"> </li>
-  <?php if($sf_user->isAuthenticated()): ?>
-  <?php if($raykuUser->getType() == '4'): ?>
-  <li><?php echo link_to( 'Admin', 'http://' . RaykuCommon::getCurrentHttpDomain() . '/admin.php' ); ?></li>
-  <?php endif; ?>
-  <?php endif;?>
-</ul>
+<?php
+
+
+}
+
+
+?>
 </div>
+
+
 <script type="text/javascript" src="/js/checkuser.js"></script>
 <script type="text/javascript" src="/js/checkuserstay.js"></script>
+
+
 <?php
-if( isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck") &&  ($_SERVER['REDIRECT_URL'] != "/logout") && ($_SERVER['REDIRECT_URL'] != "/register") && ($_SERVER['REDIRECT_URL'] != "/start") && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")):
-?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
-<script type="text/javascript" src="/js/scriptaculous.js"></script>
-<script type="text/javascript" src="/js/builder.js"></script>
-<script type="text/javascript" src="/js/effects.js"></script>
-<script type="text/javascript" src="/js/modalbox.js"></script>
-<script type="text/javascript" src="/js/encode_decode.js"></script>
-<?php if($sf_user->isAuthenticated()) : ?>
-<link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
-<script type="text/javascript" src="/scripts/popup-window.js"></script>
-<script type="text/javascript" src="/js/question_popup.js"></script>
-<script type="text/javascript" language="javascript">checkMissedQuestion();</script>
-<input type="hidden" value='1' name="question_hidden" id="question_hidden" />
-<!-- Missed Question Popup Start -->
-<div class="sample_popup" id="question_popup" style="display:none;z-index:50;border:3px solid #999;background:#F5F5F5;padding:4px 4px 25px 25px;width:420px;">
-  <div style="width:30px;float:right;" align="right"><a href="/expertmanager/cookieadd">
-  <img class="menu_form_exit" id="popup_exit" src="/styles/form_exit.png" alt="Exit"/></a>
-  </div>
-  <div style="width:340px;float:left;color:#990000;font-size:20px;font-weight:bold;margin-top:21px;">Oops! You missed a question.</div>
-  <div style="clear:both"></div>
-  <div id="misqry">
-  </div>
-</div>
-<!-- Missed Question Popup Stop -->
-<?php endif; ?>
-<?php if($_SERVER['REQUEST_URI'] == "/expertmanager/connect") : ?>
-<script type="text/javascript" src="/js/checkedMsgUser.js"></script>
-<script type="text/javascript">
-	checkedMsgUser();
-
-	setTimeout('checkForRedirect()', 25000);
-	</script>
-<?php endif; ?>
-<?php if ($sf_user->isAuthenticated()) { ?>
-<script type="text/javascript">
-checkedUser();
-checkUserStay();
-</script>
-<?php } ?>
-<script type="text/javascript">
-
-function hideDiv() {
-
-document.getElementById("question_popup").style.display = 'none';
-return true;
-
-}
-
-
-function getCookie(c_name)
-{
-
-if (document.cookie.length>0)
-  {
-  c_start=document.cookie.indexOf(c_name + "=");
-  if (c_start!=-1)
-    {
-    c_start=c_start + c_name.length+1;
-    c_end=document.cookie.indexOf(";",c_start);
-    if (c_end==-1) c_end=document.cookie.length;
-    return unescape(document.cookie.substring(c_start,c_end));
+if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck")
+    &&  ($_SERVER['REDIRECT_URL'] != "/logout")
+    && ($_SERVER['REDIRECT_URL'] != "/register")
+    && ($_SERVER['REDIRECT_URL'] != "/start")
+    && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")) {
+    
+    ?>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
+    <script type="text/javascript" src="/js/scriptaculous.js"></script>
+    <script type="text/javascript" src="/js/builder.js"></script>
+    <script type="text/javascript" src="/js/effects.js"></script>
+    <script type="text/javascript" src="/js/modalbox.js"></script>
+    <script type="text/javascript" src="/js/encode_decode.js"></script>
+    <?php
+    
+    if($sf_user->isAuthenticated()) {
+        include_partial('global/topNav_questionPopup');
     }
-  }
-return "";
+
+    if($_SERVER['REQUEST_URI'] == "/expertmanager/connect") {
+        echo '
+            <script type="text/javascript" src="/js/checkedMsgUser.js"></script>
+            <script type="text/javascript">
+                checkedMsgUser();
+                setTimeout(\'checkForRedirect()\', 25000);
+            </script>';
+    }
+
+    if ($sf_user->isAuthenticated()) {
+        echo '
+            <script type="text/javascript">
+                checkedUser();
+                checkUserStay();
+            </script>';
+    }
+
+    include_partial('global/topNav_someJSScripts');
 }
-
-
-function checkForRedirect() {
-
-redirect = getCookie("redirection");
-//alert(redirect);
-forumsub = getCookie("forumsub");
-//alert(forumsub);
-
-redirect = getCookie("redirection");
-forumsub = getCookie("forumsub");
-
-	if(redirect != '' && redirect != null ) {
-		var d = jQuery.noConflict();
-		d.ajax({ cache: false,
-			type : "POST",
-			url: "http://"+getHostname()+"/register/redirect",
-			success : function (data)  {
-				var check = data.split("<");
-				if(check[0] == "redirect") {
-					document.location = "http://"+getHostname()+"/expertmanager/studentconfirmation";
-				}
-			}
-		});
-	}
-setTimeout('checkForRedirect()', 20000);
-}
-</script>
-<?php
-endif;
 ?>
