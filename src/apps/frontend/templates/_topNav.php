@@ -127,7 +127,6 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
     && ($_SERVER['REDIRECT_URL'] != "/start")
     && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")) {
     ?>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
     <script type="text/javascript" src="/js/scriptaculous.js"></script>
