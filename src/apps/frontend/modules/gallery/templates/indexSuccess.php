@@ -4,7 +4,7 @@
 <?php debug_message($message) ?>-->
    
 <div id="top" style="margin-left:16px;padding-top:2px">
-  <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
+  <div style="width:30px; float:left;"><img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>"/></div>
     <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left">Gallery Home</div>
   <div class="spacer"></div>
 </div>

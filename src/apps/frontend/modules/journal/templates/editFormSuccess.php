@@ -20,7 +20,7 @@ window.onload = function()
 '); ?>
 
 <div id="top" style="margin-left:18px;padding-top:2px">
-  <div class="title" style="float:left"> <img src="/images/arrow-right.gif" alt="" />
+  <div class="title" style="float:left"> <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
     <p style="font-size:16px; line-height:24px;color:#1C517C;font-weight:bold;margin-left:15px;"><a href="http://www.rayku.com/journal/<? echo $expertusr; ?>"><? echo $expertname; ?>'s Journal Entries</a> > Create/Edit Journal Entry</p>
   </div>
   <div class="spacer"></div>

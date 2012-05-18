@@ -285,12 +285,12 @@ if ($cat != NULL) {
     }
     /* Automatic Tutor Select - End */
     if ($experts->getType() == 5) { ?>
-      <img src="/images/expert_saved.png" alt="Rayku Staff" />
+      <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
       <?php } ?>
       <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
       <?php } else { ?>
       <?php if ($experts->getType() == 5) { ?>
-      <img src="/images/expert_saved.png" alt="Rayku Staff" />
+      <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
       <?php } ?>
       <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
       <?php } ?>
@@ -319,7 +319,7 @@ if ($cat != NULL) {
 
         if ($lastSession != null && $lastSession->stillActive()) {
 ?>
-      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="<?php echo image_path('em-busy.jpg', false); ?>"></a>
 <?php
         } else {
             $_count_online_user += 1;
@@ -343,7 +343,7 @@ if ($cat != NULL) {
         }
     } else {
 ?>
-      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="/images/em-email.jpg"></a>
+      <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="<?php echo image_path('em-email.jpg', false); ?>"></a>
 <?php
     }
 ?>
@@ -395,7 +395,7 @@ $_v++;
             if (count($sample)!=count($newUser)) {
 ?>
 <div style="width:100%;font-size:20px;line-height:35px;" align="right">
-  <div id="bottomMoreButton"> <img src="/images/ajax-loader.gif" style="display:none" class="spinner" /> <a id="more_<?php echo @$next_records?>" class="more_records" name="2" href="javascript: void(0)">show more listings</a> </div>
+  <div id="bottomMoreButton"> <img src="<?php echo image_path('ajax-loader.gif', false); ?>" style="display:none" class="spinner" /> <a id="more_<?php echo @$next_records?>" class="more_records" name="2" href="javascript: void(0)">show more listings</a> </div>
 </div>
 <?php
             }

@@ -712,12 +712,12 @@ if ($cat != NULL) {
 
               <?php if ($onlinecheck == "online" || $experts->isOnline()) { ?>
               <?php if ($experts->getType() == 5) { ?>
-              <img src="/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
               <?php } ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php } else { ?>
               <?php if ($experts->getType() == 5) { ?>
-              <img src="/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
               <?php } ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php } ?>
@@ -725,7 +725,7 @@ if ($cat != NULL) {
             <?php if ($onlinecheck == "online" || $experts->isOnline()) { ?>
 
     <?php if (($experts->getType() == 5)) { ?>
-        <div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
+        <div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="<?php echo image_path('portfolio/certified-online.png', false); ?>" alt="Certified" id="certified" /></div>
     <?php } elseif ($curr_user_rank <= 10) { ?>
             <div style='float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;'>ranked <strong>#<?php echo $curr_user_rank; ?></strong></div>
          <?php } ?>
@@ -753,10 +753,10 @@ if ($cat != NULL) {
             <?php $_count_online_user += 1; ?>
               <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy; ?>" value="<?php echo $newOne['userid']?>" onclick="setvalue(this.id)" />
               <?php } else{ ?>
-              <a href="../../message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="/images/em-email.jpg"></a>
+              <a href="../../message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="<?php echo image_path('em-email.jpg', false); ?>"></a>
               <?php } ?>
               <?php } else{ ?>
-              <a href="../../message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="/images/em-email.jpg"></a>
+              <a href="../../message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="<?php echo image_path('em-email.jpg', false); ?>"></a>
               <?php } ?>
             </p>
           </div>
@@ -773,12 +773,12 @@ if ($cat != NULL) {
 
               <?php if ($onlinecheck == "online" || $experts->isOnline()) { ?>
               <?php if ($experts->getType() == 5) { ?>
-              <img src="/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
               <?php } ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
               <?php }else{ ?>
               <?php if ($experts->getType() == 5) { ?>
-              <img src="/images/expert_saved.png" alt="Rayku Staff" />
+              <img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" />
               <?php } ?>
               <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
               <?php } ?>
@@ -787,7 +787,7 @@ if ($cat != NULL) {
             <?php if ($onlinecheck == "online" || $experts->isOnline()) { ?>
 
             <?php if (($experts->getType() == 5)) { ?>
-                <div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="/images/portfolio/certified-online.png" alt="Certified" id="certified" /></div>
+                <div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;"><img src="<?php echo image_path('portfolio/certified-online.png', false); ?>" alt="Certified" id="certified" /></div>
             <?php } elseif ($curr_user_rank <= 10) { ?>
                     <div style='float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;'>ranked <strong>#<?php echo $curr_user_rank; ?></strong></div>
             <?php } ?>
@@ -820,7 +820,7 @@ if ($cat != NULL) {
                 if ($lastSession != null && $lastSession->stillActive()) {
                     $_count_online_user += 1;
 ?>
-              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="/images/em-busy.jpg"></a>
+              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="<?php echo image_path('em-busy.jpg', false); ?>"></a>
 <?php
                 } else {
 ?>
@@ -829,7 +829,7 @@ if ($cat != NULL) {
                 }
             } else {
 ?>
-              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="/images/em-email.jpg"></a>
+              <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img height="18" width="59" alt="" src="<?php echo image_path('em-email.jpg', false); ?>"></a>
               <?php } ?>
             </p>
           </div>

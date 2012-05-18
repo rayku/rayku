@@ -3,7 +3,7 @@
 <?php echo acl_javascript() ?>
 
 <div id="top" style="margin-left:16px;padding-top:2px">
-  <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
+  <div style="width:30px; float:left;"><img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>"/></div>
     <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left"><a href="/gallery/list/<?php echo $sf_user->getRaykuUser()->getId() ?>">Gallery Home</a> > <a href="/gallery/show/<?php echo htmlentities($gallery->getId()) ?>">Album "<?php echo htmlentities($gallery->getTitle()) ?>"</a> > Edit Album</div>
     <div class="spacer"></div>
 </div>

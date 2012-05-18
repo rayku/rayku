@@ -38,7 +38,7 @@ function webmail(email) {
 <div class="body-main">
   <div id="what-is">
     <div style="width:30px;float:left">
-      <img height="25" width="42" alt="" src="/images/green_arrow.jpg"/>
+      <img height="25" width="42" alt="" src="<?php echo image_path('green_arrow.jpg', false); ?>"/>
     </div>
     <p style="font-size:16px;font-weight:bold;margin-left:55px;margin-bottom:20px"><a href="http://www.rayku.com/register/invitation" style="color:rgb(28, 81, 124)">Invite  Friends, Get RP</a> > Email Invite Tool</p>
   </div>
@@ -66,7 +66,7 @@ echo "<script type='text/javascript'>alert('Your invitation email(s) has been se
       <h3 class="invite-friends">Send Invite Coupon Codes to Friends</h3>
       <p style="line-height:20px; font-size:14px">        Enter the email address and password of your primary email account, and our system will automatically fetch your contacts.</p>
       <h3 class="we-support">Some of the email clients we support:</h3>
-      <img class="supported-emails" src="/images/supported-emails.png" alt="" />
+      <img class="supported-emails" src="<?php echo image_path('supported-emails.png', false); ?>" alt="" />
       <form id="emailform" name='emailform' onsubmit="if(emailCheck($('input-email').value))new Ajax.Updater('target', '/register/getcontact?userid=<?php echo $user->getId()?>', {asynchronous:true, evalScripts:true, onComplete:function(request, json){}, onLoading:function(request, json){}, onSuccess:function(request, json){}, parameters:Form.serialize(this)}); return false;" action="/register/getcontact?userid=<?php echo $user->getId()?>" method="post" autocomplete="off">
         <h3 style="margin-bottom: 5px;">Email address (eg. youremail@gmail.com):</h3>
         <?php //echo input_tag('',array('class'=>'field','id'=>'input-email')); ?>

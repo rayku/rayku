@@ -1,5 +1,5 @@
 <div class="avatar">
-  <img alt="img" src="/images/memberlist_avatar.png"/>
+  <img alt="img" src="<?php echo image_path('memberlist_avatar.png', false); ?>"/>
 </div>
 
 <div class="username">

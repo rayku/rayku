@@ -12,7 +12,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 		<ul id="tags" >
 			 <?php while($_rowTag = mysql_fetch_assoc($_queryTag)) { ?>
 
-                                <li><img src="images/tag.jpg" alt="tag" class="tag" />
+                                <li><img src="<?php echo image_path('tag.jpg', false); ?>" alt="tag" class="tag" />
 	<!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $_rowTag['id'];?>" class="waste" > -->
 <small style="a:hover{text-decoration:none;};cursor:pointer;" id="clicktag_<?php echo $_rowTag['id'];?>" class="clicktag waste" >
 		 <?php $_queryCourse = mysql_query("select * from courses where id =".$_rowTag['course_id'], $connection) or die("Error-->2".mysql_error());

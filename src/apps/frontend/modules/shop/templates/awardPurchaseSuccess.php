@@ -1,7 +1,7 @@
 <div class="body-main">
     <div id="what-is">
         <div style="width:30px; float:left;">
-            <img src="/images/green_arrow.jpg" width="42" height="25" alt="" />
+            <img src="<?php echo image_path('green_arrow.jpg', false); ?>" width="42" height="25" alt="" />
         </div>
         <p style="font-size:16px; color:#1c517c; font-weight:bold; margin-left:45px;"><a href="/shop/index" style="color:#1C517C">RP Shop</a> > Profile Icons</p>
     </div>

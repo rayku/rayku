@@ -124,7 +124,7 @@ if($sf_context->getModuleName() !='expertmanager') {
     
     <div id="footer" style="padding-bottom:40px;">
       <div class="foo">
-        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="/images/img-footer-logo-1.png" alt="rayku.com"/></a> </div>
+        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
         <p style="margin-top:10px">Copyright 2012 Rayku, Inc.  All rights reserved.</p>
         <ul>
           <!--<li><?php echo link_to( 'member list', 'friends/index' ); ?></li>-->

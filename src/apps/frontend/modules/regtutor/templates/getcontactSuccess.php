@@ -29,7 +29,7 @@
 
         </div>
 
-        <input name="submit" type="image" value="1" src="/images/invite-your-friends.png" alt="Invite Your Friends" style="clear: both; float: right;margin-right:10px; margin-top: 14px;" onClick="" />
+        <input name="submit" type="image" value="1" src="<?php echo image_path('invite-your-friends.png', false); ?>" alt="Invite Your Friends" style="clear: both; float: right;margin-right:10px; margin-top: 14px;" onClick="" />
         <div class="left-bottom"></div>
 
     </div>

@@ -5,7 +5,7 @@
   <?php if($user->getPicture()!=''): ?>
 	  <?php echo avatar_tag_for_user($user); ?>
   <?php else: ?>
-    <img src="/images/dev/emptyprofile.gif" alt="" />
+    <img src="<?php echo image_path('dev/emptyprofile.gif', false); ?>" alt="" />
   <?php endif; ?>
 									
   <div class="container">

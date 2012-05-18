@@ -40,7 +40,7 @@
 
 	<div id="top" style="margin-left:18px;padding-top:2px">
 		<div class="title" style="float:left;">
-			<img src="/images/arrow-right.gif" alt="" />
+			<img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
 			<p style="line-height:24px"><?php echo $expert->getName(); ?>'s Tutor Portfolio <!--<span>(username)</span>--></p>
 		</div>
 
@@ -140,7 +140,7 @@
 					<?php if ($expert->isOnline()): ?>                        
 						<?php echo submit_image_tag('/images/start.png', array('width' => '71', 'height' => '19', 'border' => '0')); ?>
 					<?php else: ?>
-						<img src="/images/start-gray.png" /><br />
+						<img src="<?php echo image_path('start-gray.png', false); ?>" /><br />
 						(expert is offline)
 					<?php endif; ?>
 					</div>
@@ -290,24 +290,24 @@
           </div>
         
                 <!--<div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
                 
                 <div class="clear-both" style="height:10px"></div>
                 
                 <div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
                 
                 <div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
                 
                 <div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>-->
 				

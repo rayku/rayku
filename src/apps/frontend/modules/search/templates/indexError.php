@@ -1,6 +1,6 @@
     	<div id="top">
           <div class="title">
-            <img src="/images/arrow-right.gif" alt="" />
+            <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
                  <p>Search Results</p>
            </div>
          <div class="spacer"></div>

@@ -3,7 +3,7 @@
 <div class="body-main">
 
 	<div id="top">
-	<div class="title" style="float:left"><img src="/images/arrow-right.gif" alt="" /><p>Schedules</p></div>
+	<div class="title" style="float:left"><img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" /><p>Schedules</p></div>
 	<div class="spacer"></div>
 	</div> 
 

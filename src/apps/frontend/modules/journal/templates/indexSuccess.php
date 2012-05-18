@@ -1,5 +1,5 @@
 <div id="top" style="margin-left:18px;padding-top:2px">
-  <div class="title" style="float:left"> <img src="/images/arrow-right.gif" alt="" />
+  <div class="title" style="float:left"> <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
     <p style="font-size:16px; line-height:24px;color:#1C517C;font-weight:bold;margin-left:15px;"><? echo $journalEntry->getUser(); ?>'s Journal Entries</p>
   </div>
   <div class="spacer"></div>

@@ -15,7 +15,7 @@
 
 <div id="top">
 	<div class="title">
-		<img src="/images/arrow-right.gif" alt="" />
+		<img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
 		<p>Search Results</p>
 	</div>
 	<div class="spacer"></div>
@@ -40,7 +40,7 @@
 			  <?php if($searchresult->getPicture()!=''): ?>
 				  <?php echo avatar_tag_for_user($searchresult); ?>
 			  <?php else: ?>
-				<img src="/images/dev/emptyprofile.gif" alt="" />
+				<img src="<?php echo image_path('dev/emptyprofile.gif', false); ?>" alt="" />
 			  <?php endif; ?>
 												
 			  <div class="container">

@@ -14,7 +14,7 @@
 </style>
 	<div id="top">
 		<div class="title" style="float:left">
-			<img src="/images/arrow-right.gif" alt="" />
+			<img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
 			<?php if($expert->getUsername() == $sf_user->getRaykuUser()->getUsername()): ?>
 			<p>Welcome <?php echo $expert->getUsername(); ?> <!--<span>(username)</span>--></p>
 			<?php else: ?>
@@ -109,17 +109,17 @@
 				<div class="entry" style="margin-top:10px;">
 
 				<div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
 				<div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
 				<div class="portimg">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
@@ -128,17 +128,17 @@
 				<h3>Best Response</h3>
 				
 				<div class="portimg best">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
 				<div class="portimg best">
-					<a href="#"><img src="/images/img_portfolio.jpg" alt="img" /></a>
+					<a href="#"><img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" /></a>
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
 				<div class="portimg best">
-					<img src="/images/img_portfolio.jpg" alt="img" />
+					<img src="<?php echo image_path('img_portfolio.jpg', false); ?>" alt="img" />
 					<div class="desc"><span>Video Title here</span>  -  Enter your very short description here :-).</div>
 				</div>
 				
@@ -157,7 +157,7 @@
 			<div class="top"></div>
 			<div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
 				<div class="text">
-					<div class="displaypic"><img src="/images/default-avatar.jpg" alt="img" /></div>
+					<div class="displaypic"><img src="<?php echo image_path('default-avatar.jpg', false); ?>" alt="img" /></div>
 					<h1 class="name"><?php echo $expert->getUsername(); ?></h1>
 					<strong>Experts Trust:</strong>  583<br />
 					<strong style="float:left;">Rank:</strong>

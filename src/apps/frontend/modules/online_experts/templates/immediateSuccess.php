@@ -36,7 +36,7 @@
  
 <div id="top">
 <div class="title" style="float:left">
-<img src="/images/arrow-right.gif" alt="" />
+<img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
 <p>Checkout</p>
 </div>
 
@@ -198,7 +198,7 @@ This is an information box. You can add valuable information to the user so that
 <div class="box">
 <div class="top"></div>
 <div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
-<img src="/images/vid.gif" alt="vid" width="250" />                                
+<img src="<?php echo image_path('vid.gif', false); ?>" alt="vid" width="250" />                                
 </div>
 <div class="bottom"></div>
 </div>

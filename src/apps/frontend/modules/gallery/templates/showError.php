@@ -1,6 +1,6 @@
 
 <div id="top">
-  <div class="title" style="float:left"> <img src="/images/arrow-right.gif" alt="" />
+  <div class="title" style="float:left"> <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
     <p>Permission Denied</p>
   </div>
   <div class="spacer"></div>

@@ -6,7 +6,7 @@ $raykuUser = $sf_user->getRaykuUser();
 
 
 <div id="top" style="margin-left:16px;padding-top:2px">
-  <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
+  <div style="width:30px; float:left;"><img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>"/></div>
     <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left"><a href="/gallery/list/<?php echo $sf_user->getRaykuUser()->getId() ?>">Gallery Home</a> > Album "<?php echo htmlentities($gallery->getTitle()) ?>"</div>
   <div class="spacer"></div>
 </div>
@@ -17,7 +17,7 @@ $raykuUser = $sf_user->getRaykuUser();
       <div class="top-green"></div>
       <div class="content-green">
         <div class="mediacount">
-          <img src="/images/ico/album-homepage-pic.gif" alt="" />
+          <img src="<?php echo image_path('ico/album-homepage-pic.gif', false); ?>" alt="" />
           <p><?php echo count($images) . ' Picture' . (count($images) > 1 ? 's':'') ; ?></p>
         </div>
 
@@ -61,7 +61,7 @@ $raykuUser = $sf_user->getRaykuUser();
       <div class="top-green"></div>
         <div class="content-green">
           <div class="mediacount">
-              <img src="/images/ico/album-homepage-pic.gif" alt="" />
+              <img src="<?php echo image_path('ico/album-homepage-pic.gif', false); ?>" alt="" />
                 <p>0 Pictures</p>
             </div>
           
@@ -80,7 +80,7 @@ $raykuUser = $sf_user->getRaykuUser();
         <div class="top-green"></div>
           <div class="content-green">
             <div class="mediacount">
-                <img src="/images/ico/album-homepage-vid.gif" alt="" />
+                <img src="<?php echo image_path('ico/album-homepage-vid.gif', false); ?>" alt="" />
                   <p>
   <?php if(count($videos)==1): ?>
                   <?php echo count($videos); ?> Video
@@ -136,7 +136,7 @@ $raykuUser = $sf_user->getRaykuUser();
         <div class="top-green"></div>
           <div class="content-green">
             <div class="mediacount">
-                <img src="/images/ico/album-homepage-vid.gif" alt="" />
+                <img src="<?php echo image_path('ico/album-homepage-vid.gif', false); ?>" alt="" />
                   <p>0 Videos</p>
               </div>
 

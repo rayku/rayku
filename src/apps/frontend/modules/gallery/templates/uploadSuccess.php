@@ -23,14 +23,14 @@ function loadImages() {
 /*function call_loading(){ 
 
  var el = document.getElementById("loading_box");
-     el.innerHTML = '<img src="/images/loading.gif">';
+     el.innerHTML = '<img src="<?php echo image_path('loading.gif', false); ?>">';
         new Effect.Appear('loading_box');
   }*/
 </script>
 <?php /* @var $gallery Gallery */ ?>
 
 <div id="top" style="margin-left:16px;padding-top:2px">
-  <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
+  <div style="width:30px; float:left;"><img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>"/></div>
     <div style="font-size:16px; color:#1C517C; font-weight:bold; margin-left:25px; padding-top:3px;float:left"><a href="/gallery/list/<?php echo $sf_user->getRaykuUser()->getId() ?>">Gallery Home</a> > <a href="/gallery/show/<?php echo htmlentities($gallery->getId()) ?>">Album "<?php echo htmlentities($gallery->getTitle()) ?>"</a> > Upload</div>
   <div class="spacer"></div>
 </div>
@@ -38,10 +38,10 @@ function loadImages() {
   <div id="pictures" class="box"> <?php echo form_tag('@gallery_upload?id=' . $gallery->getId(), 'multipart=true') ?>
     <div class="top"></div>
     <div class="content">
-      <div class="mediacount"> <img src="/images/ico/album-homepage-pic.gif" style="border:none" alt="" />
+      <div class="mediacount"> <img src="<?php echo image_path('ico/album-homepage-pic.gif', false); ?>" style="border:none" alt="" />
         <p style="text-align:left;padding-top:5px">Picture Upload</p>
       </div>
-      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="/images/loader.gif" border="0" alt="loader"/> </div>
+      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="<?php echo image_path('loader.gif', false); ?>" border="0" alt="loader"/> </div>
       <div class="select" style="text-align:left;">Select a picture you would like to upload.</div>
       <div class="browse">
         <input type="text" id="picupload" disabled="disabled" />
@@ -61,10 +61,10 @@ function loadImages() {
   <div class="box"> <?php echo form_tag('@gallery_upload?id='.$gallery->getId(), 'multipart=true') ?>
     <div class="top"></div>
     <div class="content">
-      <div class="mediacount"> <img src="/images/ico/album-homepage-vid.gif" style="border:non" alt="" />
+      <div class="mediacount"> <img src="<?php echo image_path('ico/album-homepage-vid.gif', false); ?>" style="border:non" alt="" />
         <p style="text-align:left;padding-top:5px">Video Upload</p>
       </div>
-      <div id="loading_video" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="/images/loader.gif" border="0" alt="loader"/> </div>
+      <div id="loading_video" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="<?php echo image_path('loader.gif', false); ?>" border="0" alt="loader"/> </div>
       <div class="select" style="text-align:left;">Select a video you would like to upload.</div>
       <div class="browse">
         <input type="text" id="vidupload" disabled="disabled" />

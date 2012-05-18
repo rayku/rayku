@@ -20,7 +20,7 @@ $connection = RaykuCommon::getDatabaseConnection();
       <!--question form container-->
       <div class="question-form-container">
         <p id="error" align="center" style="display:none;" class="cn-pricepermin"><em style="font-size:14px;color:red;line-height:20px;">Oops, you missed something!</em></p>
-        <p class="question"><img src="/images/question-icon.png" alt="Question" style="z-index:5;position:relative" /><input type="text" placeholder="Describe question in one sentence" id="question" name="question"/></p>
+        <p class="question"><img src="<?php echo image_path('question-icon.png', false); ?>" alt="Question" style="z-index:5;position:relative" /><input type="text" placeholder="Describe question in one sentence" id="question" name="question"/></p>
         
         <!--recent questions-->
             <?php $_queryTag = mysql_query("select * from user_question_tag where category_id = 1 and user_id=".$raykuUser->getId(), $connection) or die("Error-->1".mysql_error());
@@ -31,7 +31,7 @@ $connection = RaykuCommon::getDatabaseConnection();
 			<input type="hidden" name="dummycount" id="dummycount" value="1" />
             <ul id="tags" >
               <?php while($_rowTag = mysql_fetch_assoc($_queryTag)) { ?>
-              <li><img src="images/tag.jpg" alt="tag" class="tag" /> 
+              <li><img src="<?php echo image_path('tag.jpg', false); ?>" alt="tag" class="tag" /> 
                 <!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $_rowTag['id'];?>" class="waste" > --> 
                 <small style="a:hover{text-decoration:none;};cursor:pointer;" onclick="return clicktagclick(this.id);" id="clicktag_<?php echo $_rowTag['id'];?>" class="clicktag waste" >
 				

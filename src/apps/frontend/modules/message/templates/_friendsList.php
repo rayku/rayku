@@ -8,7 +8,7 @@
      <?php if($friend->getPicture()!=''): ?>
      <?php echo avatar_tag_for_user($friend); ?>
      <?php else: ?>
-     <img src="/images/dev/emptyprofile-small.gif" alt="" />
+     <img src="<?php echo image_path('dev/emptyprofile-small.gif', false); ?>" alt="" />
      <?php endif; ?>
      <div>
      <?php echo link_to($friend, '@compose_to?nickname=' . $friend->getUsername(),array('class'=>'usrname')); ?>
