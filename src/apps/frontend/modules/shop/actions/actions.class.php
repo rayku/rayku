@@ -278,12 +278,91 @@ class shopActions extends sfActions
   {
 
    $this->user = $this->getUser()->getRaykuUser();
-
+  
    $this->userId = $this->user->getId();
 
+  
 
+   if ((sfWebRequest::POST === $this->getRequest()->getMethod()) && ($this->hasRequestParameter('submit_card')) )       
+    {
+       
+       $expiration = substr($this->getRequestParameter('expiry_date'),0,2) .'/'. substr($this->getRequestParameter('expiry_date'),-2);
+        
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
+               
+        $result = Braintree_Customer::create(array(
+            'firstName' => $this->user->getName(),
+            'lastName' => '',
+            'creditCard' => array(
+                'cardholderName' => $this->getRequestParameter('realname'),
+                'number' => $this->getRequestParameter('credit_card'),
+                'cvv' => $this->getRequestParameter('cvv'),
+                'expirationDate' => $expiration,
+                'options' => array(
+                    'verifyCard' => true
+                )
+            )
+        ));
+        
+        error_log($result->customer->creditCards[0]->token, 0);
+        
+        
+        if (!$result->success){
+           
+            $this->error = 'Your credit card is invalid.';
+            //return sfView::SUCCESS;
+        }else{
+            //should only save last 4 digit
+            $this->user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
+            $this->user->setCreditCardToken($result->customer->creditCards[0]->token);
+            $this->user->save();
+            //return sfView::SUCCESS;
+        }
+       
+    }
+    
+    if ((sfWebRequest::POST === $this->getRequest()->getMethod()) && ($this->hasRequestParameter('pay_balance')) ) {
+        $this->points = $this->user->getPoints();
+        $this->token = $this->user->getCreditCardToken();
+        
+        if ($this->points<0){
+            $amount = '' . ($this->points * -1);
+            
+            require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
+
+            $result = Braintree_CreditCard::sale(
+                $this->token,
+                array(
+                    'amount' => $amount,
+                    'credit_card' => array(              
+                    )
+                )
+                );
+
+        // error_log($result->customer->creditCards[0]->token, 0);
+
+
+            if (!$result->success){
+                //error_log("invalid", 0);
+                $this->error = 'Your credit card is invalid.';
+                
+            }else{
+                //should pay all balance
+                $this->user->setPoints(0);                
+                $this->user->save();
+                
+            }    
+        }
+    }
+    
+    $this->token = $this->user->getCreditCardToken();
+    $this->cardNum = $this->user->getCreditCard();
+
+    return sfView::SUCCESS;
   }
 
+  
+    
   public function executeVoucherCode()
   {
 
@@ -463,64 +542,6 @@ class shopActions extends sfActions
     }
     else
       $this->msg = "<p style='font-size:14px;color:#444444'>Unauthorized access.</p>";
-  }
-  
-  public function executeDonatePage()
-  {
-
-  	$this->user = $this->getUser()->getRaykuUser();
-		
-
-
-
-//$this->items = $allItems;
-
-
-	
-  }
-  
-  public function executeDonate()
-  {
-
-
-
-
-  	if($this->getRequest()->getMethod() == sfRequest::POST)
-	{
-		$amount = htmlentities($this->getRequestParameter('points'));
-		$username = htmlentities($this->getRequestParameter('name'));
-		$comment = htmlentities($this->getRequestParameter('comments'));
-		$this->user = $this->getUser()->getRaykuUser();
-		
-		if($this->user && $this->user->getPoints() > $amount)
-		{
-			
-			$c = new Criteria();
-			$c->add(UserPeer::USERNAME, $username);
-			$c->add(UserPeer::HIDDEN, false);
-			
-			$receiver = UserPeer::doSelectOne($c);
-			if($receiver)
-			{
-				$user_donations = new UserDonations();
-				$user_donations->setUserId($receiver->getId());
-				$user_donations->setFromUserId($this->user->getId());
-				$user_donations->setPoints($amount);
-				$user_donations->save();
-				$this->user->setPoints($this->user->getPoints() - $amount);
-				$this->user->save();
-				$receiver->setPoints($receiver->getPoints() + $amount);
-				$receiver->save();
-				$this->msg = "Successful donation of ".$amount."RP!";
-			}
-			else
-			 $this->msg = "The user you want to donate to can not be found.";
-		}
-		else
-		  $this->msg = "Unauthorized access.";	
-	}
-	else
-		$this->msg = "Unauthorized access.";
   }
   
   public function executeAwardPurchase()

@@ -64,15 +64,13 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, 11);
 
-		$tMap->addForeignKey('PICTURE_ID', 'PictureId', 'INTEGER', 'picture', 'ID', false, 11);
-
 		$tMap->addColumn('USERNAME', 'Username', 'VARCHAR', false, 100);
 
 		$tMap->addColumn('EMAIL', 'Email', 'VARCHAR', false, 100);
 
 		$tMap->addColumn('PASSWORD', 'Password', 'VARCHAR', false, 40);
 
-		$tMap->addColumn('POINTS', 'Points', 'INTEGER', false, 11);
+		$tMap->addColumn('POINTS', 'Points', 'DECIMAL', false, 11);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 
@@ -98,8 +96,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('RELATIONSHIP_STATUS', 'RelationshipStatus', 'INTEGER', false, 11);
 
-		$tMap->addColumn('ABOUT_ME', 'AboutMe', 'LONGVARCHAR', false, null);
-
 		$tMap->addColumn('SHOW_EMAIL', 'ShowEmail', 'INTEGER', false, 11);
 
 		$tMap->addColumn('SHOW_GENDER', 'ShowGender', 'INTEGER', false, 11);
@@ -116,8 +112,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('SHOW_RELATIONSHIP_STATUS', 'ShowRelationshipStatus', 'INTEGER', false, 11);
 
-		$tMap->addColumn('SHOW_HOBBIES', 'ShowHobbies', 'VARCHAR', false, 200);
-
 		$tMap->addColumn('PASSWORD_RECOVER_KEY', 'PasswordRecoverKey', 'VARCHAR', false, 40);
 
 		$tMap->addColumn('COOKIE_KEY', 'CookieKey', 'VARCHAR', false, 40);
@@ -130,9 +124,15 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PHONE_NUMBER', 'PhoneNumber', 'VARCHAR', true, 20);
 
-		$tMap->addForeignKey('NETWORK_ID', 'NetworkId', 'INTEGER', 'network', 'ID', false, 11);
-
 		$tMap->addColumn('LOGIN', 'Login', 'INTEGER', true, 10);
+
+		$tMap->addColumn('CREDIT_CARD', 'CreditCard', 'VARCHAR', false, 4);
+
+		$tMap->addColumn('CREDIT_CARD_TOKEN', 'CreditCardToken', 'VARCHAR', false, 10);
+
+		$tMap->addColumn('FIRST_CHARGE', 'FirstCharge', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('WHERE_FIND_US', 'WhereFindUs', 'LONGVARCHAR', true, null);
 
 	} // doBuild()
 

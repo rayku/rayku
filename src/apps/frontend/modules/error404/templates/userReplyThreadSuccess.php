@@ -11,7 +11,7 @@ function gotoforum()
 <div id="body">
 					<div id="top">
 					  <div class="title">
-						<img src="/images/arrow-right.gif" alt="" />
+						<img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
 						<p><?php echo $thread->getTitle();?></p>
 					  </div>
 					  <select id="jumpto"  onchange="return gotoforum();">

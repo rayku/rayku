@@ -12,9 +12,6 @@
 
 					$user_id=$raykuUser->getId();
 			
-					//echo "select * from gallery where 	user_id=".$user_id;
-			//	$query_gallery_pf = mysql_query("select * from gallery where 	user_id=".$user_id) ;
-				//echo $fetch_gallery_pf=mysql_num_rows($query_gallery_pf);
 				 $profile_pic_exist=0;
 				 
 				 $action=base64_decode($_GET['action']);
@@ -66,18 +63,8 @@
 
 <?php if ($sf_user->isAuthenticated() && $user->equals($raykuUser) && !empty($raykuUser)): ?>
 	<ul>
-		<li><?php echo link_to('View/Edit Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
-		<li><?php echo link_to('View/Edit Journal', '@journal_index?user_id=' . $user->getId()) ?></li>	
         <li><?php echo link_to('Edit Course Information', 'profile/course?name='.$user->getUsername()); ?> </li>			
 		<li><?php echo link_to('Profile Display Permissions', '@profile_edit?username=' . $user->getUsername()); ?></li>
-        <?php 
-			$c= new Criteria();
-			$c->add(UsersNetworksPeer::USER_ID,$sf_user->getRaykuUser()->getId());
-			$networkusers = UsersNetworksPeer::doSelectOne($c);
-		?>
-		<?php if($networkusers != NULL): ?>
-			<li><?php echo link_to('Networks', '/network/index'); ?></li>
-		<?php endif ; ?>
 		<?php endif ?>
         
     	<?php 
@@ -99,93 +86,4 @@
     
 	</ul>
 
-<?php else: ?>
-
-	<ul>
-		<li><?php echo link_to('View Galleries', '@gallery_index?user_id=' . $user->getId()) ?></li>
-		<li><?php echo link_to('View Journal', '@journal_index?user_id=' . $user->getId()) ?></li>
-		<li><?php echo link_to('Send a Nudge', '/nudge/send/username/' . $user->getUsername()) ?></li>
-
-		
-		<?php if($user->getType() == '5'): ?>
-		
-			<?php 
-			
-					
-					//echo $currentuser->getId().','.$user->getId();
-						if(!empty($raykuUser)) :
-								$c = new Criteria();
-								//if(!empty($raykuUser)) {
-									$c->add(SavedExpertsPeer::USER_ID,$currentuser->getId());
-								//}
-								$c->add(SavedExpertsPeer::EXPERT_ID,$user->getId());
-								$savedexperts = SavedExpertsPeer::doSelectOne($c);
-					
-								if($savedexperts == NULL) :?>
-		
-								<li><?php echo link_to('Save this Expert', 'expertsconnect/saveanexpert?expid='.$user->getId()) ?></li>
-					
-								<?php else: ?>
-					
-								<li><?php echo link_to('Saved', '@profile?username='.$user->getUsername()); ?></li>
-					
-								<?php endif; ?>
-						<?php endif; ?>
-				
-		<?php  endif; ?>
-				
-				
-		<?php if ($sf_user->isAuthenticated() && !empty($raykuUser) ): ?>
-			<li id="friendActions[<?php echo $user->getId() ?>]">
-
-				<?php if ($user->isFriendsWith($raykuUser) && !empty($raykuUser) ): ?>
-
-					<?php if (isset($ajaxAdd) && $ajaxAdd): ?>
-
-						<?php echo link_to_remote(
-							'Remove as Friend',
-
-							array(
-								'url' => '@friend_remove?ajax=1&user_id=' . $user->getId(),
-
-								'update' => 'friendActions[' . $user->getId() . ']',
-
-							),
-
-							array('href' => url_for('@friend_remove?user_id=' . $user->getId()))
-
-						) ?>
-					<?php else: ?>
-						<?php echo link_to('Remove as Friend', '@friend_remove?user_id=' . $user->getId()) ?>
-
-					<?php endif ?>
-
-				<?php else: ?>
-
-					<?php if (isset($ajaxAdd) && $ajaxAdd): ?>
-						<?php echo link_to_remote(
-
-							'Add as Friend',
-							array(
-
-								'url' => '@submit_friend_request?username=' . $user->getUsername(),
-								'update' => 'friendActions[' . $user->getId() . ']',
-
-							),
-
-							array('href' => url_for('@submit_friend_request?username=' . $user->getUsername()))
-
-						) ?>
-						<?php else: ?>
-
-						<?php echo link_to('Add as Friend', '@submit_friend_request?username=' . $user->getUsername()) ?>
-
-					<?php endif ?>
-
-				<?php endif ?>
-
-			</li>
-		<?php endif ?>
-
-	</ul>
 <?php endif ?>

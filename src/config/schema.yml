@@ -2,14 +2,6 @@ propel:
   _attributes:
     package: lib.model
     defaultIdMethod: native
-  album:
-    _attributes: { phpName: Album }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '150', required: false }
-    description: { type: LONGVARCHAR, required: false }
-    owner_id: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    _indexes: { album_FI_1: [owner_id] }
   bulletin:
     _attributes: { phpName: Bulletin }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -25,6 +17,7 @@ propel:
     parent: { type: INTEGER, size: '11', required: true }
     prefix: { type: VARCHAR, size: '10', required: true }
     updated_at: { type: DATE, required: true }
+    status: { type: INTEGER, size: '11'}
     _uniques: { category_name_unique: [name], category_prefix_unique: [prefix] }
   chat_data:
     _attributes: { phpName: ChatData }
@@ -54,18 +47,6 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_name: { type: VARCHAR, size: '100', required: true }
     status: { type: INTEGER, size: '11', required: true }
-  comment:
-    _attributes: { phpName: Comment }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    journal_entry_id: { type: INTEGER, size: '11', required: false, foreignTable: journal_entry, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    poster_id: { type: INTEGER, size: '11', required: false }
-    picture_id: { type: INTEGER, size: '11', required: false }
-    video_id: { type: INTEGER, size: '11', required: false }
-    content: { type: LONGVARCHAR, required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    type: { type: INTEGER, size: '11', required: false }
-    approved: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    _indexes: { comment_FI_1: [poster_id], comment_FI_2: [picture_id], comment_FI_3: [video_id], comment_FI_4: [journal_entry_id] }
   expert:
     _attributes: { phpName: Expert }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -81,53 +62,12 @@ propel:
     created_at: { type: TIMESTAMP, required: true }
     updated_at: { type: TIMESTAMP, required: true }
     _indexes: { expert_FI_1: [user_id] }
-  expert_available_days:
-    _attributes: { phpName: ExpertAvailableDays }
-    id: { type: INTEGER, size: '40', primaryKey: true, autoIncrement: true, required: true }
-    expert_id: { type: INTEGER, size: '40', required: true }
-    monday: { type: INTEGER, size: '10', required: true }
-    tuesday: { type: INTEGER, size: '10', required: true }
-    wednesday: { type: INTEGER, size: '10', required: true }
-    thursday: { type: INTEGER, size: '10', required: true }
-    friday: { type: INTEGER, size: '10', required: true }
-    saturday: { type: INTEGER, size: '10', required: true }
-    sunday: { type: INTEGER, size: '10', required: true }
-    timings: { type: VARCHAR, size: '100', required: true }
   expert_category:
     _attributes: { phpName: ExpertCategory }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     _indexes: { expert_category_FI_1: [user_id], expert_category_FI_2: [category_id] }
-  expert_lesson:
-    _attributes: { phpName: ExpertLesson }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    price: { type: FLOAT, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-    day: { type: VARCHAR, size: '50', required: true }
-    _indexes: { expert_lesson_FI_1: [user_id] }
-  expert_lesson_schedule:
-    _attributes: { phpName: ExpertLessonSchedule }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    date: { type: INTEGER, size: '11', required: true }
-    timings: { type: VARCHAR, size: '100', required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    expert_lesson_id: { type: INTEGER, size: '11', required: true }
-    _indexes: { expert_lesson_schedule_FI_1: [user_id] }
-  expert_student_schedules:
-    _attributes: { phpName: ExpertStudentSchedules }
-    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
-    exp_id: { type: INTEGER, size: '11', required: true }
-    student_id: { type: INTEGER, size: '11', required: true }
-    date: { type: INTEGER, size: '11', required: true }
-    time: { type: INTEGER, size: '11', required: true }
-    message: { type: LONGVARCHAR, required: true }
-    expert_lesson_id: { type: INTEGER, size: '11', required: true }
-    accept_reject: { type: INTEGER, size: '11', required: true }
   experts_admin_payout:
     _attributes: { phpName: ExpertsAdminPayout }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -135,14 +75,6 @@ propel:
     amount: { type: FLOAT, size: '5', scale: '2', required: true }
     paypal_id: { type: VARCHAR, size: '100', required: true }
     paid: { type: INTEGER, size: '11', required: true }
-  experts_credit_details:
-    _attributes: { phpName: ExpertsCreditDetails }
-    id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
-    student_id: { type: INTEGER, size: '10', required: true }
-    expert_id: { type: INTEGER, size: '10', required: true }
-    credit_amount: { type: FLOAT, size: '5', scale: '2', required: true }
-    lesson_id: { type: INTEGER, size: '20', required: true }
-    immediate_lesson_id: { type: INTEGER, size: '20', required: true }
   experts_debit_details:
     _attributes: { phpName: ExpertsDebitDetails }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -154,25 +86,6 @@ propel:
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
     expert_id: { type: INTEGER, size: '10', required: true }
     amount: { type: FLOAT, size: '5', scale: '2', required: true }
-  experts_immediate_lesson:
-    _attributes: { phpName: ExpertsImmediateLesson }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '50', required: true }
-    content: { type: LONGVARCHAR, required: true }
-    price: { type: FLOAT, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
-  experts_lesson_members:
-    _attributes: { phpName: ExpertsLessonMembers }
-    id: { type: INTEGER, size: '10', primaryKey: true, autoIncrement: true, required: true }
-    student_id: { type: INTEGER, size: '20', required: true }
-    category_id: { type: INTEGER, size: '20', required: true }
-    expert_id: { type: INTEGER, size: '20', required: true }
-    lesson_id: { type: INTEGER, size: '20', required: true }
-    approve: { type: INTEGER, size: '10', required: true }
-    created_at: { type: TIMESTAMP, required: true }
-    updated_at: { type: TIMESTAMP, required: true }
   experts_promo_text:
     _attributes: { phpName: ExpertsPromoText }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -210,63 +123,6 @@ propel:
     created_at: { type: TIMESTAMP, required: true }
     updated_at: { type: TIMESTAMP, required: true }
     _indexes: { forum_question_FI_1: [category_id], forum_question_FI_2: [user_id] }
-  friend:
-    _attributes: { phpName: Friend }
-    user_id1: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id2: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    status: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { friend_FI_1: [user_id1], friend_FI_2: [user_id2] }
-  gallery:
-    _attributes: { phpName: Gallery }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '255', required: false }
-    show_entity: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    classroom_id: { type: INTEGER, size: '11', required: false }
-    _indexes: { gallery_FI_1: [user_id] }
-  gallery_acl:
-    _attributes: { phpName: GalleryAcl }
-    gallery_id: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { gallery_acl_FI_1: [gallery_id], gallery_acl_FI_2: [user_id] }
-  gallery_item:
-    _attributes: { phpName: GalleryItem }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '255', required: false }
-    gallery_id: { type: INTEGER, size: '11', required: false, foreignTable: gallery, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    file_name: { type: VARCHAR, size: '255', required: false }
-    file_system_path: { type: VARCHAR, size: '255', required: false }
-    mime_type: { type: VARCHAR, size: '255', required: false }
-    is_image: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    _indexes: { gallery_item_FI_1: [gallery_id], user_id: [user_id] }
-  group_site_page:
-    _attributes: { phpName: GroupSitePage }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    title: { type: VARCHAR, size: '100', required: false }
-    group_id: { type: INTEGER, size: '11', required: false }
-    content: { type: LONGVARCHAR, required: false }
-    page_order: { type: INTEGER, size: '11', required: false }
-    template: { type: VARCHAR, size: '150', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    _indexes: { group_site_page_FI_1: [group_id] }
-  group_user:
-    _attributes: { phpName: GroupUser }
-    group_id: { type: INTEGER, size: '11', required: false }
-    inviter_id: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false }
-    status: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { group_user_FI_1: [group_id], group_user_FI_2: [inviter_id], group_user_FI_3: [user_id] }
   history:
     _attributes: { phpName: History }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -305,47 +161,11 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     name: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
-  journal_entry:
-    _attributes: { phpName: JournalEntry }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    subject: { type: VARCHAR, size: '150', required: false }
-    content: { type: LONGVARCHAR, required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    show_entity: { type: INTEGER, size: '11', required: false }
-    _indexes: { journal_entry_FI_1: [user_id] }
-  journal_entry_acl:
-    _attributes: { phpName: JournalEntryAcl }
-    journal_entry_id: { type: INTEGER, size: '11', required: false }
-    user_id: { type: INTEGER, size: '11', required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { journal_entry_acl_FI_1: [journal_entry_id], journal_entry_acl_FI_2: [user_id] }
-  live_video_chat:
-    _attributes: { phpName: LiveVideoChat }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    receiver_id: { type: INTEGER, size: '11', required: true }
-    sender_id: { type: INTEGER, size: '11', required: true }
-    classroom_id: { type: INTEGER, size: '11', required: true }
-    approved: { type: INTEGER, size: '11', required: true }
-    _indexes: { video_live_chat_FI_1: [receiver_id], video_live_chat_FI_2: [sender_id] }
-  network:
-    _attributes: { phpName: Network }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '150', required: false }
-    description: { type: LONGVARCHAR, required: false }
-    type: { type: INTEGER, size: '11', required: false }
   notification_emails:
     _attributes: { phpName: NotificationEmails }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '100', required: true }
     on_off: { type: INTEGER, size: '11', required: true }
-  nudge:
-    _attributes: { phpName: Nudge }
-    user_from_id: { type: INTEGER, size: '11', required: false }
-    user_to_id: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    _indexes: { nudge_FI_1: [user_from_id], nudge_FI_2: [user_to_id] }
   offer_voucher:
     _attributes: { phpName: OfferVoucher }
     id: { type: INTEGER, size: '40', primaryKey: true, autoIncrement: true, required: true }
@@ -366,15 +186,6 @@ propel:
     is_active: { type: INTEGER, size: '11', required: false }
     price: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
     _indexes: { user_id: [user_id], id: [id] }
-  picture:
-    _attributes: { phpName: Picture }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '150', required: false }
-    description: { type: LONGVARCHAR, required: false }
-    album_id: { type: INTEGER, size: '11', required: false, foreignTable: album, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
-    owner_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
-    created_at: { type: TIMESTAMP, required: false }
-    _indexes: { picture_FI_1: [album_id], picture_FI_2: [owner_id] }
   post:
     _attributes: { phpName: Post }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -384,6 +195,11 @@ propel:
     updated_at: { type: TIMESTAMP, required: true }
     content: { type: LONGVARCHAR, required: true }
     best_response: { type: INTEGER, size: '11', required: true }
+    reported: { type: INTEGER, size: '4', default: '0', required: true }
+    user_ip: { type: VARCHAR, size: '255' }
+    banned: { type: INTEGER, size: '2', default: '0', required: true }
+    reported_date: { type: TIMESTAMP }
+    _indexes: { reported: [reported], user_ip: [user_ip,banned] }
   private_message:
     _attributes: { phpName: PrivateMessage }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -412,28 +228,6 @@ propel:
     telephone_number: { type: VARCHAR, size: '255', required: false }
     zip: { type: VARCHAR, size: '20', required: false, defaultValue: '0' }
     _indexes: { purchase_detail_FI_1: [user_id], purchase_detail_FI_2: [sales_id] }
-  report_entity:
-    _attributes: { phpName: ReportEntity }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    report_count: { type: INTEGER, size: '11', required: false }
-    thread_id: { type: INTEGER, size: '11', required: false }
-    post_id: { type: INTEGER, size: '11', required: false }
-    group_id: { type: INTEGER, size: '11', required: false }
-    bulletin_id: { type: INTEGER, size: '11', required: false }
-    group_site_page_id: { type: INTEGER, size: '11', required: false }
-    comment_id: { type: INTEGER, size: '11', required: false }
-    picture_id: { type: INTEGER, size: '11', required: false }
-    video_id: { type: INTEGER, size: '11', required: false }
-    shout_id: { type: INTEGER, size: '11', required: false }
-    _uniques: { report_entity_thread_id_unique: [thread_id], report_entity_post_id_unique: [post_id], report_entity_group_id_unique: [group_id], report_entity_bulletin_id_unique: [bulletin_id], report_entity_group_site_page_id_unique: [group_site_page_id], report_entity_comment_id_unique: [comment_id], report_entity_picture_id_unique: [picture_id], report_entity_video_id_unique: [video_id], report_entity_shout_id_unique: [shout_id] }
-  report_user:
-    _attributes: { phpName: ReportUser }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    type: { type: INTEGER, size: '11', required: false }
-    entity_id: { type: INTEGER, size: '11', required: false }
-    created_at: { type: TIMESTAMP, required: false }
-    _indexes: { report_user_FI_1: [user_id] }
   sales:
     _attributes: { phpName: Sales }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -457,11 +251,6 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { sales_detail_FI_1: [item_id] }
-  saved_experts:
-    _attributes: { phpName: SavedExperts }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true }
-    expert_id: { type: INTEGER, size: '11', required: true }
   shopping_cart:
     _attributes: { phpName: ShoppingCart }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -514,15 +303,19 @@ propel:
     school_grade: { type: VARCHAR, size: '100', required: true }
     created_at: { type: TIMESTAMP, required: true }
     lastpost_at: { type: TIMESTAMP, required: true }
-    stickie: { type: INTEGER, required: true }
+    user_ip: { type: VARCHAR, size: '255' }
+    banned: { type: INTEGER, size: '4', default: '0', required: true }
+    reported: { type: INTEGER, size: '4', default: '0', required: true }
+    reported_date: { type: TIMESTAMP }
+    stickie: { type: INTEGER, required: true, default: '0' }
+    _indexes: { reported: [reported] }
   user:
     _attributes: { phpName: User }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    picture_id: { type: INTEGER, size: '11', required: false, foreignTable: picture, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
     username: { type: VARCHAR, size: '100', required: false }
     email: { type: VARCHAR, size: '100', required: false }
     password: { type: VARCHAR, size: '40', required: false }
-    points: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
+    points: { type: DECIMAL, size: '11', scale: '2', defaultValue: '0' }    
     created_at: { type: TIMESTAMP, required: false }
     last_activity_at: { type: TIMESTAMP, required: false }
     type: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
@@ -535,7 +328,6 @@ propel:
     birthdate: { type: DATE, required: false }
     address: { type: LONGVARCHAR, required: false }
     relationship_status: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    about_me: { type: LONGVARCHAR, required: false }
     show_email: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_gender: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_hometown: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
@@ -544,16 +336,17 @@ propel:
     show_birthdate: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_address: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
     show_relationship_status: { type: INTEGER, size: '11', required: false, defaultValue: '1' }
-    show_hobbies: { type: VARCHAR, size: '200', required: false, defaultValue: '1' }
     password_recover_key: { type: VARCHAR, size: '40', required: false }
     cookie_key: { type: VARCHAR, size: '40', required: false }
     credit: { type: INTEGER, size: '11', required: true, defaultValue: '0' }
     invisible: { type: INTEGER, size: '11', required: true }
     notification: { type: VARCHAR, size: '10', required: true }
     phone_number: { type: VARCHAR, size: '20', required: true }
-    network_id: { type: INTEGER, size: '11', required: false, foreignTable: network, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
-    login: { type: INTEGER, size: '10', required: true }
-    _indexes: { user_FI_1: [picture_id], network_id: [network_id] }
+    login: { type: INTEGER, size: '10', required: true, default: '0' }
+    credit_card: { type: VARCHAR, size: '4', required: false }
+    credit_card_token: { type: VARCHAR, size: '10', required: false }
+    first_charge: { type: TIMESTAMP, required: false }
+    where_find_us: { type: LONGVARCHAR, required: true}
     _uniques: { user_username_unique: [username], user_email_unique: [email], user_password_recover_key_unique: [password_recover_key] }
   user_awards:
     _attributes: { phpName: UserAwards }
@@ -561,39 +354,9 @@ propel:
     user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
     awards: { type: INTEGER, size: '11', required: false }
     _indexes: { user_awards_FI_1: [user_id] }
-  user_donations:
-    _attributes: { phpName: UserDonations }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    from_user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    points: { type: INTEGER, size: '11', required: false }
-    comments: { type: LONGVARCHAR, required: false }
-    _indexes: { user_donations_FI_1: [user_id], user_donations_FI_2: [from_user_id] }
-  user_interest:
-    _attributes: { phpName: UserInterest }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
-    interest: { type: LONGVARCHAR, required: false }
-    _indexes: { user_interest_FI_1: [user_id] }
   user_gtalk:
-    userid: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
+    userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
     gtalkid: { type: VARCHAR, size: 100, required: true }
-  usergroup:
-    _attributes: { phpName: Usergroup }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    name: { type: VARCHAR, size: '150', required: false }
-    points: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    description: { type: LONGVARCHAR, required: false }
-    type: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
-    created_at: { type: TIMESTAMP, required: false }
-    updated_at: { type: TIMESTAMP, required: false }
-    bankrupt_since: { type: DATE, required: false }
-  users_networks:
-    _attributes: { phpName: UsersNetworks }
-    id: { type: INTEGER, size: '40', primaryKey: true, autoIncrement: true, required: true }
-    network_id: { type: INTEGER, size: '10', required: true }
-    user_id: { type: INTEGER, size: '10', required: true }
-    joined_on: { type: TIMESTAMP, required: true }
   video:
     _attributes: { phpName: Video }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -616,6 +379,10 @@ propel:
     ended_at: { type: TIMESTAMP, required: false }
     directory: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
+    timer: { type: VARCHAR, size: '100', required: true }
+    rating: { type: INTEGER, size: '11', required: true }
+    amount: { type: FLOAT, size: '5', scale: '2', required: true }
+    comments: { type: VARCHAR, size: '255' }
     _indexes: { whiteboard_chat_FI_1: [expert_id, asker_id] }
   whiteboard_message:
     _attributes: { phpName: WhiteboardMessage }
@@ -637,17 +404,17 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: StudentId }
     checked_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: TutorId }
-    category_id: { type: INTEGER, size: '11', required: true }
-    course_id: { type: INTEGER, size: '11', required: true }
+    category_id: { type: INTEGER, size: '11', required: true, default: '1' }
+    course_id: { type: INTEGER, size: '11', required: true, default: '1' }
     question: { type: VARCHAR, size: '500', required: true }
     exe_order: { type: INTEGER, size: '11', required: true }
-    time: { type: INTEGER, size: '11', required: true }
+    time: { type: INTEGER, size: '100', required: true }
     course_code: { type: VARCHAR, size: '100', required: true }
     year: { type: VARCHAR, size: '100', required: true }
     school: { type: VARCHAR, size: '100', required: true }
-    status: { type: INTEGER, size: '10', required: true }
-    close: { type: INTEGER, size: '10', required: true }
-    cron: { type: INTEGER, size: '10', required: true }
+    status: { type: INTEGER, size: '10', required: true, default: '0' }
+    close: { type: INTEGER, size: '10', required: true, default: '61000' }
+    cron: { type: INTEGER, size: '10', required: true, default: '1' }
     source: { type: VARCHAR, size: '100', required: true }
   whiteboard_sessions:
     _attributes: { phpName: WhiteboardSession }

@@ -616,7 +616,7 @@ if(count($lastSessions)>0) {
     for($ls=0;$ls<$count_session;$ls++){
 ?>
       <!--thumbnail wrap begins-->
-      <div class="thumbnail"> <img src="/images/portfolio/thumbnail.png" alt="Sidebar thumbnail" />
+      <div class="thumbnail"> <img src="<?php echo image_path('portfolio/thumbnail.png', false); ?>" alt="Sidebar thumbnail" />
         <p>
           <?php if ($lastSessions[$ls]->getQuestion() <> '') { ?>
           <a href="#<?php //echo url_for('whiteboard/show?id=' . $lastSessions[$ls]->getId()) ?>" style="color:#FFF"> <?php echo urldecode($lastSessions[$ls]->getQuestion()) ?> </a>

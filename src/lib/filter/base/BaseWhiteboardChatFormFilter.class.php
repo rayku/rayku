@@ -24,6 +24,10 @@ class BaseWhiteboardChatFormFilter extends BaseFormFilterPropel
       'ended_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'directory'       => new sfWidgetFormFilterInput(),
       'created_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'timer'           => new sfWidgetFormFilterInput(),
+      'rating'          => new sfWidgetFormFilterInput(),
+      'amount'          => new sfWidgetFormFilterInput(),
+      'comments'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -37,6 +41,10 @@ class BaseWhiteboardChatFormFilter extends BaseFormFilterPropel
       'ended_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'directory'       => new sfValidatorPass(array('required' => false)),
       'created_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'timer'           => new sfValidatorPass(array('required' => false)),
+      'rating'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'amount'          => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'comments'        => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('whiteboard_chat_filters[%s]');
@@ -65,6 +73,10 @@ class BaseWhiteboardChatFormFilter extends BaseFormFilterPropel
       'ended_at'        => 'Date',
       'directory'       => 'Text',
       'created_at'      => 'Date',
+      'timer'           => 'Text',
+      'rating'          => 'Number',
+      'amount'          => 'Number',
+      'comments'        => 'Text',
     );
   }
 }

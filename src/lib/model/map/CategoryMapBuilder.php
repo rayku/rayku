@@ -74,6 +74,8 @@ class CategoryMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'DATE', true, null);
 
+		$tMap->addColumn('STATUS', 'Status', 'INTEGER', false, 11);
+
 	} // doBuild()
 
 } // CategoryMapBuilder

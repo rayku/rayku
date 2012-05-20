@@ -1,13 +1,5 @@
 <div class="body-side">
   
-  <?php if($friends != NULL) : ?>
-  
-  <div id="selectfriends">Message a Friend</div>
-
-  <?php include_partial('message/friendsList',array('friends'=>$friends)); ?> 
-  
-  <?php endif; ?>
-
   <div id="searchfm">Search for a Member</div>
     <div class="box">
       <div class="top"></div>

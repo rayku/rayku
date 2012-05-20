@@ -9,16 +9,6 @@
  */ 
 class ThreadPeer extends BaseThreadPeer
 {
-  static function getLastNetworkThreads( Network $network )
-  {
-    $c = new Criteria();
-    $c->addJoin( self::POSTER_ID, UserPeer::ID );
-    $c->add( UserPeer::NETWORK_ID, $network->getId() );
-    $c->addDescendingOrderByColumn( self::CREATED_AT );
-    $c->setLimit( 5 );
-    return self::doSelectJoinUser( $c );
-  }
-
   static function getLastUsersThreads( $userIds, $limit = 10 )
   {
     $c = new Criteria();

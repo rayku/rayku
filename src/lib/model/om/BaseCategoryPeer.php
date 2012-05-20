@@ -19,7 +19,7 @@ abstract class BaseCategoryPeer {
 	const CLASS_DEFAULT = 'lib.model.Category';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -42,6 +42,9 @@ abstract class BaseCategoryPeer {
 	/** the column name for the UPDATED_AT field */
 	const UPDATED_AT = 'category.UPDATED_AT';
 
+	/** the column name for the STATUS field */
+	const STATUS = 'category.STATUS';
+
 	/**
 	 * An identiy map to hold any loaded instances of Category objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -63,11 +66,11 @@ abstract class BaseCategoryPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'Parent', 'Prefix', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'parent', 'prefix', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::PARENT, self::PREFIX, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'parent', 'prefix', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'Parent', 'Prefix', 'UpdatedAt', 'Status', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'parent', 'prefix', 'updatedAt', 'status', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::PARENT, self::PREFIX, self::UPDATED_AT, self::STATUS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'parent', 'prefix', 'updated_at', 'status', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -77,11 +80,11 @@ abstract class BaseCategoryPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'Parent' => 3, 'Prefix' => 4, 'UpdatedAt' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'parent' => 3, 'prefix' => 4, 'updatedAt' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::PARENT => 3, self::PREFIX => 4, self::UPDATED_AT => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'parent' => 3, 'prefix' => 4, 'updated_at' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'Parent' => 3, 'Prefix' => 4, 'UpdatedAt' => 5, 'Status' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'parent' => 3, 'prefix' => 4, 'updatedAt' => 5, 'status' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::PARENT => 3, self::PREFIX => 4, self::UPDATED_AT => 5, self::STATUS => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'parent' => 3, 'prefix' => 4, 'updated_at' => 5, 'status' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -174,6 +177,8 @@ abstract class BaseCategoryPeer {
 		$criteria->addSelectColumn(CategoryPeer::PREFIX);
 
 		$criteria->addSelectColumn(CategoryPeer::UPDATED_AT);
+
+		$criteria->addSelectColumn(CategoryPeer::STATUS);
 
 	}
 

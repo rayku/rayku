@@ -31,7 +31,7 @@
 							   
 							   
 							   <div class="entry">
-                               		<div class="status"><img src="/images/forum-threads-statuson.gif" alt="" /></div>
+                               		<div class="status"><img src="<?php echo image_path('forum-threads-statuson.gif', false); ?>" alt="" /></div>
                                     <div class="information">
                                     	
 										<?php echo link_to($thread, '@view_thread?thread_id='.$thread->getId(),array('class' => 'threadttle')); ?>

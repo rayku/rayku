@@ -63,6 +63,32 @@ abstract class BasePost extends BaseObject  implements Persistent {
 	protected $best_response;
 
 	/**
+	 * The value for the reported field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $reported;
+
+	/**
+	 * The value for the user_ip field.
+	 * @var        string
+	 */
+	protected $user_ip;
+
+	/**
+	 * The value for the banned field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $banned;
+
+	/**
+	 * The value for the reported_date field.
+	 * @var        string
+	 */
+	protected $reported_date;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -94,6 +120,8 @@ abstract class BasePost extends BaseObject  implements Persistent {
 	 */
 	public function applyDefaultValues()
 	{
+		$this->reported = 0;
+		$this->banned = 0;
 	}
 
 	/**
@@ -220,6 +248,74 @@ abstract class BasePost extends BaseObject  implements Persistent {
 	public function getBestResponse()
 	{
 		return $this->best_response;
+	}
+
+	/**
+	 * Get the [reported] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getReported()
+	{
+		return $this->reported;
+	}
+
+	/**
+	 * Get the [user_ip] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUserIp()
+	{
+		return $this->user_ip;
+	}
+
+	/**
+	 * Get the [banned] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getBanned()
+	{
+		return $this->banned;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [reported_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getReportedDate($format = 'Y-m-d H:i:s')
+	{
+		if ($this->reported_date === null) {
+			return null;
+		}
+
+
+		if ($this->reported_date === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->reported_date);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->reported_date, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -421,6 +517,115 @@ abstract class BasePost extends BaseObject  implements Persistent {
 	} // setBestResponse()
 
 	/**
+	 * Set the value of [reported] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Post The current object (for fluent API support)
+	 */
+	public function setReported($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->reported !== $v || $v === 0) {
+			$this->reported = $v;
+			$this->modifiedColumns[] = PostPeer::REPORTED;
+		}
+
+		return $this;
+	} // setReported()
+
+	/**
+	 * Set the value of [user_ip] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Post The current object (for fluent API support)
+	 */
+	public function setUserIp($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->user_ip !== $v) {
+			$this->user_ip = $v;
+			$this->modifiedColumns[] = PostPeer::USER_IP;
+		}
+
+		return $this;
+	} // setUserIp()
+
+	/**
+	 * Set the value of [banned] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Post The current object (for fluent API support)
+	 */
+	public function setBanned($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->banned !== $v || $v === 0) {
+			$this->banned = $v;
+			$this->modifiedColumns[] = PostPeer::BANNED;
+		}
+
+		return $this;
+	} // setBanned()
+
+	/**
+	 * Sets the value of [reported_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Post The current object (for fluent API support)
+	 */
+	public function setReportedDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->reported_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->reported_date !== null && $tmpDt = new DateTime($this->reported_date)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->reported_date = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = PostPeer::REPORTED_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setReportedDate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -431,7 +636,15 @@ abstract class BasePost extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array())) {
+			if (array_diff($this->modifiedColumns, array(PostPeer::REPORTED,PostPeer::BANNED))) {
+				return false;
+			}
+
+			if ($this->reported !== 0) {
+				return false;
+			}
+
+			if ($this->banned !== 0) {
 				return false;
 			}
 
@@ -464,6 +677,10 @@ abstract class BasePost extends BaseObject  implements Persistent {
 			$this->updated_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->content = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->best_response = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->reported = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->user_ip = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->banned = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->reported_date = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -473,7 +690,7 @@ abstract class BasePost extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = PostPeer::NUM_COLUMNS - PostPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = PostPeer::NUM_COLUMNS - PostPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Post object", $e);
@@ -777,6 +994,18 @@ abstract class BasePost extends BaseObject  implements Persistent {
 			case 6:
 				return $this->getBestResponse();
 				break;
+			case 7:
+				return $this->getReported();
+				break;
+			case 8:
+				return $this->getUserIp();
+				break;
+			case 9:
+				return $this->getBanned();
+				break;
+			case 10:
+				return $this->getReportedDate();
+				break;
 			default:
 				return null;
 				break;
@@ -805,6 +1034,10 @@ abstract class BasePost extends BaseObject  implements Persistent {
 			$keys[4] => $this->getUpdatedAt(),
 			$keys[5] => $this->getContent(),
 			$keys[6] => $this->getBestResponse(),
+			$keys[7] => $this->getReported(),
+			$keys[8] => $this->getUserIp(),
+			$keys[9] => $this->getBanned(),
+			$keys[10] => $this->getReportedDate(),
 		);
 		return $result;
 	}
@@ -857,6 +1090,18 @@ abstract class BasePost extends BaseObject  implements Persistent {
 			case 6:
 				$this->setBestResponse($value);
 				break;
+			case 7:
+				$this->setReported($value);
+				break;
+			case 8:
+				$this->setUserIp($value);
+				break;
+			case 9:
+				$this->setBanned($value);
+				break;
+			case 10:
+				$this->setReportedDate($value);
+				break;
 		} // switch()
 	}
 
@@ -888,6 +1133,10 @@ abstract class BasePost extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setContent($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setBestResponse($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setReported($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUserIp($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setBanned($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setReportedDate($arr[$keys[10]]);
 	}
 
 	/**
@@ -906,6 +1155,10 @@ abstract class BasePost extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PostPeer::UPDATED_AT)) $criteria->add(PostPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(PostPeer::CONTENT)) $criteria->add(PostPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(PostPeer::BEST_RESPONSE)) $criteria->add(PostPeer::BEST_RESPONSE, $this->best_response);
+		if ($this->isColumnModified(PostPeer::REPORTED)) $criteria->add(PostPeer::REPORTED, $this->reported);
+		if ($this->isColumnModified(PostPeer::USER_IP)) $criteria->add(PostPeer::USER_IP, $this->user_ip);
+		if ($this->isColumnModified(PostPeer::BANNED)) $criteria->add(PostPeer::BANNED, $this->banned);
+		if ($this->isColumnModified(PostPeer::REPORTED_DATE)) $criteria->add(PostPeer::REPORTED_DATE, $this->reported_date);
 
 		return $criteria;
 	}
@@ -971,6 +1224,14 @@ abstract class BasePost extends BaseObject  implements Persistent {
 		$copyObj->setContent($this->content);
 
 		$copyObj->setBestResponse($this->best_response);
+
+		$copyObj->setReported($this->reported);
+
+		$copyObj->setUserIp($this->user_ip);
+
+		$copyObj->setBanned($this->banned);
+
+		$copyObj->setReportedDate($this->reported_date);
 
 
 		$copyObj->setNew(true);

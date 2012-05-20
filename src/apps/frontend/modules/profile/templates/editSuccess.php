@@ -35,7 +35,7 @@ return true;
 <?php /* @var $user User */ ?>
 
 <div id="top" style="margin-left:18px;padding-top:2px">
-  <div class="title" style="float:left"> <img src="/images/arrow-right.gif" alt="" />
+  <div class="title" style="float:left"> <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
     <p style="font-size:16px; line-height:24px;color:#1C517C;font-weight:bold;margin-left:17px;">Edit your Profile</p>
   </div>
   <div class="spacer"></div>
@@ -48,7 +48,7 @@ return true;
       <div class="mediacount">
         <p style="text-align:left;padding-top:5px">Profile Picture</p>
       </div>
-      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="/images/loader.gif" border="0" alt="loader"/> </div>
+      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="<?php echo image_path('loader.gif', false); ?>" border="0" alt="loader"/> </div>
       <div class="browse">
         <input type="text" id="picupload" disabled="disabled" />
         <!--<input type="file" size="71" onchange="document.getElementById('picupload').value=this.value" />--> 
@@ -203,41 +203,6 @@ $date = date('Y')+1;
     <div class="bottom"></div>
   </div>
   <div class="spacer"></div>
-  <div class="box">
-    <div class="top"></div>
-    <div class="content">
-      <p style="text-align:left;padding-top:5px;font-size:18px;color:#1C517C;font-weight:bold;margin:5px 0 0 10px;">Additional Information</p>
-      <div class="entry">
-        <div class="ttle">Write a little about yourself</div>
-        <div class="spacer"></div>
-        <div class="txtareabg"></div>
-        <?php echo textarea_tag('about_me', $user->getAboutMe()); ?> <?php echo form_error('about_me'); ?> 
-        
-        <!--<input type="checkbox" class="chkbox" checked="checked" style="top:50px; left:-295px; !left:-284px;" />
-                                    <div class="text" style="top:52px; left:-295px; !left:-284px;">Display "a little about yourself" on public profile</div>-->
-        <div class="text" style="top:52px; left:-295px; !left:-284px;"><em>must be displayed</em></div>
-        <div class="spacer"></div>
-      </div>
-      <div class="entry">
-        <div class="ttle">What are your Hobbies?</div>
-        <div class="spacer"></div>
-        <div class="txtareabg"></div>
-        <?php echo textarea_tag('hobbies', $user->getInterestsAsString()); ?> <?php echo form_error('hobbies'); ?> <?php echo checkbox_tag('show_hobbies', '1', $user->getShowHobbies(),array('class'=>"chkbox",'style'=>'top:50px; left:-295px; !left:-284px;')); ?>
-        <div class="text" style="top:52px; left:-295px; !left:-284px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
-      <!--<div class="entry">
-        <div class="ttle">Relationship Status</div>
-        <div class="spacer"></div>
-        <div style="clear:left"> <?php echo enum_values_select_tag(get_class($user), 'RelationshipStatuse', $user->getRelationshipStatus()); ?> <?php echo form_error('relationshipStatuse'); ?> </div>
-        <?php echo checkbox_tag('show_relationship_status', '1', $user->getShowRelationshipStatus(),array('class'=>"chkbox")); ?>
-        <div class="text">Display "Relationship Status" on public profile</div>
-        <div class="spacer"></div>
-      </div>-->
-    </div>
-    <div class="bottom"></div>
-    <div class="spacer"></div>
-  </div>
   <?php echo submit_tag('Save your profile changes',array('id'=>'save','onClick' => 'return userNameCheck();')); ?>
 
   </form>

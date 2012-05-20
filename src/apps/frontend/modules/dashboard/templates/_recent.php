@@ -16,27 +16,12 @@ $connection = RaykuCommon::getDatabaseConnection();
 		if($c>7)
 		break;
   ?>
-  <?php
-	if($historyItem->getEntityType() == "Friend") {
-		$query = mysql_query("select * from history as h, friend as f where h.created_at = f.created_at and h.id=".$historyItem->getId()." and h.created_at = '".$historyItem->getCreatedAt()."' ", $connection);
-		$row = mysql_fetch_array($query);
-			if($row["status"] == 1) : ?>
   <div class="update-item">
     <div class="update-info" style="float: left; padding-left: 15px;">
       <p class="update-text"><?php echo $historyItem; ?></p>
     </div>
     <div class="clear-both"></div>
   </div>
-  <?php endif;		       
-  } else {
-  ?>
-  <div class="update-item">
-    <div class="update-info" style="float: left; padding-left: 15px;">
-      <p class="update-text"><?php echo $historyItem; ?></p>
-    </div>
-    <div class="clear-both"></div>
-  </div>
-  <?php } ?>
   <?php } ?>
   <div class="update-item" style="border-bottom:none;padding-top:10px;">
     <div class="update-info" style="float:left;">

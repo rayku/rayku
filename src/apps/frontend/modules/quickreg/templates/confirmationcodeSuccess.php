@@ -5,14 +5,14 @@
 	function confirmation_display()
 	{
 		var cc = jQuery.noConflict();
-		cc('#confirmation_connect').load('http://www.rayku.com/quickreg/confirmpopup', '', function(response) 
+		cc('#confirmation_connect').load('/quickreg/confirmpopup', '', function(response) 
 		{
 			cc("#confirmation_content").html(response);
 
 		});
 	}
 </script>
-<link rel="stylesheet" type="text/css" href="http://www.rayku.com/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/css/global.css" />
 
 <div id="body">
 <div id="confirmation_connect"></div> 
@@ -69,7 +69,7 @@
               <div class="cn-column-four" align="center">Connect</div>
               <div class="clear-both"></div>
             </div>
-            <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="http://www.rayku.com/images/loading1.gif"></div>
+            <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="<?php echo image_path('loading1.gif', false); ?>"></div>
           </form>
         </div>
       </div>

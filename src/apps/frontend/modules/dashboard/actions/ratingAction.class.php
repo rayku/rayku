@@ -194,6 +194,18 @@ class ratingAction extends sfAction
                 $this->getResponse()->setCookie("ratingExpertId", "", time()-3600);
                 $this->getResponse()->setCookie("ratingUserId", "", time()-3600);
 
+                
+                
+                $this->user = $this->getUser()->getRaykuUser();  
+                $this->userPoints = $this->user->getPoints();
+                $this->userFirstCharge = $this->user->getFirstCharge();
+                if (($this->userPoints < 0)&&(empty($this->userFirstCharge))){
+                    $datetime = strtotime($row->createdate);
+                    $mysqldate = date("m/d/y g:i A", $datetime);
+                    $this->user->setFirstCharge($mysqldate);
+                }
+                
+                
                 if ($_chat_rating == 1 || $_chat_rating == 2) {
                     $this->redirect('/dashboard/moneyback');
                 }

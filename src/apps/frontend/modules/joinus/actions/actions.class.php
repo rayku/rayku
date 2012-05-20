@@ -17,7 +17,7 @@ class joinusActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-   
+    $this->getResponse()->setCookie('wherefind', 'Sarah called me');
   }
   
   public function executeApplied()

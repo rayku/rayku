@@ -76,7 +76,7 @@ class StudentQuestionMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('EXE_ORDER', 'ExeOrder', 'INTEGER', true, 11);
 
-		$tMap->addColumn('TIME', 'Time', 'INTEGER', true, 11);
+		$tMap->addColumn('TIME', 'Time', 'INTEGER', true, 100);
 
 		$tMap->addColumn('COURSE_CODE', 'CourseCode', 'VARCHAR', true, 100);
 

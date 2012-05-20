@@ -2,7 +2,7 @@
   
   <div id="what-is">
 	  <div style="width:30px; float:left;">
-		  <img src="/images/green_arrow.jpg" width="42" height="25" alt="" />
+		  <img src="<?php echo image_path('green_arrow.jpg', false); ?>" width="42" height="25" alt="" />
 	  </div>
       
       <?php $_date = explode(" ", $chat->getCreatedAt()); ?>

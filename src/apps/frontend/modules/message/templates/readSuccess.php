@@ -4,7 +4,7 @@
 
 <div class="body-main">
   <div id="what-is">
-    <div style="width:30px;float:left;"> <img height="25" width="42" alt="" src="/images/green_arrow.jpg"/> </div>
+    <div style="width:30px;float:left;"> <img height="25" width="42" alt="" src="<?php echo image_path('green_arrow.jpg', false); ?>"/> </div>
     <p style="font-size:16px;color:rgb(28, 81, 124);font-weight:bold;margin:0 0 32px 55px;"> <?php echo link_to('Private Messages', '@inbox',array('style'=>'color:#069')); ?> > "<?php echo $message->getSubject(); ?>"</p>
   </div>
   <div class="box">
@@ -69,4 +69,3 @@ if($message->getSender()->getType() == 5): ?>
   </div>
   <div style="float:right;"> <a href="/message/compose/<?php echo $message->getSender()->getUsername();?>/subject/Re: <?php echo $message->getSubject(); ?>" style="width: 81px; height: 35px; float: left;margin-right:5px;" id="reply"></a> <a href="/message/delete/id/<?php echo $message->getId();?>" style="width: 81px; height: 35px; float: left;" id="delete"></a> </div>
 </div>
-<?php include_partial('message/rightSideBlock', array('friends' => $friends)); ?>

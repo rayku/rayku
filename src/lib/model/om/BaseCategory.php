@@ -57,6 +57,12 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	/**
+	 * The value for the status field.
+	 * @var        int
+	 */
+	protected $status;
+
+	/**
 	 * @var        array ExpertCategory[] Collection to store aggregation of ExpertCategory objects.
 	 */
 	protected $collExpertCategorys;
@@ -186,6 +192,16 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [status] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getStatus()
+	{
+		return $this->status;
 	}
 
 	/**
@@ -338,6 +354,26 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	} // setUpdatedAt()
 
 	/**
+	 * Set the value of [status] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Category The current object (for fluent API support)
+	 */
+	public function setStatus($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->status !== $v) {
+			$this->status = $v;
+			$this->modifiedColumns[] = CategoryPeer::STATUS;
+		}
+
+		return $this;
+	} // setStatus()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -380,6 +416,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			$this->parent = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->prefix = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->status = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -389,7 +426,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = CategoryPeer::NUM_COLUMNS - CategoryPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = CategoryPeer::NUM_COLUMNS - CategoryPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Category object", $e);
@@ -704,6 +741,9 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getUpdatedAt();
 				break;
+			case 6:
+				return $this->getStatus();
+				break;
 			default:
 				return null;
 				break;
@@ -731,6 +771,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			$keys[3] => $this->getParent(),
 			$keys[4] => $this->getPrefix(),
 			$keys[5] => $this->getUpdatedAt(),
+			$keys[6] => $this->getStatus(),
 		);
 		return $result;
 	}
@@ -780,6 +821,9 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			case 5:
 				$this->setUpdatedAt($value);
 				break;
+			case 6:
+				$this->setStatus($value);
+				break;
 		} // switch()
 	}
 
@@ -810,6 +854,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setParent($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPrefix($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setStatus($arr[$keys[6]]);
 	}
 
 	/**
@@ -827,6 +872,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(CategoryPeer::PARENT)) $criteria->add(CategoryPeer::PARENT, $this->parent);
 		if ($this->isColumnModified(CategoryPeer::PREFIX)) $criteria->add(CategoryPeer::PREFIX, $this->prefix);
 		if ($this->isColumnModified(CategoryPeer::UPDATED_AT)) $criteria->add(CategoryPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(CategoryPeer::STATUS)) $criteria->add(CategoryPeer::STATUS, $this->status);
 
 		return $criteria;
 	}
@@ -890,6 +936,8 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 		$copyObj->setPrefix($this->prefix);
 
 		$copyObj->setUpdatedAt($this->updated_at);
+
+		$copyObj->setStatus($this->status);
 
 
 		if ($deepCopy) {

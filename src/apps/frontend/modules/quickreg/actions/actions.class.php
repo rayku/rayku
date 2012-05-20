@@ -133,7 +133,7 @@ class quickregActions extends sfActions
 				
 				$_SESSION['confirm_user_error'] = "Invalid Confirmation Code.";
 				
-				$this->redirect("http://www.rayku.com/quickreg/confirmationcode");
+				$this->redirect("/quickreg/confirmationcode");
 				//return sfView::ERROR;
 		}
 
@@ -179,10 +179,6 @@ class quickregActions extends sfActions
 		$this->getUser()->signIn($userCheck);
 		}
 
-		if($user) {
-			$kinkarsoUser = FriendPeer::createInitialFriendship($user);
-		} 
-		
 		if( $kinkarsoUser ) {
 
 		if($user) {
@@ -191,9 +187,6 @@ class quickregActions extends sfActions
 
 
 				 ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
-
-		  	 	 JournalEntryPeer::createHelloWorldEntryFor($user);
-
 			}
 
 		} 
@@ -226,17 +219,11 @@ class quickregActions extends sfActions
 		} 
 
 
-		$gallery = new Gallery();
-		$gallery->setTitle('Profile Pictures');
-		$gallery->setShowEntity(0);
-		$gallery->save();
-
-
 		}
 
 
 
-			$this->redirect("http://www.rayku.com/expertmanager/list");
+			$this->redirect("/expertmanager/list");
 	}
 	
 	public function executeDuplicationcheck()

@@ -251,18 +251,16 @@ class UserPeer extends BaseUserPeer
         return UserPeer::doSelectOne($oC);
     }
 
-    static public function getWithMatchingUsername($matchingUsername, $limit = null)
+    static public function getWithMatchingUsername($matchingUsername, $limit = 10)
     {
         $c = new Criteria;
         $c->add(self::USERNAME, "%$matchingUsername%", Criteria::LIKE);
         $c->add(self::HIDDEN, 0);
-        if (is_null($limit)) {
-            $c->setLimit($limit);
-        }
+        $c->setLimit($limit);
         return self::doSelect($c);
     }
 
-    static public function search($criteria, $ids, sfUser $user)
+    static public function search($criteria, sfUser $user)
     {
         $c = new Criteria;
         $c->addSelectColumn(self::ID . ' ID');
@@ -278,10 +276,6 @@ class UserPeer extends BaseUserPeer
         $cton = $c->getNewCriterion(self::USERNAME, "%$criteria%", Criteria::LIKE);
         $cton->addOr($c->getNewCriterion(self::NAME, "%$criteria%", Criteria::LIKE));
         $cton->addOr($c->getNewCriterion(self::EMAIL, "%$criteria%", Criteria::LIKE));
-
-        if (count($ids) > 0) {
-            $cton->addOr($c->getNewCriterion(self::ID, $ids, Criteria::IN));
-        }
 
         $c->add($cton);
 

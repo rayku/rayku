@@ -22,7 +22,7 @@ list-style-type: disc !important;
 
 
 <div id="top" style="margin-left:16px;padding-top:2px">
-  <div style="width:30px; float:left;"><img height="25" width="42" src="/images/green_arrow.jpg"/></div>
+  <div style="width:30px; float:left;"><img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>"/></div>
   <div style="font-size:16px; line-height:24px;color:#1C517C;font-weight:bold;margin-left:25px;float:left;width:600px;"><?php echo link_to('Q&A Boards','forum/index'); ?> > <?php echo link_to($category->getName(),'forum/'.$category->getId().'');?> > <?php echo $thread->getTitle() ; ?></div>
 
   <select id="jumpto"  onchange="return gotoforum();">

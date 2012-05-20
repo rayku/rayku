@@ -7,7 +7,7 @@
     <div class="box">
       <div class="top"></div>
       <div class="content">
-	  	<div class="entry" style="padding-bottom:15px;">
+        <div class="entry" style="padding-bottom:15px;">
           <div class="ttle">Full Name:</div>
           <div style="float:left">
             <?php if ($sf_request->hasError('realname')): ?>
@@ -42,7 +42,37 @@
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
+    <?php
+        //include_partial('registerCreditCard');
+        //include_partial('registerRefferal');
+    ?>
+    <!-- for expert categories //-->
+    <?php if($requestedUserType == UserPeer::getTypeFromValue( 'expert' ) ): ?>
+    <div class="box">
+      <div class="top"></div>
+      <div class="content">
+        <div class="title">Select Expert Categories</div>
+        <div class="subtitle">Every expert needs to select atleast one category (You may select multiple categories using the shift button)</div>
+        <div class="entry">
+          <div class="ttle">Categories</div>
+          <div style="clear:left;">
+            <?php $options = array(); ?>
+            <?php $categories = CategoryPeer::getAll(); ?>
+            <?php foreach( $categories as $key=>$category): ?>
+            <?php $options[$category->getId()] = $category->getName(); ?>
+            <?php endforeach; ?>
+            <?php echo select_tag('categories',
+									   		options_for_select($options), array('style' => 'width: 300px; height: 80px;background: none', 'multiple' => true));
+										?> </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+      <div class="spacer"></div>
+    </div>
 
+    <!-- end of expert categories //-->
+<?php endif; ?>
 
     <div id="error" style="color:#FF0000; font-size:12px;padding-bottom:5px"></div>
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
