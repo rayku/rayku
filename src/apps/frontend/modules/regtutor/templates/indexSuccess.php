@@ -46,7 +46,7 @@
             <?php if($sf_request->hasError('where_find_us')): ?>
             <div style="font-size:14px;color:#900;line-height:22px" align="center"><?php echo form_error('where_find_us') ?></div>
             <?php endif; ?>
-            <?php echo input_tag('where_find_us', '', array('type' => 'text')) ?> </div>
+            <?php echo input_tag('where_find_us', $wherefind, array('type' => 'text')) ?> </div>
           <div class="spacer"></div>
         </div>
 
