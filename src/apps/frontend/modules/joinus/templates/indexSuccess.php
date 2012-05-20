@@ -7,6 +7,9 @@
 </head>
 
 <body>
+
+<?php setcookie('wherefind','Sarah called me'); ?>
+
 <div class="body-main" style="width:600px">
   <div id="want">
     <h3>Tutor Math Online, Get Paid!</h3>
