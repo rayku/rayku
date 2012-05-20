@@ -35,7 +35,7 @@ return true;
 <?php /* @var $user User */ ?>
 
 <div id="top" style="margin-left:18px;padding-top:2px">
-  <div class="title" style="float:left"> <img src="/images/arrow-right.gif" alt="" />
+  <div class="title" style="float:left"> <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt="" />
     <p style="font-size:16px; line-height:24px;color:#1C517C;font-weight:bold;margin-left:17px;">Edit your Profile</p>
   </div>
   <div class="spacer"></div>
@@ -48,7 +48,7 @@ return true;
       <div class="mediacount">
         <p style="text-align:left;padding-top:5px">Profile Picture</p>
       </div>
-      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="/images/loader.gif" border="0" alt="loader"/> </div>
+      <div id="loading_images" style="display:none; margin-left:-350px;padding-bottom:15px; padding-top:15px;"> <img src="<?php echo image_path('loader.gif', false); ?>" border="0" alt="loader"/> </div>
       <div class="browse">
         <input type="text" id="picupload" disabled="disabled" />
         <!--<input type="file" size="71" onchange="document.getElementById('picupload').value=this.value" />--> 

@@ -54,7 +54,7 @@ function cmp($a, $b)
 
 
 <div style="margin-left:16px;padding-top:25px;width:600px;float:left;">
-  <img height="25" width="42" src="/images/green_arrow.jpg" style="float:left;"/>
+  <img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>" style="float:left;"/>
   <div style="font-size:16px;line-height:24px;color:#1C517C;font-weight:bold;margin-left:10px;width:300px;float:left;">Ask a Question</div>
   </div>
 

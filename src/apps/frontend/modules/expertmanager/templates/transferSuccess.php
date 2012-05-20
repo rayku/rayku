@@ -1,6 +1,6 @@
 <div id="top">
   <div class="title">
-    <img src="/images/arrow-right.gif" alt=""/>
+    <img src="<?php echo image_path('arrow-right.gif', false); ?>" alt=""/>
     <p><a id="hp">Network homepage</a></p>
   </div>
   <div class="spacer"></div>

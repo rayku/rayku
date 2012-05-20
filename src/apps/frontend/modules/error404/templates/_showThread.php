@@ -41,15 +41,15 @@
 
 <?php if($user->getType() == 5) : ?>
 
-<div style="width:125px;margin-bottom:5px;"><img src="/images/expert_saved.png" alt="Rayku Staff" title="Rayku Staff" style="border:none;margin:5px 3px 0 0;" />
+<div style="width:125px;margin-bottom:5px;"><img src="<?php echo image_path('expert_saved.png', false); ?>" alt="Rayku Staff" title="Rayku Staff" style="border:none;margin:5px 3px 0 0;" />
 <?php else: ?>
 		<?php if($row['score'] >= 1000 && $row['score'] < 2000) { ?>
 
-<div style="width:125px;" align="center"><img src="/images/beside1.gif" alt="Certified Tutor" title="Certified Tutor" /><br />
+<div style="width:125px;" align="center"><img src="<?php echo image_path('beside1.gif', false); ?>" alt="Certified Tutor" title="Certified Tutor" /><br />
 
 		<?php } else if($row['score'] >= 2000) { ?>
 		<div>
-		<img src="/images/beside1.gif" alt="Certified Tutor" />
+		<img src="<?php echo image_path('beside1.gif', false); ?>" alt="Certified Tutor" />
 		<?php } else { ?>
 		<div>
 		<?php }  ?>
@@ -130,7 +130,7 @@
       </div>
       <div class="cmmt">
         <div class="info">
-          <div> <img src="/images/forum-threads-statuson.gif" alt="" />
+          <div> <img src="<?php echo image_path('forum-threads-statuson.gif', false); ?>" alt="" />
             <p><?php echo $thread->getTitle() ; ?></p>
           </div>
           <div class="postdate">

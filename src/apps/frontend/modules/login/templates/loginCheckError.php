@@ -2,7 +2,7 @@
 
   <div id="top">
       <div class="title">
-          <img alt="" src="/images/arrow-right.gif"/>
+          <img alt="" src="<?php echo image_path('arrow-right.gif', false); ?>"/>
           <p>Login Error</p>
       </div>
       <div class="spacer"></div>
