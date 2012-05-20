@@ -43,8 +43,8 @@
       <div class="spacer"></div>
     </div>
     <?php
-        include_partial('registerCreditCard');
-        include_partial('registerRefferal');
+        //include_partial('registerCreditCard');
+        //include_partial('registerRefferal');
     ?>
     <!-- for expert categories //-->
     <?php if($requestedUserType == UserPeer::getTypeFromValue( 'expert' ) ): ?>
