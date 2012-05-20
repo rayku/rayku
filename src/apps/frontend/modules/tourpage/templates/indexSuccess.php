@@ -11,7 +11,7 @@
     <div class="clear"></div>
   </ul>
   <div class="tabContainer">
-    <div id="side_menu_tab1" class="tab current"> <img src="images/overview-screen.jpg" alt="img" />
+    <div id="side_menu_tab1" class="tab current"> <img src="<?php echo image_path('overview-screen.jpg', false); ?>" alt="img" />
       <h1>&quot;24/7 Access to the Best Tutors, with a Click of the Mouse&quot;</h1>
       <p> <strong>Rayku</strong> let's students get tutoring help online. With the most relevant tutors. Over a beautiful online whiteboard. In under 60 seconds. </p>
       <p>Check out what we're all about in this introductory video:<br />
@@ -25,7 +25,7 @@
     
     <!--tab-->
     
-    <div id="side_menu_tab2" class="tab"> <img src="images/livehelp-screen.jpg" alt="img" />
+    <div id="side_menu_tab2" class="tab"> <img src="<?php echo image_path('livehelp-screen.jpg', false); ?>" alt="img" />
       <h1>Connect with the tutor best suited to help you!</h1>
       <p>Rayku takes a algorithmic and systmatic approach to connect you to an online expert who is specifically qualified to assist YOU.</p>
       <p><strong>What this means for you:</strong> Whenever, Wherever. If you have any question or need any advice, right at this moment, Rayku has you covered.</p>
@@ -34,7 +34,7 @@
     
     <!--tab-->
     
-    <div id="side_menu_tab3" class="tab"> <img src="images/whiteboard-screen.jpg" alt="img" />
+    <div id="side_menu_tab3" class="tab"> <img src="<?php echo image_path('whiteboard-screen.jpg', false); ?>" alt="img" />
       <h1>Rayku works because we show, not tell.</h1>
       <p>We've put together a fast and easy-to-use whiteboard app, with everything from audio/video to a sleek math equation writer. Connect with your online tutor immediately for a painless experience. </p>
       <p><strong>What this means for you:</strong> Bypass the 'joy' of flipping through that 5kg sleeping pill. Give Rayku a try and a real person will <em>show</em> you the solution.</p>

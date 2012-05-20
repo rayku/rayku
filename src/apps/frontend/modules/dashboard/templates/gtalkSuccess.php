@@ -3,7 +3,7 @@
 
 <div class='body-main'>
   <div id="what-is">
-    <div style="width:30px;float:left;"> <img height="25" width="42" alt="" src="/images/green_arrow.jpg"/> </div>
+    <div style="width:30px;float:left;"> <img height="25" width="42" alt="" src="<?php echo image_path('green_arrow.jpg', false); ?>"/> </div>
     <p style="font-size:16px;color:rgb(28, 81, 124);font-weight:bold;margin-left:45px;">Get notifications via Google Talk</p>
   </div>
   <?php if($record == 1): ?>

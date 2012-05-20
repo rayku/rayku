@@ -475,7 +475,7 @@ function reSet(value)
 				<div class="clear-both"></div>
 	        </div>
       <!--<a href="whiteboard">-->
-          <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="/images/loading1.gif"></div>
+          <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="<?php echo image_path('loading1.gif', false); ?>"></div>
 		<!-- new page -->
 
 			      </form>
@@ -489,7 +489,7 @@ function reSet(value)
 function loadingAjax()
 {
 	var imagejsconflict = jQuery.noConflict();
-	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="/images/loading1.gif"></div>');
+	imagejsconflict(".cn-content").html('<div style="width:100%;text-align:center;margin-top:50px;"><img src="<?php echo image_path('loading1.gif', false); ?>"></div>');
 	return true;
 }
 </script>
