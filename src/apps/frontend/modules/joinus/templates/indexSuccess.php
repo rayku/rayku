@@ -7,6 +7,14 @@
 </head>
 
 <body>
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
+<?php setcookie('wherefind','Sarah called me'); ?>
+
 <div class="body-main" style="width:600px">
   <div id="want">
     <h3>Tutor Math Online, Get Paid!</h3>
@@ -44,7 +52,7 @@
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
-        <td>No application process<sup>1</sup>, start tutoring immediately!</td>
+        <td>15 minute walkthrough video to get started immediately</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -53,7 +61,7 @@
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Commission</td>
-        <td><strong>75%<sup>2</sup> (avg. $24/hr)</strong></td>
+        <td><strong>75%<sup>1</sup> (avg. $24/hr)</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Price</td>
@@ -64,10 +72,9 @@
   <div style="clear:both"></div>
   <div id="bottom">
   	<div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>
-    <p class="content">Tutor when you want, wherever you want.  Your salary and work hours are yours to decide. <a href="http://rayku.com/regtutor">Register today</a>, it's free!</p>
+    <p class="content">Tutor when you want, wherever you want. Your salary and work hours are yours to decide. <a href="http://rayku.com/regtutor">Register today</a>, it's free!</p>
     <p class="footnote"><br /><br /><br /><br />
-      <sup>1</sup>As a new tutor, you will be asked to set your rate at $0/min. Once you have reached sufficient experience (approximately 3-4 quality sessions), your account will be automatically verified and you will be allowed to charge a flexible rate, as well as rank higher on our tutor lists.</p>
-      <p class="footnote"><br /><sup>2</sup>Dependent on the quality of the tutoring session. The higher the quality, the more you earn.</p>
+      <sup>1</sup>Dependent on the quality of the tutoring session. The higher the quality, the more you earn.</p>
   </div>
 </div>
 <div id="sidebar" style="height:auto">
@@ -81,4 +88,15 @@
   </div>
 </div>
 <div class="clear-both"></div>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRc9.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(44004,1,"www");
+</script>
+<!-- ClickTale end of Bottom part -->
 </body>

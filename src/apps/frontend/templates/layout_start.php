@@ -277,7 +277,12 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.easing.1.3.js"></script> 
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.scrolling-parallax.js"></script> 
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js"></script> 
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/input-fader.js"></script> 
-
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/input-fader.js"></script>
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName("script")[0];
+a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0003/8331.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
 </body>
 </html>

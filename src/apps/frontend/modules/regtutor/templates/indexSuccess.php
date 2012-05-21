@@ -1,3 +1,9 @@
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+
 <?php use_helper('Javascript', 'MyForm') ?>
 <link href="/css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="http://www.rayku.com/css/custom/register.css" rel="stylesheet" type="text/css" media="screen" />
@@ -76,3 +82,14 @@
     </div>
   </div>
 </div>
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRc9.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(44004,1,"www");
+</script>
+<!-- ClickTale end of Bottom part -->
