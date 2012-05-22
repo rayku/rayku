@@ -96,6 +96,7 @@
 		},
 		
 		_keepAlive: function( recurse ){
+                    return;
 			var self = this,
 				options = this.options;
 				
