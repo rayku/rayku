@@ -4,6 +4,3 @@
 [submodule "src/lib/vendor/phake"]
 	path = src/lib/vendor/phake
 	url = git://github.com/mlively/Phake.git
-[submodule "src/public_html/js/vendor/ehynds/jquery-idle-timeout"]
-	path = src/public_html/js/vendor/ehynds/jquery-idle-timeout
-	url = https://github.com/ehynds/jquery-idle-timeout.git
