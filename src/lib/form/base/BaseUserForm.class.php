@@ -48,6 +48,7 @@ class BaseUserForm extends BaseFormPropel
       'credit_card_token'        => new sfWidgetFormInput(),
       'first_charge'             => new sfWidgetFormDateTime(),
       'where_find_us'            => new sfWidgetFormTextarea(),
+      'www_online_status'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -87,6 +88,7 @@ class BaseUserForm extends BaseFormPropel
       'credit_card_token'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'first_charge'             => new sfValidatorDateTime(array('required' => false)),
       'where_find_us'            => new sfValidatorString(),
+      'www_online_status'        => new sfValidatorString(array('max_length' => 10)),
     ));
 
     $this->validatorSchema->setPostValidator(
