@@ -1,14 +1,4 @@
-<style type="text/css">
-#idletimeout { background:#CC5100; border:3px solid #FF6500; color:#fff; font-family:arial, sans-serif; text-align:center; font-size:12px; padding:10px; position:relative; top:0px; left:0; right:0; z-index:100000; display:none; }
-#idletimeout a { color:#fff; font-weight:bold }
-#idletimeout span { font-weight:bold }
-</style>
-<div id="idletimeout">
-	You will be logged off in <span><!-- countdown place holder --></span>&nbsp;seconds due to inactivity. 
-	<a id="idletimeout-resume" href="#">Click here to continue using this web page</a>.
-</div>
-
-    <?php
+<?php
     RaykuCommon::getDatabaseConnection();
     use_helper('MyAvatar', 'Javascript');
     
@@ -131,11 +121,15 @@
 
 
 <?php
-if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck")
-    &&  ($_SERVER['REDIRECT_URL'] != "/logout")
-    && ($_SERVER['REDIRECT_URL'] != "/register")
-    && ($_SERVER['REDIRECT_URL'] != "/start")
-    && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")) {
+if(
+    (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck")
+        &&  ($_SERVER['REDIRECT_URL'] != "/logout")
+        && ($_SERVER['REDIRECT_URL'] != "/register")
+        && ($_SERVER['REDIRECT_URL'] != "/start")
+        && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose"))
+    && $_SERVER['REQUEST_URI'] != '/user/setWWWOnlineStatusToIdle'
+        
+) {
     ?>
     <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
@@ -160,34 +154,39 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
     }
 
     if ($sf_user->isAuthenticated()) {
-        echo '
+        ?>
             <script type="text/javascript">
                 checkedUser();
-            </script>';
-        
-        
-        echo '
-            <script type="text/javascript">
-                jQuery.idleTimeout(\'#idletimeout\', \'#idletimeout a\', {
-                        idleAfter: 5,
-                        onTimeout: function(){
-                                jQuery(this).slideUp();
-                                window.location = "timeout.htm";
-                        },
-                        onIdle: function(){
-                                window.alert(\'WAKE UP!\');
-                                jQuery(this).slideDown(); // show the warning bar
-                        },
-                        onCountdown: function( counter ){
-                                console.log(jQuery(this));
-                                jQuery(this).find("span").html( counter ); // update the counter
-                        },
-                        onResume: function(){
-                                jQuery(this).slideUp(); // hide the warning bar
-                        }
-                });            
             </script>
-        ';
+
+            <div id="idleStateMessage" style="display: none">
+                <div>
+                    WARNING!<br />
+                    You will soon be switched to <b>IDLE</b> state.<br />
+                    <a href="#" style="text-decoration: underline">Please - don't - I'm here :)</a><br />Countdown: <span></span>
+                </div>
+            </div>
+            <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>
+            <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimeout.js" type="text/javascript"></script>
+            <script type="text/javascript">
+jQuery.idleTimeout('#idleStateMessage', '#idleStateMessage a', {
+        idleAfter: 30,
+        warningLength: 10,
+        onTimeout: function(){
+            window.location = '/user/setWWWOnlineStatusToIdle';
+        },
+        onIdle: function(){
+            jQuery(this).slideDown();
+        },
+        onCountdown: function( counter ){
+            jQuery(this).find("span").html( counter );
+        },
+        onResume: function(){
+            jQuery(this).slideUp();
+        }
+});            
+            </script>
+        <?php
     }
 
     include_partial('global/topNav_someJSScripts');

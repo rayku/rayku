@@ -62,8 +62,6 @@ if($sf_context->getModuleName() !='expertmanager') {
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquerynav.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery.notifier.js"></script>
-<script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>
-<script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimeout.js" type="text/javascript"></script>
 <style type="text/css">
 <?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
  @import "<?php echo $baseRootPath; ?>/css/46.css";

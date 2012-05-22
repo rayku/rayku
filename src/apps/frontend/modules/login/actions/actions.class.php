@@ -170,6 +170,11 @@ class loginActions extends sfActions
 		/********************** END OF LOGIN LOG ENTRY ************************/
 
 
+        /**
+         * Invisible in practice means "invisible until next login"
+         * On each login this flag is set either to 0 or 1
+         * There is no possibility to change invisible status while being logged in
+         */
 		$this->user->setInvisible($this->getRequestParameter('invisible', false));
 
 
