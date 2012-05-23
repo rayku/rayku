@@ -158,7 +158,12 @@ if(
             <script type="text/javascript">
                 checkedUser();
             </script>
+<?php
 
+    $userTutorResult = mysql_query("select * from user_tutor where userid=".$raykuUser->getId());
+
+    if (mysql_num_rows($userTutorResult) > 0) {
+?>
             <div id="idleStateMessage" style="display: none">
                 <div>
                     WARNING!<br />
@@ -187,6 +192,7 @@ jQuery.idleTimeout('#idleStateMessage', '#idleStateMessage a', {
 });            
             </script>
         <?php
+        }
     }
 
     include_partial('global/topNav_someJSScripts');
