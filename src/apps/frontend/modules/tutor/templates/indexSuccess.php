@@ -282,8 +282,8 @@ h2.avatar {
     margin-left:15px;
 }
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.rayku.com/styles/popup-window.css" />
-<script type="text/javascript" src="http://www.rayku.com/js/popup-window.js"></script>
+<link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
+<script type="text/javascript" src="/js/popup-window.js"></script>
 <?php
 $onlinecheck = '';
 
@@ -385,13 +385,13 @@ if (is_array(@$_Users)) {
     $_query = mysql_query("select * from user_tutor where userid =".$expert->getId()." ", $connection) or die(mysql_error());
     if(mysql_num_rows($_query) > 0) { ?>
             <?php if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) { ?>
-            <a href="http://www.rayku.com/expertmanager/direct?id=<?php echo $expert->getId(); ?>"><img id="connect" src="http://www.rayku.com/images/portfolio/connect.png" alt="Connect" /></a>
+            <a href="/expertmanager/direct?id=<?php echo $expert->getId(); ?>"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>
             <?php } elseif($expert->getId() != $_currentUserId ) { ?>
-            <img id="connect" src="http://www.rayku.com/images/portfolio/offline.png" alt="Offline" />
+            <img id="connect" src="/images/portfolio/offline.png" alt="Offline" />
 <?php }
     } else {
 ?>
-              <img id="connect" src="http://www.rayku.com/images/portfolio/tutor-2.png" alt="tutor" />
+              <img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />
 <?php
     }
 
@@ -411,9 +411,9 @@ $rating_score = mysql_fetch_row($_query_scrore);
 
 if($expert->getType() == 5) {
 ?>
-      <img src="http://www.rayku.com/images/portfolio/certified.png" alt="Certified" id="certified" />
+      <img src="/images/portfolio/certified.png" alt="Certified" id="certified" />
       <? } ?>
-      <a href="http://rayku.com/tutor/<?php echo $expert->getusername(); ?>" id="tutor-link">http://rayku.com/tutor/<?php echo $expert->getusername(); ?></a>
+      <a href="/tutor/<?php echo $expert->getusername(); ?>" id="tutor-link">http://rayku.com/tutor/<?php echo $expert->getusername(); ?></a>
 <?php
     if(!empty($currentUser)) {
         $_currentUserId = $currentUser->getId();
@@ -425,7 +425,7 @@ if($expert->getType() == 5) {
 <?php
             } else {
 ?>
-      <a href="http://www.rayku.com/tutor/<?php echo $expert->getUsername(); ?>?expert_id=<?php echo $expert->getId(); ?>" id="tutor-follow">Follow <?php echo $expert->getname(); ?></a>
+      <a href="/tutor/<?php echo $expert->getUsername(); ?>?expert_id=<?php echo $expert->getId(); ?>" id="tutor-follow">Follow <?php echo $expert->getname(); ?></a>
 <?php
             }
         }
@@ -662,10 +662,10 @@ if(count($lastSessions)>0) {
                      $total_nostars=5-$_row['rating'];
                     echo '<table style="border:none;">';
                     for($i=0;$i<$total_stars;$i++) {
-                        echo "<td style='background:url(http://www.rayku.com/images/portfolio/rating-star.png) no-repeat;' valign='top'>&nbsp;</td>";
+                        echo "<td style='background:url(/images/portfolio/rating-star.png) no-repeat;' valign='top'>&nbsp;</td>";
                     }
                     for($i=0;$i<$total_nostars;$i++) {
-                        echo "<td style='background:url(http://www.rayku.com/images/portfolio/rating-star-gray.png) no-repeat;' valign='top'>&nbsp;</td>";
+                        echo "<td style='background:url(/images/portfolio/rating-star-gray.png) no-repeat;' valign='top'>&nbsp;</td>";
                     }
                             echo'<td style="font-size:12px;">'.date("Y-m-d",strtotime($_row['started_at'])).'&nbsp;&nbsp;&nbsp;<a id="various'.$_row['id'].'" href="#inline'.$_row['id'].'" >info</a></td>';
                             echo "</tr></table></div>";
