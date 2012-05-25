@@ -189,10 +189,10 @@ class ratingAction extends sfAction
                     }
                 }
 
-                $this->getResponse()->setCookie("timer", "", time()-3600);
-                $this->getResponse()->setCookie("whiteboardChatId", "", time()-3600);
-                $this->getResponse()->setCookie("ratingExpertId", "", time()-3600);
-                $this->getResponse()->setCookie("ratingUserId", "", time()-3600);
+                $this->getResponse()->setCookie("timer", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie("whiteboardChatId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie("ratingExpertId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie("ratingUserId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
 
                 
                 

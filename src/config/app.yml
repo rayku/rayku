@@ -1,0 +1,3 @@
+all:
+  whiteboard_url: http://whiteboard.rayku.com
+  cookies_domain: .rayku.com
