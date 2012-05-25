@@ -50,8 +50,8 @@ if($sf_context->getModuleName() !='expertmanager') {
 		if(mysql_num_rows($queryStatus)) {
 			mysql_query("DELETE FROM `sendmessage` WHERE `asker_id` =".$sessUserId." ") or die(mysql_error());
 			mysql_query("DELETE FROM `user_expert` WHERE `user_id`=".$sessUserId." ") or die(mysql_error());
-			setCookie("redirection", "",time()-600);
-			setCookie("forumsub", "",time()-600);
+			setCookie("redirection", "",time()-600, '/', sfConfig::get('app_cookies_domain'));
+			setCookie("forumsub", "",time()-600, '/', sfConfig::get('app_cookies_domain'));
 		}
 	}
 }

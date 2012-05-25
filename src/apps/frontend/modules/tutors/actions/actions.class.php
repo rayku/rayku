@@ -65,14 +65,14 @@ $count = count($_POST['checkbox']);
 
 		$cookname =  'tutor_'.$u;
 
-		$this->getResponse()->setCookie($cookname, '',time()-3600);
+		$this->getResponse()->setCookie($cookname, '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 			    		
 	}
 
 
-	$this->getResponse()->setCookie("tutorcount", '',time()-3600);
+	$this->getResponse()->setCookie("tutorcount", '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 
-	$this->getResponse()->setCookie("cookcount", '',time()-3600);
+	$this->getResponse()->setCookie("cookcount", '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 
 	/* Clearing Cookies */
 	if($count == 4)
@@ -124,11 +124,11 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 				
 
-				setcookie("asker_que",$_SESSION['question'], time()+600, "/");
+				setcookie("asker_que",$_SESSION['question'], time()+600, "/", sfConfig::get('app_cookies_domain'));
 
-				$this->getResponse()->setCookie("redirection", 1,time()+600);
+				$this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
 
-				$this->getResponse()->setCookie("forumsub", 1,time()+600);
+				$this->getResponse()->setCookie("forumsub", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
 
 
 
@@ -553,14 +553,14 @@ $count = count($_POST['checkbox']);
 
 		$cookname =  'tutor_'.$u;
 
-		$this->getResponse()->setCookie($cookname, '',time()-3600);
+		$this->getResponse()->setCookie($cookname, '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 			    		
 	}
 
 
-	$this->getResponse()->setCookie("tutorcount", '',time()-3600);
+	$this->getResponse()->setCookie("tutorcount", '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 
-	$this->getResponse()->setCookie("cookcount", '',time()-3600);
+	$this->getResponse()->setCookie("cookcount", '',time()-3600, '/', sfConfig::get('app_cookies_domain'));
 
 	/* Clearing Cookies */
 
@@ -587,11 +587,11 @@ mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, 
 
 				
 
-				setcookie("asker_que",$_SESSION['question'], time()+600, "/");
+				setcookie("asker_que",$_SESSION['question'], time()+600, "/", sfConfig::get('app_cookies_domain'));
 
-				$this->getResponse()->setCookie("redirection", 1,time()+600);
+				$this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
 
-				$this->getResponse()->setCookie("forumsub", 1,time()+600);
+				$this->getResponse()->setCookie("forumsub", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
 
 
 

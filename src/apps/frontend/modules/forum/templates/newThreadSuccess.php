@@ -130,10 +130,10 @@ $(document).ready(function(){
                         <?php
                         $_SESSION['course_name_sess'] = "";
                         $_SESSION['question'] = "";
-                        setcookie("forumsub", "", time() - 3600, "/", "rayku.com");
+                        setcookie("forumsub", "", time() - 3600, "/", sfConfig::get('app_cookies_domain'));
                         $_COOKIE["forumsub"] = "";
 
-                        setcookie("redirection", "", time() - 3600, "/", "rayku.com");
+                        setcookie("redirection", "", time() - 3600, "/", sfConfig::get('app_cookies_domain'));
                         $_COOKIE["redirection"] = "";
                         ?>
                     <?php } else { ?>

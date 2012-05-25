@@ -273,9 +273,9 @@ class listAction extends sfAction
             mysql_query($insSQL, $connection);
 
             // Connect Whiteboard //
-            setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/");
-            $this->getResponse()->setCookie("redirection", 1,time()+600);
-            $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600);
+            setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/", sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600, '/', sfConfig::get('app_cookies_domain'));
 
             $this->redirect('expertmanager/connect');
         }
