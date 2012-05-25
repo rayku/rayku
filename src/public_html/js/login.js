@@ -93,7 +93,7 @@ function sendID(newchatid, loginId, askerid) {
 
 		$.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/whiteboard/sendid.php?newchatid="+newchatid+"&loginId="+loginId+"&askerid="+askerid
+			url: "/whiteboard/sendid.php?newchatid="+newchatid+"&loginId="+loginId+"&askerid="+askerid
 
 		});
 
