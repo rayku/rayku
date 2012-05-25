@@ -85,7 +85,7 @@ function onConnect (session) {
 }
 
 function openWhiteboard(newid, newsessionid) {
-  window.location = 'http://www.rayku.com:8001/session?id='+newid+'&sid='+newsessionid;
+  window.location = window.globalConfig.whiteboard_url+'/session?id='+newid+'&sid='+newsessionid;
 }
 
 function sendID(newchatid, loginId, askerid) {
@@ -104,7 +104,7 @@ return true;
 
 function setCookie( name, value, expires)
 {
-  _setCookie( name, value, expires, '/', 'rayku.com');
+  _setCookie( name, value, expires, '/', window.globalConfig.cookies_domain);
 }
 
 function _setCookie( name, value, expires, path, domain, secure )
