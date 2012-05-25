@@ -62,7 +62,7 @@ class dashboardActions extends sfActions
         asort($rankUsers);
         arsort($rankUsers);
         $this->rankUsers = $rankUsers;
-        $this->getResponse()->setCookie("practice_name", $row['username'],time()+3600);
+        $this->getResponse()->setCookie("practice_name", $row['username'],time()+3600, '/', sfConfig::get('app_cookies_domain'));
         $queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
         $this->changeUserType = null;
         if (mysql_num_rows($queryScore) > 0) {
@@ -387,7 +387,7 @@ class dashboardActions extends sfActions
                 $name = trim($parts[0]);
 
                 if (($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "practice_name")  ) {
-                    $this->getResponse()->setCookie($name, "", time()-3600);
+                    $this->getResponse()->setCookie($name, "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 }
             }
         }
