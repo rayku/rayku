@@ -2,6 +2,11 @@ propel:
   _attributes:
     package: lib.model
     defaultIdMethod: native
+  banned_ips:
+    _attributes: { phpName: BannedIPs}
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    ip: { type: LONGVARCHAR, required: true }
+    banned_on: { type: TIMESTAMP, required: true }
   bulletin:
     _attributes: { phpName: Bulletin }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -19,6 +24,18 @@ propel:
     updated_at: { type: DATE, required: true }
     status: { type: INTEGER, size: '11'}
     _uniques: { category_name_unique: [name], category_prefix_unique: [prefix] }
+  courses:
+    _attributes: { phpName: Courses }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    course_name: { type: VARCHAR, size: '200', required: true }
+    description: { type: LONGVARCHAR, required: true }
+  course_sub:
+    _attributes: { phpName: CourseSub }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    course_id: { type: VARCHAR, size: '200', required: true }
+    course_code: { type: VARCHAR, size: '200', required: true }
   chat_data:
     _attributes: { phpName: ChatData }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -68,6 +85,22 @@ propel:
     user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
     _indexes: { expert_category_FI_1: [user_id], expert_category_FI_2: [category_id] }
+  expert_course:
+    _attributes: { phpName: ExpertCourse }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    category_id: { type: INTEGER, size: '11', required: true, foreignTable: category, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    course_id: { type: INTEGER, size: '11', required: true, foreignTable: courses, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+  expert_course_code:
+    _attributes: { phpName: ExpertCourseCode }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    course_code_id: { type: INTEGER, size: '11', required: true }
+  expert_subscribers:
+    _attributes: { phpName: ExpertSubscribers }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    expert_id: { type: INTEGER, size: '11', required: false }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
   experts_admin_payout:
     _attributes: { phpName: ExpertsAdminPayout }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -75,6 +108,14 @@ propel:
     amount: { type: FLOAT, size: '5', scale: '2', required: true }
     paypal_id: { type: VARCHAR, size: '100', required: true }
     paid: { type: INTEGER, size: '11', required: true }
+  experts_credit_details:
+    _attributes: { phpName: ExpertsCreditDetails }
+    id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
+    student_id: { type: INTEGER, size: '10', required: true }
+    expert_id: { type: INTEGER, size: '10', required: true }
+    credit_amount: { type: FLOAT, size: '5', scale: '2', required: true }
+    lesson_id: { type: INTEGER, size: '20', required: true }
+    immediate_lesson_id: { type: INTEGER, size: '20', required: true }
   experts_debit_details:
     _attributes: { phpName: ExpertsDebitDetails }
     id: { type: INTEGER, size: '100', primaryKey: true, autoIncrement: true, required: true }
@@ -123,6 +164,11 @@ propel:
     created_at: { type: TIMESTAMP, required: true }
     updated_at: { type: TIMESTAMP, required: true }
     _indexes: { forum_question_FI_1: [category_id], forum_question_FI_2: [user_id] }
+  gtalkcron:
+    _attributes: { phpName: GTalkCron }
+    id: { type: INTEGER, size: '11', primaryKey: true, required: true }
+    userid: { type: INTEGER, size: '11', required: true }
+    expire_time: { type: INTEGER, size: '100', required: true, default: '0' }
   history:
     _attributes: { phpName: History }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -149,6 +195,11 @@ propel:
     created_at: { type: TIMESTAMP, required: false }
     updated_at: { type: TIMESTAMP, required: false }
     _indexes: { item_FI_1: [size_id], item_FI_2: [item_type_id] }
+  item_featured:
+    _attributes: { phpName: ItemFeatured }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    item_id: { type: INTEGER, size: '11', required: true, foreignTable: item, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    status: { type: INTEGER, size: '11', required: true }
   item_rating:
     _attributes: { phpName: ItemRating }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -161,6 +212,13 @@ propel:
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     name: { type: VARCHAR, size: '255', required: false }
     created_at: { type: TIMESTAMP, required: false }
+  kinkarso_points:
+    _attributes: { phpName: KinkarsoPoints }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    date: { type: TIMESTAMP, required: false }
+    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    expert_id: { type: INTEGER, size: '11', required: true }
+    points: { type: FLOAT, size: '11', scale: '2', required: false }
   notification_emails:
     _attributes: { phpName: NotificationEmails }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -286,6 +344,23 @@ propel:
     student_id: { type: INTEGER, size: '10', required: true }
     expert_id: { type: INTEGER, size: '10', required: true }
     experts_accept: { type: INTEGER, size: '10', required: true }
+  student_questions:
+    _attributes: { phpName: StudentQuestion }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: StudentId }
+    checked_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: TutorId }
+    category_id: { type: INTEGER, size: '11', required: true, default: '1' }
+    course_id: { type: INTEGER, size: '11', required: true, default: '1' }
+    question: { type: VARCHAR, size: '500', required: true }
+    exe_order: { type: INTEGER, size: '11', required: true }
+    time: { type: INTEGER, size: '100', required: true }
+    course_code: { type: VARCHAR, size: '100', required: true }
+    year: { type: VARCHAR, size: '100', required: true }
+    school: { type: VARCHAR, size: '100', required: true }
+    status: { type: INTEGER, size: '10', required: true, default: '0' }
+    close: { type: INTEGER, size: '10', required: true, default: '61000' }
+    cron: { type: INTEGER, size: '10', required: true, default: '1' }
+    source: { type: VARCHAR, size: '100', required: true }
   thread:
     _attributes: { phpName: Thread }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -315,7 +390,7 @@ propel:
     username: { type: VARCHAR, size: '100', required: false }
     email: { type: VARCHAR, size: '100', required: false }
     password: { type: VARCHAR, size: '40', required: false }
-    points: { type: DECIMAL, size: '11', scale: '2', defaultValue: '0' }    
+    points: { type: DECIMAL, size: '11', scale: '2', defaultValue: '0' }
     created_at: { type: TIMESTAMP, required: false }
     last_activity_at: { type: TIMESTAMP, required: false }
     type: { type: INTEGER, size: '11', required: false, defaultValue: '0' }
@@ -348,15 +423,81 @@ propel:
     first_charge: { type: TIMESTAMP, required: false }
     where_find_us: { type: LONGVARCHAR, required: true}
     _uniques: { user_username_unique: [username], user_email_unique: [email], user_password_recover_key_unique: [password_recover_key] }
+  usergroup:
+    _attributes: { phpName: Usergroup }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    name: { type: VARCHAR, size: '150', required: false }
+    points: { type: INTEGER, size: '11', required: false, default: '0' }
+    description: { type: LONGVARCHAR, required: false }
+    type: { type: INTEGER, size: '11', required: false, default: '0' }
+    created_at: { type: TIMESTAMP, required: false }
+    updated_at: { type: TIMESTAMP, required: false }
+    bankrupt_since: { type: DATE, required: false }
   user_awards:
     _attributes: { phpName: UserAwards }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
     user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
     awards: { type: INTEGER, size: '11', required: false }
     _indexes: { user_awards_FI_1: [user_id] }
+  user_course:
+    _attributes: { phpName: UserCourse }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    course_subject: { type: VARCHAR, size: '255', required: true }
+    course_name: { type: VARCHAR, size: '255', required: true }
+    course_year: { type: VARCHAR, size: '255', required: true }
+    course_performance: { type: VARCHAR, size: '255', required: true }
+  user_expire_msg:
+    _attributes: { phpName: UserExpireMsg }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    userid: { type: INTEGER, size: '11', required: true }
+    expire_time: { type: INTEGER, size: '100', required: true, default: '0' }
+  user_expert:
+    _attributes: { phpName: UserExpert }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    checked_id: { type: INTEGER, size: '11', required: true }
+    category_id: { type: INTEGER, size: '11', required: false, default: '1' }
+    course_id: { type: INTEGER, size: '10', required: false, default: '1' }
+    question: { type: VARCHAR, size: '255', required: true }
+    exe_order: { type: INTEGER, size: '11', required: false }
+    time: { type: INTEGER, size: '100', required: true }
+    course_code: { type: VARCHAR, size: '100', required: false }
+    year: { type: VARCHAR, size: '50', required: false }
+    school: { type: VARCHAR, size: '75', required: true }
+    status: { type: INTEGER, size: '10', required: true, default: '0' }
+    close: { type: INTEGER, size: '10', required: true, default: '61000' }
+    cron: { type: INTEGER, size: '4', required: true, default: '1' }
+  user_fb:
+    _attributes: { phpName: UserFacebook }
+    userid: { type: INTEGER, size: '11', primaryKey: true, required: true }
+    fb_username: { type: VARCHAR, size: '255', required: true }
   user_gtalk:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
-    gtalkid: { type: VARCHAR, size: 100, required: true }
+    gtalkid: { type: VARCHAR, size: '100', required: true }
+  user_profile:
+    _attributes: { phpName: UserProfile }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: CASCADE, onUpdate: RESTRICT }
+    file_name: { type: VARCHAR, size: '255', required: false }
+    created_at: { type: TIMESTAMP, required: true }
+  user_question:
+    _attributes: { phpName: UserQuestion }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    status: { type: INTEGER, size: '4', required: true, default: '1' }
+    time: { type: INTEGER, size: '100', required: true }
+  user_question_tag:
+    _attributes: { phpName: UserQuestionTag }
+    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    category_id: { type: INTEGER, size: '11', required: false, foreignTable: category, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    course_id: { type: INTEGER, size: '11', required: false, foreignTable: courses, foreignReference: id, onDelete: RESTRICT, onUpdate: RESTRICT }
+    course_code: { type: VARCHAR, size: '255', required: false }
+    education: { type: INTEGER, size: '10', required: false }
+    school: { type: VARCHAR, size: '255', required: false }
+    year: { type: VARCHAR, size: '255', required: false }
+    question: { type: VARCHAR, size: '255', required: true }
   video:
     _attributes: { phpName: Video }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -399,23 +540,6 @@ propel:
     filename: { type: VARCHAR, size: '255', required: true }
     created_at: { type: TIMESTAMP, required: true }
     _indexes: { whiteboard_snapshot_FI_1: [whiteboard_chat_id] }
-  student_questions:
-    _attributes: { phpName: StudentQuestion }
-    id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
-    user_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: StudentId }
-    checked_id: { type: INTEGER, size: '11', required: true, foreignTable: user, foreignReference: id, phpName: TutorId }
-    category_id: { type: INTEGER, size: '11', required: true, default: '1' }
-    course_id: { type: INTEGER, size: '11', required: true, default: '1' }
-    question: { type: VARCHAR, size: '500', required: true }
-    exe_order: { type: INTEGER, size: '11', required: true }
-    time: { type: INTEGER, size: '100', required: true }
-    course_code: { type: VARCHAR, size: '100', required: true }
-    year: { type: VARCHAR, size: '100', required: true }
-    school: { type: VARCHAR, size: '100', required: true }
-    status: { type: INTEGER, size: '10', required: true, default: '0' }
-    close: { type: INTEGER, size: '10', required: true, default: '61000' }
-    cron: { type: INTEGER, size: '10', required: true, default: '1' }
-    source: { type: VARCHAR, size: '100', required: true }
   whiteboard_sessions:
     _attributes: { phpName: WhiteboardSession }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
@@ -434,4 +558,3 @@ propel:
     overall: { type: INTEGER, size: '5', required: true }
     feedback: { type: LONGVARCHAR, required: false }
     created_at: { type: TIMESTAMP, required: true }
-   
