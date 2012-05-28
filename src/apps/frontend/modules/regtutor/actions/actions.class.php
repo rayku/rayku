@@ -17,7 +17,7 @@ class regtutorActions extends sfActions
      */
     public function executeIndex()
     {
-        $this->wherefind = $this->getRequest()->getCookie('wherefind');
+	$this->wherefind = $this->getRequest()->getCookie('wherefind');
 
         //If the user is logged in, don't let them regtutor
         if ($this->getUser()->isAuthenticated()) {
