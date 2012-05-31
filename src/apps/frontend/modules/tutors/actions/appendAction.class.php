@@ -138,17 +138,14 @@ class appendAction extends sfAction
         $i = 0;
         $newUserLimit = array();
 
-        foreach ($experts as $exp):
+        foreach ($experts as $exp) {
 
-
-            //if($userId != $exp->getUserId()):
-
-            if (!in_array($exp->getUserId(), $newUserLimit)) :
+            if (!in_array($exp->getUserId(), $newUserLimit)) {
 
                 $newUserLimit[] = $exp->getUserId();
 
                 $_query = mysql_query("select * from user_tutor where userid =" . $exp->getUserId() . " ") or die(mysql_error());
-                if (mysql_num_rows($_query) > 0) :
+                if (mysql_num_rows($_query) > 0) {
 
                     //$_queryCourse = mysql_query("select * from expert_course where user_id =".$exp->getUserId()." and category_id = 1 and course_id = ".$this->course_id." ") or die("Er-1-->".mysql_error()); 
 
@@ -171,12 +168,12 @@ class appendAction extends sfAction
 
 
 
-                    if ($_queryCourse && mysql_num_rows($_queryCourse) > 0) :
+                    if ($_queryCourse && mysql_num_rows($_queryCourse) > 0) {
 
                         $query = mysql_query("select * from user_score where user_id=" . $exp->getUserId()) or die(mysql_error());
                         $score = mysql_fetch_assoc($query);
 
-                        if ($score['score'] != 0):
+                        if ($score['score'] != 0) {
 
                             if (false) { //$_points == '' || $_points == '0.00'   Temporary hack
                                 $emptyRCquery = mysql_query("select * from user_rate where userid=" . $exp->getUserId() . " and (rate = 0.00 || rate = 0) ") or die("Error In rate" . mysql_error());
@@ -202,17 +199,13 @@ class appendAction extends sfAction
 
                                 $i++;
                             }
-                        endif;
-                    endif;
+                        }
+                    }
 
-                endif;
+                }
 
-            endif;
-
-        //endif;	
-
-
-        endforeach;
+            }
+        }
 
 
 
@@ -240,7 +233,7 @@ class appendAction extends sfAction
         $botResponse = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
         $botUsers = json_decode($botResponse, true);
 
-        foreach ($newUser as $new):
+        foreach ($newUser as $new) {
 
             $a = new Criteria();
             $a->add(UserPeer::ID, $new['userid']);
@@ -272,30 +265,30 @@ class appendAction extends sfAction
 
                     $fb_username = $fbRow['fb_username'];
 
-                    foreach ($facebookUsers as $key => $user) :
+                    foreach ($facebookUsers as $key => $user) {
 
-                        if ($user['username'] == $fb_username):
+                        if ($user['username'] == $fb_username) {
 
                             $onlinecheck = 'online';
 
                             break;
-                        endif;
+                        }
 
-                    endforeach;
+                    }
                 }
             }
 
             if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
 
-                foreach ($botUsers as $key => $_user) :
+                foreach ($botUsers as $key => $_user) {
 
-                    if ($_user['email'] == $users_online->getEmail()):
+                    if ($_user['email'] == $users_online->getEmail()){
 
                         $onlinecheck = 'online';
                         break;
-                    endif;
+                    }
 
-                endforeach;
+                }
             }
 
 
@@ -320,7 +313,7 @@ class appendAction extends sfAction
                 $k++;
             }
 
-        endforeach;
+        }
 
         $this->newOnlineUser = $newOnlineUser;
 
@@ -341,7 +334,7 @@ class appendAction extends sfAction
 
                 $cookieSchool = array();
                 $m = 0;
-                foreach ($newOnlineUser as $new):
+                foreach ($newOnlineUser as $new) {
 
                     $b = new Criteria();
                     $b->add(UserPeer::ID, $new['userid']);
@@ -355,7 +348,7 @@ class appendAction extends sfAction
                         $m++;
                     }
 
-                endforeach;
+                }
 
                 $this->expert_cats = $cookieSchool;
             } else {
@@ -368,7 +361,7 @@ class appendAction extends sfAction
                 $cookieSchool = array();
                 $m = 0;
 
-                foreach ($newOfflineUser as $new):
+                foreach ($newOfflineUser as $new) {
 
                     $b = new Criteria();
                     $b->add(UserPeer::ID, $new['userid']);
@@ -382,7 +375,7 @@ class appendAction extends sfAction
                         $m++;
                     }
 
-                endforeach;
+                }
 
                 $this->expert_cats = $cookieSchool;
             } else {
@@ -396,7 +389,7 @@ class appendAction extends sfAction
                 $cookieSchool = array();
                 $m = 0;
 
-                foreach ($newUser as $new):
+                foreach ($newUser as $new) {
 
                     $b = new Criteria();
                     $b->add(UserPeer::ID, $new['userid']);
@@ -408,7 +401,7 @@ class appendAction extends sfAction
                         $m++;
                     }
 
-                endforeach;
+                }
 
                 $this->expert_cats = $cookieSchool;
             } else {
