@@ -356,6 +356,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $singleUserGtalk;
 
 	/**
+	 * @var        UserTutor one-to-one related UserTutor object
+	 */
+	protected $singleUserTutor;
+
+	/**
 	 * @var        array StudentQuestion[] Collection to store aggregation of StudentQuestion objects.
 	 */
 	protected $collStudentQuestionsRelatedByStudentId;
@@ -1973,6 +1978,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->singleUserGtalk = null;
 
+			$this->singleUserTutor = null;
+
 			$this->collStudentQuestionsRelatedByStudentId = null;
 			$this->lastStudentQuestionRelatedByStudentIdCriteria = null;
 
@@ -2180,6 +2187,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->singleUserTutor !== null) {
+				if (!$this->singleUserTutor->isDeleted()) {
+						$affectedRows += $this->singleUserTutor->save($con);
+				}
+			}
+
 			if ($this->collStudentQuestionsRelatedByStudentId !== null) {
 				foreach ($this->collStudentQuestionsRelatedByStudentId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -2358,6 +2371,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				if ($this->singleUserGtalk !== null) {
 					if (!$this->singleUserGtalk->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singleUserGtalk->getValidationFailures());
+					}
+				}
+
+				if ($this->singleUserTutor !== null) {
+					if (!$this->singleUserTutor->validate($columns)) {
+						$failureMap = array_merge($failureMap, $this->singleUserTutor->getValidationFailures());
 					}
 				}
 
@@ -3022,6 +3041,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$relObj = $this->getUserGtalk();
 			if ($relObj) {
 				$copyObj->setUserGtalk($relObj->copy($deepCopy));
+			}
+
+			$relObj = $this->getUserTutor();
+			if ($relObj) {
+				$copyObj->setUserTutor($relObj->copy($deepCopy));
 			}
 
 			foreach ($this->getStudentQuestionsRelatedByStudentId() as $relObj) {
@@ -4854,6 +4878,42 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Gets a single UserTutor object, which is related to this object by a one-to-one relationship.
+	 *
+	 * @param      PropelPDO $con
+	 * @return     UserTutor
+	 * @throws     PropelException
+	 */
+	public function getUserTutor(PropelPDO $con = null)
+	{
+
+		if ($this->singleUserTutor === null && !$this->isNew()) {
+			$this->singleUserTutor = UserTutorPeer::retrieveByPK($this->id, $con);
+		}
+
+		return $this->singleUserTutor;
+	}
+
+	/**
+	 * Sets a single UserTutor object as related to this object by a one-to-one relationship.
+	 *
+	 * @param      UserTutor $l UserTutor
+	 * @return     User The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUserTutor(UserTutor $v)
+	{
+		$this->singleUserTutor = $v;
+
+		// Make sure that that the passed-in UserTutor isn't already associated with this object
+		if ($v->getUser() === null) {
+			$v->setUser($this);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Clears out the collStudentQuestionsRelatedByStudentId collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -5427,6 +5487,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			if ($this->singleUserGtalk) {
 				$this->singleUserGtalk->clearAllReferences($deep);
 			}
+			if ($this->singleUserTutor) {
+				$this->singleUserTutor->clearAllReferences($deep);
+			}
 			if ($this->collStudentQuestionsRelatedByStudentId) {
 				foreach ((array) $this->collStudentQuestionsRelatedByStudentId as $o) {
 					$o->clearAllReferences($deep);
@@ -5455,6 +5518,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collShoutsRelatedByRecipientId = null;
 		$this->collUserAwardss = null;
 		$this->singleUserGtalk = null;
+		$this->singleUserTutor = null;
 		$this->collStudentQuestionsRelatedByStudentId = null;
 		$this->collStudentQuestionsRelatedByTutorId = null;
 		$this->collWhiteboardSessions = null;
