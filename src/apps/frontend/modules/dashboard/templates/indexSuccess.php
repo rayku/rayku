@@ -6,21 +6,22 @@
 <div id="tutor_profile" style="position:absolute;z-index:999999;margin-left:350px;"></div>
 <?php
 $connection = RaykuCommon::getDatabaseConnection();
+/* @var $raykuUser User */
 $raykuUser = $sf_user->getRaykuUser();
 $stats = $raykuUser->getStatisticsForDashboard();
 usort($rankUsers, "cmp");
 $curr_user_rank = '';
 $ij = 1;
 
-if (count($rankUsers) > 0):
-	foreach($rankUsers as $_expert):
-		if ($_expert['userid'] == $logedUserId):
-			$curr_user_rank = $ij;
-			break;
-		endif;
-		$ij++;
-	endforeach;
-endif;
+if (count($rankUsers) > 0) {
+    foreach($rankUsers as $_expert) {
+        if ($_expert['userid'] == $raykuUser->getId()) {
+            $curr_user_rank = $ij;
+            break;
+        }
+        $ij++;
+    }
+}
 
 function cmp($a, $b)
 	{
@@ -47,7 +48,6 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
   <div style="margin-left:16px;padding-top:25px;width:600px;float:left;"> <img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>" style="float:left;"/>
     <div style="font-size:16px;line-height:24px;color:#1C517C;font-weight:bold;margin-left:10px;width:300px;float:left;">Ask a Question</div>
   </div>
-  <?php $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id']; ?>
   <div class="body-left" style="margin-top:15px;">
     <?php include_partial('askquestion'); ?>
     <div>
@@ -64,10 +64,9 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
       <!--widget-head-->
       
       <div id="widget-head">
-        <?php $query = mysql_query("select * from user_tutor where userid =".$logedUserId." ", $connection) or die(mysql_error()); ?>
         <div style="float:left;width:150px;">
           <h3>
-            <?php if(mysql_num_rows($query) > 0) : ?>
+            <?php if($raykuUser->isTutorStatusEnabled()) : ?>
             <?php if($stats['expertCount'] >= 125 && $stats['expertCount'] <= 500 && $changeUserType != 1){ ?>
             <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
             <span style="color:#900">Staff (Level 9001)</span>
@@ -93,11 +92,11 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
           </h3>
         </div>
         <div style="float:right;width:60px;">
-          <?php if(mysql_num_rows($query) > 0) : ?>
+          <?php if($raykuUser->isTutorStatusEnabled()) { ?>
           <span id="on-off"><strong style="color:#060">On</strong> | <a href="/dashboard/tutor" style="color:#333;text-decoration:underline">Off</a></span>
-          <?php else: ?>
+          <?php } else { ?>
           <span id="on-off"><a href="javascript:tutorprofile();" style="color:#333;text-decoration:underline">On</a> | <strong style="color:#900">Off</strong></span>
-          <?php endif; ?>
+          <?php } ?>
         </div>
         <div style="clear:both;"></div>
       </div>
@@ -106,7 +105,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
       <?php
 
 
-		if(mysql_num_rows($query) > 0 && empty($_COOKIE['loginname'])) : ?>
+		if($raykuUser->isTutorStatusEnabled() && empty($_COOKIE['loginname'])) : ?>
       
       <!--widget main-->
       
@@ -115,7 +114,6 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
         <!--progress wrap-->
         <?php
 		$percentage = '';
-		//echo $logedUserId."---**".$stats['expertCount'];
 		if ($stats['expertCount'] <= 125 )
 		{
 			$percentage = ($stats['expertCount'] / 125) * 100;
@@ -181,7 +179,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
       <!--widget-foot-->
       
       <?php
-		$query = mysql_query("select * from user_rate where userid=".$logedUserId." ", $connection) or die(mysql_error());
+		$query = mysql_query("select * from user_rate where userid=".$raykuUser->getId()." ", $connection) or die(mysql_error());
 		$rate = mysql_fetch_assoc($query);
 		$_Rate = ''; $_max = '';
 		if(mysql_num_rows($query) == 0) :
@@ -296,7 +294,7 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
   </div>
   <!--widget-->
   
-  <?php elseif(mysql_num_rows($query) == 0) : ?>
+  <?php elseif($raykuUser->isTutorStatusDisabled()) : ?>
   <!--widget main-->
   <div id="widget-main">
     <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>

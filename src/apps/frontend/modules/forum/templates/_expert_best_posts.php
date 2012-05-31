@@ -58,43 +58,32 @@ foreach($expert_best_posts as $post)
 		 
 
 	$c = new Criteria();
-
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
 	$rankexperts = ExpertCategoryPeer::doSelect($c);
+        
+	$rankUsers = array();
+        $ji =0;
+        $eachExpertOnlyOnce = array(); 
 
-	$rankUsers = array(); $ji =0; $newUserLimit = array(); 
+        foreach($rankexperts as $exp) {
+            if(in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                continue;
+            }
+            $eachExpertOnlyOnce[] = $exp->getUserId();
 
-		 foreach($rankexperts as $exp): 
+            $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+            $score = mysql_fetch_assoc($query);
 
-	
-					if(!in_array($exp->getUserId(), $newUserLimit)) :
-
-					$newUserLimit[] = $exp->getUserId();
-
-						 $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error()); 
-						 if(mysql_num_rows($_query) > 0) : 
-
-							$query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-							$score = mysql_fetch_assoc($query);
-
-							if($score['score'] != 0):
-
-								$rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId());
-
-								$ji++;
-							endif;
-		      
-      						 endif; 
-
-					endif;
-
-
-		 endforeach; 
-
-					asort($rankUsers);  
-
-		
-			arsort($rankUsers);
-$ij = 1; $curr_user_rank = '';
+            if($score['score'] != 0) {
+                $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId());
+                $ji++;
+            }
+        }
+        
+        asort($rankUsers);  
+        arsort($rankUsers);
+        
+        $ij = 1; $curr_user_rank = '';
 
 	if(count($rankUsers) > 0) :
          

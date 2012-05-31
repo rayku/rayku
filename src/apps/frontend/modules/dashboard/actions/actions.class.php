@@ -34,36 +34,36 @@ class dashboardActions extends sfActions
         }
 
         $connection = RaykuCommon::getDatabaseConnection();
-        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-        $this->logedUserId =  $logedUserId;
-        $query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
-        $row = mysql_fetch_assoc($query);
+        /* @var $raykuUser User */
+        $raykuUser = $this->getUser()->getRaykuUser();
 
         $c = new Criteria();
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
         $rankexperts = ExpertCategoryPeer::doSelect($c);
-        $rankUsers = array(); $ji =0; $newUserLimit = array();
-        foreach($rankexperts as $exp){
-            if (!in_array($exp->getUserId(), $newUserLimit)) {
-                $newUserLimit[] = $exp->getUserId();
-                $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-                if (mysql_num_rows($_query) > 0) {
-                    $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-                    $score = mysql_fetch_assoc($query);
-                    if ($score['score'] != 0){
-                        $dv=new Criteria();
-                        $dv->add(UserPeer::ID,$exp->getUserId());
-                        $_thisUser = UserPeer::doSelectOne($dv);
-                        $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
-                        $ji++;
-                    }
-                }
+        $rankUsers = array();
+        $ji =0;
+        $eachExpertOnlyOnce = array();
+        foreach($rankexperts as $exp) {
+            if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                continue;
+            }
+            $eachExpertOnlyOnce[] = $exp->getUserId();
+            
+            $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+            $score = mysql_fetch_assoc($query);
+            if ($score['score'] != 0){
+                $dv=new Criteria();
+                $dv->add(UserPeer::ID,$exp->getUserId());
+                $_thisUser = UserPeer::doSelectOne($dv);
+                $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
+                $ji++;
             }
         }
         asort($rankUsers);
         arsort($rankUsers);
         $this->rankUsers = $rankUsers;
-        $this->getResponse()->setCookie("practice_name", $row['username'],time()+3600, '/', sfConfig::get('app_cookies_domain'));
-        $queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
+        $this->getResponse()->setCookie("practice_name", $raykuUser->getUsername(),time()+3600, '/', sfConfig::get('app_cookies_domain'));
+        $queryScore = mysql_query("select * from user_score where user_id =".$raykuUser->getId()." and score >= 125 and status = 0", $connection) or die(mysql_error());
         $this->changeUserType = null;
         if (mysql_num_rows($queryScore) > 0) {
             $this->changeUserType = 1;
@@ -148,10 +148,11 @@ class dashboardActions extends sfActions
     public function executeTutor()
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        $_userId = $this->getUser()->getRaykuUser()->getId();
-        $_select = mysql_query("select * from user_tutor where userid=".$_userId, $connection) or die(mysql_error());
-        if (mysql_num_rows($_select) > 0) {
-            mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());
+        /* @var $raykuUser User */
+        $raykuUser = $this->getUser()->getRaykuUser();
+        $_userId = $raykuUser->getId();
+        if ($raykuUser->isTutorStatusEnabled()) {
+            $raykuUser->setTutorStatusDisabled();
             $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
             if (!$_query) {
                 mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
@@ -218,7 +219,7 @@ class dashboardActions extends sfActions
                     mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
                 }
 
-                mysql_query("insert into user_tutor(userid) values(".$_userId.")", $connection) or die(mysql_error());
+                $raykuUser->setTutorStatusEnabled();
                 $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
                 if (!$_query) {
                     mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());

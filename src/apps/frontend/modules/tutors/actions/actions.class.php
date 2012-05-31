@@ -143,20 +143,6 @@ class tutorsActions extends sfActions {
 
 
 
-        $c = new Criteria();
-
-
-
-        if ($this->cat == 5) {
-
-            $experts = ExpertCategoryPeer::doSelect($c);
-        } else {
-            $c->add(ExpertCategoryPeer::CATEGORY_ID, $this->cat);
-
-            $experts = ExpertCategoryPeer::doSelect($c);
-        }
-
-
         $queryPoints = mysql_query("select * from user where id=" . $userId) or die("Error In rate" . mysql_error());
 
         if (mysql_num_rows($queryPoints) > 0) {
@@ -166,62 +152,60 @@ class tutorsActions extends sfActions {
             $_points = $rowPoints['points'];
         }
 
+        $c = new Criteria();
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
+        if ($this->cat == 5) {
+            $experts = ExpertCategoryPeer::doSelect($c);
+        } else {
+            $c->add(ExpertCategoryPeer::CATEGORY_ID, $this->cat);
+            $experts = ExpertCategoryPeer::doSelect($c);
+        }
 
         $newUser = array();
         $i = 0;
-        $newUserLimit = array();
+        $eachExpertOnlyOnce = array();
 
-        foreach ($experts as $exp):
+        foreach ($experts as $exp) {
+            if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                continue;
+            }
+            $eachExpertOnlyOnce[] = $exp->getUserId();
 
+            $_queryCourse = mysql_query("select * from expert_course where user_id =" . $exp->getUserId() . " and category_id = 1 and course_id = " . $this->course_id . " ") or die("Er-1-->" . mysql_error());
+            if (mysql_num_rows($_queryCourse) > 0) {
 
-            if (!in_array($exp->getUserId(), $newUserLimit)) :
+                $query = mysql_query("select * from user_score where user_id=" . $exp->getUserId()) or die(mysql_error());
+                $score = mysql_fetch_assoc($query);
 
-                $newUserLimit[] = $exp->getUserId();
+                if ($score['score'] != 0) {
 
-                $_query = mysql_query("select * from user_tutor where userid =" . $exp->getUserId() . " ") or die(mysql_error());
-                if (mysql_num_rows($_query) > 0) :
+                    if (false) { //$_points == '' || $_points == '0.00'     Temporary hack
+                        $emptyRCquery = mysql_query("select * from user_rate where userid=" . $exp->getUserId() . " and (rate = 0.00 || rate = 0) ") or die("Error In rate" . mysql_error());
 
-                    $_queryCourse = mysql_query("select * from expert_course where user_id =" . $exp->getUserId() . " and category_id = 1 and course_id = " . $this->course_id . " ") or die("Er-1-->" . mysql_error());
-                    if (mysql_num_rows($_queryCourse) > 0) :
+                        if (mysql_num_rows($emptyRCquery) > 0) {
 
-                        $query = mysql_query("select * from user_score where user_id=" . $exp->getUserId()) or die(mysql_error());
-                        $score = mysql_fetch_assoc($query);
+                            $dv = new Criteria();
+                            $dv->add(UserPeer::ID, $exp->getUserId());
+                            $_thisUser = UserPeer::doSelectOne($dv);
 
-                        if ($score['score'] != 0):
+                            $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-                            if (false) { //$_points == '' || $_points == '0.00'     Temporary hack
-                                $emptyRCquery = mysql_query("select * from user_rate where userid=" . $exp->getUserId() . " and (rate = 0.00 || rate = 0) ") or die("Error In rate" . mysql_error());
+                            $i++;
+                        }
+                    } else {
 
-                                if (mysql_num_rows($emptyRCquery) > 0) {
-
-                                    $dv = new Criteria();
-                                    $dv->add(UserPeer::ID, $exp->getUserId());
-                                    $_thisUser = UserPeer::doSelectOne($dv);
-
-                                    $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                                    $i++;
-                                }
-                            } else {
-
-                                $dv = new Criteria();
-                                $dv->add(UserPeer::ID, $exp->getUserId());
-                                $_thisUser = UserPeer::doSelectOne($dv);
+                        $dv = new Criteria();
+                        $dv->add(UserPeer::ID, $exp->getUserId());
+                        $_thisUser = UserPeer::doSelectOne($dv);
 
 
-                                $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                        $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-                                $i++;
-                            }
-                        endif;
-                    endif;
-
-                endif;
-
-            endif;
-
-
-        endforeach;
+                        $i++;
+                    }
+                }
+            }
+        }
 
 
 

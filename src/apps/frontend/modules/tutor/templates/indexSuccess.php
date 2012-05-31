@@ -286,7 +286,8 @@ h2.avatar {
 <script type="text/javascript" src="/js/popup-window.js"></script>
 <?php
 $onlinecheck = '';
-
+    
+/* @var $expert User */
 if($expert->isOnline()) {
     $web="Web";
 } else {
@@ -380,22 +381,18 @@ if (is_array(@$_Users)) {
       <div style="float: left;">
         <h2 class="avatar"> <?php echo $expert->getName(); ?></h2><br>
         <!--Connect Button-->
-<?php if(!empty($currentUser)) {
-    $_currentUserId = $currentUser->getId();
-    $_query = mysql_query("select * from user_tutor where userid =".$expert->getId()." ", $connection) or die(mysql_error());
-    if(mysql_num_rows($_query) > 0) { ?>
-            <?php if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) { ?>
-            <a href="/expertmanager/direct?id=<?php echo $expert->getId(); ?>"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>
-            <?php } elseif($expert->getId() != $_currentUserId ) { ?>
-            <img id="connect" src="/images/portfolio/offline.png" alt="Offline" />
-<?php }
-    } else {
-?>
-              <img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />
 <?php
+if(!empty($currentUser)) {
+    $_currentUserId = $currentUser->getId();
+    if($expert->isTutorStatusEnabled()) {
+        if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) {
+            echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
+        } else if($expert->getId() != $_currentUserId ) {
+            echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
+        }
+    } else {
+        echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
     }
-
-
 }
 ?>
       </div>

@@ -28,28 +28,34 @@ class tutorActions extends sfActions
         $c->add(UserPeer::USERNAME, $this->getRequestParameter('username'));
         $user = UserPeer::doSelectOne($c);
         $this->user = $user;
-        $tutor_id = $user->getId();
         $this->tutor_id = $user->getId();
-        $c = new Criteria();
 
+        $c = new Criteria();
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
         $rankexperts = ExpertCategoryPeer::doSelect($c);
 
-        $rankUsers = array(); $ji =0; $newUserLimit = array();  $rankScore = array();
-        foreach($rankexperts as $exp){
-            if (!in_array($exp->getUserId(), $newUserLimit)) {
-                $newUserLimit[] = $exp->getUserId();
-                $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-                if (mysql_num_rows($_query) > 0) {
-                    $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-                    $score = mysql_fetch_assoc($query);
-                    if ($score['score'] != 0){
-                        $dv=new Criteria();
-                        $dv->add(UserPeer::ID,$exp->getUserId());
-                        $_thisUser = UserPeer::doSelectOne($dv);
-                        $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
-                        $ji++;
-                    }
-                }
+        $rankUsers = array();
+        $ji =0;
+        $eachExpertOnlyOnce = array();
+        $rankScore = array();
+        
+        /**
+         * @todo this loop parses all experts only to later use only one of them in template - fix this 
+         */
+        foreach($rankexperts as $exp) {
+            if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                continue;
+            }
+            $eachExpertOnlyOnce[] = $exp->getUserId();
+            
+            $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+            $score = mysql_fetch_assoc($query);
+            if ($score['score'] != 0){
+                $dv=new Criteria();
+                $dv->add(UserPeer::ID,$exp->getUserId());
+                $_thisUser = UserPeer::doSelectOne($dv);
+                $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
+                $ji++;
             }
         }
         asort($rankUsers);

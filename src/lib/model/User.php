@@ -556,5 +556,33 @@ class User extends BaseUser
   {
     return ThreadPeer::getLastUsersThreads(array($this->getId()), 8);
   }
+  
+  function isTutorStatusEnabled()
+  {
+      return ($this->getUserTutor() instanceof UserTutor);
+  }
+  
+  function isTutorStatusDisabled()
+  {
+      return !$this->isTutorStatusEnabled();
+  }
+  
+  function setTutorStatusDisabled()
+  {
+      $userTutor = $this->getUserTutor();
+      if ($userTutor) {
+          $userTutor->delete();
+      }
+  }
+  
+  function setTutorStatusEnabled()
+  {
+      $userTutor = $this->getUserTutor();
+      if (!$userTutor) {
+          $userTutor = new UserTutor;
+          $userTutor->setUser($this);
+          $userTutor->save();
+      }
+  }
 
 }
