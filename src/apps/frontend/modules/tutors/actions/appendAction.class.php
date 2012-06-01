@@ -125,9 +125,6 @@ class appendAction extends sfAction
 
             $eachExpertOnlyOnce[] = $exp->getUserId();
 
-            /* Student match with Tutors */
-            $usrname = $this->getUser()->getRaykuUser()->getUsername();
-
             $_queryCourse = '';
             $tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = " . $exp->getUserId() . "") or die("Er-1-->" . mysql_error());
             $tutors = mysql_fetch_array($tutorsq);

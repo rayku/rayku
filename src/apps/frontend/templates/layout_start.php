@@ -54,9 +54,12 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
       <h3>Ask any math question <span style="font-weight:normal">
         <?php
             $onlineUsersCount = $uac->getOnlineUsersCount();
-            if( $onlineUsersCount > 5) { ?>
-              (<span style="color:#919294;text-shadow:#000 0 1px 0;"><?php echo $onlineUsersCount; ?></span> tutors online):</span>
-        <?php } ?>
+            if( $onlineUsersCount > 5) {
+                echo '(<span style="color:#919294;text-shadow:#000 0 1px 0;">';
+                echo $onlineUsersCount;
+                echo '</span> tutors online):</span>';
+            } 
+        ?>
       </h3>
       <p class="main-question">
         <input type="text" name="question" id="question" value="Type the question or topic you need help with here"/>
