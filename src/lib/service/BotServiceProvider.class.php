@@ -53,6 +53,8 @@ class BotServiceProvider
     private $logging = false;
     private $logFilePath = '/tmp/botServiceProvider.log';
             
+    private $curlConnectTimeout = 1;
+    private $curlTimeout = 3;
     
     /**
      * Default state of enabled flag
@@ -81,9 +83,35 @@ class BotServiceProvider
         if (!$this->enabled) {
             return json_encode(array());
         }
+        
+        require_once dirname(__DIR__).'/vendor/guzzle/guzzle.phar';
+        
         $time = time();
         $url = $this->getUrl();
-        $content = file_get_contents($url);
+        
+        $client = new Guzzle\Service\Client($url);
+        $request = $client->get($url);
+        $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, $this->curlConnectTimeout);
+        $request->getCurlOptions()->set(CURLOPT_TIMEOUT, $this->curlTimeout);
+        try {
+            $response = $request->send();
+        } catch(\Guzzle\Http\Exception\BadResponseException $e) {
+            if ($this->logging) {
+                file_put_contents(
+                    $this->logFilePath,
+                    'time: '
+                        . (time()-$time)
+                        . ', url: '.$url
+                        . ', exception: '.$e->getMessage()
+                        ."\n",
+                    FILE_APPEND
+                );
+            }
+            return '[]';
+        }
+         
+        $content = $response->getBody(true);
+        
         if ($this->logging) {
             file_put_contents(
                 $this->logFilePath,
