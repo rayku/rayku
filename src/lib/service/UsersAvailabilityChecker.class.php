@@ -144,10 +144,18 @@ class UsersAvailabilityChecker
         return $this->counts;
     }
     
-    function getOnlineUsersCount()
+    static function getOnlineUsersCount()
     {
-        $onlineUsersCount = count($this->getOnlineUsers());
-        return $onlineUsersCount;
+        $cache = DataCache::getInstance();
+        $count = $cache->get('onlineUsersTotalCount');
+        
+        if ($count === null) {
+            $uac = new UsersAvailabilityChecker;
+            $count = count($uac->getOnlineUsers());
+            $cache->set('onlineUsersTotalCount', $count, 60);
+        }
+        
+        return $count;
     }
 
 }

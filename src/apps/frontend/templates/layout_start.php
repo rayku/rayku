@@ -53,7 +53,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
     <form name="register-form" id="register-form" action="quickreg/register" method="post" style="height:265px;background:url(/images/media-logos.png) no-repeat center bottom;">
       <h3>Ask any math question <span style="font-weight:normal">
         <?php
-            $onlineUsersCount = $uac->getOnlineUsersCount();
+            $onlineUsersCount = UsersAvailabilityChecker::getOnlineUsersCount();
             if( $onlineUsersCount > 5) {
                 echo '(<span style="color:#919294;text-shadow:#000 0 1px 0;">';
                 echo $onlineUsersCount;

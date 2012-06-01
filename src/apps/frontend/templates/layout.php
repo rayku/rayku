@@ -4,7 +4,6 @@ $baseRootPath = sfContext::getInstance()->getRequest()->getRelativeUrlRoot();
 
 if(( sfContext::getInstance()->getModuleName() == 'start' )) :
 	
-	$uac = new UsersAvailabilityChecker;
 	include('layout_start.php');
 	
 else:

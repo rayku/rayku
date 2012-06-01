@@ -1,3 +1,12 @@
 all:
   whiteboard_url: http://whiteboard.rayku.com
   cookies_domain: .rayku.com
+
+  .array:
+    data_cache:
+      class: sfMemcacheCache
+      param:
+        servers:
+          localhost1:
+            port: 11211
+            host: localhost
