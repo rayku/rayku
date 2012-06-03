@@ -12,8 +12,7 @@ frmVal(document).ready(function(){
 </script>
 <style>
 .option {
-    font-size:18px;
-    font-weight:bold;
+    font-size:14px;
     color:#666;
     line-height:28px;
 }
@@ -56,15 +55,17 @@ $raykuPercentage = $newTimer * $rate;
             </td>
             </tr>
              <tr>
+            <!--
             <td width="253" style="padding:20px 0"><font  class="option">Tip Tutor (optional):</font>
               <p>
                 <font style="font-size: 14px; color:#333; margin-left: 3px;"> Amount:</font>&nbsp;
                 <input name="tiptutor" type="textbox" id="tiptutor" maxlength="3" style=" width:40px;" width="30"  class="validate[custom[integer],min[1],max[<?php echo $raykuPercentage;?>]]"  />
               </p></td>
+            -->
             </tr>
           <tr>
-            <td><input name="chkIsPublic" type="checkbox" id="chkIsPublic" checked />
-              <font style="font-size: 14px; color:#333; margin-left: 3px;">Allow session to be public</font><br />
+            <td><label><input name="chkIsPublic" type="checkbox" id="chkIsPublic" checked />
+              <font style="font-size: 14px; color:#333; margin-left: 3px;">Allow session to be public</font></label><br />
               <label>
                 <input type="checkbox" id="checkbox" name="checkbox" />
                 <font style="font-size: 14px; color:#333; margin-left: 3px;">Follow this tutor</font></label>
@@ -75,22 +76,22 @@ $raykuPercentage = $newTimer * $rate;
       </tr>
       <tr>
         <td width="35"><input type="radio" name="rating" value="5" /></td>
-        <td class="option">Excellent</td>
+        <td class="option">No Problems!</td>
         <td width="180" class="option"><span class="option1"><img src="../images/star.png" width="25" height="25" ><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span></td>
       </tr>
       <tr>
         <td><input type="radio" name="rating"  value="4" /></td>
-        <td class="option">Very good</td>
+        <td class="option">Pretty Helpful</td>
         <td class="option"><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span></td>
       </tr>
       <tr>
         <td><input type="radio" name="rating"  value="3" /></td>
-        <td class="option">Average</td>
+        <td class="option">Somewhat Helpful</td>
         <td class="option"><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span></td>
       </tr>
       <tr>
         <td><input type="radio" name="rating" value="2"  /></td>
-        <td class="option">Not good</td>
+        <td class="option">Not very helpful</td>
         <td class="option"><span class="option1"><img src="../images/star.png" width="25" height="25" ></span><span class="option1"><img src="../images/star.png" width="25" height="25" ></span></td>
       </tr>
       <tr>

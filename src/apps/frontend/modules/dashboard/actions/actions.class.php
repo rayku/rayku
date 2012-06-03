@@ -373,8 +373,9 @@ class dashboardActions extends sfActions
         $cookiename= $logedUserId."_question";
         $limitcookiename = $logedUserId."_limit";
 
-        if (!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
-            $wtf = new WhiteboardTutorFeedback;
+       // if (!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
+         if (!empty($_POST['audio'])){
+	    $wtf = new WhiteboardTutorFeedback;
             $wtf->setWhiteboardChatId($_COOKIE["whiteboardChatId"]);
             $wtf->setExpertId($_COOKIE["ratingExpertId"]);
             $wtf->setAudio(!empty($_POST["audio"]) ? $_POST["audio"] : '');
