@@ -7,7 +7,7 @@
     <div class="content">
       <div class="entry">
         <div class="spacer"></div>
-         <?php if($action == 1) { ?>
+         <?php if($weAreFriendsNow) { ?>
 
        	<div style="border-top: 2px solid rgb(56, 109, 37);  padding: 12px; background: rgb(201, 242, 201) none repeat scroll 0% 0%; color: rgb(51, 51, 51); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; font-size: 14px; line-height: 18px; margin-bottom: 20px;">Your friend request to 'raykubot' has just been sent! We will automatically accept it in a few moments, and you will start getting notifications through Facebook.</div>
 
