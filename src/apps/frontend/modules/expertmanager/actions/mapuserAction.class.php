@@ -102,7 +102,7 @@ class mapuserAction extends sfAction
             $studentQuestion->setStatus(0);
             $studentQuestion->save();
 
-            @setcookie('_popupclose', 1, time()+300, '/', null);
+            @setcookie('_popupclose', 1, time()+300, '/', sfConfig::get('app_cookies_domain'));
             echo join('-', array(
                 $studentQuestion->getTutor()->getId(),
                 $studentQuestion->getStudent()->getId(),

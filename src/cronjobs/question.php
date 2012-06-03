@@ -205,7 +205,7 @@ function checkquestion() {
             $_Users = json_decode($onlineUsers, true);
             foreach($_Users as $key => $_user) {
                 if($_user['email'] == $tutorEmail){
-                    $url = 'http://notification-bot.rayku.com/tutor/'.$tutorEmail.'/notification';
+                    $url = 'http://bots.rayku.com:5678/tutor/'.$tutorEmail.'/notification';
                     $fields = array(
                         'link'=>urlencode($link),
                         'body'=>urlencode($question),

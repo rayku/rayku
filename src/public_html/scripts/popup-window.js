@@ -94,7 +94,7 @@ function popup_exit(e)
 		jk.ajax({ 
 			cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/cookieadd?cookie=1"
+			url: "/expertmanager/cookieadd?cookie=1"
 		});
 
 

@@ -260,9 +260,9 @@ if ($cat != NULL) {
 <?php
                 $tutname = "expert_".$icount;
                 $maxcook = $icount;
-                setcookie($tutname, $newOne['userid'], time()+3600);
-                setcookie("cooktotal", $maxcook, time()+3600);
-                setcookie("expertscount", $expertscount, time()+3600);
+                setcookie($tutname, $newOne['userid'], time()+3600, '/', sfConfig::get('app_cookies_domain'));
+                setcookie("cooktotal", $maxcook, time()+3600, '/', sfConfig::get('app_cookies_domain'));
+                setcookie("expertscount", $expertscount, time()+3600, '/', sfConfig::get('app_cookies_domain'));
 
 ?>
                 <script type="text/javascript">

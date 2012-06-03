@@ -24,269 +24,13 @@ function cmp($a, $b)
 <script type="text/javascript" src="/fancybox/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.1.js"></script>
 <link rel="stylesheet" type="text/css" href="/fancybox/jquery.fancybox-1.3.1.css" media="screen" />
-<style type='text/css'>
-th {
-    background-color: #8FB5DB;
-    border-color: #DDDDDD;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    font-size: 17px;
-}
-td {
-    border-color: #DDDDDD;
-    font-size: 15px;
-    padding: 6px;
-}
-table {
-    border: groove;
-    border-color: #DDDDDD;
-    font-size: 15px;
-    border-bottom-width : 20px;
-}
-.entry select {
-    width:295px;
-    height:40px;
-    background:#fff url(images/add-journal-view.gif) no-repeat;
-    float:left;
-    margin-right:5px;
-    color:#3d3d3d;
-    font:14px "Arial";
-    border:0px;
-    padding:11px 10px 10px 12px;
-}
-#main {
-    background:white;
-}
-/*Content*/
-
-#content {
-    width:630px;
-    float:left;
-    padding-left:20px;
-}
-#content h2 {
-    font-family:Cambria, Arial, Helvetica, sans-serif;
-    font-size:34px;
-    font-weight:bold;
-    color:#1c517c;
-    /*display:inline-block;
-    *display:inline;
-    zoom:1;*/
-}
-#avatar-connect {
-    position:relative;
-    margin-bottom:20px;
-    padding-left:3px;
-}
-h2.avatar {
-    padding-top:10px;
-    margin-left:8px;
-}
-.avatar {
-    margin-top:22px;
-    float:left;
-}
-#connect {
-    padding-left:10px;
-    padding-top:7px;
-}
-#facts {
-    width:100%;
-    border:1px solid #8daec7;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    margin-bottom:30px;
-    position:relative;
-    color:#5d5f60;
-    padding-top:10px;
-    padding-bottom:20px;
-}
-#certified {
-    position:absolute;
-    right:16px;
-    top:9px;
-}
-#facts .row {
-    border-bottom:1px dashed #e7e7e7;
-    padding:10px 0;
-    width:500px;
-    position:relative;
-}
-#facts .row:last-child {
-    border:none;
-}
-#tutor-link {
-    position:absolute;
-    right:18px;
-    top:145px;
-    font-size:12px;
-    color:#1c517c;
-    text-decoration:underline;
-    font-weight:bold;
-    z-index: 1;
-}
-#tutor-follow {
-    color:#1C517C;
-    font-size:15px;
-    font-weight:bold;
-    position:absolute;
-    right:19px;
-    text-decoration:underline;
-    top:-34px;
-}
-#facts .left {
-    float:left;
-    width:190px;
-    font-size:16px;
-    padding-left:16px;
-}
-#facts .right {
-    float:right;
-    width:278px;
-    padding-left:12px;
-    font-size:16px;
-    border-left:1px solid #CCC;
-}
-#facts .right img {
-    margin-left: -10px;
-}
-#facts .row-bg {
-    background:#f8fbfe;
-}
-#facts .rate-color {
-    font-weight:bold;
-    color:#006600;
-}
-#add-value {
-    padding-bottom:20px;
-    margin-bottom:20px;
-    color:#575757;
-    border-bottom:4px solid #eaeaea;
-}
-#add-value h3 {
-    font-size:18px;
-    font-weight:bold
-}
-#add-value p {
-    margin:20px 0 5px 0;
-    font-size:14px;
-    line-height:20px;
-}
-#followers h4 {
-    color:#575757;
-    font-size:12px;
-    font-weight:bold;
-    padding-left:5px;
-}
-#followers h4 span.foll-no {
-    color:#006600 !important;
-}
-#followers-images {
-    margin-left:-5px;
-    margin-top: 10px;
-}
-/*Sidebar*/
-#sidebar {
-    width:265px;
-    margin:0 24px;
-    float:right;
-    padding-top:28px;
-    text-align:left;
-}
-#sidebar a {
-    color: #87A8C3;
-}
-#thumbnail-wrap {
-    margin-bottom:45px;
-    padding-left:6px;
-}
-#thumbnail-wrap a {
-    margin-top:0;
-    display:block;
-    font-size:12px;
-    margin-left:8px;
-}
-.thumbnail {
-    width:253px;
-    height:105px;
-    background:url(../images/portfolio/thumbnail-bg.png) no-repeat;
-    margin-bottom:20px;
-    text-align:center;
-    padding-top:7px;
-    position:relative;
-}
-.thumbnail p {
-    text-align:left;
-    background:url(../images/portfolio/thumbnail-text-bg.png) repeat;
-    font-size:11px;
-    font-family:Calibri, Arial, Helvetica, sans-serif;
-    color:#fff;
-    padding:6px;
-    margin:0 9px;
-    position:absolute;
-    bottom:5px;
-    width:223px;
-    *left:0;
-}
-#ratings {
-    color:#676767;
-    font-size:12px;
-    border-bottom:4px solid #eaeaea;
-    padding-bottom:14px;
-    padding-left:15px;
-    margin-bottom:16px;
-}
-#ratings p {
-    line-height:16px;
-    color:#999;
-}
-.ratings-wrap {
-    margin-bottom:16px;
-}
-.ratings-wrap a {
-    text-decoration:underline;
-    color:#1c517c !important;
-}
-.ratings-wrap img {
-    vertical-align:text-top;
-}
-#latest-posts {
-    font-size:12px;
-    margin-bottom:25px;
-}
-#latest-posts p {
-    line-height:16px;
-    color:#999;
-}
-#latest-posts h4 {
-    font-weight:bold;
-    color:#575757;
-    padding-bottom:8px;
-    padding-left:15px;
-}
-#latest-posts li {
-    width: 235px;
-    padding-left:15px;
-    margin-top:10px;
-    padding-bottom:4px;
-    border-bottom:1px dashed #e7e7e7;
-}
-#latest-posts li a {
-    color:#5981ae;
-}
-.more-posts {
-    display:block;
-    margin-top:15px;
-    margin-left:15px;
-}
-</style>
-<link rel="stylesheet" type="text/css" href="http://www.rayku.com/styles/popup-window.css" />
-<script type="text/javascript" src="http://www.rayku.com/js/popup-window.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/tutorprofile.css"
+<link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
+<script type="text/javascript" src="/js/popup-window.js"></script>
 <?php
 $onlinecheck = '';
-
+    
+/* @var $expert User */
 if($expert->isOnline()) {
     $web="Web";
 } else {
@@ -367,35 +111,32 @@ if (is_array(@$_Users)) {
     }
 }
 ?>
-<div id="main">
+<div id="main"> 
   <!--content begins-->
-    <div id="content">
+  <div id="content"> 
     <!--avatar, name and connect begins-->
-    <div id="avatar-connect">
+    <div id="avatar-connect"> 
       <!--avatar-->
       <div class="avatar">
         <div class="displaypic"><?php echo link_to( avatar_tag_for_user($expert), '@profile?username=' . $expert->getUsername() ); ?></div>
       </div>
       <!--Name-->
       <div style="float: left;">
-        <h2 class="avatar"> <?php echo $expert->getName(); ?></h2><br>
+        <h2 class="avatar"> <?php echo $expert->getName(); ?></h2>
+        <br>
         <!--Connect Button-->
-<?php if(!empty($currentUser)) {
-    $_currentUserId = $currentUser->getId();
-    $_query = mysql_query("select * from user_tutor where userid =".$expert->getId()." ", $connection) or die(mysql_error());
-    if(mysql_num_rows($_query) > 0) { ?>
-            <?php if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) { ?>
-            <a href="http://www.rayku.com/expertmanager/direct?id=<?php echo $expert->getId(); ?>"><img id="connect" src="http://www.rayku.com/images/portfolio/connect.png" alt="Connect" /></a>
-            <?php } elseif($expert->getId() != $_currentUserId ) { ?>
-            <img id="connect" src="http://www.rayku.com/images/portfolio/offline.png" alt="Offline" />
-<?php }
-    } else {
-?>
-              <img id="connect" src="http://www.rayku.com/images/portfolio/tutor-2.png" alt="tutor" />
 <?php
+if(!empty($currentUser)) {
+    $_currentUserId = $currentUser->getId();
+    if($expert->isTutorStatusEnabled()) {
+        if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) {
+            echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
+        } else if($expert->getId() != $_currentUserId ) {
+            echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
+        }
+    } else {
+        echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
     }
-
-
 }
 ?>
       </div>
@@ -404,46 +145,49 @@ if (is_array(@$_Users)) {
     <div class="clear-both"></div>
     <!--facts box begins-->
     <div id="facts">
-<?php	$_query_scrore = mysql_query("select score from user_score where user_id=".$expert->getId()." ", $connection) or die(mysql_error());
+      <?php	$_query_scrore = mysql_query("select score from user_score where user_id=".$expert->getId()." ", $connection) or die(mysql_error());
 $chat_rating = 0; $rating_count = 0; $avg_rating = 0;
 
 $rating_score = mysql_fetch_row($_query_scrore);
 
 if($expert->getType() == 5) {
 ?>
-      <img src="http://www.rayku.com/images/portfolio/certified.png" alt="Certified" id="certified" />
+      <img src="/images/portfolio/certified.png" alt="Certified" id="certified" />
       <? } ?>
-      <a href="http://rayku.com/tutor/<?php echo $expert->getusername(); ?>" id="tutor-link">http://rayku.com/tutor/<?php echo $expert->getusername(); ?></a>
-<?php
+      <a href="/tutor/<?php echo $expert->getusername(); ?>" id="tutor-link">http://rayku.com/tutor/<?php echo $expert->getusername(); ?></a>
     if(!empty($currentUser)) {
         $_currentUserId = $currentUser->getId();
         if($expert->getId() != $_currentUserId ) {
             $query = mysql_query("select * from expert_subscribers as es, user as u where es.expert_id=".$expert->getId()." and es.user_id =".$_currentUserId." and es.user_id = u.id ", $connection) or die("error1");
             if(mysql_num_rows($query) > 0) {
 ?>
-      <span id="tutor-follow" style="text-decoration:none;">Currently Following</span>
-<?php
+      <a href="#" id="tutor-follow">Unfollow</a>
+      <?php
             } else {
 ?>
-      <a href="http://www.rayku.com/tutor/<?php echo $expert->getUsername(); ?>?expert_id=<?php echo $expert->getId(); ?>" id="tutor-follow">Follow <?php echo $expert->getname(); ?></a>
-<?php
+      <a href="/tutor/<?php echo $expert->getUsername(); ?>?expert_id=<?php echo $expert->getId(); ?>" id="tutor-follow">Follow <?php echo $expert->getname(); ?></a>
             }
         }
     }
 ?>
-
+      
       <!--row 1 begins-->
-
+      
+      <div class="row row-bg">
+        <div class="left" style="width:550px;"><em>Sophomore</em> at <em>University of Toronto</em> studying <em>Astronomy and Physics</em></div>
+        <div class="clear-both"></div>
+      </div>
+      
       <div class="row row-bg">
         <div class="left">Connected via: </div>
         <div class="right"><span style="color:#CFCFCF;"> <span <?php if($web!="") { ?> style="color:#069; font-weight:bold;" <?php } ?>>web</span> | <span <?php if($googletalk) { ?> style="color:#069;font-weight:bold;" <?php } ?>>gtalk</span> | <span <?php if($facebookchat!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>fb chat</span> | <span <?php if($desktopapplication!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>desktop app</span> </span> </div>
         <div class="clear-both"></div>
       </div>
-
+      
       <!--row 2 begins-->
-
+      
       <div class="row row-bg">
-<?php	$_query = mysql_query("select * from user_rate where userid =".$expert->getId()." ", $connection) or die(mysql_error());
+        <?php	$_query = mysql_query("select * from user_rate where userid =".$expert->getId()." ", $connection) or die(mysql_error());
 $chat_rating = 0;
 if(mysql_num_rows($_query) > 0) {
     $_row = mysql_fetch_array($_query);
@@ -455,11 +199,11 @@ if(mysql_num_rows($_query) > 0) {
         <div class="right rate-color"><?php echo number_format($chat_rating, 2); ?>RP/minute</div>
         <div class="clear-both"></div>
       </div>
-      <!--row 2 ends-->
-
+      <!--row 2 ends--> 
+      
       <!--row 4 begins-->
-
-<?php
+      
+      <?php
 if($curr_user_rank<=10 and $curr_user_rank<>''){
 ?>
       <div class="row row-bg">
@@ -469,14 +213,14 @@ if($curr_user_rank<=10 and $curr_user_rank<>''){
         </div>
         <div class="clear-both"></div>
       </div>
-<?php
+      <?php
 }
 ?>
-
-      <!--row 4 ends-->
-
+      
+      <!--row 4 ends--> 
+      
       <!--row 5 begins-->
-
+      
       <div class="row row-bg">
         <div class="left">Tutored Sessions:</div>
         <div class="right">
@@ -484,12 +228,12 @@ if($curr_user_rank<=10 and $curr_user_rank<>''){
         </div>
         <div class="clear-both"></div>
       </div>
-      <!--row 5 ends-->
-
+      <!--row 5 ends--> 
+      
       <!--row 6 begins-->
-
+      
       <div class="row">
-<?php
+        <?php
 $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
 $query = mysql_query("select * from expert_subscribers as es, user as u where es.expert_id=".$expert->getId()." and es.user_id = u.id", $connection) or die("error1");
@@ -499,32 +243,32 @@ $num_followers=mysql_num_rows($query);
         <div class="right">
           <?=$num_followers?>
         </div>
-
         <div class="clear-both"></div>
       </div>
-
+      
       <!-- Expert count -->
-<?php if(!empty($currentUser)) {
+      <?php if(!empty($currentUser)) {
     $_currentUserType = $currentUser->getType();
     if($_currentUserType == 5) { ?>
-
-<?php
+      <?php
         $expertscor_qry = mysql_query("select score from user_score where user_id =".$expert->getId()." ", $connection) or die("error1");
     $expertscore_result = mysql_fetch_array($expertscor_qry);
 ?>
       <div class="row">
         <div class="left">Expert Score:</div>
-        <div class="right"><?=$expertscore_result['score']?></div>
+        <div class="right">
+          <?=$expertscore_result['score']?>
+        </div>
+        <div class="clear-both"></div>
       </div>
       <?php } ?>
-      <!--row 6 ends-->
-
+      <!--row 6 ends--> 
+      
     </div>
-    <!--facts box ends-->
-
-
-    <!--how i add value box begins-->
-
+    <!--facts box ends--> 
+    
+    <!--how i add value box begins--> 
+    
     <script type="text/javascript">
     var k = jQuery.noConflict();
     k(document).ready(function() {
@@ -535,19 +279,15 @@ $num_followers=mysql_num_rows($query);
         });
     });
     </script>
-
-
     <div id="add-value">
       <h3>How I add value?
-<?php $_currentUserId = $currentUser->getId();
+        <?php $_currentUserId = $currentUser->getId();
 if($expert->getId() == $_currentUserId ) { ?>
-
-    <a id="promotionalText" href="#promotionalMsg" >[edit]</a>
-
+        <a id="promotionalText" href="#promotionalMsg" >[edit]</a>
         <?php } ?>
         <?php } ?>
       </h3>
-<?php
+      <?php
     $c= new Criteria();
 $c->add(ExpertsPromoTextPeer::EXP_ID,$expert->getId());
 $promotext = ExpertsPromoTextPeer::doSelectOne($c);
@@ -561,30 +301,28 @@ $promotext = ExpertsPromoTextPeer::doSelectOne($c);
       <?php } ?>
     </div>
     <!--add value box ends-->
-
-
-
+    
     <div style="display: none;">
-        <div id="promotionalMsg" style="width:550px;height:480px;overflow:auto;padding:25px" align="left">
-<?php if(!empty($promotext)) {
+      <div id="promotionalMsg" style="width:550px;height:480px;overflow:auto;padding:25px" align="left">
+        <?php if(!empty($promotext)) {
     $content = $promotext->getContent();
 }  ?>
-            <?php echo form_tag('tutor/'.$expert->getUserName()) ?>
-            <p style="padding:10px 0;font-weight:bold;font-size:16px;color:#333">Describe how you add value: </p>
-            <?php echo textarea_tag('content',$content,array('size' => '54x40', 'rich' => 'fck')); ?> <br />
-            <?php echo submit_tag('Edit Description',array('style' => 'padding:5px;font-size:13px;')) ?>
-            </form>
-        </div>
-        </div>
-
+        <?php echo form_tag('tutor/'.$expert->getUserName()) ?>
+        <p style="padding:10px 0;font-weight:bold;font-size:16px;color:#333">Describe how you add value: </p>
+        <?php echo textarea_tag('content',$content,array('size' => '54x40', 'rich' => 'fck')); ?> <br />
+        <?php echo submit_tag('Edit Description',array('style' => 'padding:5px;font-size:13px;')) ?>
+        </form>
+      </div>
+    </div>
+    
     <!--followers begins-->
-
+    
     <div id="followers">
       <h4><span class="foll-no">
         <?=$num_followers?>
         </span> Followers</h4>
       <div  id="followers-images">
-<?php
+        <?php
     $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
 $query = mysql_query("select * from expert_subscribers as es, user as u where es.expert_id=".$expert->getId()." and es.user_id = u.id ", $connection) or die("error1");
@@ -598,19 +336,19 @@ if(mysql_num_rows($query) > 0) {
 }
 ?>
       </div>
-      <!--followers images ends-->
-
+      <!--followers images ends--> 
+      
     </div>
-    <!--followers ends-->
-
+    <!--followers ends--> 
+    
   </div>
-  <!--content ends-->
-
+  <!--content ends--> 
+  
   <!--sidebar-begins-->
-
+  
   <div id="sidebar">
     <div id="thumbnail-wrap">
-<?php
+      <?php
 if(count($lastSessions)>0) {
     $count_session=count($lastSessions)>3?3:count($lastSessions);
     for($ls=0;$ls<$count_session;$ls++){
@@ -620,17 +358,17 @@ if(count($lastSessions)>0) {
         <p>
           <?php if ($lastSessions[$ls]->getQuestion() <> '') { ?>
           <a href="#<?php //echo url_for('whiteboard/show?id=' . $lastSessions[$ls]->getId()) ?>" style="color:#FFF"> <?php echo urldecode($lastSessions[$ls]->getQuestion()) ?> </a>
-<?php
+          <?php
           }
 ?>
         </p>
       </div>
-<?php
+      <?php
     }
 }
 ?>
       <br />
-<?php
+      <?php
 if(count($lastSessions)>0) {
 ?>
       <a href="<?php echo url_for('whiteboard/sessions/') . '/' . $expert->getUsername() ?>" >More Sessions</a>
@@ -639,7 +377,7 @@ if(count($lastSessions)>0) {
     <!--thumbnail wrap ends-->
     <div id="ratings">
       <h4 style="margin-bottom:20px; font-weight:bold; color: #575757;">Latest Ratings</h4>
-<?php
+      <?php
     $rating_count = 0;
     $_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' order by started_at desc limit 0,5 ", $connection) or die(mysql_error());
 
@@ -662,10 +400,10 @@ if(count($lastSessions)>0) {
                      $total_nostars=5-$_row['rating'];
                     echo '<table style="border:none;">';
                     for($i=0;$i<$total_stars;$i++) {
-                        echo "<td style='background:url(http://www.rayku.com/images/portfolio/rating-star.png) no-repeat;' valign='top'>&nbsp;</td>";
+                        echo "<td style='background:url(/images/portfolio/rating-star.png) no-repeat;' valign='top'>&nbsp;</td>";
                     }
                     for($i=0;$i<$total_nostars;$i++) {
-                        echo "<td style='background:url(http://www.rayku.com/images/portfolio/rating-star-gray.png) no-repeat;' valign='top'>&nbsp;</td>";
+                        echo "<td style='background:url(/images/portfolio/rating-star-gray.png) no-repeat;' valign='top'>&nbsp;</td>";
                     }
                             echo'<td style="font-size:12px;">'.date("Y-m-d",strtotime($_row['started_at'])).'&nbsp;&nbsp;&nbsp;<a id="various'.$_row['id'].'" href="#inline'.$_row['id'].'" >info</a></td>';
                             echo "</tr></table></div>";
@@ -687,9 +425,9 @@ if(count($lastSessions)>0) {
                 }
             }
         ?>
-
-      <!--ratings begins-->
-    <script type="text/javascript">
+      
+      <!--ratings begins--> 
+      <script type="text/javascript">
     var k = jQuery.noConflict();
     k(document).ready(function() {
         k("#various_moreratings").fancybox({
@@ -699,11 +437,11 @@ if(count($lastSessions)>0) {
         });
     });
     </script>
-<?php
+      <?php
     if($rating_count>0){
 ?>
       <a id="various_moreratings" href="#inline_moreratings">More </a>
-<?php } else {
+      <?php } else {
     echo "<p>There are no sessions available to display.</p>";
 }?>
       <div style="display: none;">
@@ -718,7 +456,7 @@ if(count($lastSessions)>0) {
               <th width="130px">Comments</th>
               <th width="130px">Date</th>
             </tr>
-<?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ", $connection) or die(mysql_error());
+            <?php	$_query = mysql_query("select * from whiteboard_chat where expert_id =".$expert->getId()." and rating !='' ", $connection) or die(mysql_error());
 
 if(mysql_num_rows($_query) > 0) {
     $rating_count = mysql_num_rows($_query);
@@ -736,19 +474,19 @@ if(mysql_num_rows($_query) > 0) {
         </div>
       </div>
     </div>
-    <!--ratings ends-->
-
+    <!--ratings ends--> 
+    
     <!--Latest Posts Begins-->
-
+    
     <div id="latest-posts">
       <h4>Latest  Q&amp;A Responses</h4>
-
+      
       <!--Forum Post links-->
       <ul>
         <?php if($best_responses != NULL){ ?>
         <?php foreach($best_responses as $best_response){ ?>
         <li> <strong>
-<?php $a = new Criteria();
+          <?php $a = new Criteria();
 $a->add(ThreadPeer::ID,$best_response->getThreadId());
 $threads = ThreadPeer::doSelectOne($a);
 
@@ -756,7 +494,7 @@ if($threads != NULL){
     echo link_to($threads->getTitle(), '@view_thread?thread_id='.$threads->getId(),array('class' => 'threadttle'));
 }
 ?>
-        </strong></li>
+          </strong></li>
         <?php } ?>
         <a id="various_moreposts" href="#inline_moreposts" class="more-posts">More </a>
         <?php } else { ?>
@@ -766,11 +504,11 @@ if($threads != NULL){
         <?php } ?>
       </ul>
     </div>
-    <!--latest posts ends-->
-
+    <!--latest posts ends--> 
+    
   </div>
   <!--sidebar ends-->
-
+  
   <div class="clear-both"></div>
 </div>
 <script type="text/javascript">
@@ -794,7 +532,7 @@ k(document).ready(function() {
         <th width="130px">Created</th>
         <th width="130px">Last post</th>
       </tr>
-<?php
+      <?php
 if($bestResponses != NULL) {
     foreach($bestResponses as $response){
         $a = new Criteria();

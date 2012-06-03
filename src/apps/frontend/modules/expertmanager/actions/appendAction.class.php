@@ -51,6 +51,8 @@ class appendAction extends sfAction
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
         $c = new Criteria();
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
+        
         if ($this->cat == 5) {
             $experts = ExpertCategoryPeer::doSelect($c);
         } else {
@@ -62,126 +64,127 @@ class appendAction extends sfAction
             $rowPoints = mysql_fetch_assoc($queryPoints);
             $_points = $rowPoints['points'];
         }
-        $newUser= array(); $i =0; $newUserLimit= array();
+        
+        $newUser= array();
+        $i =0;
+        $eachExpertOnlyOnce= array();
 
         foreach ($experts as $exp) {
             if ($userId != $exp->getUserId()) {
-                if (!in_array($exp->getUserId(), $newUserLimit)) {
-                    $newUserLimit[] = $exp->getUserId();
-                    $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-                    if (mysql_num_rows($_query) > 0) {
-                        /* Testing - Student match with Tutors */
-                        $usrname = $this->getUser()->getRaykuUser()->getUsername();
-                        $_queryCourse = '';
+                if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                    continue;
+                }
+                $eachExpertOnlyOnce[] = $exp->getUserId();
+                
+                /* Testing - Student match with Tutors */
+                $_queryCourse = '';
 
-                        $tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());
-                        $tutors = mysql_fetch_array($tutorsq);
-                        $tutor ='';
+                $tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());
+                $tutors = mysql_fetch_array($tutorsq);
+                $tutor ='';
 
-                        $tutor = explode("-",$tutors['course_id']);
-                        if (in_array($_SESSION["course_id"],$tutor)) {
-                            $_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());
-                            //echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
-                        }
-                        if (@mysql_num_rows($_queryCourse) > 0) {
-                            $query = mysql_query("select * from user_score where user_id = ".$exp->getUserId(), $connection) or die(mysql_error());
-                            $score = mysql_fetch_assoc($query);
+                $tutor = explode("-",$tutors['course_id']);
+                if (in_array($_SESSION["course_id"],$tutor)) {
+                    $_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."", $connection) or die("Er-1-->".mysql_error());
+                    //echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
+                }
+                if (@mysql_num_rows($_queryCourse) > 0) {
+                    $query = mysql_query("select * from user_score where user_id = ".$exp->getUserId(), $connection) or die(mysql_error());
+                    $score = mysql_fetch_assoc($query);
 
-                            if ($score['score'] != 0) {
-                                if ($_points == '' || $_points == '0.00' ) {
-                                    $emptyRCquery = mysql_query("select * from user_rate where userid = ".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
-                                    if (mysql_num_rows($emptyRCquery) > 0) {
-                                        $dv = new Criteria();
-                                        $dv->add(UserPeer::ID,$exp->getUserId());
-                                        $_thisUser = UserPeer::doSelectOne($dv);
-                                        $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                    if ($score['score'] != 0) {
+                        if ($_points == '' || $_points == '0.00' ) {
+                            $emptyRCquery = mysql_query("select * from user_rate where userid = ".$exp->getUserId()." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
+                            if (mysql_num_rows($emptyRCquery) > 0) {
+                                $dv = new Criteria();
+                                $dv->add(UserPeer::ID,$exp->getUserId());
+                                $_thisUser = UserPeer::doSelectOne($dv);
+                                $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-                                        if (!empty($_SESSION["asker_year"])) {
-                                            $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-2-->".mysql_error());
-                                            $rowExp = mysql_fetch_assoc($queryExp);
+                                if (!empty($_SESSION["asker_year"])) {
+                                    $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-2-->".mysql_error());
+                                    $rowExp = mysql_fetch_assoc($queryExp);
 
-                                            if (!is_numeric($rowExp['course_year'])) {
-                                                if ($rowExp['course_year'] == "graduated") {
-                                                    $rowExp['course_year'] = 5;
-                                                } else {
-                                                    $rowExp['course_year'] = 4;
-                                                }
-                                            }
-                                            $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-
-                                            if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                                $score['score'] = $score['score'] * 1.2;
-                                            } else if ($valueYear == 4) {
-                                                $score['score'] = $score['score'] * 1.1;
-                                            }
-                                        }
-
-                                        if (!empty($_SESSION["asker_cc_id"])) {
-                                            $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
-                                            if (mysql_num_rows($_queryCourseCode) > 0) {
-                                                $score['score'] = $score['score'] * 1.5;
-                                            }
-                                        }
-
-                                        if (!empty($_SESSION["asker_school"])) {
-                                            $mailUser = explode("@", $_thisUser->getEmail());
-                                            $newMailUser = explode(".", $mailUser[1]);
-
-                                            if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
-                                                $score['score'] = $score['score'] * 1.5;
-                                            }
-                                        }
-
-                                        $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-                                        $i++;
-                                    }
-                                } else {
-                                    $dv = new Criteria();
-                                    $dv->add(UserPeer::ID,$exp->getUserId());
-                                    $_thisUser = UserPeer::doSelectOne($dv);
-                                    $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                                    if (!empty($_SESSION["asker_year"])) {
-                                        $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-4-->".mysql_error());
-                                        $rowExp = mysql_fetch_assoc($queryExp);
-
-                                        if (!is_numeric($rowExp['course_year'])) {
-                                            if ($rowExp['course_year'] == "graduated") {
-                                                $rowExp['course_year'] = 5;
-                                            } else {
-                                                $rowExp['course_year'] = 4;
-                                            }
-                                        }
-                                        $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-                                        if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                            $score['score'] = $score['score'] * 1.2;
-                                        } else if ($valueYear == 4) {
-                                            $score['score'] = $score['score'] * 1.1;
+                                    if (!is_numeric($rowExp['course_year'])) {
+                                        if ($rowExp['course_year'] == "graduated") {
+                                            $rowExp['course_year'] = 5;
+                                        } else {
+                                            $rowExp['course_year'] = 4;
                                         }
                                     }
+                                    $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
 
-                                    if (!empty($_SESSION["asker_cc_id"])) {
-                                        $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());
-                                        if (mysql_num_rows($_queryCourseCode) > 0) {
-                                            $score['score'] = $score['score'] * 1.5;
-                                        }
+                                    if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
+                                        $score['score'] = $score['score'] * 1.2;
+                                    } else if ($valueYear == 4) {
+                                        $score['score'] = $score['score'] * 1.1;
                                     }
+                                }
 
-                                    if (!empty($_SESSION["asker_school"])) {
-                                        $mailUser = explode("@", $_thisUser->getEmail());
-                                        $newMailUser = explode(".", $mailUser[1]);
-                                        if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
-                                            $score['score'] = $score['score'] * 1.5;
-                                        }
+                                if (!empty($_SESSION["asker_cc_id"])) {
+                                    $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
+                                    if (mysql_num_rows($_queryCourseCode) > 0) {
+                                        $score['score'] = $score['score'] * 1.5;
                                     }
-                                    $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-                                    $i++;
+                                }
+
+                                if (!empty($_SESSION["asker_school"])) {
+                                    $mailUser = explode("@", $_thisUser->getEmail());
+                                    $newMailUser = explode(".", $mailUser[1]);
+
+                                    if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
+                                        $score['score'] = $score['score'] * 1.5;
+                                    }
+                                }
+
+                                $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                                $i++;
+                            }
+                        } else {
+                            $dv = new Criteria();
+                            $dv->add(UserPeer::ID,$exp->getUserId());
+                            $_thisUser = UserPeer::doSelectOne($dv);
+                            $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+
+                            if (!empty($_SESSION["asker_year"])) {
+                                $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-4-->".mysql_error());
+                                $rowExp = mysql_fetch_assoc($queryExp);
+
+                                if (!is_numeric($rowExp['course_year'])) {
+                                    if ($rowExp['course_year'] == "graduated") {
+                                        $rowExp['course_year'] = 5;
+                                    } else {
+                                        $rowExp['course_year'] = 4;
+                                    }
+                                }
+                                $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
+                                if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
+                                    $score['score'] = $score['score'] * 1.2;
+                                } else if ($valueYear == 4) {
+                                    $score['score'] = $score['score'] * 1.1;
                                 }
                             }
-                        }
 
+                            if (!empty($_SESSION["asker_cc_id"])) {
+                                $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());
+                                if (mysql_num_rows($_queryCourseCode) > 0) {
+                                    $score['score'] = $score['score'] * 1.5;
+                                }
+                            }
+
+                            if (!empty($_SESSION["asker_school"])) {
+                                $mailUser = explode("@", $_thisUser->getEmail());
+                                $newMailUser = explode(".", $mailUser[1]);
+                                if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
+                                    $score['score'] = $score['score'] * 1.5;
+                                }
+                            }
+                            $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                            $i++;
+                        }
                     }
                 }
+
             }
         }
         asort($newUser);

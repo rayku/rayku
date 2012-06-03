@@ -8,10 +8,10 @@ function delayer(){
 //-->
 </script>
 
-	<script type="text/javascript" src="http://www.rayku.com/slider/js/jquery-ui-1.7.1.custom.min.js"></script>
-	<script type="text/javascript" src="http://www.rayku.com/slider/js/selectToUISlider.jQuery.js"></script>
-	<link rel="stylesheet" href="http://www.rayku.com/slider/css/redmond/jquery-ui-1.7.1.custom.css" type="text/css" />
-	<link rel="Stylesheet" href="http://www.rayku.com/slider/css/ui.slider.extras.css" type="text/css" />
+	<script type="text/javascript" src="/slider/js/jquery-ui-1.7.1.custom.min.js"></script>
+	<script type="text/javascript" src="/slider/js/selectToUISlider.jQuery.js"></script>
+	<link rel="stylesheet" href="/slider/css/redmond/jquery-ui-1.7.1.custom.css" type="text/css" />
+	<link rel="Stylesheet" href="/slider/css/ui.slider.extras.css" type="text/css" />
 	<style type="text/css">
 		
 		._fieldset { border:0; margin: 2em 2em 5em 100px; height: 12em;margin-left:100px;}	

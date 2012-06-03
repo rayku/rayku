@@ -120,10 +120,10 @@ $(document).ready(function(){
          	 <input name="thread_title" id="thread_title" value="<?php echo $_SESSION['question']; ?>" size="30" type="text" style="color:#000000"> 
 
 		<?php 
-			setcookie("forumsub", "", time()-3600,"/","rayku.com");
+			setcookie("forumsub", "", time()-3600,"/",sfConfig::get('app_cookies_domain'));
 			 $_COOKIE["forumsub"] = "";
 
-			 setcookie("redirection", "", time()-3600,"/","rayku.com");
+			 setcookie("redirection", "", time()-3600,"/",sfConfig::get('app_cookies_domain'));
 			 $_COOKIE["redirection"] = "";
 
 		 ?>

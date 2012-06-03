@@ -44,7 +44,7 @@ function cmp($a, $b)
 
 ?>
 <div id="body">
-      	<?php if($sf_user->getRaykuUser()->getType() != 5 && $changeUserType == 1): ?>
+      	<?php if($raykuUser->getType() != 5 && $changeUserType == 1): ?>
 
 	<div style="padding:10px;border-bottom:2px solid #009900;background:#E4FFE0;font-size:14px;" align="center">Click Here <a href="/dashboard/verifytutor" style="text-decoration:underline;color: #060;">'Get Verified'</a> To Change Verified Tutors</div>
 
@@ -81,14 +81,14 @@ function cmp($a, $b)
    <div id="widget-head">            		
 
       <div style="float:left;width:150px;"><h3>Tutor Status:</h3> </div>
-	<?php $query = mysql_query("select * from user_tutor where userid =".$logedUserId." ", $connection) or die(mysql_error()); ?>
-    
     <div style="float:right;width:60px;">
-        <?php if(mysql_num_rows($query) > 0) : ?>
-        	 	<span id="on-off"><strong style="color:#060">On</strong> | <a href="/dashboard/tutor" style="color:#333;text-decoration:underline">Off</a></span>
-        <?php else: ?>
-        		<span id="on-off"><a href="/dashboard/tutor" style="color:#333;text-decoration:underline">On</a> | <strong style="color:#900">Off</strong></span>
-        <?php endif; ?>             
+        <?php
+            if($raykuUser->isTutorStatusEnabled()) {
+                echo '<span id="on-off"><strong style="color:#060">On</strong> | <a href="/dashboard/tutor" style="color:#333;text-decoration:underline">Off</a></span>';
+            } else {
+                echo '<span id="on-off"><a href="/dashboard/tutor" style="color:#333;text-decoration:underline">On</a> | <strong style="color:#900">Off</strong></span>';
+            }
+        ?>
         </div>
         <div style="clear:both;"></div>
 

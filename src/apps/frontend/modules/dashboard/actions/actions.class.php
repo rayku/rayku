@@ -34,36 +34,36 @@ class dashboardActions extends sfActions
         }
 
         $connection = RaykuCommon::getDatabaseConnection();
-        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-        $this->logedUserId =  $logedUserId;
-        $query = mysql_query("select * from user where id=".$logedUserId." ", $connection) or die(mysql_error());
-        $row = mysql_fetch_assoc($query);
+        /* @var $raykuUser User */
+        $raykuUser = $this->getUser()->getRaykuUser();
 
         $c = new Criteria();
+        $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
         $rankexperts = ExpertCategoryPeer::doSelect($c);
-        $rankUsers = array(); $ji =0; $newUserLimit = array();
-        foreach($rankexperts as $exp){
-            if (!in_array($exp->getUserId(), $newUserLimit)) {
-                $newUserLimit[] = $exp->getUserId();
-                $_query = mysql_query("select * from user_tutor where userid =".$exp->getUserId()." ", $connection) or die(mysql_error());
-                if (mysql_num_rows($_query) > 0) {
-                    $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
-                    $score = mysql_fetch_assoc($query);
-                    if ($score['score'] != 0){
-                        $dv=new Criteria();
-                        $dv->add(UserPeer::ID,$exp->getUserId());
-                        $_thisUser = UserPeer::doSelectOne($dv);
-                        $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
-                        $ji++;
-                    }
-                }
+        $rankUsers = array();
+        $ji =0;
+        $eachExpertOnlyOnce = array();
+        foreach($rankexperts as $exp) {
+            if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                continue;
+            }
+            $eachExpertOnlyOnce[] = $exp->getUserId();
+            
+            $query = mysql_query("select * from user_score where user_id=".$exp->getUserId(), $connection) or die(mysql_error());
+            $score = mysql_fetch_assoc($query);
+            if ($score['score'] != 0){
+                $dv=new Criteria();
+                $dv->add(UserPeer::ID,$exp->getUserId());
+                $_thisUser = UserPeer::doSelectOne($dv);
+                $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId(), "createdat" => $_thisUser->getCreatedAt());
+                $ji++;
             }
         }
         asort($rankUsers);
         arsort($rankUsers);
         $this->rankUsers = $rankUsers;
-        $this->getResponse()->setCookie("practice_name", $row['username'],time()+3600);
-        $queryScore = mysql_query("select * from user_score where user_id =".$logedUserId." and score >= 125 and status = 0", $connection) or die(mysql_error());
+        $this->getResponse()->setCookie("practice_name", $raykuUser->getUsername(),time()+3600, '/', sfConfig::get('app_cookies_domain'));
+        $queryScore = mysql_query("select * from user_score where user_id =".$raykuUser->getId()." and score >= 125 and status = 0", $connection) or die(mysql_error());
         $this->changeUserType = null;
         if (mysql_num_rows($queryScore) > 0) {
             $this->changeUserType = 1;
@@ -148,10 +148,11 @@ class dashboardActions extends sfActions
     public function executeTutor()
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        $_userId = $this->getUser()->getRaykuUser()->getId();
-        $_select = mysql_query("select * from user_tutor where userid=".$_userId, $connection) or die(mysql_error());
-        if (mysql_num_rows($_select) > 0) {
-            mysql_query("delete from user_tutor where userid = ".$_userId." ", $connection) or die(mysql_error());
+        /* @var $raykuUser User */
+        $raykuUser = $this->getUser()->getRaykuUser();
+        $_userId = $raykuUser->getId();
+        if ($raykuUser->isTutorStatusEnabled()) {
+            $raykuUser->setTutorStatusDisabled();
             $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
             if (!$_query) {
                 mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
@@ -218,7 +219,7 @@ class dashboardActions extends sfActions
                     mysql_query("insert into tutor_profile(user_id,category,course_id,school,year,tutor_role,study,course_code) values('".$uid."','".$catid."','".$courses."','".$school."','".$year."','".$usrdesc."','".$study."','".$coursecode."')", $connection) or die(mysql_error());
                 }
 
-                mysql_query("insert into user_tutor(userid) values(".$_userId.")", $connection) or die(mysql_error());
+                $raykuUser->setTutorStatusEnabled();
                 $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
                 if (!$_query) {
                     mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
@@ -288,23 +289,27 @@ class dashboardActions extends sfActions
         }
     }
 
-    public function executeFacebookadd()
+    public function executeFacebookadd($request)
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $userId = $this->getUser()->getRaykuUser()->getId();
-        $query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
-        $fb_username = !empty($_GET['username']) ? $_GET['username'] : '';
-        if (!empty($fb_username)) {
-            $this->display = 1;
-            if (mysql_num_rows($query) > 0) {
-                mysql_query("update user_fb set fb_username = '".$fb_username."' where userid = ".$userId." ", $connection) or die(mysql_error());
-            } else {
-                mysql_query("insert into user_fb(userid, fb_username) values(".$userId.", '".$fb_username."' ) ", $connection) or die(mysql_error());
-            }
-        } else {
-            $this->display = 2;
+        $username = $request->getParameter('username');
+        
+        if ($username == '') {
+            return sfView::ERROR;
         }
-        BotServiceProvider::createFor("http://facebook.rayku.com/bot_enabled?action=1")->getContent();
+        
+        $connection = RaykuCommon::getDatabaseConnection();
+        $user = $this->getUser()->getRaykuUser();
+        $query = mysql_query("select * from user_fb where userid =".$user->getId()." ");
+        if (mysql_num_rows($query) > 0) {
+            mysql_query("update user_fb set fb_username = '".$username."' where userid = ".$user->getId());
+        } else {
+            mysql_query("insert into user_fb(userid, fb_username) values(".$user->getId().", '".$username."' )");
+        }
+        
+        $this->weAreFriendsNow = $request->getGetParameter('action');
+        if ($this->weAreFriendsNow){
+            BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
+        }
     }
 
     public function executeGtalk()
@@ -368,8 +373,9 @@ class dashboardActions extends sfActions
         $cookiename= $logedUserId."_question";
         $limitcookiename = $logedUserId."_limit";
 
-        if (!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
-            $wtf = new WhiteboardTutorFeedback;
+       // if (!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
+         if (!empty($_POST['audio'])){
+	    $wtf = new WhiteboardTutorFeedback;
             $wtf->setWhiteboardChatId($_COOKIE["whiteboardChatId"]);
             $wtf->setExpertId($_COOKIE["ratingExpertId"]);
             $wtf->setAudio(!empty($_POST["audio"]) ? $_POST["audio"] : '');
@@ -387,7 +393,7 @@ class dashboardActions extends sfActions
                 $name = trim($parts[0]);
 
                 if (($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "practice_name")  ) {
-                    $this->getResponse()->setCookie($name, "", time()-3600);
+                    $this->getResponse()->setCookie($name, "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 }
             }
         }

@@ -13,7 +13,7 @@ var WRInitTime=(new Date()).getTime();
 </script>
 <!-- ClickTale end of Top part -->
 
-<?php setcookie('wherefind','Sarah called me'); ?>
+<?php setcookie('wherefind','Sarah called me', null, '/', sfConfig::get('app_cookies_domain')); ?>
 
 <div class="body-main" style="width:600px">
   <div id="want">

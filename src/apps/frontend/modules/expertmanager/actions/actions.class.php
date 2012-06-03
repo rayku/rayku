@@ -22,9 +22,9 @@ class expertmanagerActions extends sfActions
         $source = 'tutor';
         mysql_query("DELETE FROM `student_questions` WHERE user_id = ".$userId."", $connection);
         mysql_query("INSERT INTO `student_questions` (`user_id`, `checked_id`, `category_id`,`course_id`, `question`, `exe_order`, `time`, `status`, source) VALUES ('".$userId."', '".$_GET['id']."', '1', '1',  'To be discussed', 1, '".$time."', 1, '".$source."') ", $connection) or die(mysql_error());
-        setcookie("asker_que",'To be discussed', time()+600, "/");
-        $this->getResponse()->setCookie("redirection", 1,time()+600);
-        $this->getResponse()->setCookie("forumsub", 5,time()+600);
+        setcookie("asker_que",'To be discussed', time()+600, "/", sfConfig::get('app_cookies_domain'));
+        $this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
+        $this->getResponse()->setCookie("forumsub", 5,time()+600, '/', sfConfig::get('app_cookies_domain'));
         $this->redirect('/expertmanager/connect');
     }
 
@@ -61,10 +61,10 @@ class expertmanagerActions extends sfActions
         mysql_query("delete from user_question where user_id = ".$userId, $connection) or die(mysql_error());
         mysql_query("delete from missed_question_info where send_user = '".$userName."'", $connection) or die(mysql_error());
         if ($_GET['cookie'] == 0) {
-            $this->getResponse()->setCookie("popup_close", '', time()-300);
+            $this->getResponse()->setCookie("popup_close", '', time()-300, '/', sfConfig::get('app_cookies_domain'));
         } else {
             if (empty($_COOKIE['popup_close'])) {
-                $this->getResponse()->setCookie("popup_close", $_GET['cookie'], time()+300);
+                $this->getResponse()->setCookie("popup_close", $_GET['cookie'], time()+300, '/', sfConfig::get('app_cookies_domain'));
             }
         }
 
@@ -113,7 +113,7 @@ class expertmanagerActions extends sfActions
 
         $userId = $currentUser->getId();
         $_SESSION["_modelbox"] = 0;
-        @setcookie('_popupclose', '', time()-300, '/', null);
+        @setcookie('_popupclose', '', time()-300, '/', sfConfig::get('app_cookies_domain'));
         if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
             if ($_SESSION['popup_session']) {
@@ -176,7 +176,7 @@ class expertmanagerActions extends sfActions
 
         $_SESSION["_modelbox"] = 0;
 
-        @setcookie('_popupclose', '', time()-300, '/', null);
+        @setcookie('_popupclose', '', time()-300, '/', sfConfig::get('app_cookies_domain'));
 
         if ($_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
@@ -263,7 +263,7 @@ class expertmanagerActions extends sfActions
 
     public function executeCookie()
     {
-        $this->getResponse()->setCookie("_post_id", $_GET['id'],time()+300);
+        $this->getResponse()->setCookie("_post_id", $_GET['id'],time()+300, '/', sfConfig::get('app_cookies_domain'));
         echo "cookie set";
     }
 
@@ -357,9 +357,9 @@ class expertmanagerActions extends sfActions
             mysql_query($switchdata, $connection) or die("Error In Insert-->".mysql_error());
         }
 
-        setcookie("asker_que",'To be discussed', time()+600, "/");
-        $this->getResponse()->setCookie("redirection", 1,time()+600);
-        $this->getResponse()->setCookie("forumsub", 1,time()+600);
+        setcookie("asker_que",'To be discussed', time()+600, "/", sfConfig::get('app_cookies_domain'));
+        $this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
+        $this->getResponse()->setCookie("forumsub", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
         return $this->redirect('expertmanager/connect');
     }
 

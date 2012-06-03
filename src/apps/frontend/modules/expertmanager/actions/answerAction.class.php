@@ -13,7 +13,7 @@ class answerAction extends sfAction
 
         $_SESSION["_modelbox"] = 0;
 
-        @setcookie('_popupclose', '', time()-300, '/', null);
+        @setcookie('_popupclose', '', time()-300, '/', sfConfig::get('app_cookies_domain'));
 
         if (@$_SESSION['modelPopupOpen']) {
             unset($_SESSION['modelPopupOpen']);
@@ -34,15 +34,15 @@ class answerAction extends sfAction
 
             mysql_query("delete from user_expert where user_id = " . $userId) or die(mysql_error());
 
-            $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600);
+            $this->getResponse()->setCookie('sessionToken', $session->getToken(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
 
             $expertId = $details[0];
             $raykuCharge = $this->getRaykuCharge($expertId);
-            $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
+            $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600, '/', sfConfig::get('app_cookies_domain'));
 
             // redirect to rayku whiteboard
             $this->logWhiteboardConnection($userId);
-            $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
+            $this->redirect(sfConfig::get('app_whiteboard_url').'/');
         } else {
 
             $criteria = new Criteria();
@@ -53,18 +53,18 @@ class answerAction extends sfAction
             $student = $studentQuestion->getStudent();
             $tutor = $studentQuestion->getTutor();
 
-            $this->getResponse()->setCookie('ratingExpertId', $tutor->getId(), time() + 3600);
-            $this->getResponse()->setCookie('ratingUserId', $student->getId(), time() + 3600);
-            $this->getResponse()->setCookie("askerpoints", $student->getPoints(), time() + 3600);
-            $this->getResponse()->setCookie("loginname", $student->getUsername(), time() + 3600);
-            $this->getResponse()->setCookie("check_nick", $student->getUsername(), time() + 3600);
-            $this->getResponse()->setCookie("chatid", $tutorSession->getChatId(), time() + 3600);
+            $this->getResponse()->setCookie('ratingExpertId', $tutor->getId(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie('ratingUserId', $student->getId(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("askerpoints", $student->getPoints(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("loginname", $student->getUsername(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("check_nick", $student->getUsername(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("chatid", $tutorSession->getChatId(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
 
             $sessionService = new WhiteboardSessionService();
             $studentSession = $sessionService->connect($student->getId(), $studentQuestion->getId());
             $studentSession->setChatId($tutorSession->getChatId());
             $studentSession->save();
-            $this->getResponse()->setCookie("sessionToken", $studentSession->getToken(), time() + 3600);
+            $this->getResponse()->setCookie("sessionToken", $studentSession->getToken(), time() + 3600, '/', sfConfig::get('app_cookies_domain'));
 
             $_record_id = $details[0];
             $_queryRecord = mysql_query("select * from sendmessage where id = ".$_record_id." ") or die(mysql_error());
@@ -72,11 +72,11 @@ class answerAction extends sfAction
                 $row = mysql_fetch_array($_queryRecord);
 
                 $raykuCharge = $this->getRaykuCharge($row['expert_id']);
-                $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600);
+                $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600, '/', sfConfig::get('app_cookies_domain'));
 
-                $this->getResponse()->setCookie("newredirect", 1, time()+  100);
-                $this->getResponse()->setCookie("redirection", "", time() - 600);
-                $this->getResponse()->setCookie("forumsub", "", time() - 600);
+                $this->getResponse()->setCookie("newredirect", 1, time()+  100, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie("redirection", "", time() - 600, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie("forumsub", "", time() - 600, '/', sfConfig::get('app_cookies_domain'));
 
                 if (!empty($userId)) {
                     mysql_query("insert into popup_close(user_id) values(".$userId.")") or die("error3".mysql_error());
@@ -87,7 +87,7 @@ class answerAction extends sfAction
                 }
 
                 // redirect to rayku whiteboard
-                $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().':8001/');
+                $this->redirect(sfConfig::get('app_whiteboard_url').'/');
             } else {
                 $this->redirect('/dashboard');
             }

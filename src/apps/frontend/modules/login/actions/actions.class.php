@@ -226,7 +226,7 @@ class loginActions extends sfActions
 
 	public function executeLogout()
 	{
-		$this->getResponse()->setCookie("loginname", "",time() - 3600);
+		$this->getResponse()->setCookie("loginname", "",time() - 3600, '/', sfConfig::get('app_cookies_domain'));
 
                 $connection = RaykuCommon::getDatabaseConnection();
 
@@ -545,17 +545,17 @@ class loginActions extends sfActions
 			$askerUsername = $asker->getUsername();
 			$askerName = $asker->getName();
 
-			$this->getResponse()->setCookie("check_nick", urlencode($askerName), time()+3600);
-			$this->getResponse()->setCookie("askerUsername", $askerUsername, time()+3600);
-			$this->getResponse()->setCookie("askerid", $row['user_id'],time()+3600);
-			$this->getResponse()->setCookie("expertid", $row['checked_id'],time()+3600);
-			$this->getResponse()->setCookie("asker_que", urlencode($row['question']), time()+600, "/");
+			$this->getResponse()->setCookie("check_nick", urlencode($askerName), time()+3600, '/', sfConfig::get('app_cookies_domain'));
+			$this->getResponse()->setCookie("askerUsername", $askerUsername, time()+3600, '/', sfConfig::get('app_cookies_domain'));
+			$this->getResponse()->setCookie("askerid", $row['user_id'],time()+3600, '/', sfConfig::get('app_cookies_domain'));
+			$this->getResponse()->setCookie("expertid", $row['checked_id'],time()+3600, '/', sfConfig::get('app_cookies_domain'));
+			$this->getResponse()->setCookie("asker_que", urlencode($row['question']), time()+600, "/", sfConfig::get('app_cookies_domain'));
 
 			$userdetail = mysql_query("select * from user where id=".$row['checked_id']." ", $connection) or die("Error2".mysql_error());
 			if(mysql_num_rows($userdetail) > 0) {
 				$rowuser = mysql_fetch_assoc($userdetail);
 				$name =  str_replace(" ","", $rowuser['name']);
-				$this->getResponse()->setCookie("loginname", $name, time()+3600);
+				$this->getResponse()->setCookie("loginname", $name, time()+3600, '/', sfConfig::get('app_cookies_domain'));
 				mysql_query("update user_expert set status = 7 where user_id =".$row['checked_id'], $connection) or die("Error5".mysql_error());
 				mysql_query("delete from user_expire_msg where userid=".$row['checked_id'], $connection) or die("Error_Expire2".mysql_error());
 

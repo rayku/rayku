@@ -50,8 +50,8 @@ if($sf_context->getModuleName() !='expertmanager') {
 		if(mysql_num_rows($queryStatus)) {
 			mysql_query("DELETE FROM `sendmessage` WHERE `asker_id` =".$sessUserId." ") or die(mysql_error());
 			mysql_query("DELETE FROM `user_expert` WHERE `user_id`=".$sessUserId." ") or die(mysql_error());
-			setCookie("redirection", "",time()-600);
-			setCookie("forumsub", "",time()-600);
+			setCookie("redirection", "",time()-600, '/', sfConfig::get('app_cookies_domain'));
+			setCookie("forumsub", "",time()-600, '/', sfConfig::get('app_cookies_domain'));
 		}
 	}
 }
@@ -62,6 +62,12 @@ if($sf_context->getModuleName() !='expertmanager') {
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquerynav.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery.notifier.js"></script>
+<script type="text/javascript">
+  window.globalConfig = {
+    whiteboard_url: '<?php echo sfConfig::get('app_whiteboard_url').'/'; ?>',
+    cookies_domain: '<?php echo sfConfig::get('app_cookies_domain').'/'; ?>'
+  }
+</script>
 <style type="text/css">
 <?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
  @import "<?php echo $baseRootPath; ?>/css/46.css";

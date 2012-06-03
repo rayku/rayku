@@ -62,33 +62,26 @@ foreach ($other_others_posts as $post) {
 
                             <?php
                             $c = new Criteria();
-
+                            $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
                             $rankexperts = ExpertCategoryPeer::doSelect($c);
 
                             $rankUsers = array();
                             $ji = 0;
-                            $newUserLimit = array();
+                            $eachExpertOnlyOnce = array();
 
                             foreach ($rankexperts as $exp) {
+                                if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
+                                    continue;
+                                }
 
+                                $eachExpertOnlyOnce[] = $exp->getUserId();
 
-                                if (!in_array($exp->getUserId(), $newUserLimit)) {
+                                $query = mysql_query("select * from user_score where user_id=" . $exp->getUserId(), $connection) or die(mysql_error());
+                                $score = mysql_fetch_assoc($query);
 
-                                    $newUserLimit[] = $exp->getUserId();
-
-                                    $_query = mysql_query("select * from user_tutor where userid =" . $exp->getUserId() . " ", $connection) or die(mysql_error());
-                                    if (mysql_num_rows($_query) > 0) {
-
-                                        $query = mysql_query("select * from user_score where user_id=" . $exp->getUserId(), $connection) or die(mysql_error());
-                                        $score = mysql_fetch_assoc($query);
-
-                                        if ($score['score'] != 0) {
-
-                                            $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId());
-
-                                            $ji++;
-                                        }
-                                    }
+                                if ($score['score'] != 0) {
+                                    $rankUsers[$ji] = array("score" => $score['score'], "userid" => $exp->getUserId());
+                                    $ji++;
                                 }
                             }
 

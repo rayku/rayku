@@ -834,6 +834,22 @@ CREATE TABLE `user_gtalk`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- user_tutor
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_tutor`;
+
+
+CREATE TABLE `user_tutor`
+(
+	`userid` INTEGER(10)  NOT NULL,
+	PRIMARY KEY (`userid`),
+	CONSTRAINT `user_tutor_FK_1`
+		FOREIGN KEY (`userid`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- video
 #-----------------------------------------------------------------------------
 

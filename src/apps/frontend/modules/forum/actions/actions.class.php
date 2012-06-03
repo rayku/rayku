@@ -45,7 +45,7 @@ class forumActions extends sfActions
         }
 
         if (!empty($_GET['post_id'])) {
-            $this->getResponse()->setCookie("_post_Id", $_GET['post_id'], time() + 600);
+            $this->getResponse()->setCookie("_post_Id", $_GET['post_id'], time() + 600, '/', sfConfig::get('app_cookies_domain'));
             $_COOKIE['_post_Id'] = 100;
         }
 
@@ -637,7 +637,7 @@ class forumActions extends sfActions
 
 
         if (!empty($_COOKIE['redirection'])) {
-            $this->getResponse()->setCookie("redirection", "", time() - 600);
+            $this->getResponse()->setCookie("redirection", "", time() - 600, '/', sfConfig::get('app_cookies_domain'));
         }
 
 
