@@ -289,23 +289,27 @@ class dashboardActions extends sfActions
         }
     }
 
-    public function executeFacebookadd()
+    public function executeFacebookadd($request)
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $userId = $this->getUser()->getRaykuUser()->getId();
-        $query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
-        $fb_username = !empty($_GET['username']) ? $_GET['username'] : '';
-        if (!empty($fb_username)) {
-            $this->display = 1;
-            if (mysql_num_rows($query) > 0) {
-                mysql_query("update user_fb set fb_username = '".$fb_username."' where userid = ".$userId." ", $connection) or die(mysql_error());
-            } else {
-                mysql_query("insert into user_fb(userid, fb_username) values(".$userId.", '".$fb_username."' ) ", $connection) or die(mysql_error());
-            }
-        } else {
-            $this->display = 2;
+        $username = $request->getParameter('username');
+        
+        if ($username == '') {
+            return sfView::ERROR;
         }
-        BotServiceProvider::createFor("http://facebook.rayku.com/bot_enabled?action=1")->getContent();
+        
+        $connection = RaykuCommon::getDatabaseConnection();
+        $user = $this->getUser()->getRaykuUser();
+        $query = mysql_query("select * from user_fb where userid =".$user->getId()." ");
+        if (mysql_num_rows($query) > 0) {
+            mysql_query("update user_fb set fb_username = '".$username."' where userid = ".$user->getId());
+        } else {
+            mysql_query("insert into user_fb(userid, fb_username) values(".$user->getId().", '".$username."' )");
+        }
+        
+        $this->action = $request->getParameter('action');
+        if ($this->action == 1){
+            BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
+        }
     }
 
     public function executeGtalk()
