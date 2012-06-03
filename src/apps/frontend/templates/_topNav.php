@@ -164,11 +164,9 @@ if(
 
     if (mysql_num_rows($userTutorResult) > 0) {
 ?>
-            <div id="idleStateMessage" style="display: none">
+            <div id="idleStateMessage" style="display:none;width:941px;margin:0 auto;background:#FFFFCC;border-bottom:3px solid #DECAAB;padding:5px;color:#333;font-size:14px;">
                 <div>
-                    WARNING!<br />
-                    You will soon be switched to <b>IDLE</b> state.<br />
-                    <a href="#" style="text-decoration: underline">Please - don't - I'm here :)</a><br />Countdown: <span></span>
+                    <font color="#990000" style="font-weight:bold">Warning!</font> Your tutor status will be switched to IDLE in <span></span> seconds due to inactivity. <a href="#" style="text-decoration:underline;color:#069">Click here to abort</a>
                 </div>
             </div>
             <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>
