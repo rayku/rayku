@@ -134,8 +134,6 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('WHERE_FIND_US', 'WhereFindUs', 'LONGVARCHAR', true, null);
 
-		$tMap->addColumn('WWW_ONLINE_STATUS', 'WwwOnlineStatus', 'VARCHAR', true, 10);
-
 	} // doBuild()
 
 } // UserMapBuilder

@@ -251,13 +251,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $where_find_us;
 
 	/**
-	 * The value for the www_online_status field.
-	 * Note: this column has a database default value of: 'active'
-	 * @var        string
-	 */
-	protected $www_online_status;
-
-	/**
 	 * @var        array Expert[] Collection to store aggregation of Expert objects.
 	 */
 	protected $collExperts;
@@ -443,7 +436,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->show_relationship_status = 1;
 		$this->credit = 0;
 		$this->login = 0;
-		$this->www_online_status = 'active';
 	}
 
 	/**
@@ -916,16 +908,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function getWhereFindUs()
 	{
 		return $this->where_find_us;
-	}
-
-	/**
-	 * Get the [www_online_status] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getWwwOnlineStatus()
-	{
-		return $this->www_online_status;
 	}
 
 	/**
@@ -1765,26 +1747,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setWhereFindUs()
 
 	/**
-	 * Set the value of [www_online_status] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setWwwOnlineStatus($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->www_online_status !== $v || $v === 'active') {
-			$this->www_online_status = $v;
-			$this->modifiedColumns[] = UserPeer::WWW_ONLINE_STATUS;
-		}
-
-		return $this;
-	} // setWwwOnlineStatus()
-
-	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1795,7 +1757,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT,UserPeer::LOGIN,UserPeer::WWW_ONLINE_STATUS))) {
+			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT,UserPeer::LOGIN))) {
 				return false;
 			}
 
@@ -1852,10 +1814,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			if ($this->login !== 0) {
-				return false;
-			}
-
-			if ($this->www_online_status !== 'active') {
 				return false;
 			}
 
@@ -1917,7 +1875,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->credit_card_token = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
 			$this->first_charge = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
 			$this->where_find_us = ($row[$startcol + 35] !== null) ? (string) $row[$startcol + 35] : null;
-			$this->www_online_status = ($row[$startcol + 36] !== null) ? (string) $row[$startcol + 36] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1927,7 +1884,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 37; // 37 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -2588,9 +2545,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				return $this->getWhereFindUs();
 				break;
-			case 36:
-				return $this->getWwwOnlineStatus();
-				break;
 			default:
 				return null;
 				break;
@@ -2648,7 +2602,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[33] => $this->getCreditCardToken(),
 			$keys[34] => $this->getFirstCharge(),
 			$keys[35] => $this->getWhereFindUs(),
-			$keys[36] => $this->getWwwOnlineStatus(),
 		);
 		return $result;
 	}
@@ -2788,9 +2741,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			case 35:
 				$this->setWhereFindUs($value);
 				break;
-			case 36:
-				$this->setWwwOnlineStatus($value);
-				break;
 		} // switch()
 	}
 
@@ -2851,7 +2801,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[33], $arr)) $this->setCreditCardToken($arr[$keys[33]]);
 		if (array_key_exists($keys[34], $arr)) $this->setFirstCharge($arr[$keys[34]]);
 		if (array_key_exists($keys[35], $arr)) $this->setWhereFindUs($arr[$keys[35]]);
-		if (array_key_exists($keys[36], $arr)) $this->setWwwOnlineStatus($arr[$keys[36]]);
 	}
 
 	/**
@@ -2899,7 +2848,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::CREDIT_CARD_TOKEN)) $criteria->add(UserPeer::CREDIT_CARD_TOKEN, $this->credit_card_token);
 		if ($this->isColumnModified(UserPeer::FIRST_CHARGE)) $criteria->add(UserPeer::FIRST_CHARGE, $this->first_charge);
 		if ($this->isColumnModified(UserPeer::WHERE_FIND_US)) $criteria->add(UserPeer::WHERE_FIND_US, $this->where_find_us);
-		if ($this->isColumnModified(UserPeer::WWW_ONLINE_STATUS)) $criteria->add(UserPeer::WWW_ONLINE_STATUS, $this->www_online_status);
 
 		return $criteria;
 	}
@@ -3023,8 +2971,6 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$copyObj->setFirstCharge($this->first_charge);
 
 		$copyObj->setWhereFindUs($this->where_find_us);
-
-		$copyObj->setWwwOnlineStatus($this->www_online_status);
 
 
 		if ($deepCopy) {

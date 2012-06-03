@@ -788,7 +788,6 @@ CREATE TABLE `user`
 	`credit_card_token` VARCHAR(10),
 	`first_charge` DATETIME,
 	`where_find_us` TEXT  NOT NULL,
-	`www_online_status` VARCHAR(10) default 'active' NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),

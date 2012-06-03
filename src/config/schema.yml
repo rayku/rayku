@@ -347,7 +347,6 @@ propel:
     credit_card_token: { type: VARCHAR, size: '10', required: false }
     first_charge: { type: TIMESTAMP, required: false }
     where_find_us: { type: LONGVARCHAR, required: true}
-    www_online_status: { type: VARCHAR, size: '10', required: true, default: 'active'}
     _uniques: { user_username_unique: [username], user_email_unique: [email], user_password_recover_key_unique: [password_recover_key] }
   user_awards:
     _attributes: { phpName: UserAwards }
