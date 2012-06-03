@@ -36,3 +36,5 @@ allow from all
 
 # big crash from our front web controller
 ErrorDocument 500 "<h2>Application error</h2>symfony application failed to start properly"
+
+Redirect /fmaths http://rayku.com/start
