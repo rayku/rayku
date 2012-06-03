@@ -309,3 +309,46 @@ div.separator { background: url('../images/tutorshelp/separator-background.jpg')
 	height: 308px;
 	position: absolute;
 }
+/* Status activated */
+.activated {
+	padding:20px;
+	background:#408CB3;
+	border-bottom:2px solid #069;
+	font-size:16px;
+	color:#FFF;
+}
+.notifications {
+	padding:16px;
+	background:#FEFFCE;
+	margin-bottom:50px;
+	color:#666;
+	font-size:12px;
+	line-height:16px;
+}
+.notifications .gtalkfb {
+	width:300px;
+	margin-right:50px;
+	float:left;
+}
+.notifications .gtalkfb a {
+	font-size:20px;
+	color:#069;
+}
+.notifications .gtalkfb img {
+	float:left;
+	margin-right:20px;
+}
+.notifications .gtalkfb h2 {
+	padding:20px 0 8px;
+	line-height:21px;
+}
+.notifications .software {
+	width:170px;
+	float:left;
+	padding-top:18px;
+}
+.notifications .software a {
+	font-size:16px;
+	color:#333;
+	line-height:18px;
+}
