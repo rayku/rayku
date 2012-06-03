@@ -117,7 +117,7 @@ xmlhttp.onreadystatechange=function()
     }
   }
 
-xmlhttp.open("POST","http://www.rayku.com/expertmanager/mapuser", true);
+xmlhttp.open("POST","/expertmanager/mapuser", true);
 xmlhttp.send();
 
 
@@ -134,7 +134,7 @@ function askerOpen(row_id,chat_id) {
 			details[0] = row_id;
   			details[1] = chat_id;
 					 
-		document.location='http://www.rayku.com/expertmanager/answer?details='+details;
+		document.location='/expertmanager/answer?details='+details;
 
 }
 
@@ -165,7 +165,7 @@ doTheThing();
 
 /* Dynamic Title Bar Content - End */
 
-	Modalbox.show('<div class="notifbg"> <h1><span>'+ school +'</span> student:</h1> <div class="content"> <div class="question">'+ ques +' <span>(year '+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <input type="button" name="continue" value="Continue" onclick="javascript:document.location=\'http://www.rayku.com/expertmanager/answer?details='+ details +'\'" class="myButton"> <div class="expire">this question expires<br> in <span>15 seconds</span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div>', {title: this.title,overlayClose: false,  width: 400 });
+	Modalbox.show('<div class="notifbg"> <h1><span>'+ school +'</span> student:</h1> <div class="content"> <div class="question">'+ ques +' <span>(year '+ year +' '+ sub +')</span> </div> <div class="price"> Paying <span>'+ points +'RP</span> ($'+ points +') per minute </div> <div class="connect"> <input type="button" name="continue" value="Continue" onclick="javascript:document.location=\'/expertmanager/answer?details='+ details +'\'" class="myButton"> <div class="expire">this question expires<br> in <span>15 seconds</span> </div> </div> <div class="ignore" align="right"> <a href="#" onClick="ignoreclose(newexpid, newuserid, newques, newschool, newsub, newyear, newid, newloginname)">ignore</a> </div> </div> </div>', {title: this.title,overlayClose: false,  width: 400 });
 
 
   newexpid = expid;
@@ -203,7 +203,7 @@ function finalclose(newexpid, newuserid, newques, newschool, newsub, newyear, ne
   details[7] = newloginname;
 
 
- document.location="http://www.rayku.com/expertmanager/auto?details="+ details;
+ document.location="/expertmanager/auto?details="+ details;
 
   
 }
@@ -251,7 +251,7 @@ xmlhttp.onreadystatechange=function()
     }
   }
 
-xmlhttp.open("POST","http://www.rayku.com/expertmanager/ignore?details="+ details, true);
+xmlhttp.open("POST","/expertmanager/ignore?details="+ details, true);
 xmlhttp.send();
 
 
@@ -268,7 +268,7 @@ function newpopup(rowid, chatid){
 
 	alert("An expert is available to help!");
 
-  Modalbox.show('<div style="padding:20px 15px"><p style="color:#000;font-size:14px;">An expert has offered to help!<br><br><a href="http://www.rayku.com/expertmanager/answer?details='+ details +'" style="font-size:16px;font-weight:bold">Connect Now!</a></p></div>', {title: this.title,overlayClose: false,  height: 150, width: 350 });
+  Modalbox.show('<div style="padding:20px 15px"><p style="color:#000;font-size:14px;">An expert has offered to help!<br><br><a href="/expertmanager/answer?details='+ details +'" style="font-size:16px;font-weight:bold">Connect Now!</a></p></div>', {title: this.title,overlayClose: false,  height: 150, width: 350 });
 
   newrowid = rowid;
 
@@ -285,7 +285,7 @@ function newfinalclose(newrowid){
   
   Modalbox.hide('', {title: this.title,overlayClose: false,  height: 300, width: 400 });
 
-  document.location="http://www.rayku.com/expertmanager/ignore?details="+ newrowid;
+  document.location="/expertmanager/ignore?details="+ newrowid;
 
 }
 
