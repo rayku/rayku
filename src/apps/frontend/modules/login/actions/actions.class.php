@@ -278,11 +278,14 @@ class loginActions extends sfActions
 		$this->getUser()->signOut();
 
 
-
+                if ($this->getRequestParameter('redirectTo')) {
+                    $redirectTo = $this->getRequestParameter('redirectTo');
+                    switch ($redirectTo) {
+                        case 'idle': $this->redirect('login/idleLogout');
+                    }
+                }
 
 		$this->redirect('@homepage');
-
-
 	}
 
 	public function executeRecoverPassword()
@@ -584,4 +587,8 @@ class loginActions extends sfActions
 	}
 
 
+    public function executeIdleLogout()
+    {
+        
+    }
 }

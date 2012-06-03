@@ -68,14 +68,13 @@ class SiteUser extends sfBasicSecurityUser
 			$cookie_key = MyTools::generateRandomKey();
 
 			$user->setCookieKey($cookie_key);
+                        $user->save();
 
 			$value = base64_encode(serialize(array($cookie_key, $user->getUsername())));
 			sfContext::getInstance()->getResponse()->setCookie('rayku', $value, time() + 60 * 60 * 24 * 15, '/', sfConfig::get('app_cookies_domain'));
 		}
 
 		$this->setAttribute('user_id', $user->getId());
-                
-                $user->setWwwOnlineStatus(User::WWW_ONLINE_STATUS_ACTIVE);
                 
                 $user->save();
 	}

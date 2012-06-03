@@ -121,14 +121,11 @@
 
 
 <?php
-if(
-    (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck")
+if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/loginCheck")
         &&  ($_SERVER['REDIRECT_URL'] != "/logout")
         && ($_SERVER['REDIRECT_URL'] != "/register")
         && ($_SERVER['REDIRECT_URL'] != "/start")
-        && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose"))
-    && $_SERVER['REQUEST_URI'] != '/user/setWWWOnlineStatusToIdle'
-        
+        && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")
 ) {
     ?>
     <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
@@ -173,10 +170,10 @@ if(
             <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimeout.js" type="text/javascript"></script>
             <script type="text/javascript">
 jQuery.idleTimeout('#idleStateMessage', '#idleStateMessage a', {
-        idleAfter: 30,
-        warningLength: 10,
+        idleAfter: 1800,
+        warningLength: 60,
         onTimeout: function(){
-            window.location = '/user/setWWWOnlineStatusToIdle';
+            window.location = '/login/logout?redirectTo=idle';
         },
         onIdle: function(){
             jQuery(this).slideDown();

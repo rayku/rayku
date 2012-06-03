@@ -10,9 +10,6 @@ require_once 'om/BaseUser.php';
 
 class User extends BaseUser
 {
-    const WWW_ONLINE_STATUS_IDLE = 'idle';
-    const WWW_ONLINE_STATUS_ACTIVE = 'active';
-    
 	/**
 	* Generates the confirmation code for this user
 	*/
@@ -456,9 +453,6 @@ class User extends BaseUser
     if( $this->getInvisible() )
       return false;
 
-            if ($this->getWwwOnlineStatus() == self::WWW_ONLINE_STATUS_IDLE) {
-                return false;
-            }
 		$then = $this->getLastActivityAt('U');
 		$now = time();
 
