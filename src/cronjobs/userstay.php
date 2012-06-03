@@ -1,4 +1,8 @@
 <?php
+/**
+ * this script should not currently by  used and soon it will be deleted
+ * it ws suppose to realise 30mins online = 6RP rule
+ */
 require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 sfCoreAutoload::register();

@@ -1,4 +1,10 @@
 <?php
+/**
+ * this should be launched once per two weeks ?
+ * 0 0 * / 14 * * squeezing.php
+ *
+ *  what this script does ?
+ */
 require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 sfCoreAutoload::register();

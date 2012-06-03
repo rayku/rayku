@@ -1,4 +1,8 @@
 <?php
+/**
+ * should be runned each minute
+ * what it does ? what is this script job ?
+ */
 require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 sfCoreAutoload::register();
