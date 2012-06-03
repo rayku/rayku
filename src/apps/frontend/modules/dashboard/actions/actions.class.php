@@ -306,8 +306,8 @@ class dashboardActions extends sfActions
             mysql_query("insert into user_fb(userid, fb_username) values(".$user->getId().", '".$username."' )");
         }
         
-        $this->action = $request->getParameter('action');
-        if ($this->action == 1){
+        $this->weAreFriendsNow = $request->getGetParameter('action');
+        if ($this->weAreFriendsNow){
             BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
         }
     }
