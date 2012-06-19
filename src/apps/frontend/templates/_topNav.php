@@ -163,7 +163,7 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
 ?>
             <div id="idleStateMessage" style="display:none;width:941px;margin:0 auto;background:#FFFFCC;border-bottom:3px solid #DECAAB;padding:5px;color:#333;font-size:14px;">
                 <div>
-                    <font color="#990000" style="font-weight:bold">Warning!</font> Your tutor status will be switched to IDLE in <span></span> seconds due to inactivity. <a href="#" style="text-decoration:underline;color:#069">Click here to abort</a>
+                    <font color="#990000" style="font-weight:bold">Warning!</font> Your will be logged out in <span></span> seconds due to inactivity. <a href="#" style="text-decoration:underline;color:#069">Click here to abort</a>
                 </div>
             </div>
             <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>
