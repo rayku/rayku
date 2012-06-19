@@ -158,20 +158,6 @@ class dashboardActions extends sfActions
                 mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
             }
 
-            $insSQL = "INSERT INTO `log_user_on_off` (
-                `id` ,
-                `user_id` ,
-                `off_date_time` ,
-                `off_status`
-            )
-            VALUES (
-                NULL ,
-                '".$_userId."',
-                '".date("Y-m-d H:i:s")."',
-                '0'
-            );";
-            mysql_query($insSQL, $connection);
-
             $this->redirect('/dashboard');
         } else {
             if ($_POST['usrid']) {
@@ -196,21 +182,6 @@ class dashboardActions extends sfActions
                 } else {
                     $year = '4+ Year';
                 }
-
-                // change  Tutor on / off status //
-                $insSQL = "INSERT INTO `log_user_on_off` (
-                    `id` ,
-                    `user_id` ,
-                    `off_date_time` ,
-                    `off_status`
-                )
-                VALUES (
-                    NULL ,
-                    '".$uid."',
-                    '".date("Y-m-d H:i:s")."',
-                    '1'
-                );";
-                mysql_query($insSQL, $connection);
 
                 $_select = mysql_query("select * from tutor_profile where user_id=".$uid, $connection) or die(mysql_error());
                 if (mysql_num_rows($_select) > 0) {

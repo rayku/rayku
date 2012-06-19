@@ -257,20 +257,6 @@ class listAction extends sfAction
                 $question->save();
             }
 
-            // Connect Whiteboard //
-            $insSQL = "INSERT INTO `log_user_whiteboard` (
-                `id` ,
-                `user_id` ,
-                `whiteboard_date_time`
-            )
-            VALUES (
-                NULL ,
-                '".$logedUserId."',
-                '".date("Y-m-d H:i:s")."'
-            );";
-            mysql_query($insSQL, $connection);
-
-            // Connect Whiteboard //
             setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/", sfConfig::get('app_cookies_domain'));
             $this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
             $this->getResponse()->setCookie("forumsub", $_SESSION['subject'],time()+600, '/', sfConfig::get('app_cookies_domain'));

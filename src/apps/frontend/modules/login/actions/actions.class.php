@@ -146,30 +146,6 @@ class loginActions extends sfActions
 
 		$this->getUser()->signIn($this->user, $this->getRequestParameter('remember', false));
 
-		/********************** LOGIN LOG ENTRY *******************************/
-
-		if($this->user) {
-			$userID = $this->user->getId();
-
-			$insSQL = "INSERT INTO `log_user_login` (
-				`id` ,
-				`user_id` ,
-				`login_date_time` ,
-				`login_status`
-					)
-					VALUES (
-							NULL ,
-							'".$userID."',
-							'".date("Y-m-d H:i:s")."',
-							'1'
-						   );";
-			mysql_query($insSQL, $connection);
-
-		}
-
-		/********************** END OF LOGIN LOG ENTRY ************************/
-
-
 		$this->user->setInvisible($this->getRequestParameter('invisible', false));
 
 
@@ -248,27 +224,6 @@ class loginActions extends sfActions
 				unset($_SESSION['popup_session']);
 			}
 		}
-
-		/********************** LOGIN LOG ENTRY *******************************/
-
-		if($logedUserId > 0) {
-			$insSQL = "INSERT INTO `log_user_login` (
-				`id` ,
-				`user_id` ,
-				`login_date_time` ,
-				`login_status`
-					)
-					VALUES (
-							NULL ,
-							'".$logedUserId."',
-							'".date("Y-m-d H:i:s")."',
-							'0'
-						   );";
-			mysql_query($insSQL, $connection);
-
-		}
-
-		/********************** END OF LOGIN LOG ENTRY ************************/
 
 		$this->getUser()->signOut();
 
