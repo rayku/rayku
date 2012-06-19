@@ -450,10 +450,4 @@ class tutorsActions extends sfActions {
     {
         
     }
-
-    public function executeDemopopup()
-    {
-        
-    }
-
 }

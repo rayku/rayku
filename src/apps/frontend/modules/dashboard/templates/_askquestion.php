@@ -245,7 +245,6 @@ var rayku_ask = jQuery.noConflict();
 	rayku_ask("#name").val("");
 	rayku_ask("#autocourse").val("");
 	rayku_ask('#personal-info').hide();
-    //var auto_refresh = setInterval(function(){rayku_ask("#recent-questions").fadeOut('slow').load('http://www.rayku.com/dashboard/demo').fadeIn("slow");}, 100);
 
    });
    
