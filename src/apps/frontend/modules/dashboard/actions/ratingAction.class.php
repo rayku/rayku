@@ -66,7 +66,6 @@ class ratingAction extends sfAction
                     if ($rate != '0.00') {
                         $kinkarsoPoints = $rowKinkarso["points"] + $raykuPercentage;
                         mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                        mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$raykuPercentage.", '".$date."')", $connection) or die(mysql_error());
                     }
                 }  elseif ($_POST["rating"] == 2) {
                     $tiptutor=$_POST["tiptutor"];
@@ -78,7 +77,6 @@ class ratingAction extends sfAction
                     $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                     mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
                     mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                    mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
                 } elseif ($_POST["rating"] == 3) {
                     $tiptutor=$_POST["tiptutor"];
                     $_Score = 0;
@@ -102,7 +100,6 @@ class ratingAction extends sfAction
                         $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                         mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
                         mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                        mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
                     }
                 } elseif ($_POST["rating"] == 4) {
                     $tiptutor=$_POST["tiptutor"];
@@ -126,7 +123,6 @@ class ratingAction extends sfAction
                         $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                         mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
                         mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                        mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
                     }
                 } elseif ($_POST["rating"] == 5) {
                     $tiptutor=$_POST["tiptutor"];
@@ -140,7 +136,6 @@ class ratingAction extends sfAction
                         $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                         mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
                         mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                        mysql_query("insert into kinkarso_points(user_id, expert_id, points, date) values(".$_COOKIE["ratingUserId"].", ".$_COOKIE["ratingExpertId"].", ".$kinkarsoPer.", '".$date."')", $connection) or die(mysql_error());
                     }
                     $_Score = 0;
                     if ($newTimer > 10) {

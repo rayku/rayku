@@ -99,27 +99,9 @@ if($count>0)
 					    </div>
 
 					<?php 
-						$school = ''; $Year = '';
-						   $mail = explode("@", $user->getEmail());	     
-						   $newMail = explode(".", $mail[1]);
-					
-						   if($newMail[0] == "utoronto") { 
-							 
-							   $school = "University of Toronto";
-						   
-						   } else if($newMail[1] == "ubc") {
-							 
-							   $school = "UBC";
-							 
-						   }
-					
-					
-				
-					  
-					
 						$query = mysql_query("select * from user_course where user_id=".$user->getId()." AND course_subject=1", $connection) or die(mysql_error());
 	
-						$allsub=" "; $Year = "";
+						$allsub=" ";
 						while ($row = mysql_fetch_array($query, MYSQL_NUM)) 
 						 {
 							 if($allsub==" ")
@@ -130,36 +112,8 @@ if($count>0)
 							 {
 							 	$allsub=$allsub."<span>".$row[3]."</span>";
 							 }
-
-							 if($Year=="")
-							 {
-								 								 										if($row[4] == "graduated") {
-
-									$Year = "Graduated";
-								} else {
-
-									$Year = intval($row[4]);
-
-								} 
-							 }
-							 else
-							 {
-								
-							 	if($Year < $row[4]) {
-
-									$Year =  $row[4];
-
-								} elseif($row[4] == "graduated") {
-
-									$Year = "Graduated";
-								}
-							 }
-
-					
                           				}
-							  //3rd Year UBC Student
 
-						$_year = $Year."  Year ".$school." Student:";
 					
 ?>
 						    

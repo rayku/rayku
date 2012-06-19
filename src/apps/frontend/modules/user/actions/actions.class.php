@@ -10,5 +10,4 @@ class userActions extends sfActions
             sfConfig::get('app_users_autocomplete_limit')
         );
     }
-
 }

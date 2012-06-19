@@ -426,7 +426,6 @@ class tutorsActions extends sfActions {
 
             $selmisqry = mysql_query("SELECT * FROM popup_close WHERE user_id ='" . $_GET['userid'] . "'");
             $misqrys = mysql_fetch_array($selmisqry);
-
             if ($misqrys['user_id'] == "") {
                 mysql_query("INSERT INTO `popup_close` (
 					 `id` ,
@@ -451,10 +450,4 @@ class tutorsActions extends sfActions {
     {
         
     }
-
-    public function executeDemopopup()
-    {
-        
-    }
-
 }

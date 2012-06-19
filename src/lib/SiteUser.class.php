@@ -59,6 +59,7 @@ class SiteUser extends sfBasicSecurityUser
 	 */
 	public function signIn(User $user, $rememberMe = false)
 	{
+            
 		$this->setAuthenticated(true);
     $this->setUserTypeCredentials( $user->getType() );
 
@@ -67,13 +68,15 @@ class SiteUser extends sfBasicSecurityUser
 			$cookie_key = MyTools::generateRandomKey();
 
 			$user->setCookieKey($cookie_key);
-			$user->save();
+                        $user->save();
 
 			$value = base64_encode(serialize(array($cookie_key, $user->getUsername())));
 			sfContext::getInstance()->getResponse()->setCookie('rayku', $value, time() + 60 * 60 * 24 * 15, '/', sfConfig::get('app_cookies_domain'));
 		}
 
 		$this->setAttribute('user_id', $user->getId());
+                
+                $user->save();
 	}
 
 	public function signOut()

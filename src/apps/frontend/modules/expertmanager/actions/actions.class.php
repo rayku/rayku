@@ -149,21 +149,6 @@ class expertmanagerActions extends sfActions
         } else {
             mysql_query("delete from sendmessage where id = ".$_REQUEST['details'], $connection) or die(mysql_error());
         }
-
-        // Ignore Whiteboard //
-        $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
-            `id` ,
-            `user_id` ,
-            `connect_date_time`,
-            `connect_status`
-        )
-        VALUES (
-            NULL ,
-            '".$logedUserId."',
-            '".date("Y-m-d H:i:s")."',
-            '0'
-        );";
-        mysql_query($insSQL, $connection);
         echo "close";
     }
 
@@ -244,20 +229,6 @@ class expertmanagerActions extends sfActions
         } else {
             mysql_query("delete from sendmessage where id = ".$_REQUEST['details'], $connection) or die(mysql_error());
         }
-        // Ignore Whiteboard //
-        $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
-            `id` ,
-            `user_id` ,
-            `connect_date_time`,
-            `connect_status`
-        )
-        VALUES (
-            NULL ,
-            '".$logedUserId."',
-            '".date("Y-m-d H:i:s")."',
-            '0'
-        );";
-        mysql_query($insSQL, $connection);
         echo "close";
     }
 

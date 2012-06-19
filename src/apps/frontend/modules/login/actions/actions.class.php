@@ -146,30 +146,11 @@ class loginActions extends sfActions
 
 		$this->getUser()->signIn($this->user, $this->getRequestParameter('remember', false));
 
-		/********************** LOGIN LOG ENTRY *******************************/
-
-		if($this->user) {
-			$userID = $this->user->getId();
-
-			$insSQL = "INSERT INTO `log_user_login` (
-				`id` ,
-				`user_id` ,
-				`login_date_time` ,
-				`login_status`
-					)
-					VALUES (
-							NULL ,
-							'".$userID."',
-							'".date("Y-m-d H:i:s")."',
-							'1'
-						   );";
-			mysql_query($insSQL, $connection);
-
-		}
-
-		/********************** END OF LOGIN LOG ENTRY ************************/
-
-
+        /**
+         * Invisible in practice means "invisible until next login"
+         * On each login this flag is set either to 0 or 1
+         * There is no possibility to change invisible status while being logged in
+         */
 		$this->user->setInvisible($this->getRequestParameter('invisible', false));
 
 
@@ -249,35 +230,17 @@ class loginActions extends sfActions
 			}
 		}
 
-		/********************** LOGIN LOG ENTRY *******************************/
-
-		if($logedUserId > 0) {
-			$insSQL = "INSERT INTO `log_user_login` (
-				`id` ,
-				`user_id` ,
-				`login_date_time` ,
-				`login_status`
-					)
-					VALUES (
-							NULL ,
-							'".$logedUserId."',
-							'".date("Y-m-d H:i:s")."',
-							'0'
-						   );";
-			mysql_query($insSQL, $connection);
-
-		}
-
-		/********************** END OF LOGIN LOG ENTRY ************************/
-
 		$this->getUser()->signOut();
 
 
-
+                if ($this->getRequestParameter('redirectTo')) {
+                    $redirectTo = $this->getRequestParameter('redirectTo');
+                    switch ($redirectTo) {
+                        case 'idle': $this->redirect('login/idleLogout');
+                    }
+                }
 
 		$this->redirect('@homepage');
-
-
 	}
 
 	public function executeRecoverPassword()
@@ -579,4 +542,8 @@ class loginActions extends sfActions
 	}
 
 
+    public function executeIdleLogout()
+    {
+        
+    }
 }

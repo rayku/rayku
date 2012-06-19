@@ -41,7 +41,6 @@ class answerAction extends sfAction
             $this->getResponse()->setCookie("raykuCharge", $raykuCharge,time()+3600, '/', sfConfig::get('app_cookies_domain'));
 
             // redirect to rayku whiteboard
-            $this->logWhiteboardConnection($userId);
             $this->redirect(sfConfig::get('app_whiteboard_url').'/');
         } else {
 
@@ -94,24 +93,6 @@ class answerAction extends sfAction
         }
     }
 
-    private function logWhiteboardConnection($userId)
-    {
-        // Connect Whiteboard //
-        $insSQL = "INSERT INTO `log_user_connect_whiteboard` (
-            `id` ,
-            `user_id` ,
-            `connect_date_time`,
-            `connect_status`
-        )
-        VALUES (
-            NULL ,
-            '".$userId."',
-            '".date("Y-m-d H:i:s")."',
-            '1'
-        );";
-        mysql_query($insSQL);
-    }
-    
     private function getRaykuCharge($expertId)
     {
         $queryRPRate = mysql_query("select * from user_rate where userid = $expertId") or die(mysql_error());

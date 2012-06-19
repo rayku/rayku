@@ -13,7 +13,6 @@
 
     <li><?php echo link_to('Threads', 'threads/index'); ?></li>
     <li><?php echo link_to('Reported Posts', 'reportedposts/index'); ?></li>
-    <li><?php echo link_to('Log Statistics', 'statistics/index'); ?></li>
     <li><?php echo link_to( 'Logout', "http://$_SERVER[HTTP_HOST]/login/logout", array( 'class' => 'last' ) ); ?></li>
   </ul><br /><br />
 
