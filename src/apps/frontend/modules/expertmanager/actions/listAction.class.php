@@ -50,7 +50,6 @@ class listAction extends sfAction
         /* Quick Registration Users - Listing Tutors */
         if ($this->studentFromQuickRegistrationAskingAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
-            $_year = '';
             $_asker_cc_id = '';   $_asker_year = '';  $_asker_school = '';
             $_SESSION['subject'] = 1;
             $_dash_education = $_SESSION['edu'];
@@ -107,7 +106,6 @@ class listAction extends sfAction
 
         } else if ($this->loggedStudentAsksAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
-            $_year = '';
 
             $_asker_cc_id = '';   $_asker_year = '';  $_asker_school = '';
 

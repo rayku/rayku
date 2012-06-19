@@ -336,33 +336,6 @@ vd('#tutor-rate').mouseover(function() {
   <!--widget main--> 
 </div>
 <!--widget-->
-
-
-<!--
-<div id="myvar4">
-  <div class="updates">
-    <div class="top"></div>
-    <ul>
-      <?php
-
-
-
-						$query = mysql_query("select * from news_update order by id DESC limit 0,4", $connection) or die(mysql_error());
-
-
-
-							while($row = mysql_fetch_array($query)) { ?>
-      <li>
-        <div class="right" style="width:260px;padding-left:10px;"><span><?php echo $row['title']; ?></span>:<br />
-          <?php echo $row['description']; ?> </div>
-        <br class="clear-both" />
-      </li>
-      <?php }	?>
-    </ul>
-    <div class="bot"></div>
-  </div>
-</div> -->
-
 <div id="myvar5">
 </div>
 </div>
