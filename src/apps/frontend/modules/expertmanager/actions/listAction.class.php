@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of listAction
+ * List of tutors displayed after student asks question
  */
 class listAction extends sfAction
 {
