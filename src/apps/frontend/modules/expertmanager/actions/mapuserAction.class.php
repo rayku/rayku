@@ -22,11 +22,6 @@ class mapuserAction extends sfAction
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $time = time()-300;
-        $userGtalk = $currentUser->getUserGtalk();
-        $onlinecheck = '';
-        if ($userGtalk) {
-            $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
-        }
 
         $query = mysql_query($s = "select * from user_expert where checked_id = ".$userId." and exe_order = 1 and time >= ".$time."", $connection) or die(mysql_error());
         if (mysql_num_rows($query) > 0) {

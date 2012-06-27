@@ -54,13 +54,13 @@
     <ul class="top-menu">
       <li><?php echo link_to( 'Rayku', '/', array('title'=>'Rayku') ); ?></li>
       <li><?php echo link_to( 'Ask Question', '/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
-      <li><?php echo link_to( 'Q&A Boards', '/forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>
+      <li><?php echo link_to( 'Tutors', 'tutors/index', array('title'=>'Tutors','class'=>'tt-tutors') ); ?></li>
+      <!--<li><?php echo link_to( 'Q&A Boards', '/forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>-->
       <?php if($raykuUser->getNrOfNewMessages() >= 1) : ?>
       <li><a href="/message/inbox" title="Messages" class="tt-messages"><span><?php echo $raykuUser->getNrOfNewMessages(); ?></span>Messages</a></li>
       <?php else:  ?>
       <li><a href="/message/inbox" title="Messages" class="tt-messages">Messages</a></li>
       <?php endif; ?>
-      <li><?php echo link_to( 'Tutors', 'tutors/index', array('title'=>'Tutors','class'=>'tt-tutors') ); ?></li>
       <li><?php echo link_to( 'Rayku Points', 'shop/paypal', array('title'=>'Rayku Points','class'=>'tt-points') ); ?></li>
     </ul>
     <!--ul.top-menu-->
