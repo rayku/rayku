@@ -833,6 +833,24 @@ CREATE TABLE `user_gtalk`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- user_fb
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_fb`;
+
+
+CREATE TABLE `user_fb`
+(
+	`userid` INTEGER(10)  NOT NULL,
+	`fb_username` VARCHAR(255)  NOT NULL,
+	`fb_uid` VARCHAR(100)  NOT NULL,
+	PRIMARY KEY (`userid`),
+	CONSTRAINT `user_fb_FK_1`
+		FOREIGN KEY (`userid`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- user_tutor
 #-----------------------------------------------------------------------------
 
