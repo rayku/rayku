@@ -1,3 +1,7 @@
 # default rules
-default:
-  url:   /:module/:action/*
+authCheckLogin:
+  class: sfRequestRoute
+  url:   /auth/checkLogin
+  param: { module: auth, action: checkLogin }
+  requirements:
+    sf_method: post
