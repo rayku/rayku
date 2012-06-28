@@ -433,10 +433,9 @@ class listAction extends sfAction
             }
 
             if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
-                $fb_query = mysql_query("select * from user_fb where userid = ".$new['userid'], $connection) or die(mysql_error());
-                if (mysql_num_rows($fb_query) > 0) {
-                    $fbRow = mysql_fetch_assoc($fb_query);
-                    $fb_username = $fbRow['fb_username'];
+                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
+                if ($userFb) {
+                    $fb_username = $userFb->getFbUsername();
                     foreach ($Users as $key => $user) {
                         if ($user['username'] == $fb_username) {
                             $onlinecheck = 'online';

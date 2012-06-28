@@ -256,26 +256,21 @@ class tutorsActions extends sfActions {
 
             if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
+                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
+                if ($userFb) {
 
-                $fb_query = mysql_query("select * from user_fb where userid=" . $new['userid']) or die(mysql_error());
+                    $fb_username = $userFb->getFbUsername();
 
-                if (mysql_num_rows($fb_query) > 0) {
+                    foreach ($facebookUsers as $key => $user) {
 
-                    $fbRow = mysql_fetch_assoc($fb_query);
-
-                    $fb_username = $fbRow['fb_username'];
-
-
-                    foreach ($facebookUsers as $key => $user) :
-
-                        if ($user['username'] == $fb_username):
+                        if ($user['username'] == $fb_username) {
 
                             $onlinecheck = 'online';
 
                             break;
-                        endif;
+                        }
 
-                    endforeach;
+                    }
                 }
             }
 
