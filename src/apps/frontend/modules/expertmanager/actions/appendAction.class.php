@@ -7,7 +7,6 @@ class appendAction extends sfAction
     public function execute($request)
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
@@ -47,8 +46,6 @@ class appendAction extends sfAction
         } else {
             $_SESSION['subject'] = $this->cat;
         }
-
-        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
         $c = new Criteria();
         $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);

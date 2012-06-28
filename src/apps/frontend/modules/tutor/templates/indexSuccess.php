@@ -284,88 +284,6 @@ h2.avatar {
 </style>
 <link rel="stylesheet" type="text/css" href="/styles/popup-window.css" />
 <script type="text/javascript" src="/js/popup-window.js"></script>
-<?php
-$onlinecheck = '';
-    
-/* @var $expert User */
-if($expert->isOnline()) {
-    $web="Web";
-} else {
-    $web = null;
-}
-$userGtalk = $expert->getUserGtalk();
-
-$googletalk=null;
-if($userGtalk) {
-    $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
-    if($onlinecheck == "online") {
-        $googletalk=true;
-    }
-}
-
-if(empty($onlinecheck) || ($onlinecheck != "online")) {
-    $userFb = $expert->getUserFb();
-    if($userFb) {
-        $fb_username = $userFb->getFbUsername();
-
-        $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
-        $Users = json_decode($details, true);
-
-        foreach($Users as $key => $user) {
-            if($user['username'] == $fb_username){
-                $onlinecheck = "online";
-                break;
-            }
-        }
-    }
-}
-
-$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
-if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array(@$_Users)) {
-    $_Users = json_decode($onlineTutorsByNotificationBot, true);
-    foreach($_Users as $key => $_user) {
-        if($_user['email'] == $expert->getEmail()){
-            $onlinecheck = 'online';
-            break;
-        }
-    }
-}
-
-if($onlinecheck != "online") {
-    $onlinecheck = 'offline';
-}
-
-// Facebook //
-$facebookchat = null;
-$userFb = $expert->getUserFb();
-if($userFb) {
-    $fb_username = $userFb->getFbUsername();
-
-    $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
-    $Users = json_decode($details, true);
-
-    foreach($Users as $key => $user) {
-        if($user['username'] == $fb_username){
-            $onlinecheck = "online";
-            $facebookchat="Facebook Chat";
-            break;
-        }
-    }
-}
-
-$_Users = json_decode($onlineTutorsByNotificationBot, true);
-
-$desktopapplication = null;
-if (is_array(@$_Users)) {
-    foreach($_Users as $key => $_user) {
-        if($_user['email'] == $expert->getEmail()){
-            $onlinecheck = 'online';
-            $desktopapplication="Desktop Application";
-            break;
-        }
-    }
-}
-?>
 <div id="main">
   <!--content begins-->
     <div id="content">
@@ -380,18 +298,23 @@ if (is_array(@$_Users)) {
         <h2 class="avatar"> <?php echo $expert->getName(); ?></h2><br>
         <!--Connect Button-->
 <?php
-if(!empty($currentUser)) {
-    $_currentUserId = $currentUser->getId();
-    if($expert->isTutorStatusEnabled()) {
-        if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) {
-            echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
-        } else if($expert->getId() != $_currentUserId ) {
-            echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
+
+    /* @var $expert User */
+    $CCS = new Rayku\CommunicationChannel\Service();
+    $onlineCCs = $CCS->getUserOnlineCCs($expert);
+
+    if(!empty($currentUser)) {
+        $_currentUserId = $currentUser->getId();
+        if($expert->isTutorStatusEnabled()) {
+            if( count($onlineCCs) > 0 && $expert->getId() != $_currentUserId ) {
+                echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
+            } else if($expert->getId() != $_currentUserId ) {
+                echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
+            }
+        } else {
+            echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
         }
-    } else {
-        echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
     }
-}
 ?>
       </div>
     </div>
@@ -431,7 +354,25 @@ if($expert->getType() == 5) {
 
       <div class="row row-bg">
         <div class="left">Connected via: </div>
-        <div class="right"><span style="color:#CFCFCF;"> <span <?php if($web!="") { ?> style="color:#069; font-weight:bold;" <?php } ?>>web</span> | <span <?php if($googletalk) { ?> style="color:#069;font-weight:bold;" <?php } ?>>gtalk</span> | <span <?php if($facebookchat!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>fb chat</span> | <span <?php if($desktopapplication!="") { ?> style="color:#069;font-weight:bold;" <?php } ?>>desktop app</span> </span> </div>
+        <div class="right">
+            <span style="color:#CFCFCF;">
+                <span <?php if(in_array('web', $onlineCCs)) { ?> style="color:#069; font-weight:bold;" <?php } ?>>
+                    web
+                </span>
+                |
+                <span <?php if(in_array('gtalk', $onlineCCs)) { ?> style="color:#069;font-weight:bold;" <?php } ?>>
+                    gtalk
+                </span>
+                |
+                <span <?php if(in_array('fb', $onlineCCs)) { ?> style="color:#069;font-weight:bold;" <?php } ?>>
+                    fb chat
+                </span>
+                |
+                <span <?php if(in_array('desktop', $onlineCCs)) { ?> style="color:#069;font-weight:bold;" <?php } ?>>
+                    desktop app
+                </span>
+            </span>
+        </div>
         <div class="clear-both"></div>
       </div>
 

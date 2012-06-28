@@ -8,8 +8,9 @@
  */
 require_once 'om/BaseUser.php';
 
-class User extends BaseUser
+class User extends BaseUser implements \Rayku\User
 {
+    
 	/**
 	* Generates the confirmation code for this user
 	*/
@@ -584,5 +585,26 @@ class User extends BaseUser
           $userTutor->save();
       }
   }
+
+    public function getFacebookCCUsername()
+    {
+        $userFb = $this->getUserFb();
+        if ($userFb) {
+            return '-'.$userFb->getFbUid().'@chat.facebook.com';
+        }
+    }
+
+    public function getGtalkCCUsername()
+    {
+        $userGtalk = $this->getUserGtalk();
+        if ($userGtalk) {
+            return $userGtalk->getGtalkid();
+        }
+    }
+    
+    public function getDesktopCCUsername()
+    {
+        return $this->getEmail();
+    }
 
 }
