@@ -7,26 +7,25 @@
     <p style="font-size:16px;color:rgb(28, 81, 124);font-weight:bold;margin-left:45px;">Get notifications via Facebook Chat</p>
   </div>
 
-  <?php if($record == 1): ?>
+  <?php if($userFb) { ?>
   <div class="box">
     <div class="top"></div>
     <div class="content">
       <div class="entry">
         <div class="spacer"></div>
-         <?php  if(@$_SESSION['adduser'] == 1) : ?>
+        <?php  if(@$_SESSION['adduser'] == 1) { ?>
+            <div style="border-top:2px solid #900;padding:12px;color:#333;background:#FFF0F0;font-size:14px;line-height:18px;margin-bottom:20px;">Your friend request to 'raykubot' has just been sent! We will automatically accept it in a few moments, and you will start getting notifications through Facebook.</div>
+            <?php unset($_SESSION['adduser']); ?>
+        <?php } ?>
 
-        <div style="border-top:2px solid #900;padding:12px;color:#333;background:#FFF0F0;font-size:14px;line-height:18px;margin-bottom:20px;">Your friend request to 'raykubot' has just been sent! We will automatically accept it in a few moments, and you will start getting notifications through Facebook.</div>
+        <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>This does not currently support mobile</strong> - if you are using Facebook Chat with your mobile device, please do not install this. Download the software instead. Thanks!</div>
 
-  <?php unset($_SESSION['adduser']); ?>
-  <?php endif; ?>
-  
-  <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>This does not currently support mobile</strong> - if you are using Facebook Chat with your mobile device, please do not install this. Download the software instead. Thanks!</div>
-  
-  <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time.</strong> Connect with your instant messenger account and we will notify you with questions from students when your IM status is 'online', and never when you are 'busy' or 'offline'. <br /><br />
-      1. Enter your <a href="http://facebook.com/username" target="_blank">Facebook username</a> below<br />
-      2. Accept to add 'raykubot' to your friends list<br />
-      3. You're done!</div>
-        <p class="cn-pricepermin" style="color:#333;font-weight:normal">Your connected Facebook account username is <?php echo "<b>".$facebook."</b>"; ?>.</p>
+        <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time.</strong> Connect with your instant messenger account and we will notify you with questions from students when your IM status is 'online', and never when you are 'busy' or 'offline'. <br /><br />
+            1. Enter your <a href="http://facebook.com/username" target="_blank">Facebook username</a> below<br />
+            2. Accept to add 'raykubot' to your friends list<br />
+            3. You're done!
+        </div>
+        <p class="cn-pricepermin" style="color:#333;font-weight:normal">Your connected Facebook account username is <?php echo "<b>".$userFb->getFbUsername()."</b>"; ?>.</p>
       </div>
     </div>
     <div class="bottom"></div>
@@ -42,7 +41,7 @@
 
 	<input type="hidden" name="_hidden_facebook" id="_hidden_facebook" value="1" />
 
-         <input type="hidden" name="_hidden_fb_name" id="_hidden_fb_name" value="<?php echo $facebook; ?>" />
+         <input type="hidden" name="_hidden_fb_name" id="_hidden_fb_name" value="<?php echo $userFb->getFbUsername(); ?>" />
 
         <input type="text" value="raykubot" id="fbname" name="fbname" onblur="if(this.value=='') this.value='raykubot';" onfocus="if(this.value=='raykubot') this.value='';" style="font-size:14px;border:1px solid #999;padding:5px 7px;background:none;float:left;margin-right:10px;">
           </div>
@@ -54,7 +53,7 @@
       <div class="bottom"></div>
       <div class="spacer"></div>
     </div>
-  <?php else : ?>
+  <?php } else { ?>
   <div class="box">
     <div class="top"></div>
     <div class="content">
@@ -82,7 +81,7 @@
     <div class="bottom"></div>
     <div class="spacer"></div>
   </div>
-  <?php endif; ?>
+  <?php } ?>
 </div>
 <script type='text/javascript'>
 

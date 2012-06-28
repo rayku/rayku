@@ -42,30 +42,28 @@ if($count>0)
 				if(empty($onlinecheck) || ($onlinecheck != "online")) {
 
 
-				$fb_query = mysql_query("select * from user_fb where userid=".$_COOKIE['expert_'.$i]) or die(mysql_error());
+                    $fbUser = UserFbPeer::retrieveByUserId($_COOKIE['expert_'.$i]);
 
-				if(mysql_num_rows($fb_query) > 0) {
+                    if($fbUser) {
 
-					$fbRow = mysql_fetch_assoc($fb_query);
+                        $fb_username = $fbUser->getFbUsername();
 
-					$fb_username = $fbRow['fb_username'];
+                        $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
 
-				$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+                        $Users = json_decode($details, true);
+                    
+                        foreach($Users as $key => $user) {
 
-				$Users = json_decode($details, true);
+                            if($user['username'] == $fb_username) {
 
-				foreach($Users as $key => $user) :
+                                $onlinecheck = 'online'; 	
 
-					if($user['username'] == $fb_username):
+        						 break;	
+        					}
 
-						 $onlinecheck = 'online'; 	
+                        }
 
-						 break;	
-					endif;
-
-				endforeach;
-
-				}
+                    }
 
 				}
 

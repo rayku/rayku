@@ -304,10 +304,9 @@ if($userGtalk) {
 }
 
 if(empty($onlinecheck) || ($onlinecheck != "online")) {
-    $fb_query = mysql_query("select * from user_fb where userid=".$expert->getId(), $connection) or die(mysql_error());
-    if(mysql_num_rows($fb_query) > 0) {
-        $fbRow = mysql_fetch_assoc($fb_query);
-        $fb_username = $fbRow['fb_username'];
+    $userFb = $expert->getUserFb();
+    if($userFb) {
+        $fb_username = $userFb->getFbUsername();
 
         $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
         $Users = json_decode($details, true);
@@ -338,10 +337,9 @@ if($onlinecheck != "online") {
 
 // Facebook //
 $facebookchat = null;
-$fb_query = mysql_query("select * from user_fb where userid=".$expert->getId(), $connection) or die(mysql_error());
-if(mysql_num_rows($fb_query) > 0) {
-    $fbRow = mysql_fetch_assoc($fb_query);
-    $fb_username = $fbRow['fb_username'];
+$userFb = $expert->getUserFb();
+if($userFb) {
+    $fb_username = $userFb->getFbUsername();
 
     $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
     $Users = json_decode($details, true);

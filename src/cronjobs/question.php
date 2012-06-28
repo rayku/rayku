@@ -31,11 +31,10 @@ function checkquestion() {
                     $_send_msg = BotServiceProvider::createFor('http://www.rayku.com:8892/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
                 }
             }
-
-            $fb_query = mysql_query("select * from user_fb where userid=".$_row_expire_msg['userid']) or die(mysql_error());
-            if(mysql_num_rows($fb_query) > 0) {
-                $fbRow = mysql_fetch_assoc($fb_query);
-                $fb_username = $fbRow['fb_username'];
+            
+            $userFb = UserFbPeer::retrieveByUserId($_row_expire_msg['userid']);
+            if($userFb) {
+                $fb_username = $userFb->getFbUsername();
                 $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
@@ -167,10 +166,9 @@ function checkquestion() {
                     $flag = 1;
                 }
             }
-            $fb_query = mysql_query("select * from user_fb where userid=".$row['checked_id']) or die(mysql_error());
-            if(mysql_num_rows($fb_query) > 0) {
-                $fbRow = mysql_fetch_assoc($fb_query);
-                $fb_username = $fbRow['fb_username'];
+            $userFb = UserFbPeer::retrieveByUserId($row['checked_id']);
+            if($userFb) {
+                $fb_username = $userFb->getFbUsername();
                 $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
