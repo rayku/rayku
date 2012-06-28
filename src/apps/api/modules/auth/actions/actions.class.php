@@ -11,7 +11,9 @@ class authActions extends sfActions
      */
     public function executeCheckLogin(sfWebRequest $request)
     {
-        if (!$request->hasParameter('email') || !$request->hasParameter('password')) {
+        $email = trim($request->getParameter('email'));
+        $password = trim($request->getParameter('password'));
+        if ($email == '' || $password == '') {
             return $this->renderText('FAIL');
         }
         
