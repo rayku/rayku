@@ -244,20 +244,13 @@ class dashboardActions extends sfActions
 
     public function executeFacebook()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $userId = $this->getUser()->getRaykuUser()->getId();
+        /* @var $raykuUser User */
+        $raykuUser = $this->getUser()->getRaykuUser();
         if (@$_POST['_hidden_facebook'] && !empty($_POST['fbname'])) {
             $fb_username = $_POST['fbname'];
             $this->redirect('http://www.facebook.com/dialog/friends/?id=raykubot&app_id=304330886250108&redirect_uri=http://'.RaykuCommon::getCurrentHttpDomain().'/dashboard/facebookadd?username='.$fb_username);
         }
-        $query = mysql_query("select * from user_fb where userid =".$userId." ", $connection) or die(mysql_error());
-        if (mysql_num_rows($query) > 0) {
-            $this->record = 1;
-            $row = mysql_fetch_assoc($query);
-            $this->facebook = $row['fb_username'];
-        } else {
-            $this->record = 0;
-        }
+        $this->userFb = $raykuUser->getUserFb();
     }
 
     public function executeFacebookadd($request)
@@ -268,18 +261,35 @@ class dashboardActions extends sfActions
             return sfView::ERROR;
         }
         
-        $connection = RaykuCommon::getDatabaseConnection();
-        $user = $this->getUser()->getRaykuUser();
-        $query = mysql_query("select * from user_fb where userid =".$user->getId()." ");
-        if (mysql_num_rows($query) > 0) {
-            mysql_query("update user_fb set fb_username = '".$username."' where userid = ".$user->getId());
-        } else {
-            mysql_query("insert into user_fb(userid, fb_username) values(".$user->getId().", '".$username."' )");
+        $fbUserJSON = @file_get_contents('http://graph.facebook.com/'.$username);
+        
+        if (!$fbUserJSON) {
+            return sfView::ERROR;
         }
+        
+        $fbUser = json_decode($fbUserJSON, true);
+        
+        if (!is_array($fbUser) || !isset($fbUser['id'])) {
+            return sfView::ERROR;
+        }
+        
+        /* @var $user User */
+        $user = $this->getUser()->getRaykuUser();
+        $userFb = $user->getUserFb();
+        if (!$userFb) {
+            $userFb = new UserFb;
+            $userFb->setUser($user);
+        }
+        $userFb->setFbUsername($username);
+        $userFb->setFbUid($fbUser['id']);
+        $userFb->save();
         
         $this->weAreFriendsNow = $request->getGetParameter('action');
         if ($this->weAreFriendsNow){
-            BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
+            /**
+             * @todo - accept new friend on RaykuBot FB profile
+             */
+//            BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
         }
     }
 

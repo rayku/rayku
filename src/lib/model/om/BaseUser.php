@@ -356,6 +356,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $singleUserGtalk;
 
 	/**
+	 * @var        UserFb one-to-one related UserFb object
+	 */
+	protected $singleUserFb;
+
+	/**
 	 * @var        UserTutor one-to-one related UserTutor object
 	 */
 	protected $singleUserTutor;
@@ -1978,6 +1983,8 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->singleUserGtalk = null;
 
+			$this->singleUserFb = null;
+
 			$this->singleUserTutor = null;
 
 			$this->collStudentQuestionsRelatedByStudentId = null;
@@ -2187,6 +2194,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->singleUserFb !== null) {
+				if (!$this->singleUserFb->isDeleted()) {
+						$affectedRows += $this->singleUserFb->save($con);
+				}
+			}
+
 			if ($this->singleUserTutor !== null) {
 				if (!$this->singleUserTutor->isDeleted()) {
 						$affectedRows += $this->singleUserTutor->save($con);
@@ -2371,6 +2384,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				if ($this->singleUserGtalk !== null) {
 					if (!$this->singleUserGtalk->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singleUserGtalk->getValidationFailures());
+					}
+				}
+
+				if ($this->singleUserFb !== null) {
+					if (!$this->singleUserFb->validate($columns)) {
+						$failureMap = array_merge($failureMap, $this->singleUserFb->getValidationFailures());
 					}
 				}
 
@@ -3041,6 +3060,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$relObj = $this->getUserGtalk();
 			if ($relObj) {
 				$copyObj->setUserGtalk($relObj->copy($deepCopy));
+			}
+
+			$relObj = $this->getUserFb();
+			if ($relObj) {
+				$copyObj->setUserFb($relObj->copy($deepCopy));
 			}
 
 			$relObj = $this->getUserTutor();
@@ -4878,6 +4902,42 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Gets a single UserFb object, which is related to this object by a one-to-one relationship.
+	 *
+	 * @param      PropelPDO $con
+	 * @return     UserFb
+	 * @throws     PropelException
+	 */
+	public function getUserFb(PropelPDO $con = null)
+	{
+
+		if ($this->singleUserFb === null && !$this->isNew()) {
+			$this->singleUserFb = UserFbPeer::retrieveByPK($this->id, $con);
+		}
+
+		return $this->singleUserFb;
+	}
+
+	/**
+	 * Sets a single UserFb object as related to this object by a one-to-one relationship.
+	 *
+	 * @param      UserFb $l UserFb
+	 * @return     User The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUserFb(UserFb $v)
+	{
+		$this->singleUserFb = $v;
+
+		// Make sure that that the passed-in UserFb isn't already associated with this object
+		if ($v->getUser() === null) {
+			$v->setUser($this);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Gets a single UserTutor object, which is related to this object by a one-to-one relationship.
 	 *
 	 * @param      PropelPDO $con
@@ -5487,6 +5547,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			if ($this->singleUserGtalk) {
 				$this->singleUserGtalk->clearAllReferences($deep);
 			}
+			if ($this->singleUserFb) {
+				$this->singleUserFb->clearAllReferences($deep);
+			}
 			if ($this->singleUserTutor) {
 				$this->singleUserTutor->clearAllReferences($deep);
 			}
@@ -5518,6 +5581,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collShoutsRelatedByRecipientId = null;
 		$this->collUserAwardss = null;
 		$this->singleUserGtalk = null;
+		$this->singleUserFb = null;
 		$this->singleUserTutor = null;
 		$this->collStudentQuestionsRelatedByStudentId = null;
 		$this->collStudentQuestionsRelatedByTutorId = null;

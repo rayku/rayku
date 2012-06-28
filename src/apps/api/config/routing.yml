@@ -1,0 +1,3 @@
+# default rules
+default:
+  url:   /:module/:action/*

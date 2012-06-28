@@ -62,11 +62,11 @@ class UsersAvailabilityChecker
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $this->gtalkIds[$row['USERID']] = $row['GTALKID'];
         }
-        
-        $query = "SELECT * FROM user_fb";
-        $result = Propel::getConnection()->query($query);
+
+        $c = new Criteria;
+        $result = UserFbPeer::doSelectStmt($c);
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            $this->fbIds[$row['userid']] = $row['fb_username'];
+            $this->fbIds[$row['USERID']] = $row['FB_USERNAME'];
         }
     }
     

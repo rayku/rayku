@@ -357,6 +357,10 @@ propel:
   user_gtalk:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
     gtalkid: { type: VARCHAR, size: 100, required: true }
+  user_fb:
+    userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
+    fb_username: { type: VARCHAR, size: 255, required: true }
+    fb_uid: { type: VARCHAR, size: 100, required: true }
   user_tutor:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
   video:
