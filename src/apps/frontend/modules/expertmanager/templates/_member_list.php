@@ -14,20 +14,17 @@ $_Max_Count = intval($tutorsCount / 15) + 1;  $loopCount = $_Max_Count; if($loop
         <div class="cn-left-top"></div>
         <h3 style="margin-bottom:8px;">Subject:</h3>
 
-       <?php $_queryCourse = mysql_query("select * from courses") or die("Error-->2".mysql_error()); ?>
-
-
         <label>
         <form name="form1" id="form1" method="post">
           <select name="course" onchange="this.form.submit();">
             <option value="">--- SELECT ---</option>
-            <?php while($_rowCourse = mysql_fetch_assoc($_queryCourse)) { ?>
-
-			    <option value="<?php echo $_rowCourse['id'];?>" <?php if($course_id == $_rowCourse['id']): ?> selected="selected" <?php endif; ?> >
-			    <?php echo $_rowCourse['course_name'];?>
-			    </option>
-
-            <?php } ?>
+              <?php
+                /* @var $courses Courses[] */
+                $courses = CoursesPeer::doSelect(new Criteria);
+                foreach ($courses as $course) {
+                    echo '<option value="' . $course->getId() . '" >' . $course->getCourseName() . ' </option>';
+                }
+              ?>
           </select>
         </form>
         </label>
