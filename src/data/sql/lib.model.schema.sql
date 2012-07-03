@@ -110,6 +110,26 @@ CREATE TABLE `chat_user`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- courses
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `courses`;
+
+
+CREATE TABLE `courses`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`category_id` INTEGER(11)  NOT NULL,
+	`course_name` VARCHAR(200)  NOT NULL,
+	`description` TEXT  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `courses_FI_1` (`category_id`),
+	CONSTRAINT `courses_FK_1`
+		FOREIGN KEY (`category_id`)
+		REFERENCES `category` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- expert
 #-----------------------------------------------------------------------------
 

@@ -63,6 +63,16 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	protected $status;
 
 	/**
+	 * @var        array Courses[] Collection to store aggregation of Courses objects.
+	 */
+	protected $collCoursess;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collCoursess.
+	 */
+	private $lastCoursesCriteria = null;
+
+	/**
 	 * @var        array ExpertCategory[] Collection to store aggregation of ExpertCategory objects.
 	 */
 	protected $collExpertCategorys;
@@ -488,6 +498,9 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->collCoursess = null;
+			$this->lastCoursesCriteria = null;
+
 			$this->collExpertCategorys = null;
 			$this->lastExpertCategoryCriteria = null;
 
@@ -603,6 +616,14 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collCoursess !== null) {
+				foreach ($this->collCoursess as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collExpertCategorys !== null) {
 				foreach ($this->collExpertCategorys as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -681,6 +702,14 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collCoursess !== null) {
+					foreach ($this->collCoursess as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collExpertCategorys !== null) {
 					foreach ($this->collExpertCategorys as $referrerFK) {
@@ -945,6 +974,12 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
+			foreach ($this->getCoursess() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addCourses($relObj->copy($deepCopy));
+				}
+			}
+
 			foreach ($this->getExpertCategorys() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addExpertCategory($relObj->copy($deepCopy));
@@ -996,6 +1031,160 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			self::$peer = new CategoryPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Clears out the collCoursess collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addCoursess()
+	 */
+	public function clearCoursess()
+	{
+		$this->collCoursess = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collCoursess collection (array).
+	 *
+	 * By default this just sets the collCoursess collection to an empty array (like clearcollCoursess());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initCoursess()
+	{
+		$this->collCoursess = array();
+	}
+
+	/**
+	 * Gets an array of Courses objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Category has previously been saved, it will retrieve
+	 * related Coursess from storage. If this Category is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Courses[]
+	 * @throws     PropelException
+	 */
+	public function getCoursess($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(CategoryPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCoursess === null) {
+			if ($this->isNew()) {
+			   $this->collCoursess = array();
+			} else {
+
+				$criteria->add(CoursesPeer::CATEGORY_ID, $this->id);
+
+				CoursesPeer::addSelectColumns($criteria);
+				$this->collCoursess = CoursesPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(CoursesPeer::CATEGORY_ID, $this->id);
+
+				CoursesPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCoursesCriteria) || !$this->lastCoursesCriteria->equals($criteria)) {
+					$this->collCoursess = CoursesPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCoursesCriteria = $criteria;
+		return $this->collCoursess;
+	}
+
+	/**
+	 * Returns the number of related Courses objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Courses objects.
+	 * @throws     PropelException
+	 */
+	public function countCoursess(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(CategoryPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collCoursess === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(CoursesPeer::CATEGORY_ID, $this->id);
+
+				$count = CoursesPeer::doCount($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(CoursesPeer::CATEGORY_ID, $this->id);
+
+				if (!isset($this->lastCoursesCriteria) || !$this->lastCoursesCriteria->equals($criteria)) {
+					$count = CoursesPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collCoursess);
+				}
+			} else {
+				$count = count($this->collCoursess);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Courses object to this object
+	 * through the Courses foreign key attribute.
+	 *
+	 * @param      Courses $l Courses
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addCourses(Courses $l)
+	{
+		if ($this->collCoursess === null) {
+			$this->initCoursess();
+		}
+		if (!in_array($l, $this->collCoursess, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collCoursess, $l);
+			$l->setCategory($this);
+		}
 	}
 
 	/**
@@ -1211,6 +1400,11 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collCoursess) {
+				foreach ((array) $this->collCoursess as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collExpertCategorys) {
 				foreach ((array) $this->collExpertCategorys as $o) {
 					$o->clearAllReferences($deep);
@@ -1218,6 +1412,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
+		$this->collCoursess = null;
 		$this->collExpertCategorys = null;
 	}
 
