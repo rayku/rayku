@@ -32,12 +32,12 @@
         <select id="course_id" name="course_id">
         <option value="0">Choose question subject</option>
         <?php
-        $catquery = mysql_query("SELECT s.id,c.id as catid,s.course_name,c.name FROM courses AS s JOIN category AS c ON c.id=s.category_id WHERE c.status=1");	
-        while($cat = mysql_fetch_array($catquery))
-        {
+            $courses = CoursesPeer::getAllForCategoryStatus(1);
+
+            foreach ($courses as $course) {
+                echo '<option value="'.$course->getId().'">'.$course->getCourseName().'</option>';
+            }
         ?>
-          <option value="<?php echo $cat['id']; ?>"><?php echo $cat['course_name']; ?></option>          
-        <?php } ?>  
         </select>
         
         <!--question form container-->

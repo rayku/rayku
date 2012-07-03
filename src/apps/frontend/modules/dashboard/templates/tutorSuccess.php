@@ -30,31 +30,31 @@ $connection = RaykuCommon::getDatabaseConnection();
 	?>
         <input type="hidden" name="usrid" id="usrid" value="<?php echo $usrid; ?>" />
         <div class="categories">
-	        <?php
-        	$catquery = mysql_query("SELECT s.id,c.id as catid, s.course_name,c.name FROM courses AS s JOIN category AS c ON c.id=s.category_id WHERE c.status=1", $connection);
+            <?php
+                $courses = CoursesPeer::getAllForCategoryStatus(1);
+                
         	$e=1;
         	$course = $usrdata['course_id'];
 		$course = explode("-",$course);
-		while($cat = mysql_fetch_array($catquery))
-        	{
-        	?>
-				<label>
-		   		<?php if(in_array($cat['id'], $course)){ ?>
-		   		<input name="catcheck[]" type="checkbox" value="<?php echo $cat['id']; ?>" checked />
-		   		<?php } else { ?>
-		   		<input name="catcheck[]" type="checkbox" value="<?php echo $cat['id']; ?>" />
-		   		<?php } ?>
-		   		<input type="hidden" name="category" id="category" value="<?php echo $cat['catid']; ?>" />
-		    		<?php echo $cat['course_name']; ?></label>
-		  		<?php if($e%2==0)
-		  		{ ?>
-		  			<br />
-		  		<?php
-		  		}
-		  		$e++;
-
-       		}
-        	?>
+                
+                
+                foreach ($courses as $oneCourse) {
+                    if(in_array($oneCourse->getId(), $course)){
+                        $checked = 'checked';
+                    } else {
+                        $checked = '';
+                    }
+                    echo '<label>';
+                    echo '<input name="catcheck[]" type="checkbox" value="'.$oneCourse->getId().'" ',$checked,' />';
+                    echo '<input type="hidden" name="category" id="category" value="'.$oneCourse->getCategoryId().'" />';
+                    echo $oneCourse->getCourseName();
+                    echo '</label>';
+                    if($e%2==0) {
+                        echo '<br />';
+                    }
+                    $e++;
+                }
+            ?>
         </div>
         <div style="clear:both;padding-bottom:20px;"></div>
         <!--categories-->

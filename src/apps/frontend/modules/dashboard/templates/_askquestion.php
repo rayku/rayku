@@ -35,10 +35,10 @@ $connection = RaykuCommon::getDatabaseConnection();
                 <!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $_rowTag['id'];?>" class="waste" > --> 
                 <small style="a:hover{text-decoration:none;};cursor:pointer;" onclick="return clicktagclick(this.id);" id="clicktag_<?php echo $_rowTag['id'];?>" class="clicktag waste" >
 				
-				<?php $_queryCourse = mysql_query("select * from courses where id =".$_rowTag['course_id'], $connection) or die("Error-->2".mysql_error());
-
-	          $_rowCourse = mysql_fetch_assoc($_queryCourse); ?>
-                <span id="course_category_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowCourse['id']; ?>" > <?php echo $_rowCourse['course_name'];?></span>
+                <?php
+                    $course = CoursesPeer::retrieveByPK($_rowTag['course_id']);
+	        ?>
+                <span id="course_category_<?php echo $_rowTag['id'];?>" class="<?php echo $course->getId(); ?>" > <?php echo $course->getCourseName();?></span>
                 <?php 
 			if ($_rowTag['year'] != 'Choose year' ) {
 		if(!empty($_rowTag['year']) && ($_rowTag['year'] > 4) ):  ?>
@@ -84,12 +84,15 @@ $connection = RaykuCommon::getDatabaseConnection();
         <div id="hideload_course_category">
           <select id="course_category" name="course_category">
             <option value="0">Choose subject category</option>
-            <?php $_queryCourses = mysql_query("select * from courses where category_id = 1", $connection) or die("Error-->3".mysql_error());
+            <?php
+                $courses = CoursesPeer::getAllForCategoryId(1);
 
-		  if(mysql_num_rows($_queryCourses)) { 
-			while($_rowCourses = mysql_fetch_assoc($_queryCourses)) { ?>
-            <option value="<?php echo $_rowCourses['id'];?>"><?php echo $_rowCourses['course_name'];?></option>
-            <?php } }?>
+		if($courses) {
+                    foreach ($courses as $course) {
+                        echo '<option value="'.$course->getId().'">'.$course->getCourseName().'</option>';
+                    }
+                }
+            ?>
           </select>
         </div>
         <input type="hidden" name="course_category_hidden" id="course_category_hidden" value="" />
@@ -182,7 +185,6 @@ function CheckMsg() {
 var rayku_as = jQuery.noConflict();
 
 var question = document.getElementById('question').value;
-//var subject = document.getElementById('courses').value;
 var subject = rayku_as(".sbSelector").html();
 
 var error = '<p class="cn-pricepermin"><em style="font-size:14px;color:red;line-height:20px;">Oops, you missed something!</em></p>';

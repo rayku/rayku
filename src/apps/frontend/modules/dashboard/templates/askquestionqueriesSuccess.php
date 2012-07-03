@@ -15,9 +15,11 @@ $connection = RaykuCommon::getDatabaseConnection();
                                 <li><img src="<?php echo image_path('tag.jpg', false); ?>" alt="tag" class="tag" />
 	<!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $_rowTag['id'];?>" class="waste" > -->
 <small style="a:hover{text-decoration:none;};cursor:pointer;" id="clicktag_<?php echo $_rowTag['id'];?>" class="clicktag waste" >
-		 <?php $_queryCourse = mysql_query("select * from courses where id =".$_rowTag['course_id'], $connection) or die("Error-->2".mysql_error());
-
-	          $_rowCourse = mysql_fetch_assoc($_queryCourse); ?> <span id="course_category_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowCourse['id']; ?>" > <?php echo $_rowCourse['course_name'];?></span>
+		 <?php
+                    $course = CoursesPeer::retrieveByPK($_rowTag['course_id']);
+                ?>
+    
+                <span id="course_category_<?php echo $_rowTag['id'];?>" class="<?php echo $course->getId(); ?>" > <?php echo $course->getCourseName();?></span>
 
 		<?php 
 			if ($_rowTag['year'] != 'Choose year' ) {
