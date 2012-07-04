@@ -540,11 +540,6 @@ class User extends BaseUser implements \Rayku\User
 
   function getStatisticsForDashboard()
   {
-
-
-	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-	$cookiename = $logedUserId."_question";
-
     $stats = array(
         'ryakuCount'      => $this->getAllRyaku(),
         'expertCount' => $this->getExpertScore()

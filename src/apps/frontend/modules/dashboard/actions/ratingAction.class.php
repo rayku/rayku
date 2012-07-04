@@ -6,14 +6,12 @@ class ratingAction extends sfAction
         $connection = RaykuCommon::getDatabaseConnection();
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
-        $cookiename= $logedUserId."_question";
-        $limitcookiename = $logedUserId."_limit";
         if (isset($_SERVER['HTTP_COOKIE'])) {
             $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
             foreach($cookies as $cookie) {
                 $parts = explode('=', $cookie);
                 $name = trim($parts[0]);
-                if (($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "ratingExpertId") && ($name != "ratingUserId") && ($name != "timer") && ($name != "practice_name") && ($name != "rEmail") && ($name != "rPassword") && $name != "whiteboardChatId") {
+                if (($name != "rayku_frontend") && ($name != "ratingExpertId") && ($name != "ratingUserId") && ($name != "timer") && $name != "whiteboardChatId") {
                     $this->getResponse()->setCookie($name, "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 }
             }

@@ -131,19 +131,6 @@ class loginActions extends sfActions
 			return sfView::ERROR;
 		}
 
-		if($this->getRequestParameter('remember')) {
-
-			$time = time() + 60 * 60 * 24 * 15;
-
-                        /**
-                         * @todo - wtf ? - do we need this at all ?
-                         */
-			$this->getResponse()->setCookie("rEmail", $sEmail,$time);
-			$this->getResponse()->setCookie("rPassword", $sPassword,$time);
-
-
-		}
-
 		$this->getUser()->signIn($this->user, $this->getRequestParameter('remember', false));
 
         /**
