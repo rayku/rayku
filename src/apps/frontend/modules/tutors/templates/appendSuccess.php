@@ -132,35 +132,6 @@ function cmp($a, $b)
 
     $sample = array_slice($_FinalUsers,0,$next_records);
     $_finalUsers = $sample;
-    function getTitlePre($role)
-    {
-        $verb = '';
-        switch ($role) {
-        case 'Freshman':
-        case 'Sophomore':
-        case 'Junior':
-        case 'Senior':
-        case 'Masters Student':
-        case 'Phd Candidate':
-            $verb = 'studying';
-            break;
-
-        case 'Masters Degree Holder':
-        case 'Undergrad Degree Holder':
-        case 'Phd Degree Holder':
-            $verb = 'having studied';
-            break;
-
-        case 'Teaching Assistant':
-        case 'Professor':
-        case 'Middle School Teacher':
-        case 'High School Teacher':
-            $verb = 'teaching';
-            break;
-        }
-        return $verb;
-    }
-
 
     foreach($_finalUsers as $newOne) {
         $xy =  $newOne['userid'];
@@ -194,7 +165,7 @@ function cmp($a, $b)
                         $allsub		.= " at ".$tutData['school'];
                     }
                     if ($tutData['study'] != ''){
-                        $allsub		.= " ".getTitlePre($tutData['tutor_role'])." ".$tutData['study'];
+                        $allsub		.= " ".RaykuCommon::getTitlePre($tutData['tutor_role'])." ".$tutData['study'];
                     }
                 }
             }

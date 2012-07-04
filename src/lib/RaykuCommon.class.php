@@ -100,5 +100,34 @@ class RaykuCommon
 
       return self::$dbConfig;
   }
+  
+  static function getTitlePre($role)
+  {
+        $verb = '';
+        switch ($role) {
+            case 'Freshman':
+            case 'Sophomore':
+            case 'Junior':
+            case 'Senior':
+            case 'Masters Student':
+            case 'Phd Candidate':
+                $verb = 'studying';
+                break;
+
+            case 'Masters Degree Holder':
+            case 'Undergrad Degree Holder':
+            case 'Phd Degree Holder':
+                $verb = 'having studied';
+                break;
+
+            case 'Teaching Assistant':
+            case 'Professor':
+            case 'Middle School Teacher':
+            case 'High School Teacher':
+                $verb = 'teaching';
+                break;
+        }
+        return $verb;
+  }
 }
 ?>
