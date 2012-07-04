@@ -21,9 +21,7 @@ class dashboardActions extends sfActions
         unset($_SESSION['edu']);
         unset($_SESSION['course_id']);
         unset($_SESSION['name']);
-        unset($_SESSION["asker_school"]);
         unset($_SESSION['course_code']);
-        unset($_SESSION["asker_cc_id"]);
         unset($_SESSION['year']);
         unset($_SESSION['grade']);
         unset($_SESSION['question']);

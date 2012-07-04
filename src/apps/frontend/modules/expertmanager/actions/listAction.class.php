@@ -38,14 +38,9 @@ class listAction extends sfAction
             $_SESSION["course_id"] = '1';
         }
 
-        if (empty($_SESSION["asker_school"])) {
-            $_SESSION["asker_school"] = '';
-        }
-
         /* Quick Registration Users - Listing Tutors */
         if ($this->studentFromQuickRegistrationAskingAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
-            $_asker_cc_id = '';   $_asker_school = '';
             $_SESSION['subject'] = 1;
             $_dash_education = $_SESSION['edu'];
             $_dash_course_id = $_SESSION['course_id'];
@@ -55,25 +50,6 @@ class listAction extends sfAction
                 $_SESSION['course_name_sess'] = $rowCoursename['course_name'];
             }
 
-            if ($_dash_education == 1) {
-                $_school = trim($_SESSION['name']);
-                if ($_school == "University of Toronto") {
-                    $_SESSION["asker_school"] = "utoronto";
-                } elseif ($_school == "UBC University of British Columbia") {
-                    $_SESSION["asker_school"] = "ubc";
-                } elseif ($_school == "University of British Columbia") {
-                    $_SESSION["asker_school"] = "ubc";
-                }
-            } elseif ($_dash_education == 2) {
-                $_SESSION["asker_school"] = "High School";
-            }
-
-            if ($_SESSION['course_code'] != "Course Code" ) {
-                $_dash_code_id = trim($_SESSION['course_code']);
-                $_queryCourseCode = mysql_query("select * from course_sub where course_code ='".$_dash_code_id."' ", $connection) or die(mysql_error());
-                $_rowCourseCode = mysql_fetch_assoc($_queryCourseCode);
-                $_SESSION["asker_cc_id"] = $_rowCourseCode['id'];
-            }
 
             if (strtolower($_SESSION['year']) != "Choose year") {
                 $_dash_year = trim($_SESSION['year']);
@@ -93,8 +69,6 @@ class listAction extends sfAction
         } else if ($this->loggedStudentAsksAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
 
-            $_asker_cc_id = '';  $_asker_school = '';
-
             $_dash_question = $_POST['question'];
 
             $_SESSION['question'] = $_dash_question;
@@ -113,28 +87,6 @@ class listAction extends sfAction
             $_dash_education = $_POST['edu'];
             /* Student Confirmation */
             $_SESSION['edu'] = $_dash_education;
-
-            if ($_dash_education == 1) {
-                $_school = trim($_POST['name']);
-                if ($_school == "University of Toronto") {
-                    $_SESSION["asker_school"] = "utoronto";
-                } elseif ($_school == "UBC University of British Columbia") {
-                    $_SESSION["asker_school"] = "ubc";
-                } elseif ($_school == "University of British Columbia") {
-                    $_SESSION["asker_school"] = "ubc";
-                }
-            } elseif ($_dash_education == 2) {
-                $_SESSION["asker_school"] = "High School";
-            }
-
-            if (strtolower($_POST['course_code_hidden']) != "choose code" ) {
-                $_dash_code_id = trim($_POST['course_code_hidden']);
-                $_SESSION['course_code'] = trim($_dash_code_id);
-                $_queryCourseCode = mysql_query("select * from course_sub where course_code ='".$_dash_code_id."' ", $connection) or die(mysql_error());
-                $_rowCourseCode = mysql_fetch_assoc($_queryCourseCode);
-
-                $_SESSION["asker_cc_id"] = $_rowCourseCode['id'];
-            }
 
             if ( strtolower($_POST['year_hidden']) != "choose year") {
                 $_dash_year = trim($_POST['year_hidden']);
@@ -288,22 +240,6 @@ class listAction extends sfAction
                                 $dv->add(UserPeer::ID,$exp->getUserId());
                                 $_thisUser = UserPeer::doSelectOne($dv);
                                 $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                                if (!empty($_SESSION["asker_cc_id"])) {
-                                    $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
-                                    if (mysql_num_rows($_queryCourseCode) > 0) {
-                                        $score['score'] = $score['score'] * 1.5;
-                                    }
-                                }
-
-                                if (!empty($_SESSION["asker_school"])) {
-                                    $mailUser = explode("@", $_thisUser->getEmail());
-                                    $newMailUser = explode(".", $mailUser[1]);
-                                    if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
-                                        $score['score'] = $score['score'] * 1.5;
-                                    }
-                                }
-
                                 $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
                                 $i++;
                             }
@@ -313,20 +249,6 @@ class listAction extends sfAction
                             $_thisUser = UserPeer::doSelectOne($dv);
 
                             $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                            if (!empty($_SESSION["asker_cc_id"])) {
-                                $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());
-                                if (mysql_num_rows($_queryCourseCode) > 0) {
-                                    $score['score'] = $score['score'] * 1.5;
-                                }
-                            }
-                            if (!empty($_SESSION["asker_school"])) {
-                                $mailUser = explode("@", $_thisUser->getEmail());
-                                $newMailUser = explode(".", $mailUser[1]);
-                                if (($newMailExperts[0] == $_SESSION["asker_school"]) || ($newMailExperts[1] == $_SESSION["asker_school"])) {
-                                    $score['score'] = $score['score'] * 1.5;
-                                }
-                            }
                             $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
                             $i++;
                         }

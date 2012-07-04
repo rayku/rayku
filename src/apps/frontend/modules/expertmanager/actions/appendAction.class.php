@@ -16,10 +16,6 @@ class appendAction extends sfAction
             $_SESSION["course_id"] = '1';
         }
 
-        if (empty($_SESSION["asker_school"])) {
-            $_SESSION["asker_school"] = '';
-        }
-
         $this->cat = $this->getRequestParameter('category');
         $this->course_id = $this->getRequestParameter('course');
 
@@ -93,23 +89,6 @@ class appendAction extends sfAction
                                 $dv->add(UserPeer::ID,$exp->getUserId());
                                 $_thisUser = UserPeer::doSelectOne($dv);
                                 $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                                if (!empty($_SESSION["asker_cc_id"])) {
-                                    $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
-                                    if (mysql_num_rows($_queryCourseCode) > 0) {
-                                        $score['score'] = $score['score'] * 1.5;
-                                    }
-                                }
-
-                                if (!empty($_SESSION["asker_school"])) {
-                                    $mailUser = explode("@", $_thisUser->getEmail());
-                                    $newMailUser = explode(".", $mailUser[1]);
-
-                                    if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
-                                        $score['score'] = $score['score'] * 1.5;
-                                    }
-                                }
-
                                 $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
                                 $i++;
                             }
@@ -118,21 +97,6 @@ class appendAction extends sfAction
                             $dv->add(UserPeer::ID,$exp->getUserId());
                             $_thisUser = UserPeer::doSelectOne($dv);
                             $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                            if (!empty($_SESSION["asker_cc_id"])) {
-                                $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());
-                                if (mysql_num_rows($_queryCourseCode) > 0) {
-                                    $score['score'] = $score['score'] * 1.5;
-                                }
-                            }
-
-                            if (!empty($_SESSION["asker_school"])) {
-                                $mailUser = explode("@", $_thisUser->getEmail());
-                                $newMailUser = explode(".", $mailUser[1]);
-                                if ((@$newMailExperts[0] == $_SESSION["asker_school"]) || (@$newMailExperts[1] == $_SESSION["asker_school"])) {
-                                    $score['score'] = $score['score'] * 1.5;
-                                }
-                            }
                             $newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
                             $i++;
                         }

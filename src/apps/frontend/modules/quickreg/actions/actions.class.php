@@ -179,50 +179,6 @@ class quickregActions extends sfActions
 		$this->getUser()->signIn($userCheck);
 		}
 
-		if( $kinkarsoUser ) {
-
-		if($user) {
-		$query = mysql_query("select * from  shout where recipient_id=".$user->getId()." and  poster_id=".$kinkarsoUser->getId()."") or die(mysql_error());
-			if(mysql_num_rows($query) == 0) {
-
-
-				 ShoutPeer::createWelcomeComment($user,$kinkarsoUser);
-			}
-
-		} 
-
-
-
-		 $subject='Welcome to Rayku';
-
-			if($user) {
-					 $body='Hey '.$user->getName().', welcome to Rayku.com!<br><br>';
-
-			} 
-
-		 
-		 $body .=' Thanks for joining our community!<br><br>
-		 
-		 The first thing you should do is introduce yourself. We\'re interested in hearing your story, if you are a potential tutor or tutee.<br><br>
-		 
-		 Let us know by creating a thread in the <a href="http://www.rayku.com/forum/newthread/125">Introductions Forum</a>.<br><br>
-		 				 
-		 Thanks!<br>
-		 Rayku Administration';
-		 
-		 
-		$currentuser = $kinkarsoUser;
-		//Send the message
-
-		if($user) {
-			$currentuser->sendMessage($user->getId(),$subject,$body);
-		} 
-
-
-		}
-
-
-
 			$this->redirect("/expertmanager/list");
 	}
 	

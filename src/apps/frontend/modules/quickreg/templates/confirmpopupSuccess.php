@@ -55,11 +55,9 @@
           <div id="university-info" class="clearfix hide">
             <p class="info university-name">
               <input type="text" name="name" onblur="this.value = (this.value=='')? 'University Name' : this.value;" onclick="if (this.value=='University Name') this.value='';" value="University Name" />
-              <?php //echo input_auto_complete_tag('name', '', 'quickreg/autocomplete', array('placeholder' => 'University Name'), array('use_style' => true)); ?>
             </p>
             <p class="info course-code">
               <input type="text" name="course_code" onblur="this.value = (this.value=='')? 'Course Code' : this.value;" onclick="if (this.value=='Course Code') this.value='';" value="Course Code" />
-              <?php //echo input_auto_complete_tag('course_code', '', 'quickreg/autocourse', array('placeholder' => 'Course Code'), array('use_style' => true)); ?>
             </p>
             <p class="info year">
               <select name="asker_year" id="asker_year">
