@@ -16,10 +16,6 @@ class appendAction extends sfAction
             $_SESSION["course_id"] = '1';
         }
 
-        if (empty($_SESSION["asker_year"])) {
-            $_SESSION["asker_year"] = '';
-        }
-
         if (empty($_SESSION["asker_school"])) {
             $_SESSION["asker_school"] = '';
         }
@@ -98,26 +94,6 @@ class appendAction extends sfAction
                                 $_thisUser = UserPeer::doSelectOne($dv);
                                 $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-                                if (!empty($_SESSION["asker_year"])) {
-                                    $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-2-->".mysql_error());
-                                    $rowExp = mysql_fetch_assoc($queryExp);
-
-                                    if (!is_numeric($rowExp['course_year'])) {
-                                        if ($rowExp['course_year'] == "graduated") {
-                                            $rowExp['course_year'] = 5;
-                                        } else {
-                                            $rowExp['course_year'] = 4;
-                                        }
-                                    }
-                                    $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-
-                                    if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                        $score['score'] = $score['score'] * 1.2;
-                                    } else if ($valueYear == 4) {
-                                        $score['score'] = $score['score'] * 1.1;
-                                    }
-                                }
-
                                 if (!empty($_SESSION["asker_cc_id"])) {
                                     $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
                                     if (mysql_num_rows($_queryCourseCode) > 0) {
@@ -142,25 +118,6 @@ class appendAction extends sfAction
                             $dv->add(UserPeer::ID,$exp->getUserId());
                             $_thisUser = UserPeer::doSelectOne($dv);
                             $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                            if (!empty($_SESSION["asker_year"])) {
-                                $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-4-->".mysql_error());
-                                $rowExp = mysql_fetch_assoc($queryExp);
-
-                                if (!is_numeric($rowExp['course_year'])) {
-                                    if ($rowExp['course_year'] == "graduated") {
-                                        $rowExp['course_year'] = 5;
-                                    } else {
-                                        $rowExp['course_year'] = 4;
-                                    }
-                                }
-                                $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-                                if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                    $score['score'] = $score['score'] * 1.2;
-                                } else if ($valueYear == 4) {
-                                    $score['score'] = $score['score'] * 1.1;
-                                }
-                            }
 
                             if (!empty($_SESSION["asker_cc_id"])) {
                                 $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());

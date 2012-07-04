@@ -142,17 +142,8 @@ function cmp($a, $b)
         $experts=UserPeer::doSelectOne($c);
 
         if ($sfcategory == 5) {
-
-            $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ", $connection) or die(mysql_error());
-            $detail3=mysql_fetch_assoc($query3);
-
-
-            $allsub = "General"." Student (Year: ".$detail3['course_year'].")";
-
+            $allsub = "General Student";
         } else {
-            $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
-            $detail3  =mysql_fetch_assoc($query3);
-
             $titSQL = "SELECT `tutor_role`,`school`,`study` FROM `tutor_profile` WHERE `user_id` = ".$newOne['userid']."";
             $titRes = mysql_query($titSQL, $connection);
             $allsub		= "";
@@ -171,16 +162,7 @@ function cmp($a, $b)
             }
 
             if ($allsub==""){
-                $query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory, $connection) or die(mysql_error());
-                $allsub=" ";
-                while ($row = mysql_fetch_array($query4, MYSQL_NUM)) {
-                    if ($allsub==" ") {
-                        $allsub=$row[3];
-                    } else {
-                        $allsub=$allsub." | ".$row[3];
-                    }
-                }
-                $allsub = $allsub." Student (Year: ".$detail3['course_year'].")";
+                $allsub = "Student";
             }
         }
         $query5 = mysql_query("select * from user_rate where userid=".$newOne['userid']." ", $connection) or die(mysql_error());

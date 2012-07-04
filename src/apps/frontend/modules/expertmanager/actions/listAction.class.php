@@ -38,10 +38,6 @@ class listAction extends sfAction
             $_SESSION["course_id"] = '1';
         }
 
-        if (empty($_SESSION["asker_year"])) {
-            $_SESSION["asker_year"] = '';
-        }
-
         if (empty($_SESSION["asker_school"])) {
             $_SESSION["asker_school"] = '';
         }
@@ -49,7 +45,7 @@ class listAction extends sfAction
         /* Quick Registration Users - Listing Tutors */
         if ($this->studentFromQuickRegistrationAskingAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
-            $_asker_cc_id = '';   $_asker_year = '';  $_asker_school = '';
+            $_asker_cc_id = '';   $_asker_school = '';
             $_SESSION['subject'] = 1;
             $_dash_education = $_SESSION['edu'];
             $_dash_course_id = $_SESSION['course_id'];
@@ -81,15 +77,6 @@ class listAction extends sfAction
 
             if (strtolower($_SESSION['year']) != "Choose year") {
                 $_dash_year = trim($_SESSION['year']);
-                if ($_dash_year == "1st Year") {
-                    $_SESSION["asker_year"] = '1';
-                } elseif ($_dash_year == "2nd Year") {
-                    $_SESSION["asker_year"] = '2';
-                } elseif ($_dash_year == "3rd Year") {
-                    $_SESSION["asker_year"] = '3';
-                } else {
-                    $_SESSION["asker_year"] = '4';
-                }
             } elseif (strtolower($_SESSION['grade']) != "Choose grade") {
                 $_dash_year = trim($_SESSION['grade']);
             }
@@ -106,7 +93,7 @@ class listAction extends sfAction
         } else if ($this->loggedStudentAsksAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
 
-            $_asker_cc_id = '';   $_asker_year = '';  $_asker_school = '';
+            $_asker_cc_id = '';  $_asker_school = '';
 
             $_dash_question = $_POST['question'];
 
@@ -153,16 +140,6 @@ class listAction extends sfAction
                 $_dash_year = trim($_POST['year_hidden']);
                 /* student confirmation */
                 $_SESSION['year'] = $_dash_year;
-
-                if ($_dash_year == "1st Year") {
-                    $_SESSION["asker_year"] = '1';
-                } elseif ($_dash_year == "2nd Year") {
-                    $_SESSION["asker_year"] = '2';
-                } elseif ($_dash_year == "3rd Year") {
-                    $_SESSION["asker_year"] = '3';
-                } else {
-                    $_SESSION["asker_year"] = '4';
-                }
             } elseif (strtolower($_POST['grade_hidden']) != "choose grade") {
                 $_dash_year = trim($_POST['grade_hidden']);
                 /* student confirmation */
@@ -311,27 +288,6 @@ class listAction extends sfAction
                                 $dv->add(UserPeer::ID,$exp->getUserId());
                                 $_thisUser = UserPeer::doSelectOne($dv);
                                 $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-                                if (!empty($_SESSION["asker_year"])) {
-
-                                    $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-2-->".mysql_error());
-                                    $rowExp = mysql_fetch_assoc($queryExp);
-
-                                    if (!is_numeric($rowExp['course_year'])) {
-                                        if ($rowExp['course_year'] == "graduated") {
-                                            $rowExp['course_year'] = 5;
-                                        } else {
-                                            $rowExp['course_year'] = 4;
-                                        }
-                                    }
-                                    $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-
-                                    if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                        $score['score'] = $score['score'] * 1.2;
-
-                                    } else if ($valueYear == 4) {
-                                        $score['score'] = $score['score'] * 1.1;
-                                    }
-                                }
 
                                 if (!empty($_SESSION["asker_cc_id"])) {
                                     $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-3-->".mysql_error());
@@ -357,26 +313,6 @@ class listAction extends sfAction
                             $_thisUser = UserPeer::doSelectOne($dv);
 
                             $rankUsersFinal[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                            if (!empty($_SESSION["asker_year"])) {
-                                $queryExp = mysql_query("select * from user_course where user_id = ".$exp->getUserId()." AND course_subject = ".$this->cat, $connection) or die("Er-4-->".mysql_error());
-                                $rowExp = mysql_fetch_assoc($queryExp);
-
-                                if (!is_numeric($rowExp['course_year'])) {
-                                    if ($rowExp['course_year'] == "graduated") {
-                                        $rowExp['course_year'] = 5;
-                                    } else {
-                                        $rowExp['course_year'] = 4;
-                                    }
-                                }
-                                $valueYear = $rowExp['course_year']  - $_SESSION["asker_year"];
-
-                                if ($valueYear == 1 || $valueYear == 2 || $valueYear == 3) {
-                                    $score['score'] = $score['score'] * 1.2;
-                                } else if ($valueYear == 4) {
-                                    $score['score'] = $score['score'] * 1.1;
-                                }
-                            }
 
                             if (!empty($_SESSION["asker_cc_id"])) {
                                 $_queryCourseCode = mysql_query("select * from expert_course_code where user_id =".$exp->getUserId()." and  course_code_id = ".$_SESSION["asker_cc_id"]." ", $connection) or die("Er-5-->".mysql_error());

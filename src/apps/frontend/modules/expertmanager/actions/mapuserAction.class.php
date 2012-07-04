@@ -45,9 +45,6 @@ class mapuserAction extends sfAction
                 $question = substr(trim($row['question']), 0, 200);
             }
 
-            $queryUser = mysql_query("select * from user_course where user_id = ".$row['user_id']." and course_subject = ".$row['category_id'], $connection) or die(mysql_error());
-            $rowUser = mysql_fetch_array($queryUser);
-
             $x = new Criteria();
             $x->add(UserPeer::ID, $row['checked_id']);
             $newloginId = UserPeer::doSelectOne($x);
