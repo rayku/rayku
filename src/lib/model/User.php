@@ -601,5 +601,14 @@ class User extends BaseUser implements \Rayku\User
     {
         return $this->getEmail();
     }
+    
+    public function isWBSessionActive()
+    {
+        $criteria = new Criteria();
+        $criteria->add(WhiteboardSessionPeer::USER_ID, $this->getId());
+        $criteria->addDescendingOrderByColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
+        $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
+        return ($lastSession && $lastSession->stillActive());
+    }
 
 }
