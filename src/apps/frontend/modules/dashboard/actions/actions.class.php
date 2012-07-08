@@ -152,11 +152,7 @@ class dashboardActions extends sfActions
         $_userId = $raykuUser->getId();
         if ($raykuUser->isTutorStatusEnabled()) {
             $raykuUser->setTutorStatusDisabled();
-            $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-            if (!$_query) {
-                mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-            }
-
+            $raykuUser->setRate(0);
             $this->redirect('/dashboard');
         } else {
             if ($_POST['usrid']) {
@@ -190,11 +186,8 @@ class dashboardActions extends sfActions
                 }
 
                 $raykuUser->setTutorStatusEnabled();
-                $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-                if (!$_query) {
-                    mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-                }
-
+                $raykuUser->setRate(0);
+                
                 $this->redirect('/tutorshelp?tutor=activate');
             }
         }
@@ -375,15 +368,10 @@ class dashboardActions extends sfActions
 
     public function executeChargerate()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
         $_Rate = !empty($_GET['rate']) ? $_GET['rate'] : '0.00';
-        $userId = $this->getUser()->getRaykuUser()->getId();
-        $query = mysql_query("select * from user_rate where userid=".$userId, $connection) or die(mysql_error());
-        if (mysql_num_rows($query) > 0) {
-            mysql_query("update user_rate set rate = ".$_Rate." where userid=".$userId, $connection) or die(mysql_error());
-        } else {
-            mysql_query("insert into user_rate(userid,rate) values(".$userId.", ".$_Rate.") ", $connection) or die(mysql_error());
-        }
+        $user = $this->getUser()->getRaykuUser();
+        $user->setRate($_Rate);
+        
         return sfView::HEADER_ONLY;
     }
 

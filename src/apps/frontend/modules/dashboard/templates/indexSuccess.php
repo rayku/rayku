@@ -179,15 +179,9 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
       <!--widget-foot-->
       
       <?php
-		$query = mysql_query("select * from user_rate where userid=".$raykuUser->getId()." ", $connection) or die(mysql_error());
-		$rate = mysql_fetch_assoc($query);
-		$_Rate = ''; $_max = '';
-		if(mysql_num_rows($query) == 0) :
-			$_Rate = '0.00';
-		else :
-			$_Rate = $rate['rate'];
-		endif; ?>
-      <?php
+        $_max = '';
+        $_Rate = $raykuUser->getRate();
+        
 	if($stats['expertCount'] >= 125 && $changeUserType != 1):
 
 		$_max = '0.50';

@@ -610,5 +610,33 @@ class User extends BaseUser implements \Rayku\User
         $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
         return ($lastSession && $lastSession->stillActive());
     }
+    
+    public function setRate($newRate)
+    {
+        $userRate = $this->getUserRateRecord();
+        
+        $userRate->setRate($newRate);
+        $userRate->save();
+    }
+    
+    private function getUserRateRecord()
+    {
+        $c = new Criteria;
+        $c->setLimit(1);
+        $userRate = $this->getUserRates($c);
+        if (!is_array($userRate) || count($userRate) < 1) {
+            $userRate = new UserRate;
+            $userRate->setUser($this);
+        } else {
+            $userRate = $userRate[0];
+        }
+        return $userRate;
+    }
+    
+    public function getRate()
+    {
+        $userRate = $this->getUserRateRecord();
+        return $userRate->getRate();
+    }
 
 }

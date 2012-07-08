@@ -16,11 +16,11 @@
         <?php } ?>
       </div>
       <div style="float:left;height:50px;line-height:20px;width:50px;border-right:1px solid #CFD0D2;" align="center"><strong>#<?php echo $counter++; ?></strong></div>
-      <div style="padding-left:60px;"> <u><a href="javascript:void(0);" title="Click to Select">ALLSUB - TODO</a></u></div>
+      <div style="padding-left:60px;"> <u><a href="javascript:void(0);" title="Click to Select"><?php echo $user->getName(); ?></a></u></div>
       </p>
     </div>
     <div class="cn-column-two" align="center">
-      <p class="cn-expertscore" style="font-size:13px;color:#333"> RATE - TODO</p>
+      <p class="cn-expertscore" style="font-size:13px;color:#333"><?php echo $user->getRate(); ?> RP</p>
     </div>
     <div class="cn-column-four">
       <p class="cn-pricepermin" align="center" style="margin-top:10px">

@@ -27,12 +27,11 @@ class ratingAction extends sfAction
                 if (!empty($_COOKIE['raykuCharge'])) {
                     $rate = $_COOKIE['raykuCharge'];
                 } else {
-                    $queryRPRate = mysql_query("select * from user_rate where userid=".$_COOKIE["ratingExpertId"]." ", $connection) or die(mysql_error());
-                    if (mysql_num_rows($queryRPRate)) {
-                        $rowRPRate = mysql_fetch_assoc($queryRPRate);
-                        $rate = $rowRPRate['rate'];
+                    $user = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
+                    if ($user) {
+                        $rate = $user->getRate();
                     } else {
-                        $rate = '0.00';
+                        $rate = 0;
                     }
                 }
                 $timer = explode(":", $_COOKIE["timer"]);

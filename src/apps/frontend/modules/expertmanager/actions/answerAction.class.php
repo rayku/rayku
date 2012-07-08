@@ -95,14 +95,7 @@ class answerAction extends sfAction
 
     private function getRaykuCharge($expertId)
     {
-        $queryRPRate = mysql_query("select * from user_rate where userid = $expertId") or die(mysql_error());
-        if (mysql_num_rows($queryRPRate)) {
-            $rowRPRate = mysql_fetch_assoc($queryRPRate);
-            $raykuCharge = $rowRPRate['rate'];
-        } else {
-            $raykuCharge = '0.16';
-        }
-        
-        return $raykuCharge;
+        $user = UserPeer::retrieveByPK($expertId);
+        return $user->getRate();
      }
 }

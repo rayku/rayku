@@ -323,7 +323,7 @@ h2.avatar {
     <!--facts box begins-->
     <div id="facts">
 <?php	$_query_scrore = mysql_query("select score from user_score where user_id=".$expert->getId()." ", $connection) or die(mysql_error());
-$chat_rating = 0; $rating_count = 0; $avg_rating = 0;
+$rating_count = 0; $avg_rating = 0;
 
 $rating_score = mysql_fetch_row($_query_scrore);
 
@@ -379,16 +379,9 @@ if($expert->getType() == 5) {
       <!--row 2 begins-->
 
       <div class="row row-bg">
-<?php	$_query = mysql_query("select * from user_rate where userid =".$expert->getId()." ", $connection) or die(mysql_error());
-$chat_rating = 0;
-if(mysql_num_rows($_query) > 0) {
-    $_row = mysql_fetch_array($_query);
-    $chat_rating = $_row['rate'];
-}
-?>
         <div class="left">Rate:</div>
         <?php /*?><div class="right rate-color"><a id="various1" href="#inline1" style="color:rgb(255, 102, 0);"><?php echo number_format($avg_rating, 2); ?></a></div><?php */?>
-        <div class="right rate-color"><?php echo number_format($chat_rating, 2); ?>RP/minute</div>
+        <div class="right rate-color"><?php echo number_format($expert->getRate(), 2); ?>RP/minute</div>
         <div class="clear-both"></div>
       </div>
       <!--row 2 ends-->
