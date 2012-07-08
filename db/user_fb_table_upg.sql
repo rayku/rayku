@@ -4,5 +4,5 @@
 -- DROP TABLE banned_ips,course_sub,
 -- expert_course,expert_course_code,expert_subscribers,gtalkcron,item_featured,
 -- missed_question_info,points_paypal,popup_close,referral_code,
--- question,sendmessage,tutor_profile,user_course,user_expert,user_expire_msg,
--- user_profile,user_question,user_question_tag,user_rate,user_score,user_stay,user_tutor, whiteboard_moneyback;
+-- question,sendmessage,tutor_profile,user_expert,user_expire_msg,
+-- user_profile,user_question,user_rate,user_score,user_stay,user_tutor, whiteboard_moneyback;

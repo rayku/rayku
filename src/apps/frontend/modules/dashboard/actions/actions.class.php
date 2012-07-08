@@ -72,12 +72,15 @@ class dashboardActions extends sfActions
 
     public function executeTag()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        mysql_query("delete from user_question_tag where id=".$_REQUEST['id'][1], $connection);
-        $userId = $this->getUser()->getRaykuUser()->getId();
-        $countquery = mysql_query("select user_id from `user_question_tag` where user_id = ".$userId, $connection);
-        echo $countrows = mysql_num_rows($countquery);
-        exit(0);
+        $userQuestionTag = UserQuestionTagPeer::retrieveByPK($_REQUEST['id'][1]);
+        if ($userQuestionTag) {
+            $userQuestionTag->delete();
+        }
+        /* @var $user User */
+        $user = $this->getUser()->getRaykuUser();
+        $c = new Criteria;
+        $c->add(UserQuestionTagPeer::USER_ID, $user->getId());
+        return $this->renderText((int)UserQuestionTagPeer::doCount($c));
     }
 
     public function executeAutocomplete()

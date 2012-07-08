@@ -95,14 +95,29 @@ class listAction extends sfAction
                 $_dash_year = trim($_SESSION['grade']);
             }
 
-            $_queryTag = mysql_query("select * from user_question_tag where category_id = 1 and user_id = ".$userId." and course_id = ".$_dash_course_id." and education = ".$_dash_education." and school = '".$_school."' and year = '".$_dash_year."' and course_code ='".$_dash_code_id."' ", $connection) or die("Error-->1".mysql_error());
-
-            if (mysql_num_rows($_queryTag) > 0) 	{
-                $_rowDelete = mysql_fetch_assoc($_queryTag);
-                mysql_query("delete from user_question_tag where id =".$_rowDelete['id'], $connection) or die(mysql_error());
+            $c = new Criteria;
+            $c->add(UserQuestionTagPeer::CATEGORY_ID, 1);
+            $c->add(UserQuestionTagPeer::USER_ID, $userId);
+            $c->add(UserQuestionTagPeer::COURSE_ID, $_dash_course_id);
+            $c->add(UserQuestionTagPeer::COURSE_CODE, $_dash_code_id);
+            $c->add(UserQuestionTagPeer::EDUCATION, $_dash_education);
+            $c->add(UserQuestionTagPeer::SCHOOL, $_school);
+            $c->add(UserQuestionTagPeer::YEAR, $_dash_year);
+            $userQuestionTag = UserQuestionTagPeer::doSelectOne($c);
+            if ($userQuestionTag) {
+                $userQuestionTag->delete();
             }
-
-            mysql_query("INSERT INTO `user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_SESSION['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
+            
+            $userQuestionTag = new UserQuestionTag;
+            $userQuestionTag->setUserId($userId);
+            $userQuestionTag->setCategoryId(1);
+            $userQuestionTag->setCourseId($_dash_course_id);
+            $userQuestionTag->setCourseCode($_dash_code_id);
+            $userQuestionTag->setEducation($_dash_education);
+            $userQuestionTag->setSchool($_school);
+            $userQuestionTag->setYear($_dash_year);
+            $userQuestionTag->setQuestion($_SESSION['question']);
+            $userQuestionTag->save();
 
         } else if ($this->loggedStudentAsksAQuestion()) {
             $_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
@@ -169,13 +184,30 @@ class listAction extends sfAction
                 /* student confirmation */
                 $_SESSION['grade'] = $_dash_year;
             }
-            $_queryTag = mysql_query("select * from user_question_tag where category_id = 1 and user_id = ".$userId." and course_id = ".$_dash_course_id." and education = ".$_dash_education." and school = '".$_school."' and year = '".$_dash_year."' and course_code ='".$_dash_code_id."' ", $connection) or die("Error-->1".mysql_error());
-            if (mysql_num_rows($_queryTag) > 0) 	{
-                $_rowDelete = mysql_fetch_assoc($_queryTag);
-                mysql_query("delete from user_question_tag where id =".$_rowDelete['id'], $connection) or die(mysql_error());
+            
+            $c = new Criteria;
+            $c->add(UserQuestionTagPeer::CATEGORY_ID, 1);
+            $c->add(UserQuestionTagPeer::USER_ID, $userId);
+            $c->add(UserQuestionTagPeer::COURSE_ID, $_dash_course_id);
+            $c->add(UserQuestionTagPeer::COURSE_CODE, $_dash_code_id);
+            $c->add(UserQuestionTagPeer::EDUCATION, $_dash_education);
+            $c->add(UserQuestionTagPeer::SCHOOL, $_school);
+            $c->add(UserQuestionTagPeer::YEAR, $_dash_year);
+            $userQuestionTag = UserQuestionTagPeer::doSelectOne($c);
+            if ($userQuestionTag) {
+                $userQuestionTag->delete();
             }
-
-            mysql_query("INSERT INTO `user_question_tag` (`user_id`, `category_id`, `course_id`, `course_code`, `education`, `school`, `year`,`question`) VALUES (".$userId.", '1', ".$_dash_course_id.", '".$_dash_code_id."', ".$_dash_education.", '".$_school."', '".$_dash_year."','".$_POST['question']."')", $connection) or die("Error In Tag Insert--->".mysql_error());
+            
+            $userQuestionTag = new UserQuestionTag;
+            $userQuestionTag->setUserId($userId);
+            $userQuestionTag->setCategoryId(1);
+            $userQuestionTag->setCourseId($_dash_course_id);
+            $userQuestionTag->setCourseCode($_dash_code_id);
+            $userQuestionTag->setEducation($_dash_education);
+            $userQuestionTag->setSchool($_school);
+            $userQuestionTag->setYear($_dash_year);
+            $userQuestionTag->setQuestion($_POST['question']);
+            $userQuestionTag->save();
         }
 
         /**
@@ -214,17 +246,24 @@ class listAction extends sfAction
             }
 
             $j = 0;
-            $_queryFetch = mysql_query("select * from user_question_tag where user_id = ".$userId." order by id desc", $connection) or die("Error-->1".mysql_error());
+            
+            $c = new Criteria;
+            $c->add(UserQuestionTagPeer::USER_ID, $userId);
+            $c->addDescendingOrderByColumn(UserQuestionTagPeer::ID);
+            $userQuestionTag = UserQuestionTagPeer::doSelectOne($c);
+                    
+            $course_code = '';
+            $year = '';
+            $course_id = '1';
+            $school = '';
+            
+            if ($userQuestionTag) {
+                $course_id = $userQuestionTag->getCourseId();
+                $course_code = $userQuestionTag->getCourseCode();
+                $year = $userQuestionTag->getYear();
+                $school = $userQuestionTag->getSchool();
 
-            $course_code = ''; 			$year = ''; $course_id = '1'; $school = '';
-            if (mysql_num_rows($_queryFetch) > 0) {
-                $_rowFetch = mysql_fetch_assoc($_queryFetch);
-                $course_id = $_rowFetch['course_id'];
-                $course_code = $_rowFetch['course_code'];
-                $year = $_rowFetch['year'];
-                $school =  $_rowFetch['school'];
-
-                if ($_rowFetch['education'] == 2) {
+                if ($userQuestionTag->getEducation() == 2) {
                     $school = "High School";
                 }
             }
