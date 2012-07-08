@@ -1,6 +1,4 @@
 <?php
-$connection = RaykuCommon::getDatabaseConnection();
-
   $raykuUser = $sf_user->getRaykuUser();
   $stats = $raykuUser->getStatisticsForDashboard();
 
@@ -23,54 +21,58 @@ $connection = RaykuCommon::getDatabaseConnection();
         <p class="question"><img src="<?php echo image_path('question-icon.png', false); ?>" alt="Question" style="z-index:5;position:relative" /><input type="text" placeholder="Describe question in one sentence" id="question" name="question"/></p>
         
         <!--recent questions-->
-            <?php $_queryTag = mysql_query("select * from user_question_tag where category_id = 1 and user_id=".$raykuUser->getId(), $connection) or die("Error-->1".mysql_error());
-		  if(mysql_num_rows($_queryTag)) { ?>
+            <?php
+                $c = new Criteria;
+                $c->add(UserQuestionTagPeer::CATEGORY_ID, 1);
+                $c->add(UserQuestionTagPeer::USER_ID, $raykuUser->getId());
+                $userQuestionTags = UserQuestionTagPeer::doSelect($c);
+                if(count($userQuestionTags) > 0) { ?>
              <div id="dumpquestionrecent">
           <div id="recent-questions">
 			  <h3>Recent Question Filters (<a href="#">?</a>):</h3>
 			<input type="hidden" name="dummycount" id="dummycount" value="1" />
             <ul id="tags" >
-              <?php while($_rowTag = mysql_fetch_assoc($_queryTag)) { ?>
+              <?php foreach($userQuestionTags as $userQuestionTag) { ?>
               <li><img src="<?php echo image_path('tag.jpg', false); ?>" alt="tag" class="tag" /> 
-                <!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $_rowTag['id'];?>" class="waste" > --> 
-                <small style="a:hover{text-decoration:none;};cursor:pointer;" onclick="return clicktagclick(this.id);" id="clicktag_<?php echo $_rowTag['id'];?>" class="clicktag waste" >
+                <!--<a href="#" style="a:hover{text-decoration:none;}" id="<?php echo $userQuestionTag->getId();?>" class="waste" > --> 
+                <small style="a:hover{text-decoration:none;};cursor:pointer;" onclick="return clicktagclick(this.id);" id="clicktag_<?php echo $userQuestionTag->getId();?>" class="clicktag waste" >
 				
                 <?php
-                    $course = CoursesPeer::retrieveByPK($_rowTag['course_id']);
+                    $course = CoursesPeer::retrieveByPK($userQuestionTag->getCourseId());
 	        ?>
-                <span id="course_category_<?php echo $_rowTag['id'];?>" class="<?php echo $course->getId(); ?>" > <?php echo $course->getCourseName();?></span>
+                <span id="course_category_<?php echo $userQuestionTag->getId();?>" class="<?php echo $course->getId(); ?>" > <?php echo $course->getCourseName();?></span>
                 <?php 
-			if ($_rowTag['year'] != 'Choose year' ) {
-		if(!empty($_rowTag['year']) && ($_rowTag['year'] > 4) ):  ?>
-                <span id="grade_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowTag['year']; ?>" ><?php echo $_rowTag['year']; ?></span>
-                <?php elseif(!empty($_rowTag['year']) && ($_rowTag['year'] <= 4) ) :  ?>
-                <span id="year_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowTag['year']; ?>"><?php echo $_rowTag['year']; ?></span>
+			if ($userQuestionTag->getYear() != 'Choose year' ) {
+		if($userQuestionTag->getYear() != '' && ($userQuestionTag->getYear() > 4) ):  ?>
+                <span id="grade_<?php echo $userQuestionTag->getId();?>" class="<?php echo $userQuestionTag->getYear(); ?>" ><?php echo $userQuestionTag->getYear(); ?></span>
+                <?php elseif($userQuestionTag->getYear() != '' && ($userQuestionTag->getYear() <= 4) ) :  ?>
+                <span id="year_<?php echo $userQuestionTag->getId();?>" class="<?php echo $userQuestionTag->getYear(); ?>"><?php echo $userQuestionTag->getYear(); ?></span>
                 <?php endif; }?>
                 <?php 
-		if ($_rowTag['education'] == 1)
+		if ($userQuestionTag->getEducation() == 1)
 		{
 			?>
-                <i style="display:none;" name='hidden_education_<?php echo $_rowTag['id']; ?>' id='hidden_education_<?php echo $_rowTag['id']; ?>'>1</i>
+                <i style="display:none;" name='hidden_education_<?php echo $userQuestionTag->getId(); ?>' id='hidden_education_<?php echo $userQuestionTag->getId(); ?>'>1</i>
                 <?php
 		}
-		else if($_rowTag['education'] == 2)
+		else if($userQuestionTag->getEducation() == 2)
 		{
 		?>
-                <i style="display:none;" name='hidden_education_<?php echo $_rowTag['id']; ?>' id='hidden_education_<?php echo $_rowTag['id']; ?>'>2</i>
+                <i style="display:none;" name='hidden_education_<?php echo $userQuestionTag->getId(); ?>' id='hidden_education_<?php echo $userQuestionTag->getId(); ?>'>2</i>
                 <?php
 		}
 		?>
-                <?php if(!empty($_rowTag['school']) && ($_rowTag['education'] == 1)): ?>
-                <span id="university_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowTag['education']; ?>"> <?php echo $_rowTag['school']; ?></span>
-                <?php elseif(!empty($_rowTag['school']) && ($_rowTag['education'] == 2)) : ?>
-                <span id="school_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowTag['education']; ?>" > <?php echo $_rowTag['school']; ?></span>
+                <?php if($userQuestionTag->getSchool() != '' && ($userQuestionTag->getEducation() == 1)): ?>
+                <span id="university_<?php echo $userQuestionTag->getId();?>" class="<?php echo $userQuestionTag->getEducation(); ?>"> <?php echo $userQuestionTag->getSchool(); ?></span>
+                <?php elseif($userQuestionTag->getSchool() != '' && ($userQuestionTag->getEducation() == 2)) : ?>
+                <span id="school_<?php echo $userQuestionTag->getId();?>" class="<?php echo $userQuestionTag->getEducation(); ?>" > <?php echo $userQuestionTag->getSchool(); ?></span>
                 <?php endif;?>
                 <?php 
-			if ($_rowTag['course_code'] != 'Course Code' ) {
-		if(!empty($_rowTag['course_code'])): ?>
-                <span id="course_code_<?php echo $_rowTag['id'];?>" class="<?php echo $_rowTag['course_code']; ?>" > <?php echo $_rowTag['course_code']; ?></span>
+			if ($userQuestionTag->getCourseCode() != 'Course Code' ) {
+		if($userQuestionTag->getCourseCode() != ''): ?>
+                <span id="course_code_<?php echo $userQuestionTag->getId();?>" class="<?php echo $userQuestionTag->getCourseCode(); ?>" > <?php echo $userQuestionTag->getCourseCode(); ?></span>
                 <?php endif; } ?>
-                </small> <span style="cursor:pointer;" id="delete_<?php echo $_rowTag['id'];?>" class="cross" onclick="return crossclick(this.id);">cross</span> </li>
+                </small> <span style="cursor:pointer;" id="delete_<?php echo $userQuestionTag->getId();?>" class="cross" onclick="return crossclick(this.id);">cross</span> </li>
               <?php } ?>
             </ul>
 			 </div>
