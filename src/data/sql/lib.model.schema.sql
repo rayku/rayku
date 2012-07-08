@@ -887,6 +887,39 @@ CREATE TABLE `user_tutor`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- user_question_tag
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_question_tag`;
+
+
+CREATE TABLE `user_question_tag`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER(11),
+	`category_id` INTEGER(11),
+	`course_id` INTEGER(11),
+	`course_code` VARCHAR(255),
+	`education` INTEGER(10),
+	`school` VARCHAR(255),
+	`year` VARCHAR(255),
+	`question` VARCHAR(255)  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `user_question_tag_FI_1` (`user_id`),
+	CONSTRAINT `user_question_tag_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `user` (`id`),
+	INDEX `user_question_tag_FI_2` (`category_id`),
+	CONSTRAINT `user_question_tag_FK_2`
+		FOREIGN KEY (`category_id`)
+		REFERENCES `category` (`id`),
+	INDEX `user_question_tag_FI_3` (`course_id`),
+	CONSTRAINT `user_question_tag_FK_3`
+		FOREIGN KEY (`course_id`)
+		REFERENCES `courses` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- video
 #-----------------------------------------------------------------------------
 

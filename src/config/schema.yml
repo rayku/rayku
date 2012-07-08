@@ -368,6 +368,16 @@ propel:
     fb_uid: { type: VARCHAR, size: 100, required: true }
   user_tutor:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
+  user_question_tag:
+    id: { type: INTEGER, size: '11', required: true, primaryKey: true, autoIncrement: true }
+    user_id: { type: INTEGER, size: '11', required: false, foreignTable: user, foreignReference: id}
+    category_id: { type: INTEGER, size: '11', required: false, foreignTable: category, foreignReference: id}
+    course_id: { type: INTEGER, size: '11', required: false, foreignTable: courses, foreignReference: id}
+    course_code: { type: VARCHAR, size: '255', required: false }
+    education: { type: INTEGER, size: '10', required: false }
+    school: { type: VARCHAR, size: '255', required: false }
+    year: { type: VARCHAR, size: '255', required: false }
+    question: { type: VARCHAR, size: '255', required: true }
   video:
     _attributes: { phpName: Video }
     id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }

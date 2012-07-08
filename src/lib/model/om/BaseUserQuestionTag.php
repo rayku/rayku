@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Base class that represents a row from the 'courses' table.
+ * Base class that represents a row from the 'user_question_tag' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseCourses extends BaseObject  implements Persistent {
+abstract class BaseUserQuestionTag extends BaseObject  implements Persistent {
 
 
-  const PEER = 'CoursesPeer';
+  const PEER = 'UserQuestionTagPeer';
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        CoursesPeer
+	 * @var        UserQuestionTagPeer
 	 */
 	protected static $peer;
 
@@ -27,22 +27,57 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
+	 * The value for the user_id field.
+	 * @var        int
+	 */
+	protected $user_id;
+
+	/**
 	 * The value for the category_id field.
 	 * @var        int
 	 */
 	protected $category_id;
 
 	/**
-	 * The value for the course_name field.
-	 * @var        string
+	 * The value for the course_id field.
+	 * @var        int
 	 */
-	protected $course_name;
+	protected $course_id;
 
 	/**
-	 * The value for the description field.
+	 * The value for the course_code field.
 	 * @var        string
 	 */
-	protected $description;
+	protected $course_code;
+
+	/**
+	 * The value for the education field.
+	 * @var        int
+	 */
+	protected $education;
+
+	/**
+	 * The value for the school field.
+	 * @var        string
+	 */
+	protected $school;
+
+	/**
+	 * The value for the year field.
+	 * @var        string
+	 */
+	protected $year;
+
+	/**
+	 * The value for the question field.
+	 * @var        string
+	 */
+	protected $question;
+
+	/**
+	 * @var        User
+	 */
+	protected $aUser;
 
 	/**
 	 * @var        Category
@@ -50,14 +85,9 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	protected $aCategory;
 
 	/**
-	 * @var        array UserQuestionTag[] Collection to store aggregation of UserQuestionTag objects.
+	 * @var        Courses
 	 */
-	protected $collUserQuestionTags;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collUserQuestionTags.
-	 */
-	private $lastUserQuestionTagCriteria = null;
+	protected $aCourses;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -74,7 +104,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Initializes internal state of BaseCourses object.
+	 * Initializes internal state of BaseUserQuestionTag object.
 	 * @see        applyDefaults()
 	 */
 	public function __construct()
@@ -104,6 +134,16 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [user_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getUserId()
+	{
+		return $this->user_id;
+	}
+
+	/**
 	 * Get the [category_id] column value.
 	 * 
 	 * @return     int
@@ -114,30 +154,70 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [course_name] column value.
+	 * Get the [course_id] column value.
 	 * 
-	 * @return     string
+	 * @return     int
 	 */
-	public function getCourseName()
+	public function getCourseId()
 	{
-		return $this->course_name;
+		return $this->course_id;
 	}
 
 	/**
-	 * Get the [description] column value.
+	 * Get the [course_code] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDescription()
+	public function getCourseCode()
 	{
-		return $this->description;
+		return $this->course_code;
+	}
+
+	/**
+	 * Get the [education] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEducation()
+	{
+		return $this->education;
+	}
+
+	/**
+	 * Get the [school] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSchool()
+	{
+		return $this->school;
+	}
+
+	/**
+	 * Get the [year] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getYear()
+	{
+		return $this->year;
+	}
+
+	/**
+	 * Get the [question] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getQuestion()
+	{
+		return $this->question;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Courses The current object (for fluent API support)
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -147,17 +227,41 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = CoursesPeer::ID;
+			$this->modifiedColumns[] = UserQuestionTagPeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
+	 * Set the value of [user_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 */
+	public function setUserId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->user_id !== $v) {
+			$this->user_id = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::USER_ID;
+		}
+
+		if ($this->aUser !== null && $this->aUser->getId() !== $v) {
+			$this->aUser = null;
+		}
+
+		return $this;
+	} // setUserId()
+
+	/**
 	 * Set the value of [category_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Courses The current object (for fluent API support)
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 */
 	public function setCategoryId($v)
 	{
@@ -167,7 +271,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 
 		if ($this->category_id !== $v) {
 			$this->category_id = $v;
-			$this->modifiedColumns[] = CoursesPeer::CATEGORY_ID;
+			$this->modifiedColumns[] = UserQuestionTagPeer::CATEGORY_ID;
 		}
 
 		if ($this->aCategory !== null && $this->aCategory->getId() !== $v) {
@@ -178,44 +282,128 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	} // setCategoryId()
 
 	/**
-	 * Set the value of [course_name] column.
+	 * Set the value of [course_id] column.
 	 * 
-	 * @param      string $v new value
-	 * @return     Courses The current object (for fluent API support)
+	 * @param      int $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 */
-	public function setCourseName($v)
+	public function setCourseId($v)
 	{
 		if ($v !== null) {
-			$v = (string) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->course_name !== $v) {
-			$this->course_name = $v;
-			$this->modifiedColumns[] = CoursesPeer::COURSE_NAME;
+		if ($this->course_id !== $v) {
+			$this->course_id = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::COURSE_ID;
+		}
+
+		if ($this->aCourses !== null && $this->aCourses->getId() !== $v) {
+			$this->aCourses = null;
 		}
 
 		return $this;
-	} // setCourseName()
+	} // setCourseId()
 
 	/**
-	 * Set the value of [description] column.
+	 * Set the value of [course_code] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Courses The current object (for fluent API support)
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 */
-	public function setDescription($v)
+	public function setCourseCode($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->description !== $v) {
-			$this->description = $v;
-			$this->modifiedColumns[] = CoursesPeer::DESCRIPTION;
+		if ($this->course_code !== $v) {
+			$this->course_code = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::COURSE_CODE;
 		}
 
 		return $this;
-	} // setDescription()
+	} // setCourseCode()
+
+	/**
+	 * Set the value of [education] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 */
+	public function setEducation($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->education !== $v) {
+			$this->education = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::EDUCATION;
+		}
+
+		return $this;
+	} // setEducation()
+
+	/**
+	 * Set the value of [school] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 */
+	public function setSchool($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->school !== $v) {
+			$this->school = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::SCHOOL;
+		}
+
+		return $this;
+	} // setSchool()
+
+	/**
+	 * Set the value of [year] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 */
+	public function setYear($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->year !== $v) {
+			$this->year = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::YEAR;
+		}
+
+		return $this;
+	} // setYear()
+
+	/**
+	 * Set the value of [question] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 */
+	public function setQuestion($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->question !== $v) {
+			$this->question = $v;
+			$this->modifiedColumns[] = UserQuestionTagPeer::QUESTION;
+		}
+
+		return $this;
+	} // setQuestion()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -255,9 +443,14 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->category_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->course_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->category_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->course_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->course_code = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->education = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->school = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->year = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->question = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -267,10 +460,10 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = CoursesPeer::NUM_COLUMNS - CoursesPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = UserQuestionTagPeer::NUM_COLUMNS - UserQuestionTagPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Courses object", $e);
+			throw new PropelException("Error populating UserQuestionTag object", $e);
 		}
 	}
 
@@ -290,8 +483,14 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aUser !== null && $this->user_id !== $this->aUser->getId()) {
+			$this->aUser = null;
+		}
 		if ($this->aCategory !== null && $this->category_id !== $this->aCategory->getId()) {
 			$this->aCategory = null;
+		}
+		if ($this->aCourses !== null && $this->course_id !== $this->aCourses->getId()) {
+			$this->aCourses = null;
 		}
 	} // ensureConsistency
 
@@ -316,13 +515,13 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CoursesPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(UserQuestionTagPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = CoursesPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = UserQuestionTagPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -332,10 +531,9 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aUser = null;
 			$this->aCategory = null;
-			$this->collUserQuestionTags = null;
-			$this->lastUserQuestionTagCriteria = null;
-
+			$this->aCourses = null;
 		} // if (deep)
 	}
 
@@ -355,12 +553,12 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CoursesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(UserQuestionTagPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
-			CoursesPeer::doDelete($this, $con);
+			UserQuestionTagPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -389,14 +587,14 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CoursesPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(UserQuestionTagPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$affectedRows = $this->doSave($con);
 			$con->commit();
-			CoursesPeer::addInstanceToPool($this);
+			UserQuestionTagPeer::addInstanceToPool($this);
 			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollBack();
@@ -426,6 +624,13 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aUser !== null) {
+				if ($this->aUser->isModified() || $this->aUser->isNew()) {
+					$affectedRows += $this->aUser->save($con);
+				}
+				$this->setUser($this->aUser);
+			}
+
 			if ($this->aCategory !== null) {
 				if ($this->aCategory->isModified() || $this->aCategory->isNew()) {
 					$affectedRows += $this->aCategory->save($con);
@@ -433,14 +638,21 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 				$this->setCategory($this->aCategory);
 			}
 
+			if ($this->aCourses !== null) {
+				if ($this->aCourses->isModified() || $this->aCourses->isNew()) {
+					$affectedRows += $this->aCourses->save($con);
+				}
+				$this->setCourses($this->aCourses);
+			}
+
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = CoursesPeer::ID;
+				$this->modifiedColumns[] = UserQuestionTagPeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = CoursesPeer::doInsert($this, $con);
+					$pk = UserQuestionTagPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -449,18 +661,10 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += CoursesPeer::doUpdate($this, $con);
+					$affectedRows += UserQuestionTagPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
-			}
-
-			if ($this->collUserQuestionTags !== null) {
-				foreach ($this->collUserQuestionTags as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
 			}
 
 			$this->alreadyInSave = false;
@@ -534,25 +738,29 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aUser !== null) {
+				if (!$this->aUser->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aUser->getValidationFailures());
+				}
+			}
+
 			if ($this->aCategory !== null) {
 				if (!$this->aCategory->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aCategory->getValidationFailures());
 				}
 			}
 
-
-			if (($retval = CoursesPeer::doValidate($this, $columns)) !== true) {
-				$failureMap = array_merge($failureMap, $retval);
+			if ($this->aCourses !== null) {
+				if (!$this->aCourses->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aCourses->getValidationFailures());
+				}
 			}
 
 
-				if ($this->collUserQuestionTags !== null) {
-					foreach ($this->collUserQuestionTags as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
+			if (($retval = UserQuestionTagPeer::doValidate($this, $columns)) !== true) {
+				$failureMap = array_merge($failureMap, $retval);
+			}
+
 
 
 			$this->alreadyInValidation = false;
@@ -572,7 +780,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CoursesPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = UserQuestionTagPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -591,13 +799,28 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getCategoryId();
+				return $this->getUserId();
 				break;
 			case 2:
-				return $this->getCourseName();
+				return $this->getCategoryId();
 				break;
 			case 3:
-				return $this->getDescription();
+				return $this->getCourseId();
+				break;
+			case 4:
+				return $this->getCourseCode();
+				break;
+			case 5:
+				return $this->getEducation();
+				break;
+			case 6:
+				return $this->getSchool();
+				break;
+			case 7:
+				return $this->getYear();
+				break;
+			case 8:
+				return $this->getQuestion();
 				break;
 			default:
 				return null;
@@ -618,12 +841,17 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = CoursesPeer::getFieldNames($keyType);
+		$keys = UserQuestionTagPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getCategoryId(),
-			$keys[2] => $this->getCourseName(),
-			$keys[3] => $this->getDescription(),
+			$keys[1] => $this->getUserId(),
+			$keys[2] => $this->getCategoryId(),
+			$keys[3] => $this->getCourseId(),
+			$keys[4] => $this->getCourseCode(),
+			$keys[5] => $this->getEducation(),
+			$keys[6] => $this->getSchool(),
+			$keys[7] => $this->getYear(),
+			$keys[8] => $this->getQuestion(),
 		);
 		return $result;
 	}
@@ -640,7 +868,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CoursesPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = UserQuestionTagPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -659,13 +887,28 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setCategoryId($value);
+				$this->setUserId($value);
 				break;
 			case 2:
-				$this->setCourseName($value);
+				$this->setCategoryId($value);
 				break;
 			case 3:
-				$this->setDescription($value);
+				$this->setCourseId($value);
+				break;
+			case 4:
+				$this->setCourseCode($value);
+				break;
+			case 5:
+				$this->setEducation($value);
+				break;
+			case 6:
+				$this->setSchool($value);
+				break;
+			case 7:
+				$this->setYear($value);
+				break;
+			case 8:
+				$this->setQuestion($value);
 				break;
 		} // switch()
 	}
@@ -689,12 +932,17 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = CoursesPeer::getFieldNames($keyType);
+		$keys = UserQuestionTagPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCategoryId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setCourseName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
+		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setCategoryId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCourseId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setCourseCode($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEducation($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSchool($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setYear($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setQuestion($arr[$keys[8]]);
 	}
 
 	/**
@@ -704,12 +952,17 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
+		$criteria = new Criteria(UserQuestionTagPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(CoursesPeer::ID)) $criteria->add(CoursesPeer::ID, $this->id);
-		if ($this->isColumnModified(CoursesPeer::CATEGORY_ID)) $criteria->add(CoursesPeer::CATEGORY_ID, $this->category_id);
-		if ($this->isColumnModified(CoursesPeer::COURSE_NAME)) $criteria->add(CoursesPeer::COURSE_NAME, $this->course_name);
-		if ($this->isColumnModified(CoursesPeer::DESCRIPTION)) $criteria->add(CoursesPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(UserQuestionTagPeer::ID)) $criteria->add(UserQuestionTagPeer::ID, $this->id);
+		if ($this->isColumnModified(UserQuestionTagPeer::USER_ID)) $criteria->add(UserQuestionTagPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(UserQuestionTagPeer::CATEGORY_ID)) $criteria->add(UserQuestionTagPeer::CATEGORY_ID, $this->category_id);
+		if ($this->isColumnModified(UserQuestionTagPeer::COURSE_ID)) $criteria->add(UserQuestionTagPeer::COURSE_ID, $this->course_id);
+		if ($this->isColumnModified(UserQuestionTagPeer::COURSE_CODE)) $criteria->add(UserQuestionTagPeer::COURSE_CODE, $this->course_code);
+		if ($this->isColumnModified(UserQuestionTagPeer::EDUCATION)) $criteria->add(UserQuestionTagPeer::EDUCATION, $this->education);
+		if ($this->isColumnModified(UserQuestionTagPeer::SCHOOL)) $criteria->add(UserQuestionTagPeer::SCHOOL, $this->school);
+		if ($this->isColumnModified(UserQuestionTagPeer::YEAR)) $criteria->add(UserQuestionTagPeer::YEAR, $this->year);
+		if ($this->isColumnModified(UserQuestionTagPeer::QUESTION)) $criteria->add(UserQuestionTagPeer::QUESTION, $this->question);
 
 		return $criteria;
 	}
@@ -724,9 +977,9 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
+		$criteria = new Criteria(UserQuestionTagPeer::DATABASE_NAME);
 
-		$criteria->add(CoursesPeer::ID, $this->id);
+		$criteria->add(UserQuestionTagPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -757,32 +1010,28 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Courses (or compatible) type.
+	 * @param      object $copyObj An object of UserQuestionTag (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
+		$copyObj->setUserId($this->user_id);
+
 		$copyObj->setCategoryId($this->category_id);
 
-		$copyObj->setCourseName($this->course_name);
+		$copyObj->setCourseId($this->course_id);
 
-		$copyObj->setDescription($this->description);
+		$copyObj->setCourseCode($this->course_code);
 
+		$copyObj->setEducation($this->education);
 
-		if ($deepCopy) {
-			// important: temporarily setNew(false) because this affects the behavior of
-			// the getter/setter methods for fkey referrer objects.
-			$copyObj->setNew(false);
+		$copyObj->setSchool($this->school);
 
-			foreach ($this->getUserQuestionTags() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addUserQuestionTag($relObj->copy($deepCopy));
-				}
-			}
+		$copyObj->setYear($this->year);
 
-		} // if ($deepCopy)
+		$copyObj->setQuestion($this->question);
 
 
 		$copyObj->setNew(true);
@@ -800,7 +1049,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Courses Clone of current object.
+	 * @return     UserQuestionTag Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -819,21 +1068,72 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     CoursesPeer
+	 * @return     UserQuestionTagPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new CoursesPeer();
+			self::$peer = new UserQuestionTagPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a User object.
+	 *
+	 * @param      User $v
+	 * @return     UserQuestionTag The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setUser(User $v = null)
+	{
+		if ($v === null) {
+			$this->setUserId(NULL);
+		} else {
+			$this->setUserId($v->getId());
+		}
+
+		$this->aUser = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the User object, it will not be re-added.
+		if ($v !== null) {
+			$v->addUserQuestionTag($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated User object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     User The associated User object.
+	 * @throws     PropelException
+	 */
+	public function getUser(PropelPDO $con = null)
+	{
+		if ($this->aUser === null && ($this->user_id !== null)) {
+			$c = new Criteria(UserPeer::DATABASE_NAME);
+			$c->add(UserPeer::ID, $this->user_id);
+			$this->aUser = UserPeer::doSelectOne($c, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aUser->addUserQuestionTags($this);
+			 */
+		}
+		return $this->aUser;
 	}
 
 	/**
 	 * Declares an association between this object and a Category object.
 	 *
 	 * @param      Category $v
-	 * @return     Courses The current object (for fluent API support)
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setCategory(Category $v = null)
@@ -849,7 +1149,7 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the Category object, it will not be re-added.
 		if ($v !== null) {
-			$v->addCourses($this);
+			$v->addUserQuestionTag($this);
 		}
 
 		return $this;
@@ -874,258 +1174,61 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aCategory->addCoursess($this);
+			   $this->aCategory->addUserQuestionTags($this);
 			 */
 		}
 		return $this->aCategory;
 	}
 
 	/**
-	 * Clears out the collUserQuestionTags collection (array).
+	 * Declares an association between this object and a Courses object.
 	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addUserQuestionTags()
-	 */
-	public function clearUserQuestionTags()
-	{
-		$this->collUserQuestionTags = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collUserQuestionTags collection (array).
-	 *
-	 * By default this just sets the collUserQuestionTags collection to an empty array (like clearcollUserQuestionTags());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initUserQuestionTags()
-	{
-		$this->collUserQuestionTags = array();
-	}
-
-	/**
-	 * Gets an array of UserQuestionTag objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Courses has previously been saved, it will retrieve
-	 * related UserQuestionTags from storage. If this Courses is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array UserQuestionTag[]
+	 * @param      Courses $v
+	 * @return     UserQuestionTag The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function getUserQuestionTags($criteria = null, PropelPDO $con = null)
+	public function setCourses(Courses $v = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserQuestionTags === null) {
-			if ($this->isNew()) {
-			   $this->collUserQuestionTags = array();
-			} else {
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				UserQuestionTagPeer::addSelectColumns($criteria);
-				$this->collUserQuestionTags = UserQuestionTagPeer::doSelect($criteria, $con);
-			}
+		if ($v === null) {
+			$this->setCourseId(NULL);
 		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				UserQuestionTagPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUserQuestionTagCriteria) || !$this->lastUserQuestionTagCriteria->equals($criteria)) {
-					$this->collUserQuestionTags = UserQuestionTagPeer::doSelect($criteria, $con);
-				}
-			}
+			$this->setCourseId($v->getId());
 		}
-		$this->lastUserQuestionTagCriteria = $criteria;
-		return $this->collUserQuestionTags;
+
+		$this->aCourses = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Courses object, it will not be re-added.
+		if ($v !== null) {
+			$v->addUserQuestionTag($this);
+		}
+
+		return $this;
 	}
 
+
 	/**
-	 * Returns the number of related UserQuestionTag objects.
+	 * Get the associated Courses object
 	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related UserQuestionTag objects.
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Courses The associated Courses object.
 	 * @throws     PropelException
 	 */
-	public function countUserQuestionTags(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function getCourses(PropelPDO $con = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
+		if ($this->aCourses === null && ($this->course_id !== null)) {
+			$c = new Criteria(CoursesPeer::DATABASE_NAME);
+			$c->add(CoursesPeer::ID, $this->course_id);
+			$this->aCourses = CoursesPeer::doSelectOne($c, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aCourses->addUserQuestionTags($this);
+			 */
 		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collUserQuestionTags === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				$count = UserQuestionTagPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				if (!isset($this->lastUserQuestionTagCriteria) || !$this->lastUserQuestionTagCriteria->equals($criteria)) {
-					$count = UserQuestionTagPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collUserQuestionTags);
-				}
-			} else {
-				$count = count($this->collUserQuestionTags);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a UserQuestionTag object to this object
-	 * through the UserQuestionTag foreign key attribute.
-	 *
-	 * @param      UserQuestionTag $l UserQuestionTag
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addUserQuestionTag(UserQuestionTag $l)
-	{
-		if ($this->collUserQuestionTags === null) {
-			$this->initUserQuestionTags();
-		}
-		if (!in_array($l, $this->collUserQuestionTags, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collUserQuestionTags, $l);
-			$l->setCourses($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Courses is new, it will return
-	 * an empty collection; or if this Courses has previously
-	 * been saved, it will retrieve related UserQuestionTags from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Courses.
-	 */
-	public function getUserQuestionTagsJoinUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserQuestionTags === null) {
-			if ($this->isNew()) {
-				$this->collUserQuestionTags = array();
-			} else {
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				$this->collUserQuestionTags = UserQuestionTagPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-			if (!isset($this->lastUserQuestionTagCriteria) || !$this->lastUserQuestionTagCriteria->equals($criteria)) {
-				$this->collUserQuestionTags = UserQuestionTagPeer::doSelectJoinUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastUserQuestionTagCriteria = $criteria;
-
-		return $this->collUserQuestionTags;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Courses is new, it will return
-	 * an empty collection; or if this Courses has previously
-	 * been saved, it will retrieve related UserQuestionTags from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Courses.
-	 */
-	public function getUserQuestionTagsJoinCategory($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(CoursesPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserQuestionTags === null) {
-			if ($this->isNew()) {
-				$this->collUserQuestionTags = array();
-			} else {
-
-				$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-				$this->collUserQuestionTags = UserQuestionTagPeer::doSelectJoinCategory($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(UserQuestionTagPeer::COURSE_ID, $this->id);
-
-			if (!isset($this->lastUserQuestionTagCriteria) || !$this->lastUserQuestionTagCriteria->equals($criteria)) {
-				$this->collUserQuestionTags = UserQuestionTagPeer::doSelectJoinCategory($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastUserQuestionTagCriteria = $criteria;
-
-		return $this->collUserQuestionTags;
+		return $this->aCourses;
 	}
 
 	/**
@@ -1140,15 +1243,11 @@ abstract class BaseCourses extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collUserQuestionTags) {
-				foreach ((array) $this->collUserQuestionTags as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
-		$this->collUserQuestionTags = null;
+			$this->aUser = null;
 			$this->aCategory = null;
+			$this->aCourses = null;
 	}
 
-} // BaseCourses
+} // BaseUserQuestionTag
