@@ -361,6 +361,16 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $singleUserFb;
 
 	/**
+	 * @var        array UserRate[] Collection to store aggregation of UserRate objects.
+	 */
+	protected $collUserRates;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collUserRates.
+	 */
+	private $lastUserRateCriteria = null;
+
+	/**
 	 * @var        UserTutor one-to-one related UserTutor object
 	 */
 	protected $singleUserTutor;
@@ -1995,6 +2005,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 			$this->singleUserFb = null;
 
+			$this->collUserRates = null;
+			$this->lastUserRateCriteria = null;
+
 			$this->singleUserTutor = null;
 
 			$this->collUserQuestionTags = null;
@@ -2213,6 +2226,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collUserRates !== null) {
+				foreach ($this->collUserRates as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->singleUserTutor !== null) {
 				if (!$this->singleUserTutor->isDeleted()) {
 						$affectedRows += $this->singleUserTutor->save($con);
@@ -2411,6 +2432,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				if ($this->singleUserFb !== null) {
 					if (!$this->singleUserFb->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singleUserFb->getValidationFailures());
+					}
+				}
+
+				if ($this->collUserRates !== null) {
+					foreach ($this->collUserRates as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
 					}
 				}
 
@@ -3094,6 +3123,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$relObj = $this->getUserFb();
 			if ($relObj) {
 				$copyObj->setUserFb($relObj->copy($deepCopy));
+			}
+
+			foreach ($this->getUserRates() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addUserRate($relObj->copy($deepCopy));
+				}
 			}
 
 			$relObj = $this->getUserTutor();
@@ -4973,6 +5008,160 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collUserRates collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addUserRates()
+	 */
+	public function clearUserRates()
+	{
+		$this->collUserRates = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collUserRates collection (array).
+	 *
+	 * By default this just sets the collUserRates collection to an empty array (like clearcollUserRates());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initUserRates()
+	{
+		$this->collUserRates = array();
+	}
+
+	/**
+	 * Gets an array of UserRate objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this User has previously been saved, it will retrieve
+	 * related UserRates from storage. If this User is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array UserRate[]
+	 * @throws     PropelException
+	 */
+	public function getUserRates($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserRates === null) {
+			if ($this->isNew()) {
+			   $this->collUserRates = array();
+			} else {
+
+				$criteria->add(UserRatePeer::USERID, $this->id);
+
+				UserRatePeer::addSelectColumns($criteria);
+				$this->collUserRates = UserRatePeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(UserRatePeer::USERID, $this->id);
+
+				UserRatePeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserRateCriteria) || !$this->lastUserRateCriteria->equals($criteria)) {
+					$this->collUserRates = UserRatePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserRateCriteria = $criteria;
+		return $this->collUserRates;
+	}
+
+	/**
+	 * Returns the number of related UserRate objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related UserRate objects.
+	 * @throws     PropelException
+	 */
+	public function countUserRates(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collUserRates === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(UserRatePeer::USERID, $this->id);
+
+				$count = UserRatePeer::doCount($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(UserRatePeer::USERID, $this->id);
+
+				if (!isset($this->lastUserRateCriteria) || !$this->lastUserRateCriteria->equals($criteria)) {
+					$count = UserRatePeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collUserRates);
+				}
+			} else {
+				$count = count($this->collUserRates);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a UserRate object to this object
+	 * through the UserRate foreign key attribute.
+	 *
+	 * @param      UserRate $l UserRate
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addUserRate(UserRate $l)
+	{
+		if ($this->collUserRates === null) {
+			$this->initUserRates();
+		}
+		if (!in_array($l, $this->collUserRates, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collUserRates, $l);
+			$l->setUser($this);
+		}
+	}
+
+	/**
 	 * Gets a single UserTutor object, which is related to this object by a one-to-one relationship.
 	 *
 	 * @param      PropelPDO $con
@@ -5833,6 +6022,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			if ($this->singleUserFb) {
 				$this->singleUserFb->clearAllReferences($deep);
 			}
+			if ($this->collUserRates) {
+				foreach ((array) $this->collUserRates as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->singleUserTutor) {
 				$this->singleUserTutor->clearAllReferences($deep);
 			}
@@ -5870,6 +6064,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->collUserAwardss = null;
 		$this->singleUserGtalk = null;
 		$this->singleUserFb = null;
+		$this->collUserRates = null;
 		$this->singleUserTutor = null;
 		$this->collUserQuestionTags = null;
 		$this->collStudentQuestionsRelatedByStudentId = null;

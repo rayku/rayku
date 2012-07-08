@@ -366,6 +366,10 @@ propel:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
     fb_username: { type: VARCHAR, size: 255, required: true }
     fb_uid: { type: VARCHAR, size: 100, required: true }
+  user_rate:
+    id: { type: INTEGER, size: '10', required: true, primaryKey: true, autoIncrement: true }
+    userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id }
+    rate: { type: FLOAT, size: '11', scale: '2', required: true, default: "0.16" }
   user_tutor:
     userid: { type: INTEGER, size: '10', required: true, foreignTable: user, foreignReference: id, primaryKey: true }
   user_question_tag:
