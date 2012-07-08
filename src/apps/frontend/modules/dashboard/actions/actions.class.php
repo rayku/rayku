@@ -112,7 +112,7 @@ class dashboardActions extends sfActions
     public function executeTutorprofile()
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        if ($_POST['usrid']) {
+        if (@$_POST['usrid']) {
             $uid = $_POST['usrid'];
             $catid = $_POST['category'];
             $courseid = $_POST['catcheck'];
