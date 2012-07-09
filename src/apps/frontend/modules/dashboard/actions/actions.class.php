@@ -21,11 +21,8 @@ class dashboardActions extends sfActions
         unset($_SESSION['edu']);
         unset($_SESSION['course_id']);
         unset($_SESSION['name']);
-        unset($_SESSION["asker_school"]);
         unset($_SESSION['course_code']);
-        unset($_SESSION["asker_cc_id"]);
         unset($_SESSION['year']);
-        unset($_SESSION['asker_year']);
         unset($_SESSION['grade']);
         unset($_SESSION['question']);
 
@@ -62,7 +59,6 @@ class dashboardActions extends sfActions
         asort($rankUsers);
         arsort($rankUsers);
         $this->rankUsers = $rankUsers;
-        $this->getResponse()->setCookie("practice_name", $raykuUser->getUsername(),time()+3600, '/', sfConfig::get('app_cookies_domain'));
         $queryScore = mysql_query("select * from user_score where user_id =".$raykuUser->getId()." and score >= 125 and status = 0", $connection) or die(mysql_error());
         $this->changeUserType = null;
         if (mysql_num_rows($queryScore) > 0) {
@@ -116,7 +112,7 @@ class dashboardActions extends sfActions
     public function executeTutorprofile()
     {
         $connection = RaykuCommon::getDatabaseConnection();
-        if ($_POST['usrid']) {
+        if (@$_POST['usrid']) {
             $uid = $_POST['usrid'];
             $catid = $_POST['category'];
             $courseid = $_POST['catcheck'];
@@ -156,11 +152,7 @@ class dashboardActions extends sfActions
         $_userId = $raykuUser->getId();
         if ($raykuUser->isTutorStatusEnabled()) {
             $raykuUser->setTutorStatusDisabled();
-            $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-            if (!$_query) {
-                mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-            }
-
+            $raykuUser->setRate(0);
             $this->redirect('/dashboard');
         } else {
             if ($_POST['usrid']) {
@@ -194,11 +186,8 @@ class dashboardActions extends sfActions
                 }
 
                 $raykuUser->setTutorStatusEnabled();
-                $_query = mysql_query("update user_rate set rate = 0.00 where userid=".$_userId, $connection) or die(mysql_error());
-                if (!$_query) {
-                    mysql_query("insert into user_rate(userid,rate) values(".$_userId.", '0.00') ", $connection) or die(mysql_error());
-                }
-
+                $raykuUser->setRate(0);
+                
                 $this->redirect('/tutorshelp?tutor=activate');
             }
         }
@@ -311,8 +300,6 @@ class dashboardActions extends sfActions
 
     public function executeGtalkupdate($request)
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-
         /* @var $user User */
         $user = $this->getUser()->getRaykuUser();
         $userGtalk = $user->getUserGtalk();
@@ -328,9 +315,11 @@ class dashboardActions extends sfActions
             $email .= '@gmail.com';
         }
 
-        $test = BotServiceProvider::createFor('http://www.rayku.com:8892/add/'.$email)->getContent();
+        $CCS = new Rayku\CommunicationChannel\Service();
+        $gtalkCC = $CCS->getCC('gtalk');
+        $added = $gtalkCC->addFriend($email);
 
-        if ($test) {
+        if ($added) {
             $_SESSION['adduser'] = 1;
         } else {
             $_SESSION['adduser'] = 2;
@@ -352,12 +341,6 @@ class dashboardActions extends sfActions
 
     public function executeThank()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
-        $logedUserId = $this->getUser()->getRaykuUser()->getId();
-        $cookiename= $logedUserId."_question";
-        $limitcookiename = $logedUserId."_limit";
-
-       // if (!empty($_COOKIE["whiteboardChatId"]) && !empty($_POST['audio']) &&  !empty($_COOKIE["ratingExpertId"])) {
          if (!empty($_POST['audio'])){
 	    $wtf = new WhiteboardTutorFeedback;
             $wtf->setWhiteboardChatId($_COOKIE["whiteboardChatId"]);
@@ -376,7 +359,7 @@ class dashboardActions extends sfActions
                 $parts = explode('=', $cookie);
                 $name = trim($parts[0]);
 
-                if (($name != $cookiename) && ($name != $limitcookiename) && ($name != "WRUID") && ($name != "rayku_frontend") && ($name != "practice_name")  ) {
+                if (($name != "rayku_frontend")) {
                     $this->getResponse()->setCookie($name, "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 }
             }
@@ -385,15 +368,10 @@ class dashboardActions extends sfActions
 
     public function executeChargerate()
     {
-        $connection = RaykuCommon::getDatabaseConnection();
         $_Rate = !empty($_GET['rate']) ? $_GET['rate'] : '0.00';
-        $userId = $this->getUser()->getRaykuUser()->getId();
-        $query = mysql_query("select * from user_rate where userid=".$userId, $connection) or die(mysql_error());
-        if (mysql_num_rows($query) > 0) {
-            mysql_query("update user_rate set rate = ".$_Rate." where userid=".$userId, $connection) or die(mysql_error());
-        } else {
-            mysql_query("insert into user_rate(userid,rate) values(".$userId.", ".$_Rate.") ", $connection) or die(mysql_error());
-        }
+        $user = $this->getUser()->getRaykuUser();
+        $user->setRate($_Rate);
+        
         return sfView::HEADER_ONLY;
     }
 

@@ -100,13 +100,6 @@ function checkquestion() {
                 $email = $rowuserdetail['email'];
             }
 
-            $usercourse = mysql_query("select * from user_course where user_id = ".$row['user_id']."") or die("Error7".mysql_error());
-            $grade = '';
-            if(mysql_num_rows($usercourse) > 0) {
-                $rowCourse = mysql_fetch_assoc($usercourse);
-                $grade = $rowCourse['course_year'];
-            }
-
             $mail = explode("@", $email);
             $newMail = explode(".", $mail[1]);
             if($newMail[0] == "utoronto") {
@@ -120,9 +113,6 @@ function checkquestion() {
             } else {
                 $question = substr(trim($row['question']), 0, 100);
             }
-
-            $queryUser = mysql_query("select * from user_course where user_id=".$row['user_id']." and course_subject=".$row['category_id']) or die("Error8".mysql_error());
-            $rowUser = mysql_fetch_array($queryUser);
 
             $userTutor = mysql_query("select * from user where id = ".$row['checked_id']."") or die("Error9".mysql_error());
             if(mysql_num_rows($userTutor) > 0) {
@@ -148,7 +138,6 @@ function checkquestion() {
             $message .= $final_ques."%20%20%20";
             $message .= $newline;
 
-            $detailsFinal = array("0" => $row['checked_id'], "1" => $row['user_id'], "2" => $question, "3" => $school, "4" => $subject, "5" => $rowUser['course_year'], 6 => $row['id'], "7" => $name, "8" => "expert", "9" => $raykuCharge);
             $message .= "Connect:%20";
             $link = "http://www.rayku.com/login/answer?id=".$row['id'];
             $message .= urlencode($link);
@@ -207,7 +196,7 @@ function checkquestion() {
                     $fields = array(
                         'link'=>urlencode($link),
                         'body'=>urlencode($question),
-                        'grade'=>urlencode($grade." year student"),
+                        'grade'=>urlencode("student"),
                         'timeLeft'=> '1'
                     );
 

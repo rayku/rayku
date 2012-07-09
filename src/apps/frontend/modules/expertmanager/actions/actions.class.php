@@ -149,7 +149,7 @@ class expertmanagerActions extends sfActions
         } else {
             mysql_query("delete from sendmessage where id = ".$_REQUEST['details'], $connection) or die(mysql_error());
         }
-        echo "close";
+        return $this->renderText("close");
     }
 
     public function executeAuto()

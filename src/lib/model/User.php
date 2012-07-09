@@ -8,8 +8,9 @@
  */
 require_once 'om/BaseUser.php';
 
-class User extends BaseUser
+class User extends BaseUser implements \Rayku\User
 {
+    
 	/**
 	* Generates the confirmation code for this user
 	*/
@@ -539,11 +540,6 @@ class User extends BaseUser
 
   function getStatisticsForDashboard()
   {
-
-
-	$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-	$cookiename = $logedUserId."_question";
-
     $stats = array(
         'ryakuCount'      => $this->getAllRyaku(),
         'expertCount' => $this->getExpertScore()
@@ -584,5 +580,68 @@ class User extends BaseUser
           $userTutor->save();
       }
   }
+
+    public function getFacebookCCUsername()
+    {
+        $userFb = $this->getUserFb();
+        if ($userFb) {
+            return '-'.$userFb->getFbUid().'@chat.facebook.com';
+        }
+    }
+
+    public function getGtalkCCUsername()
+    {
+        $userGtalk = $this->getUserGtalk();
+        if ($userGtalk) {
+            return $userGtalk->getGtalkid();
+        }
+    }
+    
+    public function getDesktopCCUsername()
+    {
+        return $this->getEmail();
+    }
+    
+    public function isWBSessionActive()
+    {
+        $criteria = new Criteria();
+        $criteria->add(WhiteboardSessionPeer::USER_ID, $this->getId());
+        $criteria->addDescendingOrderByColumn(WhiteboardSessionPeer::LAST_ACTIVITY);
+        $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
+        return ($lastSession && $lastSession->stillActive());
+    }
+    
+    public function setRate($newRate)
+    {
+        $userRate = $this->getUserRateRecord();
+        
+        $userRate->setRate($newRate);
+        $userRate->save();
+    }
+    
+    private function getUserRateRecord()
+    {
+        $c = new Criteria;
+        $c->setLimit(1);
+        $userRate = $this->getUserRates($c);
+        if (!is_array($userRate) || count($userRate) < 1) {
+            $userRate = new UserRate;
+            $userRate->setUser($this);
+        } else {
+            $userRate = $userRate[0];
+        }
+        return $userRate;
+    }
+    
+    public function getRate()
+    {
+        $userRate = $this->getUserRateRecord();
+        return $userRate->getRate();
+    }
+    
+    public function getRateFormatted()
+    {
+        return number_format($this->getRate(), 2);
+    }
 
 }

@@ -45,20 +45,10 @@ class mapuserAction extends sfAction
                 $question = substr(trim($row['question']), 0, 200);
             }
 
-            $queryUser = mysql_query("select * from user_course where user_id = ".$row['user_id']." and course_subject = ".$row['category_id'], $connection) or die(mysql_error());
-            $rowUser = mysql_fetch_array($queryUser);
-
             $x = new Criteria();
             $x->add(UserPeer::ID, $row['checked_id']);
             $newloginId = UserPeer::doSelectOne($x);
-            $queryRPRate = mysql_query("select * from user_rate where userid = ".$userId." ", $connection) or die(mysql_error());
-
-            if (mysql_num_rows($queryRPRate)) {
-                $rowRPRate = mysql_fetch_assoc($queryRPRate);
-                $raykuCharge = $rowRPRate['rate'];
-            } else {
-                $raykuCharge = '0.16';
-            }
+            $raykuCharge = $currentUser->getRate();
 
             mysql_query("update user_expert set status = 0 where id = ".$row['id']." ", $connection) or die(mysql_error());
 

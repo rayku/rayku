@@ -871,6 +871,25 @@ CREATE TABLE `user_fb`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- user_rate
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_rate`;
+
+
+CREATE TABLE `user_rate`
+(
+	`id` INTEGER(10)  NOT NULL AUTO_INCREMENT,
+	`userid` INTEGER(10)  NOT NULL,
+	`rate` FLOAT(11,2) default 0.16 NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `user_rate_FI_1` (`userid`),
+	CONSTRAINT `user_rate_FK_1`
+		FOREIGN KEY (`userid`)
+		REFERENCES `user` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- user_tutor
 #-----------------------------------------------------------------------------
 

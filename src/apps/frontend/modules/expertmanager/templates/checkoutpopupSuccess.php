@@ -99,29 +99,11 @@ if($count>0)
 				$c=new Criteria();
 				$c->add(UserPeer::ID,$_COOKIE['expert_'.$i]);
 				$user = UserPeer::doSelectOne($c);
-						
-				$query = mysql_query("select * from user_course where user_id=".$user->getId()." AND course_subject=1") or die(mysql_error());
-
-				$allsub=" ";
-				while ($row = mysql_fetch_array($query, MYSQL_NUM)) 
-					 {
-						 if($allsub==" ")
-						 {
-							 $allsub= "<span>".$row[3]."</span>";
-						 }
-						 else
-						 {
-						 	$allsub=$allsub."<span>".$row[3]."</span>";
-						 }
-
-				
-                  				}
-			
 ?>
 			    
 			    <div class="tutor-info">
 				<p class="name"><?php echo $user->getName(); ?></p>
-				<p class="subjects"><?php echo $allsub; ?></p>
+				<p class="subjects"></p>
 				<input type="hidden"  value="<?php echo $user->getId();?>" id="checkbox[<?php echo $user->getId();?>]" name="checkbox[]">
 			    </div>
 			    

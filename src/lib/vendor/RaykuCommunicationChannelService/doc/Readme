@@ -1,0 +1,14 @@
+This is a standalone PHP library that can be used in any PHP project.
+It serves as a service layer at top of all Rayku Communication Channels.
+
+Currently we are supporting following CC's:
+- web
+- gtalk
+- facebook
+- native Rayku Windows/Mac client
+
+
+
+TODOS:
+* make sure we are compliant with PSR-0 and start using autoloader
+* write some unit tests :P

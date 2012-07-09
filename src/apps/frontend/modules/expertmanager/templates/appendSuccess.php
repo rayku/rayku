@@ -116,34 +116,6 @@ if ($cat != NULL) {
         $icount = $iq;
         $expertscount = 0;
 
-        function getTitlePre($role) {
-            $verb = '';
-            switch ($role) {
-            case 'Freshman':
-            case 'Sophomore':
-            case 'Junior':
-            case 'Senior':
-            case 'Masters Student':
-            case 'Phd Candidate':
-                $verb = 'studying';
-                break;
-
-            case 'Masters Degree Holder':
-            case 'Undergrad Degree Holder':
-            case 'Phd Degree Holder':
-                $verb = 'having studied';
-                break;
-
-            case 'Teaching Assistant':
-            case 'Professor':
-            case 'Middle School Teacher':
-            case 'High School Teacher':
-                $verb = 'teaching';
-                break;
-            }
-            return $verb;
-        }
-
         /* Automatic Tutor Select -End */
         foreach ($_finalUsers as $newOne) {
             $xy =  $newOne['userid'];
@@ -153,13 +125,8 @@ if ($cat != NULL) {
             $experts=UserPeer::doSelectOne($c);
 
             if ($sfcategory == 5) {
-                $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." ") or die(mysql_error());
-                $detail3=mysql_fetch_assoc($query3);
-                $allsub = "General"." Student (Year: ".$detail3['course_year'].")";
+                $allsub = "General Student";
             } else {
-                $query3 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
-                $detail3  =mysql_fetch_assoc($query3);
-
                 $titSQL = "SELECT `tutor_role`,`school`,`study` FROM `tutor_profile` WHERE `user_id` = ".$newOne['userid']."";
                 $titRes = mysql_query($titSQL);
                 $allsub		= "";
@@ -174,22 +141,13 @@ if ($cat != NULL) {
                         }
 
                         if ($tutData['study'] != '') {
-                            $allsub		.= " ".getTitlePre($tutData['tutor_role'])." ".$tutData['study'];
+                            $allsub		.= " ".RaykuCommon::getTitlePre($tutData['tutor_role'])." ".$tutData['study'];
                         }
                     }
                 }
 
                 if ($allsub=="") {
-                    $query4 = mysql_query("select * from user_course where user_id=".$newOne['userid']." AND course_subject=".$sfcategory) or die(mysql_error());
-                    $allsub=" ";
-                    while ($row = mysql_fetch_array($query4, MYSQL_NUM)) {
-                        if ($allsub==" ") {
-                            $allsub=$row[3];
-                        } else {
-                            $allsub=$allsub." | ".$row[3];
-                        }
-                    }
-                    $allsub = $allsub." Student (Year: ".$detail3['course_year'].")";
+                    $allsub = "Student";
                 }
             }
 
