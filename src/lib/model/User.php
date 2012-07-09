@@ -8,9 +8,8 @@
  */
 require_once 'om/BaseUser.php';
 
-class User extends BaseUser implements \Rayku\User
+class User extends BaseUser
 {
-    
 	/**
 	* Generates the confirmation code for this user
 	*/

@@ -300,6 +300,8 @@ class dashboardActions extends sfActions
 
     public function executeGtalkupdate($request)
     {
+        $connection = RaykuCommon::getDatabaseConnection();
+
         /* @var $user User */
         $user = $this->getUser()->getRaykuUser();
         $userGtalk = $user->getUserGtalk();
@@ -315,11 +317,9 @@ class dashboardActions extends sfActions
             $email .= '@gmail.com';
         }
 
-        $CCS = new Rayku\CommunicationChannel\Service();
-        $gtalkCC = $CCS->getCC('gtalk');
-        $added = $gtalkCC->addFriend($email);
+        $test = BotServiceProvider::createFor('http://www.rayku.com:8892/add/'.$email)->getContent();
 
-        if ($added) {
+        if ($test) {
             $_SESSION['adduser'] = 1;
         } else {
             $_SESSION['adduser'] = 2;

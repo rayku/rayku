@@ -314,17 +314,5 @@ class UserPeer extends BaseUserPeer
         $criteria->add(self::TYPE, array(1, 2, 3, 4, 5), Criteria::IN);
         $criteria->add(self::HIDDEN, false);
     }
-    
-    static public function getOnlineUsersCriteria()
-    {
-        $c = new Criteria;
-        $c->add(self::INVISIBLE, 0);
-        $c->add(
-            self::LAST_ACTIVITY_AT,
-            time() - sfConfig::get('app_profile_online_activity_timeout'),
-            Criteria::GREATER_THAN
-        );
-        return $c;
-    }
 
 }

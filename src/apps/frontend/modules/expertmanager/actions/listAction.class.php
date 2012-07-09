@@ -7,6 +7,7 @@ class listAction extends sfAction
     public function execute($request)
     {
         $connection = RaykuCommon::getDatabaseConnection();
+        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $this->userId = $currentUser->getId();
@@ -231,6 +232,7 @@ class listAction extends sfAction
             $this->redirect('expertmanager/connect');
         }
 
+        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         $c = new Criteria();
         $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
         if ($this->cat == 5) {
