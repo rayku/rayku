@@ -7,7 +7,7 @@ class appendAction extends sfAction
     public function execute($request)
     {
         $c = new Criteria;
-        $c->setLimit(5);
+        $c->setLimit(15);
         $this->users = UserPeer::doSelect($c);
         
         if (count($this->users) < 1) {

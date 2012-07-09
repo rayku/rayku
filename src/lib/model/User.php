@@ -638,5 +638,10 @@ class User extends BaseUser implements \Rayku\User
         $userRate = $this->getUserRateRecord();
         return $userRate->getRate();
     }
+    
+    public function getRateFormatted()
+    {
+        return number_format($this->getRate(), 2);
+    }
 
 }

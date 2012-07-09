@@ -20,7 +20,7 @@
       </p>
     </div>
     <div class="cn-column-two" align="center">
-      <p class="cn-expertscore" style="font-size:13px;color:#333"><?php echo $user->getRate(); ?> RP</p>
+      <p class="cn-expertscore" style="font-size:13px;color:#333"><?php echo $user->getRateFormatted(); ?> RP</p>
     </div>
     <div class="cn-column-four">
       <p class="cn-pricepermin" align="center" style="margin-top:10px">
@@ -32,7 +32,7 @@
 <?php
             } else {
 ?>
-        <input type="checkbox" name="checkbox[]" value="<?php echo $user->getId(); ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" />
+        <input type="checkbox" name="checkbox[]" value="<?php echo $user->getId(); ?>" onclick="setvalue(event)" style="background-color:#DEF3FE;border:1px solid red;" />
 <?php
             }
         } else {

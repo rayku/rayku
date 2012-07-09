@@ -42,7 +42,6 @@
       <div class="body-connect-right" style="margin-top:25px;">
         <form name='listform' id='listform' method='post' action="">
           <div style="width:700px;font-size:21px;color:#333;line-height:30px;margin-bottom:20px;font-weight:bold">Select the tutors that are relevant to your question:</div>
-          <input type="hidden" name="hidden" value="hidden" />
           <div class="cn-content">
               
           <div class="cn-right-top">
@@ -73,129 +72,55 @@ function loadingAjax()
 
 
 
-
-
-function setvalue(a)
+function getSelectedTutors()
 {
-    var form = jQuery("#listform input")[0];
-    console.log(form);
+    var tutorsCheckboxes = jQuery("#listform input[type=checkbox]");
     var selectedTutors = [];
-    debugger;
-    for (var i=0; i < tutorsCheckboxes; i++) {
+    var selectedTutorsIndex = 0;
+    
+    for (var i=0; i < tutorsCheckboxes.length; i++) {
         if (tutorsCheckboxes[i].checked) {
-            selectedTutors.include(tutorsCheckboxes[i].value);
+            selectedTutors[selectedTutorsIndex++] = tutorsCheckboxes[i].value;
         }
     }
     
-    console.log(selectedTutors);
-    
-    var expertcount = getCookie('expertscount');
-    expertcount = parseInt(expertcount);
-
-    if(expertcount == 4) {
-        if (document.getElementById(a).checked == true)
-        {
-            document.getElementById(a).checked = false;
-            alert("You are Limited To Select Four Expers At Once");
-            return false;
-        }
-    }
-
-    if (document.getElementById(a).checked == true)
-    {
-
-        var newId = a.split('_');
-
-        var lastOne = newId[1];
-
-        var tid = lastOne;
-
-        document.getElementById("first"+tid).style.backgroundColor = '#DEF3FE';
-
-        var expertcount = getCookie('expertscount');
-        expertcount=parseInt(expertcount)+1;
-
-        var cooktotal = getCookie('cooktotal');
-        var icount=parseInt(cooktotal)+1;
-
-
-        var tutname = "expert_"+icount;
-
-        var maxcook = icount;
-
-        setCookie(tutname, tid, 36000);
-
-        setCookie("cooktotal", maxcook, 36000);
-
-        setCookie("expertscount", expertcount, 36000);
-
-        dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-            dv("#popup_content").html(response);
-
-        });
-
-    }
-
-    if (document.getElementById(a).checked == false)
-    {
-
-        var newId = a.split('_');
-
-        var lastOne = newId[1];
-
-        var tid = lastOne;
-
-        document.getElementById("first"+tid).style.backgroundColor = '';
-
-        var b = 'checkbox_'+tid;
-
-        document.getElementById(b).checked = false;
-
-        var cooktotal = getCookie('cooktotal');
-
-        if(cooktotal)
-        {
-                var icount=cooktotal;
-        }
-
-        for(j=1;j<=icount;j++)
-        {
-                var cookieval = getCookie("expert_"+j);
-
-                if(cookieval == tid)
-                {
-                        var currcookie = "expert_"+j;
-                }
-        }
-
-        var tcount = getCookie('expertscount');
-
-        tcount=tcount-1;
-
-        expertcount = tcount;
-
-        setCookie("expertscount", expertcount, 36000);
-
-        var cookie_date = new Date();  // current date & time
-
-        cookie_date.setTime(cookie_date.getTime() - 1);
-
-        document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
-
-        dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
-            dv("#popup_content").html(response);
-
-        });
-
-
-    }
-
-
-
+    return selectedTutors;
 }
 
 
 
+function setvalue(event)
+{
+    var selectedTutors = getSelectedTutors();
+    
+    if (selectedTutors.length > <?php echo $maxTutorsCount; ?>) {
+        event.preventDefault();
+        alert("You are Limited To Select <?php echo $maxTutorsCount; ?> Expers At Once");
+    } else {
+        jQuery('#popup_connect').load('/tutorsList/popup', {'selectedTutorsIds': selectedTutors}, function(response) {
+            jQuery("#popup_content").html(response);
+        });
+    }
+}
+
+function checkExpertCheckBoxes()
+{
+    var selectedTutors = getSelectedTutors();
+    
+    if (selectedTutors.length > 1) {
+        return true;
+    } else if (selectedTutors.length == 1) {
+        var result = confirm("It's recommended to select 2 to <?php echo $maxTutorsCount; ?> experts for best results! Please click 'cancel' to do so, or 'ok' to continue anyways.");
+        if (result == true) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        alert("Please select at least one expert for connect");
+        return false;
+    }
+}
 
 
 

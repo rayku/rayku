@@ -3,6 +3,7 @@
     include_partial(
         'member_list',
         array(
+            'maxTutorsCount' => tutorsListActions::MAX_TUTORS_COUNT
 //            'expert_cats' => $expert_cats,
 //            'cat' => $cat,
 //            'tutorsCount' => $tutorsCount,
