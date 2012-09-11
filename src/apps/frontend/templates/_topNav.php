@@ -65,7 +65,7 @@
     </ul>
     <!--ul.top-menu-->
 
-    <div id="user-box" align="left"> <a href="http://whiteboard.rayku.com" title="Test Whiteboard" target="_blank" class="tt-whiteboard">Test Whiteboard</a>
+    <div id="user-box" align="left"> <a href="http://whiteboard.rayku.com/standalone" title="Test Whiteboard" target="_blank" class="tt-whiteboard">Test Whiteboard</a>
       <ul>
         <li class="main-row">
           <?php $_image = avatar_tag_for_user($raykuUser); $_image = str_replace("img", "img height='24'", $_image);?>

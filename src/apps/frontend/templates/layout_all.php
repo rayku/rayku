@@ -104,6 +104,7 @@ if($sf_context->getModuleName() !='expertmanager') {
       <?php  include_partial('global/messages') ?>
       <?php echo $sf_content ?>
       <div class="clear-both"></div>
+      <!--
       <form action="/search" method="post">
         <div class="searchform">
           <fieldset>
@@ -115,6 +116,7 @@ if($sf_context->getModuleName() !='expertmanager') {
           </fieldset>
         </div>
       </form>
+    -->
     </div>
     <!-- end of content -->
     
@@ -123,7 +125,7 @@ if($sf_context->getModuleName() !='expertmanager') {
         <div class="partners"><a href="http://rayku.com" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
         <p style="margin-top:10px">Copyright 2012 Rayku, Inc.  All rights reserved.</p>
         <ul>
-          <li><a href="mailto:cs[at]rayku.com">contact us</a></li>
+          <li><a href="mailto:cs[at]mail.rayku.com">contact us</a></li>
           <li><a href="http://rayku.com/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
           <?php if(!$sf_user->isAuthenticated()) { ?>
           <li class="nobg"><a href="http://rayku.com/joinus">become a rayku tutor</a></li>

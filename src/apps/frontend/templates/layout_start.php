@@ -268,7 +268,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   <!--container-->
   <div class="container">
     <div style="width:300px;float:left;">Copyright 2012 Rayku, Inc. All rights reserved.</div>
-    <div style="width:300px;float:right;" align="right"><a href="mailto:cs@rayku.com">contact us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a> // <a href="http://rayku.com/joinus">become a rayku tutor</a></div>
+    <div style="width:300px;float:right;" align="right"><a href="mailto:cs[at]mail.rayku.com">contact us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a> // <a href="http://rayku.com/joinus">become a rayku tutor</a></div>
   </div>
   <!--container--> 
   
