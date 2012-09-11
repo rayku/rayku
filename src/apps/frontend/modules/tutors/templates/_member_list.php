@@ -144,7 +144,7 @@ function reSet(value)
 		
 					cookie_date.setTime(cookie_date.getTime() - 1);
 		
-					document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+					document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 			
 					
 					
@@ -171,9 +171,9 @@ function reSet(value)
 
 			cookie_date.setTime(cookie_date.getTime() - 1);
 
-			document.cookie = tcook += "=; expires=" + cookie_date.toGMTString();
+			document.cookie = tcook += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 			
-			document.cookie = ccook += "=; expires=" + cookie_date.toGMTString();
+			document.cookie = ccook += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 			
 			
 			/* var remaintcount = getCookie('tutorcount');			
@@ -245,7 +245,7 @@ function reSet(value)
 			
 				cookie_date.setTime(cookie_date.getTime() - 1);
 			
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 				
 				dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
 			
@@ -347,7 +347,7 @@ function reSet(value)
 			
 			cookie_date.setTime(cookie_date.getTime() - 1);
 			
-			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+			document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 
 			dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
 			
@@ -432,7 +432,7 @@ function reSet(value)
 		
 				cookie_date.setTime(cookie_date.getTime() - 1);
 		
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString()+";path=/;domain="+window.globalConfig.cookies_domain;;
 			
 					dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
 		

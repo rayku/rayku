@@ -148,12 +148,12 @@ class listAction extends sfAction
             if (isset($_COOKIE['cookcount'])) {
                 for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
                     $cookname =  'expert_'.$u;
-                    setcookie($cookname,'', time()-3600, "/expertmanager/");
+                    setcookie($cookname,'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
                 }
             }
 
-            setcookie("expertscount",'', time()-3600, "/expertmanager/");
-            setcookie("cooktotal",'', time()-3600, "/expertmanager/");
+            setcookie("expertscount",'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
+            setcookie("cooktotal",'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
 
             /* Clearing Cookies */
 

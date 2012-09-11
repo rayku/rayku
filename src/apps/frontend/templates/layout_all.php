@@ -67,7 +67,7 @@ if($sf_context->getModuleName() !='expertmanager') {
 <script type="text/javascript">
   window.globalConfig = {
     whiteboard_url: '<?php echo sfConfig::get('app_whiteboard_url').'/'; ?>',
-    cookies_domain: '<?php echo sfConfig::get('app_cookies_domain').'/'; ?>'
+    cookies_domain: '<?php echo sfConfig::get('app_cookies_domain'); ?>'
   }
 </script>
 <style type="text/css">
