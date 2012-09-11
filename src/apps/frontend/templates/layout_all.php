@@ -4,6 +4,8 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <?php include_title() ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css"/>
+
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/navigation.css"/>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/global.css" />
 <?php if($sf_context->getModuleName() =='profile'): ?>
