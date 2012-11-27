@@ -12,7 +12,7 @@
 
 all:
   general:
-    admin_email: administration@rayku.com # Admin's e-mail address
+    admin_email: administration@mail.rayku.com # Admin's e-mail address
     allowed_html_tags: <b><a><u><i> # List of allowed HTML tags
     date_format: M j, Y # Date format to be used across the site see 
                         # http://php.net/date for formatting details

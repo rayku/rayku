@@ -13,7 +13,7 @@ var WRInitTime=(new Date()).getTime();
 </script>
 <!-- ClickTale end of Top part -->
 
-<?php setcookie('wherefind','Sarah called me', null, '/', sfConfig::get('app_cookies_domain')); ?>
+<?php setcookie('wherefind','', null, '/', sfConfig::get('app_cookies_domain')); ?>
 
 <div class="body-main" style="width:600px">
   <div id="want">
@@ -33,14 +33,14 @@ var WRInitTime=(new Date()).getTime();
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td width="350">Teach online via a live shared whiteboard</td>
-        <td><strong>Yes</strong></td>
+        <td><strong>Yes</strong> (<a href="http://whiteboard.rayku.com/standalone" target="_blank">demo</a>)</td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Instant chat / desktop tutoring request notifications</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
-        <td>100% flexible schedules (log on whenever)</td>
+        <td>100% flexible schedules (log on to tutor whenever)</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -48,7 +48,7 @@ var WRInitTime=(new Date()).getTime();
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
-        <td>Full billing system with monthly payments</td>
+        <td>Full billing system with on-demand payments</td>
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -60,7 +60,7 @@ var WRInitTime=(new Date()).getTime();
         <td><strong>Yes</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
-        <td>Commission</td>
+        <td>Amount you are paid per session</td>
         <td><strong>75%<sup>1</sup> (avg. $24/hr)</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
@@ -71,7 +71,7 @@ var WRInitTime=(new Date()).getTime();
   </div>
   <div style="clear:both"></div>
   <div id="bottom">
-  	<div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>
+  	<!--<div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>-->
     <p class="content">Tutor when you want, wherever you want. Your salary and work hours are yours to decide. <a href="http://rayku.com/regtutor">Register today</a>, it's free!</p>
     <p class="footnote"><br /><br /><br /><br />
       <sup>1</sup>Dependent on the quality of the tutoring session. The higher the quality, the more you earn.</p>

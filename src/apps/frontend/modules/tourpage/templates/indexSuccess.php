@@ -6,28 +6,28 @@
   
   <ul class="tabNav">
     <li id="side_menu_tab11" class="current"><a href="javascript:side_menu('side_menu_tab1')" class="tab">Overview</a></li>
-    <li id="side_menu_tab21" class=""><a href="javascript:side_menu('side_menu_tab2')" class="tab">Best Tutors</a></li>
+    <li id="side_menu_tab21" class=""><a href="javascript:side_menu('side_menu_tab2')" class="tab">Expert Tutors</a></li>
     <li id="side_menu_tab31" class="" ><a href="javascript:side_menu('side_menu_tab3')" class="tab">Live Whiteboard</a></li>
     <div class="clear"></div>
   </ul>
   <div class="tabContainer">
     <div id="side_menu_tab1" class="tab current"> <img src="<?php echo image_path('overview-screen.jpg', false); ?>" alt="img" />
       <h1>&quot;24/7 Access to the Best Tutors, with a Click of the Mouse&quot;</h1>
-      <p> <strong>Rayku</strong> let's students get tutoring help online. With the most relevant tutors. Over a beautiful online whiteboard. In under 60 seconds. </p>
+      <p> <strong>Rayku</strong> lets students get tutoring help online. With the most relevant tutors. Over a beautiful online whiteboard. In under 60 seconds. </p>
       <p>Check out what we're all about in this introductory video:<br />
       <iframe src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=640&videoHeight=360&playerColor=313131" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="640" height="360"></iframe>
       </p>
       <ul class="features">
         <div class="clear"></div>
       </ul>
-      <p style="margin:20px 0 0 0"><strong><a href="javascript:side_menu('side_menu_tab2')" style="color:#1c517c">NEXT: Best Tutors &gt;&gt;</a></strong></p>
+      <p style="margin:20px 0 0 0"><strong><a href="javascript:side_menu('side_menu_tab2')" style="color:#1c517c">NEXT: Expert Tutors &gt;&gt;</a></strong></p>
     </div>
     
     <!--tab-->
     
     <div id="side_menu_tab2" class="tab"> <img src="<?php echo image_path('livehelp-screen.jpg', false); ?>" alt="img" />
       <h1>Connect with the tutor best suited to help you!</h1>
-      <p>Rayku takes a algorithmic and systmatic approach to connect you to an online expert who is specifically qualified to assist YOU.</p>
+      <p>Rayku takes an algorithmic and systematic approach to connect you to an online expert who is specifically qualified to assist YOU.</p>
       <p><strong>What this means for you:</strong> Whenever, Wherever. If you have any question or need any advice, right at this moment, Rayku has you covered.</p>
       <p style="margin-bottom:0"><a href="javascript:side_menu('side_menu_tab3')" style="color:#1c517c"><strong>NEXT: Live Whiteboard &gt;&gt;</strong></a></p>
     </div>

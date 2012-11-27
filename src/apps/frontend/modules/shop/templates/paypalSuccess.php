@@ -45,17 +45,13 @@ RaykuCommon::getDatabaseConnection();
               <div class="obj" style="font-size:14px;color:#444;line-height:20px;">
 
               <div class="raykupoints" align="center">
-              YOU HAVE<br>
-              <span><?php echo $detailPoints['points']; ?></span><br>
-              RAYKU POINTS
-              </div>
+              YOUR RAYKU POINTS<br>
+              <span><?php echo $detailPoints['points']; ?></span></div>
 
 <input type="hidden" id="_hidden" name="_hidden" value="<?php echo $detailPoints['points']; ?>" />
 
               <div class="rpcontent">
-              <h3>What are Rayku Points (RP)?</h3>
-              <p>
-              Rayku Points are credits that you can use on Rayku to pay for live question sessions. In the future, you'll be able to use them in a Rayku Shop to buy cool stuff (like an iPad!).</p>
+              <p>Rayku Points are tutoring credits that you can use on the site to pay for premium live tutoring sessions.</p>
               </div>
               <div style="clear:both"></div>
 
@@ -76,8 +72,8 @@ RaykuCommon::getDatabaseConnection();
                   <?=$row['title'];?>
                   </option>
                 <?php } ?>
-                </select> Rayku Points for <span id="value" style="color:#060;font-weight:bold"><?php echo $_show_value; ?></span>(CAD)
-                </h1>
+                </select> 
+                Rayku Points for <span id="value" style="color:#060;font-weight:bold"><?php echo $_show_value; ?></span></h1>
                 <span style="color:#666">This will give you a total of</span> <span id="final_points" style="color:#666"><?php echo $_final_points;?>RP</span><span style="color:#666">, which can account for</span> <span id="minutes" style="color:#666"><?php echo $_minutes; ?></span> <span style="color:#666"> minutes* of premium tutoring.</span>
 
 
@@ -104,7 +100,7 @@ RaykuCommon::getDatabaseConnection();
                 <div class="clear"></div>
                 <div class="sep"></div>
                 <div class="obj"><?php echo $rowOne['title']; ?> Rayku Points (RP)</div>
-                <div class="price">$<?php echo $rowOne['price']; ?>.00 <strong>CAD</strong></div>
+                <div class="price">$<?php echo $rowOne['price']; ?>.00</div>
                 <div class="clear"></div>
                 <?php $tot_price = $rowOne['price'] + $rowOne['shipping_charge_per_unit']; ?>
                 <?php $tot_item_price = $rowOne['price'] ?>
@@ -218,16 +214,15 @@ RaykuCommon::getDatabaseConnection();
     </div>
   </div>
   
-  <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo $detailPoints['points']; ?>CAD</strong></p><br />
+  <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo $detailPoints['points']; ?></strong></p><br />
   <input type="submit" class="myButton" value="Cash Out" name="submit"/>
 </div>
 <div id="shop_right">  
   <div class="text">
-  <h2 style="font-size:16px;line-height:20px;border-bottom:1px solid #CCC;color:#666;font-weight:bold;margin-top:10px;">Terms</h2>
-  <p style="margin-top:20px;">All purchases are final.</p>
+  <h2 style="font-size:16px;line-height:20px;border-bottom:1px solid #CCC;color:#666;font-weight:bold;margin-top:10px;">Why?  </h2>
+  <p style="margin-top:20px;">Full-length, on-demand sessions with the top-rated Rayku tutors.</p>
+  <p style="margin-top:20px;">Premium sessions are charged by-the-minute. Only pay for what you use. </p>
   <p style="margin-top:20px;">Rayku Points do not expire. They are yours to keep and use forever!</p>
-  <p style="margin-top:20px;">We reserve the right to revoke a user's ability to use or purchase Rayku Points if we suspect abuse.</p>
-  <p style="margin-top:20px;">We reserve the right to change the price of Rayku Points at any time without notice.</p>
   </div>
 </div>
 <!--shop_right--> 

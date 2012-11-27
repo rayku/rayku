@@ -7,6 +7,7 @@ class listAction extends sfAction
     public function execute($request)
     {
         $connection = RaykuCommon::getDatabaseConnection();
+        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         $currentUser = $this->getUser()->getRaykuUser();
         $userId = $currentUser->getId();
         $this->userId = $currentUser->getId();
@@ -147,12 +148,12 @@ class listAction extends sfAction
             if (isset($_COOKIE['cookcount'])) {
                 for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
                     $cookname =  'expert_'.$u;
-                    setcookie($cookname,'', time()-3600, "/expertmanager/");
+                    setcookie($cookname,'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
                 }
             }
 
-            setcookie("expertscount",'', time()-3600, "/expertmanager/");
-            setcookie("cooktotal",'', time()-3600, "/expertmanager/");
+            setcookie("expertscount",'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
+            setcookie("cooktotal",'', time()-3600, "/", sfConfig::get('app_cookies_domain'));
 
             /* Clearing Cookies */
 
@@ -231,6 +232,7 @@ class listAction extends sfAction
             $this->redirect('expertmanager/connect');
         }
 
+        $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         $c = new Criteria();
         $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
         if ($this->cat == 5) {

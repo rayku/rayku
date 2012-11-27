@@ -182,7 +182,8 @@ function reSet(value)
 
 				cookie_date.setTime(cookie_date.getTime() - 1);
 
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+                                document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString() + ";path=/;domain="+window.globalConfig.cookies_domain;
+                                
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 				   dv("#popup_content").html(response);
 
@@ -299,7 +300,7 @@ function reSet(value)
 
 				cookie_date.setTime(cookie_date.getTime() - 1);
 
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString() + ";path=/;domain="+window.globalConfig.cookies_domain;
 
 				dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 				    dv("#popup_content").html(response);
@@ -391,7 +392,7 @@ function reSet(value)
 
 				cookie_date.setTime(cookie_date.getTime() - 1);
 
-				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString();
+				document.cookie = currcookie += "=; expires=" + cookie_date.toGMTString() + ";path=/;domain="+window.globalConfig.cookies_domain;;
 					dv('#popup_connect').load('/expertmanager/checkoutpopup', '', function(response) {
 				    		dv("#popup_content").html(response);
 

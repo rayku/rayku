@@ -35,31 +35,31 @@ class BotServiceProvider
     static $bots = array(
         'gtalk' => array(
             'prefix' => 'http://www.rayku.com:8892',
-            'serviceUrl' => 'local.gtalk.bot.rayku.com:8892',
-            'enabled' => false
+            'serviceUrl' => 'bots.rayku.com:8892',
+            'enabled' => true
         ),
         'facebook' => array(
             'prefix' => 'http://facebook.rayku.com',
-            'serviceUrl' => 'local.facebook.bot.rayku.com:4567',
-            'enabled' => false
+            'serviceUrl' => 'bots.rayku.com:4567',
+            'enabled' => true
         ),
         'mac-server' => array(
             'prefix' => 'http://notification-bot.rayku.com',
-            'serviceUrl' => 'local.mac-server.bot.rayku.com:5678',
-            'enabled' => false
+            'serviceUrl' => 'bots.rayku.com:5678',
+            'enabled' => true
         )
     );
     
-    private $logging = false;
+    private $logging = true;
     private $logFilePath = '/tmp/botServiceProvider.log';
             
     private $curlConnectTimeout = 1;
-    private $curlTimeout = 3;
+    private $curlTimeout = 5;
     
     /**
      * Default state of enabled flag
      */
-    private $enabled = false;
+    private $enabled = true;
     
     /**
      * If you pass only $url it will be used directly - without any modifications

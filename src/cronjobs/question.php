@@ -10,7 +10,15 @@ sfCoreAutoload::register();
 
 RaykuCommon::getDatabaseConnection();
 
+function luklog($msg) {
+    file_put_contents('/tmp/luk.log', $msg."\n", FILE_APPEND);
+}
+
+
 function checkquestion() {
+
+
+luklog('checkquestion function call');
 
     $time = time()-300;
     mysql_query("delete from user_expert where status = 7 ") or die("Error5--1".mysql_error());
@@ -18,6 +26,8 @@ function checkquestion() {
     $_expire_msg = mysql_query("select * from user_expire_msg where expire_time <= '".$check_time."'") or die("Error_Expire1".mysql_error());
     if(mysql_num_rows($_expire_msg) > 0) {
         while($_row_expire_msg = mysql_fetch_assoc($_expire_msg)) {
+
+luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
             $_send_expire_msg = mysql_query("select * from user_gtalk where userid=".$_row_expire_msg['userid']) or die("Error11".mysql_error());
             if(mysql_num_rows($_send_expire_msg) > 0) {
                 $getInfo = mysql_fetch_assoc($_send_expire_msg);

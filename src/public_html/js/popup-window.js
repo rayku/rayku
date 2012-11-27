@@ -105,7 +105,7 @@ window.location.reload();
 					var expires = "; expires="+date.toGMTString();
 
 					var value = '';
-					document.cookie = "_post_Id" + "=" + value + expires; path="/"; domain=document.domain;
+					document.cookie = "_post_Id" + "=" + value + expires+";path=/;domain="+window.globalConfig.cookies_domain;
 				} 
 
 				var date = new Date();
@@ -113,7 +113,7 @@ window.location.reload();
 				var expires = "; expires="+date.toGMTString();
 
 				var value = aId;
-				document.cookie = "_post_Id" + "=" + value + expires; path="/"; domain=document.domain;
+				document.cookie = "_post_Id" + "=" + value + expires+";path=/;domain="+window.globalConfig.cookies_domain;
 
 
 
