@@ -28,9 +28,9 @@ class UserPeer extends BaseUserPeer
     /**
      * Returns the index associated with a given typeCode value. Makes the
      * typeCode value lower-case before passing it.
-     * 
+     *
      * @param string $value
-     * 
+     *
      * @return int
      */
     public static function getTypeFromValue($value)
@@ -57,7 +57,7 @@ class UserPeer extends BaseUserPeer
 
     /**
      * Returns the value associated with a given gender index
-     * 
+     *
      * @param int $index
      * @return string
      */
@@ -73,7 +73,7 @@ class UserPeer extends BaseUserPeer
     /**
      * Returns the index associated with a given gender value. Makes the
      * typeCode value lower-case before passing it.
-     * 
+     *
      * @param string $value
      * @return int
      */
@@ -93,7 +93,7 @@ class UserPeer extends BaseUserPeer
     /**
      * Returns an indexed list of all of the genders after applying the
      * ucfirst() function to make the list suitable for direct output
-     * 
+     *
      * @return array
      */
     public static function getGenders()
@@ -103,7 +103,7 @@ class UserPeer extends BaseUserPeer
 
     /**
      * Returns the value associated with a given relationship status index
-     * 
+     *
      * @param int $index
      * @return string
      */
@@ -119,7 +119,7 @@ class UserPeer extends BaseUserPeer
     /**
      * Returns the index associated with a given relationship status value. Makes the
      * typeCode value lower-case before passing it.
-     * 
+     *
      * @param string $value
      * @return int
      */
@@ -139,7 +139,7 @@ class UserPeer extends BaseUserPeer
     /**
      * Returns an indexed list of all of the relationship statuses after applying the
      * ucfirst() function to make the list suitable for direct output
-     * 
+     *
      * @return array
      */
     public static function getRelationshipStatuses()

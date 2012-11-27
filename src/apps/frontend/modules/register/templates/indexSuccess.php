@@ -3,7 +3,14 @@
 <div class="body-main">
   <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(/images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Account</span> </div>
   <div class="clear"></div>
-  <div class="body-mains"> <?php echo form_tag('register/index', array('name' => 'register')) ?> <?php echo input_hidden_tag('utype',$requestedUserType) ?>
+  <div class="body-mains">
+  <?php //echo form_tag('register/index', array('name' => 'register', 'action' => '/register?ref='.$_GET['ref'])) ?>
+	<form name="register" action="/register<?php if($_GET['ref']) echo "?ref=" . $_GET['ref'];?>" method="post">
+  <?php echo input_hidden_tag('utype',$requestedUserType) ?>
+  <?php echo input_hidden_tag('ref',$_GET['ref']) ?>
+
+
+
     <div class="box">
       <div class="top"></div>
       <div class="content">

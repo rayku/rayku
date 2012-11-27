@@ -1,54 +1,151 @@
-@charset "utf-8";
-/*-------------------------------------------
+h3 {
+	color: #1C517C;
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 25px;
+	margin-bottom: 15px;
+}
+h3 span {
+	font-size:16px;
+	font-weight:normal;
+}
 
-           Name: Table 
-           Author: Pawel Wisniowski
-		   eMail: pawel@wisniowski.org
-		   		   
-/*! Resets
----------------------------------------------*/
-* { margin: 0; padding: 0; }
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
-h1, h2, h3, h4, h5, h6{ font-weight: 500; }
-img { border-width:0; image-rendering: optimizeQuality; -ms-interpolation-mode: bicubic  }
+#wrapper {
+	width: 915px;
+	margin: 0 auto;
+}
 
-table { width: 100%; border-collapse:separate; border-spacing: 0; }
-	th, td { text-align: left; font-weight: 400; }
-	legend, caption { position: absolute; left: -3000em; top: 0; }
-	html* legend, html* caption { display: none; }
-	
-/*! Global
----------------------------------------------*/
-html { min-height: 100%; font-size: 100.01%; }
-body { font: 100% Verdana, Arial, Helvetica, sans-serif; background :#fff; color: #000; font-family: Arial, Helvetica, sans-serif; }
-a { text-decoration: none; }
-	a:hover, a:focus, a:active { text-decoration: underline; }
+#progress-diagram {
+	padding: 15px;
+	text-align: center;
+	font-weight: bold;
+	color:#333;
+}
 
+#progress-diagram div {
+	display: inline-block;
+}
 
-/*! Layout
----------------------------------------------*/
-#skip{ position: absolute; top: 0; left: -10001px; margin: 0; padding: 0; }
-	#skip a:focus, #skip a:active { display: block; position: absolute; left: 10001px; top: 0; z-index: 10001; width: 200px; margin: 15px 0 0 15px; padding: 2px 0; text-align: center; background: #333; color: #fff; }	div.table-a { width: 635px; margin: 12px 0 0 9px; padding: 19px 0 0 0; border: 1px solid #8fafc8; background: url(../images/table-bg-a.gif) top repeat-x; }
-div.table-a { border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; -khtml-border-radius: 12px; }
-	div.table-a h3 { margin: 0 0 2px 0; padding: 0 0 0 14px; color: #002c50; font-size: 16px; font-weight: 700; }
-	div.table-a h4 { margin: 0 0 13px 0;  padding: 0 0 0 14px; color: #7f8189; font-size: 12px; }
-	div.table-a table { background: url(../images/table-bg-b.gif) bottom repeat-x; background: none\9; color: #1c6b99; font-size: 14px; }
-	div.table-a table { border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; -khtml-border-radius: 12px; }
-	div.table-a th { padding: 14px 0 13px 0; border-top: 1px solid #e4ecf2; border-left: 1px solid #e4ecf2; color: #002c50; font-weight: 700; text-align: center; }
-	div.table-a td { padding: 0 0 0 19px; border-top: 1px solid #e4ecf2; border-left: 1px solid #e4ecf2; text-align: left; vertical-align: middle; }
-	div.table-a th:first-child, div.table-a th.first, div.table-a td:first-child, div.table-a td.first { border-left: none; }
-	div.table-a label { display: block; position: relative; float: left; width: 39px; height: 39px; margin: 18px 0 37px 6px; background: url(../images/grades.png) no-repeat; }
-	html* div.table-a label { padding: 0 0 36px 0; }
-		div.table-a label.a { }
-		div.table-a label.b { background-position: -39px 0; }
-		div.table-a label.c { background-position: -78px 0; }
-		div.table-a label.d { background-position: -117px 0; }
-		div.table-a label span { position: absolute; top: 0; left: -3000em; }
-		div.table-a label input { position: absolute; left: 14px; bottom: -22px; }
-		html* div.table-a label input { left: 10px; top: 45px; }
+#progress-diagram span+div {
+	margin-left: 0.5em;
+}
 
-/*! Misc
----------------------------------------------*/
-@media only screen and (max-device-width:480px) {
-	html { -webkit-text-size-adjust: none; }
+#progress-diagram span {
+	margin-left: 5px;
+	margin-right: 15px;
+	vertical-align: 4px;
+}
+
+#callout {
+	border-radius: 5px;
+	border: 1px solid #A9C6C9;
+	padding: 10px 20px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	background: #eef7fb;
+}
+
+#callout p {
+	font-size:14px;
+	font-weight:normal;
+}
+
+#share-link {
+	margin-top: 20px;
+	text-align: center;
+	clear: both;
+}
+
+#share-link span {
+	font-size:15px;
+	line-height:32px;
+	margin-right:5px;
+	vertical-align:top;
+}
+
+#share-link button {
+	margin-left: 6px;
+	margin-bottom: 10px;
+}
+
+.alert {
+	margin-top: 20px;
+}
+
+#social-invite {
+	float: left;
+}
+#social-invite h3 {
+	font-size:20px;
+}
+
+#social-invite textarea {
+	float: left;
+	width: 400px;
+}
+
+#social-invite button {
+	float: left;
+}
+
+#social-invite button+button {
+	margin-left: 10px;
+}
+
+#email-invite {
+	float: right;
+}
+
+#email-invite h3 {
+	font-size:20px;
+}
+
+#email-invite textarea {
+	width: 400px;
+}
+
+.clear {
+	clear: both;
+}
+
+/* Extras */
+
+.numberCircle {
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+    behavior: url(PIE.htc);
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    background: #5683b0;
+    border: 2px solid #9eb1b8;
+    color: #FFF;
+    text-align: center;
+    font: 20px Arial, sans-serif;
+	line-height:24px;
+}
+
+.myButton {
+	-moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow: inset 0px 1px 0px 0px white;
+	box-shadow: inset 0px 1px 0px 0px white;
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #EDEDED), color-stop(1, #DFDFDF) );
+	background: -moz-linear-gradient( center top, #EDEDED 5%, #DFDFDF 100% );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color: #EDEDED;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #7A7A7A;
+	display: inline-block;
+	color: #777;
+	font-family: arial;
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: bold;
+	padding: 4px 14px;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px white;
+	cursor: pointer;
 }

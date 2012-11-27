@@ -7,8 +7,8 @@
 
 class StatsD {
 
-    static $enabled = false;
-    
+    static $enabled = true;
+
     /**
      * Log timing information
      *
@@ -84,7 +84,7 @@ class StatsD {
 
         // Wrap this in a try/catch - failures in any of this should be silently ignored
         try {
-            $host = 'localhost';
+            $host = 'statsd.p.rayku.com';
             $port = 8125;
             $fp = fsockopen("udp://$host", $port, $errno, $errstr);
             if (! $fp) { return; }

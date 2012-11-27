@@ -193,11 +193,6 @@ class dashboardActions extends sfActions
         }
     }
 
-    public function executeNew()
-    {
-        $this->user  = $this->getUser()->getRaykuUser();
-    }
-
     public function executeGetstarted()
     {
         $this->user = $this->getUser()->getRaykuUser();

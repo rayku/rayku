@@ -9,4 +9,4 @@ all:
         servers:
           localhost1:
             port: 11211
-            host: localhost
+            host: cache1.p.rayku.com

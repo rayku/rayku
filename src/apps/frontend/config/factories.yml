@@ -2,7 +2,7 @@ prod:
   logger:
     class: sfAggregateLogger
     param:
-      level: info
+      level: err
 
 cli:
   controller:

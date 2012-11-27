@@ -42,6 +42,9 @@
 Rayku currently does not work every well with <strong>Internet Explorer</strong>. Please use Firefox or Chrome or another browser.
 </div>
 <![endif]-->
+<div style="width:100%;padding:8px 0;background:#FFF0F6;font-size:14px;color:#333" align="center">
+Rayku is currently under maintenance. Some features have been disabled, and tutoring sessions will temporarily be unavailable. Please check back soon!
+</div>
 </div>
 <!--header--> 
 

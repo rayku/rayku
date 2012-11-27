@@ -41,11 +41,11 @@ class registerActions extends sfActions
         $user->setEmail($this->getRequestParameter('email'));
         $user->setPassword($this->getRequestParameter('password1'));
         $user->setName($this->getRequestParameter('realname'));
-               
+
         $expiration = substr($this->getRequestParameter('expiry_date'),0,2) .'/'. substr($this->getRequestParameter('expiry_date'),-2);
-        
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
-               
+
         $result = Braintree_Customer::create(array(
             'firstName' => $this->getRequestParameter('realname'),
             'lastName' => '',
@@ -59,16 +59,16 @@ class registerActions extends sfActions
                 )
             )
         ));
-        
+
         //error_log($result->customer->creditCards[0]->token, 0);
-        
-        
+
+
         if (false && !$result->success){
             //error_log("invalid", 0);
             $this->error = 'Your credit card is invalid.';
             return sfView::ERROR;
-            
-            
+
+
         }else{
             //should only save last 4 digit
 //            $user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
@@ -95,6 +95,7 @@ class registerActions extends sfActions
             $user->setUsername($userName);
             $user->setTypeUnconfirmed($this->requestedUserType);
 
+
             if (!empty($_POST['coupon'])) {
                 $query = mysql_query("select * from referral_code where referral_code='".$_POST['coupon']."'") or die(mysql_error());
 
@@ -116,6 +117,7 @@ class registerActions extends sfActions
                 }
             }
 
+
             if (!$user->save()) {
                 throw new PropelException('User creation failed');
             }
@@ -132,6 +134,16 @@ class registerActions extends sfActions
             } elseif (!empty($_POST['coupon'])) {
                 mysql_query("update user set points='11' where id=".$user->getId()) or die(mysql_error());
             }
+
+			// Referral module
+			// Rajesh Soni - 23 November 2012
+
+            if ($_POST['ref'])
+			{
+				$ref_by_user = mysql_real_escape_string( $_POST['ref'] );
+                mysql_query("update user set referred_by='$ref_by_user' where id=".$user->getId()) or die(mysql_error());
+			}
+
             mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
             mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
 
@@ -215,7 +227,7 @@ class registerActions extends sfActions
     {
         $user = UserPeer::doSelectFromConfirmationCode($this->getRequestParameter('code'));
 
-        if (!$user) {
+		if (!$user) {
             $newCode = $this->getRequestParameter('code');
             $oC = new Criteria();
             $oC->add(UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$newCode'" , Criteria::CUSTOM);
@@ -229,6 +241,27 @@ class registerActions extends sfActions
         if ($user) {
             $user->setTypeConfirmed();
             $user->save();
+
+
+
+			// Referral module
+			// Rajesh Soni - 23 November 2012
+
+			$ref_points = 6;
+			$ref_points_user = 4;
+
+	        $result = mysql_query("select referred_by from user where id=".$user->getId()) or die(mysql_error());
+			$row = mysql_fetch_row($result) or die(mysql_error());
+
+			$ref_by_user = $row[0];
+
+            if ($ref_by_user) {
+
+				mysql_query("update user set points= points + ".$ref_points." where id=".$ref_by_user . " LIMIT 1") or die(mysql_error());
+				mysql_query("update user set points='".$ref_points_user."' where id=".$user->getId() . " LIMIT 1") or die(mysql_error());
+            }
+
+
         }
 
         if ($user) {
