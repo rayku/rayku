@@ -40,6 +40,8 @@ register:
 register_confirm:
   url: /register/confirm/:code/temp/*
   param: { module: register, action: confirmUser }
+  skip_encoding: 
+    code
 
 recover_password:
   url: /recover-password

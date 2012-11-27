@@ -18,7 +18,7 @@
       <!--question form container-->
       <div class="question-form-container">
         <p id="error" align="center" style="display:none;" class="cn-pricepermin"><em style="font-size:14px;color:red;line-height:20px;">Oops, you missed something!</em></p>
-        <p class="question"><img src="<?php echo image_path('question-icon.png', false); ?>" alt="Question" style="z-index:5;position:relative" /><input type="text" placeholder="Describe question in one sentence" id="question" name="question"/></p>
+        <p class="question"><img src="<?php echo image_path('question-icon.png', false); ?>" alt="Question" style="z-index:5;position:relative" /><input type="text" placeholder="Describe question in one sentence" id="question" value="<?php echo $sf_params->get('question') ?>" name="question"/></p>
         
         <!--recent questions-->
             <?php

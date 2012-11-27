@@ -13,94 +13,109 @@ class quickregActions extends sfActions
     public function preExecute() {
         RaykuCommon::getDatabaseConnection();
     }
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeIndex(sfWebRequest $request)
-  {
-   	// $this->forward('default', 'module');   	
-	
-  }
+    /**
+    * Executes index action
+    *
+    * @param sfRequest $request A request object
+    */
+    public function executeIndex(sfWebRequest $request)
+    {
+    	// $this->forward('default', 'module');   	
+
+    }
   
-  public function executeRegister()
-  {
-  	//If the user is logged in, don't let them register
-	if ($this->getUser()->isAuthenticated())
-	{
-	$this->error = 'You are already logged in. You can not register again.';
-	return sfView::ERROR;
-	}
-	$this->requestedUserType = '1';
-	//Create and populate the User object
-	$user = new User();
-	
-	$userName = str_replace(' ','',strtolower($this->getRequestParameter('name')));
-	$user->setName($this->getRequestParameter('name'));
-	$user->setEmail($this->getRequestParameter('email'));
-	$user->setPassword($this->getRequestParameter('password'));
-	
-	
-	$_SESSION['question'] = $this->getRequestParameter('question');
-	
-	//$user->setPoints('10.11');
-	$user->setTypeUnconfirmed($this->requestedUserType);
-	
-	/* Username Duplication Check */
-	$unamequery = mysql_query("select * from user where username='".$userName."'");
-	$unamecount = mysql_num_rows($unamequery);
-	
-	$dupval = 2;
-	duplicationCheck:
-	if($unamecount>=1)
-	{
-		$newUsername = $userName.$dupval;
-		$unamequery = mysql_query("select * from user where username='".$newUsername."'");
-		$unamecount = mysql_num_rows($unamequery);
-		if($unamecount>=1)
-		{
-			$dupval++;
-			goto duplicationCheck;
-		}
-		else
-		{
-			$userName = $newUsername;
-		}
-	}
-	$user->setUsername($userName);
-	
-	//Try to save the User... throw an exception if something messes up		
-	if(!$user->save())
-	throw new PropelException('User creation failed');
+    public function executeRegister()
+    {
+    	//If the user is logged in, don't let them register
+        if ($this->getUser()->isAuthenticated()) {
+            $this->error = 'You are already logged in. You can not register again.';
+            return sfView::ERROR;
+        }
+        if (!$this->hasRequestParameter('name') || !$this->hasRequestParameter('email') 
+            || !$this->hasRequestParameter('password')) {
+            $this->error = 'Invalid Request.';
+            return sfView::ERROR;
+        }
 
-	mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
+        $this->requestedUserType = '1';
+        //Create and populate the User object
+        $user = new User();
 
-	mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
+        $userName = str_replace(' ','',strtolower($this->getRequestParameter('name')));
+        $user->setName($this->getRequestParameter('name'));
+        $user->setEmail($this->getRequestParameter('email'));
+        $user->setPassword($this->getRequestParameter('password'));
 
-	$this->sendConfirmationEmail( $user );
+        $_SESSION['question'] = $this->getRequestParameter('question');
 
-	$this->forward('quickreg', 'confirmationcode');
-	
-	//$this->redirect("http://www.rayku.com/quickreg/confirmationcodesent");
-  }
-  	private function sendConfirmationEmail( User $user )
+        //$user->setPoints('10.11');
+        $user->setTypeUnconfirmed($this->requestedUserType);
+
+        /* Username Duplication Check */
+        $unamequery = mysql_query("select * from user where username='".$userName."'");
+        $unamecount = mysql_num_rows($unamequery);
+
+        $dupval = 2;
+        duplicationCheck:
+        if($unamecount>=1)
+        {
+        	$newUsername = $userName.$dupval;
+        	$unamequery = mysql_query("select * from user where username='".$newUsername."'");
+        	$unamecount = mysql_num_rows($unamequery);
+        	if($unamecount>=1)
+        	{
+        		$dupval++;
+        		goto duplicationCheck;
+        	}
+        	else
+        	{
+        		$userName = $newUsername;
+        	}
+        }
+        $user->setUsername($userName);
+
+        //Try to save the User... throw an exception if something messes up		
+        if(!$user->save())
+            throw new PropelException('User creation failed');
+
+        mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
+
+        mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
+
+        $this->sendConfirmationEmail( $user, $_SESSION['question'] );
+
+        $this->user = $user;
+
+        $this->forward('quickreg', 'confirmationcode');
+
+        //$this->redirect("http://www.rayku.com/quickreg/confirmationcodesent");
+    }
+  	private function sendConfirmationEmail( User $user, $question )
 	{
 		$mail = Mailman::createMailer();
+
 		$mail->setContentType('text/html');
 		$mail->addAddress( $user->getEmail() );
 		$mail->setSubject('Activate your new account');
 		sfProjectConfiguration::getActive()->loadHelpers(array('Asset','Url','Partial'));
-		$mail->setBody(
-		get_partial(
-		'activationEmail',
-		array( 'confirmationCode' => $user->getConfirmationCode(),
-	       'user' => $user ) ) );
-		$mail->setAltBody(
-		get_partial(
-		'activationEmailHtml',
-		array( 'confirmationCode' => url_for( '@register_confirm?code='.$user->getConfirmationCode(), true ),
-	       'user' => $user ) ) );
+
+		$confirmationCode = array(
+            'code'    => $user->getConfirmationCode(),
+            'question' => $question
+        );
+        $confirmationCode = base64_encode(serialize($confirmationCode));
+
+        $mail->setBody(
+        get_partial(
+        'activationEmail',
+        array( 'confirmationCode' => $confirmationCode,
+           'user' => $user ) ) );
+
+        $mail->setAltBody(
+        get_partial(
+        'activationEmailHtml',
+        array( 'confirmationCode' => url_for( '@register_confirm?code='.$confirmationCode, true ),
+           'user' => $user ) ) );
 		
 		$mail->send();
 	}

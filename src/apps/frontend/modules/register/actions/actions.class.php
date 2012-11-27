@@ -194,7 +194,7 @@ class registerActions extends sfActions
                 'activationEmail',
                 array('activationLink' => url_for('@register_confirm?code='.$user->getConfirmationCode(), true),
                 'user' => $user)));
-        $mail->send();
+        //$mail->send();
     }
 
     /**
@@ -213,12 +213,20 @@ class registerActions extends sfActions
      */
     public function executeConfirmUser()
     {
-        $user = UserPeer::doSelectFromConfirmationCode($this->getRequestParameter('code'));
+
+        if (strlen($this->getRequestParameter('code')) > 40) {
+            $req = unserialize(base64_decode(urldecode($this->getRequestParameter('code'))));
+            $code = $req['code'];
+            $question = $req['question'];
+        } else {
+            $code = $this->getRequestParameter('code');
+        }
+
+        $user = UserPeer::doSelectFromConfirmationCode($code);
 
         if (!$user) {
-            $newCode = $this->getRequestParameter('code');
             $oC = new Criteria();
-            $oC->add(UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$newCode'" , Criteria::CUSTOM);
+            $oC->add(UserPeer::ID, "SHA1( CONCAT( user.password, 'salt', user.id ) ) = '$code'" , Criteria::CUSTOM);
             $oC->add(UserPeer::TYPE, '1');
             $userCheck = UserPeer::doSelectOne($oC);
             if (!$userCheck) {
@@ -236,7 +244,11 @@ class registerActions extends sfActions
         } else {
             $this->getUser()->signIn($userCheck);
         }
-        if ($user) {
+    
+        if ($question) {
+            $this->getRequest()->setParameter('question', $question);
+            $this->forward("/dashboard", 'index');
+        } elseif ($user) {
             $this->forward('register', 'new');
         } else {
             $this->redirect("/dashboard/getstarted");
