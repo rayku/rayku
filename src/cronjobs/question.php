@@ -4,6 +4,11 @@ require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/service/BotServiceProvider.class.php';
 sfCoreAutoload::register();
 
+require_once(__DIR__.'/../config/ProjectConfiguration.class.php');
+$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
+$context = sfContext::createInstance($configuration);
+
+
 /**
  * @todo - reimplement that script using symfony tasks system and start using propel instead of mysql_connect/query 
  */
