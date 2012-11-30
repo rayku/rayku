@@ -1,39 +1,33 @@
-<div style="font-size:14px;color:#333;margin:0 100px">
+<div class="tutor-status no-tutor">
 
-<h1 style="font-size:18px;color:#900">Uh-oh... all experts are either busy or unavailable</h1>
+    <div class="tutor-status-head clearfix">
 
-<br /><br />Sometimes tutors are away from their computers and may have missed your question.<br /><br />
+        <h3 class="status">Status</h3>
 
-You can <a href="http://www.rayku.com/expertmanager/connectagain" name="Notify same tutor again">notify the same tutors again</a> or <a href="http://www.rayku.com/forum/newthread/<?php echo $_COOKIE['forumsub']; ?>" name="Post Question on Forum">ask the community forum</a>.<br />
-<br /><br /><br /><br />
-<a href="javascript:history.go(-2)">Go back</a>
+    </div><!-- tutor status head -->
 
-<?php 
-	
-	//$_SESSION['dash_hidden'] = 1; 
-	
-	
-	//$user = mysql_query("SELECT checked_id,source FROM student_questions WHERE user_id=".$userid."") or die(mysql_error());
-	//$sourceval = mysql_fetch_array($user);
-	//$source = $sourceval['source'];
-	
+    <div class="tutor-status-body clearfix">
+        
+        <div class="status">
 
-	//if($source=='tutorlist') { ?>
+            <h2>Well, this is embarrassing... <strong>All your selected tutors are either away or busy</strong></h2>
 
-	<!--<a href="http://www.rayku.com/tutors" name="Ask Again"><h2>Ask Again</h2></a>-->
-	
-<?php //} elseif($source=='expertmanager') { ?>
-	
-	<!--<a href="http://www.rayku.com/expertmanager/list" name="Ask Again"><h2>Ask Again</h2></a>-->
+        </div><!-- status -->
 
-<?php //} elseif($source=='tutor') { 
+        <div class="no-tutor-links-wrap">
 
-	//$a=new Criteria();
-	//$a->add(UserPeer::ID, $sourceval['checked_id']);
-	//$tutor =UserPeer::doSelectOne($a);	?>
-	
-	<!--<a href="http://www.rayku.com/tutor/<?php //echo $tutor->getUsername(); ?>" name="Ask Again"><h2>Ask Again</h2></a>-->
+            <ul class="no-tutor-links">
+                <li><a href="/expertmanager/connectagain">Ask the same tutors again</a></li>
+                <li><a href="/expertmanager/list">Select new tutors to ask your question</a></li>
+                <li><a href="/dashboard">Go back to your dashboard</a></li>
+                <li><a href="mailto:cs@mail.rayku.com">Need help?</a></li>
+            </ul>
 
-<?php //} ?>
+        </div><!-- no-tutor-links-wrap -->
 
-</div>
+    </div><!-- tutor status body -->
+
+    <div class="status-bar"></div><!-- status bar -->
+
+</div><!-- tutor status -->
+

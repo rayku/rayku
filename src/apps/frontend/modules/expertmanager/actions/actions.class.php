@@ -322,13 +322,17 @@ class expertmanagerActions extends sfActions
         $connection = RaykuCommon::getDatabaseConnection();
         $userId = $this->getUser()->getRaykuUser()->getId();
         /* Notify same tutor again */
-        $query = mysql_query("select * from student_questions where user_id = '".$userId."'", $connection) or die(mysql_error());
-        while ($record = mysql_fetch_array($query)) {
-            $switchdata = "INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close) VALUES ('".$record['user_id']."', '".$record['checked_id']."', ".$record['category_id'].", ".$record['course_id'].",'".$record['question']."','".$record['exe_order']."', '".$record['time']."', '".$record['course_code']."', '".$record['year']."', '".$record['school']."', '".$record['status']."', '".$record['close']."')";
+        // fetch all questions asked by this user in order of most recent asked
+        $query = mysql_query("select * from student_questions where user_id = '".$userId."' ORDER BY time DESC", $connection) or die(mysql_error());
+        // Query based on the user and the most recent time stamp
+        $result = mysql_fetch_array($query);
+        $query2 = mysql_query("select * from student_questions where user_id = '".$userId."' AND time = '".$result['time']."'",$connection) or die(mysql_error()); 
+        while ($record = mysql_fetch_array($query2)) {
+            $switchdata = "INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close) VALUES ('".$record['user_id']."', '".$record['checked_id']."', ".$record['category_id'].", ".$record['course_id'].",'".$record['question']."','".$record['exe_order']."', '".time()."', '".$record['course_code']."', '".$record['year']."', '".$record['school']."', '".$record['status']."', '".$record['close']."')";
             mysql_query($switchdata, $connection) or die("Error In Insert-->".mysql_error());
         }
 
-        setcookie("asker_que",'To be discussed', time()+600, "/", sfConfig::get('app_cookies_domain'));
+        setcookie("asker_que",$_COOKIE["asker_que"], time()+600, "/", sfConfig::get('app_cookies_domain'));
         $this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
         $this->getResponse()->setCookie("forumsub", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
         return $this->redirect('expertmanager/connect');
@@ -343,5 +347,88 @@ class expertmanagerActions extends sfActions
     public function executeExpertsreject() { }
 
     public function executeModify() { }
+
+    public function executeNexttutor() {
+        // doing some connecting
+        $connection = RaykuCommon::getDatabaseConnection();
+        $currentUser = $this->getUser()->getRaykuUser();
+        $user_id = $currentUser->getId();
+
+        // this is from the client side
+        $tutor_id = $_REQUEST['currenttutor'];
+
+        // get the time, so we know it's the same question
+        $result = mysql_query("SELECT * FROM user_expert WHERE user_id = '". mysql_real_escape_string($user_id) ."' AND checked_id = '". mysql_real_escape_string($tutor_id) ."' LIMIT 0,1");
+        $queue_item = mysql_fetch_assoc($result);
+        $queue_time = $queue_item['time'];
+
+        // delete the current queue item
+        mysql_query("DELETE FROM user_expert WHERE user_id = '". mysql_real_escape_string($user_id) ."' AND checked_id = '". mysql_real_escape_string($tutor_id) ."' LIMIT 1");
+        print ("rows deleted:" . mysql_affected_rows() . "\n");
+
+        // update the next queue item to have priority 1
+        // not sure if it's important, but we should do it anyway
+        // only update exec order if something is deleted
+        if (mysql_affected_rows() > 0) {
+            mysql_query("UPDATE user_expert SET exe_order='1' WHERE user_id = '". mysql_real_escape_string($user_id) ."' AND time = '". mysql_real_escape_string($queue_time) ."' LIMIT 1");
+            print ("rows updated:" . mysql_affected_rows() . "\n");            
+        }
+
+        exit;
+    }
+
+    public function executeCurrenttutor() {
+        // connect to the database and get the current user's id
+        $connection = RaykuCommon::getDatabaseConnection();
+        $currentUser = $this->getUser()->getRaykuUser();
+        $userId = $currentUser->getId();
+
+        // make a query to the user_expert table (which should hold current questions)
+        // sort by status, lowest first, and limit to one
+        $sql = "SELECT * FROM user_expert WHERE user_id='". mysql_real_escape_string($userId) ."' ORDER BY status LIMIT 0,1";
+        $result = mysql_query($sql);
+
+        // if there is nothing else, let sami know by returning a blank object
+        if (mysql_num_rows($result) === 0) {
+            print "";
+            exit;
+        }
+
+        // get the target tutor's id, and get their information
+        $tutor_row = mysql_fetch_assoc($result);
+        $tutor_id = $tutor_row['checked_id'];
+
+        // get their username, firt, and last name
+        $sql = "SELECT * FROM user WHERE id='". mysql_real_escape_string($tutor_id) ."'";
+        $result = mysql_query($sql);
+        $tutor_info = mysql_fetch_assoc($result);
+        $tutor_user_name = $tutor_info['username']; 
+        $tutor_full_name = $tutor_info['name']; 
+        $tutor_pic_url = 'http://'. RaykuCommon::getCurrentHttpDomain() . "/avatar/$tutor_id/0";
+
+
+        // get their experience and profile
+        $sql = "SELECT * FROM tutor_profile WHERE user_id='". mysql_real_escape_string($tutor_id) ."'";
+        $result = mysql_query($sql);
+        $tutor_info = mysql_fetch_assoc($result);
+        $tutor_school = $tutor_info['school']; 
+        $tutor_role = $tutor_info['tutor_role']; 
+        $tutor_study = $tutor_info['study']; 
+
+
+        // get an object ready to return to client end
+        $return_obj = new stdClass;
+        $return_obj->id = $tutor_id;
+        $return_obj->user_name = $tutor_user_name;
+        $return_obj->full_name = $tutor_full_name;
+        $return_obj->pic_url = $tutor_pic_url;
+        $return_obj->school = $tutor_school;
+        $return_obj->role = $tutor_role;
+        $return_obj->study = $tutor_study;
+
+        // return json-encoded object
+        print json_encode($return_obj);
+        exit;
+    }
 
 }
