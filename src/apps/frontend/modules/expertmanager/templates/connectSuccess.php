@@ -134,7 +134,9 @@ function updateCurrentTutor(tutor_info){
           $progress_bar.animate({
             width : "100%"
           },tutor_wait_time, 'linear');
-
+          jQuery(this).show();
+          console.log("tutor table fadeIn complete"); 
+          
         }); 
 
   		});
