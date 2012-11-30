@@ -141,3 +141,188 @@ a.connect-now:hover
 {
 	background-position:0 -32px;
 }
+h2.connecting{
+	background: url(../images/arrows-green.png) 0 center no-repeat;
+	padding-left: 40px;
+	height: 28px;
+	line-height: 28px;
+	color:#1c517c;
+	font-weight: bold;
+	margin-top: 55px;
+	text-align:left;
+	font-size:20px;
+}
+.tutor-status{
+	width: 883px;
+	margin: 25px auto;
+}
+.tutor-status-head{
+	background: url(../images/tutor-status-head.png) repeat-x;
+	height: 40px;
+	border-left: 1px solid #9f9f9f;
+	border-right: 1px solid #9f9f9f;
+}
+.tutor,.status{
+	float: left;
+	width: 440px;
+}
+.tutor-status-head .tutor,.tutor-status-head .status{
+	width: 420px;
+	height: 40px;
+	line-height: 40px;
+	color:#333;
+	font-size: 14px;
+	padding-left: 20px;
+	text-align:left;
+}
+.status{
+	border-left: 1px solid #ccc;
+}
+.tutor-status-body .tutor{
+	background: #ecf4f9;
+	height: 250px;
+	border-bottom: 1px solid #ccc;
+	border-right:1px solid #fff;
+	font-size: 13px;
+	text-align: center;
+}
+.tutor-img,.tutor-name,.tutor-position{
+	margin: 0 auto;
+}
+.tutor-img{
+	padding: 3px;
+	border: 1px solid #ccc;
+	text-align: center;
+	background: #efefef;
+	margin-top: 30px;
+	display: inline-block;
+}
+.tutor-name{
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 14px;
+}
+.tutor-position{
+	margin-top: 10px;
+	font-size: 13px;
+	width: 230px;
+	text-align: center;
+	line-height: 18px;
+}
+
+.tutor-status-body .status{
+	background: #f9f9f3;
+	height: 250px;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	width: 441px;
+	font-size: 13px;
+	line-height: 18px;
+}
+
+.no-tutor .status{
+	border-left: none;
+	width: 100%;
+}
+
+.status-bar{
+	background: #ebebeb;
+	height: 22px;
+	margin-top: 1px;
+}
+.status-bar .bar-progress{
+	width: 0%;
+	background: #f5f5f5;
+	height: 22px;
+	float:left;
+}
+.status-img{
+	margin: 0 auto;
+	padding-top: 40px;
+}
+.status-img.spinner{
+	width: 128px;
+	height: 128px;
+}
+.status-img.success{
+	width: 129px;
+	height: 112px;
+	margin: 0 auto;
+	padding-top: 50px;
+	margin-bottom: -10px;
+}
+.waiting-response{
+	width: 200px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 18px;
+}
+
+.no-tutor .tutor-status-body .status{
+	height: auto;
+	text-align: center;
+	float: none;
+}
+.no-tutor .tutor-status-body .status h2{
+	font-size: 18px;
+	color:#990000;
+	padding:40px 0 30px 0;
+	border-bottom: 1px solid #ccc;
+}
+.no-tutor-links-wrap{
+	background: #ecf4f9;
+	padding: 30px 0;
+}
+.no-tutor-links{
+	margin-left: 250px;
+}
+.no-tutor-links li{
+	background: url(../images/arrow-blue.png) 0 center no-repeat;
+	padding:10px 0 10px 30px;
+}
+.no-tutor-links a{
+	font-size: 15px;
+	text-decoration: underline;
+}
+
+.no-tutor-links a:hover{
+	color:#06C;
+}
+.waiting-response{
+	width: 200px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 18px;
+}
+
+.no-tutor .tutor-status-body .status{
+	height: auto;
+	text-align: center;
+	float: none;
+}
+.no-tutor .tutor-status-body .status h2{
+	font-size: 18px;
+	color:#990000;
+	padding:40px 0 30px 0;
+	border-bottom: 1px solid #ccc;
+}
+.no-tutor-links-wrap{
+	background: #ecf4f9;
+	padding: 30px 0;
+}
+.no-tutor-links{
+	margin-left: 250px;
+}
+.no-tutor-links li{
+	background: url(../images/arrow-blue.png) 0 center no-repeat;
+	padding:10px 0 10px 30px;
+}
+.no-tutor-links a{
+	font-size: 15px;
+	text-decoration: underline;
+}
+
+.no-tutor-links a:hover{
+	color:#06C;
+}
