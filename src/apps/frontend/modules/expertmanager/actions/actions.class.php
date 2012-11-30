@@ -385,7 +385,7 @@ class expertmanagerActions extends sfActions
 
         // make a query to the user_expert table (which should hold current questions)
         // sort by status, lowest first, and limit to one
-        $sql = "SELECT * FROM user_expert WHERE user_id='". mysql_real_escape_string($userId) ."' ORDER BY status LIMIT 0,1";
+        $sql = "SELECT * FROM user_expert WHERE user_id='". mysql_real_escape_string($userId) ."' ORDER BY exe_order LIMIT 0,1";
         $result = mysql_query($sql);
 
         // if there is nothing else, let sami know by returning a blank object
