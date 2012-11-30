@@ -24,9 +24,11 @@
     <!--navigation-->
     <ul id="navigation">
       <li><a href="/login">Login</a></li>
-      <li><a href="/register">Register</a></li>
-      <li><a href="/tourpage">Tour</a></li>
-      <li><a href="/joinus">Tutors</a></li>
+       <li><strong><a href="/register">Register</a></strong></li>
+       <li><a href="/about">About</a></li>
+       <li><a href="/jobs">Jobs</a></li>
+       <li><a href="/joinus">Become a Tutor</a></li>
+       <!--<li><a href="/tourpage">Tour</a></li>-->
     </ul>
     <!--navigation-->
     <div class="clear"></div>

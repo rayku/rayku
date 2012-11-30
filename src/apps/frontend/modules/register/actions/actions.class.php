@@ -259,16 +259,25 @@ class registerActions extends sfActions
 			$ref_points = 6;
 			$ref_points_user = 4;
 
-	        $result = mysql_query("select referred_by from user where id=".$user->getId()) or die(mysql_error());
-			$row = mysql_fetch_row($result) or die(mysql_error());
+			$sql2 = "select referred_by from user where id=".$user->getId();
 
-			$ref_by_user = $row[0];
 
-            if ($ref_by_user) {
+			if( $user->getId() )
+			{
+				$result = mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+				$row = mysql_fetch_row($result) or die( $sql2 . mysql_error());
 
-				mysql_query("update user set points= points + ".$ref_points." where id=".$ref_by_user . " LIMIT 1") or die(mysql_error());
-				mysql_query("update user set points='".$ref_points_user."' where id=".$user->getId() . " LIMIT 1") or die(mysql_error());
-            }
+				$ref_by_user = $row[0];
+
+				if ($ref_by_user)
+				{
+					$sql2 = "update user set points= points + ".$ref_points." where id=".$ref_by_user . " LIMIT 1";
+					mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+
+					$sql2 = "update user set points='".$ref_points_user."' where id=".$user->getId() . " LIMIT 1";
+					mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+				}
+			}
 
 
         }
@@ -278,12 +287,24 @@ class registerActions extends sfActions
         } else {
             $this->getUser()->signIn($userCheck);
         }
-    
+
         if ($question) {
             $this->getRequest()->setParameter('question', $question);
-            $this->forward("/dashboard", 'index');
+
+			// Rajesh Soni - 28 November 2012
+			// One other bug by the way: There appears a database error when I click on the confirmation link (for new registered users), and it is fixed if I reload the page (F5).  I researched a bit about it, and I found that it is due to last changes done on production server appears needing a column (referred_by) in USER table. That causes this error. Could you please take a quick look into this as well?
+
+            //$this->forward("/dashboard", 'index');
+            $this->redirect("/dashboard/getstarted");
+
         } elseif ($user) {
-            $this->forward('register', 'new');
+
+			// Rajesh Soni - 28 November 2012
+			// ERROR: Email confirmation email link for new registered users is going to a Rayku.com 404 page (not when clicked - but when copy/pasted to browser)
+
+            //$this->forward('register', 'new');
+            $this->redirect("/dashboard/getstarted");
+
         } else {
             $this->redirect("/dashboard/getstarted");
         }

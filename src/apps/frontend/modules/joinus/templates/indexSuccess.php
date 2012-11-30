@@ -7,20 +7,18 @@
 </head>
 
 <body>
-<!-- ClickTale Top part -->
-<script type="text/javascript">
-var WRInitTime=(new Date()).getTime();
-</script>
-<!-- ClickTale end of Top part -->
 
 <?php setcookie('wherefind','', null, '/', sfConfig::get('app_cookies_domain')); ?>
 
 <div class="body-main" style="width:600px">
-  <div id="want">
+  <div id="want" style="height:240px">
     <h3>Tutor Math Online, Get Paid!</h3>
     <p>Rayku lets you teach math students online. Start today, and charge by-the-minute rates of your choice (recommended $0.40/min. or $24/hour).<br />
       <br />
-      Sessions are carried out through a live shared whiteboard, where students can interact with video, audio, and math equation writer tools. With passive notifications, you can log in and tutor at your own self-determined schedule.</p>
+      Sessions are carried out through a live shared whiteboard, where students can interact with video, audio, and math equation writer tools. With passive notifications, you can log in and tutor at your own self-determined schedule.<br />
+      <br />
+      Although you are allowed to set your own rates, our system automatically caps the highest you can charge depending on your past ratings on the site. Your first few sessions will be capped at $0/minute to build experience.
+    </p>
   </div>
   <!--want-->
   
@@ -61,7 +59,7 @@ var WRInitTime=(new Date()).getTime();
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Amount you are paid per session</td>
-        <td><strong>75%<sup>1</sup> (avg. $24/hr)</strong></td>
+        <td><strong>75%<sup>1</sup> (avg. $18/hr)</strong></td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Price</td>
@@ -88,15 +86,4 @@ var WRInitTime=(new Date()).getTime();
   </div>
 </div>
 <div class="clear-both"></div>
-
-<!-- ClickTale Bottom part -->
-<div id="ClickTaleDiv" style="display: none;"></div>
-<script type="text/javascript">
-if(document.location.protocol!='https:')
-  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRc9.js'%20type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-if(typeof ClickTale=='function') ClickTale(44004,1,"www");
-</script>
-<!-- ClickTale end of Bottom part -->
 </body>

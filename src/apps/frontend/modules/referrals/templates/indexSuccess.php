@@ -1,20 +1,20 @@
-<?php
-session_start();
-$user_id = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-
-if(!$user_id)
-	die("Please login!");
-
-?><!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <title>Rayku.com Referrals</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+ -->
+<?php
+$connection = RaykuCommon::getDatabaseConnection();
+/* @var $raykuUser User */
+$raykuUser = $sf_user->getRaykuUser();
+?>
 <!-- Le styles -->
-<link href="css/bootstrap.css" rel="stylesheet">
+
+
+<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="css/font-awesome.css">
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -58,10 +58,103 @@ document.getElementById('frm1').submit();
 }
 </script>
 
+
+
+
+
+
+      <?php
+        $_max = '';
+        $_Rate = $raykuUser->getRate();
+
+	if($stats['expertCount'] >= 125 && $changeUserType != 1):
+
+		$_max = '0.50';
+
+	else:
+		$_max = '0.00';
+	endif; ?>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+   <script src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/widget/jquery.ui.core.js"></script>
+   <script src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/widget/jquery.ui.widget.js"></script>
+   <script src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/widget/jquery.ui.mouse.js"></script>
+   <script src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/widget/jquery.ui.slider.js"></script>
+   <script type="text/javascript" src="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/js/widget/jquery.qtip-1.0.0-rc3.min.js"></script>
+   <script type="text/javascript">
+    var vd = jQuery.noConflict();
+
+    vd('#rank').qtip({
+        content: '<span style="line-height:16px;">Rank in the <strong>top #25</strong> and<br >you will show up on the<br >1st page of tutor search lists.</span>',
+        position: {
+            corner: {
+                target: 'topRight',
+                tooltip: 'topLeft'
+            }
+        },
+        show: 'mouseover',
+        hide: 'mouseout',
+        style: {
+            color: '#CCC',
+            background: '#113048',
+            border: {
+                width: 1,
+                radius: 3,
+                color: '#1C517B'
+            }
+        }
+    });
+    vd("#tutor-rate").slider({
+        range: "min",
+        value: <?php echo $_Rate; ?> , min: 0.00,
+        max: <?php echo $_max; ?> , step: 0.01,
+        slide: function (event, ui) {
+            vd("#amount").val(ui.value);
+            vd("#amount_hidden").val(ui.value);
+        }
+    });
+    vd("#amount").val(vd("#tutor-rate").slider("value"));
+    vd("#amount_hidden").val(vd("#tutor-rate").slider("value"));
+
+    vd('#tutor-rate').mouseout(function () {
+        var rate = document.getElementById("amount_hidden").value;
+        vd.ajax({
+            cache: false,
+            type: "GET",
+            url: "http://" + getHostname() + "/dashboard/chargerate?rate=" + rate
+        });
+
+    });
+
+    vd('#_slider_call').mouseover(function() {
+
+	var rate = <?php echo $_max; ?>
+
+	if(rate == "0.00") {
+
+	document.getElementById("error-message").style.display = "block";
+
+	}
+
+});
+
+    vd('#tutor-rate').mouseover(function () {
+        var rate = document.getElementById("amount_hidden").value;
+        vd.ajax({
+            cache: false,
+            type: "GET",
+            url: "/dashboard/chargerate?rate=" + rate
+        });
+
+    });
+</script>
+
 </head>
 
 <body>
 <div id="wrapper">
+          <div id="tutor-rate"></div>
+          <input type="hidden" id="amount_hidden" name ="amount_hidden" value=''>
+
   <div id="callout">
     <h3>Get free tutoring credits for inviting your friends!</h3>
     <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tristique vulputate arcu, non interdum leo pretium at. Sed et consequat lectus. Vestibulum gravida ornare pharetra.</p>
@@ -105,7 +198,7 @@ document.getElementById('frm1').submit();
 <!-- Le javascript
 	================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<!-- <script src="js/jquery.js"></script> -->
+<!-- <script src="js/bootstrap.min.js"></script> -->
 </body>
 </html>

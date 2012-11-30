@@ -17,7 +17,7 @@ class staticActions extends sfActions
 	public function executeFaq()
 	{
 	}
-	
+
 	public function executeAbout()
 	{
 	}

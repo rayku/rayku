@@ -18,6 +18,18 @@ class referralsActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->user = $this->getUser();
+	//$user_id = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
+	$user = $this->getUser()->getRaykuUser();
+
+	if($user)
+		$user_id = $user->getId();
+
+	if(!$user_id)
+	{
+        $this->forward('/dashboard');
+	}
+
+	$this->setVar('user_id', $user_id);
 
 	//Form submitted
 	if (sfWebRequest::POST == $this->getRequest()->getMethod()) {

@@ -92,7 +92,7 @@ img {
   width: auto\9;
   /* IE7-8 need help adjusting responsive images */
 
-  height: auto;
+  /*height: auto;*/
   /* Part 2: Scale the height according to the width, otherwise you get stretching */
 
   vertical-align: middle;
@@ -142,13 +142,16 @@ textarea {
   overflow: auto;
   vertical-align: top;
 }
-body {
+body2 {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   color: #333333;
   background-color: #ffffff;
+}
+body {
+font: normal 62.5%/1 Arial, Geneva, Verdana, Tahoma, sans-serif;
 }
 a {
   color: #0088cc;
@@ -596,8 +599,12 @@ h4 small {
 }
 ul,
 ol {
+
+  /*
   padding: 0;
   margin: 0 0 10px 25px;
+  */
+
 }
 ul ul,
 ul ol,
