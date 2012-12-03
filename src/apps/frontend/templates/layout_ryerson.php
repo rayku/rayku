@@ -45,7 +45,7 @@
      <!--navigation-->
      <ul id="navigation">
        <li><a href="/login">Login</a></li>
-       <li><strong><a href="/register">Register</a></strong></li>
+       <li><a href="/register">Register</a></li>
        <li><a href="/about">About</a></li>
        <li><a href="/jobs">Jobs</a></li>
        <li><a href="/joinus">Become a Tutor</a></li>
@@ -121,7 +121,7 @@
 
           <div class="content">
                 <h2><img src="/images/r4.png" align="absmiddle" />Get Paid</h2>
-                <p>Full billing system with on-demand payments.</p>
+                <p>Full billing system to deliver payments directly to your paypal or bank account.</p>
           </div> <!-- class="content" -->
 
           <div class="content">
@@ -148,7 +148,7 @@
 
   <!--container-->
   <div class="container">
-    <div style="width:300px;float:left;">Copyright 2012 Rayku, Inc. All rights reserved.</div>
+    <div style="width:300px;float:left;">Copyright 2012 Rayku Corp. All rights reserved.</div>
     <div style="width:500px;float:right;" align="right">Get in touch! 1-888-98RAYKU // <a href="mailto:cs[at]mail.rayku.com">email us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
   </div>
   <!--container-->

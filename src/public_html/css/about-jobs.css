@@ -554,7 +554,6 @@ div.hr
 	background-color:#f4f4f4;
 	border:1px #d1d2d2 solid;
 	border-radius:3px;
-	
 	margin:100px 0px 50px 0px
 	
 }
@@ -574,11 +573,11 @@ div.hr
 {
 	float:left;
 	width:94px;
-	padding: 4px;
+	padding:4px;
 	height:auto;
 	text-align:center;
 	font-size:11px;
-	margin:20px 0px 20px 35px
+	margin:10px 0px 10px 35px
 
 }
 

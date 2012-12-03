@@ -9,8 +9,8 @@
   
     <!--row-1-->
     <div class="row-2">
-      <h3>Account created. Just verify your email and let's start!</h3>
-      <p>We have just sent you an email, follow link inside it to confirm your account and submit your question.</p>
+      <h3>Success! Verify your email to ask your first question.</h3>
+      <p>We have just sent you an email. Please follow the link inside to confirm your account and submit your question.</p>
     </div>
     <!--row-1-->
      

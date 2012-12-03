@@ -23,7 +23,7 @@ if (isset($_POST['points']))
 
 
 
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
+			$con = mysql_connect("db1.p.rayku.com", "rayku_db", "UthmCRtaum34qpGL") or die(mysql_error());
 			$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 
 
@@ -128,7 +128,7 @@ switch ($_GET['action']) {
      
       if ($p->validate_ipn()) {
 	  
-			$con = mysql_connect("localhost", "rayku_db", "db_*$%$%") or die(mysql_error());
+			$con = mysql_connect("db1.p.rayku.com", "rayku_db", "UthmCRtaum34qpGL") or die(mysql_error());
 
 			$db = mysql_select_db("rayku_db", $con) or die(mysql_error());
 	  

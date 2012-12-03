@@ -201,7 +201,7 @@ class ratingAction extends sfAction
                 if ($_chat_rating == 1 || $_chat_rating == 2) {
                     $this->redirect('/dashboard/moneyback');
                 }
-                $this->redirect('/dashboard');
+                $this->redirect('/referrals?session=complete');
             }
         }
     }

@@ -31,7 +31,7 @@ RaykuCommon::getDatabaseConnection();
 
 <link rel="stylesheet" type="text/css" media="screen" href="/styles/global.css" />
 
-<div class="body-main">
+<div class="body-main" style="margin-bottom:40px">
   <div id="what-is">
     <div style="width:30px; float:left;"> <img src="<?php echo image_path('green_arrow.jpg', false); ?>" width="42" height="25" alt="" /> </div>
     <p style="font-size:16px; color:#1c517c; font-weight:bold; margin-left:45px;">Purchase Rayku Points</p>
@@ -129,82 +129,7 @@ RaykuCommon::getDatabaseConnection();
 
             </div>
               
-              <div class="rpdivider"></div>
               
-              <div class="cont">
-                  
-                  <?php
-                    if (!empty($cardNum)){
-                        echo 'You have registered a card: xxxxxxxxxxxx-' . $cardNum;
-                        ?>
-                        
-                         <?php echo $error; ?>
-                        
-                        <?php echo form_tag('shop/paypal', array('name' => 'pay_balance')) ?>
-                            <?php echo submit_tag('', array('id' => 'pay_balance','name' => 'pay_balance', 'value'=>'Pay the balance')) ?>
-                  
-                        </form>
-                        
-                        
-                        <?php
-                    }else{
-                        
-                  ?>
-                  
-                        <br/>
-                        <?php echo $error; ?>
-                        <?php echo form_tag('shop/paypal', array('name' => 'submit_card')) ?>
-                        <div class="top"></div>
-                            <div class="content">
-                            <div class="entry">
-                                <div class="ttle">Enter your credit card info for automatic payment</div>
-
-                                <div class="spacer"></div>
-                            </div>
-                            <div class="entry">
-                                <div class="ttle">Cardholder Name:</div>
-                                <div style="float:left">
-                                
-                                <?php echo input_tag('card_name', '', array('type' => 'card_name')) ?> </div>
-                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
-                                <div class="spacer"></div>
-                            </div>
-                                
-                            <div class="entry">
-                                <div class="ttle">Credit Card Number:</div>
-                                <div style="float:left">
-                                
-                                <?php echo input_tag('credit_card', '', array('type' => 'credit_card')) ?> </div>
-                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
-                                <div class="spacer"></div>
-                            </div>          
-
-                            <div class="entry">
-                                <div class="ttle">CVV:</div>
-                                <div style="float:left">
-                                
-                                <?php echo input_tag('cvv', '', array('type' => 'cvv')) ?> </div>
-                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;"></div>
-                                <div class="spacer"></div>
-                            </div>       
-
-                            <div class="entry">
-                                <div class="ttle">Expiry Date:</div>
-                                <div style="float:left">
-                                   
-                                    <?php echo input_tag('expiry_date', '', array('type' => 'expiry_date')) ?> </div>
-                                <div style="font-weight:normal;color:#666;width:200px;margin-left:240px;">Format: mmyy</div>
-                                <div class="spacer"></div>
-                                </div>
-                                </div>
-                            <div class="bottom"></div>
-                            <div class="spacer"></div>
-
-                        <?php echo submit_tag('', array('id' => 'submit_card','name' => 'submit_card', 'value'=>'Submit')) ?>
-                        </form>
-                <?php } ?>
-              </div>
-            <!--cont--> 
           </div>
           <!--b--> 
         </div>
@@ -213,9 +138,12 @@ RaykuCommon::getDatabaseConnection();
       <!--end of box--> 
     </div>
   </div>
-  
+  <?php if ($detailPoints['points'] < '50'): ?>
+  <p style="font-size:14px;color:#666;">You need to accumulate at least 50RP in order to request a cash out</p>
+  <?php else: ?>
   <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo $detailPoints['points']; ?></strong></p><br />
-  <input type="submit" class="myButton" value="Cash Out" name="submit"/>
+  <input type="submit" class="myButton" value="Cash Out" name="submit" onClick="window.location.href='mailto:cs@mail.rayku.com?subject=Cash Out <?php echo $detailPoints['points']; ?> from userID<?php echo $user->getId(); ?>'"/>
+  <?php endif; ?>
 </div>
 <div id="shop_right">  
   <div class="text">

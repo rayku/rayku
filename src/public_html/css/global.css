@@ -1,6 +1,10 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 @import "reset.css";
 @import "predefined.css";
+
+#video-button {
+	position: absolute;
+}
 
 /* MJWALSH MODIFICATION */
 
@@ -836,6 +840,7 @@ Body - Subpage
 	font:1.2em Arial;
 	color:#fff;
 }
+
 .bulletin .header h4 a {
 	font:bold 1.1em Arial;
 	color:#1C517C;
@@ -1200,6 +1205,7 @@ Body - Subpage
 							float:left;
 							font-size:13px;
 								}
+
 		#shop_right .text {
 			width:264px;
 			height:auto;

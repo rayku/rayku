@@ -292,21 +292,17 @@ class registerActions extends sfActions
             $this->getRequest()->setParameter('question', $question);
 
 			// Rajesh Soni - 28 November 2012
-			// One other bug by the way: There appears a database error when I click on the confirmation link (for new registered users), and it is fixed if I reload the page (F5).  I researched a bit about it, and I found that it is due to last changes done on production server appears needing a column (referred_by) in USER table. That causes this error. Could you please take a quick look into this as well?
 
-            //$this->forward("/dashboard", 'index');
-            $this->redirect("/dashboard/getstarted");
+            $this->redirect("referrals?register=success");
 
         } elseif ($user) {
 
 			// Rajesh Soni - 28 November 2012
-			// ERROR: Email confirmation email link for new registered users is going to a Rayku.com 404 page (not when clicked - but when copy/pasted to browser)
 
-            //$this->forward('register', 'new');
-            $this->redirect("/dashboard/getstarted");
+            $this->redirect("referrals?register=success");
 
         } else {
-            $this->redirect("/dashboard/getstarted");
+            $this->redirect("referrals?register=success");
         }
     }
 

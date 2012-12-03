@@ -24,7 +24,7 @@
      <!--navigation-->
      <ul id="navigation">
        <li><a href="/login">Login</a></li>
-       <li><strong><a href="/register">Register</a></strong></li>
+       <li><a href="/register">Register</a></li>
        <li><a href="/about">About</a></li>
        <li><a href="/jobs">Jobs</a></li>
        <li><a href="/joinus">Become a Tutor</a></li>
@@ -173,7 +173,7 @@
                 <div id="profile-voutsinas" class="board-of-advisor-profile">
                     <div class="board-of-advisor-profile-img"><img src="/images/prf2.png"  alt="" /></div>
                     <div class="board-of-advisor-profile-content">
-                        <h1>Chris Voutsinas, Advisor</h1>
+                        <h1>Christopher Voutsinas, Advisor</h1>
                         <p>Christopher is President at Capital Value & Income Corp. Christopher has held senior strategic roles at leading institutions, including Goldman Sachs (Executive Director), Deutsche Bank (Managing Director), and OMERS (Global Head of Investment). He has also advised numerous public and private companies, including TELUS and Wave Accounting. Christopher received an M.B.A. from the Wharton School of Business, an M.S. from M.I.T., and a Bachelor of Architecture from McGill University. </p>
                     
                     </div> <!-- board-of-advisor-profile-content -->
@@ -189,7 +189,8 @@
                     <div class="board-of-advisor-profile-content">
                         <h1>Paul Jackson, Advisor</h1>
                         <p>Paul is CEO and founder of <a href="http://methodcrm.com" target="_blank">Method CRM</a>, with a focus on product development, user experience and data integration between SaaS applications.  Previously, he founded LM Software and QXpress, which were acquired by Marathon Data Systems.  Paul is also an angel investor and advisor to several local tech start-ups. Paul holds a BComm from Queen’s University.</p>
-                    
+                        <a href="https://twitter.com/PaulAlexJackson" target="_blank"><img src="/images/btn-follow.jpg" alt="Follow @PaulAlexJackson" /></a>  
+
                     </div> <!-- board-of-advisor-profile-content -->
                 
                     <div class="clear"></div>
@@ -202,7 +203,7 @@
                     <div class="board-of-advisor-profile-img"><img src="/images/prf6.png"  alt="" /></div>
                     <div class="board-of-advisor-profile-content">
                         <h1>Geoff Simonett, Advisor</h1>
-                        <p>Geoff is an accomplished entrepreneur with two decades of experience starting, operating and successfully exiting multiple companies acting as a principal, advisor, investor, board member, mentor and/or consultant. He has participated in the growth and success of many early stage companies both in Canada and the United States. Geoff received a Commerce degree from Queen's University.</p>
+                        <p>Geoff is the founder and President of GreenSky Capital in Toronto, a boutique corporate financial advisory firm and Exempt Market Dealer. Geoff is an accomplished entrepreneur with two decades of experience starting, operating and successfully exiting multiple companies acting as a principal, advisor, investor, board member, mentor and/or consultant. He has participated in the growth and success of many early stage companies both in Canada and the United States. Geoff received a Commerce degree from Queen's University.</p>
                     
                     </div> <!-- board-of-advisor-profile-content -->
                 
@@ -230,16 +231,16 @@
             <div class="board-of-advisor-right">
             	<h2>Board of Advisors</h2>  
 
-                <div id="link-solomon" class="board-of-advisor-right-profile">
+                <div id="link-solomon" class="board-of-advisor-right-profile" style="margin-top:20px;">
                 	<a href="#solomon"><img src="/images/prf3.png" width="75px" alt="" /><br />
                	  <strong>Aron Solomon</strong></a><br />
-                    Smartswise              
+                    UNFINISHED              
                 </div> <!-- board-of-advisor-right-profile -->
 
-                <div id="link-voutsinas" class="board-of-advisor-right-profile">
+                <div id="link-voutsinas" class="board-of-advisor-right-profile" style="margin-top:20px;">
                     <a href="#voutsinas"><img src="/images/prf2.png" width="75px" alt="" /><br />
-                    <strong>Chris Voutsinas</strong></a><br />
-                    Capital Value &#38; Income         
+                    <strong style="font-size:12px;">Chris Voutsinas</strong></a><br />
+                    Capital Value &#38; Income    
                 </div> <!-- board-of-advisor-right-profile -->  
                 
                 <div id="link-jackson" class="board-of-advisor-right-profile">
@@ -254,7 +255,7 @@
                     GreenSky Capital          
                 </div> <!-- board-of-advisor-right-profile -->
 
-                <div id="link-carrescia" class="board-of-advisor-right-profile">
+                <div id="link-carrescia" class="board-of-advisor-right-profile" style="margin-bottom:20px;">
                     <a href="#carrescia"><img src="/images/prf4.png" width="75px" alt="" /><br />
                   <strong>Peter Carrescia</strong></a><br />
                     Advisor             
@@ -276,7 +277,7 @@
 
   <!--container-->
   <div class="container">
-    <div style="width:300px;float:left;">Copyright 2012 Rayku, Inc. All rights reserved.</div>
+    <div style="width:300px;float:left;">Copyright 2012 Rayku Corp. All rights reserved.</div>
     <div style="width:500px;float:right;" align="right">Get in touch! 1-888-98RAYKU // <a href="mailto:cs[at]mail.rayku.com">email us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
   </div>
   <!--container-->

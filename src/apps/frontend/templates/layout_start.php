@@ -7,7 +7,7 @@
 <!--[if lte IE 8]>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/ie78.css" media="screen" />
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css?version=5"/>
 
 <!-- Form Validation -->
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/validation/validationEngine.jquery.css" media="screen" />
@@ -25,11 +25,11 @@
 <div id="header">
   <!--container-->
   <div class="container clearfix">
-    <h1><a href="#register"><img src="<?php echo $baseRootPath; ?>/images/landing/topnav/rayku.jpg" alt="Rayku"/></a></h1>
+    <h1><a href="/"><img src="<?php echo $baseRootPath; ?>/images/landing/topnav/rayku.jpg" alt="Rayku"/></a></h1>
     <!--navigation-->
     <ul id="navigation">
       <li><a href="/login">Login</a></li>
-       <li><strong><a href="/register">Register</a></strong></li>
+       <li><a href="/register">Register</a></li>
        <li><a href="/about">About</a></li>
        <li><a href="/jobs">Jobs</a></li>
        <li><a href="/joinus">Become a Tutor</a></li>
@@ -52,8 +52,10 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
   <!--container-->
   <div class="container">
-    <form name="register-form" id="register-form" action="quickreg/register" method="post" style="height:265px;background:url(/images/media-logos.png) no-repeat center bottom;">
-      <h3>Ask any math question <span style="font-weight:normal">
+	<a id="video-button" href="#newsletter-form"></a>
+	<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
+    <form name="register-form" id="register-form" action="quickreg/register" method="post">
+      <h3>Free Live Math Tutoring <span style="font-weight:normal">
         <?php
             $onlineUsersCount = UsersAvailabilityChecker::getOnlineUsersCount();
             if( $onlineUsersCount > 5) {
@@ -64,11 +66,11 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
         ?>
       </h3>
       <p class="main-question">
-        <input type="text" name="question" id="question" value="Type the question or topic you need help with here"/>
+        <input type="text" name="question" id="question" value="Type your math question here"/>
       </p>
       <!--register-block-->
       <div id="register-block">
-        <h4 class="clearfix">Create account as you ask your first question (it's free!):</h4>
+        <h4 class="clearfix">Create an account as you ask your first question (it's free!):</h4>
         <!--register block fields-->
         <div id="register-block-fields">
           <ul class="clearfix">
@@ -248,7 +250,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
       <!--video-->
       <div class="video">
-        <iframe src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&videoHeight=262&volumeControl=true&playerColor=313131&plugin%5BpostRoll%5D%5Bversion%5D=v1&plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="465" height="262"></iframe>
+        <iframe id="promo-video" src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&videoHeight=262&volumeControl=true&playerColor=313131&plugin%5BpostRoll%5D%5Bversion%5D=v1&plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="465" height="262"></iframe>
         <form action="#" id="newsletter-form">
           <p>Take 30 seconds</p>
           <p><a href="/register">Register Now</a></p>
@@ -281,13 +283,8 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="http://placeholder-fixer.googlecode.com/svn/trunk/placeholder_fixer.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.scrolling-parallax.js"></script>
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js?version=5"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/input-fader.js"></script>
-<script type="text/javascript">
-setTimeout(function(){var a=document.createElement("script");
-var b=document.getElementsByTagName("script")[0];
-a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0003/8331.js?"+Math.floor(new Date().getTime()/3600000);
-a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-</script>
+<script src="//fast.wistia.com/static/iframe-api-v1.js"></script>
 </body>
 </html>

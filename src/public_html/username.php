@@ -1,7 +1,7 @@
 <?php
 
 
-		$con = mysql_connect("localhost", "rayku_db", "db_*$%$%");
+		$con = mysql_connect("db1.p.rayku.com", "rayku_db", "UthmCRtaum34qpGL");
 	        $db = mysql_select_db("rayku_db", $con);
 	//$logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 

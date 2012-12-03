@@ -41,7 +41,7 @@ class BotServiceProvider
         'facebook' => array(
             'prefix' => 'http://facebook.rayku.com',
             'serviceUrl' => 'bots.rayku.com:4567',
-            'enabled' => true
+            'enabled' => false
         ),
         'mac-server' => array(
             'prefix' => 'http://notification-bot.rayku.com',

@@ -22,9 +22,9 @@
       <li><a href="/start" title="Rayku">Rayku</a></li>
     </ul>
     <!--navigation-->
-    <ul id="navigation">
+    <ul id="navigation" style="margin-top:6px;">
       <li><a href="/login">Login</a></li>
-       <li><strong><a href="/register">Register</a></strong></li>
+       <li><a href="/register">Register</a></li>
        <li><a href="/about">About</a></li>
        <li><a href="/jobs">Jobs</a></li>
        <li><a href="/joinus">Become a Tutor</a></li>

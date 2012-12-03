@@ -37,3 +37,22 @@
 #navigation li:last-child {
 	background: none repeat scroll 0 0 transparent;
 }
+
+#video-button {
+	background: url('/images/btn-videop.png');
+	min-width: 130px;
+	min-height: 77px;
+	position: absolute;
+	top:271px;
+	left: 157px;
+}
+
+#video-button:hover {
+	background: url('/images/btn-videoa.png');
+}
+
+#media-logos {
+	position: absolute;
+	top: 281px;
+	left: 324px;	
+}
