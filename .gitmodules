@@ -4,3 +4,6 @@
 [submodule "src/lib/vendor/phake"]
 	path = src/lib/vendor/phake
 	url = git://github.com/mlively/Phake.git
+[submodule "src/lib/vendor/braintree"]
+	path = src/lib/vendor/braintree
+	url = git://github.com/braintree/braintree_php.git
