@@ -227,16 +227,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	protected $login;
 
 	/**
-	 * The value for the credit_card field.
+	 * The value for the braintree_customer_id field.
+	 * Note: this column has a database default value of: 'null'
 	 * @var        string
 	 */
-	protected $credit_card;
-
-	/**
-	 * The value for the credit_card_token field.
-	 * @var        string
-	 */
-	protected $credit_card_token;
+	protected $braintree_customer_id;
 
 	/**
 	 * The value for the first_charge field.
@@ -249,6 +244,16 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 * @var        string
 	 */
 	protected $where_find_us;
+
+	/**
+	 * @var        array CreditCard[] Collection to store aggregation of CreditCard objects.
+	 */
+	protected $collCreditCards;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collCreditCards.
+	 */
+	private $lastCreditCardCriteria = null;
 
 	/**
 	 * @var        array Expert[] Collection to store aggregation of Expert objects.
@@ -461,6 +466,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->show_relationship_status = 1;
 		$this->credit = 0;
 		$this->login = 0;
+		$this->braintree_customer_id = 'null';
 	}
 
 	/**
@@ -868,23 +874,13 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [credit_card] column value.
+	 * Get the [braintree_customer_id] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getCreditCard()
+	public function getBraintreeCustomerId()
 	{
-		return $this->credit_card;
-	}
-
-	/**
-	 * Get the [credit_card_token] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getCreditCardToken()
-	{
-		return $this->credit_card_token;
+		return $this->braintree_customer_id;
 	}
 
 	/**
@@ -1663,44 +1659,24 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	} // setLogin()
 
 	/**
-	 * Set the value of [credit_card] column.
+	 * Set the value of [braintree_customer_id] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     User The current object (for fluent API support)
 	 */
-	public function setCreditCard($v)
+	public function setBraintreeCustomerId($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->credit_card !== $v) {
-			$this->credit_card = $v;
-			$this->modifiedColumns[] = UserPeer::CREDIT_CARD;
+		if ($this->braintree_customer_id !== $v || $v === 'null') {
+			$this->braintree_customer_id = $v;
+			$this->modifiedColumns[] = UserPeer::BRAINTREE_CUSTOMER_ID;
 		}
 
 		return $this;
-	} // setCreditCard()
-
-	/**
-	 * Set the value of [credit_card_token] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     User The current object (for fluent API support)
-	 */
-	public function setCreditCardToken($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->credit_card_token !== $v) {
-			$this->credit_card_token = $v;
-			$this->modifiedColumns[] = UserPeer::CREDIT_CARD_TOKEN;
-		}
-
-		return $this;
-	} // setCreditCardToken()
+	} // setBraintreeCustomerId()
 
 	/**
 	 * Sets the value of [first_charge] column to a normalized version of the date/time value specified.
@@ -1782,7 +1758,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT,UserPeer::LOGIN))) {
+			if (array_diff($this->modifiedColumns, array(UserPeer::POINTS,UserPeer::TYPE,UserPeer::HIDDEN,UserPeer::RELATIONSHIP_STATUS,UserPeer::SHOW_EMAIL,UserPeer::SHOW_GENDER,UserPeer::SHOW_HOMETOWN,UserPeer::SHOW_HOME_PHONE,UserPeer::SHOW_MOBILE_PHONE,UserPeer::SHOW_BIRTHDATE,UserPeer::SHOW_ADDRESS,UserPeer::SHOW_RELATIONSHIP_STATUS,UserPeer::CREDIT,UserPeer::LOGIN,UserPeer::BRAINTREE_CUSTOMER_ID))) {
 				return false;
 			}
 
@@ -1842,6 +1818,10 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return false;
 			}
 
+			if ($this->braintree_customer_id !== 'null') {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -1896,10 +1876,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$this->notification = ($row[$startcol + 29] !== null) ? (string) $row[$startcol + 29] : null;
 			$this->phone_number = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
 			$this->login = ($row[$startcol + 31] !== null) ? (int) $row[$startcol + 31] : null;
-			$this->credit_card = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
-			$this->credit_card_token = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
-			$this->first_charge = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
-			$this->where_find_us = ($row[$startcol + 35] !== null) ? (string) $row[$startcol + 35] : null;
+			$this->braintree_customer_id = ($row[$startcol + 32] !== null) ? (string) $row[$startcol + 32] : null;
+			$this->first_charge = ($row[$startcol + 33] !== null) ? (string) $row[$startcol + 33] : null;
+			$this->where_find_us = ($row[$startcol + 34] !== null) ? (string) $row[$startcol + 34] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1909,7 +1888,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 36; // 36 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 35; // 35 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -1970,6 +1949,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		$this->hydrate($row, 0, true); // rehydrate
 
 		if ($deep) {  // also de-associate any related objects?
+
+			$this->collCreditCards = null;
+			$this->lastCreditCardCriteria = null;
 
 			$this->collExperts = null;
 			$this->lastExpertCriteria = null;
@@ -2132,6 +2114,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
+			}
+
+			if ($this->collCreditCards !== null) {
+				foreach ($this->collCreditCards as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
 			}
 
 			if ($this->collExperts !== null) {
@@ -2342,6 +2332,14 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collCreditCards !== null) {
+					foreach ($this->collCreditCards as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collExperts !== null) {
 					foreach ($this->collExperts as $referrerFK) {
@@ -2611,15 +2609,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				return $this->getLogin();
 				break;
 			case 32:
-				return $this->getCreditCard();
+				return $this->getBraintreeCustomerId();
 				break;
 			case 33:
-				return $this->getCreditCardToken();
-				break;
-			case 34:
 				return $this->getFirstCharge();
 				break;
-			case 35:
+			case 34:
 				return $this->getWhereFindUs();
 				break;
 			default:
@@ -2675,10 +2670,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			$keys[29] => $this->getNotification(),
 			$keys[30] => $this->getPhoneNumber(),
 			$keys[31] => $this->getLogin(),
-			$keys[32] => $this->getCreditCard(),
-			$keys[33] => $this->getCreditCardToken(),
-			$keys[34] => $this->getFirstCharge(),
-			$keys[35] => $this->getWhereFindUs(),
+			$keys[32] => $this->getBraintreeCustomerId(),
+			$keys[33] => $this->getFirstCharge(),
+			$keys[34] => $this->getWhereFindUs(),
 		);
 		return $result;
 	}
@@ -2807,15 +2801,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 				$this->setLogin($value);
 				break;
 			case 32:
-				$this->setCreditCard($value);
+				$this->setBraintreeCustomerId($value);
 				break;
 			case 33:
-				$this->setCreditCardToken($value);
-				break;
-			case 34:
 				$this->setFirstCharge($value);
 				break;
-			case 35:
+			case 34:
 				$this->setWhereFindUs($value);
 				break;
 		} // switch()
@@ -2874,10 +2865,9 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[29], $arr)) $this->setNotification($arr[$keys[29]]);
 		if (array_key_exists($keys[30], $arr)) $this->setPhoneNumber($arr[$keys[30]]);
 		if (array_key_exists($keys[31], $arr)) $this->setLogin($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setCreditCard($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setCreditCardToken($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setFirstCharge($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setWhereFindUs($arr[$keys[35]]);
+		if (array_key_exists($keys[32], $arr)) $this->setBraintreeCustomerId($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setFirstCharge($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setWhereFindUs($arr[$keys[34]]);
 	}
 
 	/**
@@ -2921,8 +2911,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserPeer::NOTIFICATION)) $criteria->add(UserPeer::NOTIFICATION, $this->notification);
 		if ($this->isColumnModified(UserPeer::PHONE_NUMBER)) $criteria->add(UserPeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(UserPeer::LOGIN)) $criteria->add(UserPeer::LOGIN, $this->login);
-		if ($this->isColumnModified(UserPeer::CREDIT_CARD)) $criteria->add(UserPeer::CREDIT_CARD, $this->credit_card);
-		if ($this->isColumnModified(UserPeer::CREDIT_CARD_TOKEN)) $criteria->add(UserPeer::CREDIT_CARD_TOKEN, $this->credit_card_token);
+		if ($this->isColumnModified(UserPeer::BRAINTREE_CUSTOMER_ID)) $criteria->add(UserPeer::BRAINTREE_CUSTOMER_ID, $this->braintree_customer_id);
 		if ($this->isColumnModified(UserPeer::FIRST_CHARGE)) $criteria->add(UserPeer::FIRST_CHARGE, $this->first_charge);
 		if ($this->isColumnModified(UserPeer::WHERE_FIND_US)) $criteria->add(UserPeer::WHERE_FIND_US, $this->where_find_us);
 
@@ -3041,9 +3030,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 
 		$copyObj->setLogin($this->login);
 
-		$copyObj->setCreditCard($this->credit_card);
-
-		$copyObj->setCreditCardToken($this->credit_card_token);
+		$copyObj->setBraintreeCustomerId($this->braintree_customer_id);
 
 		$copyObj->setFirstCharge($this->first_charge);
 
@@ -3054,6 +3041,12 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			// important: temporarily setNew(false) because this affects the behavior of
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
+
+			foreach ($this->getCreditCards() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addCreditCard($relObj->copy($deepCopy));
+				}
+			}
 
 			foreach ($this->getExperts() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
@@ -3205,6 +3198,160 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			self::$peer = new UserPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Clears out the collCreditCards collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addCreditCards()
+	 */
+	public function clearCreditCards()
+	{
+		$this->collCreditCards = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collCreditCards collection (array).
+	 *
+	 * By default this just sets the collCreditCards collection to an empty array (like clearcollCreditCards());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initCreditCards()
+	{
+		$this->collCreditCards = array();
+	}
+
+	/**
+	 * Gets an array of CreditCard objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this User has previously been saved, it will retrieve
+	 * related CreditCards from storage. If this User is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array CreditCard[]
+	 * @throws     PropelException
+	 */
+	public function getCreditCards($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCreditCards === null) {
+			if ($this->isNew()) {
+			   $this->collCreditCards = array();
+			} else {
+
+				$criteria->add(CreditCardPeer::USER_ID, $this->id);
+
+				CreditCardPeer::addSelectColumns($criteria);
+				$this->collCreditCards = CreditCardPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(CreditCardPeer::USER_ID, $this->id);
+
+				CreditCardPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCreditCardCriteria) || !$this->lastCreditCardCriteria->equals($criteria)) {
+					$this->collCreditCards = CreditCardPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCreditCardCriteria = $criteria;
+		return $this->collCreditCards;
+	}
+
+	/**
+	 * Returns the number of related CreditCard objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related CreditCard objects.
+	 * @throws     PropelException
+	 */
+	public function countCreditCards(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collCreditCards === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(CreditCardPeer::USER_ID, $this->id);
+
+				$count = CreditCardPeer::doCount($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(CreditCardPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastCreditCardCriteria) || !$this->lastCreditCardCriteria->equals($criteria)) {
+					$count = CreditCardPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collCreditCards);
+				}
+			} else {
+				$count = count($this->collCreditCards);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a CreditCard object to this object
+	 * through the CreditCard foreign key attribute.
+	 *
+	 * @param      CreditCard $l CreditCard
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addCreditCard(CreditCard $l)
+	{
+		if ($this->collCreditCards === null) {
+			$this->initCreditCards();
+		}
+		if (!in_array($l, $this->collCreditCards, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collCreditCards, $l);
+			$l->setUser($this);
+		}
 	}
 
 	/**
@@ -5966,6 +6113,11 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collCreditCards) {
+				foreach ((array) $this->collCreditCards as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collExperts) {
 				foreach ((array) $this->collExperts as $o) {
 					$o->clearAllReferences($deep);
@@ -6052,6 +6204,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
+		$this->collCreditCards = null;
 		$this->collExperts = null;
 		$this->collExpertCategorys = null;
 		$this->collHistorys = null;

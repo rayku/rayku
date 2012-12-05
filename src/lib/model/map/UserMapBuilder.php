@@ -126,9 +126,7 @@ class UserMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('LOGIN', 'Login', 'INTEGER', true, 10);
 
-		$tMap->addColumn('CREDIT_CARD', 'CreditCard', 'VARCHAR', false, 4);
-
-		$tMap->addColumn('CREDIT_CARD_TOKEN', 'CreditCardToken', 'VARCHAR', false, 10);
+		$tMap->addColumn('BRAINTREE_CUSTOMER_ID', 'BraintreeCustomerId', 'CHAR', false, 11);
 
 		$tMap->addColumn('FIRST_CHARGE', 'FirstCharge', 'TIMESTAMP', false, null);
 

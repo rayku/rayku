@@ -1,139 +1,49 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'user' table.
+ * Base static class for performing query and update operations on the 'credit_card' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseUserPeer {
+abstract class BaseCreditCardPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'user';
+	const TABLE_NAME = 'credit_card';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.User';
+	const CLASS_DEFAULT = 'lib.model.CreditCard';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 35;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'user.ID';
+	const ID = 'credit_card.ID';
 
-	/** the column name for the USERNAME field */
-	const USERNAME = 'user.USERNAME';
+	/** the column name for the USER_ID field */
+	const USER_ID = 'credit_card.USER_ID';
 
-	/** the column name for the EMAIL field */
-	const EMAIL = 'user.EMAIL';
-
-	/** the column name for the PASSWORD field */
-	const PASSWORD = 'user.PASSWORD';
-
-	/** the column name for the POINTS field */
-	const POINTS = 'user.POINTS';
-
-	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'user.CREATED_AT';
-
-	/** the column name for the LAST_ACTIVITY_AT field */
-	const LAST_ACTIVITY_AT = 'user.LAST_ACTIVITY_AT';
+	/** the column name for the TOKEN field */
+	const TOKEN = 'credit_card.TOKEN';
 
 	/** the column name for the TYPE field */
-	const TYPE = 'user.TYPE';
+	const TYPE = 'credit_card.TYPE';
 
-	/** the column name for the HIDDEN field */
-	const HIDDEN = 'user.HIDDEN';
-
-	/** the column name for the NAME field */
-	const NAME = 'user.NAME';
-
-	/** the column name for the GENDER field */
-	const GENDER = 'user.GENDER';
-
-	/** the column name for the HOMETOWN field */
-	const HOMETOWN = 'user.HOMETOWN';
-
-	/** the column name for the HOME_PHONE field */
-	const HOME_PHONE = 'user.HOME_PHONE';
-
-	/** the column name for the MOBILE_PHONE field */
-	const MOBILE_PHONE = 'user.MOBILE_PHONE';
-
-	/** the column name for the BIRTHDATE field */
-	const BIRTHDATE = 'user.BIRTHDATE';
-
-	/** the column name for the ADDRESS field */
-	const ADDRESS = 'user.ADDRESS';
-
-	/** the column name for the RELATIONSHIP_STATUS field */
-	const RELATIONSHIP_STATUS = 'user.RELATIONSHIP_STATUS';
-
-	/** the column name for the SHOW_EMAIL field */
-	const SHOW_EMAIL = 'user.SHOW_EMAIL';
-
-	/** the column name for the SHOW_GENDER field */
-	const SHOW_GENDER = 'user.SHOW_GENDER';
-
-	/** the column name for the SHOW_HOMETOWN field */
-	const SHOW_HOMETOWN = 'user.SHOW_HOMETOWN';
-
-	/** the column name for the SHOW_HOME_PHONE field */
-	const SHOW_HOME_PHONE = 'user.SHOW_HOME_PHONE';
-
-	/** the column name for the SHOW_MOBILE_PHONE field */
-	const SHOW_MOBILE_PHONE = 'user.SHOW_MOBILE_PHONE';
-
-	/** the column name for the SHOW_BIRTHDATE field */
-	const SHOW_BIRTHDATE = 'user.SHOW_BIRTHDATE';
-
-	/** the column name for the SHOW_ADDRESS field */
-	const SHOW_ADDRESS = 'user.SHOW_ADDRESS';
-
-	/** the column name for the SHOW_RELATIONSHIP_STATUS field */
-	const SHOW_RELATIONSHIP_STATUS = 'user.SHOW_RELATIONSHIP_STATUS';
-
-	/** the column name for the PASSWORD_RECOVER_KEY field */
-	const PASSWORD_RECOVER_KEY = 'user.PASSWORD_RECOVER_KEY';
-
-	/** the column name for the COOKIE_KEY field */
-	const COOKIE_KEY = 'user.COOKIE_KEY';
-
-	/** the column name for the CREDIT field */
-	const CREDIT = 'user.CREDIT';
-
-	/** the column name for the INVISIBLE field */
-	const INVISIBLE = 'user.INVISIBLE';
-
-	/** the column name for the NOTIFICATION field */
-	const NOTIFICATION = 'user.NOTIFICATION';
-
-	/** the column name for the PHONE_NUMBER field */
-	const PHONE_NUMBER = 'user.PHONE_NUMBER';
-
-	/** the column name for the LOGIN field */
-	const LOGIN = 'user.LOGIN';
-
-	/** the column name for the BRAINTREE_CUSTOMER_ID field */
-	const BRAINTREE_CUSTOMER_ID = 'user.BRAINTREE_CUSTOMER_ID';
-
-	/** the column name for the FIRST_CHARGE field */
-	const FIRST_CHARGE = 'user.FIRST_CHARGE';
-
-	/** the column name for the WHERE_FIND_US field */
-	const WHERE_FIND_US = 'user.WHERE_FIND_US';
+	/** the column name for the NUMBER field */
+	const NUMBER = 'credit_card.NUMBER';
 
 	/**
-	 * An identiy map to hold any loaded instances of User objects.
+	 * An identiy map to hold any loaded instances of CreditCard objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array User[]
+	 * @var        array CreditCard[]
 	 */
 	public static $instances = array();
 
@@ -150,11 +60,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'Email', 'Password', 'Points', 'CreatedAt', 'LastActivityAt', 'Type', 'Hidden', 'Name', 'Gender', 'Hometown', 'HomePhone', 'MobilePhone', 'Birthdate', 'Address', 'RelationshipStatus', 'ShowEmail', 'ShowGender', 'ShowHometown', 'ShowHomePhone', 'ShowMobilePhone', 'ShowBirthdate', 'ShowAddress', 'ShowRelationshipStatus', 'PasswordRecoverKey', 'CookieKey', 'Credit', 'Invisible', 'Notification', 'PhoneNumber', 'Login', 'BraintreeCustomerId', 'FirstCharge', 'WhereFindUs', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'email', 'password', 'points', 'createdAt', 'lastActivityAt', 'type', 'hidden', 'name', 'gender', 'hometown', 'homePhone', 'mobilePhone', 'birthdate', 'address', 'relationshipStatus', 'showEmail', 'showGender', 'showHometown', 'showHomePhone', 'showMobilePhone', 'showBirthdate', 'showAddress', 'showRelationshipStatus', 'passwordRecoverKey', 'cookieKey', 'credit', 'invisible', 'notification', 'phoneNumber', 'login', 'braintreeCustomerId', 'firstCharge', 'whereFindUs', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, self::EMAIL, self::PASSWORD, self::POINTS, self::CREATED_AT, self::LAST_ACTIVITY_AT, self::TYPE, self::HIDDEN, self::NAME, self::GENDER, self::HOMETOWN, self::HOME_PHONE, self::MOBILE_PHONE, self::BIRTHDATE, self::ADDRESS, self::RELATIONSHIP_STATUS, self::SHOW_EMAIL, self::SHOW_GENDER, self::SHOW_HOMETOWN, self::SHOW_HOME_PHONE, self::SHOW_MOBILE_PHONE, self::SHOW_BIRTHDATE, self::SHOW_ADDRESS, self::SHOW_RELATIONSHIP_STATUS, self::PASSWORD_RECOVER_KEY, self::COOKIE_KEY, self::CREDIT, self::INVISIBLE, self::NOTIFICATION, self::PHONE_NUMBER, self::LOGIN, self::BRAINTREE_CUSTOMER_ID, self::FIRST_CHARGE, self::WHERE_FIND_US, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'email', 'password', 'points', 'created_at', 'last_activity_at', 'type', 'hidden', 'name', 'gender', 'hometown', 'home_phone', 'mobile_phone', 'birthdate', 'address', 'relationship_status', 'show_email', 'show_gender', 'show_hometown', 'show_home_phone', 'show_mobile_phone', 'show_birthdate', 'show_address', 'show_relationship_status', 'password_recover_key', 'cookie_key', 'credit', 'invisible', 'notification', 'phone_number', 'login', 'braintree_customer_id', 'first_charge', 'where_find_us', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Token', 'Type', 'Number', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'token', 'type', 'number', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TOKEN, self::TYPE, self::NUMBER, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'token', 'type', 'number', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -164,11 +74,11 @@ abstract class BaseUserPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'Email' => 2, 'Password' => 3, 'Points' => 4, 'CreatedAt' => 5, 'LastActivityAt' => 6, 'Type' => 7, 'Hidden' => 8, 'Name' => 9, 'Gender' => 10, 'Hometown' => 11, 'HomePhone' => 12, 'MobilePhone' => 13, 'Birthdate' => 14, 'Address' => 15, 'RelationshipStatus' => 16, 'ShowEmail' => 17, 'ShowGender' => 18, 'ShowHometown' => 19, 'ShowHomePhone' => 20, 'ShowMobilePhone' => 21, 'ShowBirthdate' => 22, 'ShowAddress' => 23, 'ShowRelationshipStatus' => 24, 'PasswordRecoverKey' => 25, 'CookieKey' => 26, 'Credit' => 27, 'Invisible' => 28, 'Notification' => 29, 'PhoneNumber' => 30, 'Login' => 31, 'BraintreeCustomerId' => 32, 'FirstCharge' => 33, 'WhereFindUs' => 34, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'email' => 2, 'password' => 3, 'points' => 4, 'createdAt' => 5, 'lastActivityAt' => 6, 'type' => 7, 'hidden' => 8, 'name' => 9, 'gender' => 10, 'hometown' => 11, 'homePhone' => 12, 'mobilePhone' => 13, 'birthdate' => 14, 'address' => 15, 'relationshipStatus' => 16, 'showEmail' => 17, 'showGender' => 18, 'showHometown' => 19, 'showHomePhone' => 20, 'showMobilePhone' => 21, 'showBirthdate' => 22, 'showAddress' => 23, 'showRelationshipStatus' => 24, 'passwordRecoverKey' => 25, 'cookieKey' => 26, 'credit' => 27, 'invisible' => 28, 'notification' => 29, 'phoneNumber' => 30, 'login' => 31, 'braintreeCustomerId' => 32, 'firstCharge' => 33, 'whereFindUs' => 34, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, self::EMAIL => 2, self::PASSWORD => 3, self::POINTS => 4, self::CREATED_AT => 5, self::LAST_ACTIVITY_AT => 6, self::TYPE => 7, self::HIDDEN => 8, self::NAME => 9, self::GENDER => 10, self::HOMETOWN => 11, self::HOME_PHONE => 12, self::MOBILE_PHONE => 13, self::BIRTHDATE => 14, self::ADDRESS => 15, self::RELATIONSHIP_STATUS => 16, self::SHOW_EMAIL => 17, self::SHOW_GENDER => 18, self::SHOW_HOMETOWN => 19, self::SHOW_HOME_PHONE => 20, self::SHOW_MOBILE_PHONE => 21, self::SHOW_BIRTHDATE => 22, self::SHOW_ADDRESS => 23, self::SHOW_RELATIONSHIP_STATUS => 24, self::PASSWORD_RECOVER_KEY => 25, self::COOKIE_KEY => 26, self::CREDIT => 27, self::INVISIBLE => 28, self::NOTIFICATION => 29, self::PHONE_NUMBER => 30, self::LOGIN => 31, self::BRAINTREE_CUSTOMER_ID => 32, self::FIRST_CHARGE => 33, self::WHERE_FIND_US => 34, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'email' => 2, 'password' => 3, 'points' => 4, 'created_at' => 5, 'last_activity_at' => 6, 'type' => 7, 'hidden' => 8, 'name' => 9, 'gender' => 10, 'hometown' => 11, 'home_phone' => 12, 'mobile_phone' => 13, 'birthdate' => 14, 'address' => 15, 'relationship_status' => 16, 'show_email' => 17, 'show_gender' => 18, 'show_hometown' => 19, 'show_home_phone' => 20, 'show_mobile_phone' => 21, 'show_birthdate' => 22, 'show_address' => 23, 'show_relationship_status' => 24, 'password_recover_key' => 25, 'cookie_key' => 26, 'credit' => 27, 'invisible' => 28, 'notification' => 29, 'phone_number' => 30, 'login' => 31, 'braintree_customer_id' => 32, 'first_charge' => 33, 'where_find_us' => 34, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Token' => 2, 'Type' => 3, 'Number' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'token' => 2, 'type' => 3, 'number' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TOKEN => 2, self::TYPE => 3, self::NUMBER => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'token' => 2, 'type' => 3, 'number' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -178,7 +88,7 @@ abstract class BaseUserPeer {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			self::$mapBuilder = new UserMapBuilder();
+			self::$mapBuilder = new CreditCardMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -228,12 +138,12 @@ abstract class BaseUserPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. UserPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. CreditCardPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(UserPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(CreditCardPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -250,75 +160,15 @@ abstract class BaseUserPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(UserPeer::ID);
+		$criteria->addSelectColumn(CreditCardPeer::ID);
 
-		$criteria->addSelectColumn(UserPeer::USERNAME);
+		$criteria->addSelectColumn(CreditCardPeer::USER_ID);
 
-		$criteria->addSelectColumn(UserPeer::EMAIL);
+		$criteria->addSelectColumn(CreditCardPeer::TOKEN);
 
-		$criteria->addSelectColumn(UserPeer::PASSWORD);
+		$criteria->addSelectColumn(CreditCardPeer::TYPE);
 
-		$criteria->addSelectColumn(UserPeer::POINTS);
-
-		$criteria->addSelectColumn(UserPeer::CREATED_AT);
-
-		$criteria->addSelectColumn(UserPeer::LAST_ACTIVITY_AT);
-
-		$criteria->addSelectColumn(UserPeer::TYPE);
-
-		$criteria->addSelectColumn(UserPeer::HIDDEN);
-
-		$criteria->addSelectColumn(UserPeer::NAME);
-
-		$criteria->addSelectColumn(UserPeer::GENDER);
-
-		$criteria->addSelectColumn(UserPeer::HOMETOWN);
-
-		$criteria->addSelectColumn(UserPeer::HOME_PHONE);
-
-		$criteria->addSelectColumn(UserPeer::MOBILE_PHONE);
-
-		$criteria->addSelectColumn(UserPeer::BIRTHDATE);
-
-		$criteria->addSelectColumn(UserPeer::ADDRESS);
-
-		$criteria->addSelectColumn(UserPeer::RELATIONSHIP_STATUS);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_EMAIL);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_GENDER);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_HOMETOWN);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_HOME_PHONE);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_MOBILE_PHONE);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_BIRTHDATE);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_ADDRESS);
-
-		$criteria->addSelectColumn(UserPeer::SHOW_RELATIONSHIP_STATUS);
-
-		$criteria->addSelectColumn(UserPeer::PASSWORD_RECOVER_KEY);
-
-		$criteria->addSelectColumn(UserPeer::COOKIE_KEY);
-
-		$criteria->addSelectColumn(UserPeer::CREDIT);
-
-		$criteria->addSelectColumn(UserPeer::INVISIBLE);
-
-		$criteria->addSelectColumn(UserPeer::NOTIFICATION);
-
-		$criteria->addSelectColumn(UserPeer::PHONE_NUMBER);
-
-		$criteria->addSelectColumn(UserPeer::LOGIN);
-
-		$criteria->addSelectColumn(UserPeer::BRAINTREE_CUSTOMER_ID);
-
-		$criteria->addSelectColumn(UserPeer::FIRST_CHARGE);
-
-		$criteria->addSelectColumn(UserPeer::WHERE_FIND_US);
+		$criteria->addSelectColumn(CreditCardPeer::NUMBER);
 
 	}
 
@@ -338,21 +188,21 @@ abstract class BaseUserPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(CreditCardPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserPeer::addSelectColumns($criteria);
+			CreditCardPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// BasePeer returns a PDOStatement
@@ -371,7 +221,7 @@ abstract class BaseUserPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     User
+	 * @return     CreditCard
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -379,7 +229,7 @@ abstract class BaseUserPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = UserPeer::doSelect($critcopy, $con);
+		$objects = CreditCardPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -396,7 +246,7 @@ abstract class BaseUserPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return UserPeer::populateObjects(UserPeer::doSelectStmt($criteria, $con));
+		return CreditCardPeer::populateObjects(CreditCardPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -414,12 +264,12 @@ abstract class BaseUserPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			UserPeer::addSelectColumns($criteria);
+			CreditCardPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -437,10 +287,10 @@ abstract class BaseUserPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      User $value A User object.
+	 * @param      CreditCard $value A CreditCard object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(User $obj, $key = null)
+	public static function addInstanceToPool(CreditCard $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -458,18 +308,18 @@ abstract class BaseUserPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A User object or a primary key value.
+	 * @param      mixed $value A CreditCard object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof User) {
+			if (is_object($value) && $value instanceof CreditCard) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or User object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or CreditCard object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -484,7 +334,7 @@ abstract class BaseUserPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     User Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     CreditCard Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -538,12 +388,12 @@ abstract class BaseUserPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = UserPeer::getOMClass();
+		$cls = CreditCardPeer::getOMClass();
 		$cls = substr('.'.$cls, strrpos('.'.$cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = UserPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = UserPeer::getInstanceFromPool($key))) {
+			$key = CreditCardPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = CreditCardPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -553,16 +403,252 @@ abstract class BaseUserPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				UserPeer::addInstanceToPool($obj, $key);
+				CreditCardPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
 		return $results;
 	}
 
+	/**
+	 * Returns the number of rows matching criteria, joining the related User table
+	 *
+	 * @param      Criteria $c
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(CreditCardPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			CreditCardPeer::addSelectColumns($criteria);
+		}
+
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(array(CreditCardPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of CreditCard objects pre-filled with their User objects.
+	 * @param      Criteria  $c
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of CreditCard objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+		// Set the correct dbName if it has not been overridden
+		if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		CreditCardPeer::addSelectColumns($c);
+		$startcol = (CreditCardPeer::NUM_COLUMNS - CreditCardPeer::NUM_LAZY_LOAD_COLUMNS);
+		UserPeer::addSelectColumns($c);
+
+		$c->addJoin(array(CreditCardPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = CreditCardPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = CreditCardPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$omClass = CreditCardPeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				CreditCardPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = UserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = UserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$omClass = UserPeer::getOMClass();
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					UserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+
+				// Add the $obj1 (CreditCard) to $obj2 (User)
+				$obj2->addCreditCard($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $c
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(CreditCardPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			CreditCardPeer::addSelectColumns($criteria);
+		}
+
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(array(CreditCardPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of CreditCard objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $c
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of CreditCard objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+		// Set the correct dbName if it has not been overridden
+		if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		CreditCardPeer::addSelectColumns($c);
+		$startcol2 = (CreditCardPeer::NUM_COLUMNS - CreditCardPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		UserPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$c->addJoin(array(CreditCardPeer::USER_ID,), array(UserPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = CreditCardPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = CreditCardPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$omClass = CreditCardPeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				CreditCardPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined User rows
+
+			$key2 = UserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = UserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$omClass = UserPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					UserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (CreditCard) to the collection in $obj2 (User)
+				$obj2->addCreditCard($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
   static public function getUniqueColumnNames()
   {
-    return array(array('username'), array('email'), array('password_recover_key'));
+    return array();
   }
 	/**
 	 * Returns the TableMap related to this peer.
@@ -587,13 +673,13 @@ abstract class BaseUserPeer {
 	 */
 	public static function getOMClass()
 	{
-		return UserPeer::CLASS_DEFAULT;
+		return CreditCardPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a User or Criteria object.
+	 * Method perform an INSERT on the database, given a CreditCard or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or User object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or CreditCard object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -602,17 +688,17 @@ abstract class BaseUserPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from User object
+			$criteria = $values->buildCriteria(); // build Criteria from CreditCard object
 		}
 
-		if ($criteria->containsKey(UserPeer::ID) && $criteria->keyContainsValue(UserPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserPeer::ID.')');
+		if ($criteria->containsKey(CreditCardPeer::ID) && $criteria->keyContainsValue(CreditCardPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.CreditCardPeer::ID.')');
 		}
 
 
@@ -634,9 +720,9 @@ abstract class BaseUserPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a User or Criteria object.
+	 * Method perform an UPDATE on the database, given a CreditCard or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or User object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or CreditCard object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -645,7 +731,7 @@ abstract class BaseUserPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -653,10 +739,10 @@ abstract class BaseUserPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(UserPeer::ID);
-			$selectCriteria->add(UserPeer::ID, $criteria->remove(UserPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(CreditCardPeer::ID);
+			$selectCriteria->add(CreditCardPeer::ID, $criteria->remove(CreditCardPeer::ID), $comparison);
 
-		} else { // $values is User object
+		} else { // $values is CreditCard object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -668,21 +754,21 @@ abstract class BaseUserPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the user table.
+	 * Method to DELETE all rows from the credit_card table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(UserPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(CreditCardPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -692,9 +778,9 @@ abstract class BaseUserPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a User or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a CreditCard or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or User object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or CreditCard object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -705,20 +791,20 @@ abstract class BaseUserPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			UserPeer::clearInstancePool();
+			CreditCardPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof User) {
+		} elseif ($values instanceof CreditCard) {
 			// invalidate the cache for this single object
-			UserPeer::removeInstanceFromPool($values);
+			CreditCardPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -727,11 +813,11 @@ abstract class BaseUserPeer {
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(UserPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(CreditCardPeer::ID, (array) $values, Criteria::IN);
 
 			foreach ((array) $values as $singleval) {
 				// we can invalidate the cache for this single object
-				UserPeer::removeInstanceFromPool($singleval);
+				CreditCardPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -747,27 +833,6 @@ abstract class BaseUserPeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in ExpertPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ExpertPeer::clearInstancePool();
-
-			// invalidate objects in HistoryPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			HistoryPeer::clearInstancePool();
-
-			// invalidate objects in ItemRatingPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ItemRatingPeer::clearInstancePool();
-
-			// invalidate objects in OfferVoucher1Peer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			OfferVoucher1Peer::clearInstancePool();
-
-			// invalidate objects in PurchaseDetailPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			PurchaseDetailPeer::clearInstancePool();
-
-			// invalidate objects in ShoppingCartPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ShoppingCartPeer::clearInstancePool();
-
-			// invalidate objects in UserAwardsPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			UserAwardsPeer::clearInstancePool();
-
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -777,24 +842,24 @@ abstract class BaseUserPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given User object.
+	 * Validates all modified columns of given CreditCard object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      User $obj The object to validate.
+	 * @param      CreditCard $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(User $obj, $cols = null)
+	public static function doValidate(CreditCard $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(UserPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(UserPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(CreditCardPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(CreditCardPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -810,11 +875,11 @@ abstract class BaseUserPeer {
 
 		}
 
-		$res =  BasePeer::doValidate(UserPeer::DATABASE_NAME, UserPeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(CreditCardPeer::DATABASE_NAME, CreditCardPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = UserPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = CreditCardPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
         }
     }
 
@@ -826,23 +891,23 @@ abstract class BaseUserPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     User
+	 * @return     CreditCard
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = UserPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = CreditCardPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(UserPeer::DATABASE_NAME);
-		$criteria->add(UserPeer::ID, $pk);
+		$criteria = new Criteria(CreditCardPeer::DATABASE_NAME);
+		$criteria->add(CreditCardPeer::ID, $pk);
 
-		$v = UserPeer::doSelect($criteria, $con);
+		$v = CreditCardPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -858,30 +923,30 @@ abstract class BaseUserPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CreditCardPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(UserPeer::DATABASE_NAME);
-			$criteria->add(UserPeer::ID, $pks, Criteria::IN);
-			$objs = UserPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(CreditCardPeer::DATABASE_NAME);
+			$criteria->add(CreditCardPeer::ID, $pks, Criteria::IN);
+			$objs = CreditCardPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseUserPeer
+} // BaseCreditCardPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the UserPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the UserPeer class:
+// NOTE: This static code cannot call methods on the CreditCardPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the CreditCardPeer class:
 //
-// Propel::getDatabaseMap(UserPeer::DATABASE_NAME)->addTableBuilder(UserPeer::TABLE_NAME, UserPeer::getMapBuilder());
+// Propel::getDatabaseMap(CreditCardPeer::DATABASE_NAME)->addTableBuilder(CreditCardPeer::TABLE_NAME, CreditCardPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseUserPeer::DATABASE_NAME)->addTableBuilder(BaseUserPeer::TABLE_NAME, BaseUserPeer::getMapBuilder());
+Propel::getDatabaseMap(BaseCreditCardPeer::DATABASE_NAME)->addTableBuilder(BaseCreditCardPeer::TABLE_NAME, BaseCreditCardPeer::getMapBuilder());
 
