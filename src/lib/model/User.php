@@ -24,7 +24,7 @@ class User extends BaseUser
 	{
     		return UserPeer::generateConfirmationValue( $this );
 	}
-	
+
 	/**
 	* Hashes the password for entry into the DB
 	*
@@ -262,6 +262,21 @@ class User extends BaseUser
 
 		//If the post wasn't correctly added to the DB, return false
 		return $post->save();
+	}
+
+	/**
+	 * Add points to the user
+	 *
+	 * @throws  InvalidArgumentException
+	 * @param   int  Points to add
+	 * @return  void
+	 */
+	public function addNewPoints($points)
+	{
+		if ($points < 0)
+			throw new InvalidArgumentException('Points must not be negative number');
+
+		$this->setPoints($this->getPoints() + $points);
 	}
 
 	/**
@@ -551,17 +566,17 @@ class User extends BaseUser
   {
     return ThreadPeer::getLastUsersThreads(array($this->getId()), 8);
   }
-  
+
   function isTutorStatusEnabled()
   {
       return ($this->getUserTutor() instanceof UserTutor);
   }
-  
+
   function isTutorStatusDisabled()
   {
       return !$this->isTutorStatusEnabled();
   }
-  
+
   function setTutorStatusDisabled()
   {
       $userTutor = $this->getUserTutor();
@@ -569,7 +584,7 @@ class User extends BaseUser
           $userTutor->delete();
       }
   }
-  
+
   function setTutorStatusEnabled()
   {
       $userTutor = $this->getUserTutor();
@@ -595,12 +610,12 @@ class User extends BaseUser
             return $userGtalk->getGtalkid();
         }
     }
-    
+
     public function getDesktopCCUsername()
     {
         return $this->getEmail();
     }
-    
+
     public function isWBSessionActive()
     {
         $criteria = new Criteria();
@@ -609,15 +624,15 @@ class User extends BaseUser
         $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
         return ($lastSession && $lastSession->stillActive());
     }
-    
+
     public function setRate($newRate)
     {
         $userRate = $this->getUserRateRecord();
-        
+
         $userRate->setRate($newRate);
         $userRate->save();
     }
-    
+
     private function getUserRateRecord()
     {
         $c = new Criteria;
@@ -631,13 +646,13 @@ class User extends BaseUser
         }
         return $userRate;
     }
-    
+
     public function getRate()
     {
         $userRate = $this->getUserRateRecord();
         return $userRate->getRate();
     }
-    
+
     public function getRateFormatted()
     {
         return number_format($this->getRate(), 2);
