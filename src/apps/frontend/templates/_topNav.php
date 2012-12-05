@@ -63,7 +63,7 @@
       <?php else:  ?>
       <li><a href="/message/inbox" title="Messages" class="tt-messages">Messages</a></li>
       <?php endif; ?>
-      <li><?php echo link_to( 'Rayku Points', 'shop/paypal', array('title'=>'Rayku Points','class'=>'tt-points') ); ?></li>
+      <li><?php echo link_to('Rayku Points', '@points_buy', array('title'=>'Rayku Points','class'=>'tt-points')); ?></li>
     </ul>
     <!--ul.top-menu-->
 
