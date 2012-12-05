@@ -1,6 +1,7 @@
 # ----
 # Static Pages
 # ----
+
 homepage:
   url:   /
   param: { module: static, action: index }
@@ -20,6 +21,7 @@ faq:
 advertise:
   url: /advertise/*
   param: { module: static, action: advertise }
+
 
 # ----
 # Login & Register
@@ -54,6 +56,7 @@ recover_password_sent:
 reset_password:
   url: /reset-password/:key
   param: { module: login, action: resetPassword }
+
 
 # ----
 # Forum
@@ -98,7 +101,6 @@ edit:
   url: /forum/edit/:thread_id/*
   param: { module: forum, action: edit }
 
-
 expertreply_thread:
   url: /forum/expertreplythread/:forum_id/:thread_id/
   param: { module: forum, action: expertReplyThread }
@@ -107,11 +109,10 @@ userreply_thread:
   url: /forum/userreplythread/:forum_id/:thread_id/
   param: { module: forum, action: userReplyThread }
 
-
-
 view_forums:
   url: /forum/*
   param: { module: forum, action: index }
+
 
 # ----
 # Private Messaging
@@ -130,6 +131,7 @@ outbox:
 compose_to:
   url: /message/compose/:nickname/*
   param: { module: message, action: compose }
+
 
 # ----
 # CMS/Groups
@@ -186,7 +188,18 @@ avatar:
   param: { module: profile, action: showAvatar, size: 1 }
 
 
+# ----
+# Payments
+# ----
 
+payment_remove:
+  url: /payment/remove/:type/:id
+  param: { module: payment, action: remove }
+  requirements: { type: paypal|cc, id: \d+ }
+
+points_buy:
+  url: /points/buy
+  param: { module: points, action: buy }
 
 
 # ----
@@ -198,6 +211,7 @@ tutor:
   param: { module: tutor, action: index }
   options:
     segment_separators: ['/']
+
 
 # ----
 # Tutors
@@ -219,7 +233,6 @@ testtutor:
     segment_separators: ['/']
 
 
-
 # ----
 # Training
 # ----
@@ -229,14 +242,9 @@ training:
   param: { module: training, action: index }
 
 
-
-
-
-
 # ----
 # Regtutor
 # ----
-
 
 #regtutor:
 #  url: /regtutor
@@ -250,6 +258,7 @@ regtutor_confirm:
 # ----
 # Whiteboard session
 # ----
+
 whiteboard_session_info:
   url: /session/:token
   param: { module: session, action: info }
@@ -296,6 +305,3 @@ default_index:
 
 default:
   url:   /:module/:action/*
-
-
-
