@@ -130,6 +130,30 @@ CREATE TABLE `courses`
 )ENGINE=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- credit_card
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `credit_card`;
+
+
+CREATE TABLE `credit_card`
+(
+	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER(11)  NOT NULL,
+	`token` VARCHAR(11)  NOT NULL,
+	`type` VARCHAR(30),
+	`number` CHAR(4)  NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `credit_card_FI_1`(`user_id`),
+	KEY `token_FI_2`(`token`),
+	CONSTRAINT `credit_card_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `user` (`id`)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- expert
 #-----------------------------------------------------------------------------
 
@@ -825,8 +849,7 @@ CREATE TABLE `user`
 	`notification` VARCHAR(10)  NOT NULL,
 	`phone_number` VARCHAR(20)  NOT NULL,
 	`login` INTEGER(10) default 0 NOT NULL,
-	`credit_card` VARCHAR(4),
-	`credit_card_token` VARCHAR(10),
+	`braintree_customer_id` CHAR(11) default 'null',
 	`first_charge` DATETIME,
 	`where_find_us` TEXT  NOT NULL,
 	PRIMARY KEY (`id`),
