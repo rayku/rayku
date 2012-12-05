@@ -1,20 +1,32 @@
 # -----------
 # Rayku Main Configuration File
 # -----------
-# 
+#
 # Use this file to modify any configuration items. Note that Lifies works on a
-# cache system which caches all configuration files (among other things) to 
+# cache system which caches all configuration files (among other things) to
 # save processing time. Once you modify this file, you need to regenerate the
 # cache. This can be done in your AdminCP by selecting the "Regenerate Cache"
 # option from the menu. Note that only admins have access to this feature and
 # not moderators.
 #
 
+dev:
+  braintree:
+    environment: sandbox
+
+test:
+  braintree:
+    environment: sandbox
+
+prod:
+  braintree:
+    environment: xyz
+
 all:
   general:
     admin_email: administration@mail.rayku.com # Admin's e-mail address
     allowed_html_tags: <b><a><u><i> # List of allowed HTML tags
-    date_format: M j, Y # Date format to be used across the site see 
+    date_format: M j, Y # Date format to be used across the site see
                         # http://php.net/date for formatting details
     referral_points: 5 # Number of points to grant someone for referring another
                        # member
@@ -36,13 +48,13 @@ all:
     avatar_default_image_type: jpg
   homepage:
     count_newest_users: 4 # number of "newest users" to appear on homepage
-  
+
   forum:
     threads_per_page: 25 # Maximum number of threads for one page (on the global
                          # forum only)
     posts_per_page: 25   # Maximum number of posts for one page (global forum)
-    
-                         
+
+
   group:
     threads_per_page: 5 # Maximum number of threads for one page (on the group
                         # page only)
@@ -56,20 +68,20 @@ all:
                          # members
   users:
     autocomplete_limit: 10
-                        
+
   profile:
     threads_per_page: 5 # Maximum number of threads for one page (in the profile
                         # page only)
     posts_per_page: 25   # Maximum number of posts for one page (profile page)
     online_activity_timeout: 60 # Number in seconds of how long someone is "online" after their last page hit
-    
+
   messages:
     messages_per_page: 25 # Maximum number of PMs to display on any one page
-    
-  
+
+
   bulletin:
     expiry_time: 30 # Number of days before a bulletin expires
-    
+
   gallery:
     thumbnail2_max_width: 120
     thumbnail2_max_height: 120
@@ -81,3 +93,8 @@ all:
     image_thumb_height: 91
     award_price : 2
     award_limit: 0
+
+  braintree:
+    merchantId: sb744r5j9242tw7x
+    publicKey: ps79cw885xbf6hfv
+    privateKey: 6fn68d69szc68zx3
