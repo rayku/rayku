@@ -37,7 +37,7 @@ function cmp($a, $b)
 <?php $raykuUser = $sf_user->getRaykuUser(); ?>
 <div id="body">
   <?php if($sf_user->getRaykuUser()->getType() != 5 && $changeUserType == 1): ?>
-  <div style="padding:10px;border-bottom:2px solid #009900;background:#E4FFE0;font-size:14px;" align="center">You qualify for an upgrade! <a href="/dashboard/verifytutor" style="text-decoration:underline;color: #060;">Click to upgrade to tutor level two</a></div>
+  <div style="padding:10px;border-bottom:2px solid #009900;background:#E4FFE0;font-size:14px;" align="center">You qualify for an upgrade! You can now get more exposure and charge rates for tutoring: <a href="/dashboard/verifytutor" style="text-decoration:underline;color: #060;">Click to activate</a></div>
   <?php endif; ?>
   <!--[if IE]>
 <div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" align="center">
@@ -273,12 +273,12 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
     
     <!--widget main-->
     <div id="widget-main">
-      <p>Connect with as many notification channels as you can:</p>
+      <p>Connect to be notified when a student has a question:</p>
       <ul class="icon-list">
         <li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:12px;text-indent:-5000px;" /></li>
         <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
-        <li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
-        <!--<li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
+        <!--<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
+        <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
         <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
       </ul>
       <div style="clear:both"></div>

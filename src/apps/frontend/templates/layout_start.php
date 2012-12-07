@@ -1,17 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>On-Demand P2P Math Tutoring | Calculus, Algebra, Statistics, more | Rayku.com</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css"  media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css?version=2"  media="screen" />
 <!--[if lte IE 8]>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/ie78.css" media="screen" />
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css?version=5"/>
 
 <!-- Form Validation -->
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/validation/validationEngine.jquery.css" media="screen" />
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/jquery-1.6.min.js"> </script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/languages/jquery.validationEngine-en.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/start_validation.js"></script>
@@ -40,7 +38,7 @@
   </div>
   <!--container-->
   <!--[if IE]>
-<div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" align="center">
+<div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" text-align="center">
 Rayku currently does not work every well with <strong>Internet Explorer</strong>. Please use Firefox or Chrome or another browser.
 </div>
 <![endif]-->
@@ -55,11 +53,11 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 	<a id="video-button" href="#newsletter-form"></a>
 	<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
     <form name="register-form" id="register-form" action="quickreg/register" method="post">
-      <h3>Free Live Math Tutoring <span style="font-weight:normal">
+      <h3>Free Live Math Tutoring
         <?php
             $onlineUsersCount = UsersAvailabilityChecker::getOnlineUsersCount();
             if( $onlineUsersCount > 5) {
-                echo '(<span style="color:#919294;text-shadow:#000 0 1px 0;">';
+                echo '<span style="font-weight:normal">(<span style="color:#919294;text-shadow:#000 0 1px 0;">';
                 echo $onlineUsersCount;
                 echo '</span> tutors online):</span>';
             }
@@ -89,8 +87,8 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
             <!-- Email Filter Utoronto.ca - ,funcCall[emailValidateNew]  -->
           </ul>
           <div id="tos-create-account" class="clearfix">
-            <p class="tos">By submitting this form, you indicate that you have read and agree to the <a href="tos.html" target="_blank">Terms & Conditions</a></p>
-            <p class="create-account"><input type="image" src="<?php echo $baseRootPath; ?>/images/landing/ask-question-button.png" value="" />
+            <p class="tos">By submitting this form, you indicate that you have read and agree to the <a href="tos.html" target="_blank">Terms &amp; Conditions</a></p>
+            <p class="create-account"><input type="image" src="<?php echo $baseRootPath; ?>/images/landing/ask-question-button.png" alt="Question" />
             </p>
             <input type="hidden" id="checkdata" name="checkdata" />
           </div>
@@ -250,7 +248,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
       <!--video-->
       <div class="video">
-        <iframe id="promo-video" src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&videoHeight=262&volumeControl=true&playerColor=313131&plugin%5BpostRoll%5D%5Bversion%5D=v1&plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="465" height="262"></iframe>
+        <iframe id="promo-video" src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&amp;videoHeight=262&amp;volumeControl=true&amp;playerColor=313131&amp;plugin%5BpostRoll%5D%5Bversion%5D=v1&amp;plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&amp;plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" class="wistia_embed" name="wistia_embed" width="465" height="262"></iframe>
         <form action="#" id="newsletter-form">
           <p>Take 30 seconds</p>
           <p><a href="/register">Register Now</a></p>
@@ -272,19 +270,19 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
   <!--container-->
   <div class="container">
     <div style="width:300px;float:left;">Copyright 2012 Rayku, Inc. All rights reserved.</div>
-    <div style="width:500px;float:right;" align="right">Get in touch! 1-888-98RAYKU // <a href="mailto:cs[at]mail.rayku.com">email us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
+    <div style="width:500px;float:right; text-align: right;">Get in touch! 1-888-98RAYKU // <a href="mailto:cs@mail.rayku.com">email us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
   </div>
   <!--container-->
 
 </div>
 <!--footer--> 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="http://placeholder-fixer.googlecode.com/svn/trunk/placeholder_fixer.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/placeholder_fixer.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.scrolling-parallax.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js?version=5"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/input-fader.js"></script>
-<script src="//fast.wistia.com/static/iframe-api-v1.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/iframe-api-v1.js"></script>
 </body>
 </html>
