@@ -14,7 +14,7 @@ $(document).ready(function() {
 
                         scrollTop: $($anchor.attr('href')).offset().top
 
-                    }, 7000,'easeOutExpo');
+                    }, 3000,'easeOutSine');
 
 					event.preventDefault();
 

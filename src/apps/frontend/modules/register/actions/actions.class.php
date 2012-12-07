@@ -293,16 +293,16 @@ class registerActions extends sfActions
 
 			// Rajesh Soni - 28 November 2012
 
-            $this->redirect("referrals?register=success");
+            $this->redirect("/referrals?register=success");
 
         } elseif ($user) {
 
 			// Rajesh Soni - 28 November 2012
 
-            $this->redirect("referrals?register=success");
+            $this->redirect("/referrals?register=success");
 
         } else {
-            $this->redirect("referrals?register=success");
+            $this->redirect("/referrals?register=success");
         }
     }
 

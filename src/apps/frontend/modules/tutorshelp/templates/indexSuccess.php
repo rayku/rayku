@@ -9,13 +9,16 @@
 	?>
   <div class="activated"> Your tutor status is activated! Make sure that you're connected:</div>
   <div class="notifications">
-    <div class="gtalkfb"><a href="http://rayku.com/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
+  <div class="gtalkfb" style="width:700px;"><a href="http://rayku.com/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
+      <h2>Connect with Google Talk</h2></a>
+      When you connect, you will have question notifications sent to you via Google Talk. We will then see whenever you are online, and send you question requests from students when you are available, and never when you are 'busy' or 'offline'.</div>
+    <!--<div class="gtalkfb"><a href="http://rayku.com/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
       <h2>Connect with Google Talk</h2></a>
       Have question notifications sent to you via Google Talk</div>
     <div class="gtalkfb"><a href="http://rayku.com/dashboard/facebook" target="_blank"><img src="/images/fbchat-large.png"/>
       <h2>Connect with Facebook Chat</h2></a>
       Have question notifications sent to you via FB chat</div>
-    <!--<div class="software"align="right"><a href="http://notification-bot.rayku.com/download/rayku.dmg">
+    <div class="software"align="right"><a href="http://notification-bot.rayku.com/download/rayku.dmg">
       <h2>MacOS Notification Software</h2>
       </a><br />
       <a href="http://notification-bot.rayku.com/download/rayku.exe">

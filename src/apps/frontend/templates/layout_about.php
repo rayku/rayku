@@ -42,7 +42,14 @@
         </div>
     	<div class="btn-applynow"><img src="/images/btn-aboutpage.png" alt="" /></div>
     </div> <!-- header -->
-    <div class="header-bg"></div><!-- header-bg -->
+    <div class="header-bg">
+        <ul id="about-nav">
+            <li id="timeline"><a href="#about-nav">Timeline</a></li>
+            <li><a href="#applybox">Key People</a></li>
+            <li><a href="#map_canvas">Map</a></li>
+            <li><a href="mailto:cs@mail.rayku.com">Contact Us</a></li>
+        </ul>
+    </div><!-- header-bg -->    
     <div id="aboutcontainer">
     <div id="aboutcontent">
     	<div class="aboutcontent-left">
@@ -287,5 +294,8 @@
 </div> <!-- outer-container -->
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/profiles.js"></script>
+<script type="text/javascript" src="/js/about-nav.js"></script>
+<script type="text/javascript" src="/js/landing/functions.js"></script>
+<script type="text/javascript" src="/js/landing/jquery.easing.1.3.js"></script>
 </body>
 </html>

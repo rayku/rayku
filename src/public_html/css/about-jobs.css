@@ -1,3 +1,39 @@
+#about-nav {
+	width: 836px;
+	margin: 0 auto;
+	padding-left: 368px;
+	text-shadow: -1px 1px rgba(255, 255, 255, 0.65);
+	overflow: hidden;
+}
+
+#about-nav a {
+	font-family:Helvetica;
+	font-weight: bolder;
+	color: #585858;
+	text-decoration: none !important;
+}
+
+#about-nav a:hover {
+	color: #077ab3;
+}
+
+#about-nav li {
+	width: 104px;
+	height: 27px;
+	padding-top: 12px;
+	float: left;
+	list-style: none;
+	text-align: center;
+}
+
+.active-nav {
+	background: url('/images/about-navbar-hover.png');
+}
+
+#about-nav li+li {
+	margin-left: 22px;
+}
+
 body {
 	font-family:Helvetica;
 	font-size:13px;
