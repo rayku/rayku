@@ -259,16 +259,25 @@ class registerActions extends sfActions
 			$ref_points = 6;
 			$ref_points_user = 4;
 
-	        $result = mysql_query("select referred_by from user where id=".$user->getId()) or die(mysql_error());
-			$row = mysql_fetch_row($result) or die(mysql_error());
+			$sql2 = "select referred_by from user where id=".$user->getId();
 
-			$ref_by_user = $row[0];
 
-            if ($ref_by_user) {
+			if( $user->getId() )
+			{
+				$result = mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+				$row = mysql_fetch_row($result) or die( $sql2 . mysql_error());
 
-				mysql_query("update user set points= points + ".$ref_points." where id=".$ref_by_user . " LIMIT 1") or die(mysql_error());
-				mysql_query("update user set points='".$ref_points_user."' where id=".$user->getId() . " LIMIT 1") or die(mysql_error());
-            }
+				$ref_by_user = $row[0];
+
+				if ($ref_by_user)
+				{
+					$sql2 = "update user set points= points + ".$ref_points." where id=".$ref_by_user . " LIMIT 1";
+					mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+
+					$sql2 = "update user set points='".$ref_points_user."' where id=".$user->getId() . " LIMIT 1";
+					mysql_query( $sql2 ) or die( $sql2 . mysql_error());
+				}
+			}
 
 
         }
@@ -278,14 +287,22 @@ class registerActions extends sfActions
         } else {
             $this->getUser()->signIn($userCheck);
         }
-    
+
         if ($question) {
             $this->getRequest()->setParameter('question', $question);
-            $this->forward("/dashboard", 'index');
+
+			// Rajesh Soni - 28 November 2012
+
+            $this->redirect("/referrals?register=success");
+
         } elseif ($user) {
-            $this->forward('register', 'new');
+
+			// Rajesh Soni - 28 November 2012
+
+            $this->redirect("/referrals?register=success");
+
         } else {
-            $this->redirect("/dashboard/getstarted");
+            $this->redirect("/referrals?register=success");
         }
     }
 

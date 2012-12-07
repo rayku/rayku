@@ -197,8 +197,10 @@ class listAction extends sfAction
                 }
             }
 
+            // this is where the sql injection error is happening, fix this
+            // escape single quotes
             for ($i = 0; $i < $count; $i++) {
-                mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close) VALUES ('".$userId."', '".$_POST['checkbox'][$i]."', ".$this->cat.", ".$course_id.",'".$_SESSION['question']."','".(++$j)."', '".$time."', '".$course_code."', '".$year."', '".$school."', 1, ".$close.") ", $connection) or die("Error In Insert-->".mysql_error());
+                mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close) VALUES ('". mysql_real_escape_string($userId) ."', '". mysql_real_escape_string($_POST['checkbox'][$i]) ."', ". mysql_real_escape_string($this->cat) .", ". mysql_real_escape_string($course_id) .",'". mysql_real_escape_string($_SESSION['question']) ."','". mysql_real_escape_string((++$j)) ."', '". mysql_real_escape_string($time) ."', '". mysql_real_escape_string($course_code) ."', '". mysql_real_escape_string($year) ."', '". mysql_real_escape_string($school) ."', 1, ". mysql_real_escape_string($close) .") ", $connection) or die("Error In Insert-->".mysql_error());
             }
 
             /* Notify same tutor again */

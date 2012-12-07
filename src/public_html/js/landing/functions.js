@@ -14,7 +14,7 @@ $(document).ready(function() {
 
                         scrollTop: $($anchor.attr('href')).offset().top
 
-                    }, 7000,'easeOutExpo');
+                    }, 3000,'easeOutSine');
 
 					event.preventDefault();
 
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 var mainQuestion = $('.main-question input');
 
-var initialValue = 'Type the question or topic you need help with here';
+var initialValue = 'Type your math question here';
 
 
 
@@ -104,7 +104,8 @@ mainQuestion.keyup(function(){
 
     //animate opening here
 
-    $("#register-form").css("background","none");
+    $('#media-logos').hide();
+    $('#video-button').hide();
 
     $('#register-form').stop().animate({top:"-130px"},1000);
 
@@ -130,7 +131,8 @@ mainQuestion.blur(function(){
 
         $('#register-block').slideUp(); 
 
-        $("#register-form").css("background","url(/images/media-logos.png) no-repeat center bottom");
+        $('#media-logos').show();
+	 $('#video-button').show();
 
     }
 
@@ -173,4 +175,9 @@ staticScrollLimit: false,});
 $('.q-8').scrollingParallax({staticSpeed : .8,
 
 staticScrollLimit: false,});
+
+$('#video-button').click(function() {
+	wistiaEmbed = jQuery("#promo-video")[0].wistiaApi;
+	wistiaEmbed.play();	
+});
 

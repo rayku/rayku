@@ -28,7 +28,7 @@
     <div id="side_menu_tab2" class="tab"> <img src="<?php echo image_path('livehelp-screen.jpg', false); ?>" alt="img" />
       <h1>Connect with the tutor best suited to help you!</h1>
       <p>Rayku takes an algorithmic and systematic approach to connect you to an online expert who is specifically qualified to assist YOU.</p>
-      <p><strong>What this means for you:</strong> Whenever, Wherever. If you have any question or need any advice, right at this moment, Rayku has you covered.</p>
+      <p><strong>What this means for you:</strong> Whenever, Wherever. If you have a question or need advice, right at this moment, Rayku has you covered!</p>
       <p style="margin-bottom:0"><a href="javascript:side_menu('side_menu_tab3')" style="color:#1c517c"><strong>NEXT: Live Whiteboard &gt;&gt;</strong></a></p>
     </div>
     
@@ -37,7 +37,7 @@
     <div id="side_menu_tab3" class="tab"> <img src="<?php echo image_path('whiteboard-screen.jpg', false); ?>" alt="img" />
       <h1>Rayku works because we show, not tell.</h1>
       <p>We've put together a fast and easy-to-use whiteboard app, with everything from audio/video to a sleek math equation writer. Connect with your online tutor immediately for a painless experience. </p>
-      <p><strong>What this means for you:</strong> Bypass the 'joy' of flipping through that 5kg sleeping pill. Give Rayku a try and a real person will <em>show</em> you the solution.</p>
+      <p><strong>What this means for you:</strong> Bypass the 'joy' of flipping through that 5kg sleeping pill. Give Rayku a try and a real person will <em>show</em> you how to solve your problem.</p>
       <p style="margin-bottom:0"><a href="http://www.rayku.com/register" style="color:#1c517c"><strong>Register for Free</strong></a></p>
     </div>
 

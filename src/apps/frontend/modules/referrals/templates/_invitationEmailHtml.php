@@ -1,11 +1,12 @@
-<strong><a href="http://www.rayku.com/register?ref=<?php echo $ref; ?>">Register</a></strong><br />
-http://www.rayku.com/register?ref=<?php echo $ref; ?>
-<p><strong>What is Rayku?</strong><br />
-Rayku.com is a micro-tutoring service that lets students share &amp; ask for education<br />
-help in real time. So when you're <strong>studying for your math exam</strong> and need a little<br />
-push in the right direction, Rayku.com has you covered.<br />
-<br />
-Take the quick tour:
-http://www.rayku.com/tourpage</p>
+Yup, it's one of those emails again.<br /><br />
 
-<?php include_partial( 'global/emailFooterHtml' ); ?>
+But this time, your friend personally typed in your email address to send you this invite! You get 10 minutes of premium tutoring to go along with unlimited regular tutoring on Rayku.com.<br /><br />
+
+Rayku.com is an online tutoring service that lets you get on-demand math help with expert tutors, over an interactive whiteboard.<br /><br />
+
+Take a look!<br />
+<a href="http://rayku.com/register?ref=<?php echo $ref; ?>">http://rayku.com/register?ref=<?php echo $ref; ?></a><br /><br />
+
+Thanks!<br />
+Rayku Team<br /><br />
+PS, the link above expires soon. Want to learn more? Take the tour: http://rayku.com/tourpage

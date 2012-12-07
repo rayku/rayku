@@ -6,8 +6,19 @@ if(( sfContext::getInstance()->getModuleName() == 'start' )) :
 	
 	include('layout_start.php');
 	
-else:
+elseif(( sfContext::getInstance()->getModuleName() == 'jobs' )):
 	
+	include('layout_jobs.php');
+
+elseif(( sfContext::getInstance()->getModuleName() == 'ryerson' )):
+	
+	include('layout_ryerson.php');
+
+elseif(( sfContext::getInstance()->getModuleName() == 'static' )):
+	
+	include('layout_about.php');
+
+else:
 	include('layout_all.php');
 	
 endif;

@@ -13,18 +13,19 @@
       <div class="entry">
         <div class="spacer"></div>
         <?php  if(@$_SESSION['adduser'] == 1) : ?>
-        <div style="border-top:2px solid #900;padding:12px;color:#333;background:#FFF0F0;font-size:14px;line-height:18px;margin-bottom:20px;"> Our bot has just sent you a friend request to your google talk account. <strong>Click on the yes button</strong>, and you're all set!</div>
+        <div style="border-top:2px solid #900;padding:12px;color:#333;background:#FFF0F0;font-size:14px;line-height:18px;margin-bottom:20px;"> Our bot has just sent you a friend request to your google talk account. <strong>Click on the yes button</strong>, and you're all set! If you run into any problems, <a href="mailto:cs@mail.rayku.com">shoot us an email</a>.</div>
         <?php unset($_SESSION['adduser']); ?>
         <?php endif; ?>
         
-        <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>This does not currently support mobile</strong> - if you are using Google Talk with your mobile device, please do not install this. Download the software instead. Thanks!</div>
+        <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>Note:</strong> This does not support mobile usage of Google Talk on your smart phone</div>
         
-        <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time.</strong> Connect with your google talk account and we will notify you with questions from students when your  status is 'online', and never when you are 'busy' or 'offline'. <br />
+        <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time via Google Talk.</strong><br />
           <br />
-          1. Submit your google talk email below.<br />
-          2. We will automatically send you an add request from 'Rayku Bot'.<br />
+          1. Have <a href="http://google.com/talk/" target="_blank">Google Talk</a> set up<br />
+          2. Submit your google talk email below<br />
+          <em>(we will automatically send you an add request from 'Rayku Bot')</em><br />
           3. Accept the invitation. You're done!</div>
-        <p class="cn-pricepermin" style="color:#333;font-weight:normal">Your connected Google talk account is <?php echo "<b>".$gtalk."</b>"; ?>.</p>
+        <p class="cn-pricepermin" style="color:#333;font-weight:normal">Currently connect as: <?php echo "<b>".$gtalk."</b>"; ?></p>
       </div>
     </div>
     <div class="bottom"></div>
@@ -34,7 +35,7 @@
     <div class="top"></div>
     <div class="content">
       <div class="entry">
-      <div class="ttle" style="font-size:18px">Change Google Talk Account:</div>
+      <div class="ttle" style="font-size:18px">Change connected account:</div>
       <div class="spacer"></div>
       <form name="gtalk" action="/dashboard/gtalkupdate" method="post">
         <input type="text" value="example@gmail.com" id="gtalkname" name="gtalkname" onblur="if(this.value=='') this.value='example@gmail.com';" onfocus="if(this.value=='example@gmail.com') this.value='';" style="font-size:14px;border:1px solid #999;padding:5px 7px;background:none;float:left;margin-right:10px;">
@@ -52,14 +53,15 @@
     <div class="top"></div>
     <div class="content">
       <div class="entry">
-      <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>This does not currently support mobile</strong> - if you are using Google Talk with your mobile device, please do not install this. Download the software instead. Thanks!</div>
+      <div style="border-top:2px solid #D0CA82;padding:12px;color:#666;background:#FFFECC;font-size:14px;line-height:18px;margin-bottom:20px;"><strong>Note:</strong> This does not support mobile usage of Google Talk on your smart phone</div>
       
-      <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time.</strong> Connect with your google talk account and we will notify you with questions from students when your  status is 'online', and never when you are 'busy' or 'offline'. <br />
+      <div style="font-size:14px;color:#666;line-height:20px;padding-bottom:20px;margin-bottom:10px;border-bottom:1px solid #F4F4F4"><strong>Get question notifications in real time via Google Talk.</strong><br />
         <br />
-        1. Submit your google talk email below.<br />
-        2. We will automatically send you an add request from 'Rayku Bot'.<br />
-        3. Accept the invitation. You're done!</div>
-      <div class="ttle" style="font-size:18px">Connect Google Talk Account:</div>
+1. Have <a href="http://google.com/talk/" target="_blank">Google Talk</a> set up<br />
+2. Submit your google talk email below<br />
+<em>(we will automatically send you an add request from 'Rayku Bot')</em><br />
+3. Accept the invitation. You're done!</div>
+      <div class="ttle" style="font-size:18px">Connect Google Talk account:</div>
       <div class="spacer"></div>
       <form name="gtalk" action="/dashboard/gtalkupdate" method="post">
         <input type="text" value="example@gmail.com" id="gtalkname" name="gtalkname" onblur="if(this.value=='') this.value='example@gmail.com';" onfocus="if(this.value=='example@gmail.com') this.value='';" style="font-size:14px;border:1px solid #999;padding:5px 7px;background:none;float:left;margin-right:10px;">
@@ -134,8 +136,8 @@ function validation() {
   <div class="box">
     <div class="top" style="margin-top:43px;"></div>
     <div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
-      <div class="title" style="margin-top:0px; font-size:16px">Download notification software</div>
-      <div class="text">Get our spyware-free notification software and you'll be open for business whenever your computer is connected to the Internet.<br />
+      <div class="title" style="margin-top:0px; font-size:16px">Notification software (beta)</div>
+      <div class="text">Give our spyware-free notification software a try. It notifies you of question requests whenever your computer is connected to the Internet, and never when you're idle.<br />
         <br />
         <ul class="icon-list">
           <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>

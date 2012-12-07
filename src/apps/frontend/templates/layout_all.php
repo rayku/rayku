@@ -104,28 +104,14 @@ if($sf_context->getModuleName() !='expertmanager') {
       <?php  include_partial('global/messages') ?>
       <?php echo $sf_content ?>
       <div class="clear-both"></div>
-      <!--
-      <form action="/search" method="post">
-        <div class="searchform">
-          <fieldset>
-            Find
-            <?php $options=array("people"=>"People:","forums"=>"Q&A Posts:"); ?>
-            <?php echo select_tag("findfrom",options_for_select($options,$sf_request->getParameter('findfrom')),array('class' => 'sselect')); ?>
-            <input type="text" name="criteria" class="text-box" value="<?php echo $sf_request->getParameter('criteria') ?>" />
-            <input type="submit" class="myButton" value="Search!" />
-          </fieldset>
-        </div>
-      </form>
-    -->
-    </div>
-    <!-- end of content -->
-    
     <div id="footer" style="padding-bottom:40px;">
       <div class="foo">
         <div class="partners"><a href="http://rayku.com" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
-        <p style="margin-top:10px">Copyright 2012 Rayku, Inc.  All rights reserved.</p>
+        <p style="margin-top:10px">Copyright 2012 Rayku Corp.  All rights reserved.</p>
         <ul>
-          <li><a href="mailto:cs[at]mail.rayku.com">contact us</a></li>
+          <li><a href="mailto:cs[at]mail.rayku.com">email us</a></li>
+          <li><a href="http://rayku.com/about">about</a></li>
+          <li><a href="http://rayku.com/jobs">jobs</a></li>
           <li><a href="http://rayku.com/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
           <?php if(!$sf_user->isAuthenticated()) { ?>
           <li class="nobg"><a href="http://rayku.com/joinus">become a rayku tutor</a></li>

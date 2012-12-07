@@ -37,16 +37,13 @@ function cmp($a, $b)
 <?php $raykuUser = $sf_user->getRaykuUser(); ?>
 <div id="body">
   <?php if($sf_user->getRaykuUser()->getType() != 5 && $changeUserType == 1): ?>
-  <div style="padding:10px;border-bottom:2px solid #009900;background:#E4FFE0;font-size:14px;" align="center">You qualify for an upgrade! <a href="/dashboard/verifytutor" style="text-decoration:underline;color: #060;">Click to upgrade to tutor level two</a></div>
+  <div style="padding:10px;border-bottom:2px solid #009900;background:#E4FFE0;font-size:14px;" align="center">You qualify for an upgrade! You can now get more exposure and charge rates for tutoring: <a href="/dashboard/verifytutor" style="text-decoration:underline;color: #060;">Click to activate</a></div>
   <?php endif; ?>
   <!--[if IE]>
 <div style="width:100%;padding:8px 0;background:#FFCCCC;border-bottom:2px solid #BF3535;font-size:14px;color:#666" align="center">
 Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or another browser.
 </div>
-<![endif]-->
-
-<div style="padding:10px;border-bottom:2px solid #963;background:#FFFBDB;font-size:14px;color:#302010" align="center">Rayku is currently under maintenance. A portion of sessions may not connect for the duration. We apologize for the inconvenience.</div>
-  
+<![endif]-->  
   <div style="margin-left:16px;padding-top:25px;width:600px;float:left;"> <img height="25" width="42" src="<?php echo image_path('green_arrow.jpg', false); ?>" style="float:left;"/>
     <div style="font-size:16px;line-height:24px;color:#1C517C;font-weight:bold;margin-left:10px;width:300px;float:left;">Ask a Question</div>
   </div>
@@ -71,19 +68,19 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
             <?php if($raykuUser->isTutorStatusEnabled()) : ?>
             <?php if($stats['expertCount'] >= 125 && $stats['expertCount'] <= 500 && $changeUserType != 1){ ?>
             <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
-            <span style="color:#900">Staff (Level 9001)</span>
+            <span style="color:#900">Staff</span>
             <?php else: ?>
             Tutor (level 2)
             <?php endif; ?>
             <?php } elseif($stats['expertCount'] <= 125) { ?>
             <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
-            <span style="color:#900">Staff (Level 9001)</span>
+            <span style="color:#900">Staff</span>
             <?php else: ?>
             Tutor (level 1)
             <?php endif; ?>
             <?php }  elseif($stats['expertCount'] > 500) { ?>
             <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
-            <span style="color:#900">Staff (Level 9001)</span>
+            <span style="color:#900">Staff</span>
             <?php else: ?>
             Tutor (level 3)
             <?php endif; ?>
@@ -276,13 +273,13 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
     
     <!--widget main-->
     <div id="widget-main">
-      <p>Connect with as many notification channels as you can:</p>
+      <p>Connect to be notified when a student has a question:</p>
       <ul class="icon-list">
         <li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:12px;text-indent:-5000px;" /></li>
         <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
-        <li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
+        <!--<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
         <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
-        <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
+        <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
       </ul>
       <div style="clear:both"></div>
     </div>
@@ -292,8 +289,12 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
   
   <?php elseif($raykuUser->isTutorStatusDisabled()) : ?>
   <!--widget main-->
-  <div id="widget-main">
-    <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.</p>
+  <div id="widget-main" style="font-size:12px;">
+    <p>Your tutor status is turned off. You won't be listed or available to tutor for <a rel="popup standard 600 435 noicon" href="/rp.html" title="[Opens in pop-up window]" style="color:#809EB7">RP</a>.<br />
+    <br />
+    <strong>Why become a tutor?</strong><br /><br />
+    Why not? If you are great at math and would like to tutor students in the same or lower grades than you, <a href="/joinus">become a Rayku tutor today!</a><br /><br />
+    You can earn money during your free time, and help the community out in a big way.</p>
   </div>
 </div>
 <!--widget-->
