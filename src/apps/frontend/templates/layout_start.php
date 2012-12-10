@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>On-Demand P2P Math Tutoring | Calculus, Algebra, Statistics, more | Rayku.com</title>
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css?version=2"  media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css?version=2"  media="screen" />
 <!--[if lte IE 8]>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/ie78.css" media="screen" />
