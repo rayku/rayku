@@ -70,7 +70,6 @@ Header Styling
 #navigation
 {
 	margin-left:24px;
-	background:url(/images/landing/topnav/navigation-gradient.png) repeat-x;
 	height:32px;
 	line-height:32px;
 	float:right;
@@ -390,7 +389,7 @@ Questions Section Styling
 Whiteboard Section Styling
 --------------------------------------------- */
 #whiteboard {
-	background:url(/images/landing/background.jpg) 0 -1070px repeat-x;
+	background:url(/images/landing/background.jpg) 0 repeat-x;
 	padding-top:50px;
 	z-index:1000;
 	position:relative;

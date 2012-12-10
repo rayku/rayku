@@ -30,7 +30,6 @@
     
     
   }
-
 </script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/add-event.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/popup.js"></script>
@@ -75,7 +74,6 @@
             
             <div class="clear"></div>
             
-            
             <div id="idcontainer" style="display:none"></div>
           <div class="plus-sign"><a href="javascript:showcontent('content1')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign -->
             <div class="content">
@@ -86,7 +84,7 @@
                 <p>You will be expected to identify the biggest opportunities for growth on an International scale, close deals with strategic partners, run marketing campaigns, and optimize existing initiatives to maximize scalability within the company. </p>
                 <p><strong>Requirements:</strong></p>
                 <ul>
-                  <li>- Passion for solving the world’s biggest problem: Education</li>
+                  <li>- Passion for solving the world's biggest problem: Education</li>
                   <li>- Results-oriented</li>
                   <li>- Elite research and analytical skills</li>
                   <li>- Attention-to-detail</li>
@@ -95,7 +93,7 @@
                 </ul>
                 <p><strong>Responsibilities:</strong></p>
                 <ul>
-                  <li>- Identify the biggest external opportunities to engage and/or grow Rayku’s user base</li>
+                  <li>- Identify the biggest external opportunities to engage and/or grow Rayku's user base</li>
                   <li>- Build, negotiate, and close deals with strategic partners</li>
                   <li>- Recommend R&D priorities based on market feedback</li>
                 </ul>
@@ -103,14 +101,46 @@
                 <div class="content-links"><a href="#">Toronto, Ontario</a>&bull;<a href="#">Full Time</a>&bull;<a href="#">Experience Required</a>&bull;<a href="mailto:jobs@rayku.com" style="color:#069">Apply Now</a></div>
             </div> <!-- content -->
             
-            <div class="clear"></div>
+        <div class="clear"></div>
+            
+           <a name="edu-coordinator" id="edu-coordinator"></a>
+         <div id="idcontainer" style="display:none"></div>
+          <div class="plus-sign"><a href="javascript:showcontent('content2')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign -->
+            <div class="content">
+              <h1><a href="javascript:showcontent('content2')">Education Coordinator</a></h1>
+              <!--<div id="content2" style="height:75px; overflow:hidden; flag:0">-->
+              <div id="content2">
+                <p>We are looking for an education coordinator that shares a passion for delivering high quality, personalized learning to students around the world. We are looking for a perfectionist with the highest standards, that understands the unique needs and learning styles of individual students. </p>
+                <p>You will be expected to refine and compile training material for our 500+ tutors, make informed recommendations for product improvements, and help shape the overall experience for tutors and students on the Rayku.com platform on a high level. You may also tutor students at times. </p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                  <li>- Passion for solving the world's biggest problem: Education</li>
+                  <li>- Experience tutoring high school math either online or offline</li>
+                  <li>- Elite research and analytical skills</li>
+                  <li>- Perfectionist</li>
+                  <li>- Strong communication and interpersonal skills</li>
+                  <li>- Understanding of best teaching practices in tutoring</li>
+                  <li>- Customer service oriented</li>
+                </ul>
+                <p><strong>Responsibilities:</strong></p>
+                <ul>
+                  <li>- Identify student and tutor experience improvements across our platform</li>
+                  <li>- Refine and compile training material for tutors</li>
+                  <li>- Communicate with tutors to support and understand their needs</li>
+                  <li>- Deliver quality learning to students from time to time</li>
+                </ul>
+              </div>
+                <div class="content-links"><a href="#">Toronto, Ontario</a>&bull;<a href="#">Full Time</a>&bull;<a href="#">Experience Required</a>&bull;<a href="mailto:jobs@rayku.com" style="color:#069">Apply Now</a></div>
+            </div> <!-- content -->
+            
+        <div class="clear"></div>
             
             
             <div class="plus-sign"><a href="javascript:showcontent('content2')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign -->
             <div class="content">
-              <h1><a href="javascript:showcontent('content2')">Senior Software Engineer (PHP)</a></h1>
+              <h1><a href="javascript:showcontent('content3')">Senior Software Engineer (PHP)</a></h1>
             
-           <div id="content2" style="height:75px; overflow:hidden">
+           <div id="content3" style="height:75px; overflow:hidden">
                 <p>You are an amazing software engineer looking to grow your skills and make a sizable impact in a fast-moving organization. You have a passion for working on big problems and being a big part of the solution. We're looking to work with you! </p>
                 <p>The ideal candidate is results-focused, a perfectionist, and want to be flexible in implementing important solutions. </p>
                 <p>You will be expected to create clean and solid code to build products that matter. You will be working with others in an exciting and fast-paced environment, while sharing your extensive knowledge in agile software development with the rest of the team.</p>
@@ -142,9 +172,9 @@
             <div class="clear"></div>
             
             
-           <div class="plus-sign"><a href="javascript:showcontent('content3')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign --> 
+           <div class="plus-sign"><a href="javascript:showcontent('content4')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign --> 
             <div class="content">
-              <h1><a href="javascript:showcontent('content3')">Software Engineer (NodeJS / HTML5)</a></h1>
+              <h1><a href="javascript:showcontent('content4')">Software Engineer (NodeJS / HTML5)</a></h1>
             
            <div id="content3" style="height:40px; overflow:hidden">
                 <p>Development of our award-winning <a href="http://whiteboard.rayku.com/standalone" target="_blank" style="color:#111">HTML5 whiteboard</a>. Job description coming soon.</p>
