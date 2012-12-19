@@ -145,6 +145,10 @@
     	<div class="applybox-content">
         	<div class="btn-applyhere"><a href=""><img src="/images/btn-applyhere.png" alt="" /></a></div> <!-- btn-applyhere -->
             <div class="board-of-advisor-left">
+
+                <div id="current"></div> <!-- current -->
+
+                <div id="previous"></div> <!-- previous -->                   
             
             	<div id="profile-ouyang" class="board-of-advisor-profile">
                 	<div class="board-of-advisor-profile-img"><img src="/images/prf1.png"  alt="" /></div>
@@ -159,8 +163,7 @@
                 
                 </div> 
 
-                <!-- board-of-advisor-profile-->
-                
+
                 <div id="profile-solomon" class="board-of-advisor-profile">
                     <div class="board-of-advisor-profile-img"><img src="/images/prf3.png"  alt="" /></div>
                     <div class="board-of-advisor-profile-content">
@@ -220,6 +223,21 @@
 
                 <!-- board-of-advisor-profile-->
                 
+                <div id="profile-brooke" class="board-of-advisor-profile">
+                    <div class="board-of-advisor-profile-img"><img src="/images/prf7.png"  alt="" /></div>
+                    <div class="board-of-advisor-profile-content">
+                        <h1>Justin Brooke, Advisor</h1>
+                        <p>Justin Brooke is an author, international speaker, and blogger. Justin has a software business, e-learning business, and service business all centered around the topic of helping companies get more website traffic. His online marketing strategies are responsible for tens of millions of dollars in revenue. Justin pioneered SEO strategies that became standard in the industry. He has consulted for millionaires including Trump University and spoken on stages from California to London. </p>
+                        <a href="https://twitter.com/justinbrooke" target="_blank"><img src="/images/btn-follow.jpg" alt="Follow @justinbrooke" /></a>  
+                    
+                    </div> <!-- board-of-advisor-profile-content -->
+                
+                    <div class="clear"></div>
+                
+                </div> <!-- board-of-advisor-profile-->
+                
+                <!-- board-of-advisor-profile-->
+                
                 <div id="profile-carrescia" class="board-of-advisor-profile">
                     <div class="board-of-advisor-profile-img"><img src="/images/prf4.png"  alt="" /></div>
                     <div class="board-of-advisor-profile-content">
@@ -261,6 +279,12 @@
                     <strong>Geoff Simonett</strong></a><br />
                     GreenSky Capital          
                 </div> <!-- board-of-advisor-right-profile -->
+                
+                <div id="link-brooke" class="board-of-advisor-right-profile" style="margin-bottom:20px;">
+                    <a href="#brooke"><img src="/images/prf7.png" width="75px" alt="" /><br />
+                  <strong>Justin Brooke</strong></a><br />
+                    Strategic Profits             
+                </div> <!-- board-of-advisor-right-profile -->
 
                 <div id="link-carrescia" class="board-of-advisor-right-profile" style="margin-bottom:20px;">
                     <a href="#carrescia"><img src="/images/prf4.png" width="75px" alt="" /><br />
@@ -293,7 +317,7 @@
 <!--footer--> 
 </div> <!-- outer-container -->
 <script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/profiles.js"></script>
+<script type="text/javascript" src="/js/profiles.js?version=101"></script>
 <script type="text/javascript" src="/js/about-nav.js"></script>
 <script type="text/javascript" src="/js/landing/functions.js"></script>
 <script type="text/javascript" src="/js/landing/jquery.easing.1.3.js"></script>

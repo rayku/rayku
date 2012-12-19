@@ -108,8 +108,7 @@
           <div class="plus-sign"><a href="javascript:showcontent('content2')"><img src="/images/plus-sign.png" alt="" /></a></div> <!-- plus-sign -->
             <div class="content">
               <h1><a href="javascript:showcontent('content2')">Education Coordinator</a></h1>
-              <!--<div id="content2" style="height:75px; overflow:hidden; flag:0">-->
-              <div id="content2">
+              <div id="content2" style="height:75px; overflow:hidden; flag:0">
                 <p>We are looking for an education coordinator that shares a passion for delivering high quality, personalized learning to students around the world. We are looking for a perfectionist with the highest standards, that understands the unique needs and learning styles of individual students. </p>
                 <p>You will be expected to refine and compile training material for our 500+ tutors, make informed recommendations for product improvements, and help shape the overall experience for tutors and students on the Rayku.com platform on a high level. You may also tutor students at times. </p>
                 <p><strong>Requirements:</strong></p>
