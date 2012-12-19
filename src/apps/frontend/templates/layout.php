@@ -10,6 +10,10 @@ elseif(( sfContext::getInstance()->getModuleName() == 'jobs' )):
 	
 	include('layout_jobs.php');
 
+elseif(( sfContext::getInstance()->getModuleName() == 'dev' )):
+	
+	include('layout_dev.php');
+
 elseif(( sfContext::getInstance()->getModuleName() == 'ryerson' )):
 	
 	include('layout_ryerson.php');

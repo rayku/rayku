@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>On-Demand P2P Math Tutoring | Calculus, Algebra, Statistics, more | Rayku.com</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css?version=2"  media="screen" />
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css?version=2"  media="screen" />
+<title>Free Online Math Tutoring | Calculus, Algebra, Statistics, more | Rayku.com</title>
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css"  media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css"  media="screen" />
 <!--[if lte IE 8]>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/ie78.css" media="screen" />
 <![endif]-->
@@ -55,14 +54,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 	<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
     <form name="register-form" id="register-form" action="quickreg/register" method="post">
       <h3>Free Live Math Tutoring
-        <?php
-            $onlineUsersCount = UsersAvailabilityChecker::getOnlineUsersCount();
-            if( $onlineUsersCount > 5) {
-                echo '<span style="font-weight:normal">(<span style="color:#919294;text-shadow:#000 0 1px 0;">';
-                echo $onlineUsersCount;
-                echo '</span> tutors online):</span>';
-            }
-        ?>
+
       </h3>
       <p class="main-question">
         <input type="text" name="question" id="question" value="Type your math question here"/>
@@ -282,7 +274,7 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/placeholder_fixer.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.scrolling-parallax.js"></script>
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js?version=5"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/functions.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/input-fader.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/iframe-api-v1.js"></script>
 </body>
