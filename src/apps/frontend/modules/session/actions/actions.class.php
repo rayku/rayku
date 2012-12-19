@@ -10,6 +10,9 @@ class sessionActions extends sfActions
     public function executeInfo(sfWebRequest $request)
     {
         $session = $this->loadSession($request);
+        if (!$session) {
+            return $this->renderText('{}');
+        }
         $info = $session->info();
         return $this->renderText(json_encode($info));
     }
