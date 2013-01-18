@@ -36,7 +36,7 @@ if($count>0)
 					{
                                             $userGtalk = $user->getUserGtalk();
                                             if($userGtalk) {
-					        $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+					        $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$userGtalk->getGtalkid())->getContent();
                                             }
 					}
 
@@ -47,7 +47,7 @@ if($count>0)
 
                             $fb_username = $userFb->getFbUsername();
 
-                            $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+                            $details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
 
                             $fbUsers = json_decode($details, true);
 
@@ -68,7 +68,7 @@ if($count>0)
 
 					if(empty($onlinecheck) || ($onlinecheck != "online")) {
 
-					$onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+					$onlineUsers = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
 
 					$_Users = json_decode($onlineUsers, true);
 

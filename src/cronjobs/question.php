@@ -41,21 +41,21 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
                 $_exp_message = $_exp_newline;
                 $_exp_message .= "This%20question%20has%20expired.";
                 $_exp_message .= $_exp_newline;
-                $_gtalk_online_check = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$_gtalk_email_id)->getContent();
+                $_gtalk_online_check = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$_gtalk_email_id)->getContent();
                 if($_gtalk_online_check != "offline") {
-                    $_send_msg = BotServiceProvider::createFor('http://www.rayku.com:8892/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
+                    $_send_msg = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
                 }
             }
             
             $userFb = UserFbPeer::retrieveByUserId($_row_expire_msg['userid']);
             if($userFb) {
                 $fb_username = $userFb->getFbUsername();
-                $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+                $details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
                     if($user['username'] == $fb_username){
                         //set POST variables
-                        $url = 'http://facebook.rayku.com/tutor/'.$user['uid'].'/message';
+                        $url = sfConfig::get('app_facebook_url')'/tutor/'.$user['uid'].'/message';
                         $fields = array(
                             'message'=> $_exp_message
                         );
@@ -154,7 +154,7 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
             $message .= $newline;
 
             $message .= "Connect:%20";
-            $link = "http://www.rayku.com/login/answer?id=".$row['id'];
+            $link =  sfConfig::get('app_rayku_url'). "/login/answer?id=".$row['id'];
             $message .= urlencode($link);
             $message .= $newline;
             $message .= "(earns%20you%20$".$raykuCharge."%2Fminute)";
@@ -164,21 +164,21 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
             if(mysql_num_rows($gtalkquery) > 0) {
                 $status = mysql_fetch_assoc($gtalkquery);
                 $gtalkmail = $status['gtalkid'];
-                $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$gtalkmail)->getContent();
+                $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$gtalkmail)->getContent();
                 if($onlinecheck != "offline") {
-                    $testcall = BotServiceProvider::createFor('http://www.rayku.com:8892/msg/'.$gtalkmail.'/'.$message)->getContent();
+                    $testcall = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/msg/'.$gtalkmail.'/'.$message)->getContent();
                     $flag = 1;
                 }
             }
             $userFb = UserFbPeer::retrieveByUserId($row['checked_id']);
             if($userFb) {
                 $fb_username = $userFb->getFbUsername();
-                $details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+                $details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
                     if($user['username'] == $fb_username){
                         //set POST variables
-                        $url = 'http://facebook.rayku.com/tutor/'.$user['uid'].'/message';
+                        $url = sfConfig::get('app_facebook_url').'/tutor/'.$user['uid'].'/message';
                         $fields = array(
                             'message'=> $message
                         );
@@ -203,11 +203,11 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
                     }
                 }
             }
-            $onlineUsers = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+            $onlineUsers = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
             $_Users = json_decode($onlineUsers, true);
             foreach($_Users as $key => $_user) {
                 if($_user['email'] == $tutorEmail){
-                    $url = 'http://bots.rayku.com:5678/tutor/'.$tutorEmail.'/notification';
+                    $url = sfConfig::get('app_bots_url').':5678/tutor/'.$tutorEmail.'/notification';
                     $fields = array(
                         'link'=>urlencode($link),
                         'body'=>urlencode($question),

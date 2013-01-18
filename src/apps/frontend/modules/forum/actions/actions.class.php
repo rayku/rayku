@@ -166,7 +166,7 @@ class forumActions extends sfActions
       Thank you for selecting a best response for your question. The author of the response is ' . $user->getName() . ', who is an expert in the following subjects: <br>
 	  ' . $cat_list . '<br><br>
       ' . $user->getName() . ' has been teaching avid learners with Rayku since ' . $user->getCreatedAt('Y-m-d') . '. Take a look at the following link, for information on spending an 1-on-1 session with ' . $user->getName() . ':<br><br>
-	  <a href="http://www.rayku.com/expertmanager/portfolio/' . $user->getUsername() . '">http://www.rayku.com/expertmanager/portfolio/' . $user->getUsername() . '</a><br><br>
+	  <a href="'.sfConfig::get('app_rayku_url').'/expertmanager/portfolio/' . $user->getUsername() . '">http://www.rayku.com/expertmanager/portfolio/' . $user->getUsername() . '</a><br><br>
 	  Rayku SYS';
 
         //Grab the user object

@@ -31,7 +31,7 @@
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td width="350">Teach online via a live shared whiteboard</td>
-        <td><strong>Yes</strong> (<a href="http://whiteboard.rayku.com/standalone" target="_blank">demo</a>)</td>
+        <td><strong>Yes</strong> (<a href="<?php echo sfConfig::get('app_whiteboard_url') ?>/standalone" target="_blank">demo</a>)</td>
       </tr>
       <tr onmouseover="this.style.backgroundColor='#E2EDF3';" onmouseout="this.style.backgroundColor='#EEF7FB';">
         <td>Instant chat / desktop tutoring request notifications</td>
@@ -70,7 +70,7 @@
   <div style="clear:both"></div>
   <div id="bottom">
   	<!--<div id="notice">Are you a full-time tutor with 10+ students? <a href="/privatetutors">Click Here</a></div>-->
-    <p class="content">Tutor when you want, wherever you want. Your salary and work hours are yours to decide. <a href="http://rayku.com/regtutor">Register today</a>, it's free!</p>
+    <p class="content">Tutor when you want, wherever you want. Your salary and work hours are yours to decide. <a href="<?php echo sfConfig::get('app_rayku_url') ?>/regtutor">Register today</a>, it's free!</p>
     <p class="footnote"><br /><br /><br /><br />
       <sup>1</sup>Dependent on the quality of the tutoring session. The higher the quality, the more you earn.</p>
   </div>
@@ -79,10 +79,10 @@
   <h1 class="fb">Get Started</h1>
   <div style="padding:15px;font-size:14px;color:#666;line-height:20px">
     <p>Start tutoring on Rayku in 5 minutes.
-      <input type="button" value="Register as a Tutor" class="myButton" style="font-size:14px;margin-top:15px;" onClick="parent.location='http://rayku.com/regtutor'">
+      <input type="button" value="Register as a Tutor" class="myButton" style="font-size:14px;margin-top:15px;" onClick="parent.location='<?php echo sfConfig::get('app_rayku_url') ?>/regtutor'">
     </p>
-    <img src="http://rayku.com/images/tutor-how-it-works.jpg" style="padding-top:20px;" /><br />
-    <input type="button" value="Register Now" class="myButton" style="font-size:14px;margin-top:15px;" onClick="parent.location='http://rayku.com/regtutor'">
+    <img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/tutor-how-it-works.jpg" style="padding-top:20px;" /><br />
+    <input type="button" value="Register Now" class="myButton" style="font-size:14px;margin-top:15px;" onClick="parent.location='<?php echo sfConfig::get('app_rayku_url') ?>/regtutor'">
   </div>
 </div>
 <div class="clear-both"></div>

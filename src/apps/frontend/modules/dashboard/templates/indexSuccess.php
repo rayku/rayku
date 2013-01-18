@@ -278,8 +278,8 @@ Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or 
         <li><img src="../images/icon-web.jpg" title="web" style="display:block;float:left;width:74px;height:73px;margin-right:12px;text-indent:-5000px;" /></li>
         <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
         <!--<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
-        <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
-        <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
+        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.exe" class="icon windows">Windows Software</a></li>
+        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
       </ul>
       <div style="clear:both"></div>
     </div>

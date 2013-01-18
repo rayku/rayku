@@ -107,7 +107,7 @@ RaykuCommon::getDatabaseConnection();
                 <div class="sep"></div>
                 <div class="f"><img src="../images/securepayment.jpg" title="Secure Payment via PayPal"></div>
                 <div align="center">
-                  <form name="paypal" id="paypal" method="post" action="http://www.rayku.com/paypal.php" >
+                  <form name="paypal" id="paypal" method="post" action="<?php echo sfConfig::get('app_rayku_url') ?>/paypal.php" >
                     <input type="hidden" name="loginid" id="loginid" value="<?php echo $user->getId(); ?>">
                     <input type="hidden" name="amount" id="amount" value="<?php echo $tot_price; ?>">
                     <input type="hidden" name="quantity" id="quantity" value="1">

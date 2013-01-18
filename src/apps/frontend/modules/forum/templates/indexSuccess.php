@@ -173,7 +173,7 @@ function gotoforum()
 
 									?>
       <div class="det"> <span> <?php echo ($replycount-1); ?> Responses </span><br />
-        Question Asked by <?php echo link_to($user->getName(), 'http://www.rayku.com/expertmanager/portfolio/' . $user->getUsername() ); ?> </div>
+        Question Asked by <?php echo link_to($user->getName(), sfConfig::get('app_rayku_url').'/expertmanager/portfolio/' . $user->getUsername() ); ?> </div>
       <?php endforeach; ?>
     </div>
     <div class="bot"></div>
@@ -204,7 +204,7 @@ function gotoforum()
 													$best_resp=PostPeer::doCount($c);
 
 											?>
-        <li><?php echo link_to($expert->getName(), 'http://www.rayku.com/expertmanager/portfolio/' . $expert->getUsername()); ?>: <?php echo $best_resp; ?> Best Responses</li>
+        <li><?php echo link_to($expert->getName(), sfConfig::get('app_rayku_url').'/expertmanager/portfolio/' . $expert->getUsername()); ?>: <?php echo $best_resp; ?> Best Responses</li>
         <?php endforeach; ?>
       </ul>
     </div>

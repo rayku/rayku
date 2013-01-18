@@ -38,7 +38,7 @@
       <h1>Rayku works because we show, not tell.</h1>
       <p>We've put together a fast and easy-to-use whiteboard app, with everything from audio/video to a sleek math equation writer. Connect with your online tutor immediately for a painless experience. </p>
       <p><strong>What this means for you:</strong> Bypass the 'joy' of flipping through that 5kg sleeping pill. Give Rayku a try and a real person will <em>show</em> you how to solve your problem.</p>
-      <p style="margin-bottom:0"><a href="http://www.rayku.com/register" style="color:#1c517c"><strong>Register for Free</strong></a></p>
+      <p style="margin-bottom:0"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/register" style="color:#1c517c"><strong>Register for Free</strong></a></p>
     </div>
 
     <!--tab-->

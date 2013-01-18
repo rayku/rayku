@@ -1,4 +1,4 @@
-<strong><a href="http://www.rayku.com/register">Activate Coupon</a></strong><br />
+<strong><a href="<?php echo sfConfig::get('app_rayku_url') ?>/register">Activate Coupon</a></strong><br />
 http://www.rayku.com/register
 <p><strong>What is Rayku?</strong><br />
 Rayku.com is a micro-tutoring service that lets students share &amp; ask for education<br />

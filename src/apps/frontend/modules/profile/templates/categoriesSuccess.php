@@ -88,7 +88,7 @@
 
 
 <!--<div class="title" style="float:left; margin-left:20px; margin-top:20px;">
-   	<img src="http://www.rayku.com/images/newspaper.gif" alt="" />
+   	<img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/newspaper.gif" alt="" />
     <p>Unjoin from categories</p>
 </div>
 
@@ -117,7 +117,7 @@
  </div>
  
  <div class="title" style="float:left; margin-left:20px; margin-top:20px;">
-   	<img src="http://www.rayku.com/images/newspaper.gif" alt="" />
+   	<img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/newspaper.gif" alt="" />
     <p>Join to new categories</p>
 </div>
 

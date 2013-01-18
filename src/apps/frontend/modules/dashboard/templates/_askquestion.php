@@ -231,10 +231,10 @@ var rayku_ask = jQuery.noConflict();
 	
 	var deleteids = id;
 	var originaldeleteid = deleteids.split("delete_");
-	rayku_ask.post("http://www.rayku.com/dashboard/tag", { id: originaldeleteid },
+	rayku_ask.post("<?php echo sfConfig::get('app_rayku_url') ?>/dashboard/tag", { id: originaldeleteid },
    function(data) {
-	rayku_ask("#dumpquestionrecent").load("http://www.rayku.com/dashboard #recent-questions");
-	//rayku_ask('#recent-questions').load('http://www.rayku.com/dashboard');
+	rayku_ask("#dumpquestionrecent").load("<?php echo sfConfig::get('app_rayku_url') ?>/dashboard #recent-questions");
+	//rayku_ask('#recent-questions').load('<?php echo sfConfig::get('app_rayku_url') ?>/dashboard');
 	
 	if(data == 0)
 	{

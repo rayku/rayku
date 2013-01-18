@@ -143,7 +143,7 @@
 					tp(".filter-popup").fadeOut('slow');
 					tp("#trans").fadeOut('slow');
 					return false;
-					//window.location="http://www.rayku.com/dashboard";
+					//window.location="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard";
 			}); */
 							
 			tp('.education input').click(function(){

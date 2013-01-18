@@ -37,7 +37,7 @@
 
 if($message->getSender()->getType() == 5): ?>
 
-<img src="http://www.rayku.com/images/expert_saved.png" />
+<img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/expert_saved.png" />
 
 <?php endif; ?>
 

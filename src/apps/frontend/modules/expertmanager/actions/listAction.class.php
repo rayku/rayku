@@ -139,6 +139,7 @@ class listAction extends sfAction
             $userQuestionTag->save();
         }
 
+
         /**
          * @todo - below block of code could be extracted to separate action 
          */
@@ -234,6 +235,7 @@ class listAction extends sfAction
             $this->redirect('expertmanager/connect');
         }
 
+
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         $c = new Criteria();
         $c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
@@ -251,6 +253,7 @@ class listAction extends sfAction
         $newUser= array();
         $i =0;
         $eachExpertOnlyOnce= array();
+
 
         foreach ($experts as $exp) {
             if ($userId != $exp->getUserId()) {
@@ -299,21 +302,31 @@ class listAction extends sfAction
                 }
             }
         }
+
+
+
         asort($newUser);
         arsort($newUser);
         asort($rankUsersFinal);
         arsort($rankUsersFinal);
 
-        $this->rankCheckUsers = $rankUsersFinal;
-        ////if no online expert available redirecting to the board page
-        $onlineusers = array();  $offlineusers = array();
-        $newOnlineUser = array();  $newOfflineUser = array();
-        $j = 0; $k = 0;
-        $facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
-        $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
-        $Users = json_decode($facebookTutors, true);
-        $_Users = json_decode($onlineTutorsByNotificationBot, true);
 
+        $this->rankCheckUsers = $rankUsersFinal;
+
+
+        ////if no online expert available redirecting to the board page
+
+        // // ant-edit get rid of adding notification bots right now
+         $onlineusers = array();  $offlineusers = array();
+         $newOnlineUser = array();  $newOfflineUser = array();
+         $j = 0; $k = 0;
+        // $facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+        // $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+        // $Users = json_decode($facebookTutors, true);
+        // $_Users = json_decode($onlineTutorsByNotificationBot, true);
+
+
+	//Iterate through every user and check if they are online (either on fb gchat local rayku etc...
         foreach ($newUser as $new) {
             $a = new Criteria();
             $a->add(UserPeer::ID,$new['userid']);
@@ -324,35 +337,37 @@ class listAction extends sfAction
                 $onlinecheck = "online";
             }
 
+            // // ant-edit get rid of gtalk users for now
             if (empty($onlinecheck)) {
                 $userGtalk = $users_online->getUserGtalk();
                 if ($userGtalk) {
-                    $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
-                }
+                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$userGtalk->getGtalkid())->getContent();
+	        }
             }
 
-            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
-                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
-                if ($userFb) {
-                    $fb_username = $userFb->getFbUsername();
-                    foreach ($Users as $key => $user) {
-                        if ($user['username'] == $fb_username) {
-                            $onlinecheck = 'online';
-                            break;
-                        }
-                    }
-                }
-            }
+            // if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($Users)) {
+            //     $userFb = UserFbPeer::retrieveByUserId($new['userid']);
+            //     if ($userFb) {
+            //         $fb_username = $userFb->getFbUsername();
+            //         foreach ($Users as $key => $user) {
+            //             if ($user['username'] == $fb_username) {
+            //                 $onlinecheck = 'online';
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
 
-            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($_Users)) {
-                foreach ($_Users as $key => $_user) {
-                    if ($_user['email'] == $users_online->getEmail()) {
-                        $onlinecheck = 'online';
-                        break;
-                    }
-                }
-            }
-
+            // if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($_Users)) {
+            //     foreach ($_Users as $key => $_user) {
+            //         if ($_user['email'] == $users_online->getEmail()) {
+            //             $onlinecheck = 'online';
+            //             break;
+            //         }
+            //     }
+            // }
+	    
+	    //if user was online then store ;
             if ($onlinecheck == "online") {
                 $onlineusers[$j] = $new['userid'];
                 $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
@@ -372,6 +387,9 @@ class listAction extends sfAction
         $this->newOnlineUser = $newOnlineUser;
         $this->newOfflineUser = $newOfflineUser;
         $this->_checkOnlineUsers = $onlineusers;
+
+
+
 
         if (count($onlineusers) < 1) {
             $this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/'.$_SESSION['subject'].'?exp_online = 1');
@@ -440,6 +458,9 @@ class listAction extends sfAction
         $c = new Criteria();
         $c->add(CategoryPeer::ID,$this->cat);
         $this->e = CategoryPeer::doSelectOne($c);
+
+
+
     }
 
     private function studentFromQuickRegistrationAskingAQuestion()

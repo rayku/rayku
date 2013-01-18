@@ -44,7 +44,7 @@ b.fn.fancybox=function(a){if(!b(this).length)return this;b(this).data("fancybox"
 
 		jk.ajax({ cache: false,
 			type : "POST",
-			url: "http://www.rayku.com/expertmanager/cookieadd?cookie=1"
+			url: window.globalConfig.rayku_url + "/expertmanager/cookieadd?cookie=1";
 		});
 			
 

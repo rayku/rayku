@@ -173,7 +173,7 @@ function checkReferralcode()
 						
 							if(response==1)
 							{
-								document.location.href="http://www.rayku.com/register";
+								document.location.href= window.globalConfig.rayku_url + "/register";
 							}
 							else
 							{
@@ -250,7 +250,7 @@ function checkReferralcode_quick()
 						
 							if(response==1)
 							{
-								document.location.href="http://www.rayku.com/register";
+								document.location.href= window.globalConfig.rayku_url + "/register";
 							}
 							else
 							{
@@ -263,7 +263,7 @@ function checkReferralcode_quick()
                        }
 					}
 					//document.getElementById('popuplogin').innerHTML="<p align='center'><img src='images/Send-Mail.gif' /></p>";
-					var url = "http://www.rayku.com/js/register_popup/check_refcode.php?code="+code;
+					var url = window.globalConfig.rayku_url + "/js/register_popup/check_refcode.php?code=" + code;
 					
 					//document.getElementById('popuplogin').innerHTML="<b>Sending Mail.........</b>";
 					xmlHttp.open("GET",url,true);

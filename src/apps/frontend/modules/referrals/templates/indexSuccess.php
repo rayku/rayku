@@ -5,7 +5,7 @@
 <script>
 function tweet()
 {
-	u="http://www.rayku.com/register?ref=<?php echo $user_id; ?>";
+	u="<?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $user_id; ?>";
 	desc = document.getElementById("share_desc").value;
 	t=document.title;window.open('https://twitter.com/intent/tweet?text='+desc+'','sharer','toolbar=0,status=0,width=626,height=436');
 	return false;
@@ -14,7 +14,7 @@ function tweet()
 
 function fb_click()
 {
-	u="http://www.rayku.com/register?ref=<?php echo $user_id; ?>";
+	u="<?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $user_id; ?>";
 	desc = document.getElementById("share_desc").value;
 	t=document.title;window.open('https://www.facebook.com/dialog/feed?%20app_id=458358780877780&%20link='+u+'&%20name2=Name&%20caption2=Caption%20here&%20description='+desc+'&%20redirect_uri=http://mighty-lowlands-6381.herokuapp.com/','sharer','toolbar=0,status=0,width=626,height=436');
 	return false;
@@ -163,13 +163,13 @@ document.getElementById('frm1').submit();
   <div id="share-link">
     <form>
       <span>Use this unique link to share with friends:</span>
-      <input type="text" value="http://rayku.com/register?ref=<?php echo $user_id; ?>" size="60" id="ref_url">
+      <input type="text" value="<?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $user_id; ?>" size="60" id="ref_url">
       <button class="myButton" type="button" onclick="copy()"><i class="icon-link"></i> Copy link</button>
     </form>
   </div>
   <div id="social-invite">
   <h3>Invite friends on Twitter / Facebook</h3>
-  <textarea rows="4" id="share_desc">Free hookup for 10min. of premium online math tutoring from @raykuedu! Thank me later ;) http://rayku.com/register?ref=<?php echo $user_id; ?></textarea>
+  <textarea rows="4" id="share_desc">Free hookup for 10min. of premium online math tutoring from @raykuedu! Thank me later ;) <?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $user_id; ?></textarea>
   <div class="clear"></div>
   <button class="myButton" type="button" onclick="fb_click()"><i class="icon-facebook"></i> share</button>
   <button class="myButton" type="button" onclick="tweet()"><i class="icon-twitter"></i> tweet</button>

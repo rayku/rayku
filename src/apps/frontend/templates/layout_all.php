@@ -59,17 +59,21 @@ if($sf_context->getModuleName() !='expertmanager') {
 }
 ?>
 
+<script type="text/javascript">
+  window.globalConfig = {
+    rayku_url : '<?php echo sfConfig::get('app_rayku_url').'/'; ?>',
+    whiteboard_url: '<?php echo sfConfig::get('app_whiteboard_url').'/'; ?>',
+    cookies_domain: '<?php echo sfConfig::get('app_cookies_domain'); ?>'
+  }
+</script>
+
+
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/add-event.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/popup.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquerynav.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery.notifier.js"></script>
-<script type="text/javascript">
-  window.globalConfig = {
-    whiteboard_url: '<?php echo sfConfig::get('app_whiteboard_url').'/'; ?>',
-    cookies_domain: '<?php echo sfConfig::get('app_cookies_domain'); ?>'
-  }
-</script>
+
 <style type="text/css">
 <?php if( ( sfContext::getInstance()->getModuleName() == 'expertmanager' ) && ( sfContext::getInstance()->getActionName() == 'index')): ?> @import "styles/ex_global.css";
  @import "<?php echo $baseRootPath; ?>/css/46.css";
@@ -106,17 +110,17 @@ if($sf_context->getModuleName() !='expertmanager') {
       <div class="clear-both"></div>
     <div id="footer" style="padding-bottom:40px;">
       <div class="foo">
-        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
+        <div class="partners"><a href="<?php echo sfConfig::get('app_rayku_url') ?>" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
         <p style="margin-top:10px">Copyright 2012 Rayku Corp.  All rights reserved.</p>
         <ul>
           <li><a href="mailto:cs[at]mail.rayku.com">email us</a></li>
-          <li><a href="http://rayku.com/about">about</a></li>
-          <li><a href="http://rayku.com/jobs">jobs</a></li>
-          <li><a href="http://rayku.com/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
+          <li><a href="<?php echo sfConfig::get('app_rayku_url') ?>/about">about</a></li>
+          <li><a href="<?php echo sfConfig::get('app_rayku_url') ?>/jobs">jobs</a></li>
+          <li><a href="<?php echo sfConfig::get('app_rayku_url') ?>/tos.html" rel="popup standard 800 600 noicon">legal</a></li>
           <?php if(!$sf_user->isAuthenticated()) { ?>
-          <li class="nobg"><a href="http://rayku.com/joinus">become a rayku tutor</a></li>
+          <li class="nobg"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/joinus">become a rayku tutor</a></li>
           <?php } else { ?>
-          <li class="nobg"><a href="http://rayku.com/dashboard">activate tutor status</a></li>
+          <li class="nobg"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard">activate tutor status</a></li>
           <?php } ?>
         </ul>
         <div style="clear:both"></div>

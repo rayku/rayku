@@ -276,7 +276,7 @@ class dashboardActions extends sfActions
             /**
              * @todo - accept new friend on RaykuBot FB profile
              */
-//            BotServiceProvider::createFor("http://facebook.rayku.com/queue_friendship_worker")->getContent();
+            BotServiceProvider::createFor(sfConfig::get('app_facebook_url') . "/queue_friendship_worker")->getContent();
         }
     }
 
@@ -312,7 +312,7 @@ class dashboardActions extends sfActions
             $email .= '@gmail.com';
         }
 
-        $test = BotServiceProvider::createFor('http://www.rayku.com:8892/add/'.$email)->getContent();
+        $test = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/add/'.$email)->getContent();
 
         if ($test) {
             $_SESSION['adduser'] = 1;

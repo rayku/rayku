@@ -206,12 +206,12 @@ function cmp($a, $b)
       <div id="<?php echo $xy.'.3'; ?>"  class="cn-user-info" onclick="rowCheck(this.id)" style="float:right;width:150px;line-height:14px" align="right"><strong style="color:#069"></strong>
         <?php if ($onlinecheck == "online") { ?>
         <?php if ($experts->getType() == 5) { ?>
-        <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+        <img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/expert_saved.png" alt="Rayku Staff" />
         <?php } ?>
         <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="onlinenow">(online)</span></a>
         <?php } else { ?>
         <?php if ($experts->getType() == 5) { ?>
-        <img src="http://www.rayku.com/images/expert_saved.png" alt="Rayku Staff" />
+        <img src="<?php echo sfConfig::get('app_rayku_url') ?>/images/expert_saved.png" alt="Rayku Staff" />
         <?php } ?>
         <a href="/tutor/<?php echo $experts->getUsername()?>" target="_blank" style="color:#8FAFC8"><?php echo $experts->getName()?> <span class="offlinenow">(offline)</span></a>
         <?php } ?>

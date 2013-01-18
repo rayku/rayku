@@ -199,9 +199,9 @@ class appendAction extends sfAction
 //        $newOfflineUser = array();
 //        $j = 0;
 //        $k = 0;
-//        $facebookResponse = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+//        $facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
 //        $facebookUsers = json_decode($facebookResponse, true);
-//        $botResponse = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+//        $botResponse = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
 //        $botUsers = json_decode($botResponse, true);
 //
 //        foreach ($newUser as $new) {
@@ -221,7 +221,7 @@ class appendAction extends sfAction
 //            if (empty($onlinecheck)) {
 //                $userGtalk = $users_online->getUserGtalk();
 //                if ($userGtalk) {
-//                    $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/' . $userGtalk->getGtalkid())->getContent();
+//                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/' . $userGtalk->getGtalkid())->getContent();
 //                }
 //            }
 //
