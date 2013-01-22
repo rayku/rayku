@@ -90,16 +90,8 @@ class RaykuCommon
       if (self::$dbConfig == null) {
 
           $config = sfYaml::load(dirname(__FILE__).'/../config/databases.yml');
-          //$environment = sfConfig::get('sf_environment');
 
-          $server_name =  $_SERVER['SERVER_NAME'];
-          if (preg_match('/rayku.com/im', $server_name, $match)){
-              $environment = 'prod';
-          } else{
-              $environment = 'dev';
-          }
-
-          $propelConfiguration = $config[$environment]['propel']['param'];
+          $propelConfiguration = $config['prod']['propel']['param'];
           preg_match('/dbname=(.*);host=(.*)/', $propelConfiguration['dsn'], $matched);
 
           self::$dbConfig['host'] = $matched[2];
