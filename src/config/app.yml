@@ -5,7 +5,7 @@ prod:
   notification_bot_url : http://notification-bot.rayku.com
   bots_url : http://bots.rayku.com
   cookies_domain: .rayku.com
-  
+
   .array:
     data_cache:
       class: sfMemcacheCache

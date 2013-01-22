@@ -21,12 +21,16 @@ staging:
       classname: DebugPDO
       dsn: 'mysql:dbname=rayku_staging;host=127.0.0.1'
 
+sami:
+  propel:
+    param:
+
 
 all:
   propel:
     class: sfPropelDatabase
     param:
-      dsn: 'mysql:dbname=rayku_db;host=localhost'
+      dsn: 'mysql:dbname=rayku_db;host=hello'
       username: root 
       password: 
       encoding: utf8
