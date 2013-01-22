@@ -168,11 +168,9 @@ if($sf_context->getModuleName() !='expertmanager') {
       <div class="clear-both"></div>
     <div id="footer" style="padding-bottom:40px;">
       <div class="foo">
-<<<<<<< HEAD
-        <div class="partners"><a href="http://rayku.com" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com" width="80" height="39" /></a> </div>
-=======
-        <div class="partners"><a href="<?php echo sfConfig::get('app_rayku_url') ?>" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com"/></a> </div>
->>>>>>> development
+
+        <div class="partners"><a href="<?php echo sfConfig::get('app_rayku_url') ?>" target="_blank"><img src="<?php echo image_path('img-footer-logo-1.png', false); ?>" alt="rayku.com" width="80" height="39"/></a> </div>
+
         <p style="margin-top:10px">Copyright 2012 Rayku Corp.  All rights reserved.</p>
         <ul>
           <li><a href="mailto:cs[at]mail.rayku.com">email us</a></li>
