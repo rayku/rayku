@@ -8,7 +8,7 @@ sfCoreAutoload::register();
 
 require_once(__DIR__.'/../config/ProjectConfiguration.class.php');
 
-$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
+$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', true);
 $context = sfContext::createInstance($configuration);
 
 
@@ -17,7 +17,6 @@ $context = sfContext::createInstance($configuration);
  */
 
 RaykuCommon::getDatabaseConnection();
-
 function luklog($msg) {
     file_put_contents('/tmp/luk.log', $msg."\n", FILE_APPEND);
 }
@@ -47,6 +46,7 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
                 $_gtalk_online_check = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/'.$_gtalk_email_id)->getContent();
                 if($_gtalk_online_check != "offline") {
                     $_send_msg = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
+
                 }
             }
             
@@ -102,8 +102,10 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
     }
 
     $query = mysql_query("select * from user_expert where exe_order = 1 and time >= '".$time."' and cron = 1") or die("Error5".mysql_error());
+  
     if(mysql_num_rows($query) > 0) {
         while($row = mysql_fetch_assoc($query)) {
+    
             $storetime = time();
             $expire_time = '';
             $category = mysql_query("select * from category where id = ".$row['category_id']."") or die("Error6".mysql_error());
