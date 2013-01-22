@@ -115,11 +115,13 @@ class appendAction extends sfAction
 
         $this->rankCheckUsers = $rankUsersFinal;
         ////if no online expert available redirecting to the board page
-        $onlineusers = array();  $offlineusers = array();
-        $newOnlineUser = array();  $newOfflineUser = array();
-        $j = 0; $k = 0;
-        $facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
-        $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+        
+        // // ant-edit remove for now
+         $onlineusers = array();  $offlineusers = array();
+         $newOnlineUser = array();  $newOfflineUser = array();
+         $j = 0; $k = 0;
+        // $facebookTutors = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+        // $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 
         foreach ($newUser as $new) {
             $a = new Criteria();
@@ -132,35 +134,37 @@ class appendAction extends sfAction
                 $onlinecheck = "online";
             }
 
+            // ant-edit remove for now
             if (empty($onlinecheck)) {
                 $userGtalk = $users_online->getUserGtalk();
-                if ($userGtalk) {
-                    $onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
-                }
+                if ($userGtalk) { 
+                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url') .':'.sfConfig::get('app_g_chat_port').'/status/'.$userGtalk->getGtalkid())->getContent();
+	        // echo 'hello '  . $onlinecheck     ; 
+		}
             }
 
-            if (empty($onlinecheck) || ($onlinecheck != "online")) {
-                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
-                if ($userFb) {
-                    $fb_username = $userFb->getFbUsername();
-                    $Users = json_decode($facebookTutors, true);
-                    foreach ($Users as $key => $user) {
-                        if ($user['username'] == $fb_username) {
-                            $onlinecheck = 'online';
-                            break;
-                        }
-                    }
-                }
-            }
-            if (empty($onlinecheck) || ($onlinecheck != "online")) {
-                $_Users = json_decode($onlineTutorsByNotificationBot, true);
-                foreach ($_Users as $key => $_user) {
-                    if ($_user['email'] == $users_online->getEmail()) {
-                        $onlinecheck = 'online';
-                        break;
-                    }
-                }
-            }
+            // if (empty($onlinecheck) || ($onlinecheck != "online")) {
+            //     $userFb = UserFbPeer::retrieveByUserId($new['userid']);
+            //     if ($userFb) {
+            //         $fb_username = $userFb->getFbUsername();
+            //         $Users = json_decode($facebookTutors, true);
+            //         foreach ($Users as $key => $user) {
+            //             if ($user['username'] == $fb_username) {
+            //                 $onlinecheck = 'online';
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
+            // if (empty($onlinecheck) || ($onlinecheck != "online")) {
+            //     $_Users = json_decode($onlineTutorsByNotificationBot, true);
+            //     foreach ($_Users as $key => $_user) {
+            //         if ($_user['email'] == $users_online->getEmail()) {
+            //             $onlinecheck = 'online';
+            //             break;
+            //         }
+            //     }
+            // }
 
             if ($onlinecheck == "online") {
                 $onlineusers[$j] = $new['userid'];

@@ -88,7 +88,7 @@ class quickregActions extends sfActions
 
         $this->forward('quickreg', 'confirmationcode');
 
-        //$this->redirect("http://www.rayku.com/quickreg/confirmationcodesent");
+        //$this->redirect(sfConfig::get('app_rayku_url')."/quickreg/confirmationcodesent");
     }
   	private function sendConfirmationEmail( User $user, $question )
 	{

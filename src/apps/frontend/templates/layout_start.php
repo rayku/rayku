@@ -269,7 +269,7 @@ onmouseout="this.src='<?php echo $baseRootPath; ?>/images/vidbutton.png'" />
   <!--container-->
   <div class="container">
     <div style="width:300px;float:left;">Copyright 2012 Rayku, Inc. All rights reserved.</div>
-    <div style="width:500px;float:right; text-align: right;">Get in touch! 1-888-98RAYKU // <a href="mailto:cs@mail.rayku.com">email us</a> // <a href="http://rayku.com/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
+    <div style="width:500px;float:right; text-align: right;">Get in touch! 1-888-98RAYKU // <a href="mailto:cs@mail.rayku.com">email us</a> // <a href="<?php echo sfConfig::get('app_rayku_url') ?>/tos.html" target="_blank" title="[Opens in pop-up window]">legal</a></div>
   </div>
   <!--container-->
 

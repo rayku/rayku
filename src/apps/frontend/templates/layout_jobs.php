@@ -154,7 +154,7 @@
               <h1><a href="javascript:showcontent('content4')">Software Engineer (NodeJS / HTML5)</a></h1>
             
            <div id="content3" style="height:40px; overflow:hidden">
-                <p>Development of our award-winning <a href="http://whiteboard.rayku.com/standalone" target="_blank" style="color:#111">HTML5 whiteboard</a>. Job description coming soon.</p>
+                <p>Development of our award-winning <a href="<?php echo sfConfig::get('app_whiteboard_url') ?>/standalone" target="_blank" style="color:#111">HTML5 whiteboard</a>. Job description coming soon.</p>
               </div>
             <div class="content-links"><a href="#">Anywhere</a>&bull;<a href="#">Part Time</a>&bull;<a href="#">Experience Required</a>&bull;<a href="mailto:jobs@rayku.com" style="color:#069">Apply Now</a></div>
             </div> <!-- content -->

@@ -196,9 +196,9 @@ class regtutorActions extends sfActions
             $body .='Thanks for joining our community!<br><br>
 
                 Before you get started, there are 3 important steps before you can start tutoring!<br><br>
-                1) Activated your tutor status by clicking \'on\' in your <a href="http://rayku.com/dashboard">dashboard page</a>.<br>
-                2) Important: Learn how to tutor on Rayku in 10 minutes by watching our <a href="http://rayku.com/tutorshelp">tutor help videos</a>.<br>
-                3) Prepare to receive question notifications by connecting to our <strong><a href="http://notification-bot.rayku.com/download/rayku.dmg">MacOS</a> / <a href="http://notification-bot.rayku.com/download/rayku.exe">Windows</a> notification software</strong>, <a href="http://rayku.com/dashboard/gtalk">google talk</a> and <a href="http://rayku.com/dashboard/facebook">facebook chat</a>.<br><br>
+                1) Activated your tutor status by clicking \'on\' in your <a href="'.sfConfig::get('app_rayku_url').'/dashboard">dashboard page</a>.<br>
+                2) Important: Learn how to tutor on Rayku in 10 minutes by watching our <a href="'.sfConfig::get('app_rayku_url').'/tutorshelp">tutor help videos</a>.<br>
+                3) Prepare to receive question notifications by connecting to our <strong><a href="'.sfConfig::get('app_notification_bot_url').'/download/rayku.dmg">MacOS</a> / <a href="http://notification-bot.rayku.com/download/rayku.exe">Windows</a> notification software</strong>, <a href="http://rayku.com/dashboard/gtalk">google talk</a> and <a href="http://rayku.com/dashboard/facebook">facebook chat</a>.<br><br>
 
                 Enjoy, and do let us know if you ever have any questions - we\'re here to help!<br><br>
 

@@ -6,7 +6,7 @@ var WRInitTime=(new Date()).getTime();
 
 <?php use_helper('Javascript', 'MyForm') ?>
 <link href="/css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="http://www.rayku.com/css/custom/register.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="<?php echo sfConfig::get('app_rayku_url') ?>/css/custom/register.css" rel="stylesheet" type="text/css" media="screen" />
 <div class="body-main">
   <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(/images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Create Tutor Account</span> </div>
   <div class="clear"></div>
@@ -64,7 +64,7 @@ var WRInitTime=(new Date()).getTime();
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
       <label><strong>
         <input type="checkbox" name="terms" value="1"/>
-        Agree to <a href="http://www.rayku.com/tos.html" rel="popup standard 800 600 noicon">Terms &amp; Conditions</a></strong> </label>
+        Agree to <a href="<?php echo sfConfig::get('app_rayku_url') ?>/tos.html" rel="popup standard 800 600 noicon">Terms &amp; Conditions</a></strong> </label>
     </div>
     <div style="float:right"><?php echo "<input type='submit' name='regtutor' value='Submit' style='padding:7px;width:100px;font-size:16px;font-weight:bold' onClick='return emailValidateNew()'>"; ?></div>
     <div class="spacer"></div>

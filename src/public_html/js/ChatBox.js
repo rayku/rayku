@@ -4,7 +4,7 @@
 }
 
 var xmlHttp;
-var requestURL = 'http://www.rayku.com/expertmanager/mapuser?cid=';
+var requestURL = window.globalConfig.rayku_url + '/expertmanager/mapuser?cid=';
 var is_ie = (navigator.userAgent.indexOf('MSIE') >= 0) ? 1 : 0;
 var is_ie5 = (navigator.appVersion.indexOf("MSIE 5.5") != -1) ? 1 : 0;
 var is_opera = ((navigator.userAgent.indexOf("Opera6") != -1) || (navigator.userAgent.indexOf("Opera/6") != -1)) ? 1 : 0;

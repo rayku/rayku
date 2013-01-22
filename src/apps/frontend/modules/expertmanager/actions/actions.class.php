@@ -377,6 +377,7 @@ class expertmanagerActions extends sfActions
         exit;
     }
 
+
     public function executeCurrenttutor() {
         // connect to the database and get the current user's id
         $connection = RaykuCommon::getDatabaseConnection();

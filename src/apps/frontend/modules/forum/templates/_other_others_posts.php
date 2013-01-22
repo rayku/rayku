@@ -38,7 +38,7 @@ foreach ($other_others_posts as $post) {
                                     <div>
                                     <?php } ?>
                                 <?php } ?>
-                                <?php echo link_to($user->getName(), 'http://rayku.com/tutor/' . $user->getUsername(), array('class' => 'username')) ?>
+                                <?php echo link_to($user->getName(), sfConfig::get('app_rayku_url').'/tutor/' . $user->getUsername(), array('class' => 'username')) ?>
                             </div>
                             <div class="points" style="font-weight:normal;color:#666">Posts: <strong>
                                     <?php

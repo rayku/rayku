@@ -5,7 +5,7 @@ But this time, your friend personally typed in your email address to send you th
 Rayku.com is an online tutoring service that lets you get on-demand math help with expert tutors, over an interactive whiteboard.<br /><br />
 
 Take a look!<br />
-<a href="http://rayku.com/register?ref=<?php echo $ref; ?>">http://rayku.com/register?ref=<?php echo $ref; ?></a><br /><br />
+<a href="<?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $ref; ?>"><?php echo sfConfig::get('app_rayku_url') ?>/register?ref=<?php echo $ref; ?></a><br /><br />
 
 Thanks!<br />
 Rayku Team<br /><br />

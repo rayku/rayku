@@ -31,7 +31,7 @@ You have received a private message at Rayku.com from <?php echo $senderName; ?>
 --------------------------<br /><br />
 
 To reply or delete this private message and others, please log in to your Rayku.com account here:<br />
-<a href="http://www.rayku.com/message/inbox">http://www.rayku.com/message/inbox</a><br /><br />
+<a href="<?php echo sfConfig::get('app_rayku_url') ?>/message/inbox">http://www.rayku.com/message/inbox</a><br /><br />
 
 -------------------<br />
 Thanks!<br />

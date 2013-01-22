@@ -19,8 +19,8 @@ if($_GET['code']<>'')
 			{
 
 				mysql_query("delete from referral_code where referral_code='".$_GET['code']."'") or die(mysql_error());
-				setcookie('register_set','1',time()+3600,"/",".rayku.com");
-				setcookie('referrer',$referrer[0],time()+3600,"/",".rayku.com");
+				setcookie('register_set','1',time()+3600,"/", sfConfig::get('app_cookies_domain'));
+				setcookie('referrer',$referrer[0],time()+3600,"/",sfConfig::get('app_cookies_domain'));
 				echo "1";
 				
 			}

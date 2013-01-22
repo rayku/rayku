@@ -277,8 +277,8 @@ function cmp($a, $b)
         <li><img src="../images/icon-web.png" title="web" id="icon-web" alt="web" width="74" height="73" /></li>
         <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
         <!--<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
-        <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
-        <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
+        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.exe" class="icon windows">Windows Software</a></li>
+        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
       </ul>
       <div class="clear"></div>
     </div>

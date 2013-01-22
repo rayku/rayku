@@ -35,7 +35,7 @@ class RecentActivities
     $this->feed = new sfRss201Feed();
 
     $this->feed->setTitle('rayku.com');
-    $this->feed->setLink('http://rayku.com/');
+    $this->feed->setLink(sfConfig::get('app_rayku_url'));
     $this->feed->setAuthorEmail('');
     $this->feed->setAuthorName('autor');
   }

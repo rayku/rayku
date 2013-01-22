@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/styles/donny.css">
-<script type="text/javascript" src="http://www.rayku.com/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<?php echo sfConfig::get('app_rayku_url') ?>/js/jquery-1.4.2.min.js"></script>
 
 <div class='body-main'>
   <div id="what-is">
@@ -153,8 +153,8 @@ return true;
       <div class="text">Get our spyware-free notification software and you'll be open for business whenever your computer is connected to the Internet.<br />
         <br />
         <ul class="icon-list">
-          <li><a href="http://notification-bot.rayku.com/download/rayku.exe" class="icon windows">Windows Software</a></li>
-          <li><a href="http://notification-bot.rayku.com/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
+          <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.exe" class="icon windows">Windows Software</a></li>
+          <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
         </ul>
         <div style="clear:both"></div>
       </div>

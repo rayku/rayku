@@ -76,6 +76,7 @@ class RaykuCommon
   // this is a temporary function to allow the safe removal of mysql_connect and
   // mysql_select_db across the codebase
   static function getDatabaseConnection() {
+
       $config = self::getDatabaseConfiguration();
       $connection = mysql_connect($config['host'], $config['username'], $config['password']);
 
@@ -87,9 +88,10 @@ class RaykuCommon
 
   private static function getDatabaseConfiguration() {
       if (self::$dbConfig == null) {
+
           $config = sfYaml::load(dirname(__FILE__).'/../config/databases.yml');
 
-          $propelConfiguration = $config['all']['propel']['param'];
+          $propelConfiguration = $config['prod']['propel']['param'];
           preg_match('/dbname=(.*);host=(.*)/', $propelConfiguration['dsn'], $matched);
 
           self::$dbConfig['host'] = $matched[2];

@@ -88,7 +88,7 @@
     <div id="tos" style="font-size:12px;line-height:30px;width:300px;float:left">
       <label><strong>
         <input type="checkbox" name="terms" value="1"/>
-        Agree to <a href="http://www.rayku.com/tos.html" rel="popup standard 800 600 noicon">Terms &amp; Conditions</a></strong> </label>
+        Agree to <a href="<?php echo sfConfig::get('app_rayku_url') ?>/tos.html" rel="popup standard 800 600 noicon">Terms &amp; Conditions</a></strong> </label>
     </div>
     <!--
 <?php echo submit_tag('', array('id' => 'register','name' => 'register')) ?>-->

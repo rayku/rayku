@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/styles/donny.css">
-<script type="text/javascript" src="http://www.rayku.com/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<?php echo sfConfig::get('app_rayku_url') ?>/js/jquery-1.4.2.min.js"></script>
 <div class="body-main">
 
     <div class="box" style="padding-left:144px;">

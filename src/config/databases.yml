@@ -1,8 +1,15 @@
-dev:
-  propel:
-    param:
-      classname: DebugPDO
 
+prod:
+  propel:
+    class: sfPropelDatabase
+    param:
+      dsn: 'mysql:dbname=rayku_db;host=db1.p.rayku.com'
+      username: rayku_db
+      password: UthmCRtaum34qpGL
+      encoding: utf8
+      persistent: true
+      pooling: true
+      classname: PropelPDO
 test:
   propel:
     param:
@@ -15,6 +22,7 @@ staging:
       classname: DebugPDO
       dsn: 'mysql:dbname=rayku_staging;host=127.0.0.1'
 
+
 all:
   propel:
     class: sfPropelDatabase
@@ -26,3 +34,4 @@ all:
       persistent: true
       pooling: true
       classname: PropelPDO
+

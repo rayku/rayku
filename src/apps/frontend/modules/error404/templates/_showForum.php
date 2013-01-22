@@ -130,7 +130,7 @@ if(!empty($logedUserId)) { ?>
           $best_resp_count = PostPeer::getCountOfBestResponseForExpert( $expert );
 
           echo '<div class="expert">';
-            echo '<strong><a href="http://www.rayku.com/expertmanager/portfolio/'.$expert->getUsername().'" style="color:#6E6E6E">'.$expert->getName().'</a>: </strong>';
+            echo '<strong><a href="' . sfConfig::get('app_rayku_url') .'/expertmanager/portfolio/'.$expert->getUsername().'" style="color:#6E6E6E">'.$expert->getName().'</a>: </strong>';
             echo $best_resp_count . ' Best Responses';
           echo '</div>';
         }

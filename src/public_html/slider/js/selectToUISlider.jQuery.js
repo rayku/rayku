@@ -173,7 +173,7 @@ jQuery.fn.selectToUISlider = function(settings){
 		jQuery(selectOptions).each(function(i){
 			var style = (i == selectOptions.length-1 || i == 0) ? 'style="display: none;"' : '' ;
 			var labelText = this.text;
-			var imgLocation = 'http://www.rayku.com/slider/images/smileys/'+labelText+'.png';
+			var imgLocation = window.globalConfig.rayku_url +'/slider/images/smileys/'+labelText+'.png';
 			scale.append('<li style="left:'+ leftVal(i) +'"><span class="ui-slider-label"><img src="'+imgLocation+'" height="24" /><br/>'+ labelText +'</span><span class="ui-slider-tic ui-widget-content"'+ style +'></span></li>');
 		});
 	}

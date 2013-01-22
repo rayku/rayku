@@ -323,7 +323,7 @@ h2.avatar {
 	$googletalk=null;
 	
 	if($userGtalk) {
-		$onlinecheck = BotServiceProvider::createFor('http://www.rayku.com:8892/status/'.$userGtalk->getGtalkid())->getContent();
+		$onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/'.$userGtalk->getGtalkid())->getContent();
 		
 		if($onlinecheck == "online") {
 			$googletalk=true;
@@ -337,7 +337,7 @@ h2.avatar {
 		
 		if($userFb) {
 			$fb_username = $userFb->getFbUsername();
-			$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+			$details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
 			$Users = json_decode($details, true);
 			foreach($Users as $key => $user) {
 				
@@ -352,7 +352,7 @@ h2.avatar {
 
 	}
 
-	$onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+	$onlineTutorsByNotificationBot = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
 	
 	if((empty($onlinecheck) || ($onlinecheck != "online")) && is_array(@$_Users)) {
 		$_Users = json_decode($onlineTutorsByNotificationBot, true);
@@ -378,7 +378,7 @@ h2.avatar {
 	
 	if($userFb) {
 		$fb_username = $userFb->getFbUsername();
-		$details = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+		$details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
 		$Users = json_decode($details, true);
 		foreach($Users as $key => $user) {
 			

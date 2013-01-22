@@ -8,7 +8,7 @@ $id=$raykuUser->getId();
 ?>
 <?php $raykuUser = $sf_user->getRaykuUser(); ?>
 <style media="all" type="text/css">
-@import "http://www.rayku.com/styles/global.css";
+@import "<?php echo sfConfig::get('app_rayku_url') ?>/styles/global.css";
 .left-bg h3 {
 	font: bold 14px Arial, Helvetica, sans-serif;
 	color: #056a9a;
@@ -39,10 +39,10 @@ $id=$raykuUser->getId();
     <h2>You're Finished!</h2>
     <p style="color:#333;padding-left:10px;font-size:14px;">You can now go to your dashboard and ask questions to live online tutors. Tutors offering free sessions are limited to 15 minutes per session.<br />
       <br />
-      <strong>With Rayku Points (RP)</strong>, you can get premium one-to-one tutoring with our top experts with no limits. <a href="http://www.rayku.com/shop/paypal">Here's how to get some</a>.<br />
+      <strong>With Rayku Points (RP)</strong>, you can get premium one-to-one tutoring with our top experts with no limits. <a href="<?php echo sfConfig::get('app_rayku_url'); ?>/shop/paypal">Here's how to get some</a>.<br />
       <br />
       You can get started immediately! Go ahead and ask your first question. </p>
-    <p style="margin-top:25px"><a href="http://www.rayku.com/dashboard" style="color:#060;font-size:18px;text-decoration:underline;">Click here to go to your dashboard</a></p>
+    <p style="margin-top:25px"><a href="<?php echo sfConfig::get('app_rayku_url'); ?>/dashboard" style="color:#060;font-size:18px;text-decoration:underline;">Click here to go to your dashboard</a></p>
   </div>
 </div>
 <?php $_SESSION['logid']=$logedUserId;?>

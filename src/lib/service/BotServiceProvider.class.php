@@ -32,23 +32,7 @@ class BotServiceProvider
      * Definition of all available bots
      * @todo - move this to app.yml or somewhere else outside this class - look out for cronjobs/* because they don't have direct access to app.yml content
      */
-    static $bots = array(
-        'gtalk' => array(
-            'prefix' => 'http://www.rayku.com:8892',
-            'serviceUrl' => 'bots.rayku.com:8892',
-            'enabled' => true
-        ),
-        'facebook' => array(
-            'prefix' => 'http://facebook.rayku.com',
-            'serviceUrl' => 'bots.rayku.com:4567',
-            'enabled' => false
-        ),
-        'mac-server' => array(
-            'prefix' => 'http://notification-bot.rayku.com',
-            'serviceUrl' => 'bots.rayku.com:5678',
-            'enabled' => true
-        )
-    );
+
     
     private $logging = true;
     private $logFilePath = '/tmp/botServiceProvider.log';
@@ -88,7 +72,7 @@ class BotServiceProvider
         
         $time = time();
         $url = $this->getUrl();
-        
+         
         $client = new Guzzle\Service\Client($url);
         $request = $client->get($url);
         $request->getCurlOptions()->set(CURLOPT_CONNECTTIMEOUT, $this->curlConnectTimeout);
@@ -106,12 +90,12 @@ class BotServiceProvider
                         ."\n",
                     FILE_APPEND
                 );
-            }
+            }	
             return '[]';
         }
          
         $content = $response->getBody(true);
-        
+     	 
         if ($this->logging) {
             file_put_contents(
                 $this->logFilePath,
@@ -128,9 +112,30 @@ class BotServiceProvider
 
     function getUrl()
     {
+
+        $bots = array(
+            'gtalk' => array(
+                'prefix' => sfConfig::get('app_rayku_url').':' . sfConfig::get('app_g_chat_port'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':' . sfConfig::get('app_g_chat_port'),
+                'enabled' => true
+            ),
+            'facebook' => array(
+                'prefix' => sfConfig::get('app_facebook_url'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
+                'enabled' => false
+            ),
+            'mac-server' => array(
+                'prefix' => sfConfig::get('app_notification_bot_url'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_mac_server_port'),
+                'enabled' => true
+            )
+        );
+
+
         if ($this->botId) {
-            return 'http://'.self::$bots[$this->botId]['serviceUrl'] . $this->url;
+            return $bots[$this->botId]['serviceUrl'] . $this->url;
         } else {
+		
             return $this->url;
         }
     }
@@ -140,7 +145,29 @@ class BotServiceProvider
      */
     static function createFor($url)
     {
-        foreach (self::$bots as $botId => $botParams) {
+
+
+        $bots = array(
+            'gtalk' => array(
+                'prefix' => sfConfig::get('app_rayku_url').':' . sfConfig::get('app_g_chat_port'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':' . sfConfig::get('app_g_chat_port'),
+                'enabled' => true
+            ),
+            'facebook' => array(
+                'prefix' => sfConfig::get('app_facebook_url'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
+                'enabled' => false
+            ),
+            'mac-server' => array(
+                'prefix' => sfConfig::get('app_notification_bot_url'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_mac_server_port'),
+                'enabled' => true
+            )
+        );
+
+
+
+        foreach ($bots as $botId => $botParams) {
             if (is_numeric(strpos($url, $botParams['prefix']))) {
                 $botService = new self(
                     str_replace($botParams['prefix'], '', $url),
@@ -153,9 +180,9 @@ class BotServiceProvider
                 return $botService;
             }
         }
-
         return new self($url);
     }
 }
 
 ?>
+

@@ -8,5 +8,5 @@ fclose($fh);
 
 <div style="width:600px;margin:50px auto;font-size:20px;font-family:Tahoma;">
 	<strong>Thank you!</strong> We have logged your tutor account as 'active'!<br><br>
-	<a href="http://rayku.com">Click here</a> to go back to Rayku.com.
+	<a href="<?php echo sfConfig::get('app_rayku_url') ?>">Click here</a> to go back to Rayku.com.
 	</div>

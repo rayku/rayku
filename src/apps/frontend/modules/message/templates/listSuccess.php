@@ -81,7 +81,7 @@
                        }
 					}
 					//document.getElementById('popuplogin').innerHTML="<p align='center'><img src='images/Send-Mail.gif' /></p>";
-					var url = "http://www.rayku.com/js/delete_pms.php?deletemessages="+deletemessages;
+					var url = "<?php echo sfConfig::get('app_rayku_url') ?>/js/delete_pms.php?deletemessages="+deletemessages;
 					
 					//document.getElementById('popuplogin').innerHTML="<b>Sending Mail.........</b>";
 					xmlHttp.open("GET",url,true);

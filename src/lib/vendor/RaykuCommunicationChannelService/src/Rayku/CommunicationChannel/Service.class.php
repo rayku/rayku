@@ -16,10 +16,10 @@ class Service
     
     function __construct()
     {
-        $gtalk = new BotNotifier('local.gtalk.bot.rayku.com', 8892);
+        $gtalk = new BotNotifier('local.gtalk.bot.rayku.com', sfConfig::get('app_g_chat_port'));
         $gtalk->setType('gtalk');
         
-        $fb = new BotNotifier('local.facebook.bot.rayku.com', 8893);
+        $fb = new BotNotifier('local.facebook.bot.rayku.com', sfConfig::get('app_fb_chat_port'));
         $fb->setType('fb');
         
         $this->ccS = array(

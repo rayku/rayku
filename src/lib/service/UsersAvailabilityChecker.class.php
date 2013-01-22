@@ -29,7 +29,7 @@ class UsersAvailabilityChecker
 
     private function fetchOnlineStatusFromIMBots()
     {
-        $fbUsersJSON = BotServiceProvider::createFor("http://facebook.rayku.com/tutor")->getContent();
+        $fbUsersJSON = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
         $fbUsers = json_decode($fbUsersJSON, true);
 
         foreach ($fbUsers as $fbUser) {
@@ -38,10 +38,10 @@ class UsersAvailabilityChecker
             }
         }
 
-        $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
+        $onlineTutorsByNotificationBot = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
         $this->botOnlineUsers = json_decode($onlineTutorsByNotificationBot, true);
 
-        $gtalkUsersJSON = BotServiceProvider::createFor("http://www.rayku.com:8892/onlines")->getContent();
+        $gtalkUsersJSON = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').":".sfConfig::get('app_g_chat_port')."/onlines")->getContent();
         $gtalkUsers = json_decode($gtalkUsersJSON, true);
 
         foreach ($gtalkUsers as $gtalkUserId => $status) {

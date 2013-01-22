@@ -86,7 +86,7 @@
                 <p>Although you are allowed to set your own rates, our system automatically caps the highest you can charge depending on your past ratings on the site. Your first few sessions will be capped at $0/minute to build experience.</p>
                 <p>Tutor when you want, wherever you want. Your salary and work hours are yours to decide. Register today and get started immediately, it's free!</p>
               </div>
-                <div class="content-links"><a href="http://rayku.com/regtutor" style="color:#069">Apply Now</a></div>
+                <div class="content-links"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/regtutor" style="color:#069">Apply Now</a></div>
             </div> <!-- content -->
             
             <div class="clear"></div>
@@ -96,7 +96,7 @@
         <div class="content-right">
             <div class="content">
                 <h2><img src="/images/r4.png" align="absmiddle" />Whiteboard</h2>
-                <p>Teach online via a live shared whiteboard <a href="http://whiteboard.rayku.com/standalone" target="_blank">(demo)</a>.</p>
+                <p>Teach online via a live shared whiteboard <a href="<?php echo sfConfig::get('app_whiteboard_url') ?>/standalone" target="_blank">(demo)</a>.</p>
           </div> <!-- class="content" -->
 
           <div class="content">
@@ -135,7 +135,7 @@
           </div> <!-- class="content" -->   
 
           <div class="hr"></div>
-          <div class="question">It's free! <a href="http://rayku.com/regtutor">Get Started Now</a></div> <!-- question -->
+          <div class="question">It's free! <a href="<?php echo sfConfig::get('app_rayku_url') ?>/regtutor">Get Started Now</a></div> <!-- question -->
         </div> <!-- content-right -->
         <div class="clear"></div>
     
