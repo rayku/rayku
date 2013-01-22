@@ -77,6 +77,9 @@ class RaykuCommon
   // mysql_select_db across the codebase
   static function getDatabaseConnection() {
       $config = self::getDatabaseConfiguration();
+    //  echo " hello "; 
+      // echo sfConfig::get('databases_username'); exit ;
+       //   echo $config['host']. " ". $config['username']. " ". $config['password']." ". $config['dbname']; exit; 
       $connection = mysql_connect($config['host'], $config['username'], $config['password']);
 
       mysql_select_db($config['dbname'], $connection);

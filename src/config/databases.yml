@@ -21,6 +21,7 @@ staging:
       classname: DebugPDO
       dsn: 'mysql:dbname=rayku_staging;host=127.0.0.1'
 
+
 all:
   propel:
     class: sfPropelDatabase
@@ -32,5 +33,4 @@ all:
       persistent: true
       pooling: true
       classname: PropelPDO
-
 
