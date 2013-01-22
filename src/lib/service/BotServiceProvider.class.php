@@ -136,7 +136,6 @@ class BotServiceProvider
             return $bots[$this->botId]['serviceUrl'] . $this->url;
         } else {
 		
-	echo $this->botId. " " .$bots[$this->botId]['serviceUrl'] . $this->url;         
             return $this->url;
         }
     }

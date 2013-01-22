@@ -2,9 +2,12 @@
 require_once dirname(dirname( __FILE__ )) . '/lib/vendor/symfony1/lib/autoload/sfCoreAutoload.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/RaykuCommon.class.php';
 require_once dirname(dirname( __FILE__ )) . '/lib/service/BotServiceProvider.class.php';
+
+
 sfCoreAutoload::register();
 
 require_once(__DIR__.'/../config/ProjectConfiguration.class.php');
+
 $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
 $context = sfContext::createInstance($configuration);
 
@@ -54,8 +57,8 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
                 $Users = json_decode($details, true);
                 foreach($Users as $key => $user) {
                     if($user['username'] == $fb_username){
-                        //set POST variables
-                        $url = sfConfig::get('app_facebook_url')'/tutor/'.$user['uid'].'/message';
+                        //set POST variables 
+                        $url = sfConfig::get('app_facebook_url').'/tutor/'.$user['uid'].'/message';
                         $fields = array(
                             'message'=> $_exp_message
                         );
