@@ -190,3 +190,25 @@ div#top-nav div#top-nav-center ul.top-menu {
 	display: none;
 	margin: 0;
 }
+
+.warning {
+	display: inline;
+	color: #990000;
+	font-weight: bold;
+}
+
+#idleStateMessage {
+	display:none;
+	width:941px;
+	margin:0 auto;
+	background:#FFFFCC;
+	border-bottom:3px solid #DECAAB;
+	padding:5px;
+	color:#333;
+	font-size:14px;
+}
+
+#idleStateMessage a {
+	text-decoration:underline;
+	color:#069;
+}

@@ -127,6 +127,7 @@ if($count>0)
 	<a href="javascript: document.listform1.submit()" onclick="return checkExpertCheckBoxes();" type="submit" id="submit_connect" class="connect-now">Connect Now</a>
 	<input type="hidden"  value="7" id="hidden" name="hidden">
         </form>
+        
     </div>
 </div> 
 </div> 	

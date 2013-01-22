@@ -6,15 +6,11 @@
 	outline:0;
 }
 
-.clear
-{
-	clear:both;
-}
 .black
 {
 	color:#333333;
 }
-#widget
+.widget
 {
 	margin:0 auto;
 	width:284px;
@@ -23,7 +19,12 @@
 	font-size:14px;
 	font-family:Tahoma, Geneva, sans-serif;
 }
-#widget-head
+
+.widget {
+	margin-bottom: 15px;
+}
+
+.widget-head
 {
 	position:relative;
 	width:264;
@@ -32,7 +33,7 @@
 	padding:7px 10px;
 	
 }
-#widget-head h3
+.widget-head h3
 {
 	font-size:14px;
 	font-weight:normal;
@@ -43,17 +44,18 @@
 	font-size:15px;
 	color:#666;
 }
-#widget-main
+.widget-main
 {
 	margin:10px;
 	position:relative;
 }
-#widget-main p
+.widget-main p
 {
 	color:#838383;
 	line-height:18px;
 	
 }
+
 #progress-wrap
 {
 	padding:15px 0;
@@ -93,6 +95,11 @@
 	text-decoration:underline;
 	float:left;
 }
+
+#rank-heading {
+	line-height:16px;
+}
+
 #error-message
 {
 	background:#f3f3f3;
@@ -131,14 +138,14 @@
 	padding-bottom:25px;
 }
 
-#widget-main ul.icon-list 
+.widget-main ul.icon-list 
 {
 	list-style: none;
 	padding: 0;
 	margin: 20px 0 0;
 	background: #d2e6f6;
 }
-#widget-main ul.icon-list li a
+.widget-main ul.icon-list li a
 {
 	display: block;
 	float: left;
@@ -147,14 +154,14 @@
 	margin: 0 12px 10px 0;
 	text-indent: -5000px;
 }
-#widget-main ul.icon-list li a.windows { background: url('/images/tutorshelp/icon-windows.jpg') center center no-repeat;}
-#widget-main ul.icon-list li a.windows:hover { background: url('/images/tutorshelp/icon-windows-hover.jpg') center center no-repeat;}		
-#widget-main ul.icon-list li a.mac { background: url('/images/tutorshelp/icon-mac.jpg') center center no-repeat;}
-#widget-main ul.icon-list li a.mac:hover { background: url('/images/tutorshelp/icon-mac-hover.jpg') center center no-repeat;}
-#widget-main ul.icon-list li a.gtalk { background: url('/images/tutorshelp/icon-gtalk.jpg') center center no-repeat; }
-#widget-main ul.icon-list li a.gtalk:hover { background: url('/images/tutorshelp/icon-gtalk-hover.jpg') center center no-repeat;}
-#widget-main ul.icon-list li a.facebook { background: url('/images/tutorshelp/icon-facebook.jpg') center center no-repeat; }
-#widget-main ul.icon-list li a.facebook:hover { background: url('/images/tutorshelp/icon-facebook-hover.jpg') center center no-repeat;}
+.widget-main ul.icon-list li a.windows { background: url('/images/tutorshelp/icon-windows.jpg') center center no-repeat;}
+.widget-main ul.icon-list li a.windows:hover { background: url('/images/tutorshelp/icon-windows-hover.jpg') center center no-repeat;}		
+.widget-main ul.icon-list li a.mac { background: url('/images/tutorshelp/icon-mac.jpg') center center no-repeat;}
+.widget-main ul.icon-list li a.mac:hover { background: url('/images/tutorshelp/icon-mac-hover.jpg') center center no-repeat;}
+.widget-main ul.icon-list li a.gtalk { background: url('/images/tutorshelp/icon-gtalk.jpg') center center no-repeat; }
+.widget-main ul.icon-list li a.gtalk:hover { background: url('/images/tutorshelp/icon-gtalk-hover.jpg') center center no-repeat;}
+.widget-main ul.icon-list li a.facebook { background: url('/images/tutorshelp/icon-facebook.jpg') center center no-repeat; }
+.widget-main ul.icon-list li a.facebook:hover { background: url('/images/tutorshelp/icon-facebook-hover.jpg') center center no-repeat;}
 
 
 
@@ -229,12 +236,7 @@
   background-color: #57A957!important;
   border: 1px solid #458845;
 }
-.ui-progress-bar.transition .ui-progress {
-  -moz-transition: background-color 0.5s ease-in, border-color 1.5s ease-out, box-shadow 1.5s ease-out;
-  -webkit-transition: background-color 0.5s ease-in, border-color 1.5s ease-out, box-shadow 1.5s ease-out;
-  -o-transition: background-color 0.5s ease-in, border-color 1.5s ease-out, box-shadow 1.5s ease-out;
-  transition: background-color 0.5s ease-in, border-color 1.5s ease-out, box-shadow 1.5s ease-out;
-}
+
 .ui-progress-bar .ui-progress {
   /* Usual setup stuff */
   position: relative;
@@ -267,13 +269,7 @@
   box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4), inset 0px -1px 1px rgba(0, 0, 0, 0.2);
   /* Give it a higher contrast outline */
   border: 1px solid #990000;
-  /* Animate */
-  -moz-animation: animate-stripes 2s linear infinite;
-  -webkit-animation: animate-stripes 2s linear infinite;
-  -o-animation: animate-stripes 2s linear infinite;
-  -ms-animation: animate-stripes 2s linear infinite;
-  -khtml-animation: animate-stripes 2s linear infinite;
-  animation: animate-stripes 2s linear infinite;
+
   /* Style status label */
 }
 .ui-progress-bar .ui-progress span.ui-label {

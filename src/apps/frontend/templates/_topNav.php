@@ -101,10 +101,8 @@
   });
  </script>
 
-
- <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/themes/smoothness/jquery-ui.css"/>
 <div id="tt-questions-tooltip" class="tooltip"> Ask a Question </div>
-<div id="tt-boards-tooltip" class="tooltip"> Q&A Boards </div>
+<div id="tt-boards-tooltip" class="tooltip"> Q&amp;A Boards </div>
 <div id="tt-messages-tooltip" class="tooltip"> You have <strong><?php echo $raykuUser->getNrOfNewMessages(); ?></strong> new messages </div>
 <div id="tt-tutors-tooltip" class="tooltip"> Tutors List </div>
 <div id="tt-points-tooltip" class="tooltip"> You have <strong><?php echo $detailPoints['points'];?>RP</strong> </div>
@@ -129,15 +127,6 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
         && ($_SERVER['REDIRECT_URL'] != "/start")
         && ($_SERVER['REDIRECT_URL'] != "/dashboard/beforeclose")
 ) {
-    ?>
-    <link rel="stylesheet" type="text/css" href="/css/modalbox.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/css/popup.css" media="screen" />
-    <script type="text/javascript" src="/js/scriptaculous.js"></script>
-    <script type="text/javascript" src="/js/builder.js"></script>
-    <script type="text/javascript" src="/js/effects.js"></script>
-    <script type="text/javascript" src="/js/modalbox.js"></script>
-    <script type="text/javascript" src="/js/encode_decode.js"></script>
-    <?php
     
     if($sf_user->isAuthenticated()) {
         include_partial('global/topNav_questionPopup');
@@ -163,9 +152,9 @@ if(isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] != "/login/login
 
     if (mysql_num_rows($userTutorResult) > 0) {
 ?>
-            <div id="idleStateMessage" style="display:none;width:941px;margin:0 auto;background:#FFFFCC;border-bottom:3px solid #DECAAB;padding:5px;color:#333;font-size:14px;">
+            <div id="idleStateMessage">
                 <div>
-                    <font color="#990000" style="font-weight:bold">Warning!</font> Your will be logged out in <span></span> seconds due to inactivity. <a href="#" style="text-decoration:underline;color:#069">Click here to abort</a>
+                    <div class="warning">Warning!</div> Your will be logged out in <span></span> seconds due to inactivity. <a href="#">Click here to abort</a>
                 </div>
             </div>
             <script src="/js/vendor/ehynds/jquery-idle-timeout/src/jquery.idletimer.js" type="text/javascript"></script>

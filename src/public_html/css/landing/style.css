@@ -103,7 +103,7 @@ Register Section Styling
 #register
 {
 	background:url(/images/landing/blackboard.jpg) 0 bottom repeat-x;
-	height:432px;
+	height:331px;
 	padding-top:51px;
 	border-bottom:1px solid #000;
 }
@@ -111,7 +111,7 @@ Register Section Styling
 {
 	width:100%;
 	position:absolute;
-	padding-top:90px;
+	padding-top:65px;
 }
 #register-form h3
 {
@@ -129,7 +129,7 @@ Register Section Styling
 }
 .main-question input[type=text]
 {
-	width:656px;
+	width:588px;
 	height:75px;
 	background:url(/images/landing/question-input.png) no-repeat;
 	font-size:20px;
@@ -625,3 +625,73 @@ Fonts
 }
 
 /* edited 13/12/2011 */.input-fader {	display:block!important;	height:34px;	line-height:34px;	width:290px;	padding:0 0 0 15px;	background:#fff!important;	zoom:1;	vertical-align:middle;		-moz-border-radius-topleft: 5px!important;	-webkit-border-radius: 5px!important;	border-radius: 5px!important;	margin: 0 0 10px;}.input-fader label {	display: block;	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	position:absolute!important;	z-index:1;	padding:0!important;	background:none!important;}.input-fader input {	display:block;	height:34px;	line-height:34px;	padding:0!important;	width:100%;	position:absolute;	z-index:3;	color:#333!important; background: none!important;}#registration-form input, #login-form input {	-moz-border-radius-topleft: 0px!important;	-moz-border-radius-topright: 0!important;	-moz-border-radius-bottomright: 0!important;	-moz-border-radius-bottomleft: 0px!important;	-webkit-border-radius: 0px 0 0 0px!important;	border-radius: 0px 0 0 0px!important;	color:#676767;	font-size:16px;	position:relative;}
+
+#header {
+	background: url("/images/landing/topnav/header-bg.gif") repeat-x scroll 0 0 transparent;
+	height: 47px;
+	padding-top: 4px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99999;
+}
+#header .container h1 {
+	float: left;
+	margin-top: -4px;
+}
+#navigation {
+    background: none;
+    border-radius: 5px 5px 5px 5px;
+    float: right;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    font-weight:normal;
+    height: 32px;
+    line-height: 32px;
+    margin-left: 24px;
+    margin-top: 2px;
+}
+#navigation li {
+	background: url("/images/landing/topnav/nav-border.png") no-repeat scroll right 6px transparent;
+	display: inline-block;
+	padding: 0 11px;
+}
+#navigation li a {
+	color: #ffffff;
+}
+#navigation li a:hover {
+	text-decoration: underline;
+}
+#navigation li:last-child {
+	background: none repeat scroll 0 0 transparent;
+}
+
+#video-button {
+	position: absolute;
+	top:43px;
+	left: -252px;
+	z-index: 999;
+}
+
+#media-logos {
+	position: absolute;
+	top: 43px;
+	left: 871px;	
+}
+
+#video-player {
+	position: absolute;
+	top:4px;
+	left: 233px;
+	display: none;
+
+}
+
+#close-video {
+	position: absolute;
+	left: 718px;
+	top: 11px;
+	z-index: 99999;
+	display: none;
+	
+}

@@ -9,28 +9,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/navigation.css"/>
 
 </head>
-<script type="text/javascript">
-  function showcontent(contentid)
-  {
-    //alert(contentid);
-    if(this.document.getElementById('idcontainer').innerHTML == '')
-    {
-    this.document.getElementById(contentid).style.height='auto';
-    this.document.getElementById('idcontainer').innerHTML=contentid;
-    }   
-    
-    else if(this.document.getElementById('idcontainer').innerHTML != contentid)
-    {
-      var idcontainervalue = this.document.getElementById('idcontainer').innerHTML;
-      this.document.getElementById(idcontainervalue).style.height = '75px';
-      this.document.getElementById(contentid).style.height='auto';
-      this.document.getElementById('idcontainer').innerHTML=contentid;
-    }
-    
-    
-    
-  }
-</script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/add-event.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/popup.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquerynav.js"></script>

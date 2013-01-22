@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>Free Online Math Tutoring | Calculus, Algebra, Statistics, more | Rayku.com</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css"  media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/landing/style.css"  media="screen" />
 <!--[if lte IE 8]>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/ie78.css" media="screen" />
@@ -10,9 +9,6 @@
 
 <!-- Form Validation -->
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/validation/validationEngine.jquery.css" media="screen" />
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/languages/jquery.validationEngine-en.js"></script>
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/start_validation.js"></script>
 <!-- End of form validation files include -->
 
 <?php templateGoogleAnalytics(); ?>
@@ -20,6 +16,8 @@
 
 <body>
 <!--header-->
+
+
 <div id="header">
   <!--container-->
   <div class="container clearfix">
@@ -50,48 +48,56 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
   <!--container-->
   <div class="container">
-	<a id="video-button" href="#newsletter-form"></a>
-	<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
-    <form name="register-form" id="register-form" action="quickreg/register" method="post">
-      <h3>Free Live Math Tutoring
-
-      </h3>
-      <p class="main-question">
-        <input type="text" name="question" id="question" value="Type your math question here"/>
-      </p>
-      <!--register-block-->
-      <div id="register-block">
-        <h4 class="clearfix">Create an account as you ask your first question (it's free!):</h4>
-        <!--register block fields-->
-        <div id="register-block-fields">
-          <ul class="clearfix">
-            <li>
-              <input type="text"  class="validate[required,custom[onlyLetterSp],funcCall[checkName]]" id="name" name="name" placeholder="Full Name"/>
-            </li>
-            <li>
-            <input type="text" id="email" class="validate[required,custom[email],funcCall[emailDupcheck],funcCall[resData]]" name="email" placeholder="Email Address"/>
-            </li>
-            <li>
-              <input type="password" class="validate[required,funcCall[checkPassword]]" id="password" name="password" placeholder="Password"/>
-            </li>
-            <li>
-              <input type="password" class="validate[required,funcCall[checkRPassword]] " id="confirm-password" name="confirm-password" placeholder="Confirm Password"/>
-            </li>
-            <!-- Email Filter Utoronto.ca - ,funcCall[emailValidateNew]  -->
-          </ul>
-          <div id="tos-create-account" class="clearfix">
-            <p class="tos">By submitting this form, you indicate that you have read and agree to the <a href="tos.html" target="_blank">Terms &amp; Conditions</a></p>
-            <p class="create-account"><input type="image" src="<?php echo $baseRootPath; ?>/images/landing/ask-question-button.png" alt="Question" />
-            </p>
-            <input type="hidden" id="checkdata" name="checkdata" />
-          </div>
-        </div>
-        <!--register block fields start/register -->
-
-      </div>
-      <!--register-block-->
-
-    </form>
+	<a href="#">
+	<img id="video-button" src="<?php echo $baseRootPath; ?>/images/vidbutton.png" 
+onmouseover="this.src='<?php echo $baseRootPath; ?>/images/vidbutton-hover.png'" 
+onmouseout="this.src='<?php echo $baseRootPath; ?>/images/vidbutton.png'" />
+	</a>
+	<a href="#"><img id="close-video" src="<?php echo $baseRootPath; ?>/images/landing/close-video.png" /></a>
+	<iframe id="video-player" src="http://fast.wistia.com/embed/iframe/6311e77c10?videoWidth=465&amp;videoHeight=262&amp;volumeControl=true&amp;playerColor=313131&amp;plugin%5BpostRoll%5D%5Bversion%5D=v1&amp;plugin%5BpostRoll%5D%5Btext%5D=Click%20here%20to%3Cbr%2F%3Eregister%20(it's%20free!)&amp;plugin%5BpostRoll%5D%5Blink%5D=http%3A%2F%2Frayku.com%2Fregister&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BbackgroundColor%5D=%23006699&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5Bcolor%5D=%23ffffff&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BfontSize%5D=22px&amp;plugin%5BpostRoll%5D%5Bstyle%5D%5BfontFamily%5D=Gill%20Sans%2C%20Helvetica%2C%20Arial%2C%20sans-serif" class="wistia_embed" name="wistia_embed" width="509" height="286"></iframe>
+	<div id="hide-for-video">
+		<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
+	    <form name="register-form" id="register-form" action="quickreg/register" method="post">
+	      <h3>Instant, Free Math Tutoring
+	
+	      </h3>
+	      <p class="main-question">
+	        <input type="text" name="question" id="question" value="Describe your question briefly here"/>
+	      </p>
+	      <!--register-block-->
+	      <div id="register-block">
+	        <h4 class="clearfix" style="font-weight:normal">Your first few sessions are <strong>free</strong>! Create an account to get started:</h4>
+	        <!--register block fields-->
+	        <div id="register-block-fields">
+	          <ul class="clearfix">
+	            <li>
+	              <input type="text"  class="validate[required,custom[onlyLetterSp],funcCall[checkName]]" id="name" name="name" placeholder="Full Name"/>
+	            </li>
+	            <li>
+	            <input type="text" id="email" class="validate[required,custom[email],funcCall[emailDupcheck],funcCall[resData]]" name="email" placeholder="Email Address"/>
+	            </li>
+	            <li>
+	              <input type="password" class="validate[required,funcCall[checkPassword]]" id="password" name="password" placeholder="Password"/>
+	            </li>
+	            <li>
+	              <input type="password" class="validate[required,funcCall[checkRPassword]] " id="confirm-password" name="confirm-password" placeholder="Confirm Password"/>
+	            </li>
+	            <!-- Email Filter Utoronto.ca - ,funcCall[emailValidateNew]  -->
+	          </ul>
+	          <div id="tos-create-account" class="clearfix">
+	            <p class="tos">By submitting this form, you indicate that you have read and agree to the <a href="tos.html" target="_blank">Terms &amp; Conditions</a></p>
+	            <p class="create-account"><input type="image" src="<?php echo $baseRootPath; ?>/images/landing/ask-question-button.png" alt="Question" />
+	            </p>
+	            <input type="hidden" id="checkdata" name="checkdata" />
+	          </div>
+	        </div>
+	        <!--register block fields start/register -->
+	
+	      </div>
+	      <!--register-block-->
+	
+	    </form>
+		</div>
   </div>
   <!--container-->
   <?php //print_r($_SESSION); ?>
@@ -114,15 +120,15 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
     <!--bubble-->
     <div class="bubble">
       <h3>2. Select a Tutor</h3>
-      <p>We instantly generate a list of online tutors that are BEST suited to help you.</p>
+      <p>We generate a list of online tutors that are BEST suited to help you, right now.</p>
       <img src="<?php echo $baseRootPath; ?>/images/landing/bubble-2-tutor.png" alt="Tutor" /> </div>
     <!--bubble-->
 
     <!--bubble-->
     <div class="bubble">
       <h3>3. Learn</h3>
-      <p>Within 60 seconds, you're connected to a shared whiteboard with a live tutor!</p>
-      <a href="#whiteboard"><img src="<?php echo $baseRootPath; ?>/images/landing/bubble-3-learn.png" alt="Learn" /></a> </div>
+      <p>Within 60 seconds, you are connected to our interactive whiteboard with your live tutor.</p>
+      <img src="<?php echo $baseRootPath; ?>/images/landing/bubble-3-learn.png" alt="Learn" /> </div>
     <!--bubble-->
 
   </div>
@@ -269,7 +275,9 @@ Rayku currently does not work every well with <strong>Internet Explorer</strong>
 
 </div>
 <!--footer--> 
-
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/languages/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/start_validation.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/placeholder_fixer.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/landing/jquery.easing.1.3.js"></script>

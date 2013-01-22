@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 var mainQuestion = $('.main-question input');
 
-var initialValue = 'Type your math question here';
+var initialValue = 'Describe your question briefly here';
 
 
 
@@ -175,9 +175,49 @@ staticScrollLimit: false,});
 $('.q-8').scrollingParallax({staticSpeed : .8,
 
 staticScrollLimit: false,});
+	
+var animating_video = false;
+	
+	$('#video-button').click(function() {
+	if (animating_video) {
+		return;
+		}
+	animating_video = true;
+		$('#hide-for-video').fadeTo(700, 0.0, function() {
+			$('#hide-for-video').hide();
+		
+			$('#video-button').animate({'left': '+=595px'}, 'slow', function() {
+				$(this).attr("src","images/vidbutton-hover.png");
+				$('#video-button').animate({'height': '286px', 'width': '509px', 'left': '-=110px', 'margin-top': '-39px'}, 'slow', function() {
+					$('#video-player').show(function() {
+						$('#video-button').hide();
+							wistiaEmbed = $("#video-player")[0].wistiaApi;
+						wistiaEmbed.play();
+						$('#close-video').show();
+					});
+				});
+				
+			});
+		});
+	});
+	
 
-$('#video-button').click(function() {
-	wistiaEmbed = jQuery("#promo-video")[0].wistiaApi;
-	wistiaEmbed.play();	
-});
+$('#close-video').click(function() { 
+
+		wistiaEmbed = $("#video-player")[0].wistiaApi;
+		wistiaEmbed.pause();
+		$('#close-video').hide();
+		$('#video-button').show();
+	    $('#video-player').hide(function() {
+		    $('#video-button').animate({'left': '-=595px'}, 'slow', function() {
+				$('#video-button').animate({'height': '208px', 'width': '356px', 'left': '+=126px', 'margin-top': '0px'}, 'slow', function() {
+					$('#hide-for-video').show();
+					$('#hide-for-video').fadeTo(700, 1.0);
+				});
+				
+			});
+
+		});     
+		animating_video = false;
+});	
 

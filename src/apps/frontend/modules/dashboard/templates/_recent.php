@@ -27,7 +27,7 @@ $connection = RaykuCommon::getDatabaseConnection();
     <div class="update-info" style="float:left;">
       <p class="update-text">
         <?php
-    echo link_to( image_tag( "http://img44.imageshack.us/img44/5153/1280612122icontextoinsi.png",array( 'style' => "margin:0 5px;padding:0;float:left;" )) . 'Subscribe to RSS updates','rss/index?id='.$raykuUser->getId() . '&context=profile', array( 'target' => '_blank' ) );
+    echo link_to( image_tag( "/images/rss.png",array( 'style' => "margin:0 5px;padding:0;float:left;", 'width' => "16", 'height' => "16"   )) . 'Subscribe to RSS updates','rss/index?id='.$raykuUser->getId() . '&context=profile', array( 'target' => '_blank' ) );
   ?>
       </p>
     </div>

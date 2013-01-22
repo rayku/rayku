@@ -5,6 +5,7 @@ set_background();
 $connection = RaykuCommon::getDatabaseConnection();
 $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 
+
 usort($rankCheckUsers, "cmp");
 
 function cmp($a, $b)
@@ -134,6 +135,34 @@ function cmp($a, $b)
     $_finalUsers = $sample;
 
     foreach($_finalUsers as $newOne) {
+    
+    /*
+    	$emailList = array("api@mus.is", "donny@rayku.com", "einar@rayku.com");
+    	$this_user_id = $newOne['userid'];
+    	$current_email = $sf_user->getRaykuUser()->getEmail();
+    	$tutor_id = ID of Le toronto tutor of 75;
+    	
+    	if ($this_user_id == $tutor_id)
+    	{
+    		
+    		if (in_array($current_email, $emailList))
+    		{
+    			showUser();
+    		}
+    		else
+    		{
+  
+    			//show nothing
+    			continue;
+    		}
+    	} 
+		else
+		{
+			proceed normally (show user)
+		}    	
+    	
+    */
+    
         $xy =  $newOne['userid'];
 
         $sfcategory = $newOne['category'];
@@ -200,6 +229,18 @@ function cmp($a, $b)
 ?>
 
 <div id="resultpage">
+<?php
+/* Jan 2013 Don't display the Toronto special tutor to anyone but a list of 75 students (who have certain email addresses) */
+$emailList = array("test.account@utoronto.ca");
+$current_email = $sf_user->getRaykuUser()->getEmail();
+$is_toronto_tutor = $newOne['userid'] == 9999999999;
+$email_in_list = in_array($current_email, $emailList);
+
+
+if (!$is_toronto_tutor || $email_in_list)
+{
+/* END */	
+?>
   <div class="cn-result"  id="<?php echo 'first'.$xy; ?>">
     <div  id="<?php echo $xy.'.1'; ?>" class="cn-column-one"  onclick="rowCheck(this.id)" style="padding-right:15px;width:500px;">
       <p id="<?php echo $xy.'.2'; ?>"  class="cn-title"  onclick="rowCheck(this.id)">
@@ -281,6 +322,7 @@ function cmp($a, $b)
     <div> </div>
     <div class="clear-both"></div>
   </div>
+<?php } ?>
 <?php $_SESSION['temp1'][$newOne['userid']]=1;
 
 if ($_count_check == $_v) {

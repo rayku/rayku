@@ -85,3 +85,27 @@ div.sample_popup input.btn
   font-family: Verdana, Sans-Serif;
   font-size: 11px;
 }
+
+#missed-question {
+	width:340px;
+	float:left;
+	color:#990000;
+	font-size:20px;
+	font-weight:bold;
+	margin-top:21px;
+}
+
+#question_popup {
+	display:none;
+	z-index:50;
+	border:3px solid #999;
+	background:#F5F5F5;
+	padding:4px 4px 25px 25px;
+	width:420px;
+}
+
+#question_popup > div:first-child {
+	text-align: right;
+	width:30px;
+	float:right;
+}

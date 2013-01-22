@@ -1,4 +1,7 @@
 <?php
+	
+
+
 	$connection = RaykuCommon::getDatabaseConnection();
 	use_helper('MyAvatar', 'Javascript');
 	usort($rankUsers, "cmp");
@@ -19,8 +22,18 @@
 		}
 
 	}
-
+	/* Jan 2013 error for users trying to access profile of Toronto tutor when they are not part of the 75 users who have access to him */
+	$emailList = array("test.account@utoronto.ca");
+	$current_email = $sf_user->getRaykuUser()->getEmail();
+	$current_profile_id = $expert->getId();
 	
+	if (!(in_array($current_email, $emailList)) && $current_profile_id == 1619)
+	{
+		echo "Error: Access denied.";
+		return;
+	}
+	/* END */
+
 	function cmp($a, $b){
 		
 		if ($a["score"] == $b["score"]) {

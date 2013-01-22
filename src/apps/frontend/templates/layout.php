@@ -17,7 +17,11 @@ elseif(( sfContext::getInstance()->getModuleName() == 'dev' )):
 elseif(( sfContext::getInstance()->getModuleName() == 'ryerson' )):
 	
 	include('layout_ryerson.php');
-
+	
+elseif(( sfContext::getInstance()->getModuleName() == 'internship' )):
+	
+	include('layout_internship.php');
+	
 elseif(( sfContext::getInstance()->getModuleName() == 'static' )):
 	
 	include('layout_about.php');
