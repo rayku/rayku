@@ -41,7 +41,7 @@ class UsersAvailabilityChecker
         $onlineTutorsByNotificationBot = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
         $this->botOnlineUsers = json_decode($onlineTutorsByNotificationBot, true);
 
-        $gtalkUsersJSON = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').":8892/onlines")->getContent();
+        $gtalkUsersJSON = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').":".sfConfig::get('app_g_chat_port')."/onlines")->getContent();
         $gtalkUsers = json_decode($gtalkUsersJSON, true);
 
         foreach ($gtalkUsers as $gtalkUserId => $status) {

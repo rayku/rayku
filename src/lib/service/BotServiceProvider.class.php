@@ -115,21 +115,22 @@ class BotServiceProvider
 
         $bots = array(
             'gtalk' => array(
-                'prefix' => sfConfig::get('app_rayku_url').':8892',
-                'serviceUrl' => sfConfig::get('app_whiteboard_url').':8892',
+                'prefix' => sfConfig::get('app_rayku_url').':' . sfConfig::get('app_g_chat_port'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':' . sfConfig::get('app_g_chat_port'),
                 'enabled' => true
             ),
             'facebook' => array(
                 'prefix' => sfConfig::get('app_facebook_url'),
-                'serviceUrl' => sfConfig::get('app_bots_url').':4567',
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
                 'enabled' => false
             ),
             'mac-server' => array(
                 'prefix' => sfConfig::get('app_notification_bot_url'),
-                'serviceUrl' => sfConfig::get('app_bots_url').':5678',
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_mac_server_port'),
                 'enabled' => true
             )
         );
+
 
         if ($this->botId) {
             return $bots[$this->botId]['serviceUrl'] . $this->url;
@@ -149,18 +150,18 @@ class BotServiceProvider
 
         $bots = array(
             'gtalk' => array(
-                'prefix' => sfConfig::get('app_rayku_url').':8892',
-                'serviceUrl' => sfConfig::get('app_whiteboard_url').':8892',
+                'prefix' => sfConfig::get('app_rayku_url').':' . sfConfig::get('app_g_chat_port'),
+                'serviceUrl' => sfConfig::get('app_bots_url').':' . sfConfig::get('app_g_chat_port'),
                 'enabled' => true
             ),
             'facebook' => array(
                 'prefix' => sfConfig::get('app_facebook_url'),
-                'serviceUrl' => sfConfig::get('app_bots_url').':4567',
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
                 'enabled' => false
             ),
             'mac-server' => array(
                 'prefix' => sfConfig::get('app_notification_bot_url'),
-                'serviceUrl' => sfConfig::get('app_bots_url').':5678',
+                'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_mac_server_port'),
                 'enabled' => true
             )
         );

@@ -219,7 +219,7 @@ class appendAction extends sfAction
             if (empty($onlinecheck)) {
                 $userGtalk = $users_online->getUserGtalk();
                 if ($userGtalk) {
-                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/' . $userGtalk->getGtalkid())->getContent();
+                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/' . $userGtalk->getGtalkid())->getContent();
                 }
             }
 

@@ -312,7 +312,7 @@ class dashboardActions extends sfActions
             $email .= '@gmail.com';
         }
 
-        $test = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/add/'.$email)->getContent();
+        $test = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'. sfConfig::get('app_g_chat_port') .'/add/'.$email)->getContent();
 
         if ($test) {
             $_SESSION['adduser'] = 1;

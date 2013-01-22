@@ -41,9 +41,9 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
                 $_exp_message = $_exp_newline;
                 $_exp_message .= "This%20question%20has%20expired.";
                 $_exp_message .= $_exp_newline;
-                $_gtalk_online_check = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$_gtalk_email_id)->getContent();
+                $_gtalk_online_check = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/'.$_gtalk_email_id)->getContent();
                 if($_gtalk_online_check != "offline") {
-                    $_send_msg = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
+                    $_send_msg = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/msg/'.$_gtalk_email_id.'/'.$_exp_message)->getContent();
                 }
             }
             
@@ -164,9 +164,9 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
             if(mysql_num_rows($gtalkquery) > 0) {
                 $status = mysql_fetch_assoc($gtalkquery);
                 $gtalkmail = $status['gtalkid'];
-                $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/status/'.$gtalkmail)->getContent();
+                $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/'.$gtalkmail)->getContent();
                 if($onlinecheck != "offline") {
-                    $testcall = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':8892/msg/'.$gtalkmail.'/'.$message)->getContent();
+                    $testcall = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/msg/'.$gtalkmail.'/'.$message)->getContent();
                     $flag = 1;
                 }
             }
@@ -207,7 +207,7 @@ luklog("Jadziem dla: ".print_r($_row_expire_msg, true));
             $_Users = json_decode($onlineUsers, true);
             foreach($_Users as $key => $_user) {
                 if($_user['email'] == $tutorEmail){
-                    $url = sfConfig::get('app_bots_url').':5678/tutor/'.$tutorEmail.'/notification';
+                    $url = sfConfig::get('app_bots_url').':'.sfConfig::get('app_mac_server_port').'/tutor/'.$tutorEmail.'/notification';
                     $fields = array(
                         'link'=>urlencode($link),
                         'body'=>urlencode($question),

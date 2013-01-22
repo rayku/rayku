@@ -6,6 +6,10 @@ prod:
   bots_url : http://bots.rayku.com
   cookies_domain: .rayku.com
 
+  g_chat_port: 8892
+  fb_chat_port: 8893
+  mac_server_port: 5678
+
   .array:
     data_cache:
       class: sfMemcacheCache
@@ -23,6 +27,10 @@ dev:
   bots_url : http://bots.rayku.dev
   cookies_domain: .rayku.dev
 
+  g_chat_port: 8892
+  fb_chat_port: 8893
+  mac_server_port: 5678
+
   .array:
     data_cache:
       class: sfMemcacheCache
@@ -30,11 +38,19 @@ dev:
         servers:
           localhost1:
             port: 11211
-            host: 192.168.1.127 
+            host: localhost 
 
 all:
+  rayku_url: http://rayku.com
   whiteboard_url: http://whiteboard.rayku.com
-  cookies_domain: .rayku.dev
+  facebook_url: http://facebook.rayku.com
+  notification_bot_url : http://notification-bot.rayku.com
+  bots_url : http://bots.rayku.com
+  cookies_domain: .rayku.com
+
+  g_chat_port: 8892
+  fb_chat_port: 8893
+  mac_server_port: 5678
 
   .array:
     data_cache:
@@ -43,4 +59,4 @@ all:
         servers:
           localhost1:
             port: 11211
-            host: localhost
+            host: cache1.p.rayku.com

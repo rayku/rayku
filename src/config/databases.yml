@@ -1,3 +1,15 @@
+prod:
+    propel:
+      class: sfPropelDatabase
+      param:
+        dsn: 'mysql:dbname=rayku_db;host=localhost'
+        username: root
+        password: 
+        encoding: utf8
+        persistent: true
+        pooling: true
+        classname: PropelPDO
+
 dev:
     propel:
       class: sfPropelDatabase
@@ -30,7 +42,7 @@ all:
   propel:
     class: sfPropelDatabase
     param:
-      dsn: 'mysql:dbname=rayku_db;host=hello'
+      dsn: 'mysql:dbname=rayku_db;host=localhost'
       username: root 
       password: 
       encoding: utf8
