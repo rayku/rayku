@@ -136,33 +136,6 @@ function cmp($a, $b)
 
     foreach($_finalUsers as $newOne) {
     
-    /*
-    	$emailList = array("api@mus.is", "donny@rayku.com", "einar@rayku.com");
-    	$this_user_id = $newOne['userid'];
-    	$current_email = $sf_user->getRaykuUser()->getEmail();
-    	$tutor_id = ID of Le toronto tutor of 75;
-    	
-    	if ($this_user_id == $tutor_id)
-    	{
-    		
-    		if (in_array($current_email, $emailList))
-    		{
-    			showUser();
-    		}
-    		else
-    		{
-  
-    			//show nothing
-    			continue;
-    		}
-    	} 
-		else
-		{
-			proceed normally (show user)
-		}    	
-    	
-    */
-    
         $xy =  $newOne['userid'];
 
         $sfcategory = $newOne['category'];
@@ -229,11 +202,14 @@ function cmp($a, $b)
 ?>
 
 <div id="resultpage">
+<script>
+	var toronto_tutor = false;
+</script>
 <?php
 /* Jan 2013 Don't display the Toronto special tutor to anyone but a list of 75 students (who have certain email addresses) */
 $emailList = array("test.account@utoronto.ca");
 $current_email = $sf_user->getRaykuUser()->getEmail();
-$is_toronto_tutor = $newOne['userid'] == 9999999999;
+$is_toronto_tutor = $newOne['userid'] == 3626;
 $email_in_list = in_array($current_email, $emailList);
 
 
@@ -309,7 +285,7 @@ if (!$is_toronto_tutor || $email_in_list)
                 $isfound=$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
                 if ($isfound!=$newOne['userid']) {
 ?>
-        <input type="checkbox" name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo (@$cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
+        <input type="checkbox" <?php if ($is_toronto_tutor){ ?> onchange="toronto_tutor=this.checked;console.log(toronto_tutor);" <?php } ?> name="checkbox[]" id="checkbox_<?php echo $xy?>" value="<?php echo $newOne['userid']; ?>" onclick="setvalue(this.id)" style="background-color:#DEF3FE;border:1px solid red;" <?php echo (@$cookiy==$newOne['userid'])?"checked='checked'":""; ?> />
 
 <?php
                 }

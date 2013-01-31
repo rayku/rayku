@@ -17,7 +17,6 @@
 <body>
 <!--header-->
 
-
 <div id="header">
   <!--container-->
   <div class="container clearfix">
@@ -274,6 +273,7 @@ onmouseout="this.src='<?php echo $baseRootPath; ?>/images/vidbutton.png'" />
   <!--container-->
 
 </div>
+
 <!--footer--> 
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/languages/jquery.validationEngine-en.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/validation/jquery.validationEngine.js"></script>

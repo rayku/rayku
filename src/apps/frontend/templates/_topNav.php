@@ -115,9 +115,24 @@
 
 ?>
 </div>
+<?php
+$user_id = 0;
+if($sf_user->isAuthenticated())
+{
+	$user_id = sfContext::getInstance()->getUser()->getRaykuUser()->getId();
+}
+if ($user_id == 999999)
+{
+	echo '<script type="text/javascript" src="/js/checkuser_toronto.js"></script>';
+}
+else
+{ 
+	echo '<script type="text/javascript" src="/js/checkuser.js"></script>';
+}
+
+ ?>
 
 
-<script type="text/javascript" src="/js/checkuser.js"></script>
 
 
 <?php

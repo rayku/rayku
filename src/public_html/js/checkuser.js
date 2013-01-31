@@ -137,7 +137,6 @@ function popup(expid, userid, questionEncoded, school, sub, year, id,loginname, 
             musicCheck = '<iframe src="http://' + getHostname() + '/musical.php" width="1" height="1"></iframe>';
         }
     }
-
     Modalbox.show(
             '<div id="music" style="display:none;"></div>' +
             '<div class="notifbg">' +

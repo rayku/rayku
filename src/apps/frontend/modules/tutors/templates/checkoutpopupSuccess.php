@@ -124,7 +124,7 @@ if($count>0)
             </ul>
             <p class="limit">select up to <strong><?php echo $remain_count; ?></strong> more</p>
             
-	<a href="javascript: document.listform1.submit()" onclick="return checkExpertCheckBoxes();" type="submit" id="submit_connect" class="connect-now">Connect Now</a>
+	<a href="javascript: document.listform1.submit()" onclick="if (toronto_tutor) {_gaq.push(['_trackEvent', 'Toronto Tutor (Jan 2013)', 'Student makes a call', 'Student makes a call to Toronto Tutor']);} return checkExpertCheckBoxes();" type="submit" id="submit_connect" class="connect-now">Connect Now</a>
 	<input type="hidden"  value="7" id="hidden" name="hidden">
         </form>
         

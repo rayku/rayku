@@ -14,9 +14,13 @@
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery.notifier.js"></script>
 <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=AIzaSyBOReKIo4WmHb31oExpafuJyZmE_rIMu1c" type="text/javascript"></script>
 <script type="text/javascript" src="/js/maps.js"></script>
+<?php templateGoogleAnalytics(); ?>
 </head>
 
+
+
 <body onload="initialize()" onunload="GUnload()">
+
 <div id="outer-container">
   <div class="navigation-top">
    <div class="container clearfix">
@@ -300,7 +304,7 @@
         </div> <!-- applybox-content -->
     
     </div> <!-- applybox -->
-	
+
     <div id="map_canvas" class="googlemap"></div>
 
 

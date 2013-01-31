@@ -7,13 +7,36 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/start.css"/>
 <link rel="stylesheet" media="screen" type="text/css" href="/css/about-jobs.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/navigation.css"/>
-
+<?php templateGoogleAnalytics(); ?>
 </head>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/add-event.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/popup.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquerynav.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $baseRootPath; ?>/js/jquery.notifier.js"></script>
+<script type="text/javascript">
+	function showcontent(contentid)
+	{
+		//alert(contentid);
+		if(this.document.getElementById('idcontainer').innerHTML == '')
+		{
+		this.document.getElementById(contentid).style.height='auto';
+		this.document.getElementById('idcontainer').innerHTML=contentid;
+		}		
+		
+		else if(this.document.getElementById('idcontainer').innerHTML != contentid)
+		{
+			var idcontainervalue = this.document.getElementById('idcontainer').innerHTML;
+			this.document.getElementById(idcontainervalue).style.height = '50px';
+			this.document.getElementById(contentid).style.height='auto';
+			this.document.getElementById('idcontainer').innerHTML=contentid;
+		}
+		
+		
+		
+	}
+
+</script>
 <body>
 <div id="outer-container">
   <div class="navigation-top">
