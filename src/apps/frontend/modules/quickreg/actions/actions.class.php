@@ -90,35 +90,31 @@ class quickregActions extends sfActions
 
         //$this->redirect(sfConfig::get('app_rayku_url')."/quickreg/confirmationcodesent");
     }
-  	private function sendConfirmationEmail( User $user, $question )
-	{
-		$mail = Mailman::createMailer();
+    
+    public function handleErrorRegister()
+    {
+    	$this->forward('register', 'index');
+    }
 
-		$mail->setContentType('text/html');
-		$mail->addAddress( $user->getEmail() );
-		$mail->setSubject('Activate your new account');
-		sfProjectConfiguration::getActive()->loadHelpers(array('Asset','Url','Partial'));
-
-		$confirmationCode = array(
-            'code'    => $user->getConfirmationCode(),
-            'question' => $question
-        );
-        $confirmationCode = base64_encode(serialize($confirmationCode));
-
-        $mail->setBody(
-        get_partial(
-        'activationEmail',
-        array( 'confirmationCode' => $confirmationCode,
-           'user' => $user ) ) );
-
-        $mail->setAltBody(
-        get_partial(
-        'activationEmailHtml',
-        array( 'confirmationCode' => url_for( '@register_confirm?code='.$confirmationCode, true ),
-           'user' => $user ) ) );
-		
-		$mail->send();
-	}
+    private function sendConfirmationEmail(User $user)
+    {
+    	$mail = Mailman::createMailer();
+    	$mail->setContentType('text/html');
+    	$mail->addAddress($user->getEmail());
+    	$mail->setSubject('Confirm your Rayku Account');
+    	sfProjectConfiguration::getActive()->loadHelpers(array('Asset','Url','Partial'));
+    	$mail->setBody(
+    			get_partial(
+    					'activationEmailHtml',
+    					array('activationLink' => url_for('@register_confirm?code='.$user->getConfirmationCode(), true),
+    							'user' => $user)));
+    	$mail->setAltBody(
+    			get_partial(
+    					'activationEmail',
+    					array('activationLink' => url_for('@register_confirm?code='.$user->getConfirmationCode(), true),
+    							'user' => $user)));
+    	$mail->send();
+    }
 	
 	public function executeConfirmationcode()
 	{

@@ -1,8 +1,8 @@
 <?php use_helper('Javascript', 'MyForm') ?>
 <link href="/css/style-reg-table.css" rel="stylesheet" type="text/css" media="screen" />
 <div class="body-main">
-  <?php echo input_hidden_tag('ref',$_GET['ref']) ?>
-  <?php if($_GET['ref']): ?>
+  <?php echo input_hidden_tag('ref',$ref) ?>
+  <?php if($ref): ?>
   <div id="top" style="margin:10px 0 15px 0"> <span style="background:url(/images/arrow-right.gif) no-repeat; padding-left:40px; color:#1C517C; font-size:20px; font-weight:bold">Welcome to Rayku!</span> </div>
   <div style="font-size:14px;color:#333;margin-bottom:15px;line-height:20px;padding:15px;background:#F0F7FA">Rayku lets you get online math tutoring help, at any time, with live tutors, over a beautiful and interactive whiteboard. <a href="/tourpage">Take the tour</a>
     <br /><br />It looks like you've been referred by a friend, nice! That means when you register, you'll get <strong>10 minutes</strong>* of premium tutoring credits to go along with unlimited regular tutoring on Rayku.com.</div>
@@ -11,8 +11,8 @@
   <?php endif; ?>
   <div class="clear"></div>
   <div class="body-mains">
-  <?php //echo form_tag('register/index', array('name' => 'register', 'action' => '/register?ref='.$_GET['ref'])) ?>
-	<form name="register" action="/register<?php if($_GET['ref']) echo "?ref=" . $_GET['ref'];?>" method="post">
+  <?php //echo form_tag('register/index', array('name' => 'register', 'action' => '/register?ref='.$ref)) ?>
+	<form name="register" action="/register<?php if($ref) echo "?ref=" . $ref;?>" method="post">
   <?php echo input_hidden_tag('utype',$requestedUserType) ?>
     <div class="box">
       <div class="top"></div>
@@ -109,7 +109,7 @@
 
   </div>
 </div>
-<?php if($_GET['ref']): ?>
+<?php if($ref): ?>
   <div style="clear:both"></div>
       <div style="padding-top:30px;margin-bottom:50px;color:#333">
         *minutes are approximate and is based on an average of 0.40RP/minute for premium tutoring. You will be credited 4RP.

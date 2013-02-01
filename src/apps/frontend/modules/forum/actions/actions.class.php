@@ -10,6 +10,11 @@
 class forumActions extends sfActions
 {
 
+	public function preExecute()
+	{
+		return sfView::ERROR;
+	}
+	
     public function executeIndex()
     {
 

@@ -10,6 +10,7 @@ class registerActions extends sfActions
 {
     public function preExecute()
     {
+    	$this->ref = (isset($_GET['ref'])) ? $_GET['ref'] : NULL; 
         RaykuCommon::getDatabaseConnection();
     }
 

@@ -1,0 +1,10 @@
+fields:
+  email:
+    required:
+      msg: Please specify an email
+    sfEmailValidator:
+      email_error: Please make sure this is a correct email
+    sfPropelUniqueValidator:
+      class: User
+      column: email
+      unique_error: This email address is already in use

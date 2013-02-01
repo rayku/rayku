@@ -139,7 +139,7 @@ document.getElementById('frm1').submit();
   <?php endif; ?>
   <?php if($_GET['session'] == "complete"): ?>
   <div class="register-success">
-    <div class="content" style="width:700px"><h2>Thanks giving us a try!</h2></div>
+    <div class="content" style="width:700px"><h2>Thanks for giving us a try!</h2></div>
     <div class="skip" align="right" style="width:150px"><a href="/dashboard">go back to dashboard</a></div>
     <div style="clear:both"></div>
   </div>
