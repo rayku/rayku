@@ -144,17 +144,6 @@ document.getElementById('frm1').submit();
     <div style="clear:both"></div>
   </div>
   <?php endif; ?>
-  <div id="callout">
-    <h3>Until Dec. 31st:<span> Get premium tutoring credits for inviting your friends!</span></h3>
-    <p>When you have premium tutoring credits (<a href="/rp.html" target="_blank">RP</a>), you get access to premium, on-demand, tutoring help with our highest-rated tutors! Premium tutoring sessions are not capped to 15 minutes per session. For a limited time only, you get <strong>15 minutes</strong><sup>*</sup> of free premium tutoring when you successfully refer a friend, and your <strong>friend gets 10</strong><sup>*</sup>! This is a $10 combined value.</p>
-    <div id="progress-diagram" style="margin-top:10px">
-      <div class="numberCircle">1</div>
-      <span>Invite a Friend</span>
-      <div class="numberCircle">2</div>
-      <span>Friend Joins Rayku</span>
-      <div class="numberCircle"><i class="icon-check"></i></div>
-      <span>Both Get Credits!</span> </div>
-  </div>
   <?php if($_POST['emails']){ ?>
   <div class="alert" align="center"><strong>Awesome, emails sent!</strong> Please also share on facebook or twitter<?php if($_GET['register'] == "success"): ?>
 , or <a href="/dashobard/getstarted">continue here</a><?php endif; ?><?php if($_GET['session'] == "complete"): ?>
