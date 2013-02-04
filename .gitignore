@@ -1,5 +1,3 @@
-src/cache/*
-src/log/*
 .DS_Store
 *.sw*
 host-files
