@@ -482,7 +482,7 @@ h2.avatar {
       <!--row 1 begins-->
       <div class="row">
         <div class="left">Connected via: </div>
-        <div class="right"><span style="color:#CFCFCF;"> <span <?php  if($web!="") { ?> style="color:#069; font-weight:bold;" <?php  } ?>>web</span> | <span <?php  if($googletalk) { ?> style="color:#069;font-weight:bold;" <?php  } ?>>gtalk</span> | <span <?php  if($facebookchat!="") { ?> style="color:#069;font-weight:bold;" <?php  } ?>>fb chat</span> | <span <?php  if($desktopapplication!="") { ?> style="color:#069;font-weight:bold;" <?php  } ?>>desktop app</span> </span> </div>
+        <div class="right"><span style="color:#CFCFCF;"> <span <?php  if($web!="") { ?> style="color:#069; font-weight:bold;" <?php  } ?>>web</span> | <span <?php  if($googletalk) { ?> style="color:#069;font-weight:bold;" <?php  } ?>>gtalk</span> </span> </div>
         <div class="clear-both"></div>
       </div>
 <?php
@@ -780,35 +780,6 @@ h2.avatar {
     This user is not currently a tutor on Rayku.
     </div>
     <?php } ?>
-    <!--Latest Posts Begins-->
-    <div id="latest-posts">
-      <h4>Latest  Q&amp;A Responses</h4>
-      <!--Forum Post links-->
-      <ul>
-        <?php  if($best_responses != NULL){ ?>
-        <?php  foreach($best_responses as $best_response){ ?>
-        <li> <strong>
-<?php 
-			$a = new Criteria();
-			$a->add(ThreadPeer::ID,$best_response->getThreadId());
-			$threads = ThreadPeer::doSelectOne($a);
-			
-			if($threads != NULL){
-				echo link_to($threads->getTitle(), '@view_thread?thread_id='.$threads->getId(),array('class' => 'threadttle'));
-			}
-
-			?>
-        </strong></li>
-        <?php  } ?>
-        <a id="various_moreposts" href="#inline_moreposts" class="more-posts">More </a>
-        <?php  } else { ?>
-        <li>
-          <p>This user does not have any 'best response' answers yet.</p>
-        </li>
-        <?php  } ?>
-      </ul>
-    </div>
-    <!--latest posts ends-->
   </div>
   <!--sidebar ends-->
   <div class="clear-both"></div>

@@ -164,45 +164,6 @@ $date = date('Y')+1;
     <div class="spacer"></div>
   </div>
   <div class="spacer"></div>
-  <div class="box">
-    <div class="top"></div>
-    <div class="content">
-      <p style="text-align:left;padding-top:5px;font-size:18px;color:#1C517C;font-weight:bold;margin:5px 0 0 10px;">Contact Information</p>
-      <div class="entry">
-        <div class="ttle">Home Phone</div>
-        <div class="spacer"></div>
-        <?php echo input_tag('home_phone', $user->getHomePhone()); ?> <?php echo form_error('home_phone'); ?> <?php echo checkbox_tag('show_home_phone', '1', $user->getShowHomePhone(),array('class'=>"chkbox")); ?>
-        <div class="text" style="top:5px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
-      <div class="entry">
-        <div class="ttle">Mobile Phone</div>
-        <div class="spacer"></div>
-        <?php echo input_tag('mobile_phone', $user->getMobilePhone()); ?> <?php echo form_error('mobile_phone'); ?> <?php echo checkbox_tag('show_mobile_phone', '1', $user->getShowMobilePhone(),array('class'=>"chkbox"));?>
-        <div class="text" style="top:5px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
-      <div class="entry">
-        <div class="ttle">Address</div>
-        <div class="spacer"></div>
-        <div class="txtareabg" style="height:83px; background:url(/images/edit-profile-addbg.gif) no-repeat"></div>
-        <?php echo textarea_tag('address', $user->getAddress(),array('style'=>'height:57px;')); ?> <?php echo form_error('address'); ?> <?php echo checkbox_tag('show_address', '1', $user->getShowAddress(),array('class'=>"chkbox",'style'=>'top:30px; left:-295px; !left:-284px;')); ?>
-        <div class="text" style="top:30px; left:-295px; !left:-284px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
-      <div class="entry">
-        <div class="ttle">Home Town</div>
-        <div class="spacer"></div>
-        <?php echo input_tag('hometown', $user->getHometown()); ?> <?php echo form_error('hometown'); ?>
-		
-		<?php echo checkbox_tag('show_hometown', '1', $user->getShowHometown(),array('class'=>"chkbox")); ?>
-        <div class="text" style="top:5px;">Make public</div>
-        <div class="spacer"></div>
-      </div>
-    </div>
-    <div class="bottom"></div>
-  </div>
-  <div class="spacer"></div>
   <?php echo submit_tag('Save your profile changes',array('id'=>'save','onClick' => 'return userNameCheck();')); ?>
 
   </form>
