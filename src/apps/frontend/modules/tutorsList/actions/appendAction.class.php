@@ -1,4 +1,5 @@
 <?php
+
 /**
  */
 class appendAction extends sfAction
