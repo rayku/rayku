@@ -204,7 +204,7 @@ class appendAction extends sfAction
 				$onlinecheck = "online";
 			}
 
-			if (empty($onlinecheck)) {
+			/*if (empty($onlinecheck)) {
 				$userGtalk = $users_online->getUserGtalk();
 				if ($userGtalk) {
 					$onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/' . $userGtalk->getGtalkid())->getContent();
@@ -241,7 +241,7 @@ class appendAction extends sfAction
 					}
 
 				}
-			}
+			}*/
 
 			if ($onlinecheck == "online") {
 

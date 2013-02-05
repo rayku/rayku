@@ -64,7 +64,6 @@ class BotServiceProvider
 
     function getContent()
     {
-    	return false;
         if (!$this->enabled) {
             return json_encode(array());
         }
@@ -146,7 +145,7 @@ class BotServiceProvider
      */
     static function createFor($url)
     {
-    	return new self('127.0.0.1');
+
 
         $bots = array(
             'gtalk' => array(
