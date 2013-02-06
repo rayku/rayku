@@ -57,7 +57,7 @@ onmouseout="this.src='<?php echo $baseRootPath; ?>/images/vidbutton.png'" />
 	<div id="hide-for-video">
 		<img id="media-logos" src="/images/media-logos.png" alt="Media logos" />
 	    <form name="register-form" id="register-form" action="quickreg/register" method="post">
-	      <h3>Instant, Free Math Tutoring
+	      <h3>Instant Math Tutoring
 	
 	      </h3>
 	      <p class="main-question">
