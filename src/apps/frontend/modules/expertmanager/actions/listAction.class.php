@@ -43,9 +43,6 @@ class listAction extends sfAction
 
 		/* Quick Registration Users - Listing Tutors */
 		if ($this->studentFromQuickRegistrationAskingAQuestion()) {
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 			$_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
 			$_SESSION['subject'] = 1;
 			$_dash_education = $_SESSION['edu'];
@@ -88,9 +85,6 @@ class listAction extends sfAction
 			$userQuestionTag->save();
 
 		} else if ($this->loggedStudentAsksAQuestion()) {
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 			$_dash_question = '';  $_dash_course_id = '';   $_school = '';  $_dash_education = ''; $_dash_code_id = '';  $_dash_year = '';
 
 			$_dash_question = $_POST['question'];
@@ -147,17 +141,11 @@ class listAction extends sfAction
 			$userQuestionTag->save();
 			
 		}
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 		/**
 		 * @todo - below block of code could be extracted to separate action
 		 */
 		if (!empty($_POST['hidden'])) {
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 			$count = count($_POST['checkbox']);
 			/* Clearing Cookies */
 			if (isset($_COOKIE['cookcount'])) {
@@ -200,9 +188,6 @@ class listAction extends sfAction
 			$year = '';
 			$course_id = '1';
 			$school = '';
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 			if ($userQuestionTag) {
 				$course_id = $userQuestionTag->getCourseId();
 				$course_code = $userQuestionTag->getCourseCode();
@@ -213,27 +198,18 @@ class listAction extends sfAction
 					$school = "High School";
 				}
 			}
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 			// this is where the sql injection error is happening, fix this
 			// escape single quotes
 			for ($i = 0; $i < $count; $i++) {
 				mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, course_id, `question`, `exe_order`, `time`,course_code, year, school, status, close) VALUES ('". mysql_real_escape_string($userId) ."', '". mysql_real_escape_string($_POST['checkbox'][$i]) ."', ". mysql_real_escape_string($this->cat) .", ". mysql_real_escape_string($course_id) .",'". mysql_real_escape_string($_SESSION['question']) ."','". mysql_real_escape_string((++$j)) ."', '". mysql_real_escape_string($time) ."', '". mysql_real_escape_string($course_code) ."', '". mysql_real_escape_string($year) ."', '". mysql_real_escape_string($school) ."', 1, ". mysql_real_escape_string($close) .") ", $connection) or die("Error In Insert-->".mysql_error());
 			}
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 			/* Notify same tutor again */
 
 			$l = 0;
 			$source = 'expertmanager';
 			mysql_query("DELETE FROM `student_questions` WHERE user_id = ".$userId."", $connection);
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 			for ($i = 0; $i < $count; $i++) {
 				$question = new StudentQuestion();
@@ -252,9 +228,6 @@ class listAction extends sfAction
 				$question->setSource($source);
 				$question->save();
 			}
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 			setcookie("asker_que", urldecode($_SESSION['question']), time()+600, "/", sfConfig::get('app_cookies_domain'));
 			$this->getResponse()->setCookie("redirection", 1,time()+600, '/', sfConfig::get('app_cookies_domain'));
@@ -282,9 +255,6 @@ class listAction extends sfAction
 		$i =0;
 		$eachExpertOnlyOnce= array();
 
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 		foreach ($experts as $exp) {
 			if ($userId != $exp->getUserId()) {
@@ -334,18 +304,10 @@ class listAction extends sfAction
 			}
 		}
 
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
-
 		asort($newUser);
 		arsort($newUser);
 		asort($rankUsersFinal);
 		arsort($rankUsersFinal);
-
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 		$this->rankCheckUsers = $rankUsersFinal;
 
@@ -360,10 +322,6 @@ class listAction extends sfAction
 		// $onlineTutorsByNotificationBot = BotServiceProvider::createFor("http://notification-bot.rayku.com/tutor")->getContent();
 		// $Users = json_decode($facebookTutors, true);
 		// $_Users = json_decode($onlineTutorsByNotificationBot, true);
-
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 		//Iterate through every user and check if they are online (either on fb gchat local rayku etc...
 		foreach ($newUser as $new) {
@@ -400,10 +358,6 @@ class listAction extends sfAction
 				$k++;
 			}
 		}
-		
-		$time_end = microtime(true);
-		$time = $time_end - $time_start;
-		echo $time.' '.__LINE__.' '.__FILE__.'<br />';
 
 		$this->newOnlineUser = $newOnlineUser;
 		$this->newOfflineUser = $newOfflineUser;
@@ -413,10 +367,8 @@ class listAction extends sfAction
 
 
 		if (count($onlineusers) < 1) {
-			die(__LINE__.' '.__FILE__);
 			$this->redirect('http://'.RaykuCommon::getCurrentHttpDomain().'/forum/newthread/'.$_SESSION['subject'].'?exp_online = 1');
 		}
-		die(__LINE__.' '.__FILE__);
 
 		$onoff = isset($_COOKIE['onoff']) ? $_COOKIE['onoff'] : null;
 		if ($onoff == 1) {
