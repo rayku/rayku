@@ -28,12 +28,13 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $baseRootPath; ?>/css/global.css" />
 <link rel="stylesheet" type="text/css" href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/form.css" />
 <link href="http://<?php echo RaykuCommon::getCurrentHttpDomain();?>/css/jquery.selectbox.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <?php if(( sfContext::getInstance()->getModuleName() == 'dashboard' )) { ?>
 	<link rel="stylesheet" type="text/css" href="/css/widget/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="/css/widget/style.css" />
 	<link rel="stylesheet" type="text/css" href="/css/tutor_profile/tprofile-style.css" />
+	<script type="text/javascript" src="/js/tutor-rate-validation.js"></script>
 <?php } ?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/themes/smoothness/jquery-ui.css"/>
 <link rel="stylesheet" href="/sfProtoculousPlugin/css/input_auto_complete_tag.css"/>
 <?php
