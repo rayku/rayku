@@ -339,13 +339,15 @@ h2.avatar {
 			$fb_username = $userFb->getFbUsername();
 			$details = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
 			$Users = json_decode($details, true);
-			foreach($Users as $key => $user) {
-				
-				if($user['username'] == $fb_username){
-					$onlinecheck = "online";
-					break;
+			if(is_array($Users)){
+				foreach($Users as $key => $user) {
+					
+					if($user['username'] == $fb_username){
+						$onlinecheck = "online";
+						break;
+					}
+	
 				}
-
 			}
 
 		}

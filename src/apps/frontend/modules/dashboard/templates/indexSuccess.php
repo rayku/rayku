@@ -1,3 +1,4 @@
+<?php $baseRootPath = sfContext::getInstance()->getRequest()->getRelativeUrlRoot();?>
 <div id="tutor_profile"></div>
 <!-- Tutor Profile Form -->
 <div id="preload">

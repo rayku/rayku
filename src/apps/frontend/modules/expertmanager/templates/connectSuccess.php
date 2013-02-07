@@ -63,7 +63,7 @@
     </div><!-- container -->
 
 
-		<input type="hidden" name="connected_tutors" id="connected_tutors" value="<?php echo $_SESSION['connected_tutors']; ?>" />
+		<input type="hidden" name="connected_tutors" id="connected_tutors" value="<?php echo @$_SESSION['connected_tutors']; ?>" />
 	</div>
 </div>
 <script type="text/javascript">

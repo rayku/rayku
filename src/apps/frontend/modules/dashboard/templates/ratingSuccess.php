@@ -37,9 +37,6 @@ if(!empty($_COOKIE['raykuCharge'])) {
         $rate = 0;
     }
 }
-$timer = explode(":", $_COOKIE["timer"]);
-$newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
-$raykuPercentage = $newTimer * $rate;
 ?>
 <form action="" id="rating-form" method="post">
     <table width="750" align="center">
@@ -52,15 +49,6 @@ $raykuPercentage = $newTimer * $rate;
                 <textarea class="comment-content" style="width:365px;padding:5px;font-size:14px;font-weight:normal" id="txtbox" rows="5" cols="45" name="content"></textarea>
               </p>
             </td>
-            </tr>
-             <tr>
-            <!--
-            <td width="253" style="padding:20px 0"><font  class="option">Tip Tutor (optional):</font>
-              <p>
-                <font style="font-size: 14px; color:#333; margin-left: 3px;"> Amount:</font>&nbsp;
-                <input name="tiptutor" type="textbox" id="tiptutor" maxlength="3" style=" width:40px;" width="30"  class="validate[custom[integer],min[1],max[<?php echo $raykuPercentage;?>]]"  />
-              </p></td>
-            -->
             </tr>
           <tr>
             <td><label><input name="chkIsPublic" type="checkbox" id="chkIsPublic" checked />
