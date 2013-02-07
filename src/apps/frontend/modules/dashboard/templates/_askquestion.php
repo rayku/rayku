@@ -113,7 +113,7 @@
         <!--university info-->
         <div id="university-info" class="clearfix hide">
           <p class="info university-name" id="autocompleschool">
-            <?php $to = ''; echo input_auto_complete_tag('name', '', 'dashboard/autocomplete', array('placeholder' => 'School Name'), array('use_style' => false)); ?>
+            <?php $to = ''; echo input_tag('name', '', 'dashboard/autocomplete', array('placeholder' => 'School Name'), array('use_style' => false)); ?>
           </p>
           <p class="info course" id="autocomplecourse"> <?php echo input_auto_complete_tag('autocourse', '', 'dashboard/autocourse', array('placeholder' => 'Course Code'), array('use_style' => false)); ?>
           </p>
