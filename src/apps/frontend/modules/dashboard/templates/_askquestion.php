@@ -115,7 +115,7 @@
           <p class="info university-name" id="autocompleschool">
             <?php $to = ''; echo input_tag('name', '', 'dashboard/autocomplete', array('placeholder' => 'School Name'), array('use_style' => false)); ?>
           </p>
-          <p class="info course" id="autocomplecourse"> <?php echo input_auto_complete_tag('autocourse', '', 'dashboard/autocourse', array('placeholder' => 'Course Code'), array('use_style' => false)); ?>
+          <p class="info course" id="autocomplecourse"> <?php echo input_tag('autocourse', '', 'dashboard/autocourse', array('placeholder' => 'Course Code'), array('use_style' => false)); ?>
           </p>
           <input type="hidden" name="course_code_hidden" id="course_code_hidden" value="" />
           <p class="info year">
