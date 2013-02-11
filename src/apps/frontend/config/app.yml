@@ -13,14 +13,20 @@
 dev:
   braintree:
     environment: sandbox
+  paypal:
+    environment: sandbox
 
 test:
   braintree:
     environment: sandbox
+  paypal:
+    environment: sandbox
 
 prod:
   braintree:
-    environment: xyz
+    environment: production
+  paypal:
+    environment: live
 
 all:
   general:
@@ -98,3 +104,7 @@ all:
     merchantId: sb744r5j9242tw7x
     publicKey: ps79cw885xbf6hfv
     privateKey: 6fn68d69szc68zx3
+  paypal:
+    username: xyz
+    password: xyz
+    signature: xyz
