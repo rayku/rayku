@@ -242,8 +242,6 @@
 
 									<div data-payment-container="source">
 										<div class="entry hide">
-											<label for="payment-paypal-email">Email:</label>
-											<input id="payment-paypal-email" type="input" name="payment[data][email]" value="" />
 										</div>
 									</div>
 
