@@ -138,7 +138,7 @@ tp(".filter-popup-close").click(function(){
     tp(".filter-popup").fadeOut('slow');
     tp("#trans").fadeOut('slow');
     //return false;
-    window.location = 'http://' + getHostname() + '/dashboard";
+    window.location = 'http://' + getHostname() + '/dashboard';
 });
 
 tp('.education input').click(function(){
