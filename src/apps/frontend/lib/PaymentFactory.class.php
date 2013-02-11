@@ -22,16 +22,27 @@ class PaymentFactory
 	protected $user;
 
 	/**
+	 * @var  sfNamespacedParameterHolder
+	 */
+	protected $parameterHolder;
+
+	/**
 	 * Creates a new payment factory
 	 *
 	 * @param   string  Payment type
 	 * @param   User
+	 * @param   sfNamespacedParameterHolder
 	 * @return  void
 	 */
-	public function __construct($type = NULL, User $user = NULL)
+	public function __construct(
+		$type = null,
+		User $user = null,
+		sfNamespacedParameterHolder $parameterHolder = null
+	)
 	{
 		$this->type = $type;
 		$this->user = $user;
+		$this->parameterHolder = $parameterHolder;
 	}
 
 	/**
@@ -77,6 +88,17 @@ class PaymentFactory
 	}
 
 	/**
+	 * Sets a parameter holder
+	 *
+	 * @param   sfNamespacedParameterHolder
+	 * @return  void
+	 */
+	public function setParameterHolder(sfNamespacedParameterHolder $parameterHolder)
+	{
+		$this->parameterHolder = $parameterHolder;
+	}
+
+	/**
 	 * Creates a new payment
 	 *
 	 * @return  Payment
@@ -85,7 +107,25 @@ class PaymentFactory
 	{
 		switch ($this->type) {
 			case self::PAYPAL:
-				return new Payment_PayPal($this->user);
+				$execute = $this->parameterHolder->has(
+					Payment_PayPal::SESSION_TOKEN,
+					Payment_PayPal::SESSION_NAMESPACE
+				);
+
+				if ($execute) {
+					$payment = new Payment_PayPalExecute($this->user);
+				} else {
+					$payment = new Payment_PayPalInitialize($this->user);
+				}
+
+				$paypal = new PayPal_Request(
+					sfConfig::get('app_paypal_username'),
+					sfConfig::get('app_paypal_password'),
+					sfConfig::get('app_paypal_signature'),
+					sfConfig::get('app_paypal_environment')
+				);
+
+				$payment->setPayPal(new PayPal_Feature_ExpressCheckout($paypal));
 				break;
 
 			case self::CREDIT_CARD;
@@ -94,12 +134,14 @@ class PaymentFactory
 				Braintree_Configuration::publicKey(sfConfig::get('app_braintree_publicKey'));
 				Braintree_Configuration::privateKey(sfConfig::get('app_braintree_privateKey'));
 
-				return new Payment_CreditCard($this->user);
+				$payment = new Payment_CreditCard($this->user);
 				break;
 
 			default:
 				throw new InvalidArgumentException(sprintf('"%s" payment type does not exists.', $this->type));
 		}
+
+		return $payment;
 	}
 
 	/**
@@ -110,14 +152,34 @@ class PaymentFactory
 	 */
 	public function createHandler($new = false)
 	{
-		if ($this->type === self::PAYPAL) {
-			return new Payment_Handler_PayPal($this->user);
-		} elseif ($this->type === self::CREDIT_CARD && $new === true) {
-			return new Payment_Handler_NewCreditCard($this->user);
-		} elseif ($this->type === self::CREDIT_CARD && $new === false) {
-			return new Payment_Handler_ExistingCreditCard($this->user);
-		} else {
-			throw new InvalidArgumentException(sprintf('"%s" payment type does not exists.', $this->type));
+		switch ($this->type)
+		{
+			case self::PAYPAL:
+				$execute = $this->parameterHolder->has(
+					Payment_PayPal::SESSION_TOKEN,
+					Payment_PayPal::SESSION_NAMESPACE
+				);
+
+				if ($execute) {
+					$handler = new Payment_Handler_PayPalExecute($this->user, $this->parameterHolder);
+				} else {
+					$handler = new Payment_Handler_PayPalInitialize($this->user, $this->parameterHolder);
+				}
+				break;
+
+			case self::CREDIT_CARD:
+				if ($new === true) {
+					$handler = new Payment_Handler_CreditCardNew($this->user);
+				} else {
+					$handler = new Payment_Handler_CreditCardExisting($this->user);
+				}
+				break;
+
+			default:
+				throw new InvalidArgumentException(sprintf('"%s" payment type does not exists.', $this->type));
+				break;
 		}
+
+		return $handler;
 	}
 }

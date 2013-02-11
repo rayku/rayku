@@ -5,7 +5,7 @@
  * @package   Rayku
  * @category  Payment
  */
-class Payment_Handler_NewCreditCard extends Payment_Handler_Common
+class Payment_Handler_CreditCardNew extends Payment_Handler_Common
 {
 	/**
 	 * Implements [Paymeent_Handler::handle]
@@ -48,6 +48,15 @@ class Payment_Handler_NewCreditCard extends Payment_Handler_Common
 		}
 
 		$payment->setCreditCard($creditCard);
-		$payment->execute($amount);
+
+		try {
+			$payment->execute($amount);
+
+			$this->user->addNewPoints($amount);
+			$this->user->save();
+		} catch(PaymentException $e) {
+			// Re-throw
+			throw $e;
+		}
 	}
 }

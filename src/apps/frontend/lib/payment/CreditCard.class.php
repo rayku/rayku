@@ -118,7 +118,7 @@ class Payment_CreditCard extends Payment_Common
 	}
 
 	/**
-	 * undocumented function
+	 * Implements [Payment::execute]
 	 *
 	 * @throws  PaymentException
 	 * @param   float  Payment amount

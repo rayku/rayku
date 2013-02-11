@@ -8,6 +8,13 @@
 interface Payment_Handler
 {
 	/**
+	 * Returns redirect URL
+	 *
+	 * @return  string|null  URL to redirect to or null if no redirection required
+	 */
+	public function getRedirectUrl();
+
+	/**
 	 * Handles a payment logic
 	 *
 	 * @param   Payment

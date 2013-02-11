@@ -8,6 +8,16 @@
 abstract class Payment_Handler_Common implements Payment_Handler
 {
 	/**
+	 * @var  string  Default redirect URL
+	 */
+	protected $redirectUrl = '@points_buy';
+
+	/**
+	 * @var  sfNamespacedParameterHolder
+	 */
+	protected $parameterHolder;
+
+	/**
 	 * @var  User
 	 */
 	protected $user;
@@ -18,8 +28,19 @@ abstract class Payment_Handler_Common implements Payment_Handler
 	 * @param   User
 	 * @return  void
 	 */
-	public function __construct(User $user)
+	public function __construct(User $user, sfNamespacedParameterHolder $parameterHolder = null)
 	{
 		$this->user = $user;
+		$this->parameterHolder = $parameterHolder;
+	}
+
+	/**
+	 * Implements [Payment_Handler::getRedirectUrl]
+	 *
+	 * @return  string|null
+	 */
+	public function getRedirectUrl()
+	{
+		return $this->redirectUrl;
 	}
 }

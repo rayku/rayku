@@ -5,12 +5,21 @@
  * @package   Rayku
  * @category  Payment
  */
-class Payment_PayPal extends Payment_Common
+abstract class Payment_PayPal extends Payment_Common
 {
+	const SESSION_NAMESPACE = 'paypal';
+	const SESSION_TOKEN     = 'token';
+	const SESSION_AMOUNT    = 'amount';
+
 	/**
-	 * @var  PayPal
+	 * @var  string  Token from setExpressCheckout response
 	 */
-	protected $paypay;
+	protected $token;
+
+	/**
+	 * @var  PayPal_Feature
+	 */
+	protected $paypal;
 
 	/**
 	 * Implements [Payment::add]
@@ -36,14 +45,44 @@ class Payment_PayPal extends Payment_Common
 	}
 
 	/**
-	 * Implements [Payment::execute]
+	 * Sets token
 	 *
-	 * @throws  PaymentException
-	 * @param   float  Payment amount
+	 * @param   string  PayPal token
 	 * @return  void
 	 */
-	public function execute($amount)
+	public function setToken($token)
 	{
-		throw new BadMethodCallException('"execute" method for PayPal payment not implemented');
+		$this->token = $token;
+	}
+
+	/**
+	 * Returns token
+	 *
+	 * @return  string
+	 */
+	public function getToken()
+	{
+		return $this->token;
+	}
+
+	/**
+	 * Sets PayPal gateway library
+	 *
+	 * @param   PayPal_Feature
+	 * @return  void
+	 */
+	public function setPayPal(PayPal_Feature $paypal)
+	{
+		$this->paypal = $paypal;
+	}
+
+	/**
+	 * Returns PayPal gateway library
+	 *
+	 * @return  PayPal_Feature
+	 */
+	public function getPayPal()
+	{
+		return $this->paypal;
 	}
 }
