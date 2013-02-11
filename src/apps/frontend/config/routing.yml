@@ -201,6 +201,10 @@ points_buy:
   url: /points/buy
   param: { module: points, action: buy }
 
+points_buy_paypal:
+  url: /points/buy/paypal
+  param: { module: points, action: paypal }
+
 
 # ----
 # Tutor

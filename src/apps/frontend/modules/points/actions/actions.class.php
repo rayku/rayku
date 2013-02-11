@@ -38,31 +38,53 @@ class pointsActions extends sfActions
 			$extra = $request->getParameter('payment', array());
 
 			// Extract values
-			$id    = Arr::path($extra, 'data.id');
-			$type  = PaymentFactory::resolve(Arr::get($extra, 'type'));
+			$id   = Arr::path($extra, 'data.id');
+			$type = PaymentFactory::resolve(Arr::get($extra, 'type'));
 
-			$paymentFactory = new PaymentFactory($type, $user);
+			$paymentFactory = new PaymentFactory($type, $user, $this->getUser()->getAttributeHolder());
 			$payment = $paymentFactory->createPayment();
 			$handler = $paymentFactory->createHandler(empty($id));
 
 			try {
 				$handler->handle($payment, Arr::get($extra, 'rp'), $extra);
 
-				$user->addNewPoints(Arr::get($extra, 'rp'));
-				$user->save();
-
-				$this->redirect('@points_buy');
+				$this->redirect($handler->getRedirectUrl());
 			} catch (PaymentException $e) {
-				// TODO handle exception
-				throw $e;
+				// TODO Log exception?
 			} catch (Exception $e) {
-				// TODO handle exception
-				throw $e;
+				// TODO Log exception?
 			}
 		}
 
 		$this->data = $data;
 
 		return sfView::SUCCESS;
+	}
+
+	/**
+	 * Handles PayPal transaction
+	 *
+	 * @param   sfRequest
+	 * @return  string
+	 */
+	public function executePaypal(sfRequest $request)
+	{
+		$user = $this->getUser()->getRaykuUser();
+
+		$paymentFactory = new PaymentFactory(PaymentFactory::PAYPAL, $user, $this->getUser()->getAttributeHolder());
+		$payment = $paymentFactory->createPayment();
+		$handler = $paymentFactory->createHandler();
+
+		try {
+			$handler->handle($payment, null);
+		} catch (PaymentException $e) {
+			// TODO Log exception?
+		} catch (Exception $e) {
+			// TODO Log exception?
+		}
+
+		$this->redirect('@points_buy');
+
+		return sfView::NONE;
 	}
 }
