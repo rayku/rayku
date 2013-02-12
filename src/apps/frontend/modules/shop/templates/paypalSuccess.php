@@ -1,4 +1,5 @@
-<?php 
+<?php
+$costPerMinute=40;
 
 RaykuCommon::getDatabaseConnection();
 
@@ -10,24 +11,27 @@ RaykuCommon::getDatabaseConnection();
 
 			$item = $_POST['item'];
 
-			$_show_value = "$".$item.".00";
+			$_show_value = "$".($item/100).".00";
 			$_final_points = $detailPoints['points'] + $item;
-			$_minutes = intval($_final_points / 0.40);
+			$_minutes = intval($_final_points / $costPerMinute);
 	
 
 	else :
 
-			$item = 5;
+			$item = 500;
 
-			$_final_points = $detailPoints['points'] + 5;
-			$_minutes = $_final_points / 0.40;
+			$_final_points = $detailPoints['points'] + 500;
+			$_minutes = $_final_points / $costPerMinute;
 			$_minutes = intval($_minutes);
 	
-			$_show_value = "$5.00";
+			$_show_value = "$1.00";
 
 	endif;
 
+
+
 ?>
+
 
 <link rel="stylesheet" type="text/css" media="screen" href="/styles/global.css" />
 
@@ -61,14 +65,13 @@ RaykuCommon::getDatabaseConnection();
                 <?php
                 $query = mysql_query("Select * from points_paypal") or die(mysql_error());
                 $i = 0;
-//
-                ?>
 
+                ?>
                 <form name="form1" id="form1" method="post">
-                <h1 id="buyrp">Buy <select name="item"  id="item" onchange="this.form.submit();" style="font-size:18px;width:50px;">
+                <h1 id="buyrp">Buy <select name="item"  id="item" onchange="this.form.submit();" style="font-size:18px;">
                   <?php
             while($row = mysql_fetch_assoc($query)) { ?>
-                  <option value="<?php echo $row['price'];?>" <?php if($item == $row['price']): ?> selected="selected" <?php endif; ?>>
+                  <option value="<?php echo $row['points'];?>" <?php if($item == $row['points']): ?> selected="selected" <?php endif; ?>>
                   <?=$row['title'];?>
                   </option>
                 <?php } ?>
@@ -84,7 +87,7 @@ RaykuCommon::getDatabaseConnection();
 
               if(!empty($item)) :
 
-              $queryOne = mysql_query("Select * from points_paypal where price=".$item) or die(mysql_error());
+              $queryOne = mysql_query("Select * from points_paypal where points=".$item) or die(mysql_error());
 
               $rowOne = mysql_fetch_assoc($queryOne);
               
@@ -125,7 +128,7 @@ RaykuCommon::getDatabaseConnection();
               
               
               <?php endif; ?>
-              <div class="rpnote">*estimate is provided assuming an average tutoring rate of 0.40RP/minute.</div>
+              <div class="rpnote">*estimate is provided assuming an average tutoring rate of <?php echo $costPerMinute;?>RP/minute.</div>
 
             </div>
               
@@ -164,14 +167,14 @@ RaykuCommon::getDatabaseConnection();
 		
 	
 		ray_jq('#item').change(function() {
-			var str = ""; var rayku_points = ""; var final_points = "";  var minutes = "";
-			str = parseInt(ray_jq("#item").val());
-
+			var str = ""; var rayku_points = ""; var final_points = "";  var minutes = ""; var str1="";
+			str = parseInt(ray_jq("#item").val()/100);
+            str1=parseInt(ray_jq("#item").val());
 			rayku_points = parseFloat(ray_jq("#_hidden").val());
 
-			final_points = str + rayku_points;
+			final_points = str1 + rayku_points;
 		
-			minutes = parseInt(final_points / 0.40);
+			minutes = parseInt(final_points / $costPerMinute);
 
 			str = "$"+str+".00";
 			ray_jq("#value").text(str);
