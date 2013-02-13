@@ -180,7 +180,7 @@ if($sf_context->getModuleName() !='expertmanager') {
           <?php if(!$sf_user->isAuthenticated()) { ?>
           <li class="nobg"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/joinus">become a rayku tutor</a></li>
           <?php } else { ?>
-          <li class="nobg"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard">activate tutor status</a></li>
+          <li class="nobg"><a href="javascript:tutorprofile();">activate tutor status</a></li>
           <?php } ?>
         </ul>
         <div style="clear:both"></div>
