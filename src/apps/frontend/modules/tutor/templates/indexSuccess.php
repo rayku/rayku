@@ -88,7 +88,7 @@ table {
     float:left;
     padding-left:20px;
 }
-#content h2 {
+#avatar-connect h2 {
     font-family:Cambria, Arial, Helvetica, sans-serif;
     font-size:34px;
     font-weight:bold;
@@ -98,7 +98,7 @@ table {
     zoom:1;*/
 }
 #avatar-connect {
-    position:relative;
+    width:100%;
     padding-left:3px;
 }
 h2.avatar {
@@ -219,6 +219,7 @@ h2.avatar {
     float:right;
     padding-top:28px;
     text-align:left;
+    margin-top:15px;
 }
 #sidebar a {
     color: #87A8C3;
@@ -413,42 +414,43 @@ h2.avatar {
 	?>
 <div id="main">
   <!--content begins-->
-    <div id="content">
     <!--avatar, name and connect begins-->
     <div id="avatar-connect">
       <!--avatar-->
       <div class="avatar">
-        <div class="displaypic"><?php  echo link_to( avatar_tag_for_user($expert), '@profile?username=' . $expert->getUsername() ); ?></div>
+          <div class="displaypic"><?php  echo link_to( avatar_tag_for_user($expert), '@profile?username=' . $expert->getUsername() ); ?></div>
       </div>
       <!--Name-->
       <div style="float: left;">
-        <h2 class="avatar"> <?php  echo $expert->getName(); ?></h2><br>
-        <!--Connect Button-->
-<?php
-	
-	if(!empty($currentUser)) {
-		$_currentUserId = $currentUser->getId();
-		
-		if($expert->isTutorStatusEnabled()) {
-			
-			if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) {
-				echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
-			} else
-			if($expert->getId() != $_currentUserId ) {
-				echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
-			}
+          <h2 class="avatar"> <?php  echo $expert->getName(); ?></h2><br>
+          <!--Connect Button-->
+          <?php
 
-		} else {
-			echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
-		}
+          if(!empty($currentUser)) {
+              $_currentUserId = $currentUser->getId();
 
-	}
+              if($expert->isTutorStatusEnabled()) {
 
-	?>
+                  if(($expert->isOnline() || $onlinecheck == "online") && $expert->getId() != $_currentUserId ) {
+                      echo '<a href="/expertmanager/direct?id='.$expert->getId().'"><img id="connect" src="/images/portfolio/connect.png" alt="Connect" /></a>';
+                  } else
+                      if($expert->getId() != $_currentUserId ) {
+                          echo '<img id="connect" src="/images/portfolio/offline.png" alt="Offline" />';
+                      }
+
+              } else {
+                  echo '<img id="connect" src="/images/portfolio/tutor-2.png" alt="tutor" />';
+              }
+
+          }
+
+          ?>
       </div>
+      <div class="clear-both"></div>
     </div>
     <!--avatar,name and connect ends-->
     <div class="clear-both"></div>
+    <div id="content">
     <!--facts box begins-->
     <div id="facts">
 <?php	
