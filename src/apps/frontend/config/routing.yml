@@ -59,56 +59,6 @@ reset_password:
 # Forum
 # ----
 
-make_post:
-  url: /forum/post/
-  param: { module: forum, action: makePost }
-
-search_thread:
-  url: /forum/search/*
-  param: { module: forum, action: search }
-
-thread_status:
-  url: /forum/threadstatus/:thread_id/:status/*
-  param: { module: forum, action: threadstatus }
-
-best_response:
-  url: /forum/bestresponse/post_id/:post_id/:temp/*
-  param: { module: forum, action: bestresponse }
-
-view_thread:
-  url: /forum/thread/:thread_id/:page/*
-  param: { module: forum, action: thread, page: 1 }
-  requirements: { thread_id: \d+ }
-
-view_page:
-  url: /forum/:forum_id/page/:page
-  param: { module: forum, action: forum}
-  requirements: { forum_id: \d+, page: \d+ }
-
-view_forum:
-  url: /forum/:forum_id/:page/*
-  param: { module: forum, action: forum, page: 1 }
-  requirements: { forum_id: \d+, page: \d+ }
-
-new_thread:
-  url: /forum/newthread/:forum_id/*
-  param: { module: forum, action: newThread }
-
-edit:
-  url: /forum/edit/:thread_id/*
-  param: { module: forum, action: edit }
-
-
-expertreply_thread:
-  url: /forum/expertreplythread/:forum_id/:thread_id/
-  param: { module: forum, action: expertReplyThread }
-
-userreply_thread:
-  url: /forum/userreplythread/:forum_id/:thread_id/
-  param: { module: forum, action: userReplyThread }
-
-
-
 view_forums:
   url: /forum/*
   param: { module: forum, action: index }

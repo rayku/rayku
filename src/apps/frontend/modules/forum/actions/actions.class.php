@@ -17,9 +17,8 @@ class forumActions extends sfActions
 	
     public function executeIndex()
     {
-
-
-        $a = new Criteria();
+        $this->redirect('/tutors', '200');
+        /*$a = new Criteria();
         $users = UserPeer::doSelect($a);
 //print_r($users);
         $onlineusers = 0;
@@ -63,7 +62,7 @@ class forumActions extends sfActions
         $l->addDescendingOrderByColumn(ThreadPeer::ID);
         $l->add(ThreadPeer::CANCEL, 0);
         $l->setLimit(5);
-        $this->latest = ThreadPeer::doSelect($l);
+        $this->latest = ThreadPeer::doSelect($l);*/
     }
 
     public function executeSearch()
