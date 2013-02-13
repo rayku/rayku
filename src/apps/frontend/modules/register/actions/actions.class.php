@@ -139,11 +139,14 @@ class registerActions extends sfActions
 			// Referral module
 			// Rajesh Soni - 23 November 2012
 
-            if ($_POST['ref'])
+            if (isset($_POST['ref']))
 			{
 				$ref_by_user = mysql_real_escape_string( $_POST['ref'] );
                 mysql_query("update user set referred_by='$ref_by_user' where id=".$user->getId()) or die(mysql_error());
-			}
+			}else {
+                mysql_query("update user set referred_by='0' where id=".$user->getId()) or die(mysql_error());
+
+            }
 
             mysql_query("insert into expert_category(user_id,category_id) values('".$user->getId()."','1')") or die(mysql_error());
             mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
@@ -330,5 +333,12 @@ class registerActions extends sfActions
             }
         }
         exit(0);
+    }
+
+    public function executeConfirmationEmailResend()
+    {
+        $user=new User();
+        $this->sendConfirmationEmail($user);
+        $this->forward('register', 'confirmationCodeSent');
     }
 }

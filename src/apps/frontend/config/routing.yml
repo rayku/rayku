@@ -43,6 +43,12 @@ register_confirm:
   skip_encoding: 
     code
 
+register_confirm_mail:
+  url: /register/confirmation_resend
+  param: { module: register, action: confirmationEmailResend }
+  skip_encoding:
+    code
+
 recover_password:
   url: /recover-password
   param: { module: login, action: recoverPassword }
