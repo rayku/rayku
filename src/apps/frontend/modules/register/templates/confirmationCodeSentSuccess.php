@@ -8,8 +8,9 @@
         <div class="email-st">
           <h1 style="font-size:22px; margin-bottom:30px;">You're almost done!</h1>
           <span style="font-weight:normal; font-size:14px; line-height:20px">Please <strong>confirm your email address</strong> by clicking on a link that we just emailed to you.<br />
-          If you didn't recieve any validation email, click <a href='/register/confirmation_resend'><strong>here</strong></a> to resend it.<br />
-          Thanks!</span> </div>
+          If you didn't recieve any validation email, click <a href='/register/confirmation_resend/<?php echo $email_param; ?>'><strong>here</strong></a> to resend it.<br />
+          Thanks!</span><br />
+        </div>
       </div>
     </div>
     <div class="bottom"></div>

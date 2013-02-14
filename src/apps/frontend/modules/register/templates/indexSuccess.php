@@ -112,6 +112,6 @@
 <?php if($ref): ?>
   <div style="clear:both"></div>
       <div style="padding-top:30px;margin-bottom:50px;color:#333">
-        *minutes are approximate and is based on an average of 0.40RP/minute for premium tutoring. You will be credited 4RP.
+        *minutes are approximate and is based on an average of 40RP/minute for premium tutoring. You will be credited 4RP.
       </div>
     <?php endif; ?>

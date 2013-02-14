@@ -44,10 +44,12 @@ register_confirm:
     code
 
 register_confirm_mail:
-  url: /register/confirmation_resend
+  url: /register/confirmation_resend/:email
   param: { module: register, action: confirmationEmailResend }
   skip_encoding:
-    code
+      email
+  options:
+      segment_separators: ['/']
 
 recover_password:
   url: /recover-password

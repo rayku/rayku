@@ -152,8 +152,10 @@ class registerActions extends sfActions
             mysql_query("insert into user_score(user_id,score) values('".$user->getId()."','1')") or die(mysql_error());
 
             $this->sendConfirmationEmail($user);
-
-            $this->forward('register', 'confirmationCodeSent');
+            //;
+            $email_param=$user->getEmail();
+            $this->getRequest()->setParameter('email', $email_param);
+            $this->forward('register','confirmationCodeSent');
         }
     }
 
@@ -316,6 +318,7 @@ class registerActions extends sfActions
      */
     public function executeConfirmationCodeSent()
     {
+        $this->email_param=$this->getRequest()->getParameter('email');
     }
 
     public function executeRedirect()
@@ -335,10 +338,14 @@ class registerActions extends sfActions
         exit(0);
     }
 
-    public function executeConfirmationEmailResend()
+    public function executeConfirmationEmailResend($request)
     {
-        $user=new User();
+        $email=$request->getParameter('email');
+        $c=new Criteria();
+        $c->add(UserPeer::EMAIL,$email);
+        $user = UserPeer::doSelectOne($c);
         $this->sendConfirmationEmail($user);
+        $this->getRequest()->setParameter('email', $email);
         $this->forward('register', 'confirmationCodeSent');
     }
 }
