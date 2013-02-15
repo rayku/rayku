@@ -220,7 +220,7 @@ class indexAction extends sfAction
         $newOfflineUser = array();
         $j = 0;
         $k = 0;
-        $facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
+        /*$facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
         $facebookUsers = json_decode($facebookResponse, true);
         $botResponse = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
         $botUsers = json_decode($botResponse, true);
@@ -283,21 +283,17 @@ class indexAction extends sfAction
                     endif;
 
                 endforeach;
-            }
+            }*/
 
 
 
-            if ($onlinecheck == "online") {
+        foreach ($newUser as $new) {
+            $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
+            if ($tutor_status['online_status'] == '1') {
 
                 $onlineusers[$j] = $new['userid'];
 
                 $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-                $j++;
-            } elseif ($users_online->isOnline()) {
-
-                $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-                $onlineusers[$j] = $new['userid'];
-
                 $j++;
             } else {
 
@@ -307,16 +303,10 @@ class indexAction extends sfAction
                 $k++;
             }
 
-        endforeach;
-
+        }
 
         $this->newOnlineUser = $newOnlineUser;
-
-
-
         $this->newOfflineUser = $newOfflineUser;
-
-
         $this->_checkOnlineUsers = $onlineusers;
 
 
@@ -409,5 +399,7 @@ class indexAction extends sfAction
         $c = new Criteria();
         $c->add(CategoryPeer::ID, $this->cat);
         $this->e = CategoryPeer::doSelectOne($c);
+
+
     }
 }

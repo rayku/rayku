@@ -179,7 +179,7 @@ class appendAction extends sfAction
 		////if no online expert available redirecting to the board page
 
 
-		$onlineusers = array();
+		/*$onlineusers = array();
 		$offlineusers = array();
 
 		$newOnlineUser = array();
@@ -241,19 +241,21 @@ class appendAction extends sfAction
 					}
 
 				}
-			}*/
-
-			if ($onlinecheck == "online") {
+			}
+            */
+        $newOnlineUser = array();
+        $newOfflineUser = array();
+        $j = 0;
+        $k = 0;
+        $onlineusers = array();
+        $offlineusers = array();
+        foreach ($newUser as $new) {
+           $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
+			if ($tutor_status['online_status'] == '1') {
 
 				$onlineusers[$j] = $new['userid'];
 
 				$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-				$j++;
-			} elseif ($users_online->isOnline()) {
-
-				$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-				$onlineusers[$j] = $new['userid'];
-
 				$j++;
 			} else {
 

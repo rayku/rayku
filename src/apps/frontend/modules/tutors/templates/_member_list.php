@@ -501,17 +501,17 @@ var result = confirm("It's recommended to select 2 to 4 experts for best results
           <div style="width:700px;font-size:21px;color:#333;line-height:30px;margin-bottom:20px;font-weight:bold">Select the tutors that are relevant to your question:</div>
           <input type="hidden" name="hidden" value="hidden" />
           <div class="cn-content">
-          <div class="cn-right-top">
-            <div class="cn-column-one" style="width:50px">Ranking</div>
-            <div class="cn-column-one" style="width:445px">Rayku Experts</div>
-            <!--<div class="cn-column-two" align="center"> <span id="ratesort" class="1" style="cursor:pointer;color:blue;">Rate /min. <span id="ratesymbol" style="display:none;">^</span> </span> </div>-->
-			<div class="cn-column-two" align="center"> <span id="ratesort" class="1">Rate /min </span> </div>
-            <div class="cn-column-four" align="center">Connect</div>
-            <div class="clear-both"></div>
-          </div>
-          <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="<?php echo image_path('loading1.gif', false); ?>"></div>
-        </form>
+              <div class="cn-right-top">
+                <div class="cn-column-one" style="width:50px">Ranking</div>
+                <div class="cn-column-one" style="width:445px">Rayku Experts</div>
+                <!--<div class="cn-column-two" align="center"> <span id="ratesort" class="1" style="cursor:pointer;color:blue;">Rate /min. <span id="ratesymbol" style="display:none;">^</span> </span> </div>-->
+                <div class="cn-column-two" align="center"> <span id="ratesort" class="1">Rate /min </span> </div>
+                <div class="cn-column-four" align="center">Connect</div>
+                <div class="clear-both"></div>
+              </div>
+              <div style="width:100%;text-align:center;margin-top:50px;" id="loadingimage"><img src="<?php echo image_path('loading1.gif', false); ?>"></div>
       </div>
+      </form>
     </div>
   </div>
 </div>
