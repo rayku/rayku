@@ -141,10 +141,10 @@ RaykuCommon::getDatabaseConnection();
       <!--end of box--> 
     </div>
   </div>
-  <?php if ($detailPoints['points'] < '50'): ?>
-  <p style="font-size:14px;color:#666;">You need to accumulate at least 50RP in order to request a cash out</p>
+  <?php if ($detailPoints['points'] < '500'): ?>
+  <p style="font-size:14px;color:#666;">You need to accumulate at least 500RP in order to request a cash out</p>
   <?php else: ?>
-  <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo $detailPoints['points']; ?></strong></p><br />
+  <p style="font-size:14px;color:#666;">You may cash out <?php echo $detailPoints['points']; ?>RP for <strong>$<?php echo ($detailPoints['points'])/100; ?></strong></p><br />
   <input type="submit" class="myButton" value="Cash Out" name="submit" onClick="window.location.href='mailto:cs@mail.rayku.com?subject=Cash Out <?php echo $detailPoints['points']; ?> from userID<?php echo $user->getId(); ?>'"/>
   <?php endif; ?>
 </div>
