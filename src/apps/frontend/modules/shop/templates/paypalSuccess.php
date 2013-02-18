@@ -24,7 +24,7 @@ RaykuCommon::getDatabaseConnection();
 			$_minutes = $_final_points / $costPerMinute;
 			$_minutes = intval($_minutes);
 	
-			$_show_value = "$1.00";
+			$_show_value = "$5.00";
 
 	endif;
 
