@@ -107,10 +107,14 @@ function cmp($a, $b)
                 $_vkd++;
             }
         }
-        asort($_emptyNormalUsers);
-        arsort($_emptyNormalUsers);
-        asort($_rateNormalUsers);
-        arsort($_rateNormalUsers);
+        if(isset($_emptyNormalUsers))
+            asort($_emptyNormalUsers);
+        if(isset($_emptyNormalUsers))
+            arsort($_emptyNormalUsers);
+        if(isset($_rateNormalUsers))
+            asort($_rateNormalUsers);
+        if(isset($_rateNormalUsers))
+            arsort($_rateNormalUsers);
         if (!empty($_emptyNormalUsers) && !empty($_rateNormalUsers)) {
             $_FinalUsers = array_merge($_emptyNormalUsers,$_rateNormalUsers);
         } else if (empty($_emptyNormalUsers) && !empty($_rateNormalUsers)) {
