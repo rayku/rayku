@@ -17,6 +17,11 @@ class startActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+      $context = $this->getContext();
+      $sfUser = $context->getUser();
+      if($sfUser->isAuthenticated()){
+        $this->redirect('/dashboard');
+      }
    	// $this->forward('default', 'module');
   }
 }

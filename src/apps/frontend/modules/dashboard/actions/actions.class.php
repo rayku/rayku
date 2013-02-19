@@ -155,7 +155,7 @@ class dashboardActions extends sfActions
             $raykuUser->setRate(0);
             $this->redirect('/dashboard');
         } else {
-            if ($_POST['usrid']) {
+            if (isset($_POST['usrid'])) {
                 $uid = $_POST['usrid'];
                 $catid = $_POST['category'];
                 $courseid = $_POST['catcheck'];
