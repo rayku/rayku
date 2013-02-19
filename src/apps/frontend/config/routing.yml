@@ -3,7 +3,7 @@
 # ----
 homepage:
   url:   /
-  param: { module: static, action: index }
+  param: { module: start, action: index }
 
 tos:
   url: /terms/*
