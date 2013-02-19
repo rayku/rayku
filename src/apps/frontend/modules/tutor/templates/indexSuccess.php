@@ -603,7 +603,9 @@ h2.avatar {
 	
 	if(!empty($promotext)) {
 		$content = $promotext->getContent();
-	}
+	}else{
+        $content='';
+    }
 
 	?>
             <?php  echo form_tag('tutor/'.$expert->getUserName())  ?>
@@ -712,7 +714,8 @@ h2.avatar {
         <div id="inline'.$_row['id'].'" style="width:500px;height:100px;overflow:auto;padding:25px" align="left">
             <table>
             <tr ><th width="130px">Session Question</th><th width="130px">Rating</th><th width="130px">Comments</th><th width="130px">Date</th></tr>
-            <tr align="center">'.            '<td>'.urldecode($_row['question']).'</td>'.'
+            <tr align="center">
+            '.'<td>'.urldecode($_row['question']).'</td>'.'
             '.'<td>'.$_row['rating'].'</td>'.'
             '.'<td>'.$_row['comments'].'</td>'.'
             '.'<td>'.$_row['started_at'].'</td>'.'

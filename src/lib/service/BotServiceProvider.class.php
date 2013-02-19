@@ -122,7 +122,7 @@ class BotServiceProvider
             'facebook' => array(
                 'prefix' => sfConfig::get('app_facebook_url'),
                 'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
-                'enabled' => false
+                'enabled' => true
             ),
             'mac-server' => array(
                 'prefix' => sfConfig::get('app_notification_bot_url'),
@@ -156,7 +156,7 @@ class BotServiceProvider
             'facebook' => array(
                 'prefix' => sfConfig::get('app_facebook_url'),
                 'serviceUrl' => sfConfig::get('app_bots_url').':'. sfConfig::get('app_fb_chat_port'),
-                'enabled' => false
+                'enabled' => true
             ),
             'mac-server' => array(
                 'prefix' => sfConfig::get('app_notification_bot_url'),
@@ -164,8 +164,6 @@ class BotServiceProvider
                 'enabled' => true
             )
         );
-
-
 
         foreach ($bots as $botId => $botParams) {
             if (is_numeric(strpos($url, $botParams['prefix']))) {

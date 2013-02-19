@@ -5,7 +5,7 @@
 <div id="tcontent">
   <h1 style="font-size:20px"><a href="/dashboard" style="text-decoration:underline">Dashboard</a> > Tutor Help Videos</h1>
   <?php 
-	if($_GET['tutor'] == "activate"):
+	if((isset($_GET['tutor']))&& ($_GET['tutor']== "activate")):
 	?>
   <div class="activated"> Your tutor status is activated! Make sure that you're connected:</div>
   <div class="notifications">
