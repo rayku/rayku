@@ -147,7 +147,7 @@ function cmp($a, $b)
             <?php } elseif( ($stats['expertCount'] > 500) ) { echo "Level 4"; }?>
           </div>
           <div class="clear"></div>
-          Become a level 2 tutor and be able to charge up to 0.50RP/minute for sessions. You also rank higher on our tutor lists!
+          Become a level 2 tutor and be able to charge up to 50RP/minute for sessions. You also rank higher on our tutor lists!
        </div>
         <!--progress wrap--> 
         
@@ -184,7 +184,7 @@ function cmp($a, $b)
         
 	if($stats['expertCount'] >= 125 && $changeUserType != 1):
 
-		$_max = '0.50';
+		$_max = '50.00';
 
 	else:
 		$_max = '0.00';
@@ -277,9 +277,9 @@ function cmp($a, $b)
       <ul class="icon-list">
         <li><img src="../images/icon-web.png" title="web" id="icon-web" alt="web" width="74" height="73" /></li>
         <li><a href="/dashboard/gtalk" class="icon gtalk">Google Talk</a></li>
-        <!--<li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
+        <li><a href="/dashboard/facebook" class="icon facebook">Facebook Chat</a></li>
         <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.exe" class="icon windows">Windows Software</a></li>
-        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>-->
+        <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
       </ul>
       <div class="clear"></div>
     </div>
