@@ -57,13 +57,13 @@ class UsersAvailabilityChecker
      */
     private function fetchCCIds()
     {
-        $c = new Criteria;
+        $c = new Criteria();
         $result = UserGtalkPeer::doSelectStmt($c);
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $this->gtalkIds[$row['USERID']] = $row['GTALKID'];
         }
 
-        $c = new Criteria;
+        $c = new Criteria();
         $result = UserFbPeer::doSelectStmt($c);
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $this->fbIds[$row['USERID']] = $row['FB_USERNAME'];

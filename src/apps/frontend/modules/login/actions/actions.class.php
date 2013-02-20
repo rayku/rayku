@@ -57,12 +57,18 @@ class loginActions extends sfActions
                     StatsD::increment("login.failure");
                     $_SESSION['loginErrorMsg']='Your username or password was incorrect.';
 		} else {
-                    StatsD::increment("login.success");
-                }
+            $id=$this->user->getId();
+            $tutor=mysql_num_rows(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$id'"));
+            if($tutor==1){
+                StatsD::increment("login.tutor.success");
+            }else{
+                StatsD::increment("login.student.success");
+            }
+        }
                 
-                /**
-                 * @todo - check if we ever got a chance to hit this place with recaptch - it looks like no so either lets remove it or make it working
-                 */
+        /**
+         * @todo - check if we ever got a chance to hit this place with recaptch - it looks like no so either lets remove it or make it working
+         */
 		if(isset($_SESSION['loginWrongPass']) && $_SESSION['loginWrongPass']>=5)
 		{
 
