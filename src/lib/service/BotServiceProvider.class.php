@@ -43,7 +43,7 @@ class BotServiceProvider
     /**
      * Default state of enabled flag
      */
-    private $enabled = false;
+    private $enabled = true;
     
     /**
      * If you pass only $url it will be used directly - without any modifications
