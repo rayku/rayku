@@ -12,7 +12,6 @@ if($environment == 'development'){
 sfContext::createInstance($configuration)->dispatch();
 $controller=sfContext::getInstance()->getModuleName();
 $action=sfContext::getInstance()->getActionName();
-sfContext::createInstance($configuration);
 
 $stat_name='rayku.'.$controller.'.'.$action;
 $time = (microtime(true) - $time) * 1000;
