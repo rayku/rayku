@@ -12,4 +12,4 @@ if($environment == 'development'){
 sfContext::createInstance($configuration)->dispatch();
 
 $time = (microtime(true) - $time) * 1000;
-StatsD::timing("rayku.index_php",$time);
+StatsD::timing("rayku.controller.action",$time);
