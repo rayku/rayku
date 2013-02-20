@@ -1,0 +1,1 @@
+UPDATE `user_score` SET `score`='1';
