@@ -10,6 +10,10 @@ if($environment == 'development'){
 	$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'prod', false);
 }
 sfContext::createInstance($configuration)->dispatch();
+$controller=sfContext::getInstance()->getModuleName();
+$action=sfContext::getInstance()->getActionName();
+sfContext::createInstance($configuration);
 
+$stat_name='rayku.'.$controller.'.'.$action;
 $time = (microtime(true) - $time) * 1000;
-StatsD::timing("rayku.controller.action",$time);
+StatsD::timing($stat_name,$time);
