@@ -145,6 +145,62 @@ class UsersAvailabilityChecker
         return $onlineusers;
     }
 
+    function getOnlineUsersByCategory()
+    {
+        $c = new Criteria();
+        $allUsers = UserPeer::doSelect($c);
+
+        $onlineusers = array('students'=>array('web' => 0,'gtalk' => 0,'fb' => 0,'mac' => 0),
+                             'tutors'=>array('web' => 0,'gtalk' => 0,'fb' => 0,'mac' => 0));
+
+        $this->fetchOnlineStatusFromIMBots();
+        $this->fetchCCIds();
+
+        /* @var $user User */
+        foreach ($allUsers as $user) {
+
+            // Rajesh Soni - 28 November 2012
+            // Incorrect number of online tutors shown on the home page
+            // the problem was that it didn't accurately show the number of tutors online. for example, there's only one tutor online if you go to the tutor list: http://www.rayku.com/tutors. But it's showing 7 on the home page
+
+            $type = $user->getTypeName();
+            if($type!='Expert')
+                continue;
+
+            $id=$user->getId();
+            $tutor=mysql_num_rows(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$id'"));
+            if($tutor==1){
+                if ($user->isOnline()) {
+                    $onlineusers['tutors']['web']++;
+                } else if($this->isGtalkOnline($user)) {
+                    $onlineusers['tutors']['gtalk']++;
+                } else if($this->isFBOnline($user)) {
+                    $onlineusers['tutors']['fb']++;
+                } else if ($this->isMACOnline($user)) {
+                    $onlineusers['tutors']['mac']++;
+                } else {
+                    continue;
+                }
+            }else{
+                if ($user->isOnline()) {
+                    $onlineusers['students']['web']++;
+                } else if($this->isGtalkOnline($user)) {
+                    $onlineusers['students']['gtalk']++;
+                } else if($this->isFBOnline($user)) {
+                    $onlineusers['students']['fb']++;
+                } else if ($this->isMACOnline($user)) {
+                    $onlineusers['students']['mac']++;
+                } else {
+                    continue;
+                }
+            }
+
+
+
+        }
+        return $onlineusers;
+    }
+
     /**
      * Returns array with number of online users for each comunication channel
      */

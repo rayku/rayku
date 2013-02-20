@@ -26,13 +26,31 @@ class checkonlineusersTask extends sfBaseTask
         $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
         
         RaykuCommon::getDatabaseConnection();
-        
         $uac = new UsersAvailabilityChecker();
-        StatsD::timing('onlineUsersTotal', $uac->getOnlineUsersCount());
-        $counts = $uac->getCountsByCC();
-        foreach ($counts as $cc => $ccCount) {
-            StatsD::timing('onlineUsers'.ucfirst($cc), $ccCount);
+        $onlineusers=$uac->getOnlineUsersByCategory();
+        foreach($onlineusers['students'] as $protocol=>$nr){
+            if($protocol=='web'){
+                StatsD::increment('students.online.web', $nr);
+            }elseif($protocol=='fb'){
+                StatsD::increment('students.online.fb', $nr);
+            }elseif($protocol=='gtalk'){
+                StatsD::increment('students.online.gtalk', $nr);
+            }else{
+                continue;
+            }
         }
+        foreach($onlineusers['tutors']  as $protocol=>$nr){
+            if($protocol=='web'){
+                StatsD::increment('tutors.online.web', $nr);
+            }elseif($protocol=='fb'){
+                StatsD::increment('tutors.online.fb', $nr);
+            }elseif($protocol=='gtalk'){
+                StatsD::increment('tutors.online.gtalk', $nr);
+            }else{
+                continue;
+            }
+        }
+        StatsD::timing('onlineUsersTotal', $uac->getOnlineUsersCount());
     }
 
 }
