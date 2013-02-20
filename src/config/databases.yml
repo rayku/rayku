@@ -9,17 +9,6 @@ prod:
       persistent: true
       pooling: true
       classname: PropelPDO
-test:
-  propel:
-    class: sfPropelDatabase
-    param:
-      classname: PropelPDO
-      dsn: 'mysql:dbname=rayku_db;host=db1.p.rayku.com'
-      username: rayku_db
-      password: UthmCRtaum34qpGL
-      encoding: utf8
-      persistent: true
-      pooling: true
 
 staging:
   propel:
