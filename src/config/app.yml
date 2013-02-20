@@ -20,12 +20,12 @@ prod:
             host: cache1.p.rayku.com
 
 dev:
-  rayku_url: http://rayku.local
+  rayku_url: http://qa.rayku.com
   facebook_url: http://facebook.rayku.local
-  whiteboard_url: http://whiteboard.rayku.local
+  whiteboard_url: http://w2-qa.rayku.com
   notification_bot_url : http://notification-bot.rayku.local
-  bots_url : http://bots.rayku.local
-  cookies_domain: .rayku.local
+  bots_url : http://bots.rayku.com
+  cookies_domain: .rayku.com
 
   g_chat_port: 8892
   fb_chat_port: 8893

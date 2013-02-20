@@ -43,7 +43,6 @@ class UsersAvailabilityChecker
 
         $gtalkUsersJSON = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').":".sfConfig::get('app_g_chat_port')."/onlines")->getContent();
         $gtalkUsers = json_decode($gtalkUsersJSON, true);
-
         foreach ($gtalkUsers as $gtalkUserId => $status) {
             $parts = explode('/', $gtalkUserId);
             if (trim($parts[0]) != '') {
@@ -110,7 +109,6 @@ class UsersAvailabilityChecker
 
         $c = new Criteria();
         $allUsers = UserPeer::doSelect($c);
-
         $onlineusers = array();
 
         $this->fetchOnlineStatusFromIMBots();
@@ -123,9 +121,9 @@ class UsersAvailabilityChecker
 			// Incorrect number of online tutors shown on the home page
 			// the problem was that it didn't accurately show the number of tutors online. for example, there's only one tutor online if you go to the tutor list: http://www.rayku.com/tutors. But it's showing 7 on the home page
 
-			$type = $user->getTypeName();
+			/*$type = $user->getTypeName();
 			if($type!='Expert')
-				continue;
+				continue;*/
 
             if ($user->isOnline()) {
                 $this->counts['web']++;
@@ -141,7 +139,6 @@ class UsersAvailabilityChecker
 
             $onlineusers[] = $user->getId();
         }
-
         return $onlineusers;
     }
 
