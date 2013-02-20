@@ -1,0 +1,1 @@
+ALTER TABLE `tutor_profile` ADD `online_status` tinyint(1) DEFAULT '0';
