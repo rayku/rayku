@@ -1,0 +1,1 @@
+UPDATE `user` SET `points`='1000';

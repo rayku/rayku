@@ -133,7 +133,7 @@ class registerActions extends sfActions
             if (!empty($_POST['coupon']) && !empty($points)) {
                 mysql_query("update user set points='".$points."' where id=".$user->getId()) or die(mysql_error());
             } elseif (!empty($_POST['coupon'])) {
-                mysql_query("update user set points='11' where id=".$user->getId()) or die(mysql_error());
+                mysql_query("update user set points='1000' where id=".$user->getId()) or die(mysql_error());
             }
 
 			// Referral module
