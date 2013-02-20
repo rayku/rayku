@@ -68,29 +68,30 @@ function cmp($a, $b)
       
       <div class="widget-head">
           <h3 id="tutor-level">
-            <?php if($raykuUser->isTutorStatusEnabled()) : ?>
-            <?php if($stats['expertCount'] >= 125 && $stats['expertCount'] <= 500 && $changeUserType != 1){ ?>
-            <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
+            <?php /*if($raykuUser->isTutorStatusEnabled()) : */?><!--
+            <?php /*if($stats['expertCount'] >= 125 && $stats['expertCount'] <= 500 && $changeUserType != 1){ */?>
+            <?php /*if($sf_user->getRaykuUser()->getType() == 5): */?>
             <span>Staff</span>
-            <?php else: ?>
+            <?php /*else: */?>
             Tutor (level 2)
-            <?php endif; ?>
-            <?php } elseif($stats['expertCount'] <= 125) { ?>
-            <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
+            <?php /*endif; */?>
+            <?php /*} elseif($stats['expertCount'] <= 125) { */?>
+            <?php /*if($sf_user->getRaykuUser()->getType() == 5): */?>
             <span>Staff</span>
-            <?php else: ?>
+            <?php /*else: */?>
             Tutor (level 1)
-            <?php endif; ?>
-            <?php }  elseif($stats['expertCount'] > 500) { ?>
-            <?php if($sf_user->getRaykuUser()->getType() == 5): ?>
+            <?php /*endif; */?>
+            <?php /*}  elseif($stats['expertCount'] > 500) { */?>
+            <?php /*if($sf_user->getRaykuUser()->getType() == 5): */?>
             <span>Staff</span>
-            <?php else: ?>
+            <?php /*else: */?>
             Tutor (level 3)
-            <?php endif; ?>
-            <?php } ?>
-            <?php else: ?>
+            <?php /*endif; */?>
+            <?php /*} */?>
+            <?php /*else: */?>
             Tutor Status:
-            <?php endif; ?>
+            --><?php /*endif;*/ ?>
+              Tutor:
           </h3>
         <div id="tutor-status-head">
           <?php if($raykuUser->isTutorStatusEnabled()) { ?>
@@ -114,7 +115,7 @@ function cmp($a, $b)
         
         <!--progress wrap-->
         <?php
-		$percentage = '';
+		/*$percentage = '';
 		if ($stats['expertCount'] <= 125 )
 		{
 			$percentage = ($stats['expertCount'] / 125) * 100;
@@ -126,9 +127,10 @@ function cmp($a, $b)
 		elseif ($stats['expertCount'] > 501 )
 		{
 			$percentage = 100;
-		}
+		}*/
 
 		?>
+        <!--
         <div id="progress-wrap">
             <div class="ui-progress-bar ui-container" id="progress_bar">
               <div class="ui-progress" style="width:<?=$percentage?>%;"> <span class="ui-label">
@@ -149,6 +151,7 @@ function cmp($a, $b)
           <div class="clear"></div>
           Become a level 2 tutor and be able to charge up to 50RP/minute for sessions. You also rank higher on our tutor lists!
        </div>
+       -->
         <!--progress wrap--> 
         
         <!--Tutor Rate Slider-->
@@ -220,7 +223,7 @@ function cmp($a, $b)
     vd("#tutor-rate").slider({
         range: "min",
         value: <?php echo $_Rate; ?> , min: 0.00,
-        max: <?php echo $_max; ?> , step: 0.01,
+        max: 5.00 , step: 0.01,
         slide: function (event, ui) {
             vd("#amount").val(ui.value);
             vd("#amount_hidden").val(ui.value);
@@ -239,17 +242,17 @@ function cmp($a, $b)
 
     });
 
-    vd('#_slider_call').mouseover(function() {
+    /*vd('#_slider_call').mouseover(function() {
 
-	var rate = <?php echo $_max; ?>
+	var rate = <?php //echo $_max; ?>
 
 	if(rate == "0.00") {
 
 	document.getElementById("error-message").style.display = "block";
 
 	}
+    });*/
 
-});
 
     vd('#tutor-rate').mouseover(function () {
         var rate = document.getElementById("amount_hidden").value;

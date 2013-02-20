@@ -1,4 +1,3 @@
-
 prod:
   propel:
     class: sfPropelDatabase
@@ -12,26 +11,37 @@ prod:
       classname: PropelPDO
 test:
   propel:
-    param:
-      classname: DebugPDO
-      dsn: 'mysql:dbname=rayku_unit_tests;host=127.0.0.1'
-
-staging:
-  propel:
-    param:
-      classname: DebugPDO
-      dsn: 'mysql:dbname=rayku_staging;host=127.0.0.1'
-
-
-all:
-  propel:
     class: sfPropelDatabase
     param:
+      classname: PropelPDO
       dsn: 'mysql:dbname=rayku_db;host=db1.p.rayku.com'
       username: rayku_db
       password: UthmCRtaum34qpGL
       encoding: utf8
       persistent: true
       pooling: true
+
+staging:
+  propel:
+    class: sfPropelDatabase
+    param:
       classname: PropelPDO
+      dsn: 'mysql:dbname=rayku_db;host=db1.p.rayku.com'
+      username: rayku_db
+      password: UthmCRtaum34qpGL
+      encoding: utf8
+      persistent: true
+      pooling: true
+
+all:
+  propel:
+    class: sfPropelDatabase
+    param:
+      classname: PropelPDO
+      dsn: 'mysql:dbname=rayku_db;host=db1.p.rayku.com'
+      username: rayku_db
+      password: UthmCRtaum34qpGL
+      encoding: utf8
+      persistent: true
+      pooling: true
 
