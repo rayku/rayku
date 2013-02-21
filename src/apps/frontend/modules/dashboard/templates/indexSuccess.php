@@ -222,8 +222,8 @@ function cmp($a, $b)
     });
     vd("#tutor-rate").slider({
         range: "min",
-        value: <?php echo $_Rate; ?> , min: 0.00,
-        max: 5.00 , step: 0.01,
+        value: <?php echo $_Rate; ?> , min: 40,
+        max: 200 , step: 1,
         slide: function (event, ui) {
             vd("#amount").val(ui.value);
             vd("#amount_hidden").val(ui.value);
