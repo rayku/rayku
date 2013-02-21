@@ -1523,10 +1523,10 @@ Body - Subpage
 
 .raykupoints {
   font-size:10px;
-  width:125px;
   height:60px;
-  padding:10px 0;
+  padding:10px 5px;
   background:#EDF4F5;
+  max-width:180px;
   float:left;
   color:#666;
   margin:10px;
@@ -1534,13 +1534,16 @@ Body - Subpage
 .raykupoints span{
   font-size:36px;
   line-height:45px;
+  max-width:170px;
+  overflow:hidden;
+  display:block;
   font-weight:bold;
   color:#777;
 }
 .rpcontent {
-  width:420px;
+  width:370px;
   float:right;
-  padding:15px 25px 15px 15px;
+  padding:15px 15px 15px 15px;
   color:#999;
 }
 .rpcontent p {

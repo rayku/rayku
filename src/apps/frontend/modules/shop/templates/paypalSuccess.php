@@ -50,7 +50,7 @@ RaykuCommon::getDatabaseConnection();
 
               <div class="raykupoints" align="center">
               YOUR RAYKU POINTS<br>
-              <span><?php echo $detailPoints['points']; ?></span></div>
+              <span title='<?php echo $detailPoints['points']; ?>'><?php echo $detailPoints['points']; ?></span></div>
 
 <input type="hidden" id="_hidden" name="_hidden" value="<?php echo $detailPoints['points']; ?>" />
 
