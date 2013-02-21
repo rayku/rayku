@@ -68,8 +68,8 @@ class ratingAction extends sfAction
                     $tiptutor=$_POST["tiptutor"];
                     $askerPoints = $rowAsker["points"] - $raykuPercentage;
                     mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                    $expertPer = ($raykuPercentage * 25) / 100;
-                    $kinkarsoPer = ($raykuPercentage * 75) / 100;
+                    $expertPer = $raykuPercentage;
+                    $kinkarsoPer = $raykuPercentage;
                     $expertPoints = $rowExpert["points"] + $expertPer + $tiptutor;
                     $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                     mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
@@ -91,8 +91,8 @@ class ratingAction extends sfAction
                     if ($rate != '0.00') {
                         $askerPoints = $rowAsker["points"] - $raykuPercentage;
                         mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                        $expertPer = ($raykuPercentage * 50) / 100;
-                        $kinkarsoPer = ($raykuPercentage * 50) / 100;
+                        $expertPer = $raykuPercentage;
+                        $kinkarsoPer = $raykuPercentage;
                         $expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
                         $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                         mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
@@ -114,8 +114,8 @@ class ratingAction extends sfAction
                     if ($rate != '0.00') {
                         $askerPoints = $rowAsker["points"] - $raykuPercentage;
                         mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                        $expertPer = ($raykuPercentage * 75) / 100; //60;
-                        $kinkarsoPer = ($raykuPercentage * 25) / 100; //40;
+                        $expertPer = $raykuPercentage; //60;
+                        $kinkarsoPer = $raykuPercentage; //40;
                         $expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
                         $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
                         mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
