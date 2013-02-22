@@ -10,238 +10,243 @@
 class appendAction extends sfAction
 {
 
-	public function execute($request)
-	{
-		$time_start = microtime(true);
-		
-		RaykuCommon::getDatabaseConnection();
+    public function execute($request)
+    {
+        $time_start = microtime(true);
 
-		/* @var $currentUser User */
-		$currentUser = $this->getUser()->getRaykuUser();
+        RaykuCommon::getDatabaseConnection();
 
-		$userId = $currentUser->getId();
+        /* @var $currentUser User */
+        $currentUser = $this->getUser()->getRaykuUser();
 
-		$this->userId = $currentUser->getId();
+        $userId = $currentUser->getId();
 
+        $this->userId = $currentUser->getId();
 
-		$time = time();
 
+        $time = time();
 
 
-		$_SESSION["rateDisplay"] = 1;
 
+        $_SESSION["rateDisplay"] = 1;
 
 
-		if (!empty($_POST['hidden'])) {
-			$count = count($_POST['checkbox']);
 
+        if (!empty($_POST['hidden'])) {
+            $count = count($_POST['checkbox']);
 
-			/* Clearing Cookies */
 
-			for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
+            /* Clearing Cookies */
 
-				$cookname = 'tutor_' . $u;
+            for ($u = $_COOKIE['cookcount']; $u >= 1; $u--) {
 
-				$this->getResponse()->setCookie($cookname, '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
-			}
-			
-			$this->getResponse()->setCookie("tutorcount", '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
+                $cookname = 'tutor_' . $u;
 
-			$this->getResponse()->setCookie("cookcount", '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
+                $this->getResponse()->setCookie($cookname, '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
+                echo $cookname.'--';
+            }
+            $this->getResponse()->setCookie("tutorcount", '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
 
-			/* Clearing Cookies */
+            $this->getResponse()->setCookie("cookcount", '', time() - 3600, '/', sfConfig::get('app_cookies_domain'));
 
-			if ($count > 2) {
+            /* Clearing Cookies */
 
-				$close = 21000;
-			} else if ($count == 2) {
+            if ($count > 2) {
 
-				$close = 31000;
-			} else if ($count == 1) {
+                $close = 21000;
+            } else if ($count == 2) {
 
-				$close = 61000;
-			}
+                $close = 31000;
+            } else if ($count == 1) {
 
-			$j = 0;
-			for ($i = 0; $i < $count; $i++) {
+                $close = 61000;
+            }
 
-				mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('" . $userId . "', '" . $_POST['checkbox'][$i] . "', '5', 'To be discussed','" . (++$j) . "', '" . $time . "', 1, " . $close . ") ") or die(mysql_error());
-			}
+            $j = 0;
+            for ($i = 0; $i < $count; $i++) {
 
+                mysql_query("INSERT INTO `user_expert` (`user_id`, `checked_id`, `category_id`, `question`, `exe_order`, `time`, status, close) VALUES ('" . $userId . "', '" . $_POST['checkbox'][$i] . "', '5', 'To be discussed','" . (++$j) . "', '" . $time . "', 1, " . $close . ") ") or die(mysql_error());
+            }
 
 
-			setcookie("asker_que", $_SESSION['question'], time() + 600, "/", sfConfig::get('app_cookies_domain'));
 
-			$this->getResponse()->setCookie("redirection", 1, time() + 600, '/', sfConfig::get('app_cookies_domain'));
+            setcookie("asker_que", $_SESSION['question'], time() + 600, "/", sfConfig::get('app_cookies_domain'));
 
-			$this->getResponse()->setCookie("forumsub", 1, time() + 600, '/', sfConfig::get('app_cookies_domain'));
+            $this->getResponse()->setCookie("redirection", 1, time() + 600, '/', sfConfig::get('app_cookies_domain'));
 
+            $this->getResponse()->setCookie("forumsub", 1, time() + 600, '/', sfConfig::get('app_cookies_domain'));
 
 
 
-			$this->redirect('expertmanager/connect');
-		}
 
-		$this->cat = $this->getRequestParameter('category');
+            $this->redirect('expertmanager/connect');
+        }
 
-		$this->course_id = @$_SESSION['tutcourse'];
+        $this->cat = $this->getRequestParameter('category');
 
-		if (empty($this->course_id)) {
-			$this->course_id = 1;
-		}
+        $this->course_id = @$_SESSION['tutcourse'];
 
+        if (empty($this->course_id)) {
+            $this->course_id = 1;
+        }
 
-		if (empty($this->cat)) {
-			$this->cat = 1;
-		}
 
+        if (empty($this->cat)) {
+            $this->cat = 1;
+        }
 
 
-		$c = new Criteria();
-		$c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
 
-		if ($this->cat == 5) {
-			$experts = ExpertCategoryPeer::doSelect($c);
-		} else {
-			$c->add(ExpertCategoryPeer::CATEGORY_ID, $this->cat);
-			$experts = ExpertCategoryPeer::doSelect($c);
-		}
+        //$c = new Criteria();
+        //$c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
 
-		$_points = $currentUser->getPoints();
+        if ($this->cat == 5) {
+            //$experts = ExpertCategoryPeer::doSelect($c);
+            $experts=mysql_query("SELECT * FROM tutor_profile");
+        } else {
+            //$c->add(ExpertCategoryPeer::CATEGORY_ID, $this->cat);
+            //$experts = ExpertCategoryPeer::doSelect($c);
+            $experts=mysql_query("SELECT * FROM tutor_profile");
+        }
 
+        $_points = $currentUser->getPoints();
 
-		$newUser = array();
-		$i = 0;
-		$eachExpertOnlyOnce = array();
-		foreach ($experts as $exp) {
 
-			if (in_array($exp->getUserId(), $eachExpertOnlyOnce)) {
-				continue;
-			}
+        $newUser = array();
+        $i = 0;
+        $eachExpertOnlyOnce = array();
+        while($exp=mysql_fetch_array($experts)) {
+            $user_id=$exp['user_id'];
 
-			$eachExpertOnlyOnce[] = $exp->getUserId();
+            if (in_array($user_id, $eachExpertOnlyOnce)) {
+                continue;
+            }
 
-			$_queryCourse = '';
-			$tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = " . $exp->getUserId() . "") or die("Er-1-->" . mysql_error());
-			$tutors = mysql_fetch_array($tutorsq);
-			$tutor = '';
+            $eachExpertOnlyOnce[] = $user_id;
 
-			$tutor = explode("-", $tutors['course_id']);
-			$coursid = $this->course_id;
-			if (in_array($coursid, $tutor)) {
-				//echo $coursid;
+            $tutorsq = mysql_query("select * from tutor_profile where category = 1 and user_id = '" . $user_id . "'") or die("Er-1-->" . mysql_error());
+            $tutors = mysql_fetch_array($tutorsq);
+            $tutor = '';
 
-				$_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = " . $exp->getUserId() . "") or die("Er-1-->" . mysql_error());
-				//echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
-			}
+            $tutor = explode("-", $tutors['course_id']);
+            $coursid = $this->course_id;
+            if (in_array($coursid, $tutor)) {
+                //echo $coursid;
 
-			if ($_queryCourse && mysql_num_rows($_queryCourse) > 0) {
+                $_queryCourse = mysql_query("select * from tutor_profile where category = 1 and user_id = '".$user_id ."'") or die("Er-1-->" . mysql_error());
+                //echo "select * from tutor_profile where category = 1 and user_id = ".$exp->getUserId()."";
+            }
+            if(isset($_queryCourse)){
+                $query_Course_rows=mysql_num_rows($_queryCourse);
+            }else{
+                $query_Course_rows=0;
+            }
+            if ($query_Course_rows > 0) {
 
-				$query = mysql_query("select * from user_score where user_id=" . $exp->getUserId()) or die(mysql_error());
-				$score = mysql_fetch_assoc($query);
+                $query = mysql_query("select * from user_score where user_id=" . $user_id) or die(mysql_error());
+                $score = mysql_fetch_assoc($query);
 
-				if ($score['score'] != 0) {
+                if ($score['score'] != 0) {
 
-					if (false) { //$_points == '' || $_points == '0.00'   Temporary hack
-						$emptyRCquery = mysql_query("select * from user_rate where userid=" . $exp->getUserId() . " and (rate = 0.00 || rate = 0) ") or die("Error In rate" . mysql_error());
+                    if (false) { //$_points == '' || $_points == '0.00'   Temporary hack
+                        $emptyRCquery = mysql_query("select * from user_rate where userid='" . $user_id . "' and (rate = 0.00 || rate = 0) ") or die("Error In rate" . mysql_error());
 
-						if (mysql_num_rows($emptyRCquery) > 0) {
+                        if (mysql_num_rows($emptyRCquery) > 0) {
 
-							$dv = new Criteria();
-							$dv->add(UserPeer::ID, $exp->getUserId());
-							$_thisUser = UserPeer::doSelectOne($dv);
+                            $dv = new Criteria();
+                            $dv->add(UserPeer::ID, $user_id);
+                            $_thisUser = UserPeer::doSelectOne($dv);
 
-							$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                            $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-							$i++;
-						}
-					} else {
+                            $i++;
+                        }
+                    } else {
 
-						$dv = new Criteria();
-						$dv->add(UserPeer::ID, $exp->getUserId());
-						$_thisUser = UserPeer::doSelectOne($dv);
+                        $dv = new Criteria();
+                        $dv->add(UserPeer::ID, $user_id);
+                        $_thisUser = UserPeer::doSelectOne($dv);
 
 
-						$newUser[$i] = array("score" => $score['score'], "userid" => $exp->getUserId(), "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                        $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
 
-						$i++;
-					}
-				}
-			}
-		}
+                        $i++;
+                    }
+                }
+            }
+        }
+        asort($newUser);
+        arsort($newUser);
 
-		asort($newUser);
-		arsort($newUser);
+        $this->rankCheckUsers = $newUser;
 
-		$this->rankCheckUsers = $newUser;
 
+        ////if no online expert available redirecting to the board page
 
-		////if no online expert available redirecting to the board page
 
+        /*$onlineusers = array();
+        $offlineusers = array();
 
-		/*$onlineusers = array();
-		$offlineusers = array();
+        $newOnlineUser = array();
+        $newOfflineUser = array();
+        $j = 0;
+        $k = 0;
+        $facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
+        $facebookUsers = json_decode($facebookResponse, true);
+        $botResponse = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
+        $botUsers = json_decode($botResponse, true);
 
-		$newOnlineUser = array();
-		$newOfflineUser = array();
-		$j = 0;
-		$k = 0;
-		$facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
-		$facebookUsers = json_decode($facebookResponse, true);
-		$botResponse = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
-		$botUsers = json_decode($botResponse, true);
+        foreach ($newUser as $new) {
 
-		foreach ($newUser as $new) {
+            $a = new Criteria();
+            $a->add(UserPeer::ID, $new['userid']);
+            $users_online = UserPeer::doSelectOne($a);
 
-			$a = new Criteria();
-			$a->add(UserPeer::ID, $new['userid']);
-			$users_online = UserPeer::doSelectOne($a);
+            $onlinecheck = '';
 
-			$onlinecheck = '';
+            if ($users_online->isOnline()) {
 
-			if ($users_online->isOnline()) {
+                $onlinecheck = "online";
+            }
 
-				$onlinecheck = "online";
-			}
+            /*if (empty($onlinecheck)) {
+                $userGtalk = $users_online->getUserGtalk();
+                if ($userGtalk) {
+                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/' . $userGtalk->getGtalkid())->getContent();
+                }
+            }
 
-			/*if (empty($onlinecheck)) {
-				$userGtalk = $users_online->getUserGtalk();
-				if ($userGtalk) {
-					$onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/' . $userGtalk->getGtalkid())->getContent();
-				}
-			}
+            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
 
-			if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
+                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
+                if ($userFb) {
+                    $fb_username = $userFb->getFbUsername();
 
-				$userFb = UserFbPeer::retrieveByUserId($new['userid']);
-				if ($userFb) {
-					$fb_username = $userFb->getFbUsername();
+                    foreach ($facebookUsers as $key => $user) {
 
-					foreach ($facebookUsers as $key => $user) {
+                        if ($user['username'] == $fb_username) {
 
-						if ($user['username'] == $fb_username) {
+                            $onlinecheck = 'online';
 
-							$onlinecheck = 'online';
+                            break;
+                        }
 
-							break;
-						}
+                    }
+                }
+            }
 
-					}
-				}
-			}
+            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
 
-			if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
+                foreach ($botUsers as $key => $_user) {
 
-				foreach ($botUsers as $key => $_user) {
+                    if ($_user['email'] == $users_online->getEmail()){
 
-					if ($_user['email'] == $users_online->getEmail()){
+                        $onlinecheck = 'online';
+                        break;
+                    }
 
-						$onlinecheck = 'online';
-						break;
-					}
-
-				}
-			}
+                }
+            }
             */
         $newOnlineUser = array();
         $newOfflineUser = array();
@@ -250,118 +255,117 @@ class appendAction extends sfAction
         $onlineusers = array();
         $offlineusers = array();
         foreach ($newUser as $new) {
-           $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
-			if ($tutor_status['online_status'] == '1') {
+            $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
+            if ($tutor_status['online_status'] == '1') {
 
-				$onlineusers[$j] = $new['userid'];
+                $onlineusers[$j] = $new['userid'];
 
-				$newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-				$j++;
-			} else {
+                $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+                $j++;
+            } else {
 
-				$newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
-				$offlineusers[$k] = $new['userid'];
+                $newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+                $offlineusers[$k] = $new['userid'];
 
-				$k++;
-			}
+                $k++;
+            }
 
-		}
+        }
 
-		$this->newOnlineUser = $newOnlineUser;
-		$this->newOfflineUser = $newOfflineUser;
-		$this->_checkOnlineUsers = $onlineusers;
-
-
+        $this->newOnlineUser = $newOnlineUser;
+        $this->newOfflineUser = $newOfflineUser;
+        $this->_checkOnlineUsers = $onlineusers;
 
 
-		/////////////////////////////////////////////////////
 
-		if (isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 
-			if (!empty($_COOKIE["school"])) {
+        /////////////////////////////////////////////////////
 
-				$cookieSchool = array();
-				$m = 0;
-				foreach ($newOnlineUser as $new) {
+        if (isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 1) {
 
-					$b = new Criteria();
-					$b->add(UserPeer::ID, $new['userid']);
-					$schoolusers = UserPeer::doSelectOne($b);
-					$mail = explode("@", $schoolusers->getEmail());
-					$newMail = explode(".", $mail[1]);
+            if (!empty($_COOKIE["school"])) {
 
-					if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+                $cookieSchool = array();
+                $m = 0;
+                foreach ($newOnlineUser as $new) {
 
-						$cookieSchool[$m] = $new;
-						$m++;
-					}
+                    $b = new Criteria();
+                    $b->add(UserPeer::ID, $new['userid']);
+                    $schoolusers = UserPeer::doSelectOne($b);
+                    $mail = explode("@", $schoolusers->getEmail());
+                    $newMail = explode(".", $mail[1]);
 
-				}
+                    if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
 
-				$this->expert_cats = $cookieSchool;
-			} else {
-				$this->expert_cats = $newOnlineUser;
-			}
-		} else if (isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 2) {
+                        $cookieSchool[$m] = $new;
+                        $m++;
+                    }
 
-			if (!empty($_COOKIE["school"])) {
+                }
 
-				$cookieSchool = array();
-				$m = 0;
+                $this->expert_cats = $cookieSchool;
+            } else {
+                $this->expert_cats = $newOnlineUser;
+            }
+        } else if (isset($_COOKIE["onoff"]) && $_COOKIE["onoff"] == 2) {
 
-				foreach ($newOfflineUser as $new) {
+            if (!empty($_COOKIE["school"])) {
 
-					$b = new Criteria();
-					$b->add(UserPeer::ID, $new['userid']);
-					$schoolusers = UserPeer::doSelectOne($b);
-					$mail = explode("@", $schoolusers->getEmail());
-					$newMail = explode(".", $mail[1]);
+                $cookieSchool = array();
+                $m = 0;
 
-					if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+                foreach ($newOfflineUser as $new) {
 
-						$cookieSchool[$m] = $new;
-						$m++;
-					}
+                    $b = new Criteria();
+                    $b->add(UserPeer::ID, $new['userid']);
+                    $schoolusers = UserPeer::doSelectOne($b);
+                    $mail = explode("@", $schoolusers->getEmail());
+                    $newMail = explode(".", $mail[1]);
 
-				}
+                    if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
 
-				$this->expert_cats = $cookieSchool;
-			} else {
+                        $cookieSchool[$m] = $new;
+                        $m++;
+                    }
 
-				$this->expert_cats = $newOfflineUser;
-			}
-		} else {
+                }
 
-			if (!empty($_COOKIE["school"])) {
+                $this->expert_cats = $cookieSchool;
+            } else {
 
-				$cookieSchool = array();
-				$m = 0;
+                $this->expert_cats = $newOfflineUser;
+            }
+        } else {
+            if (!empty($_COOKIE["school"])) {
 
-				foreach ($newUser as $new) {
+                $cookieSchool = array();
+                $m = 0;
 
-					$b = new Criteria();
-					$b->add(UserPeer::ID, $new['userid']);
-					$schoolusers = UserPeer::doSelectOne($b);
-					$mail = explode("@", $schoolusers->getEmail());
-					$newMail = explode(".", $mail[1]);
-					if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
-						$cookieSchool[$m] = $new;
-						$m++;
-					}
+                foreach ($newUser as $new) {
 
-				}
+                    $b = new Criteria();
+                    $b->add(UserPeer::ID, $new['userid']);
+                    $schoolusers = UserPeer::doSelectOne($b);
+                    $mail = explode("@", $schoolusers->getEmail());
+                    $newMail = explode(".", $mail[1]);
+                    if (($newMail[0] == $_COOKIE["school"]) || ($newMail[1] == $_COOKIE["school"])) {
+                        $cookieSchool[$m] = $new;
+                        $m++;
+                    }
 
-				$this->expert_cats = $cookieSchool;
-			} else {
+                }
 
-				$this->expert_cats = $newUser;
-			}
-		}
-		$this->tutorsCount = count($this->expert_cats);
+                $this->expert_cats = $cookieSchool;
+            } else {
+                $this->expert_cats = $newUser;
 
-		$c = new Criteria();
-		$c->add(CategoryPeer::ID, $this->cat);
-		$this->e = CategoryPeer::doSelectOne($c);
-		
-	}
+            }
+        }
+        $this->tutorsCount = count($this->expert_cats);
+
+        $c = new Criteria();
+        $c->add(CategoryPeer::ID, $this->cat);
+        $this->e = CategoryPeer::doSelectOne($c);
+
+    }
 }

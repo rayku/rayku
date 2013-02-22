@@ -21,7 +21,7 @@ class manageusersActions extends sfActions
 		$connection = RaykuCommon::getDatabaseConnection();
 	if(!empty($_GET['id'])) :
 
-		$_Category = mysql_query("delete from expert_category where id = ".$_GET['id']."", $connection) or die(mysql_error());
+		$_Category = mysql_query("delete from tutor_profile where id = ".$_GET['id']."", $connection) or die(mysql_error());
 
 	endif;
 
@@ -38,7 +38,7 @@ class manageusersActions extends sfActions
 	if(!empty($_GET['id'])) :
 
 
-		$_Category = mysql_query("delete from expert_category where user_id = ".$_GET['id']."", $connection) or die(mysql_error());
+		$_Category = mysql_query("delete from tutor_profile where user_id = ".$_GET['id']."", $connection) or die(mysql_error());
 
 		$_Users = mysql_query("delete from user where id = ".$_GET['id']."", $connection) or die(mysql_error());
 

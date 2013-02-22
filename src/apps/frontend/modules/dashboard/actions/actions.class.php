@@ -353,7 +353,6 @@ class dashboardActions extends sfActions
             foreach($cookies as $cookie) {
                 $parts = explode('=', $cookie);
                 $name = trim($parts[0]);
-
                 if (($name != "rayku_frontend")) {
                     $this->getResponse()->setCookie($name, "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 }

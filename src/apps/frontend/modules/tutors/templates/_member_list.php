@@ -109,9 +109,9 @@ function reSet(value)
 		} */ 
 		var expertcount = 0;
 		var tutorcount = expertcount;
-		
+
 		function callSetSession(checkboxid, type) {
-									
+
 
 			dv.ajax({ cache: false,
 				type : "POST",
@@ -239,7 +239,7 @@ function reSet(value)
 			
 				expertcount = tcount;
 			
-				setCookie("tutorcount", tcount, 1)	
+				setCookie("tutorcount", tcount, 1);
 			
 				var cookie_date = new Date();  // current date & time
 			
@@ -266,6 +266,7 @@ function reSet(value)
 		
 		function setvalue(a)
 		{
+
 			if(expertcount == 4) {
 
 				if(document.getElementById(a).checked == true)
@@ -283,7 +284,7 @@ function reSet(value)
 
 			if (document.getElementById(a).checked == true)
 			{
-			
+
 			var newId = a.split('_');
 
 			var lastOne = newId[1];
@@ -305,7 +306,6 @@ function reSet(value)
 			setCookie("cookcount", maxcook, 1);
 												
 			setCookie("tutorcount", expertcount, 1);
-			
 
 			dv('#popup_connect').load('/tutors/checkoutpopup', '', function(response) {
 			
@@ -316,8 +316,8 @@ function reSet(value)
 			}
 
 	        	if (document.getElementById(a).checked == false)
-			{									
-			
+			{
+
 			var newId = a.split('_');
 
 			var lastOne = newId[1];
@@ -342,7 +342,7 @@ function reSet(value)
 			expertcount=expertcount-1;
 
 			setCookie("tutorcount", expertcount, 1);
-			
+
 			var cookie_date = new Date();  // current date & time
 			
 			cookie_date.setTime(cookie_date.getTime() - 1);
@@ -364,7 +364,8 @@ function reSet(value)
 		
 		
 		function rowCheck(a)
-		{	
+		{
+
 			var newvalue = a.split('.');					
 			var b = "checkbox_"+newvalue[0];
 

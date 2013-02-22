@@ -25,6 +25,7 @@ function cmp($a, $b)
     $j =0;
     $k =0;
 
+
     usort($expert_cats, "cmp");
     $_dv = 0;  $_vd = 0; $_ddv = 0; $_vdd = 0; $finalOnlineusers = ''; $finalOfflineusers  = ''; $_FinalUsers = '';
     $_dvk = 0; $_vkd = 0;
@@ -96,6 +97,7 @@ function cmp($a, $b)
         } else if (!empty($finalOnlineusers) && empty($finalOfflineusers)) {
             $_FinalUsers = $finalOnlineusers;
         }
+
     } elseif (!empty($_COOKIE["onoff"]) && !empty($_SESSION["rateDisplay"]) ) {
         foreach($expert_cats as $key => $user) {
             $query = mysql_query("select * from user_rate where userid=".$user['userid']." and (rate = 0.00 || rate = 0) ", $connection) or die("Error In rate".mysql_error());
@@ -122,7 +124,9 @@ function cmp($a, $b)
         } else if (!empty($_emptyNormalUsers) && empty($_rateNormalUsers)) {
             $_FinalUsers = $_emptyNormalUsers;
         }
+
     } else {
+
         $_FinalUsers = $expert_cats;
     }
     if (!empty($_REQUEST['show_more_post'])) {
@@ -267,6 +271,7 @@ if (!$is_toronto_tutor || $email_in_list)
             $lastSession = WhiteboardSessionPeer::doSelectOne($criteria);
 
             if ($lastSession != null && $lastSession->stillActive()) {
+
 ?>
         <a href="/message/compose/<?php echo $experts->getUsername(); ?>"><img alt="in session" src="<?php echo image_path('em-busy.jpg', false); ?>"></a>
 <?php
@@ -352,7 +357,6 @@ $_v++;
             } else {
                 $next_records = 15;
             }
-
         if (count($_FinalUsers)>15) {
             if (count($sample)!=count($_FinalUsers)) {
 ?>
