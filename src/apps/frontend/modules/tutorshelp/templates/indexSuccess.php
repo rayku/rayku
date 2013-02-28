@@ -9,10 +9,10 @@
 	?>
   <div class="activated"> Your tutor status is activated! Make sure that you're connected:</div>
   <div class="notifications">
-  <div class="gtalkfb" style="width:700px;"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
+  <div class="gtalkfb" style="width:700px;"><a href="/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
       <h2>Connect with Google Talk</h2></a>
       When you connect, you will have question notifications sent to you via Google Talk. We will then see whenever you are online, and send you question requests from students when you are available, and never when you are 'busy' or 'offline'.</div>
-    <!--<div class="gtalkfb"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
+    <!--<div class="gtalkfb"><a href="/dashboard/gtalk" target="_blank"><img src="/images/gtalk-large.png"/>
       <h2>Connect with Google Talk</h2></a>
       Have question notifications sent to you via Google Talk</div>
     <div class="gtalkfb"><a href="<?php echo sfConfig::get('app_rayku_url') ?>/dashboard/facebook" target="_blank"><img src="/images/fbchat-large.png"/>

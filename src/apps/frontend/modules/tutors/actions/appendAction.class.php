@@ -167,10 +167,10 @@ class appendAction extends sfAction
                         $dv->add(UserPeer::ID, $user_id);
                         $_thisUser = UserPeer::doSelectOne($dv);
 
-
-                        $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
-
-                        $i++;
+                        if(isset($_thisUser)){
+	                        $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+	                        $i++;
+                        }
                     }
                 }
             }
