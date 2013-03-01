@@ -124,6 +124,7 @@ class regtutorActions extends sfActions
 
     private function sendConfirmationEmail(User $user)
     {
+    	StatsD::increment('tutorsignup');
         $mail = Mailman::createMailer();
         $mail->setContentType('text/html');
         $mail->addAddress($user->getEmail());

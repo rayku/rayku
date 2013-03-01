@@ -197,6 +197,7 @@ class registerActions extends sfActions
 
     private function sendConfirmationEmail(User $user)
     {
+    	StatsD::increment('signup');
         $mail = Mailman::createMailer();
         $mail->setContentType('text/html');
         $mail->addAddress($user->getEmail());
