@@ -20,9 +20,6 @@ class ratingAction extends sfAction
         if (!empty($_POST)) {
             if (empty($_POST["rating"])) {
                 $this->redirect('/dashboard/rating');
-            }else{
-                //get the rating here and update the stats
-                StatsD::increment("session.rating");
             }
             if (empty($_COOKIE['ratingExpertId']) && empty($_COOKIE['ratingUserId']) ) {
                 $this->redirect('/dashboard');
@@ -54,6 +51,8 @@ class ratingAction extends sfAction
 
                 $queryKinkarso = mysql_query("select * from user where id=124", $connection) or die(mysql_error());
                 $rowKinkarso = mysql_fetch_assoc($queryKinkarso);
+                
+                StatsD::increment("session.completed");
 
                 if ($_POST["rating"] == 1) {
                     $check1RatingScore = $rowScore['score'] - 20;

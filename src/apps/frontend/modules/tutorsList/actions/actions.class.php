@@ -66,7 +66,7 @@ class tutorsListActions extends sfActions
     public function executeConnect()
     {
         $this->count = $this->getRequestParameter('count');
-        StatsD::increment("whiteboard.session.create");
+        StatsD::increment("whiteboard.create");
     }
     
     

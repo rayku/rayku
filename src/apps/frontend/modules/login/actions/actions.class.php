@@ -37,7 +37,7 @@ class loginActions extends sfActions
 	public function executeLoginCheck()
 	{
 
-                $connection = RaykuCommon::getDatabaseConnection();
+		$connection = RaykuCommon::getDatabaseConnection();
 
 		$sEmail = trim( $this->getRequestParameter('name') );
 		$sPassword = trim( $this->getRequestParameter('pass') );
@@ -45,8 +45,8 @@ class loginActions extends sfActions
 
 		if( $sEmail == '' && $sPassword == '' )
 		{
-                    StatsD::increment("login.failure");
-                    $this->redirect( 'login/index' );
+			StatsD::increment("login.failure");
+			$this->redirect( 'login/index' );
 		}
 
 		//Check the user credentials
@@ -54,21 +54,21 @@ class loginActions extends sfActions
 
 		if(!$this->user)
 		{
-                    StatsD::increment("login.failure");
-                    $_SESSION['loginErrorMsg']='Your username or password was incorrect.';
+			StatsD::increment("login.failure");
+			$_SESSION['loginErrorMsg']='Your username or password was incorrect.';
 		} else {
-            $id=$this->user->getId();
-            $tutor=mysql_num_rows(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$id'"));
-            if($tutor==1){
-                StatsD::increment("login.tutor.success");
-            }else{
-                StatsD::increment("login.student.success");
-            }
-        }
-                
-        /**
-         * @todo - check if we ever got a chance to hit this place with recaptch - it looks like no so either lets remove it or make it working
-         */
+			$id=$this->user->getId();
+			$tutor=mysql_num_rows(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$id'"));
+			if($tutor==1){
+				StatsD::increment("login.tutor.success");
+			}else{
+				StatsD::increment("login.student.success");
+			}
+		}
+
+		/**
+		 * @todo - check if we ever got a chance to hit this place with recaptch - it looks like no so either lets remove it or make it working
+		 */
 		if(isset($_SESSION['loginWrongPass']) && $_SESSION['loginWrongPass']>=5)
 		{
 
@@ -78,17 +78,17 @@ class loginActions extends sfActions
 			$publickey = "6Lc_mscSAAAAAE0Bxon37XRl56V_l3Ba0sqib2Zm";
 			$privatekey = "6Lc_mscSAAAAAKG3YnU2l3uHYqcBDB6R31XlVTW8";
 
-# the response from reCAPTCHA
+			# the response from reCAPTCHA
 			$resp = null;
-# the error code from reCAPTCHA, if any
+			# the error code from reCAPTCHA, if any
 			$error = null;
 
-# was there a reCAPTCHA response?
+			# was there a reCAPTCHA response?
 
 			$resp = recaptcha_check_answer ($privatekey,
-					$_SERVER["REMOTE_ADDR"],
-					$_POST["recaptcha_challenge_field"],
-					$_POST["recaptcha_response_field"]);
+			$_SERVER["REMOTE_ADDR"],
+			$_POST["recaptcha_challenge_field"],
+			$_POST["recaptcha_response_field"]);
 
 
 
@@ -98,7 +98,7 @@ class loginActions extends sfActions
 				$_SESSION['recaptchaError']='';
 
 			} else {
-# set the error code so that we can display it
+				# set the error code so that we can display it
 				$_SESSION['recaptchaError'] = $resp->error;
 
 				$this->user=false;
@@ -139,11 +139,11 @@ class loginActions extends sfActions
 
 		$this->getUser()->signIn($this->user, $this->getRequestParameter('remember', false));
 
-        /**
-         * Invisible in practice means "invisible until next login"
-         * On each login this flag is set either to 0 or 1
-         * There is no possibility to change invisible status while being logged in
-         */
+		/**
+		 * Invisible in practice means "invisible until next login"
+		 * On each login this flag is set either to 0 or 1
+		 * There is no possibility to change invisible status while being logged in
+		*/
 		$this->user->setInvisible($this->getRequestParameter('invisible', false));
 
 
@@ -197,12 +197,12 @@ class loginActions extends sfActions
 	{
 		$this->getResponse()->setCookie("loginname", "",time() - 3600, '/', sfConfig::get('app_cookies_domain'));
 
-                $connection = RaykuCommon::getDatabaseConnection();
+		$connection = RaykuCommon::getDatabaseConnection();
 
 		$logedUserId = @$_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
-        if (!$logedUserId) {
-            $this->redirect('/');
-        }
+		if (!$logedUserId) {
+			$this->redirect('/');
+		}
 
 		$currentUser = $this->getUser()->getRaykuUser(); $userId = $currentUser->getId();
 
@@ -226,12 +226,12 @@ class loginActions extends sfActions
 		$this->getUser()->signOut();
 
 
-                if ($this->getRequestParameter('redirectTo')) {
-                    $redirectTo = $this->getRequestParameter('redirectTo');
-                    switch ($redirectTo) {
-                        case 'idle': $this->redirect('login/idleLogout');
-                    }
-                }
+		if ($this->getRequestParameter('redirectTo')) {
+			$redirectTo = $this->getRequestParameter('redirectTo');
+			switch ($redirectTo) {
+				case 'idle': $this->redirect('login/idleLogout');
+			}
+		}
 
 		$this->redirect('@homepage');
 	}
@@ -404,7 +404,7 @@ class loginActions extends sfActions
 
 	public function executeAnswer()
 	{
-                $connection = RaykuCommon::getDatabaseConnection();
+		$connection = RaykuCommon::getDatabaseConnection();
 
 		if (empty($_REQUEST['id'])) {
 			return;
@@ -466,8 +466,8 @@ class loginActions extends sfActions
 	}
 
 
-    public function executeIdleLogout()
-    {
-        
-    }
+	public function executeIdleLogout()
+	{
+
+	}
 }

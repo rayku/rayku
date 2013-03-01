@@ -89,6 +89,7 @@ class StatsD {
             $fp = fsockopen("udp://$host", $port, $errno, $errstr);
             if (! $fp) { return; }
             foreach ($sampledData as $stat => $value) {
+            	$stat = 'rayku.'.$stat;
                 fwrite($fp, "$stat:$value");
             }
             fclose($fp);

@@ -50,7 +50,6 @@ class checkonlineusersTask extends sfBaseTask
                 continue;
             }
         }
-        StatsD::timing('onlineUsersTotal', $uac->getOnlineUsersCount());
     }
 
 }
