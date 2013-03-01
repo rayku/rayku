@@ -100,14 +100,7 @@ class appendAction extends sfAction
         //$c = new Criteria();
         //$c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
 
-        if ($this->cat == 5) {
-            //$experts = ExpertCategoryPeer::doSelect($c);
-            $experts=mysql_query("SELECT * FROM tutor_profile");
-        } else {
-            //$c->add(ExpertCategoryPeer::CATEGORY_ID, $this->cat);
-            //$experts = ExpertCategoryPeer::doSelect($c);
-            $experts=mysql_query("SELECT * FROM tutor_profile");
-        }
+        $experts=mysql_query("SELECT * FROM tutor_profile");
 
         $_points = $currentUser->getPoints();
 
@@ -180,74 +173,6 @@ class appendAction extends sfAction
 
         $this->rankCheckUsers = $newUser;
 
-
-        ////if no online expert available redirecting to the board page
-
-
-        /*$onlineusers = array();
-        $offlineusers = array();
-
-        $newOnlineUser = array();
-        $newOfflineUser = array();
-        $j = 0;
-        $k = 0;
-        $facebookResponse = BotServiceProvider::createFor(sfConfig::get('app_facebook_url')."/tutor")->getContent();
-        $facebookUsers = json_decode($facebookResponse, true);
-        $botResponse = BotServiceProvider::createFor(sfConfig::get('app_notification_bot_url')."/tutor")->getContent();
-        $botUsers = json_decode($botResponse, true);
-
-        foreach ($newUser as $new) {
-
-            $a = new Criteria();
-            $a->add(UserPeer::ID, $new['userid']);
-            $users_online = UserPeer::doSelectOne($a);
-
-            $onlinecheck = '';
-
-            if ($users_online->isOnline()) {
-
-                $onlinecheck = "online";
-            }
-
-            /*if (empty($onlinecheck)) {
-                $userGtalk = $users_online->getUserGtalk();
-                if ($userGtalk) {
-                    $onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/' . $userGtalk->getGtalkid())->getContent();
-                }
-            }
-
-            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($facebookUsers)) {
-
-                $userFb = UserFbPeer::retrieveByUserId($new['userid']);
-                if ($userFb) {
-                    $fb_username = $userFb->getFbUsername();
-
-                    foreach ($facebookUsers as $key => $user) {
-
-                        if ($user['username'] == $fb_username) {
-
-                            $onlinecheck = 'online';
-
-                            break;
-                        }
-
-                    }
-                }
-            }
-
-            if ((empty($onlinecheck) || ($onlinecheck != "online")) && is_array($botUsers)) {
-
-                foreach ($botUsers as $key => $_user) {
-
-                    if ($_user['email'] == $users_online->getEmail()){
-
-                        $onlinecheck = 'online';
-                        break;
-                    }
-
-                }
-            }
-            */
         $newOnlineUser = array();
         $newOfflineUser = array();
         $j = 0;
@@ -256,6 +181,12 @@ class appendAction extends sfAction
         $offlineusers = array();
         foreach ($newUser as $new) {
             $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
+
+            if($new['userid'] == 3437){
+            	echo '<pre>';
+            	var_dump($tutor_status);
+            	die(__LINE__.' '.__FILE__);
+            }
             if ($tutor_status['online_status'] == '1') {
 
                 $onlineusers[$j] = $new['userid'];
