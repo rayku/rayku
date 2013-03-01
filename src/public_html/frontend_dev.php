@@ -11,3 +11,4 @@ $action=sfContext::getInstance()->getActionName();
 $stat_name=$controller.'.'.$action;
 $time = (microtime(true) - $time) * 1000;
 StatsD::timing($stat_name,$time);
+StatsD::timing('render', $time);
