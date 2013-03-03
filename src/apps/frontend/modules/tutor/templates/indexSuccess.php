@@ -325,7 +325,6 @@ h2.avatar {
 	
 	if($userGtalk) {
 		$onlinecheck = BotServiceProvider::createFor(sfConfig::get('app_rayku_url').':'.sfConfig::get('app_g_chat_port').'/status/'.$userGtalk->getGtalkid())->getContent();
-		
 		if($onlinecheck == "online") {
 			$googletalk=true;
 		}

@@ -322,7 +322,7 @@ $_v++;
                 if (!empty($_COOKIE["school"])) {?>
 <p class="cn-pricepermin" align="center" style="margin-top:10px"> No online tutors found for this category with the criteria of School level.... </p>
 <?php } else {?>
-<p class="cn-pricepermin" align="center" style="margin-top:10px"> No online tutors found for this category.... </p>
+<p class="cn-pricepermin" align="center" style="margin-top:10px"> No online tutors found for this category.... . </p>
 <?php }
             } else if ($_COOKIE["onoff"] == 2) {
                 if (!empty($_COOKIE["school"])) { ?>

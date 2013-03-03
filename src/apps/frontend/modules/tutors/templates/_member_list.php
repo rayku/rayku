@@ -39,12 +39,6 @@ endif; ?>
           <h4>Expert Status: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
           <p><a href="" onClick="return setStatus(1)">Online</a></p>
           <p><a href="" onClick="return setStatus(2)">Offline</a></p>
-          <h4>School: <img src="../images/greyarrow-down.jpg" width="10" height="11" alt="" /></h4>
-          <select name="school" onchange="return setSchool(this.value)" style="background:none;padding:4px;height:auto;border:1px solid #CCC">
-            <option value="">---- SELECT ----</option>
-            <option value="utoronto" <?php if($_COOKIE["school"] == "utoronto"): ?> selected="selected" <?php endif; ?> >University of Toronto</option>
-            <option value="ubc" <?php if($_COOKIE["school"] == "ubc"): ?> selected="selected" <?php endif; ?> >University of British Columbia</option>
-          </select>
           <script language="javascript">
 
 function setStatus(value)

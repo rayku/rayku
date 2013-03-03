@@ -1,5 +1,5 @@
 <?php 
-$count = $_COOKIE['tutorcount'];
+$count = isset($_COOKIE['tutorcount']) ? $_COOKIE['tutorcount'] : 0;
 $connection = RaykuCommon::getDatabaseConnection();
 //echo "Cook Count--->".$_COOKIE['tutorcount'];
 if($count>0)

@@ -459,4 +459,15 @@ propel:
     overall: { type: INTEGER, size: '5', required: true }
     feedback: { type: LONGVARCHAR, required: false }
     created_at: { type: TIMESTAMP, required: true }
-   
+  tutor_profile:
+    _attributes: { phpName: TutorProfile }
+    tutor_profile_id: { type: INTEGER, size: '11', primaryKey: true, autoIncrement: true, required: true }
+    user_id: { type: INTEGER, size: '11', required: true }
+    category: { type: INTEGER, size: '8', required: true }
+    course_id: { type: VARCHAR, size: '200', required: true }
+    school: { type: VARCHAR, size: '300', required: true }
+    year: { type: VARCHAR, size: '100', required: true }
+    tutor_role: { type: VARCHAR, size: '300', required: true }
+    study: { type: VARCHAR, size: '300', required: true }
+    course_code: { type: VARCHAR, size: '300', required: true }
+    online_status: { type: TINYINT, size: '1', required: false, defaultValue: '0' }

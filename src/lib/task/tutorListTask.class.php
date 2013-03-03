@@ -19,16 +19,19 @@ class tutorListTask extends sfBaseTask {
 
         $statusFinder=new UsersAvailabilityChecker();
         $onlineUsers=$statusFinder->getOnlineUsers();
-
+        
         foreach($onlineUsers as $onlineUser){
-            if(mysql_num_rows(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$onlineUser'"))>0){
-                if(mysql_query("UPDATE tutor_profile SET online_status='1' WHERE user_id='$onlineUser'")){
-                    $this->log('Hello, World!');
-                };
-            }
+        	$user = UserPeer::retrieveByPk($onlineUser);
+        	$user->setLastActivityAt(date("Y-m-d H:i:s"));
+        	$user->save();
+        	$c = new Criteria();
+        	$c->add(TutorProfilePeer::USER_ID, $onlineUser);
+        	$tutorProfile = TutorProfilePeer::doSelectOne($c);
+        	$tutorProfile->setOnlineStatus(1);
+        	$tutorProfile->save();
         }
+        StatsD::increment('user.online', count($onlineUsers));
     }
-
 }
 
 

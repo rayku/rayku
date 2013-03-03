@@ -99,7 +99,6 @@ class appendAction extends sfAction
 
         //$c = new Criteria();
         //$c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
-
         $experts=mysql_query("SELECT * FROM tutor_profile");
 
         $_points = $currentUser->getPoints();
@@ -182,11 +181,6 @@ class appendAction extends sfAction
         foreach ($newUser as $new) {
             $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
 
-            if($new['userid'] == 3437){
-            	echo '<pre>';
-            	var_dump($tutor_status);
-            	die(__LINE__.' '.__FILE__);
-            }
             if ($tutor_status['online_status'] == '1') {
 
                 $onlineusers[$j] = $new['userid'];

@@ -18,7 +18,7 @@ CREATE TABLE `bulletin`
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
 	KEY `bulletin_FI_1`(`poster_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- category
@@ -39,7 +39,7 @@ CREATE TABLE `category`
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `category_name_unique` (`name`),
 	UNIQUE KEY `category_prefix_unique` (`prefix`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- chat_data
@@ -57,7 +57,7 @@ CREATE TABLE `chat_data`
 	`flag` INTEGER(11)  NOT NULL,
 	`time` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- chat_detail
@@ -75,7 +75,7 @@ CREATE TABLE `chat_detail`
 	`expert_agreed` INTEGER(10)  NOT NULL,
 	`user_ask` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- chat_history
@@ -92,7 +92,7 @@ CREATE TABLE `chat_history`
 	`text` TEXT  NOT NULL,
 	`time` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- chat_user
@@ -107,7 +107,7 @@ CREATE TABLE `chat_user`
 	`user_name` VARCHAR(100)  NOT NULL,
 	`status` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- courses
@@ -127,7 +127,7 @@ CREATE TABLE `courses`
 	CONSTRAINT `courses_FK_1`
 		FOREIGN KEY (`category_id`)
 		REFERENCES `category` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- expert
@@ -157,7 +157,7 @@ CREATE TABLE `expert`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- expert_category
@@ -184,7 +184,7 @@ CREATE TABLE `expert_category`
 		REFERENCES `category` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- experts_admin_payout
@@ -201,7 +201,7 @@ CREATE TABLE `experts_admin_payout`
 	`paypal_id` VARCHAR(100)  NOT NULL,
 	`paid` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- experts_debit_details
@@ -217,7 +217,7 @@ CREATE TABLE `experts_debit_details`
 	`amount` FLOAT(5,2)  NOT NULL,
 	`time` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- experts_final_credit
@@ -232,7 +232,7 @@ CREATE TABLE `experts_final_credit`
 	`expert_id` INTEGER(10)  NOT NULL,
 	`amount` FLOAT(5,2)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- experts_promo_text
@@ -247,7 +247,7 @@ CREATE TABLE `experts_promo_text`
 	`exp_id` INTEGER(11)  NOT NULL,
 	`content` TEXT  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- forum
@@ -265,7 +265,7 @@ CREATE TABLE `forum`
 	`entity_id` INTEGER(11),
 	`top_or_bottom` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- forum_answer
@@ -286,7 +286,7 @@ CREATE TABLE `forum_answer`
 	PRIMARY KEY (`id`),
 	KEY `forum_answer_FI_1`(`forum_question_id`),
 	KEY `forum_answer_FI_2`(`user_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- forum_question
@@ -311,7 +311,7 @@ CREATE TABLE `forum_question`
 	PRIMARY KEY (`id`),
 	KEY `forum_question_FI_1`(`category_id`),
 	KEY `forum_question_FI_2`(`user_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- history
@@ -334,7 +334,7 @@ CREATE TABLE `history`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- item
@@ -373,7 +373,7 @@ CREATE TABLE `item`
 		REFERENCES `item_type` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- item_rating
@@ -401,7 +401,7 @@ CREATE TABLE `item_rating`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- item_type
@@ -416,7 +416,7 @@ CREATE TABLE `item_type`
 	`name` VARCHAR(255),
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- notification_emails
@@ -431,7 +431,7 @@ CREATE TABLE `notification_emails`
 	`user_id` INTEGER(100)  NOT NULL,
 	`on_off` INTEGER(11)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- offer_voucher
@@ -450,7 +450,7 @@ CREATE TABLE `offer_voucher`
 	`is_active` INTEGER(10)  NOT NULL,
 	`price` INTEGER(100)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- offer_voucher1
@@ -477,28 +477,7 @@ CREATE TABLE `offer_voucher1`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- popup_close
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `popup_close`;
-
-
-CREATE TABLE `popup_close`
-(
-	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER(11),
-	`ustatus` INTEGER(11),
-	PRIMARY KEY (`id`),
-	KEY `popup_close_user_FK`(`user_id`),
-	CONSTRAINT `popup_close_user_FK`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE RESTRICT
-		ON DELETE CASCADE,
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- post
@@ -523,7 +502,7 @@ CREATE TABLE `post`
 	PRIMARY KEY (`id`),
 	KEY `reported`(`reported`),
 	KEY `user_ip`(`user_ip`, `banned`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- private_message
@@ -546,7 +525,7 @@ CREATE TABLE `private_message`
 	PRIMARY KEY (`id`),
 	KEY `private_message_FI_1`(`sender_id`),
 	KEY `private_message_FI_2`(`recipient_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- purchase_detail
@@ -583,7 +562,7 @@ CREATE TABLE `purchase_detail`
 		REFERENCES `sales` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- sales
@@ -616,7 +595,7 @@ CREATE TABLE `sales`
 		REFERENCES `status` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- sales_detail
@@ -642,7 +621,7 @@ CREATE TABLE `sales_detail`
 		REFERENCES `item` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- shopping_cart
@@ -675,7 +654,7 @@ CREATE TABLE `shopping_cart`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- shout
@@ -704,7 +683,7 @@ CREATE TABLE `shout`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- size
@@ -718,7 +697,7 @@ CREATE TABLE `size`
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255),
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- status
@@ -732,7 +711,7 @@ CREATE TABLE `status`
 	`id` INTEGER(11)  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255),
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- students_instant_questions
@@ -749,7 +728,7 @@ CREATE TABLE `students_instant_questions`
 	`expert_id` INTEGER(10)  NOT NULL,
 	`experts_accept` INTEGER(10)  NOT NULL,
 	PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- thread
@@ -782,7 +761,7 @@ CREATE TABLE `thread`
 	`stickie` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `reported`(`reported`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user
@@ -833,7 +812,7 @@ CREATE TABLE `user`
 	UNIQUE KEY `user_username_unique` (`username`),
 	UNIQUE KEY `user_email_unique` (`email`),
 	UNIQUE KEY `user_password_recover_key_unique` (`password_recover_key`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_awards
@@ -854,7 +833,7 @@ CREATE TABLE `user_awards`
 		REFERENCES `user` (`id`)
 		ON UPDATE RESTRICT
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_gtalk
@@ -871,7 +850,7 @@ CREATE TABLE `user_gtalk`
 	CONSTRAINT `user_gtalk_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_fb
@@ -889,7 +868,7 @@ CREATE TABLE `user_fb`
 	CONSTRAINT `user_fb_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_rate
@@ -908,7 +887,7 @@ CREATE TABLE `user_rate`
 	CONSTRAINT `user_rate_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_tutor
@@ -924,7 +903,7 @@ CREATE TABLE `user_tutor`
 	CONSTRAINT `user_tutor_FK_1`
 		FOREIGN KEY (`userid`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_question_tag
@@ -957,7 +936,7 @@ CREATE TABLE `user_question_tag`
 	CONSTRAINT `user_question_tag_FK_3`
 		FOREIGN KEY (`course_id`)
 		REFERENCES `courses` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- video
@@ -976,7 +955,7 @@ CREATE TABLE `video`
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
 	KEY `video_FI_1`(`owner_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- whiteboard_chat
@@ -1004,7 +983,7 @@ CREATE TABLE `whiteboard_chat`
 	`comments` VARCHAR(255),
 	PRIMARY KEY (`id`),
 	KEY `whiteboard_chat_FI_1`(`expert_id`, `asker_id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- whiteboard_message
@@ -1026,7 +1005,7 @@ CREATE TABLE `whiteboard_message`
 		FOREIGN KEY (`whiteboard_chat_id`)
 		REFERENCES `whiteboard_chat` (`id`)
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- whiteboard_snapshot
@@ -1047,7 +1026,7 @@ CREATE TABLE `whiteboard_snapshot`
 		FOREIGN KEY (`whiteboard_chat_id`)
 		REFERENCES `whiteboard_chat` (`id`)
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- student_questions
@@ -1082,7 +1061,7 @@ CREATE TABLE `student_questions`
 	CONSTRAINT `student_questions_FK_2`
 		FOREIGN KEY (`checked_id`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- whiteboard_sessions
@@ -1109,7 +1088,7 @@ CREATE TABLE `whiteboard_sessions`
 	CONSTRAINT `whiteboard_sessions_FK_2`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `user` (`id`)
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- whiteboard_tutor_feedback
@@ -1134,7 +1113,7 @@ CREATE TABLE `whiteboard_tutor_feedback`
 		FOREIGN KEY (`whiteboard_chat_id`)
 		REFERENCES `whiteboard_chat` (`id`)
 		ON DELETE CASCADE
-)ENGINE=InnoDB;
+)Type=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
