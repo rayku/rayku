@@ -22,13 +22,17 @@ class tutorListTask extends sfBaseTask {
         
         foreach($onlineUsers as $onlineUser){
         	$user = UserPeer::retrieveByPk($onlineUser);
-        	$user->setLastActivityAt(date("Y-m-d H:i:s"));
-        	$user->save();
-        	$c = new Criteria();
-        	$c->add(TutorProfilePeer::USER_ID, $onlineUser);
-        	$tutorProfile = TutorProfilePeer::doSelectOne($c);
-        	$tutorProfile->setOnlineStatus(1);
-        	$tutorProfile->save();
+        	if($user){
+	        	$user->setLastActivityAt(date("Y-m-d H:i:s"));
+	        	$user->save();
+	        	$c = new Criteria();
+	        	$c->add(TutorProfilePeer::USER_ID, $onlineUser);
+	        	$tutorProfile = TutorProfilePeer::doSelectOne($c);
+	        	if($tutorProfile){
+		        	$tutorProfile->setOnlineStatus(1);
+		        	$tutorProfile->save();
+	        	}
+        	}
         }
         StatsD::increment('user.online', count($onlineUsers));
     }
