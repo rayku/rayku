@@ -30,22 +30,22 @@ class checkonlineusersTask extends sfBaseTask
         $onlineusers=$uac->getOnlineUsersByCategory();
         foreach($onlineusers['students'] as $protocol=>$nr){
             if($protocol=='web'){
-                StatsD::increment('students.online.web', $nr);
+                StatsD::gauge('students.online.web', $nr);
             }elseif($protocol=='fb'){
-                StatsD::increment('students.online.fb', $nr);
+                StatsD::gauge('students.online.fb', $nr);
             }elseif($protocol=='gtalk'){
-                StatsD::increment('students.online.gtalk', $nr);
+                StatsD::gauge('students.online.gtalk', $nr);
             }else{
                 continue;
             }
         }
         foreach($onlineusers['tutors']  as $protocol=>$nr){
             if($protocol=='web'){
-                StatsD::increment('tutors.online.web', $nr);
+                StatsD::gauge('tutors.online.web', $nr);
             }elseif($protocol=='fb'){
-                StatsD::increment('tutors.online.fb', $nr);
+                StatsD::gauge('tutors.online.fb', $nr);
             }elseif($protocol=='gtalk'){
-                StatsD::increment('tutors.online.gtalk', $nr);
+                StatsD::gauge('tutors.online.gtalk', $nr);
             }else{
                 continue;
             }

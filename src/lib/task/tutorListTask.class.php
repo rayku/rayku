@@ -42,7 +42,7 @@ class tutorListTask extends sfBaseTask {
 	        	}
         	}
         }
-        StatsD::increment('user.online', count($onlineUsers));
+        StatsD::gauge('user.online', count($onlineUsers));
     }
 }
 

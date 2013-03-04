@@ -19,6 +19,17 @@ class StatsD {
     public static function timing($stat, $time, $sampleRate=1) {
         StatsD::send(array($stat => "$time|ms"), $sampleRate);
     }
+    
+
+    /**
+     * Sets one or more gauges to a value
+     *
+     * @param string|array $stats The metric(s) to set.
+     * @param float $value The value for the stats.
+     **/
+    public static function gauge($stats, $value) {
+    	StatsD::updateStats($stats, $value, 1, 'g');
+    }
 
     /**
      * Increments one or more stats counters
