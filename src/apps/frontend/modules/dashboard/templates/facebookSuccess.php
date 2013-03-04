@@ -148,17 +148,6 @@ return true;
 <div class="body-side">
   <div class="box">
     <div class="top" style="margin-top:43px;"></div>
-    <div class="content" style="position:relative; _top:-3px; _bottom:-3px;">
-      <div class="title" style="margin-top:0px; font-size:16px">Download notification software</div>
-      <div class="text">Get our spyware-free notification software and you'll be open for business whenever your computer is connected to the Internet.<br />
-        <br />
-        <ul class="icon-list">
-          <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.exe" class="icon windows">Windows Software</a></li>
-          <li><a href="<?php echo sfConfig::get('app_notification_bot_url'); ?>/download/rayku.dmg" class="icon mac">MacOS Software</a></li>
-        </ul>
-        <div style="clear:both"></div>
-      </div>
-    </div>
     <div class="bottom"></div>
   </div>
 </div>
