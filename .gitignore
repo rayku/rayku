@@ -6,3 +6,4 @@ nohup.out
 chromedriver.log
 src/public_html/logs.txt
 src/public_html/uploads
+src/cache
