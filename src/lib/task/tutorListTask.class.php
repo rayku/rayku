@@ -19,6 +19,14 @@ class tutorListTask extends sfBaseTask {
 
         $statusFinder=new UsersAvailabilityChecker();
         $onlineUsers=$statusFinder->getOnlineUsers();
+
+        $c = new Criteria();
+        $c->add(TutorProfilePeer::ONLINE_STATUS, 1);
+        $currentlyOnlineTutors = TutorProfilePeer::doSelect($c);
+        foreach($currentlyOnlineTutors as $onlineTutor){
+        	$onlineTutor->setOnlineStatus(0);
+        	$onlineTutor->save();
+        }
         
         foreach($onlineUsers as $onlineUser){
         	$user = UserPeer::retrieveByPk($onlineUser);
