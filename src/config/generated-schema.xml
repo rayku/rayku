@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="propel" package="lib.model" defaultIdMethod="native">
+
+  <table name="bulletin">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="poster_id" type="INTEGER" size="11" required="false" />
+    <column name="content" type="LONGVARCHAR" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <index name="bulletin_FI_1">
+      <index-column name="poster_id" />
+    </index>
+  </table>
+
+  <table name="category">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="name" type="VARCHAR" size="50" required="true" />
+    <column name="description" type="LONGVARCHAR" required="true" />
+    <column name="parent" type="INTEGER" size="11" required="true" />
+    <column name="prefix" type="VARCHAR" size="10" required="true" />
+    <column name="updated_at" type="DATE" required="true" />
+    <column name="status" type="INTEGER" size="11" />
+    <unique name="category_name_unique">
+      <unique-column name="name" />
+    </unique>
+    <unique name="category_prefix_unique">
+      <unique-column name="prefix" />
+    </unique>
+  </table>
+
+  <table name="chat_data">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_name" type="VARCHAR" size="100" required="true" />
+    <column name="expert_name" type="VARCHAR" size="100" required="true" />
+    <column name="text" type="LONGVARCHAR" required="true" />
+    <column name="flag" type="INTEGER" size="11" required="true" />
+    <column name="time" type="TIMESTAMP" required="true" />
+  </table>
+
+  <table name="chat_detail">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user" type="VARCHAR" size="100" required="true" />
+    <column name="expert" type="VARCHAR" size="100" required="true" />
+    <column name="minutes" type="INTEGER" size="10" required="true" />
+    <column name="expert_agreed" type="INTEGER" size="10" required="true" />
+    <column name="user_ask" type="INTEGER" size="10" required="true" />
+  </table>
+
+  <table name="chat_history">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_name" type="VARCHAR" size="100" required="true" />
+    <column name="expert_name" type="VARCHAR" size="100" required="true" />
+    <column name="text" type="LONGVARCHAR" required="true" />
+    <column name="time" type="TIMESTAMP" required="true" />
+  </table>
+
+  <table name="chat_user">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_name" type="VARCHAR" size="100" required="true" />
+    <column name="status" type="INTEGER" size="11" required="true" />
+  </table>
+
+  <table name="courses">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="category_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="category">
+      <reference local="category_id" foreign="id" />
+    </foreign-key>
+    <column name="course_name" type="VARCHAR" size="200" required="true" />
+    <column name="description" type="LONGVARCHAR" required="true" />
+  </table>
+
+  <table name="expert">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="title" type="VARCHAR" size="100" required="true" />
+    <column name="description" type="LONGVARCHAR" required="true" />
+    <column name="domain" type="VARCHAR" size="100" required="true" />
+    <column name="language" type="VARCHAR" size="100" required="true" />
+    <column name="onlinerate" type="FLOAT" required="false" />
+    <column name="emailrate" type="FLOAT" required="false" />
+    <column name="moc" type="VARCHAR" size="100" required="false" />
+    <column name="rating" type="INTEGER" size="11" required="true" defaultValue="0" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="updated_at" type="TIMESTAMP" required="true" />
+    <index name="expert_FI_1">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="expert_category">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="user" onDelete="RESTRICT" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="category_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="category" onDelete="RESTRICT" onUpdate="RESTRICT">
+      <reference local="category_id" foreign="id" />
+    </foreign-key>
+    <index name="expert_category_FI_1">
+      <index-column name="user_id" />
+    </index>
+    <index name="expert_category_FI_2">
+      <index-column name="category_id" />
+    </index>
+  </table>
+
+  <table name="experts_admin_payout">
+    <column name="id" type="INTEGER" size="100" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="expert_id" type="INTEGER" size="10" required="true" />
+    <column name="amount" type="FLOAT" size="5" scale="2" required="true" />
+    <column name="paypal_id" type="VARCHAR" size="100" required="true" />
+    <column name="paid" type="INTEGER" size="11" required="true" />
+  </table>
+
+  <table name="experts_debit_details">
+    <column name="id" type="INTEGER" size="100" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="expert_id" type="INTEGER" size="10" required="true" />
+    <column name="amount" type="FLOAT" size="5" scale="2" required="true" />
+    <column name="time" type="TIMESTAMP" required="true" />
+  </table>
+
+  <table name="experts_final_credit">
+    <column name="id" type="INTEGER" size="100" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="expert_id" type="INTEGER" size="10" required="true" />
+    <column name="amount" type="FLOAT" size="5" scale="2" required="true" />
+  </table>
+
+  <table name="experts_promo_text">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="exp_id" type="INTEGER" size="11" required="true" />
+    <column name="content" type="LONGVARCHAR" required="true" />
+  </table>
+
+  <table name="forum">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="name" type="VARCHAR" size="100" required="false" />
+    <column name="description" type="LONGVARCHAR" required="false" />
+    <column name="type" type="INTEGER" size="11" required="false" />
+    <column name="entity_id" type="INTEGER" size="11" required="false" />
+    <column name="top_or_bottom" type="INTEGER" size="10" required="true" />
+  </table>
+
+  <table name="forum_answer">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="answer" type="LONGVARCHAR" required="true" />
+    <column name="forum_question_id" type="INTEGER" size="11" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <column name="best_response" type="INTEGER" size="11" required="true" defaultValue="0" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="updated_at" type="TIMESTAMP" required="true" />
+    <index name="forum_answer_FI_1">
+      <index-column name="forum_question_id" />
+    </index>
+    <index name="forum_answer_FI_2">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="forum_question">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="title" type="VARCHAR" size="100" required="true" />
+    <column name="question" type="LONGVARCHAR" required="true" />
+    <column name="category_id" type="INTEGER" size="11" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <column name="visible" type="INTEGER" size="11" required="true" defaultValue="0" />
+    <column name="cancel" type="INTEGER" size="10" required="true" />
+    <column name="notify" type="INTEGER" size="11" required="true" defaultValue="0" />
+    <column name="tags" type="VARCHAR" size="100" required="true" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="updated_at" type="TIMESTAMP" required="true" />
+    <index name="forum_question_FI_1">
+      <index-column name="category_id" />
+    </index>
+    <index name="forum_question_FI_2">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="history">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="entity_type" type="VARCHAR" size="100" required="false" />
+    <column name="data" type="VARCHAR" size="255" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <index name="history_FI_1">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="item">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="size_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="size" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="size_id" foreign="id" />
+    </foreign-key>
+    <column name="item_type_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="item_type" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="item_type_id" foreign="id" />
+    </foreign-key>
+    <column name="title" type="VARCHAR" size="255" required="false" />
+    <column name="description" type="LONGVARCHAR" required="false" />
+    <column name="price_per_unit" type="INTEGER" size="11" required="false" />
+    <column name="shipping_charge_per_unit" type="INTEGER" size="11" required="false" />
+    <column name="actual_value" type="INTEGER" size="11" required="false" />
+    <column name="actual_value_currency" type="VARCHAR" size="5" required="false" />
+    <column name="quantity" type="INTEGER" size="11" required="false" />
+    <column name="image" type="VARCHAR" size="255" required="false" />
+    <column name="features" type="LONGVARCHAR" required="false" />
+    <column name="is_active" type="INTEGER" size="11" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="updated_at" type="TIMESTAMP" required="false" />
+    <index name="item_FI_1">
+      <index-column name="size_id" />
+    </index>
+    <index name="item_FI_2">
+      <index-column name="item_type_id" />
+    </index>
+  </table>
+
+  <table name="item_rating">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="item_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="item" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="item_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="rating" type="INTEGER" size="11" required="false" />
+    <index name="item_rating_FI_1">
+      <index-column name="item_id" />
+    </index>
+    <index name="item_rating_FI_2">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="item_type">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="name" type="VARCHAR" size="255" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+  </table>
+
+  <table name="notification_emails">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="100" required="true" />
+    <column name="on_off" type="INTEGER" size="11" required="true" />
+  </table>
+
+  <table name="offer_voucher">
+    <column name="id" type="INTEGER" size="40" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="code" type="VARCHAR" size="100" required="true" />
+    <column name="valid_till_date" type="DATE" required="true" />
+    <column name="is_used" type="INTEGER" size="10" required="true" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="is_active" type="INTEGER" size="10" required="true" />
+    <column name="price" type="INTEGER" size="100" required="true" />
+  </table>
+
+  <table name="offer_voucher1">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="code" type="VARCHAR" size="255" required="false" />
+    <column name="valid_till_date" type="DATE" required="false" />
+    <column name="is_used" type="INTEGER" size="11" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="is_active" type="INTEGER" size="11" required="false" />
+    <column name="price" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <index name="user_id">
+      <index-column name="user_id" />
+    </index>
+    <index name="id">
+      <index-column name="id" />
+    </index>
+  </table>
+
+  <table name="post">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="poster_id" type="INTEGER" size="11" required="true" />
+    <column name="thread_id" type="INTEGER" size="11" required="true" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="updated_at" type="TIMESTAMP" required="true" />
+    <column name="content" type="LONGVARCHAR" required="true" />
+    <column name="best_response" type="INTEGER" size="11" required="true" />
+    <column name="reported" type="INTEGER" size="4" default="0" required="true" />
+    <column name="user_ip" type="VARCHAR" size="255" />
+    <column name="banned" type="INTEGER" size="2" default="0" required="true" />
+    <column name="reported_date" type="TIMESTAMP" />
+    <index name="reported">
+      <index-column name="reported" />
+    </index>
+    <index name="user_ip">
+      <index-column name="user_ip" />
+      <index-column name="banned" />
+    </index>
+  </table>
+
+  <table name="private_message">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="subject" type="VARCHAR" size="150" required="false" />
+    <column name="body" type="LONGVARCHAR" required="false" />
+    <column name="sender_id" type="INTEGER" size="11" required="false" />
+    <column name="recipient_id" type="INTEGER" size="11" required="false" />
+    <column name="status" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <column name="read_status" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="type" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <index name="private_message_FI_1">
+      <index-column name="sender_id" />
+    </index>
+    <index name="private_message_FI_2">
+      <index-column name="recipient_id" />
+    </index>
+  </table>
+
+  <table name="purchase_detail">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="sales_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="sales" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="sales_id" foreign="id" />
+    </foreign-key>
+    <column name="transaction_id" type="INTEGER" size="11" required="false" />
+    <column name="full_name" type="VARCHAR" size="255" required="false" />
+    <column name="email" type="VARCHAR" size="255" required="false" />
+    <column name="address1" type="VARCHAR" size="255" required="false" />
+    <column name="address2" type="VARCHAR" size="255" required="false" />
+    <column name="city" type="VARCHAR" size="255" required="false" />
+    <column name="state" type="VARCHAR" size="255" required="false" />
+    <column name="country" type="VARCHAR" size="255" required="false" />
+    <column name="telephone_number" type="VARCHAR" size="255" required="false" />
+    <column name="zip" type="VARCHAR" size="20" required="false" defaultValue="0" />
+    <index name="purchase_detail_FI_1">
+      <index-column name="user_id" />
+    </index>
+    <index name="purchase_detail_FI_2">
+      <index-column name="sales_id" />
+    </index>
+  </table>
+
+  <table name="sales">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="offer_voucher_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="offer_voucher1" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="offer_voucher_id" foreign="id" />
+    </foreign-key>
+    <column name="status_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="status" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="status_id" foreign="id" />
+    </foreign-key>
+    <column name="total_sale_price" type="INTEGER" size="11" required="false" />
+    <column name="total_shipping_charge" type="INTEGER" size="11" required="false" />
+    <column name="quantity" type="INTEGER" size="11" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="updated_at" type="TIMESTAMP" required="false" />
+    <column name="total_item_price" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <index name="sales_FI_1">
+      <index-column name="offer_voucher_id" />
+    </index>
+    <index name="sales_FI_2">
+      <index-column name="status_id" />
+    </index>
+  </table>
+
+  <table name="sales_detail">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="item_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="item" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="item_id" foreign="id" />
+    </foreign-key>
+    <column name="total_price" type="INTEGER" size="11" required="false" />
+    <column name="total_shipping_charge" type="INTEGER" size="11" required="false" />
+    <column name="quantity" type="INTEGER" size="11" required="false" />
+    <column name="transaction_id" type="INTEGER" size="11" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="updated_at" type="TIMESTAMP" required="false" />
+    <index name="sales_detail_FI_1">
+      <index-column name="item_id" />
+    </index>
+  </table>
+
+  <table name="shopping_cart">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="item_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="item" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="item_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="quantity" type="INTEGER" size="11" required="false" />
+    <column name="total_price" type="INTEGER" size="11" required="false" />
+    <column name="total_shipping_charge" type="INTEGER" size="11" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="updated_at" type="TIMESTAMP" required="false" />
+    <column name="is_active" type="TINYINT" size="4" required="false" defaultValue="0" />
+    <index name="shopping_cart_FI_1">
+      <index-column name="item_id" />
+    </index>
+    <index name="shopping_cart_FI_2">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="shout">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="poster_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="RESTRICT" onUpdate="RESTRICT">
+      <reference local="poster_id" foreign="id" />
+    </foreign-key>
+    <column name="recipient_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="RESTRICT" onUpdate="RESTRICT">
+      <reference local="recipient_id" foreign="id" />
+    </foreign-key>
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="content" type="LONGVARCHAR" required="false" />
+    <index name="shout_FI_1">
+      <index-column name="poster_id" />
+    </index>
+    <index name="shout_FI_2">
+      <index-column name="recipient_id" />
+    </index>
+  </table>
+
+  <table name="size">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="name" type="VARCHAR" size="255" required="false" />
+  </table>
+
+  <table name="status">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="name" type="VARCHAR" size="255" required="false" />
+  </table>
+
+  <table name="students_instant_questions">
+    <column name="id" type="INTEGER" size="10" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="student_question" type="LONGVARCHAR" required="true" />
+    <column name="student_id" type="INTEGER" size="10" required="true" />
+    <column name="expert_id" type="INTEGER" size="10" required="true" />
+    <column name="experts_accept" type="INTEGER" size="10" required="true" />
+  </table>
+
+  <table name="thread">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="poster_id" type="INTEGER" size="11" required="true" />
+    <column name="forum_id" type="INTEGER" size="11" required="true" />
+    <column name="title" type="VARCHAR" size="100" required="true" />
+    <column name="tags" type="VARCHAR" size="100" required="true" />
+    <column name="visible" type="INTEGER" size="11" required="true" defaultValue="1" />
+    <column name="cancel" type="INTEGER" size="11" required="true" />
+    <column name="category_id" type="INTEGER" size="11" required="true" />
+    <column name="notify_email" type="INTEGER" size="10" required="true" />
+    <column name="notify_pm" type="INTEGER" size="10" required="true" />
+    <column name="notify_sms" type="INTEGER" size="10" required="true" />
+    <column name="cell_number" type="INTEGER" size="30" required="true" />
+    <column name="school_grade" type="VARCHAR" size="100" required="true" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <column name="lastpost_at" type="TIMESTAMP" required="true" />
+    <column name="user_ip" type="VARCHAR" size="255" />
+    <column name="banned" type="INTEGER" size="4" default="0" required="true" />
+    <column name="reported" type="INTEGER" size="4" default="0" required="true" />
+    <column name="reported_date" type="TIMESTAMP" />
+    <column name="stickie" type="INTEGER" required="true" default="0" />
+    <index name="reported">
+      <index-column name="reported" />
+    </index>
+  </table>
+
+  <table name="user">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="username" type="VARCHAR" size="100" required="false" />
+    <column name="email" type="VARCHAR" size="100" required="false" />
+    <column name="password" type="VARCHAR" size="40" required="false" />
+    <column name="points" type="DECIMAL" size="11" scale="2" defaultValue="0" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="last_activity_at" type="TIMESTAMP" required="false" />
+    <column name="type" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <column name="hidden" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <column name="name" type="VARCHAR" size="100" required="false" />
+    <column name="gender" type="INTEGER" size="11" required="false" />
+    <column name="hometown" type="VARCHAR" size="100" required="false" />
+    <column name="home_phone" type="VARCHAR" size="20" required="false" />
+    <column name="mobile_phone" type="VARCHAR" size="20" required="false" />
+    <column name="birthdate" type="DATE" required="false" />
+    <column name="address" type="LONGVARCHAR" required="false" />
+    <column name="relationship_status" type="INTEGER" size="11" required="false" defaultValue="0" />
+    <column name="show_email" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_gender" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_hometown" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_home_phone" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_mobile_phone" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_birthdate" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_address" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="show_relationship_status" type="INTEGER" size="11" required="false" defaultValue="1" />
+    <column name="password_recover_key" type="VARCHAR" size="40" required="false" />
+    <column name="cookie_key" type="VARCHAR" size="40" required="false" />
+    <column name="credit" type="INTEGER" size="11" required="true" defaultValue="0" />
+    <column name="invisible" type="INTEGER" size="11" required="true" />
+    <column name="notification" type="VARCHAR" size="10" required="true" />
+    <column name="phone_number" type="VARCHAR" size="20" required="true" />
+    <column name="login" type="INTEGER" size="10" required="true" default="0" />
+    <column name="credit_card" type="VARCHAR" size="4" required="false" />
+    <column name="credit_card_token" type="VARCHAR" size="10" required="false" />
+    <column name="first_charge" type="TIMESTAMP" required="false" />
+    <column name="where_find_us" type="LONGVARCHAR" required="true" />
+    <unique name="user_username_unique">
+      <unique-column name="username" />
+    </unique>
+    <unique name="user_email_unique">
+      <unique-column name="email" />
+    </unique>
+    <unique name="user_password_recover_key_unique">
+      <unique-column name="password_recover_key" />
+    </unique>
+  </table>
+
+  <table name="user_awards">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user" onDelete="CASCADE" onUpdate="RESTRICT">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="awards" type="INTEGER" size="11" required="false" />
+    <index name="user_awards_FI_1">
+      <index-column name="user_id" />
+    </index>
+  </table>
+
+  <table name="user_gtalk">
+    <column name="userid" type="INTEGER" size="10" required="true" primaryKey="true" />
+    <foreign-key foreignTable="user">
+      <reference local="userid" foreign="id" />
+    </foreign-key>
+    <column name="gtalkid" type="VARCHAR" size="100" required="true" />
+  </table>
+
+  <table name="user_fb">
+    <column name="userid" type="INTEGER" size="10" required="true" primaryKey="true" />
+    <foreign-key foreignTable="user">
+      <reference local="userid" foreign="id" />
+    </foreign-key>
+    <column name="fb_username" type="VARCHAR" size="255" required="true" />
+    <column name="fb_uid" type="VARCHAR" size="100" required="true" />
+  </table>
+
+  <table name="user_rate">
+    <column name="id" type="INTEGER" size="10" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="userid" type="INTEGER" size="10" required="true" />
+    <foreign-key foreignTable="user">
+      <reference local="userid" foreign="id" />
+    </foreign-key>
+    <column name="rate" type="FLOAT" size="11" scale="2" required="true" default="0.16" />
+  </table>
+
+  <table name="user_tutor">
+    <column name="userid" type="INTEGER" size="10" required="true" primaryKey="true" />
+    <foreign-key foreignTable="user">
+      <reference local="userid" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="user_question_tag">
+    <column name="id" type="INTEGER" size="11" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="user">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="category_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="category">
+      <reference local="category_id" foreign="id" />
+    </foreign-key>
+    <column name="course_id" type="INTEGER" size="11" required="false" />
+    <foreign-key foreignTable="courses">
+      <reference local="course_id" foreign="id" />
+    </foreign-key>
+    <column name="course_code" type="VARCHAR" size="255" required="false" />
+    <column name="education" type="INTEGER" size="10" required="false" />
+    <column name="school" type="VARCHAR" size="255" required="false" />
+    <column name="year" type="VARCHAR" size="255" required="false" />
+    <column name="question" type="VARCHAR" size="255" required="true" />
+  </table>
+
+  <table name="video">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="owner_id" type="INTEGER" size="11" required="false" />
+    <column name="name" type="VARCHAR" size="150" required="false" />
+    <column name="description" type="LONGVARCHAR" required="false" />
+    <column name="type" type="VARCHAR" size="5" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <index name="video_FI_1">
+      <index-column name="owner_id" />
+    </index>
+  </table>
+
+  <table name="whiteboard_chat">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="is_public" type="INTEGER" size="11" required="true" />
+    <column name="expert_id" type="INTEGER" size="11" required="false" />
+    <column name="asker_id" type="INTEGER" size="11" required="false" />
+    <column name="expert_nickname" type="VARCHAR" size="100" required="false" />
+    <column name="asker_nickname" type="VARCHAR" size="100" required="false" />
+    <column name="question" type="LONGVARCHAR" required="false" />
+    <column name="started_at" type="TIMESTAMP" required="false" />
+    <column name="ended_at" type="TIMESTAMP" required="false" />
+    <column name="directory" type="VARCHAR" size="255" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="false" />
+    <column name="timer" type="VARCHAR" size="100" required="true" />
+    <column name="rating" type="INTEGER" size="11" required="true" />
+    <column name="amount" type="FLOAT" size="5" scale="2" required="true" />
+    <column name="comments" type="VARCHAR" size="255" />
+    <index name="whiteboard_chat_FI_1">
+      <index-column name="expert_id" />
+      <index-column name="asker_id" />
+    </index>
+  </table>
+
+  <table name="whiteboard_message">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="whiteboard_chat_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="whiteboard_chat" onDelete="CASCADE">
+      <reference local="whiteboard_chat_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="INTEGER" size="11" required="false" />
+    <column name="message" type="LONGVARCHAR" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <index name="whiteboard_message_FI_1">
+      <index-column name="whiteboard_chat_id" />
+    </index>
+  </table>
+
+  <table name="whiteboard_snapshot">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="whiteboard_chat_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="whiteboard_chat" onDelete="CASCADE">
+      <reference local="whiteboard_chat_id" foreign="id" />
+    </foreign-key>
+    <column name="filename" type="VARCHAR" size="255" required="true" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+    <index name="whiteboard_snapshot_FI_1">
+      <index-column name="whiteboard_chat_id" />
+    </index>
+  </table>
+
+  <table name="student_questions" phpName="StudentQuestion">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" phpName="StudentId" />
+    <foreign-key foreignTable="user">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="checked_id" type="INTEGER" size="11" required="true" phpName="TutorId" />
+    <foreign-key foreignTable="user">
+      <reference local="checked_id" foreign="id" />
+    </foreign-key>
+    <column name="category_id" type="INTEGER" size="11" required="true" default="1" />
+    <column name="course_id" type="INTEGER" size="11" required="true" default="1" />
+    <column name="question" type="VARCHAR" size="500" required="true" />
+    <column name="exe_order" type="INTEGER" size="11" required="true" />
+    <column name="time" type="INTEGER" size="100" required="true" />
+    <column name="course_code" type="VARCHAR" size="100" required="true" />
+    <column name="year" type="VARCHAR" size="100" required="true" />
+    <column name="school" type="VARCHAR" size="100" required="true" />
+    <column name="status" type="INTEGER" size="10" required="true" default="0" />
+    <column name="close" type="INTEGER" size="10" required="true" default="61000" />
+    <column name="cron" type="INTEGER" size="10" required="true" default="1" />
+    <column name="source" type="VARCHAR" size="100" required="true" />
+  </table>
+
+  <table name="whiteboard_sessions" phpName="WhiteboardSession">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="question_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="student_questions">
+      <reference local="question_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="user">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="type" type="INTEGER" size="10" required="true" />
+    <column name="token" type="VARCHAR" size="40" required="true" />
+    <column name="chat_id" type="VARCHAR" size="40" />
+    <column name="last_activity" type="INTEGER" size="11" required="true" />
+  </table>
+
+  <table name="whiteboard_tutor_feedback">
+    <column name="id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="whiteboard_chat_id" type="INTEGER" size="11" required="true" />
+    <foreign-key foreignTable="whiteboard_chat" onDelete="CASCADE">
+      <reference local="whiteboard_chat_id" foreign="id" />
+    </foreign-key>
+    <column name="expert_id" type="INTEGER" size="11" required="false" />
+    <column name="audio" type="INTEGER" size="5" required="true" />
+    <column name="usability" type="INTEGER" size="5" required="true" />
+    <column name="overall" type="INTEGER" size="5" required="true" />
+    <column name="feedback" type="LONGVARCHAR" required="false" />
+    <column name="created_at" type="TIMESTAMP" required="true" />
+  </table>
+
+  <table name="tutor_profile">
+    <column name="tutor_profile_id" type="INTEGER" size="11" primaryKey="true" autoIncrement="true" required="true" />
+    <column name="user_id" type="INTEGER" size="11" required="true" />
+    <column name="category" type="INTEGER" size="8" required="true" />
+    <column name="course_id" type="VARCHAR" size="200" required="true" />
+    <column name="school" type="VARCHAR" size="300" required="true" />
+    <column name="year" type="VARCHAR" size="100" required="true" />
+    <column name="tutor_role" type="VARCHAR" size="300" required="true" />
+    <column name="study" type="VARCHAR" size="300" required="true" />
+    <column name="course_code" type="VARCHAR" size="300" required="true" />
+    <column name="online_status" type="TINYINT" size="1" required="false" defaultValue="0" />
+  </table>
+
+</database>
