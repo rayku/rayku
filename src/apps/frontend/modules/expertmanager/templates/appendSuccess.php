@@ -156,7 +156,7 @@ if ($cat != NULL) {
                 $rowValues = mysql_fetch_assoc($query5);
                 $rate = $rowValues['rate']."RP";
             } else {
-                $rate = "0.00RP";
+                $rate = "0RP";
             }
 ?>
 <?php

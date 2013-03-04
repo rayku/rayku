@@ -177,7 +177,7 @@ function cmp($a, $b)
 			$rowValues = mysql_fetch_assoc($query5);
 			$rate = $rowValues['rate']."RP";
 		} else {
-			$rate = "0.00RP";
+			$rate = "0RP";
 		}
 
 		$curr_user_rank=''; $ij =1;

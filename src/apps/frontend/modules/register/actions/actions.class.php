@@ -19,7 +19,6 @@ class registerActions extends sfActions
      */
     public function executeIndex()
     {
-    	die(__LINE__.' '.__FILE__);
         //If the user is logged in, don't let them register
         if ($this->getUser()->isAuthenticated()) {
             $this->error = 'You are already logged in. You can not register again.';

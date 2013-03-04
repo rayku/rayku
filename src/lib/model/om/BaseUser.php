@@ -510,7 +510,7 @@ abstract class BaseUser extends BaseObject  implements Persistent {
 	 */
 	public function getPoints()
 	{
-		return $this->points;
+		return round($this->points);
 	}
 
 	/**
