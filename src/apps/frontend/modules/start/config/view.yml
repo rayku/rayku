@@ -1,0 +1,2 @@
+all:
+  javascripts: [-/sfProtoculousPlugin/js/prototype.js]
