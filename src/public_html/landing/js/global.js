@@ -4,11 +4,7 @@ $(document).ready(function(){
 	
 	//Ask a question signup form
 	$('#intro input.ask').keyup(function(){
-		if (this.value == 'q') {
 		$('#intro').addClass('open');
-		} else {
-			$('#intro').removeClass('open');
-		}
 	});
 	
 	//About Us Faces
