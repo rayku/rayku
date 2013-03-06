@@ -17,28 +17,32 @@ class ratingAction extends sfAction
             }
         }
 
-        if (!empty($_POST)) {
+        $tutor = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
+        $rate = $tutor->getRate();
+        $timer = explode(":", $_COOKIE["timer"]);
+        $minuteDuration = ($timer[0]/60)+$timer[1];
+        
+        if(empty($_POST)){
+	        $tutor = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
+	        $tutor->setPoints(
+	        		$tutor->getPoints() + ($minuteDuration * $rate)
+	        );
+	        $tutor->save();
+	        
+	        $student = UserPeer::retrieveByPK($_COOKIE['ratingUserId']);
+	        $student->setPoints(
+	        		$student->getPoints() - ($minuteDuration * $rate)
+	        );
+	        $student->save();
+        }else{
+        	$newTimer = $timer;
+        	unset($_COOKIE["timer"], $_COOKIE["ratingExpertId"], $_COOKIE['ratingUserId']);
             if (empty($_POST["rating"])) {
                 $this->redirect('/dashboard/rating');
             }
             if (empty($_COOKIE['ratingExpertId']) && empty($_COOKIE['ratingUserId']) ) {
                 $this->redirect('/dashboard');
             } else {
-                if (!empty($_COOKIE['raykuCharge'])) {
-                    $rate = $_COOKIE['raykuCharge'];
-                } else {
-                    $user = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
-                    if ($user) {
-                        $rate = $user->getRate();
-                    } else {
-                        $rate = 0;
-                    }
-                }
-                $timer = explode(":", $_COOKIE["timer"]);
-                $newTimer = (($timer[0]*3600)+($timer[1]*60)) / 60;
-                $raykuPercentage = $newTimer * $rate;
-                $_chat_rating = $_POST["rating"];
-                $date = date('Y-m-d H:i:s');
 
                 $queryScore = mysql_query("select * from user_score where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
                 $rowScore = mysql_fetch_assoc($queryScore);
@@ -62,22 +66,7 @@ class ratingAction extends sfAction
                         $newRatingScore = $rowScore['score'] - 20;
                     }
                     mysql_query("update user_score set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                    if ($rate != '0.00') {
-                        $kinkarsoPoints = $rowKinkarso["points"] + $raykuPercentage;
-                        mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                    }
-                }  elseif ($_POST["rating"] == 2) {
-                    $tiptutor=$_POST["tiptutor"];
-                    $askerPoints = $rowAsker["points"] - $raykuPercentage;
-                    mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                    $expertPer = $raykuPercentage;
-                    $kinkarsoPer = $raykuPercentage;
-                    $expertPoints = $rowExpert["points"] + $expertPer + $tiptutor;
-                    $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-                    mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                    mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
                 } elseif ($_POST["rating"] == 3) {
-                    $tiptutor=$_POST["tiptutor"];
                     $_Score = 0;
                     if ($newTimer > 10) {
                         $_Score = 10;
@@ -90,18 +79,7 @@ class ratingAction extends sfAction
                     }
                     $newRatingScore = $rowScore['score'] + $_Score;
                     mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                    if ($rate != '0.00') {
-                        $askerPoints = $rowAsker["points"] - $raykuPercentage;
-                        mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                        $expertPer = $raykuPercentage;
-                        $kinkarsoPer = $raykuPercentage;
-                        $expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
-                        $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-                        mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                        mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                    }
                 } elseif ($_POST["rating"] == 4) {
-                    $tiptutor=$_POST["tiptutor"];
                     $_Score = 0;
                     if ($newTimer > 10) {
                         $_Score = 18;
@@ -113,34 +91,12 @@ class ratingAction extends sfAction
                     }
                     $newRatingScore = $rowScore['score'] + $_Score;
                     mysql_query("update user_score  set score = ".$newRatingScore." where user_id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                    if ($rate != '0.00') {
-                        $askerPoints = $rowAsker["points"] - $raykuPercentage;
-                        mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-                        $expertPer = $raykuPercentage; //60;
-                        $kinkarsoPer = $raykuPercentage; //40;
-                        $expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
-                        $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-                        mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                        mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                    }
                 } elseif ($_POST["rating"] == 5) {
-                    $tiptutor=$_POST["tiptutor"];
-                    $ratingScore = !empty($rowScore['score']) ? $rowScore['score'] : 0 ;
-                    if ($rate != '0.00') {
-                        $askerPoints = $rowAsker["points"] - $raykuPercentage;
-                        mysql_query("update user set points = ".$askerPoints." where id=".$_COOKIE["ratingUserId"], $connection) or die(mysql_error());
-
-                        $expertPer = $raykuPercentage;  // 5 stars: 100% RP
-                        $expertPoints = $rowExpert["points"] + $expertPer +  $tiptutor;
-                        $kinkarsoPoints = $rowKinkarso["points"] + $kinkarsoPer;
-                        mysql_query("update user set points = ".$expertPoints." where id=".$_COOKIE["ratingExpertId"], $connection) or die(mysql_error());
-                        mysql_query("update user set points = ".$kinkarsoPoints." where id=124", $connection) or die(mysql_error());
-                    }
                     $_Score = 0;
                     if ($newTimer > 10) {
                         $_Score = 25;
                     } elseif ($newTimer <= 10 && $newTimer >= 2) {
-                        $_Score = 10;
+                        $_Score = 12;
                     }
                     if ($rate == '0.00') {
                         $_Score =  $_Score * 2;

@@ -10,6 +10,10 @@ require_once 'om/BaseUser.php';
 
 class User extends BaseUser
 {
+	public function setPoints($v){
+		$v = abs(round($v));
+		return parent::setPoints($v);
+	}
 	/**
 	* Generates the confirmation code for this user
 	*/
