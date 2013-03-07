@@ -149,7 +149,7 @@ class appendAction extends sfAction
                             $dv->add(UserPeer::ID, $user_id);
                             $_thisUser = UserPeer::doSelectOne($dv);
 
-                            $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+                            $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt(), "online" => $_thisUser->isOnline());
 
                             $i++;
                         }
@@ -160,7 +160,7 @@ class appendAction extends sfAction
                         $_thisUser = UserPeer::doSelectOne($dv);
 
                         if(isset($_thisUser)){
-	                        $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt());
+	                        $newUser[$i] = array("score" => $score['score'], "userid" => $user_id, "category" => $this->cat, "createdat" => $_thisUser->getCreatedAt(), "online" => $_thisUser->isOnline());
 	                        $i++;
                         }
                     }
@@ -181,20 +181,19 @@ class appendAction extends sfAction
         foreach ($newUser as $new) {
             $tutor_status=mysql_fetch_array(mysql_query("SELECT * FROM tutor_profile WHERE user_id='$new[userid]'"));
 
-            if ($tutor_status['online_status'] == '1') {
+            if ($tutor_status['online_status'] == '1' || $new['online']) {
 
                 $onlineusers[$j] = $new['userid'];
 
-                $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+                $newOnlineUser[$j] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat'], 'online' => $new['online']);
                 $j++;
             } else {
 
-                $newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat']);
+                $newOfflineUser[$k] = array("score" => $new['score'], "userid" => $new['userid'], "category" => $new['category'], "createdat" => $new['createdat'], 'online' => $new['online']);
                 $offlineusers[$k] = $new['userid'];
 
                 $k++;
             }
-
         }
 
         $this->newOnlineUser = $newOnlineUser;

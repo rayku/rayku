@@ -47,6 +47,7 @@ class ratingAction extends sfAction
 		        $student->save();
 	        }
         }else{
+        	$this->getResponse()->setCookie("timer", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
         	$newTimer = $timer;
             if (empty($_POST["rating"])) {
                 $this->redirect('/dashboard/rating');
