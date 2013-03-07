@@ -17,6 +17,11 @@ class referralsActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+  	$this->getResponse()->setCookie("timer", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+  	$this->getResponse()->setCookie("whiteboardChatId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+  	$this->getResponse()->setCookie("ratingExpertId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+  	$this->getResponse()->setCookie("ratingUserId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+  	
     $this->user = $this->getUser();
 	//$user_id = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
 	$user = $this->getUser()->getRaykuUser();

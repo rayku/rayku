@@ -2,7 +2,7 @@
 class ratingAction extends sfAction
 {
     public function execute($request)
-    {
+    {    	
         $connection = RaykuCommon::getDatabaseConnection();
         $logedUserId = $_SESSION['symfony/user/sfUser/attributes']['symfony/user/sfUser/attributes']['user_id'];
         mysql_query("delete from popup_close where user_id=".$logedUserId, $connection) or die(mysql_error());
@@ -18,25 +18,36 @@ class ratingAction extends sfAction
         }
 
         $tutor = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
-        $rate = $tutor->getRate();
+        $rate = isset($tutor) ? $tutor->getRate() : 0;
         $timer = explode(":", $_COOKIE["timer"]);
         $minuteDuration = ($timer[0]/60)+$timer[1];
         
+        if(isset($_COOKIE["ratingExpertId"]) && isset($_COOKIE['ratingUserId'])){
+        	$query = "
+	        	delete from whiteboard_sessions 
+	        	where user_id = '".(int)$_COOKIE["ratingExpertId"]."' 
+	        	OR user_id = '".(int)$_COOKIE['ratingUserId']."'";
+	        mysql_query($query) or die(mysql_error());
+        }
+        
         if(empty($_POST)){
 	        $tutor = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
-	        $tutor->setPoints(
-	        		$tutor->getPoints() + ($minuteDuration * $rate)
-	        );
-	        $tutor->save();
+	        if(isset($tutor)){
+		        $tutor->setPoints(
+		        		$tutor->getPoints() + ($minuteDuration * $rate)
+		        );
+		        $tutor->save();
+	        }
 	        
 	        $student = UserPeer::retrieveByPK($_COOKIE['ratingUserId']);
-	        $student->setPoints(
-	        		$student->getPoints() - ($minuteDuration * $rate)
-	        );
-	        $student->save();
+	        if(isset($student)){
+		        $student->setPoints(
+		        		$student->getPoints() - ($minuteDuration * $rate)
+		        );
+		        $student->save();
+	        }
         }else{
         	$newTimer = $timer;
-        	unset($_COOKIE["timer"], $_COOKIE["ratingExpertId"], $_COOKIE['ratingUserId']);
             if (empty($_POST["rating"])) {
                 $this->redirect('/dashboard/rating');
             }
@@ -143,8 +154,6 @@ class ratingAction extends sfAction
                 $this->getResponse()->setCookie("whiteboardChatId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 $this->getResponse()->setCookie("ratingExpertId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
                 $this->getResponse()->setCookie("ratingUserId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
-
-                
                 
                 $this->user = $this->getUser()->getRaykuUser();  
                 $this->userPoints = $this->user->getPoints();
@@ -155,10 +164,6 @@ class ratingAction extends sfAction
                     $this->user->setFirstCharge($mysqldate);
                 }
                 
-                
-                if ($_chat_rating == 1 || $_chat_rating == 2) {
-                    $this->redirect('/dashboard/moneyback');
-                }
                 $this->redirect('/referrals?session=complete');
             }
         }
