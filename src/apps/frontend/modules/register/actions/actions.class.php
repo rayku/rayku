@@ -31,37 +31,20 @@ class registerActions extends sfActions
         if (sfWebRequest::POST !== $this->getRequest()->getMethod()) {
             return sfView::SUCCESS;
         }
-
-        if ($this->getRequestParameter('terms') != 1) {
-            $this->error = 'You must agree to our <strong>Terms & Conditions</strong>. <a href="#" onClick="javascript: history.go(-1)">Click here</a> to go back to the previous page.';
-            return sfView::ERROR;
-        }
-
-        //Create and populate the User object
+        
         $user = new User();
-        $user->setEmail($this->getRequestParameter('email'));
-        $user->setPassword($this->getRequestParameter('password1'));
-        $user->setName($this->getRequestParameter('realname'));
-
-        $expiration = substr($this->getRequestParameter('expiry_date'),0,2) .'/'. substr($this->getRequestParameter('expiry_date'),-2);
-
-        require_once ($_SERVER['DOCUMENT_ROOT'].'/braintree_environment.php');
-
-        $result = Braintree_Customer::create(array(
-            'firstName' => $this->getRequestParameter('realname'),
-            'lastName' => '',
-            'creditCard' => array(
-                'cardholderName' => $this->getRequestParameter('realname'),
-                'number' => $this->getRequestParameter('credit_card'),
-                'cvv' => $this->getRequestParameter('cvv'),
-                'expirationDate' => $expiration,
-                'options' => array(
-                    'verifyCard' => true
-                )
-            )
-        ));
-
-        //error_log($result->customer->creditCards[0]->token, 0);
+        $user_data = $this->getRequestParameter('user');
+        if(isset($user)){
+        	$user->setName($user_data['fullname']);
+        	$user->setEmail($user_data['email']);
+        	$user->setPassword($user_data['password']);
+        	$userName = $user_data['fullname'];
+        }else{
+	        $user->setEmail($this->getRequestParameter('email'));
+	        $user->setPassword($this->getRequestParameter('password1'));
+	        $user->setName($this->getRequestParameter('realname'));
+	        $userName = str_replace(' ','',strtolower($this->getRequestParameter('realname')));
+        }
 
 
         if (false && !$result->success){
@@ -71,11 +54,6 @@ class registerActions extends sfActions
 
 
         }else{
-            //should only save last 4 digit
-//            $user->setCreditCard(substr($this->getRequestParameter('credit_card'),-4));
-//            $user->setCreditCardToken($result->customer->creditCards[0]->token);
-
-            $userName = str_replace(' ','',strtolower($this->getRequestParameter('realname')));
             $U_QRY = "select * from user where username='".$userName."'";
             $u_res = mysql_query($U_QRY);
             $unamecount = mysql_num_rows($u_res);
@@ -177,6 +155,7 @@ class registerActions extends sfActions
 
     private function subscribeExpertToCategories($categories, User $user)
     {
+
         if (!is_array($categories)) {
             return;
         }
@@ -222,6 +201,7 @@ class registerActions extends sfActions
      */
     public function handleErrorIndex()
     {
+
         $this->requestedUserType = $this->getRequestedUserType();
         return sfView::SUCCESS;
     }
@@ -324,6 +304,7 @@ class registerActions extends sfActions
 
     public function executeRedirect()
     {
+
         $user = $this->getUser()->getRaykuUser();
         $query = mysql_query("select * from user_expert where user_id=".$user->getId()) or die(mysql_error());
         $chat_query = mysql_query("select * from sendmessage where asker_id=".$user->getId()) or die(mysql_error());
@@ -341,6 +322,7 @@ class registerActions extends sfActions
 
     public function executeConfirmationEmailResend($request)
     {
+
         $email=$request->getParameter('email');
         $c=new Criteria();
         $c->add(UserPeer::EMAIL,$email);
