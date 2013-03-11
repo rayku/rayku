@@ -18,6 +18,9 @@ class loginActions extends sfActions
 	 */
 	public function executeIndex()
 	{
+		if($this->getRequest()->isMethod('POST')){
+			$this->executeLoginCheck();
+		}
 		//If the user is logged in, don't let them login again
 
 		if($this->getUser()->isAuthenticated())
@@ -36,13 +39,17 @@ class loginActions extends sfActions
 	 */
 	public function executeLoginCheck()
 	{
-
 		$connection = RaykuCommon::getDatabaseConnection();
 
 		$sEmail = trim( $this->getRequestParameter('name') );
 		$sPassword = trim( $this->getRequestParameter('pass') );
-
-
+		
+		$user_new_login = $this->getRequestParameter('user');
+		if(!empty($user_new_login)){
+			$sEmail = $user_new_login['login_email'];
+			$sPassword = $user_new_login['login_password'];
+		}
+		
 		if( $sEmail == '' && $sPassword == '' )
 		{
 			StatsD::increment("login.failure");

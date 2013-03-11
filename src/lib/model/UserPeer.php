@@ -51,7 +51,6 @@ class UserPeer extends BaseUserPeer
         $c = new Criteria();
         $c->add(UserPeer::EMAIL, $sEmail);
         $c->add(UserPeer::PASSWORD, sha1($sPassword));
-
         return UserPeer::doSelectOne($c);
     }
 
