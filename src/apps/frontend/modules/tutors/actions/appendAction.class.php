@@ -94,12 +94,13 @@ class appendAction extends sfAction
         if (empty($this->cat)) {
             $this->cat = 1;
         }
-
-
-
-        //$c = new Criteria();
-        //$c->addJoin(ExpertCategoryPeer::USER_ID, UserTutorPeer::USERID, Criteria::INNER_JOIN);
-        $experts=mysql_query("SELECT * FROM tutor_profile");
+        
+        if(strpos($currentUser->getEmail(), 'ryerson') === false){
+        	$query = "SELECT * FROM tutor_profile t INNER JOIN user u ON u.id = t.user_id WHERE u.email NOT LIKE '%ryerson%'";
+        	$experts=mysql_query($query);
+        }else{
+        	$experts=mysql_query("SELECT * FROM tutor_profile");
+        }
 
         $_points = $currentUser->getPoints();
 
