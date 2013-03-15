@@ -37,17 +37,6 @@ function cmp($a, $b)
 ?>
 <?php $raykuUser = $sf_user->getRaykuUser(); ?>
 <div id="body">
-	<?php if($sf_user->getRaykuUser()->getType() != 5 && $changeUserType == 1): ?>
-	<div id="upgrade">
-		You qualify for an upgrade! You can now get more exposure and charge
-		rates for tutoring: <a href="/dashboard/verifytutor">Click to activate</a>
-	</div>
-	<?php endif; ?>
-	<!--[if IE]>
-		<div id="ie">
-			Rayku doesn't work well with Internet Explorer. Please use Firefox or Chrome or another browser.
-		</div>
-	<![endif]-->
 	<div id="page-title">
 		<img height="25" width="42"
 			src="<?php echo image_path('green_arrow.png', false); ?>" />
@@ -175,7 +164,11 @@ function cmp($a, $b)
     vd("#tutor-rate").slider({
         range: "min",
         value: <?php echo $_Rate; ?> , min: 0,
-        max: 100 , step: 1,
+        max: 
+<?php 
+if(strpos($raykuUser->getEmail(), 'ryerson') === false){ echo '100'; }else{ echo '45'; }
+?>
+            , step: 1,
         slide: function (event, ui) {
             vd("#amount").val(ui.value);
             vd("#amount_hidden").val(ui.value);

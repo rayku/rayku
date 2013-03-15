@@ -54,7 +54,7 @@
   <!-- For the person who will use this code. Check the TITLES of the <a> tags! They correspond in the CSS file aswell! -->
   <div id="top-nav-center">
     <ul class="top-menu">
-      <li><?php echo link_to( 'Rayku', '/', array('title'=>'Rayku') ); ?></li>
+      <li><?php echo link_to( 'Rayku', '/dashboard', array('title'=>'Rayku') ); ?></li>
       <li><?php echo link_to( 'Ask Question', '/dashboard', array('title'=>'Ask Question','class'=>'tt-questions') ); ?></li>
       <li><?php echo link_to( 'Tutors', 'tutors/index', array('title'=>'Tutors','class'=>'tt-tutors') ); ?></li>
       <!--<li><?php echo link_to( 'Q&A Boards', '/forum/index', array('title'=>'Q&A Boards','class'=>'tt-boards') ); ?></li>-->

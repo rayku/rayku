@@ -2,7 +2,10 @@
 $time=microtime(true);
 
 $url_array = array(
-		'index' => '/'
+		'index' => '/',
+		'become' => '/become-a-tutor',
+		'about' => '/about',
+		'tutor-signup' => '/signup-tutor'
 );
 
 /*

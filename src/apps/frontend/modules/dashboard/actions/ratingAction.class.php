@@ -31,6 +31,13 @@ class ratingAction extends sfAction
         }
         
         if(empty($_POST)){
+        	if(!isset($_COOKIE["ratingExpertId"]) || !isset($_COOKIE['ratingUserId'])){
+        		$this->getResponse()->setCookie("timer", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+        		$this->getResponse()->setCookie("whiteboardChatId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+        		$this->getResponse()->setCookie("ratingExpertId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+        		$this->getResponse()->setCookie("ratingUserId", "", time()-3600, '/', sfConfig::get('app_cookies_domain'));
+        		$this->redirect('/dashboard');
+        	}
 	        $tutor = UserPeer::retrieveByPK($_COOKIE["ratingExpertId"]);
 	        if(isset($tutor)){
 		        $tutor->setPoints(
@@ -40,6 +47,12 @@ class ratingAction extends sfAction
 	        }
 	        
 	        $student = UserPeer::retrieveByPK($_COOKIE['ratingUserId']);
+	        
+	        if(strpos($student->getEmail(), 'ryerson') !== false && strpos($tutor->getEmail(), 'ryerson')){
+	        	$c = new Criteria();
+	        	$c->add(UserPeer::EMAIL, 'admin@ryerson.com');
+	        	$student = UserPeer::doSelectOne($c);
+	        }
 	        if(isset($student)){
 		        $student->setPoints(
 		        		$student->getPoints() - ($minuteDuration * $rate)

@@ -90,6 +90,7 @@ class StatsD {
      * Squirt the metrics over UDP
      **/
     public static function send($data, $sampleRate=1) {
+    	return;
         $config = Config::getInstance();
         if (! $config->isEnabled("statsd")) { return; }
 

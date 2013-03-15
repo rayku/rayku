@@ -22,10 +22,10 @@ prod:
 dev:
   rayku_url: http://qa.rayku.com
   facebook_url: http://facebook.rayku.local
-  whiteboard_url: http://w2-qa.rayku.com
+  whiteboard_url: http://whiteboard.rayku.local
   notification_bot_url : http://notification-bot.rayku.local
   bots_url : http://bots.rayku.com
-  cookies_domain: .rayku.com
+  cookies_domain: .rayku.local
 
   g_chat_port: 8892
   fb_chat_port: 8893
